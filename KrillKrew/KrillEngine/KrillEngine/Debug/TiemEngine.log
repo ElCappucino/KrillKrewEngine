@@ -1,0 +1,21 @@
+﻿  CombineObject.cpp
+  DrawableObject.cpp
+  GameEngine.cpp
+  GameObject.cpp
+  GameStateController.cpp
+  GLRenderer.cpp
+  ImageObject.cpp
+  Level.cpp
+C:\Users\ddctl\Downloads\TiemEngine_2024\TiemEngine_2024\TiemEngine\Level.cpp(71,10): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+C:\Users\ddctl\Downloads\TiemEngine_2024\TiemEngine_2024\TiemEngine\Level.cpp(72,10): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+  LevelTest.cpp
+C:\Users\ddctl\Downloads\TiemEngine_2024\TiemEngine_2024\TiemEngine\LevelTest.cpp(79,10): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+C:\Users\ddctl\Downloads\TiemEngine_2024\TiemEngine_2024\TiemEngine\LevelTest.cpp(80,10): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+  Main.cpp
+  MeshVbo.cpp
+  Shader.cpp
+  SquareMeshVbo.cpp
+  TriangleMeshVbo.cpp
+  Generating Code...
+     Creating library C:\Users\ddctl\Downloads\TiemEngine_2024\TiemEngine_2024\Debug\TiemEngine.lib and object C:\Users\ddctl\Downloads\TiemEngine_2024\TiemEngine_2024\Debug\TiemEngine.exp
+  TiemEngine.vcxproj -> C:\Users\ddctl\Downloads\TiemEngine_2024\TiemEngine_2024\Debug\TiemEngine.exe
