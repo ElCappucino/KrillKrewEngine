@@ -1,0 +1,280 @@
+\doxysection{GLRenderer Class Reference}
+\hypertarget{class_g_l_renderer}{}\label{class_g_l_renderer}\index{GLRenderer@{GLRenderer}}
+
+
+{\ttfamily \#include $<$GLRenderer.\+h$>$}
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_g_l_renderer_a942ee69e79838fb4087422850d1bf65f}{Render}} (vector$<$ \mbox{\hyperlink{class_drawable_object}{Drawable\+Object}} \texorpdfstring{$\ast$}{*} $>$ \&obj\+List)
+\item 
+\mbox{\hyperlink{class_g_l_renderer_af506bf1e8d531b33cb668adb7c881ae7}{GLRenderer}} (int w, int h)
+\item 
+bool \mbox{\hyperlink{class_g_l_renderer_acfaac661744f2eb445f84ab8d0479649}{Init\+GL}} (string vertex\+Shader\+File, string fragment\+Shader\+File)
+\item 
+void \mbox{\hyperlink{class_g_l_renderer_a3e4f52ca84cc263be264fed5e19c065a}{Add\+Mesh}} (string name, \mbox{\hyperlink{class_mesh_vbo}{Mesh\+Vbo}} \texorpdfstring{$\ast$}{*}shape)
+\item 
+\mbox{\hyperlink{class_mesh_vbo}{Mesh\+Vbo}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{class_g_l_renderer_ab0f5019cbad4f20178396d82acca670d}{Get\+Mesh}} (string name)
+\item 
+void \mbox{\hyperlink{class_g_l_renderer_aac9985a280e7674cabfdd317a5064507}{Clear\+Mesh}} ()
+\item 
+\mbox{\hyperlink{class_g_l_renderer_ad5da817f69b340641532b763aefc698f}{\texorpdfstring{$\sim$}{\string~}\+GLRenderer}} ()
+\item 
+void \mbox{\hyperlink{class_g_l_renderer_a6486523f334b3fbde582f4f97c988005}{Set\+Ortho\+Projection}} (float left, float right, float bottom, float top)
+\item 
+void \mbox{\hyperlink{class_g_l_renderer_a982392af1f7357318221442e7a891dcc}{Set\+View\+Port}} (int x, int y, int w, int h)
+\item 
+void \mbox{\hyperlink{class_g_l_renderer_a38a6d40d7b39e152e0f629c8a9c26306}{Set\+Clear\+Color}} (float r, float g, float b)
+\item 
+GLuint \mbox{\hyperlink{class_g_l_renderer_a67ca07326d7bcd181c79d653fb9e8bef}{Get\+Model\+Matrix\+Attr\+Id}} ()
+\item 
+GLuint \mbox{\hyperlink{class_g_l_renderer_ad12e36cf1810f8e745996c70742ea609}{Get\+Projection\+Matrix\+Attr\+Id}} ()
+\item 
+GLuint \mbox{\hyperlink{class_g_l_renderer_ab7327910c457b5d1196412c03dbe5bec}{Get\+Color\+Uniform\+Id}} ()
+\item 
+GLuint \mbox{\hyperlink{class_g_l_renderer_a318759d23fdbe8073ec9c269b25c8e2d}{Get\+Mode\+Uniform\+Id}} ()
+\item 
+GLuint \mbox{\hyperlink{class_g_l_renderer_af06a96f18bcca1ab22a4b02473c72c43}{Load\+Texture}} (string path)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_g_l_renderer_a2be1b11d115f8fd2e71b1325237c07c3}{Print\+Program\+Log}} (GLuint program)
+\item 
+bool \mbox{\hyperlink{class_g_l_renderer_a5146fae681750001f0445ce8993aa353}{Initialize}} (string vertex\+Shader\+File, string fragment\+Shader\+File)
+\item 
+void \mbox{\hyperlink{class_g_l_renderer_af18736274cbb0b38ba6111d28f8f2a45}{Set\+Mesh\+Attrib\+Id}} (\mbox{\hyperlink{class_mesh_vbo}{Mesh\+Vbo}} \texorpdfstring{$\ast$}{*}shape)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+int \mbox{\hyperlink{class_g_l_renderer_a1fae4b37532321c39d6bffb12863772d}{win\+Width}}
+\item 
+int \mbox{\hyperlink{class_g_l_renderer_af55df2dabb4398db4ee97fa36599ffdc}{win\+Height}}
+\item 
+glm\+::mat4 \mbox{\hyperlink{class_g_l_renderer_a0f75b57761d1748a244c444e476584a3}{projection\+Matrix}}
+\item 
+glm\+::mat4 \mbox{\hyperlink{class_g_l_renderer_ab034225a22c0fe89db66a7738b19c8fa}{model\+Matrix}}
+\item 
+GLuint \mbox{\hyperlink{class_g_l_renderer_a09f38f61de58340cf1faf46cebf8cb96}{m\+Matrix\+Id}} = -\/1
+\item 
+GLuint \mbox{\hyperlink{class_g_l_renderer_a37b0b6432de0492feff1b4d15fbb26a1}{p\+Matrix\+Id}} = -\/1
+\item 
+GLuint \mbox{\hyperlink{class_g_l_renderer_a7b554722855f09911aec117675f4c9e3}{color\+Uniform\+Id}} = -\/1
+\item 
+GLuint \mbox{\hyperlink{class_g_l_renderer_a1e3c7bf91c4bbd175e91a4d9a21b7dc0}{render\+Mode\+Uniform\+Id}} = -\/1
+\item 
+GLuint \mbox{\hyperlink{class_g_l_renderer_a1812ff5e7b9523454ee7b48f0cf77789}{g\+Program\+Id}}
+\item 
+int \mbox{\hyperlink{class_g_l_renderer_ad4de65cd4b61f6111b2b2e1614506296}{g\+Pos2\+DLocation}}
+\item 
+int \mbox{\hyperlink{class_g_l_renderer_a4ddee92fcaca013af522cbee82c96aa4}{g\+Tex2\+DLocation}}
+\item 
+\mbox{\hyperlink{class_shader}{Shader}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{class_g_l_renderer_acd248faeeac0f69ac9f03caa88b5221c}{vertex\+Shader}}
+\item 
+\mbox{\hyperlink{class_shader}{Shader}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{class_g_l_renderer_aa5b8d710d6ba5cccbc33cb5ffbe850af}{fragment\+Shader}}
+\item 
+map$<$ string, \mbox{\hyperlink{class_mesh_vbo}{Mesh\+Vbo}} \texorpdfstring{$\ast$}{*} $>$ \mbox{\hyperlink{class_g_l_renderer_ada79855934349882bb784a8c1a15c05c}{shapes}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{class_g_l_renderer_af506bf1e8d531b33cb668adb7c881ae7}\index{GLRenderer@{GLRenderer}!GLRenderer@{GLRenderer}}
+\index{GLRenderer@{GLRenderer}!GLRenderer@{GLRenderer}}
+\doxysubsubsection{\texorpdfstring{GLRenderer()}{GLRenderer()}}
+{\footnotesize\ttfamily \label{class_g_l_renderer_af506bf1e8d531b33cb668adb7c881ae7} 
+GLRenderer\+::\+GLRenderer (\begin{DoxyParamCaption}\item[{int}]{w}{, }\item[{int}]{h}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_g_l_renderer_ad5da817f69b340641532b763aefc698f}\index{GLRenderer@{GLRenderer}!````~GLRenderer@{\texorpdfstring{$\sim$}{\string~}GLRenderer}}
+\index{````~GLRenderer@{\texorpdfstring{$\sim$}{\string~}GLRenderer}!GLRenderer@{GLRenderer}}
+\doxysubsubsection{\texorpdfstring{\texorpdfstring{$\sim$}{\string~}GLRenderer()}{\string~GLRenderer()}}
+{\footnotesize\ttfamily \label{class_g_l_renderer_ad5da817f69b340641532b763aefc698f} 
+GLRenderer\+::\texorpdfstring{$\sim$}{\string~}\+GLRenderer (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_g_l_renderer_a3e4f52ca84cc263be264fed5e19c065a}\index{GLRenderer@{GLRenderer}!AddMesh@{AddMesh}}
+\index{AddMesh@{AddMesh}!GLRenderer@{GLRenderer}}
+\doxysubsubsection{\texorpdfstring{AddMesh()}{AddMesh()}}
+{\footnotesize\ttfamily \label{class_g_l_renderer_a3e4f52ca84cc263be264fed5e19c065a} 
+void GLRenderer\+::\+Add\+Mesh (\begin{DoxyParamCaption}\item[{string}]{name}{, }\item[{\mbox{\hyperlink{class_mesh_vbo}{Mesh\+Vbo}} \texorpdfstring{$\ast$}{*}}]{shape}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_g_l_renderer_aac9985a280e7674cabfdd317a5064507}\index{GLRenderer@{GLRenderer}!ClearMesh@{ClearMesh}}
+\index{ClearMesh@{ClearMesh}!GLRenderer@{GLRenderer}}
+\doxysubsubsection{\texorpdfstring{ClearMesh()}{ClearMesh()}}
+{\footnotesize\ttfamily \label{class_g_l_renderer_aac9985a280e7674cabfdd317a5064507} 
+void GLRenderer\+::\+Clear\+Mesh (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_g_l_renderer_ab7327910c457b5d1196412c03dbe5bec}\index{GLRenderer@{GLRenderer}!GetColorUniformId@{GetColorUniformId}}
+\index{GetColorUniformId@{GetColorUniformId}!GLRenderer@{GLRenderer}}
+\doxysubsubsection{\texorpdfstring{GetColorUniformId()}{GetColorUniformId()}}
+{\footnotesize\ttfamily \label{class_g_l_renderer_ab7327910c457b5d1196412c03dbe5bec} 
+GLuint GLRenderer\+::\+Get\+Color\+Uniform\+Id (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_g_l_renderer_ab0f5019cbad4f20178396d82acca670d}\index{GLRenderer@{GLRenderer}!GetMesh@{GetMesh}}
+\index{GetMesh@{GetMesh}!GLRenderer@{GLRenderer}}
+\doxysubsubsection{\texorpdfstring{GetMesh()}{GetMesh()}}
+{\footnotesize\ttfamily \label{class_g_l_renderer_ab0f5019cbad4f20178396d82acca670d} 
+\mbox{\hyperlink{class_mesh_vbo}{Mesh\+Vbo}} \texorpdfstring{$\ast$}{*} GLRenderer\+::\+Get\+Mesh (\begin{DoxyParamCaption}\item[{string}]{name}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_g_l_renderer_a67ca07326d7bcd181c79d653fb9e8bef}\index{GLRenderer@{GLRenderer}!GetModelMatrixAttrId@{GetModelMatrixAttrId}}
+\index{GetModelMatrixAttrId@{GetModelMatrixAttrId}!GLRenderer@{GLRenderer}}
+\doxysubsubsection{\texorpdfstring{GetModelMatrixAttrId()}{GetModelMatrixAttrId()}}
+{\footnotesize\ttfamily \label{class_g_l_renderer_a67ca07326d7bcd181c79d653fb9e8bef} 
+GLuint GLRenderer\+::\+Get\+Model\+Matrix\+Attr\+Id (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_g_l_renderer_a318759d23fdbe8073ec9c269b25c8e2d}\index{GLRenderer@{GLRenderer}!GetModeUniformId@{GetModeUniformId}}
+\index{GetModeUniformId@{GetModeUniformId}!GLRenderer@{GLRenderer}}
+\doxysubsubsection{\texorpdfstring{GetModeUniformId()}{GetModeUniformId()}}
+{\footnotesize\ttfamily \label{class_g_l_renderer_a318759d23fdbe8073ec9c269b25c8e2d} 
+GLuint GLRenderer\+::\+Get\+Mode\+Uniform\+Id (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_g_l_renderer_ad12e36cf1810f8e745996c70742ea609}\index{GLRenderer@{GLRenderer}!GetProjectionMatrixAttrId@{GetProjectionMatrixAttrId}}
+\index{GetProjectionMatrixAttrId@{GetProjectionMatrixAttrId}!GLRenderer@{GLRenderer}}
+\doxysubsubsection{\texorpdfstring{GetProjectionMatrixAttrId()}{GetProjectionMatrixAttrId()}}
+{\footnotesize\ttfamily \label{class_g_l_renderer_ad12e36cf1810f8e745996c70742ea609} 
+GLuint GLRenderer\+::\+Get\+Projection\+Matrix\+Attr\+Id (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_g_l_renderer_acfaac661744f2eb445f84ab8d0479649}\index{GLRenderer@{GLRenderer}!InitGL@{InitGL}}
+\index{InitGL@{InitGL}!GLRenderer@{GLRenderer}}
+\doxysubsubsection{\texorpdfstring{InitGL()}{InitGL()}}
+{\footnotesize\ttfamily \label{class_g_l_renderer_acfaac661744f2eb445f84ab8d0479649} 
+bool GLRenderer\+::\+Init\+GL (\begin{DoxyParamCaption}\item[{string}]{vertex\+Shader\+File}{, }\item[{string}]{fragment\+Shader\+File}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_g_l_renderer_a5146fae681750001f0445ce8993aa353}\index{GLRenderer@{GLRenderer}!Initialize@{Initialize}}
+\index{Initialize@{Initialize}!GLRenderer@{GLRenderer}}
+\doxysubsubsection{\texorpdfstring{Initialize()}{Initialize()}}
+{\footnotesize\ttfamily \label{class_g_l_renderer_a5146fae681750001f0445ce8993aa353} 
+bool GLRenderer\+::\+Initialize (\begin{DoxyParamCaption}\item[{string}]{vertex\+Shader\+File}{, }\item[{string}]{fragment\+Shader\+File}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+\Hypertarget{class_g_l_renderer_af06a96f18bcca1ab22a4b02473c72c43}\index{GLRenderer@{GLRenderer}!LoadTexture@{LoadTexture}}
+\index{LoadTexture@{LoadTexture}!GLRenderer@{GLRenderer}}
+\doxysubsubsection{\texorpdfstring{LoadTexture()}{LoadTexture()}}
+{\footnotesize\ttfamily \label{class_g_l_renderer_af06a96f18bcca1ab22a4b02473c72c43} 
+GLuint GLRenderer\+::\+Load\+Texture (\begin{DoxyParamCaption}\item[{string}]{path}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_g_l_renderer_a2be1b11d115f8fd2e71b1325237c07c3}\index{GLRenderer@{GLRenderer}!PrintProgramLog@{PrintProgramLog}}
+\index{PrintProgramLog@{PrintProgramLog}!GLRenderer@{GLRenderer}}
+\doxysubsubsection{\texorpdfstring{PrintProgramLog()}{PrintProgramLog()}}
+{\footnotesize\ttfamily \label{class_g_l_renderer_a2be1b11d115f8fd2e71b1325237c07c3} 
+void GLRenderer\+::\+Print\+Program\+Log (\begin{DoxyParamCaption}\item[{GLuint}]{program}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+\Hypertarget{class_g_l_renderer_a942ee69e79838fb4087422850d1bf65f}\index{GLRenderer@{GLRenderer}!Render@{Render}}
+\index{Render@{Render}!GLRenderer@{GLRenderer}}
+\doxysubsubsection{\texorpdfstring{Render()}{Render()}}
+{\footnotesize\ttfamily \label{class_g_l_renderer_a942ee69e79838fb4087422850d1bf65f} 
+void GLRenderer\+::\+Render (\begin{DoxyParamCaption}\item[{vector$<$ \mbox{\hyperlink{class_drawable_object}{Drawable\+Object}} \texorpdfstring{$\ast$}{*} $>$ \&}]{obj\+List}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_g_l_renderer_a38a6d40d7b39e152e0f629c8a9c26306}\index{GLRenderer@{GLRenderer}!SetClearColor@{SetClearColor}}
+\index{SetClearColor@{SetClearColor}!GLRenderer@{GLRenderer}}
+\doxysubsubsection{\texorpdfstring{SetClearColor()}{SetClearColor()}}
+{\footnotesize\ttfamily \label{class_g_l_renderer_a38a6d40d7b39e152e0f629c8a9c26306} 
+void GLRenderer\+::\+Set\+Clear\+Color (\begin{DoxyParamCaption}\item[{float}]{r}{, }\item[{float}]{g}{, }\item[{float}]{b}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_g_l_renderer_af18736274cbb0b38ba6111d28f8f2a45}\index{GLRenderer@{GLRenderer}!SetMeshAttribId@{SetMeshAttribId}}
+\index{SetMeshAttribId@{SetMeshAttribId}!GLRenderer@{GLRenderer}}
+\doxysubsubsection{\texorpdfstring{SetMeshAttribId()}{SetMeshAttribId()}}
+{\footnotesize\ttfamily \label{class_g_l_renderer_af18736274cbb0b38ba6111d28f8f2a45} 
+void GLRenderer\+::\+Set\+Mesh\+Attrib\+Id (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_mesh_vbo}{Mesh\+Vbo}} \texorpdfstring{$\ast$}{*}}]{shape}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+\Hypertarget{class_g_l_renderer_a6486523f334b3fbde582f4f97c988005}\index{GLRenderer@{GLRenderer}!SetOrthoProjection@{SetOrthoProjection}}
+\index{SetOrthoProjection@{SetOrthoProjection}!GLRenderer@{GLRenderer}}
+\doxysubsubsection{\texorpdfstring{SetOrthoProjection()}{SetOrthoProjection()}}
+{\footnotesize\ttfamily \label{class_g_l_renderer_a6486523f334b3fbde582f4f97c988005} 
+void GLRenderer\+::\+Set\+Ortho\+Projection (\begin{DoxyParamCaption}\item[{float}]{left}{, }\item[{float}]{right}{, }\item[{float}]{bottom}{, }\item[{float}]{top}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_g_l_renderer_a982392af1f7357318221442e7a891dcc}\index{GLRenderer@{GLRenderer}!SetViewPort@{SetViewPort}}
+\index{SetViewPort@{SetViewPort}!GLRenderer@{GLRenderer}}
+\doxysubsubsection{\texorpdfstring{SetViewPort()}{SetViewPort()}}
+{\footnotesize\ttfamily \label{class_g_l_renderer_a982392af1f7357318221442e7a891dcc} 
+void GLRenderer\+::\+Set\+View\+Port (\begin{DoxyParamCaption}\item[{int}]{x}{, }\item[{int}]{y}{, }\item[{int}]{w}{, }\item[{int}]{h}{}\end{DoxyParamCaption})}
+
+
+
+\doxysubsection{Member Data Documentation}
+\Hypertarget{class_g_l_renderer_a7b554722855f09911aec117675f4c9e3}\index{GLRenderer@{GLRenderer}!colorUniformId@{colorUniformId}}
+\index{colorUniformId@{colorUniformId}!GLRenderer@{GLRenderer}}
+\doxysubsubsection{\texorpdfstring{colorUniformId}{colorUniformId}}
+{\footnotesize\ttfamily \label{class_g_l_renderer_a7b554722855f09911aec117675f4c9e3} 
+GLuint GLRenderer\+::color\+Uniform\+Id = -\/1\hspace{0.3cm}{\ttfamily [protected]}}
+
+\Hypertarget{class_g_l_renderer_aa5b8d710d6ba5cccbc33cb5ffbe850af}\index{GLRenderer@{GLRenderer}!fragmentShader@{fragmentShader}}
+\index{fragmentShader@{fragmentShader}!GLRenderer@{GLRenderer}}
+\doxysubsubsection{\texorpdfstring{fragmentShader}{fragmentShader}}
+{\footnotesize\ttfamily \label{class_g_l_renderer_aa5b8d710d6ba5cccbc33cb5ffbe850af} 
+\mbox{\hyperlink{class_shader}{Shader}}\texorpdfstring{$\ast$}{*} GLRenderer\+::fragment\+Shader\hspace{0.3cm}{\ttfamily [protected]}}
+
+\Hypertarget{class_g_l_renderer_ad4de65cd4b61f6111b2b2e1614506296}\index{GLRenderer@{GLRenderer}!gPos2DLocation@{gPos2DLocation}}
+\index{gPos2DLocation@{gPos2DLocation}!GLRenderer@{GLRenderer}}
+\doxysubsubsection{\texorpdfstring{gPos2DLocation}{gPos2DLocation}}
+{\footnotesize\ttfamily \label{class_g_l_renderer_ad4de65cd4b61f6111b2b2e1614506296} 
+int GLRenderer\+::g\+Pos2\+DLocation\hspace{0.3cm}{\ttfamily [protected]}}
+
+\Hypertarget{class_g_l_renderer_a1812ff5e7b9523454ee7b48f0cf77789}\index{GLRenderer@{GLRenderer}!gProgramId@{gProgramId}}
+\index{gProgramId@{gProgramId}!GLRenderer@{GLRenderer}}
+\doxysubsubsection{\texorpdfstring{gProgramId}{gProgramId}}
+{\footnotesize\ttfamily \label{class_g_l_renderer_a1812ff5e7b9523454ee7b48f0cf77789} 
+GLuint GLRenderer\+::g\+Program\+Id\hspace{0.3cm}{\ttfamily [protected]}}
+
+\Hypertarget{class_g_l_renderer_a4ddee92fcaca013af522cbee82c96aa4}\index{GLRenderer@{GLRenderer}!gTex2DLocation@{gTex2DLocation}}
+\index{gTex2DLocation@{gTex2DLocation}!GLRenderer@{GLRenderer}}
+\doxysubsubsection{\texorpdfstring{gTex2DLocation}{gTex2DLocation}}
+{\footnotesize\ttfamily \label{class_g_l_renderer_a4ddee92fcaca013af522cbee82c96aa4} 
+int GLRenderer\+::g\+Tex2\+DLocation\hspace{0.3cm}{\ttfamily [protected]}}
+
+\Hypertarget{class_g_l_renderer_a09f38f61de58340cf1faf46cebf8cb96}\index{GLRenderer@{GLRenderer}!mMatrixId@{mMatrixId}}
+\index{mMatrixId@{mMatrixId}!GLRenderer@{GLRenderer}}
+\doxysubsubsection{\texorpdfstring{mMatrixId}{mMatrixId}}
+{\footnotesize\ttfamily \label{class_g_l_renderer_a09f38f61de58340cf1faf46cebf8cb96} 
+GLuint GLRenderer\+::m\+Matrix\+Id = -\/1\hspace{0.3cm}{\ttfamily [protected]}}
+
+\Hypertarget{class_g_l_renderer_ab034225a22c0fe89db66a7738b19c8fa}\index{GLRenderer@{GLRenderer}!modelMatrix@{modelMatrix}}
+\index{modelMatrix@{modelMatrix}!GLRenderer@{GLRenderer}}
+\doxysubsubsection{\texorpdfstring{modelMatrix}{modelMatrix}}
+{\footnotesize\ttfamily \label{class_g_l_renderer_ab034225a22c0fe89db66a7738b19c8fa} 
+glm\+::mat4 GLRenderer\+::model\+Matrix\hspace{0.3cm}{\ttfamily [protected]}}
+
+\Hypertarget{class_g_l_renderer_a37b0b6432de0492feff1b4d15fbb26a1}\index{GLRenderer@{GLRenderer}!pMatrixId@{pMatrixId}}
+\index{pMatrixId@{pMatrixId}!GLRenderer@{GLRenderer}}
+\doxysubsubsection{\texorpdfstring{pMatrixId}{pMatrixId}}
+{\footnotesize\ttfamily \label{class_g_l_renderer_a37b0b6432de0492feff1b4d15fbb26a1} 
+GLuint GLRenderer\+::p\+Matrix\+Id = -\/1\hspace{0.3cm}{\ttfamily [protected]}}
+
+\Hypertarget{class_g_l_renderer_a0f75b57761d1748a244c444e476584a3}\index{GLRenderer@{GLRenderer}!projectionMatrix@{projectionMatrix}}
+\index{projectionMatrix@{projectionMatrix}!GLRenderer@{GLRenderer}}
+\doxysubsubsection{\texorpdfstring{projectionMatrix}{projectionMatrix}}
+{\footnotesize\ttfamily \label{class_g_l_renderer_a0f75b57761d1748a244c444e476584a3} 
+glm\+::mat4 GLRenderer\+::projection\+Matrix\hspace{0.3cm}{\ttfamily [protected]}}
+
+\Hypertarget{class_g_l_renderer_a1e3c7bf91c4bbd175e91a4d9a21b7dc0}\index{GLRenderer@{GLRenderer}!renderModeUniformId@{renderModeUniformId}}
+\index{renderModeUniformId@{renderModeUniformId}!GLRenderer@{GLRenderer}}
+\doxysubsubsection{\texorpdfstring{renderModeUniformId}{renderModeUniformId}}
+{\footnotesize\ttfamily \label{class_g_l_renderer_a1e3c7bf91c4bbd175e91a4d9a21b7dc0} 
+GLuint GLRenderer\+::render\+Mode\+Uniform\+Id = -\/1\hspace{0.3cm}{\ttfamily [protected]}}
+
+\Hypertarget{class_g_l_renderer_ada79855934349882bb784a8c1a15c05c}\index{GLRenderer@{GLRenderer}!shapes@{shapes}}
+\index{shapes@{shapes}!GLRenderer@{GLRenderer}}
+\doxysubsubsection{\texorpdfstring{shapes}{shapes}}
+{\footnotesize\ttfamily \label{class_g_l_renderer_ada79855934349882bb784a8c1a15c05c} 
+map$<$string, \mbox{\hyperlink{class_mesh_vbo}{Mesh\+Vbo}}\texorpdfstring{$\ast$}{*}$>$ GLRenderer\+::shapes\hspace{0.3cm}{\ttfamily [protected]}}
+
+\Hypertarget{class_g_l_renderer_acd248faeeac0f69ac9f03caa88b5221c}\index{GLRenderer@{GLRenderer}!vertexShader@{vertexShader}}
+\index{vertexShader@{vertexShader}!GLRenderer@{GLRenderer}}
+\doxysubsubsection{\texorpdfstring{vertexShader}{vertexShader}}
+{\footnotesize\ttfamily \label{class_g_l_renderer_acd248faeeac0f69ac9f03caa88b5221c} 
+\mbox{\hyperlink{class_shader}{Shader}}\texorpdfstring{$\ast$}{*} GLRenderer\+::vertex\+Shader\hspace{0.3cm}{\ttfamily [protected]}}
+
+\Hypertarget{class_g_l_renderer_af55df2dabb4398db4ee97fa36599ffdc}\index{GLRenderer@{GLRenderer}!winHeight@{winHeight}}
+\index{winHeight@{winHeight}!GLRenderer@{GLRenderer}}
+\doxysubsubsection{\texorpdfstring{winHeight}{winHeight}}
+{\footnotesize\ttfamily \label{class_g_l_renderer_af55df2dabb4398db4ee97fa36599ffdc} 
+int GLRenderer\+::win\+Height\hspace{0.3cm}{\ttfamily [protected]}}
+
+\Hypertarget{class_g_l_renderer_a1fae4b37532321c39d6bffb12863772d}\index{GLRenderer@{GLRenderer}!winWidth@{winWidth}}
+\index{winWidth@{winWidth}!GLRenderer@{GLRenderer}}
+\doxysubsubsection{\texorpdfstring{winWidth}{winWidth}}
+{\footnotesize\ttfamily \label{class_g_l_renderer_a1fae4b37532321c39d6bffb12863772d} 
+int GLRenderer\+::win\+Width\hspace{0.3cm}{\ttfamily [protected]}}
+

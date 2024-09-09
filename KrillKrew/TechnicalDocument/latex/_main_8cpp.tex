@@ -1,0 +1,85 @@
+\doxysection{Krill\+Engine/\+Main.cpp File Reference}
+\hypertarget{_main_8cpp}{}\label{_main_8cpp}\index{KrillEngine/Main.cpp@{KrillEngine/Main.cpp}}
+{\ttfamily \#include $<$GL/glew.\+h$>$}\newline
+{\ttfamily \#include $<$SDL\+\_\+main.\+h$>$}\newline
+{\ttfamily \#include $<$SDL.\+h$>$}\newline
+{\ttfamily \#include $<$SDL\+\_\+opengl.\+h$>$}\newline
+{\ttfamily \#include $<$iostream$>$}\newline
+{\ttfamily \#include $<$string$>$}\newline
+{\ttfamily \#include "{}Game\+Engine.\+h"{}}\newline
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \mbox{\hyperlink{_main_8cpp_a0ddf1224851353fc92bfbff6f499fa97}{main}} (int argc, char \texorpdfstring{$\ast$}{*}argv\mbox{[}$\,$\mbox{]})
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+bool \mbox{\hyperlink{_main_8cpp_ac746fa6ad48d19984a159f14bec028a3}{quit}}
+\item 
+const GLint \mbox{\hyperlink{_main_8cpp_ac67c0a7662d0847543c9ee6dc946e93b}{WIDTH}} = 600
+\item 
+const GLint \mbox{\hyperlink{_main_8cpp_ad1eef68d331e47700bdada160af014bd}{HEIGHT}} = 600
+\item 
+SDL\+\_\+\+Window \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{_main_8cpp_aaa8e409e04dcf575ef63fd5fb3db06f9}{window}}
+\item 
+SDL\+\_\+\+GLContext \mbox{\hyperlink{_main_8cpp_af83374df2d32fdb460858b0590199464}{gl\+Context}}
+\item 
+SDL\+\_\+\+Event \mbox{\hyperlink{_main_8cpp_a0e7e6263d4f6078c1adb1db272cac6f3}{sdl\+Event}}
+\item 
+\mbox{\hyperlink{class_game_engine}{Game\+Engine}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{_main_8cpp_a6f87f331211985776ff3a637e341e819}{engine}} = nullptr
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Function Documentation}
+\Hypertarget{_main_8cpp_a0ddf1224851353fc92bfbff6f499fa97}\index{Main.cpp@{Main.cpp}!main@{main}}
+\index{main@{main}!Main.cpp@{Main.cpp}}
+\doxysubsubsection{\texorpdfstring{main()}{main()}}
+{\footnotesize\ttfamily \label{_main_8cpp_a0ddf1224851353fc92bfbff6f499fa97} 
+int main (\begin{DoxyParamCaption}\item[{int}]{argc}{, }\item[{char \texorpdfstring{$\ast$}{*}}]{argv}{\mbox{[}$\,$\mbox{]}}\end{DoxyParamCaption})}
+
+
+
+\doxysubsection{Variable Documentation}
+\Hypertarget{_main_8cpp_a6f87f331211985776ff3a637e341e819}\index{Main.cpp@{Main.cpp}!engine@{engine}}
+\index{engine@{engine}!Main.cpp@{Main.cpp}}
+\doxysubsubsection{\texorpdfstring{engine}{engine}}
+{\footnotesize\ttfamily \label{_main_8cpp_a6f87f331211985776ff3a637e341e819} 
+\mbox{\hyperlink{class_game_engine}{Game\+Engine}}\texorpdfstring{$\ast$}{*} engine = nullptr}
+
+\Hypertarget{_main_8cpp_af83374df2d32fdb460858b0590199464}\index{Main.cpp@{Main.cpp}!glContext@{glContext}}
+\index{glContext@{glContext}!Main.cpp@{Main.cpp}}
+\doxysubsubsection{\texorpdfstring{glContext}{glContext}}
+{\footnotesize\ttfamily \label{_main_8cpp_af83374df2d32fdb460858b0590199464} 
+SDL\+\_\+\+GLContext gl\+Context}
+
+\Hypertarget{_main_8cpp_ad1eef68d331e47700bdada160af014bd}\index{Main.cpp@{Main.cpp}!HEIGHT@{HEIGHT}}
+\index{HEIGHT@{HEIGHT}!Main.cpp@{Main.cpp}}
+\doxysubsubsection{\texorpdfstring{HEIGHT}{HEIGHT}}
+{\footnotesize\ttfamily \label{_main_8cpp_ad1eef68d331e47700bdada160af014bd} 
+const GLint HEIGHT = 600}
+
+\Hypertarget{_main_8cpp_ac746fa6ad48d19984a159f14bec028a3}\index{Main.cpp@{Main.cpp}!quit@{quit}}
+\index{quit@{quit}!Main.cpp@{Main.cpp}}
+\doxysubsubsection{\texorpdfstring{quit}{quit}}
+{\footnotesize\ttfamily \label{_main_8cpp_ac746fa6ad48d19984a159f14bec028a3} 
+bool quit}
+
+\Hypertarget{_main_8cpp_a0e7e6263d4f6078c1adb1db272cac6f3}\index{Main.cpp@{Main.cpp}!sdlEvent@{sdlEvent}}
+\index{sdlEvent@{sdlEvent}!Main.cpp@{Main.cpp}}
+\doxysubsubsection{\texorpdfstring{sdlEvent}{sdlEvent}}
+{\footnotesize\ttfamily \label{_main_8cpp_a0e7e6263d4f6078c1adb1db272cac6f3} 
+SDL\+\_\+\+Event sdl\+Event}
+
+\Hypertarget{_main_8cpp_ac67c0a7662d0847543c9ee6dc946e93b}\index{Main.cpp@{Main.cpp}!WIDTH@{WIDTH}}
+\index{WIDTH@{WIDTH}!Main.cpp@{Main.cpp}}
+\doxysubsubsection{\texorpdfstring{WIDTH}{WIDTH}}
+{\footnotesize\ttfamily \label{_main_8cpp_ac67c0a7662d0847543c9ee6dc946e93b} 
+const GLint WIDTH = 600}
+
+\Hypertarget{_main_8cpp_aaa8e409e04dcf575ef63fd5fb3db06f9}\index{Main.cpp@{Main.cpp}!window@{window}}
+\index{window@{window}!Main.cpp@{Main.cpp}}
+\doxysubsubsection{\texorpdfstring{window}{window}}
+{\footnotesize\ttfamily \label{_main_8cpp_aaa8e409e04dcf575ef63fd5fb3db06f9} 
+SDL\+\_\+\+Window\texorpdfstring{$\ast$}{*} window}
+

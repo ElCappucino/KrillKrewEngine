@@ -1,0 +1,80 @@
+\doxysection{Game\+Object Class Reference}
+\hypertarget{class_game_object}{}\label{class_game_object}\index{GameObject@{GameObject}}
+
+
+{\ttfamily \#include $<$Game\+Object.\+h$>$}
+
+Inheritance diagram for Game\+Object\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_game_object}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_game_object_a0348e3ee2e83d56eafca7a3547f432c4}{Game\+Object}} ()
+\item 
+\mbox{\hyperlink{class_game_object_ab82dfdb656f9051c0587e6593b2dda97}{\texorpdfstring{$\sim$}{\string~}\+Game\+Object}} ()
+\item 
+void \mbox{\hyperlink{class_game_object_a9b11c2bca1f26cc6243bceefa2cd1b48}{Set\+Color}} (float r, float g, float b)
+\item 
+void \mbox{\hyperlink{class_game_object_a731453d3199b01bef641f8c218558388}{Render}} (glm\+::mat4 global\+Model\+Transform)
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{class_drawable_object}{Drawable\+Object}}}
+\begin{DoxyCompactItemize}
+\item 
+glm\+::mat4 \mbox{\hyperlink{class_drawable_object_a86f155d814b5e9b34b7eb72ed4dd795d}{get\+Transform}} ()
+\item 
+\mbox{\hyperlink{class_drawable_object_ac41cf4bfc6ebce29e0c1123f2c067cf0}{Drawable\+Object}} ()
+\item 
+\mbox{\hyperlink{class_drawable_object_a4f324725016a6a5ad312eff92e6f4576}{\texorpdfstring{$\sim$}{\string~}\+Drawable\+Object}} ()
+\item 
+void \mbox{\hyperlink{class_drawable_object_a12876534224a9e42238ae726261b67ca}{Set\+Size}} (float sizeX, float sizeY)
+\item 
+void \mbox{\hyperlink{class_drawable_object_adc269b02edf37e2423a425bba0b107af}{Set\+Position}} (glm\+::vec3 new\+Position)
+\item 
+void \mbox{\hyperlink{class_drawable_object_a526365f23ad585ededf384d7c3e870fd}{Translate}} (glm\+::vec3 move\+Distance)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Additional Inherited Members}
+\doxysubsection*{Protected Attributes inherited from \mbox{\hyperlink{class_drawable_object}{Drawable\+Object}}}
+\begin{DoxyCompactItemize}
+\item 
+glm\+::vec3 \mbox{\hyperlink{class_drawable_object_a6aa0e674b5a140de7fd5afb95d7a680e}{pos}}
+\item 
+glm\+::vec3 \mbox{\hyperlink{class_drawable_object_a1dba675b2b1fe6c160da82f79ea58027}{size}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{class_game_object_a0348e3ee2e83d56eafca7a3547f432c4}\index{GameObject@{GameObject}!GameObject@{GameObject}}
+\index{GameObject@{GameObject}!GameObject@{GameObject}}
+\doxysubsubsection{\texorpdfstring{GameObject()}{GameObject()}}
+{\footnotesize\ttfamily \label{class_game_object_a0348e3ee2e83d56eafca7a3547f432c4} 
+Game\+Object\+::\+Game\+Object (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_game_object_ab82dfdb656f9051c0587e6593b2dda97}\index{GameObject@{GameObject}!````~GameObject@{\texorpdfstring{$\sim$}{\string~}GameObject}}
+\index{````~GameObject@{\texorpdfstring{$\sim$}{\string~}GameObject}!GameObject@{GameObject}}
+\doxysubsubsection{\texorpdfstring{\texorpdfstring{$\sim$}{\string~}GameObject()}{\string~GameObject()}}
+{\footnotesize\ttfamily \label{class_game_object_ab82dfdb656f9051c0587e6593b2dda97} 
+Game\+Object\+::\texorpdfstring{$\sim$}{\string~}\+Game\+Object (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_game_object_a731453d3199b01bef641f8c218558388}\index{GameObject@{GameObject}!Render@{Render}}
+\index{Render@{Render}!GameObject@{GameObject}}
+\doxysubsubsection{\texorpdfstring{Render()}{Render()}}
+{\footnotesize\ttfamily \label{class_game_object_a731453d3199b01bef641f8c218558388} 
+void Game\+Object\+::\+Render (\begin{DoxyParamCaption}\item[{glm\+::mat4}]{global\+Model\+Transform}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_drawable_object_a0162efd85614cdf9aac0475aa738bc18}{Drawable\+Object}}.
+
+\Hypertarget{class_game_object_a9b11c2bca1f26cc6243bceefa2cd1b48}\index{GameObject@{GameObject}!SetColor@{SetColor}}
+\index{SetColor@{SetColor}!GameObject@{GameObject}}
+\doxysubsubsection{\texorpdfstring{SetColor()}{SetColor()}}
+{\footnotesize\ttfamily \label{class_game_object_a9b11c2bca1f26cc6243bceefa2cd1b48} 
+void Game\+Object\+::\+Set\+Color (\begin{DoxyParamCaption}\item[{float}]{r}{, }\item[{float}]{g}{, }\item[{float}]{b}{}\end{DoxyParamCaption})}
+
