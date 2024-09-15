@@ -2,6 +2,11 @@
 \hypertarget{class_game_object}{}\label{class_game_object}\index{GameObject@{GameObject}}
 
 
+The class for creating game object.  
+
+
+
+
 {\ttfamily \#include $<$Game\+Object.\+h$>$}
 
 Inheritance diagram for Game\+Object\+:\begin{figure}[H]
@@ -13,52 +18,38 @@ Inheritance diagram for Game\+Object\+:\begin{figure}[H]
 \doxysubsubsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-\mbox{\hyperlink{class_game_object_a0348e3ee2e83d56eafca7a3547f432c4}{Game\+Object}} ()
-\item 
-\mbox{\hyperlink{class_game_object_ab82dfdb656f9051c0587e6593b2dda97}{\texorpdfstring{$\sim$}{\string~}\+Game\+Object}} ()
-\item 
-void \mbox{\hyperlink{class_game_object_a9b11c2bca1f26cc6243bceefa2cd1b48}{Set\+Color}} (float r, float g, float b)
+\Hypertarget{class_game_object_a9b11c2bca1f26cc6243bceefa2cd1b48}\label{class_game_object_a9b11c2bca1f26cc6243bceefa2cd1b48} 
+void {\bfseries Set\+Color} (float r, float g, float b)
 \item 
 void \mbox{\hyperlink{class_game_object_a731453d3199b01bef641f8c218558388}{Render}} (glm\+::mat4 global\+Model\+Transform)
 \end{DoxyCompactItemize}
 \doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{class_drawable_object}{Drawable\+Object}}}
 \begin{DoxyCompactItemize}
 \item 
-glm\+::mat4 \mbox{\hyperlink{class_drawable_object_a86f155d814b5e9b34b7eb72ed4dd795d}{get\+Transform}} ()
+glm\+::mat4 {\bfseries get\+Transform} ()
 \item 
-\mbox{\hyperlink{class_drawable_object_ac41cf4bfc6ebce29e0c1123f2c067cf0}{Drawable\+Object}} ()
+void {\bfseries Set\+Size} (float sizeX, float sizeY)
 \item 
-\mbox{\hyperlink{class_drawable_object_a4f324725016a6a5ad312eff92e6f4576}{\texorpdfstring{$\sim$}{\string~}\+Drawable\+Object}} ()
+void {\bfseries Set\+Position} (glm\+::vec3 new\+Position)
 \item 
-void \mbox{\hyperlink{class_drawable_object_a12876534224a9e42238ae726261b67ca}{Set\+Size}} (float sizeX, float sizeY)
-\item 
-void \mbox{\hyperlink{class_drawable_object_adc269b02edf37e2423a425bba0b107af}{Set\+Position}} (glm\+::vec3 new\+Position)
-\item 
-void \mbox{\hyperlink{class_drawable_object_a526365f23ad585ededf384d7c3e870fd}{Translate}} (glm\+::vec3 move\+Distance)
+void {\bfseries Translate} (glm\+::vec3 move\+Distance)
 \end{DoxyCompactItemize}
 \doxysubsubsection*{Additional Inherited Members}
 \doxysubsection*{Protected Attributes inherited from \mbox{\hyperlink{class_drawable_object}{Drawable\+Object}}}
 \begin{DoxyCompactItemize}
 \item 
-glm\+::vec3 \mbox{\hyperlink{class_drawable_object_a6aa0e674b5a140de7fd5afb95d7a680e}{pos}}
+glm\+::vec3 {\bfseries pos}
 \item 
-glm\+::vec3 \mbox{\hyperlink{class_drawable_object_a1dba675b2b1fe6c160da82f79ea58027}{size}}
+glm\+::vec3 {\bfseries size}
 \end{DoxyCompactItemize}
 
 
-\doxysubsection{Constructor \& Destructor Documentation}
-\Hypertarget{class_game_object_a0348e3ee2e83d56eafca7a3547f432c4}\index{GameObject@{GameObject}!GameObject@{GameObject}}
-\index{GameObject@{GameObject}!GameObject@{GameObject}}
-\doxysubsubsection{\texorpdfstring{GameObject()}{GameObject()}}
-{\footnotesize\ttfamily \label{class_game_object_a0348e3ee2e83d56eafca7a3547f432c4} 
-Game\+Object\+::\+Game\+Object (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+\doxysubsection{Detailed Description}
+The class for creating game object. 
 
-\Hypertarget{class_game_object_ab82dfdb656f9051c0587e6593b2dda97}\index{GameObject@{GameObject}!````~GameObject@{\texorpdfstring{$\sim$}{\string~}GameObject}}
-\index{````~GameObject@{\texorpdfstring{$\sim$}{\string~}GameObject}!GameObject@{GameObject}}
-\doxysubsubsection{\texorpdfstring{\texorpdfstring{$\sim$}{\string~}GameObject()}{\string~GameObject()}}
-{\footnotesize\ttfamily \label{class_game_object_ab82dfdb656f9051c0587e6593b2dda97} 
-Game\+Object\+::\texorpdfstring{$\sim$}{\string~}\+Game\+Object (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
-
+\begin{DoxyNote}{Note}
+There nothing implemented here yet. 
+\end{DoxyNote}
 
 
 \doxysubsection{Member Function Documentation}
@@ -70,11 +61,5 @@ void Game\+Object\+::\+Render (\begin{DoxyParamCaption}\item[{glm\+::mat4}]{glob
 
 
 
-Implements \mbox{\hyperlink{class_drawable_object_a0162efd85614cdf9aac0475aa738bc18}{Drawable\+Object}}.
-
-\Hypertarget{class_game_object_a9b11c2bca1f26cc6243bceefa2cd1b48}\index{GameObject@{GameObject}!SetColor@{SetColor}}
-\index{SetColor@{SetColor}!GameObject@{GameObject}}
-\doxysubsubsection{\texorpdfstring{SetColor()}{SetColor()}}
-{\footnotesize\ttfamily \label{class_game_object_a9b11c2bca1f26cc6243bceefa2cd1b48} 
-void Game\+Object\+::\+Set\+Color (\begin{DoxyParamCaption}\item[{float}]{r}{, }\item[{float}]{g}{, }\item[{float}]{b}{}\end{DoxyParamCaption})}
+Implements \mbox{\hyperlink{class_drawable_object}{Drawable\+Object}}.
 

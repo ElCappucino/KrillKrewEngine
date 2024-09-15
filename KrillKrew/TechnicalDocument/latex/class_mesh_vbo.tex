@@ -2,6 +2,11 @@
 \hypertarget{class_mesh_vbo}{}\label{class_mesh_vbo}\index{MeshVbo@{MeshVbo}}
 
 
+The class for store the Vbo data.  
+
+
+
+
 {\ttfamily \#include $<$Mesh\+Vbo.\+h$>$}
 
 Inheritance diagram for Mesh\+Vbo\+:\begin{figure}[H]
@@ -13,115 +18,40 @@ Inheritance diagram for Mesh\+Vbo\+:\begin{figure}[H]
 \doxysubsubsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-\mbox{\hyperlink{class_mesh_vbo_ab3ebfdcbf5045ab07a0fdc540c2ef4ae}{Mesh\+Vbo}} ()
+\Hypertarget{class_mesh_vbo_a9586e9783a615dc20eb2f5b3935afbbf}\label{class_mesh_vbo_a9586e9783a615dc20eb2f5b3935afbbf} 
+virtual void {\bfseries Load\+Data} ()=0
 \item 
-virtual void \mbox{\hyperlink{class_mesh_vbo_a9586e9783a615dc20eb2f5b3935afbbf}{Load\+Data}} ()=0
+\Hypertarget{class_mesh_vbo_a683bf0a5c94d77236ccfe86d89593d5e}\label{class_mesh_vbo_a683bf0a5c94d77236ccfe86d89593d5e} 
+virtual string {\bfseries Get\+Mesh\+Name} ()=0
 \item 
-virtual string \mbox{\hyperlink{class_mesh_vbo_a683bf0a5c94d77236ccfe86d89593d5e}{Get\+Mesh\+Name}} ()=0
+\Hypertarget{class_mesh_vbo_ab8de0fb11a153863779cf0939e3b7513}\label{class_mesh_vbo_ab8de0fb11a153863779cf0939e3b7513} 
+GLuint {\bfseries Get\+Pos\+Id} ()
 \item 
-GLuint \mbox{\hyperlink{class_mesh_vbo_ab8de0fb11a153863779cf0939e3b7513}{Get\+Pos\+Id}} ()
+\Hypertarget{class_mesh_vbo_af88365133098f28d2b6afd7d4db0125b}\label{class_mesh_vbo_af88365133098f28d2b6afd7d4db0125b} 
+GLuint {\bfseries Get\+Tex\+Id} ()
 \item 
-GLuint \mbox{\hyperlink{class_mesh_vbo_af88365133098f28d2b6afd7d4db0125b}{Get\+Tex\+Id}} ()
+\Hypertarget{class_mesh_vbo_ac3f99afd959a389df1c7178518661373}\label{class_mesh_vbo_ac3f99afd959a389df1c7178518661373} 
+virtual void {\bfseries Render} ()=0
 \item 
-virtual void \mbox{\hyperlink{class_mesh_vbo_ac3f99afd959a389df1c7178518661373}{Render}} ()=0
-\item 
-void \mbox{\hyperlink{class_mesh_vbo_a491b7cb2e94453c062c4ff756d67970e}{Set\+Attrib\+Id}} (GLuint pos\+Id, GLuint tex\+Id)
+\Hypertarget{class_mesh_vbo_a491b7cb2e94453c062c4ff756d67970e}\label{class_mesh_vbo_a491b7cb2e94453c062c4ff756d67970e} 
+void {\bfseries Set\+Attrib\+Id} (GLuint pos\+Id, GLuint tex\+Id)
 \end{DoxyCompactItemize}
 \doxysubsubsection*{Protected Attributes}
 \begin{DoxyCompactItemize}
 \item 
-GLuint \mbox{\hyperlink{class_mesh_vbo_a7b093ff56dceedfbcdfcdff526fe8a7a}{pos\+Vbo\+Id}} = -\/1
+\Hypertarget{class_mesh_vbo_a7b093ff56dceedfbcdfcdff526fe8a7a}\label{class_mesh_vbo_a7b093ff56dceedfbcdfcdff526fe8a7a} 
+GLuint {\bfseries pos\+Vbo\+Id} = -\/1
 \item 
-GLuint \mbox{\hyperlink{class_mesh_vbo_a7b5a216788ddc57f00b5d8b62361525d}{tex\+Vbo\+Id}} = -\/1
+\Hypertarget{class_mesh_vbo_a7b5a216788ddc57f00b5d8b62361525d}\label{class_mesh_vbo_a7b5a216788ddc57f00b5d8b62361525d} 
+GLuint {\bfseries tex\+Vbo\+Id} = -\/1
 \item 
-GLuint \mbox{\hyperlink{class_mesh_vbo_aab7ac9585bcd6d34ca4a0decdf0eca5c}{pos\+Attrib\+Id}} = -\/1
+\Hypertarget{class_mesh_vbo_aab7ac9585bcd6d34ca4a0decdf0eca5c}\label{class_mesh_vbo_aab7ac9585bcd6d34ca4a0decdf0eca5c} 
+GLuint {\bfseries pos\+Attrib\+Id} = -\/1
 \item 
-GLuint \mbox{\hyperlink{class_mesh_vbo_aed3031047d0fac5ca162b9fa796046be}{tex\+Attrib\+Id}} = -\/1
+\Hypertarget{class_mesh_vbo_aed3031047d0fac5ca162b9fa796046be}\label{class_mesh_vbo_aed3031047d0fac5ca162b9fa796046be} 
+GLuint {\bfseries tex\+Attrib\+Id} = -\/1
 \end{DoxyCompactItemize}
 
 
-\doxysubsection{Constructor \& Destructor Documentation}
-\Hypertarget{class_mesh_vbo_ab3ebfdcbf5045ab07a0fdc540c2ef4ae}\index{MeshVbo@{MeshVbo}!MeshVbo@{MeshVbo}}
-\index{MeshVbo@{MeshVbo}!MeshVbo@{MeshVbo}}
-\doxysubsubsection{\texorpdfstring{MeshVbo()}{MeshVbo()}}
-{\footnotesize\ttfamily \label{class_mesh_vbo_ab3ebfdcbf5045ab07a0fdc540c2ef4ae} 
-Mesh\+Vbo\+::\+Mesh\+Vbo (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
-
-
-
-\doxysubsection{Member Function Documentation}
-\Hypertarget{class_mesh_vbo_a683bf0a5c94d77236ccfe86d89593d5e}\index{MeshVbo@{MeshVbo}!GetMeshName@{GetMeshName}}
-\index{GetMeshName@{GetMeshName}!MeshVbo@{MeshVbo}}
-\doxysubsubsection{\texorpdfstring{GetMeshName()}{GetMeshName()}}
-{\footnotesize\ttfamily \label{class_mesh_vbo_a683bf0a5c94d77236ccfe86d89593d5e} 
-virtual string Mesh\+Vbo\+::\+Get\+Mesh\+Name (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
-
-
-
-Implemented in \mbox{\hyperlink{class_square_mesh_vbo_a8f20ac0e747c78bc2f8ca9faca35db9f}{Square\+Mesh\+Vbo}}, and \mbox{\hyperlink{class_triangle_mesh_vbo_ae181b5f16d71943adb3af11abe645686}{Triangle\+Mesh\+Vbo}}.
-
-\Hypertarget{class_mesh_vbo_ab8de0fb11a153863779cf0939e3b7513}\index{MeshVbo@{MeshVbo}!GetPosId@{GetPosId}}
-\index{GetPosId@{GetPosId}!MeshVbo@{MeshVbo}}
-\doxysubsubsection{\texorpdfstring{GetPosId()}{GetPosId()}}
-{\footnotesize\ttfamily \label{class_mesh_vbo_ab8de0fb11a153863779cf0939e3b7513} 
-GLuint Mesh\+Vbo\+::\+Get\+Pos\+Id (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
-
-\Hypertarget{class_mesh_vbo_af88365133098f28d2b6afd7d4db0125b}\index{MeshVbo@{MeshVbo}!GetTexId@{GetTexId}}
-\index{GetTexId@{GetTexId}!MeshVbo@{MeshVbo}}
-\doxysubsubsection{\texorpdfstring{GetTexId()}{GetTexId()}}
-{\footnotesize\ttfamily \label{class_mesh_vbo_af88365133098f28d2b6afd7d4db0125b} 
-GLuint Mesh\+Vbo\+::\+Get\+Tex\+Id (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
-
-\Hypertarget{class_mesh_vbo_a9586e9783a615dc20eb2f5b3935afbbf}\index{MeshVbo@{MeshVbo}!LoadData@{LoadData}}
-\index{LoadData@{LoadData}!MeshVbo@{MeshVbo}}
-\doxysubsubsection{\texorpdfstring{LoadData()}{LoadData()}}
-{\footnotesize\ttfamily \label{class_mesh_vbo_a9586e9783a615dc20eb2f5b3935afbbf} 
-virtual void Mesh\+Vbo\+::\+Load\+Data (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
-
-
-
-Implemented in \mbox{\hyperlink{class_square_mesh_vbo_a162f1a09f8fd10d54958a55bd3ac33f0}{Square\+Mesh\+Vbo}}, and \mbox{\hyperlink{class_triangle_mesh_vbo_aa18eb6147d542904e24bfa26d061d643}{Triangle\+Mesh\+Vbo}}.
-
-\Hypertarget{class_mesh_vbo_ac3f99afd959a389df1c7178518661373}\index{MeshVbo@{MeshVbo}!Render@{Render}}
-\index{Render@{Render}!MeshVbo@{MeshVbo}}
-\doxysubsubsection{\texorpdfstring{Render()}{Render()}}
-{\footnotesize\ttfamily \label{class_mesh_vbo_ac3f99afd959a389df1c7178518661373} 
-virtual void Mesh\+Vbo\+::\+Render (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
-
-
-
-Implemented in \mbox{\hyperlink{class_square_mesh_vbo_adbc9ffb50b34c14368b3eaaaf8700b7a}{Square\+Mesh\+Vbo}}, and \mbox{\hyperlink{class_triangle_mesh_vbo_ac55aea624f3af9bc0094fa8f2794bb8b}{Triangle\+Mesh\+Vbo}}.
-
-\Hypertarget{class_mesh_vbo_a491b7cb2e94453c062c4ff756d67970e}\index{MeshVbo@{MeshVbo}!SetAttribId@{SetAttribId}}
-\index{SetAttribId@{SetAttribId}!MeshVbo@{MeshVbo}}
-\doxysubsubsection{\texorpdfstring{SetAttribId()}{SetAttribId()}}
-{\footnotesize\ttfamily \label{class_mesh_vbo_a491b7cb2e94453c062c4ff756d67970e} 
-void Mesh\+Vbo\+::\+Set\+Attrib\+Id (\begin{DoxyParamCaption}\item[{GLuint}]{pos\+Id}{, }\item[{GLuint}]{tex\+Id}{}\end{DoxyParamCaption})}
-
-
-
-\doxysubsection{Member Data Documentation}
-\Hypertarget{class_mesh_vbo_aab7ac9585bcd6d34ca4a0decdf0eca5c}\index{MeshVbo@{MeshVbo}!posAttribId@{posAttribId}}
-\index{posAttribId@{posAttribId}!MeshVbo@{MeshVbo}}
-\doxysubsubsection{\texorpdfstring{posAttribId}{posAttribId}}
-{\footnotesize\ttfamily \label{class_mesh_vbo_aab7ac9585bcd6d34ca4a0decdf0eca5c} 
-GLuint Mesh\+Vbo\+::pos\+Attrib\+Id = -\/1\hspace{0.3cm}{\ttfamily [protected]}}
-
-\Hypertarget{class_mesh_vbo_a7b093ff56dceedfbcdfcdff526fe8a7a}\index{MeshVbo@{MeshVbo}!posVboId@{posVboId}}
-\index{posVboId@{posVboId}!MeshVbo@{MeshVbo}}
-\doxysubsubsection{\texorpdfstring{posVboId}{posVboId}}
-{\footnotesize\ttfamily \label{class_mesh_vbo_a7b093ff56dceedfbcdfcdff526fe8a7a} 
-GLuint Mesh\+Vbo\+::pos\+Vbo\+Id = -\/1\hspace{0.3cm}{\ttfamily [protected]}}
-
-\Hypertarget{class_mesh_vbo_aed3031047d0fac5ca162b9fa796046be}\index{MeshVbo@{MeshVbo}!texAttribId@{texAttribId}}
-\index{texAttribId@{texAttribId}!MeshVbo@{MeshVbo}}
-\doxysubsubsection{\texorpdfstring{texAttribId}{texAttribId}}
-{\footnotesize\ttfamily \label{class_mesh_vbo_aed3031047d0fac5ca162b9fa796046be} 
-GLuint Mesh\+Vbo\+::tex\+Attrib\+Id = -\/1\hspace{0.3cm}{\ttfamily [protected]}}
-
-\Hypertarget{class_mesh_vbo_a7b5a216788ddc57f00b5d8b62361525d}\index{MeshVbo@{MeshVbo}!texVboId@{texVboId}}
-\index{texVboId@{texVboId}!MeshVbo@{MeshVbo}}
-\doxysubsubsection{\texorpdfstring{texVboId}{texVboId}}
-{\footnotesize\ttfamily \label{class_mesh_vbo_a7b5a216788ddc57f00b5d8b62361525d} 
-GLuint Mesh\+Vbo\+::tex\+Vbo\+Id = -\/1\hspace{0.3cm}{\ttfamily [protected]}}
-
+\doxysubsection{Detailed Description}
+The class for store the Vbo data. 

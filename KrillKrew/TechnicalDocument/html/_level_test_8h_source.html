@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.12.0"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>KrillKrewEngine: KrillEngine/LevelTest.h Source File</title>
+<title>KrillKrewEngine: KrillKrew/KrillEngine/KrillEngine/LevelTest.h Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -106,46 +106,37 @@ $(function(){initNavTree('_level_test_8h_source.html',''); initResizable(true); 
   <div class="headertitle"><div class="title">LevelTest.h</div></div>
 </div><!--header-->
 <div class="contents">
-<a href="_level_test_8h.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="preprocessor">#pragma once</span></div>
-<div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="preprocessor">#include &quot;<a class="code" href="_level_8h.html">Level.h</a>&quot;</span></div>
+<div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="preprocessor">#pragma once</span></div>
+<div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="preprocessor">#include &quot;Level.h&quot;</span></div>
 <div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span> </div>
-<div class="foldopen" id="foldopen00004" data-start="{" data-end="};">
-<div class="line"><a id="l00004" name="l00004"></a><span class="lineno"><a class="line" href="class_level_test.html">    4</a></span><span class="keyword">class </span><a class="code hl_class" href="class_level_test.html">LevelTest</a> : <span class="keyword">public</span> <a class="code hl_class" href="class_level.html">Level</a></div>
-<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span>{</div>
-<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="keyword">private</span>:</div>
-<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span>    vector&lt;DrawableObject*&gt; objectsList;</div>
-<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span>    <a class="code hl_class" href="class_game_object.html">GameObject</a> * player;</div>
-<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span> </div>
-<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><span class="keyword">public</span>:</div>
-<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span>    <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code hl_function" href="class_level_test.html#a516cb931591c61dbc4903ba797fb3a44">LevelLoad</a>();</div>
-<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span>    <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code hl_function" href="class_level_test.html#a6a1c89b75588b1207f96ff3f46ae992a">LevelInit</a>();</div>
-<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span>    <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code hl_function" href="class_level_test.html#aca08ca4ff14527689ccc1446da3ba9ae">LevelUpdate</a>();</div>
-<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span>    <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code hl_function" href="class_level_test.html#ab4a36c06b88b8da5aeb7171cee9876b5">LevelDraw</a>();</div>
-<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span>    <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code hl_function" href="class_level_test.html#a35a235462ba86d650d7e9d1edff4fcd6">LevelFree</a>();</div>
-<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span>    <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code hl_function" href="class_level_test.html#a236108430cdf8f14e8ef0ae723fc1d15">LevelUnload</a>();</div>
-<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span> </div>
-<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span>    <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code hl_function" href="class_level_test.html#a6220ebd6654363fc35712375523c6447">HandleKey</a>(<span class="keywordtype">char</span> key);</div>
-<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span>    <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code hl_function" href="class_level_test.html#ab8245c537dbf62dfd20662d2e24f4bf4">HandleMouse</a>(<span class="keywordtype">int</span> type, <span class="keywordtype">int</span> x, <span class="keywordtype">int</span> y);</div>
-<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span>};</div>
+<div class="foldopen" id="foldopen00005" data-start="{" data-end="};">
+<div class="line"><a id="l00005" name="l00005"></a><span class="lineno"><a class="line" href="class_level_test.html">    5</a></span><span class="keyword">class </span><a class="code hl_class" href="class_level_test.html">LevelTest</a> : <span class="keyword">public</span> <a class="code hl_class" href="class_level.html">Level</a></div>
+<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span>{</div>
+<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span><span class="keyword">private</span>:</div>
+<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span>    vector&lt;DrawableObject*&gt; objectsList;</div>
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span>    <a class="code hl_class" href="class_game_object.html">GameObject</a> * player;</div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span> </div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="keyword">public</span>:</div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span>    <span class="keyword">virtual</span> <span class="keywordtype">void</span> LevelLoad();</div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span>    <span class="keyword">virtual</span> <span class="keywordtype">void</span> LevelInit();</div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span>    <span class="keyword">virtual</span> <span class="keywordtype">void</span> LevelUpdate();</div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span>    <span class="keyword">virtual</span> <span class="keywordtype">void</span> LevelDraw();</div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span>    <span class="keyword">virtual</span> <span class="keywordtype">void</span> LevelFree();</div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span>    <span class="keyword">virtual</span> <span class="keywordtype">void</span> LevelUnload();</div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span> </div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span>    <span class="keyword">virtual</span> <span class="keywordtype">void</span> HandleKey(<span class="keywordtype">char</span> key);</div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span>    <span class="keyword">virtual</span> <span class="keywordtype">void</span> HandleMouse(<span class="keywordtype">int</span> type, <span class="keywordtype">int</span> x, <span class="keywordtype">int</span> y);</div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span>};</div>
 </div>
-<div class="ttc" id="a_level_8h_html"><div class="ttname"><a href="_level_8h.html">Level.h</a></div></div>
-<div class="ttc" id="aclass_game_object_html"><div class="ttname"><a href="class_game_object.html">GameObject</a></div><div class="ttdef"><b>Definition</b> GameObject.h:7</div></div>
-<div class="ttc" id="aclass_level_html"><div class="ttname"><a href="class_level.html">Level</a></div><div class="ttdef"><b>Definition</b> Level.h:8</div></div>
-<div class="ttc" id="aclass_level_test_html"><div class="ttname"><a href="class_level_test.html">LevelTest</a></div><div class="ttdef"><b>Definition</b> LevelTest.h:5</div></div>
-<div class="ttc" id="aclass_level_test_html_a236108430cdf8f14e8ef0ae723fc1d15"><div class="ttname"><a href="class_level_test.html#a236108430cdf8f14e8ef0ae723fc1d15">LevelTest::LevelUnload</a></div><div class="ttdeci">virtual void LevelUnload()</div><div class="ttdef"><b>Definition</b> LevelTest.cpp:53</div></div>
-<div class="ttc" id="aclass_level_test_html_a35a235462ba86d650d7e9d1edff4fcd6"><div class="ttname"><a href="class_level_test.html#a35a235462ba86d650d7e9d1edff4fcd6">LevelTest::LevelFree</a></div><div class="ttdeci">virtual void LevelFree()</div><div class="ttdef"><b>Definition</b> LevelTest.cpp:44</div></div>
-<div class="ttc" id="aclass_level_test_html_a516cb931591c61dbc4903ba797fb3a44"><div class="ttname"><a href="class_level_test.html#a516cb931591c61dbc4903ba797fb3a44">LevelTest::LevelLoad</a></div><div class="ttdeci">virtual void LevelLoad()</div><div class="ttdef"><b>Definition</b> LevelTest.cpp:3</div></div>
-<div class="ttc" id="aclass_level_test_html_a6220ebd6654363fc35712375523c6447"><div class="ttname"><a href="class_level_test.html#a6220ebd6654363fc35712375523c6447">LevelTest::HandleKey</a></div><div class="ttdeci">virtual void HandleKey(char key)</div><div class="ttdef"><b>Definition</b> LevelTest.cpp:59</div></div>
-<div class="ttc" id="aclass_level_test_html_a6a1c89b75588b1207f96ff3f46ae992a"><div class="ttname"><a href="class_level_test.html#a6a1c89b75588b1207f96ff3f46ae992a">LevelTest::LevelInit</a></div><div class="ttdeci">virtual void LevelInit()</div><div class="ttdef"><b>Definition</b> LevelTest.cpp:12</div></div>
-<div class="ttc" id="aclass_level_test_html_ab4a36c06b88b8da5aeb7171cee9876b5"><div class="ttname"><a href="class_level_test.html#ab4a36c06b88b8da5aeb7171cee9876b5">LevelTest::LevelDraw</a></div><div class="ttdeci">virtual void LevelDraw()</div><div class="ttdef"><b>Definition</b> LevelTest.cpp:38</div></div>
-<div class="ttc" id="aclass_level_test_html_ab8245c537dbf62dfd20662d2e24f4bf4"><div class="ttname"><a href="class_level_test.html#ab8245c537dbf62dfd20662d2e24f4bf4">LevelTest::HandleMouse</a></div><div class="ttdeci">virtual void HandleMouse(int type, int x, int y)</div><div class="ttdef"><b>Definition</b> LevelTest.cpp:74</div></div>
-<div class="ttc" id="aclass_level_test_html_aca08ca4ff14527689ccc1446da3ba9ae"><div class="ttname"><a href="class_level_test.html#aca08ca4ff14527689ccc1446da3ba9ae">LevelTest::LevelUpdate</a></div><div class="ttdeci">virtual void LevelUpdate()</div><div class="ttdef"><b>Definition</b> LevelTest.cpp:33</div></div>
+<div class="ttc" id="aclass_game_object_html"><div class="ttname"><a href="class_game_object.html">GameObject</a></div><div class="ttdoc">The class for creating game object.</div><div class="ttdef"><b>Definition</b> GameObject.h:10</div></div>
+<div class="ttc" id="aclass_level_html"><div class="ttname"><a href="class_level.html">Level</a></div><div class="ttdoc">The class for setup object in the level.</div><div class="ttdef"><b>Definition</b> Level.h:10</div></div>
+<div class="ttc" id="aclass_level_test_html"><div class="ttname"><a href="class_level_test.html">LevelTest</a></div><div class="ttdoc">The class for level inherit test from P'tiam.</div><div class="ttdef"><b>Definition</b> LevelTest.h:6</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_6d4df9efd498d26f51c1f56f8b8733de.html">KrillEngine</a></li><li class="navelem"><a class="el" href="_level_test_8h.html">LevelTest.h</a></li>
+    <li class="navelem"><a class="el" href="dir_59da17abec228c27645b7992b0f149e7.html">KrillKrew</a></li><li class="navelem"><a class="el" href="dir_25c75a9f311d1ca54d5f2fe7c2cd0f03.html">KrillEngine</a></li><li class="navelem"><a class="el" href="dir_9e886aff71ad1017d2a9414a1b9a87c4.html">KrillEngine</a></li><li class="navelem"><b>LevelTest.h</b></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.12.0 </li>
   </ul>
 </div>

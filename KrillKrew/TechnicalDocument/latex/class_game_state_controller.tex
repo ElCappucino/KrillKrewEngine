@@ -2,124 +2,56 @@
 \hypertarget{class_game_state_controller}{}\label{class_game_state_controller}\index{GameStateController@{GameStateController}}
 
 
+The class for setup the game state and control during scene.  
+
+
+
+
 {\ttfamily \#include $<$Game\+State\+Controller.\+h$>$}
 
 \doxysubsubsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-\mbox{\hyperlink{class_game_state_controller_a9a3b16878733c7e4b5ee82f553e1e448}{Game\+State\+Controller}} ()
+\Hypertarget{class_game_state_controller_ac5881b2b81a2c42f74c4fce8d44a6abf}\label{class_game_state_controller_ac5881b2b81a2c42f74c4fce8d44a6abf} 
+void {\bfseries Init} (Game\+State game\+State\+Init)
 \item 
-void \mbox{\hyperlink{class_game_state_controller_ac5881b2b81a2c42f74c4fce8d44a6abf}{Init}} (\mbox{\hyperlink{_game_state_list_8h_a7899b65f1ea0f655e4bbf8d2a5714285}{Game\+State}} game\+State\+Init)
+\Hypertarget{class_game_state_controller_afdc6e70c41968b49906c7df700d414e3}\label{class_game_state_controller_afdc6e70c41968b49906c7df700d414e3} 
+void {\bfseries Load\+Level} ()
 \item 
-void \mbox{\hyperlink{class_game_state_controller_afdc6e70c41968b49906c7df700d414e3}{Load\+Level}} ()
+\Hypertarget{class_game_state_controller_a98cadebcefec8b79ffba19475eddcc13}\label{class_game_state_controller_a98cadebcefec8b79ffba19475eddcc13} 
+void {\bfseries Init\+Level} ()
 \item 
-void \mbox{\hyperlink{class_game_state_controller_a98cadebcefec8b79ffba19475eddcc13}{Init\+Level}} ()
+\Hypertarget{class_game_state_controller_a9ac91ec5a9dceb805efb3c82bbab62c1}\label{class_game_state_controller_a9ac91ec5a9dceb805efb3c82bbab62c1} 
+void {\bfseries Update\+Level} ()
 \item 
-void \mbox{\hyperlink{class_game_state_controller_a9ac91ec5a9dceb805efb3c82bbab62c1}{Update\+Level}} ()
+\Hypertarget{class_game_state_controller_afb1b58c2a574bfcc174d8cdcd0d4ab8d}\label{class_game_state_controller_afb1b58c2a574bfcc174d8cdcd0d4ab8d} 
+void {\bfseries Draw\+Level} ()
 \item 
-void \mbox{\hyperlink{class_game_state_controller_afb1b58c2a574bfcc174d8cdcd0d4ab8d}{Draw\+Level}} ()
+\Hypertarget{class_game_state_controller_a63f464dff07ff5b9a316cdef6b288a75}\label{class_game_state_controller_a63f464dff07ff5b9a316cdef6b288a75} 
+void {\bfseries Freelevel} ()
 \item 
-void \mbox{\hyperlink{class_game_state_controller_a63f464dff07ff5b9a316cdef6b288a75}{Freelevel}} ()
+\Hypertarget{class_game_state_controller_a33855730ef98224c789d246b65d828ab}\label{class_game_state_controller_a33855730ef98224c789d246b65d828ab} 
+void {\bfseries Unload\+Level} ()
 \item 
-void \mbox{\hyperlink{class_game_state_controller_a33855730ef98224c789d246b65d828ab}{Unload\+Level}} ()
+\Hypertarget{class_game_state_controller_a98fa23854cf938269787f8d32d3c1564}\label{class_game_state_controller_a98fa23854cf938269787f8d32d3c1564} 
+void {\bfseries Handle\+Key\+Level} (char key)
 \item 
-void \mbox{\hyperlink{class_game_state_controller_a98fa23854cf938269787f8d32d3c1564}{Handle\+Key\+Level}} (char key)
-\item 
-void \mbox{\hyperlink{class_game_state_controller_ae902bccb45f33b855a028427a471575d}{Handle\+Mouse\+Level}} (int type, int x, int y)
+\Hypertarget{class_game_state_controller_ae902bccb45f33b855a028427a471575d}\label{class_game_state_controller_ae902bccb45f33b855a028427a471575d} 
+void {\bfseries Handle\+Mouse\+Level} (int type, int x, int y)
 \end{DoxyCompactItemize}
 \doxysubsubsection*{Public Attributes}
 \begin{DoxyCompactItemize}
 \item 
-\mbox{\hyperlink{_game_state_list_8h_a7899b65f1ea0f655e4bbf8d2a5714285}{Game\+State}} \mbox{\hyperlink{class_game_state_controller_a29921f0c8d663997d7335a127fffe4f6}{game\+State\+Curr}}
+\Hypertarget{class_game_state_controller_a29921f0c8d663997d7335a127fffe4f6}\label{class_game_state_controller_a29921f0c8d663997d7335a127fffe4f6} 
+Game\+State {\bfseries game\+State\+Curr}
 \item 
-\mbox{\hyperlink{_game_state_list_8h_a7899b65f1ea0f655e4bbf8d2a5714285}{Game\+State}} \mbox{\hyperlink{class_game_state_controller_afb6a7127932213c43aca54102d9803d4}{game\+State\+Prev}}
+\Hypertarget{class_game_state_controller_afb6a7127932213c43aca54102d9803d4}\label{class_game_state_controller_afb6a7127932213c43aca54102d9803d4} 
+Game\+State {\bfseries game\+State\+Prev}
 \item 
-\mbox{\hyperlink{_game_state_list_8h_a7899b65f1ea0f655e4bbf8d2a5714285}{Game\+State}} \mbox{\hyperlink{class_game_state_controller_a571f84a92c0a7bee3fb83e744ee2aee8}{game\+State\+Next}}
+\Hypertarget{class_game_state_controller_a571f84a92c0a7bee3fb83e744ee2aee8}\label{class_game_state_controller_a571f84a92c0a7bee3fb83e744ee2aee8} 
+Game\+State {\bfseries game\+State\+Next}
 \end{DoxyCompactItemize}
 
 
-\doxysubsection{Constructor \& Destructor Documentation}
-\Hypertarget{class_game_state_controller_a9a3b16878733c7e4b5ee82f553e1e448}\index{GameStateController@{GameStateController}!GameStateController@{GameStateController}}
-\index{GameStateController@{GameStateController}!GameStateController@{GameStateController}}
-\doxysubsubsection{\texorpdfstring{GameStateController()}{GameStateController()}}
-{\footnotesize\ttfamily \label{class_game_state_controller_a9a3b16878733c7e4b5ee82f553e1e448} 
-Game\+State\+Controller\+::\+Game\+State\+Controller (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
-
-
-
-\doxysubsection{Member Function Documentation}
-\Hypertarget{class_game_state_controller_afb1b58c2a574bfcc174d8cdcd0d4ab8d}\index{GameStateController@{GameStateController}!DrawLevel@{DrawLevel}}
-\index{DrawLevel@{DrawLevel}!GameStateController@{GameStateController}}
-\doxysubsubsection{\texorpdfstring{DrawLevel()}{DrawLevel()}}
-{\footnotesize\ttfamily \label{class_game_state_controller_afb1b58c2a574bfcc174d8cdcd0d4ab8d} 
-void Game\+State\+Controller\+::\+Draw\+Level (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
-
-\Hypertarget{class_game_state_controller_a63f464dff07ff5b9a316cdef6b288a75}\index{GameStateController@{GameStateController}!Freelevel@{Freelevel}}
-\index{Freelevel@{Freelevel}!GameStateController@{GameStateController}}
-\doxysubsubsection{\texorpdfstring{Freelevel()}{Freelevel()}}
-{\footnotesize\ttfamily \label{class_game_state_controller_a63f464dff07ff5b9a316cdef6b288a75} 
-void Game\+State\+Controller\+::\+Freelevel (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
-
-\Hypertarget{class_game_state_controller_a98fa23854cf938269787f8d32d3c1564}\index{GameStateController@{GameStateController}!HandleKeyLevel@{HandleKeyLevel}}
-\index{HandleKeyLevel@{HandleKeyLevel}!GameStateController@{GameStateController}}
-\doxysubsubsection{\texorpdfstring{HandleKeyLevel()}{HandleKeyLevel()}}
-{\footnotesize\ttfamily \label{class_game_state_controller_a98fa23854cf938269787f8d32d3c1564} 
-void Game\+State\+Controller\+::\+Handle\+Key\+Level (\begin{DoxyParamCaption}\item[{char}]{key}{}\end{DoxyParamCaption})}
-
-\Hypertarget{class_game_state_controller_ae902bccb45f33b855a028427a471575d}\index{GameStateController@{GameStateController}!HandleMouseLevel@{HandleMouseLevel}}
-\index{HandleMouseLevel@{HandleMouseLevel}!GameStateController@{GameStateController}}
-\doxysubsubsection{\texorpdfstring{HandleMouseLevel()}{HandleMouseLevel()}}
-{\footnotesize\ttfamily \label{class_game_state_controller_ae902bccb45f33b855a028427a471575d} 
-void Game\+State\+Controller\+::\+Handle\+Mouse\+Level (\begin{DoxyParamCaption}\item[{int}]{type}{, }\item[{int}]{x}{, }\item[{int}]{y}{}\end{DoxyParamCaption})}
-
-\Hypertarget{class_game_state_controller_ac5881b2b81a2c42f74c4fce8d44a6abf}\index{GameStateController@{GameStateController}!Init@{Init}}
-\index{Init@{Init}!GameStateController@{GameStateController}}
-\doxysubsubsection{\texorpdfstring{Init()}{Init()}}
-{\footnotesize\ttfamily \label{class_game_state_controller_ac5881b2b81a2c42f74c4fce8d44a6abf} 
-void Game\+State\+Controller\+::\+Init (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{_game_state_list_8h_a7899b65f1ea0f655e4bbf8d2a5714285}{Game\+State}}}]{game\+State\+Init}{}\end{DoxyParamCaption})}
-
-\Hypertarget{class_game_state_controller_a98cadebcefec8b79ffba19475eddcc13}\index{GameStateController@{GameStateController}!InitLevel@{InitLevel}}
-\index{InitLevel@{InitLevel}!GameStateController@{GameStateController}}
-\doxysubsubsection{\texorpdfstring{InitLevel()}{InitLevel()}}
-{\footnotesize\ttfamily \label{class_game_state_controller_a98cadebcefec8b79ffba19475eddcc13} 
-void Game\+State\+Controller\+::\+Init\+Level (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
-
-\Hypertarget{class_game_state_controller_afdc6e70c41968b49906c7df700d414e3}\index{GameStateController@{GameStateController}!LoadLevel@{LoadLevel}}
-\index{LoadLevel@{LoadLevel}!GameStateController@{GameStateController}}
-\doxysubsubsection{\texorpdfstring{LoadLevel()}{LoadLevel()}}
-{\footnotesize\ttfamily \label{class_game_state_controller_afdc6e70c41968b49906c7df700d414e3} 
-void Game\+State\+Controller\+::\+Load\+Level (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
-
-\Hypertarget{class_game_state_controller_a33855730ef98224c789d246b65d828ab}\index{GameStateController@{GameStateController}!UnloadLevel@{UnloadLevel}}
-\index{UnloadLevel@{UnloadLevel}!GameStateController@{GameStateController}}
-\doxysubsubsection{\texorpdfstring{UnloadLevel()}{UnloadLevel()}}
-{\footnotesize\ttfamily \label{class_game_state_controller_a33855730ef98224c789d246b65d828ab} 
-void Game\+State\+Controller\+::\+Unload\+Level (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
-
-\Hypertarget{class_game_state_controller_a9ac91ec5a9dceb805efb3c82bbab62c1}\index{GameStateController@{GameStateController}!UpdateLevel@{UpdateLevel}}
-\index{UpdateLevel@{UpdateLevel}!GameStateController@{GameStateController}}
-\doxysubsubsection{\texorpdfstring{UpdateLevel()}{UpdateLevel()}}
-{\footnotesize\ttfamily \label{class_game_state_controller_a9ac91ec5a9dceb805efb3c82bbab62c1} 
-void Game\+State\+Controller\+::\+Update\+Level (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
-
-
-
-\doxysubsection{Member Data Documentation}
-\Hypertarget{class_game_state_controller_a29921f0c8d663997d7335a127fffe4f6}\index{GameStateController@{GameStateController}!gameStateCurr@{gameStateCurr}}
-\index{gameStateCurr@{gameStateCurr}!GameStateController@{GameStateController}}
-\doxysubsubsection{\texorpdfstring{gameStateCurr}{gameStateCurr}}
-{\footnotesize\ttfamily \label{class_game_state_controller_a29921f0c8d663997d7335a127fffe4f6} 
-\mbox{\hyperlink{_game_state_list_8h_a7899b65f1ea0f655e4bbf8d2a5714285}{Game\+State}} Game\+State\+Controller\+::game\+State\+Curr}
-
-\Hypertarget{class_game_state_controller_a571f84a92c0a7bee3fb83e744ee2aee8}\index{GameStateController@{GameStateController}!gameStateNext@{gameStateNext}}
-\index{gameStateNext@{gameStateNext}!GameStateController@{GameStateController}}
-\doxysubsubsection{\texorpdfstring{gameStateNext}{gameStateNext}}
-{\footnotesize\ttfamily \label{class_game_state_controller_a571f84a92c0a7bee3fb83e744ee2aee8} 
-\mbox{\hyperlink{_game_state_list_8h_a7899b65f1ea0f655e4bbf8d2a5714285}{Game\+State}} Game\+State\+Controller\+::game\+State\+Next}
-
-\Hypertarget{class_game_state_controller_afb6a7127932213c43aca54102d9803d4}\index{GameStateController@{GameStateController}!gameStatePrev@{gameStatePrev}}
-\index{gameStatePrev@{gameStatePrev}!GameStateController@{GameStateController}}
-\doxysubsubsection{\texorpdfstring{gameStatePrev}{gameStatePrev}}
-{\footnotesize\ttfamily \label{class_game_state_controller_afb6a7127932213c43aca54102d9803d4} 
-\mbox{\hyperlink{_game_state_list_8h_a7899b65f1ea0f655e4bbf8d2a5714285}{Game\+State}} Game\+State\+Controller\+::game\+State\+Prev}
-
+\doxysubsection{Detailed Description}
+The class for setup the game state and control during scene. 

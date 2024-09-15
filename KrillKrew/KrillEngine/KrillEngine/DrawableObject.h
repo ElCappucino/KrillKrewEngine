@@ -4,6 +4,7 @@
 
 using namespace std;
 
+/// @brief The class for creating drawable object
 class DrawableObject
 {
 protected:

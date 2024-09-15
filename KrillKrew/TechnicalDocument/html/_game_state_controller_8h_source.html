@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.12.0"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>KrillKrewEngine: KrillEngine/GameStateController.h Source File</title>
+<title>KrillKrewEngine: KrillKrew/KrillEngine/KrillEngine/GameStateController.h Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -106,62 +106,47 @@ $(function(){initNavTree('_game_state_controller_8h_source.html',''); initResiza
   <div class="headertitle"><div class="title">GameStateController.h</div></div>
 </div><!--header-->
 <div class="contents">
-<a href="_game_state_controller_8h.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="preprocessor">#pragma once</span></div>
+<div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="preprocessor">#pragma once</span></div>
 <div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span> </div>
-<div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span><span class="preprocessor">#include &quot;<a class="code" href="_game_state_list_8h.html">GameStateList.h</a>&quot;</span></div>
+<div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span><span class="preprocessor">#include &quot;GameStateList.h&quot;</span></div>
 <div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span> </div>
 <div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="keyword">class </span><a class="code hl_class" href="class_level.html">Level</a>;</div>
 <div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span> </div>
-<div class="foldopen" id="foldopen00007" data-start="{" data-end="};">
-<div class="line"><a id="l00007" name="l00007"></a><span class="lineno"><a class="line" href="class_game_state_controller.html">    7</a></span><span class="keyword">class </span><a class="code hl_class" href="class_game_state_controller.html">GameStateController</a></div>
-<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span>{</div>
-<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span><span class="keyword">private</span>:</div>
-<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span>    <a class="code hl_class" href="class_level.html">Level</a>* currentLevel;</div>
-<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span> </div>
-<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span><span class="keyword">public</span>:</div>
-<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span> </div>
-<div class="line"><a id="l00014" name="l00014"></a><span class="lineno"><a class="line" href="class_game_state_controller.html#a29921f0c8d663997d7335a127fffe4f6">   14</a></span>    <a class="code hl_enumeration" href="_game_state_list_8h.html#a7899b65f1ea0f655e4bbf8d2a5714285">GameState</a> <a class="code hl_variable" href="class_game_state_controller.html#a29921f0c8d663997d7335a127fffe4f6">gameStateCurr</a>;</div>
-<div class="line"><a id="l00015" name="l00015"></a><span class="lineno"><a class="line" href="class_game_state_controller.html#afb6a7127932213c43aca54102d9803d4">   15</a></span>    <a class="code hl_enumeration" href="_game_state_list_8h.html#a7899b65f1ea0f655e4bbf8d2a5714285">GameState</a> <a class="code hl_variable" href="class_game_state_controller.html#afb6a7127932213c43aca54102d9803d4">gameStatePrev</a>;</div>
-<div class="line"><a id="l00016" name="l00016"></a><span class="lineno"><a class="line" href="class_game_state_controller.html#a571f84a92c0a7bee3fb83e744ee2aee8">   16</a></span>    <a class="code hl_enumeration" href="_game_state_list_8h.html#a7899b65f1ea0f655e4bbf8d2a5714285">GameState</a> <a class="code hl_variable" href="class_game_state_controller.html#a571f84a92c0a7bee3fb83e744ee2aee8">gameStateNext</a>;</div>
-<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span>    </div>
-<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span> </div>
-<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span>    <a class="code hl_function" href="class_game_state_controller.html#a9a3b16878733c7e4b5ee82f553e1e448">GameStateController</a>();</div>
-<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span>    <span class="keywordtype">void</span> <a class="code hl_function" href="class_game_state_controller.html#ac5881b2b81a2c42f74c4fce8d44a6abf">Init</a>(<a class="code hl_enumeration" href="_game_state_list_8h.html#a7899b65f1ea0f655e4bbf8d2a5714285">GameState</a> gameStateInit);</div>
-<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span> </div>
-<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span>    <span class="keywordtype">void</span> <a class="code hl_function" href="class_game_state_controller.html#afdc6e70c41968b49906c7df700d414e3">LoadLevel</a>();</div>
-<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span>    <span class="keywordtype">void</span> <a class="code hl_function" href="class_game_state_controller.html#a98cadebcefec8b79ffba19475eddcc13">InitLevel</a>();</div>
-<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span>    <span class="keywordtype">void</span> <a class="code hl_function" href="class_game_state_controller.html#a9ac91ec5a9dceb805efb3c82bbab62c1">UpdateLevel</a>();</div>
-<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span>    <span class="keywordtype">void</span> <a class="code hl_function" href="class_game_state_controller.html#afb1b58c2a574bfcc174d8cdcd0d4ab8d">DrawLevel</a>();</div>
-<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span>    <span class="keywordtype">void</span> <a class="code hl_function" href="class_game_state_controller.html#a63f464dff07ff5b9a316cdef6b288a75">Freelevel</a>();</div>
-<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span>    <span class="keywordtype">void</span> <a class="code hl_function" href="class_game_state_controller.html#a33855730ef98224c789d246b65d828ab">UnloadLevel</a>();</div>
-<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>    <span class="keywordtype">void</span> <a class="code hl_function" href="class_game_state_controller.html#a98fa23854cf938269787f8d32d3c1564">HandleKeyLevel</a>(<span class="keywordtype">char</span> key);</div>
-<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span>    <span class="keywordtype">void</span> <a class="code hl_function" href="class_game_state_controller.html#ae902bccb45f33b855a028427a471575d">HandleMouseLevel</a>(<span class="keywordtype">int</span> type, <span class="keywordtype">int</span> x, <span class="keywordtype">int</span> y);</div>
-<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span> </div>
-<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span>};</div>
+<div class="foldopen" id="foldopen00008" data-start="{" data-end="};">
+<div class="line"><a id="l00008" name="l00008"></a><span class="lineno"><a class="line" href="class_game_state_controller.html">    8</a></span><span class="keyword">class </span><a class="code hl_class" href="class_game_state_controller.html">GameStateController</a></div>
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span>{</div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><span class="keyword">private</span>:</div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span>    <a class="code hl_class" href="class_level.html">Level</a>* currentLevel;</div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span> </div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span><span class="keyword">public</span>:</div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span> </div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span>    GameState gameStateCurr;</div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span>    GameState gameStatePrev;</div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span>    GameState gameStateNext;</div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span>    </div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span> </div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span>    <a class="code hl_class" href="class_game_state_controller.html">GameStateController</a>();</div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span>    <span class="keywordtype">void</span> Init(GameState gameStateInit);</div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span> </div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span>    <span class="keywordtype">void</span> LoadLevel();</div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span>    <span class="keywordtype">void</span> InitLevel();</div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span>    <span class="keywordtype">void</span> UpdateLevel();</div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span>    <span class="keywordtype">void</span> DrawLevel();</div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span>    <span class="keywordtype">void</span> Freelevel();</div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>    <span class="keywordtype">void</span> UnloadLevel();</div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span>    <span class="keywordtype">void</span> HandleKeyLevel(<span class="keywordtype">char</span> key);</div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span>    <span class="keywordtype">void</span> HandleMouseLevel(<span class="keywordtype">int</span> type, <span class="keywordtype">int</span> x, <span class="keywordtype">int</span> y);</div>
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span> </div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span>};</div>
 </div>
-<div class="ttc" id="a_game_state_list_8h_html"><div class="ttname"><a href="_game_state_list_8h.html">GameStateList.h</a></div></div>
-<div class="ttc" id="a_game_state_list_8h_html_a7899b65f1ea0f655e4bbf8d2a5714285"><div class="ttname"><a href="_game_state_list_8h.html#a7899b65f1ea0f655e4bbf8d2a5714285">GameState</a></div><div class="ttdeci">GameState</div><div class="ttdef"><b>Definition</b> GameStateList.h:4</div></div>
-<div class="ttc" id="aclass_game_state_controller_html"><div class="ttname"><a href="class_game_state_controller.html">GameStateController</a></div><div class="ttdef"><b>Definition</b> GameStateController.h:8</div></div>
-<div class="ttc" id="aclass_game_state_controller_html_a29921f0c8d663997d7335a127fffe4f6"><div class="ttname"><a href="class_game_state_controller.html#a29921f0c8d663997d7335a127fffe4f6">GameStateController::gameStateCurr</a></div><div class="ttdeci">GameState gameStateCurr</div><div class="ttdef"><b>Definition</b> GameStateController.h:14</div></div>
-<div class="ttc" id="aclass_game_state_controller_html_a33855730ef98224c789d246b65d828ab"><div class="ttname"><a href="class_game_state_controller.html#a33855730ef98224c789d246b65d828ab">GameStateController::UnloadLevel</a></div><div class="ttdeci">void UnloadLevel()</div><div class="ttdef"><b>Definition</b> GameStateController.cpp:62</div></div>
-<div class="ttc" id="aclass_game_state_controller_html_a571f84a92c0a7bee3fb83e744ee2aee8"><div class="ttname"><a href="class_game_state_controller.html#a571f84a92c0a7bee3fb83e744ee2aee8">GameStateController::gameStateNext</a></div><div class="ttdeci">GameState gameStateNext</div><div class="ttdef"><b>Definition</b> GameStateController.h:16</div></div>
-<div class="ttc" id="aclass_game_state_controller_html_a63f464dff07ff5b9a316cdef6b288a75"><div class="ttname"><a href="class_game_state_controller.html#a63f464dff07ff5b9a316cdef6b288a75">GameStateController::Freelevel</a></div><div class="ttdeci">void Freelevel()</div><div class="ttdef"><b>Definition</b> GameStateController.cpp:57</div></div>
-<div class="ttc" id="aclass_game_state_controller_html_a98cadebcefec8b79ffba19475eddcc13"><div class="ttname"><a href="class_game_state_controller.html#a98cadebcefec8b79ffba19475eddcc13">GameStateController::InitLevel</a></div><div class="ttdeci">void InitLevel()</div><div class="ttdef"><b>Definition</b> GameStateController.cpp:42</div></div>
-<div class="ttc" id="aclass_game_state_controller_html_a98fa23854cf938269787f8d32d3c1564"><div class="ttname"><a href="class_game_state_controller.html#a98fa23854cf938269787f8d32d3c1564">GameStateController::HandleKeyLevel</a></div><div class="ttdeci">void HandleKeyLevel(char key)</div><div class="ttdef"><b>Definition</b> GameStateController.cpp:67</div></div>
-<div class="ttc" id="aclass_game_state_controller_html_a9a3b16878733c7e4b5ee82f553e1e448"><div class="ttname"><a href="class_game_state_controller.html#a9a3b16878733c7e4b5ee82f553e1e448">GameStateController::GameStateController</a></div><div class="ttdeci">GameStateController()</div><div class="ttdef"><b>Definition</b> GameStateController.cpp:5</div></div>
-<div class="ttc" id="aclass_game_state_controller_html_a9ac91ec5a9dceb805efb3c82bbab62c1"><div class="ttname"><a href="class_game_state_controller.html#a9ac91ec5a9dceb805efb3c82bbab62c1">GameStateController::UpdateLevel</a></div><div class="ttdeci">void UpdateLevel()</div><div class="ttdef"><b>Definition</b> GameStateController.cpp:47</div></div>
-<div class="ttc" id="aclass_game_state_controller_html_ac5881b2b81a2c42f74c4fce8d44a6abf"><div class="ttname"><a href="class_game_state_controller.html#ac5881b2b81a2c42f74c4fce8d44a6abf">GameStateController::Init</a></div><div class="ttdeci">void Init(GameState gameStateInit)</div><div class="ttdef"><b>Definition</b> GameStateController.cpp:13</div></div>
-<div class="ttc" id="aclass_game_state_controller_html_ae902bccb45f33b855a028427a471575d"><div class="ttname"><a href="class_game_state_controller.html#ae902bccb45f33b855a028427a471575d">GameStateController::HandleMouseLevel</a></div><div class="ttdeci">void HandleMouseLevel(int type, int x, int y)</div><div class="ttdef"><b>Definition</b> GameStateController.cpp:72</div></div>
-<div class="ttc" id="aclass_game_state_controller_html_afb1b58c2a574bfcc174d8cdcd0d4ab8d"><div class="ttname"><a href="class_game_state_controller.html#afb1b58c2a574bfcc174d8cdcd0d4ab8d">GameStateController::DrawLevel</a></div><div class="ttdeci">void DrawLevel()</div><div class="ttdef"><b>Definition</b> GameStateController.cpp:52</div></div>
-<div class="ttc" id="aclass_game_state_controller_html_afb6a7127932213c43aca54102d9803d4"><div class="ttname"><a href="class_game_state_controller.html#afb6a7127932213c43aca54102d9803d4">GameStateController::gameStatePrev</a></div><div class="ttdeci">GameState gameStatePrev</div><div class="ttdef"><b>Definition</b> GameStateController.h:15</div></div>
-<div class="ttc" id="aclass_game_state_controller_html_afdc6e70c41968b49906c7df700d414e3"><div class="ttname"><a href="class_game_state_controller.html#afdc6e70c41968b49906c7df700d414e3">GameStateController::LoadLevel</a></div><div class="ttdeci">void LoadLevel()</div><div class="ttdef"><b>Definition</b> GameStateController.cpp:19</div></div>
-<div class="ttc" id="aclass_level_html"><div class="ttname"><a href="class_level.html">Level</a></div><div class="ttdef"><b>Definition</b> Level.h:8</div></div>
+<div class="ttc" id="aclass_game_state_controller_html"><div class="ttname"><a href="class_game_state_controller.html">GameStateController</a></div><div class="ttdoc">The class for setup the game state and control during scene.</div><div class="ttdef"><b>Definition</b> GameStateController.h:9</div></div>
+<div class="ttc" id="aclass_level_html"><div class="ttname"><a href="class_level.html">Level</a></div><div class="ttdoc">The class for setup object in the level.</div><div class="ttdef"><b>Definition</b> Level.h:10</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_6d4df9efd498d26f51c1f56f8b8733de.html">KrillEngine</a></li><li class="navelem"><a class="el" href="_game_state_controller_8h.html">GameStateController.h</a></li>
+    <li class="navelem"><a class="el" href="dir_59da17abec228c27645b7992b0f149e7.html">KrillKrew</a></li><li class="navelem"><a class="el" href="dir_25c75a9f311d1ca54d5f2fe7c2cd0f03.html">KrillEngine</a></li><li class="navelem"><a class="el" href="dir_9e886aff71ad1017d2a9414a1b9a87c4.html">KrillEngine</a></li><li class="navelem"><b>GameStateController.h</b></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.12.0 </li>
   </ul>
 </div>

@@ -1,19 +1,10 @@
 var searchData=
 [
-  ['level_0',['Level',['../class_level.html',1,'']]],
-  ['level_2ecpp_1',['Level.cpp',['../_level_8cpp.html',1,'']]],
-  ['level_2eh_2',['Level.h',['../_level_8h.html',1,'']]],
-  ['leveldraw_3',['LevelDraw',['../class_level.html#a30b2bb3921b96ba5c3dd9133f55a1fef',1,'Level::LevelDraw()'],['../class_level_test.html#ab4a36c06b88b8da5aeb7171cee9876b5',1,'LevelTest::LevelDraw()']]],
-  ['levelfree_4',['LevelFree',['../class_level.html#aeeeff4795d8b3e8048371b399468b28b',1,'Level::LevelFree()'],['../class_level_test.html#a35a235462ba86d650d7e9d1edff4fcd6',1,'LevelTest::LevelFree()']]],
-  ['levelinit_5',['LevelInit',['../class_level.html#af9bba2a7428da1076846c8ae66f9d60b',1,'Level::LevelInit()'],['../class_level_test.html#a6a1c89b75588b1207f96ff3f46ae992a',1,'LevelTest::LevelInit()']]],
-  ['levelload_6',['LevelLoad',['../class_level.html#aa8564174b1c6e460568ad207d9d6edb8',1,'Level::LevelLoad()'],['../class_level_test.html#a516cb931591c61dbc4903ba797fb3a44',1,'LevelTest::LevelLoad()']]],
-  ['leveltest_7',['LevelTest',['../class_level_test.html',1,'']]],
-  ['leveltest_2ecpp_8',['LevelTest.cpp',['../_level_test_8cpp.html',1,'']]],
-  ['leveltest_2eh_9',['LevelTest.h',['../_level_test_8h.html',1,'']]],
-  ['levelunload_10',['LevelUnload',['../class_level.html#ab4e93f7ecb91a7a57b4c70f2741e875c',1,'Level::LevelUnload()'],['../class_level_test.html#a236108430cdf8f14e8ef0ae723fc1d15',1,'LevelTest::LevelUnload()']]],
-  ['levelupdate_11',['LevelUpdate',['../class_level.html#aab7576c881e82565830cc126409eebaf',1,'Level::LevelUpdate()'],['../class_level_test.html#aca08ca4ff14527689ccc1446da3ba9ae',1,'LevelTest::LevelUpdate()']]],
-  ['loaddata_12',['LoadData',['../class_mesh_vbo.html#a9586e9783a615dc20eb2f5b3935afbbf',1,'MeshVbo::LoadData()'],['../class_square_mesh_vbo.html#a162f1a09f8fd10d54958a55bd3ac33f0',1,'SquareMeshVbo::LoadData()'],['../class_triangle_mesh_vbo.html#aa18eb6147d542904e24bfa26d061d643',1,'TriangleMeshVbo::LoadData()']]],
-  ['loadlevel_13',['LoadLevel',['../class_game_state_controller.html#afdc6e70c41968b49906c7df700d414e3',1,'GameStateController']]],
-  ['loadsource_14',['LoadSource',['../class_shader.html#a5c9c7faff990224de406f996b1068c6c',1,'Shader']]],
-  ['loadtexture_15',['LoadTexture',['../class_g_l_renderer.html#af06a96f18bcca1ab22a4b02473c72c43',1,'GLRenderer']]]
+  ['setclearcolor_0',['SetClearColor',['../class_g_l_renderer.html#a38a6d40d7b39e152e0f629c8a9c26306',1,'GLRenderer']]],
+  ['setcolor_1',['SetColor',['../class_combine_object.html#ad8ed57631acb8224bbb0fda250bbc0d2',1,'CombineObject']]],
+  ['setcolor2_2',['SetColor2',['../class_combine_object.html#a3e2aeea0f2c63a49245071cdfc22b2f7',1,'CombineObject']]],
+  ['setorthoprojection_3',['SetOrthoProjection',['../class_g_l_renderer.html#a6486523f334b3fbde582f4f97c988005',1,'GLRenderer']]],
+  ['setviewport_4',['SetViewPort',['../class_g_l_renderer.html#a982392af1f7357318221442e7a891dcc',1,'GLRenderer']]],
+  ['shader_5',['Shader',['../class_shader.html',1,'Shader'],['../class_shader.html#af23ac266900ae0a0f02ed98747b19e9a',1,'Shader::Shader()']]],
+  ['squaremeshvbo_6',['SquareMeshVbo',['../class_square_mesh_vbo.html',1,'']]]
 ];

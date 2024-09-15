@@ -1,2 +1,23 @@
-﻿C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppBuild.targets(531,5): warning MSB8028: The intermediate directory (Debug\) contains files shared from another project (TiemEngine.vcxproj).  This can lead to incorrect clean and rebuild behavior.
-  KrillEngine.vcxproj -> C:\Users\ddctl\Desktop\CT66Book\KrillKrewEngine\KrillKrew\KrillEngine\Debug\KrillEngine.exe
+﻿C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppBuild.targets(534,5): warning MSB8028: The intermediate directory (Debug\) contains files shared from another project (TiemEngine.vcxproj).  This can lead to incorrect clean and rebuild behavior.
+  CombineObject.cpp
+  DrawableObject.cpp
+  GameEngine.cpp
+  GameObject.cpp
+  GameStateController.cpp
+  GLRenderer.cpp
+  ImageObject.cpp
+  Level.cpp
+C:\Users\Admin\Desktop\KrillKrewEngine\KrillKrew\KrillEngine\KrillEngine\Level.cpp(71,10): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+C:\Users\Admin\Desktop\KrillKrewEngine\KrillKrew\KrillEngine\KrillEngine\Level.cpp(72,10): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+  LevelTest.cpp
+C:\Users\Admin\Desktop\KrillKrewEngine\KrillKrew\KrillEngine\KrillEngine\LevelTest.cpp(79,10): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+C:\Users\Admin\Desktop\KrillKrewEngine\KrillKrew\KrillEngine\KrillEngine\LevelTest.cpp(80,10): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+  Main.cpp
+  MeshVbo.cpp
+  pch.cpp
+  Shader.cpp
+  SquareMeshVbo.cpp
+  TriangleMeshVbo.cpp
+  Generating Code...
+     Creating library C:\Users\Admin\Desktop\KrillKrewEngine\KrillKrew\KrillEngine\Debug\KrillEngine.lib and object C:\Users\Admin\Desktop\KrillKrewEngine\KrillKrew\KrillEngine\Debug\KrillEngine.exp
+  KrillEngine.vcxproj -> C:\Users\Admin\Desktop\KrillKrewEngine\KrillKrew\KrillEngine\Debug\KrillEngine.exe

@@ -4,6 +4,7 @@
 
 class Level;
 
+/// @brief The class for setup the game state and control during scene
 class GameStateController
 {
 private:

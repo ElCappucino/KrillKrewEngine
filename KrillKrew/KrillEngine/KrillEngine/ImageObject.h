@@ -5,6 +5,7 @@
 #include "gtc/type_ptr.hpp"
 #include <string>
 
+/// @brief The class for creating object that render using texture
 class ImageObject :public DrawableObject
 {
 	unsigned int texture;

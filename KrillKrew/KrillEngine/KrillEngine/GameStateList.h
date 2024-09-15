@@ -1,5 +1,6 @@
 #pragma once
 
+/// @brief The enum list of game state
 enum GameState
 {
 	// list of all game states 

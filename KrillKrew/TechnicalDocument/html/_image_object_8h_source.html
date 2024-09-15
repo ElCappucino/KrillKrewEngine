@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.12.0"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>KrillKrewEngine: KrillEngine/ImageObject.h Source File</title>
+<title>KrillKrewEngine: KrillKrew/KrillEngine/KrillEngine/ImageObject.h Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -106,38 +106,33 @@ $(function(){initNavTree('_image_object_8h_source.html',''); initResizable(true)
   <div class="headertitle"><div class="title">ImageObject.h</div></div>
 </div><!--header-->
 <div class="contents">
-<a href="_image_object_8h.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="preprocessor">#pragma once</span></div>
+<div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="preprocessor">#pragma once</span></div>
 <div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span> </div>
-<div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span><span class="preprocessor">#include &quot;<a class="code" href="_drawable_object_8h.html">DrawableObject.h</a>&quot;</span></div>
+<div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span><span class="preprocessor">#include &quot;DrawableObject.h&quot;</span></div>
 <div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="preprocessor">#include &quot;gtc/matrix_transform.hpp&quot;</span></div>
 <div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="preprocessor">#include &quot;gtc/type_ptr.hpp&quot;</span></div>
 <div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="preprocessor">#include &lt;string&gt;</span></div>
 <div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span> </div>
-<div class="foldopen" id="foldopen00008" data-start="{" data-end="};">
-<div class="line"><a id="l00008" name="l00008"></a><span class="lineno"><a class="line" href="class_image_object.html">    8</a></span><span class="keyword">class </span><a class="code hl_class" href="class_image_object.html">ImageObject</a> :<span class="keyword">public</span> <a class="code hl_class" href="class_drawable_object.html">DrawableObject</a></div>
-<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span>{</div>
-<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span>    <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> texture;</div>
-<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span> </div>
-<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span><span class="keyword">public</span>:</div>
-<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span>    <a class="code hl_function" href="class_image_object.html#a869fdc99746e6e3f9cc16dcc12faf04b">ImageObject</a>();</div>
-<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span>    <a class="code hl_function" href="class_image_object.html#a0e8ef2174a116908ab01269bd7078cc6">~ImageObject</a>();</div>
-<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span>    <span class="keywordtype">void</span> <a class="code hl_function" href="class_image_object.html#af6068f8a9b06233a8df8cded2e651c2f">SetTexture</a>(<span class="keywordtype">string</span> path);</div>
-<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span>    <span class="keywordtype">void</span> <a class="code hl_function" href="class_image_object.html#a4e1a150373ad2197c807538975c5c9ee">Render</a>(glm::mat4 globalModelTransform);</div>
-<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span>};</div>
+<div class="foldopen" id="foldopen00009" data-start="{" data-end="};">
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno"><a class="line" href="class_image_object.html">    9</a></span><span class="keyword">class </span><a class="code hl_class" href="class_image_object.html">ImageObject</a> :<span class="keyword">public</span> <a class="code hl_class" href="class_drawable_object.html">DrawableObject</a></div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span>{</div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span>    <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> texture;</div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span> </div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span><span class="keyword">public</span>:</div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span>    <a class="code hl_class" href="class_image_object.html">ImageObject</a>();</div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span>    <a class="code hl_class" href="class_image_object.html">~ImageObject</a>();</div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span>    <span class="keywordtype">void</span> SetTexture(<span class="keywordtype">string</span> path);</div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span>    <span class="keywordtype">void</span> Render(glm::mat4 globalModelTransform);</div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span>};</div>
 </div>
-<div class="ttc" id="a_drawable_object_8h_html"><div class="ttname"><a href="_drawable_object_8h.html">DrawableObject.h</a></div></div>
-<div class="ttc" id="aclass_drawable_object_html"><div class="ttname"><a href="class_drawable_object.html">DrawableObject</a></div><div class="ttdef"><b>Definition</b> DrawableObject.h:8</div></div>
-<div class="ttc" id="aclass_image_object_html"><div class="ttname"><a href="class_image_object.html">ImageObject</a></div><div class="ttdef"><b>Definition</b> ImageObject.h:9</div></div>
-<div class="ttc" id="aclass_image_object_html_a0e8ef2174a116908ab01269bd7078cc6"><div class="ttname"><a href="class_image_object.html#a0e8ef2174a116908ab01269bd7078cc6">ImageObject::~ImageObject</a></div><div class="ttdeci">~ImageObject()</div><div class="ttdef"><b>Definition</b> ImageObject.cpp:13</div></div>
-<div class="ttc" id="aclass_image_object_html_a4e1a150373ad2197c807538975c5c9ee"><div class="ttname"><a href="class_image_object.html#a4e1a150373ad2197c807538975c5c9ee">ImageObject::Render</a></div><div class="ttdeci">void Render(glm::mat4 globalModelTransform)</div><div class="ttdef"><b>Definition</b> ImageObject.cpp:22</div></div>
-<div class="ttc" id="aclass_image_object_html_a869fdc99746e6e3f9cc16dcc12faf04b"><div class="ttname"><a href="class_image_object.html#a869fdc99746e6e3f9cc16dcc12faf04b">ImageObject::ImageObject</a></div><div class="ttdeci">ImageObject()</div><div class="ttdef"><b>Definition</b> ImageObject.cpp:7</div></div>
-<div class="ttc" id="aclass_image_object_html_af6068f8a9b06233a8df8cded2e651c2f"><div class="ttname"><a href="class_image_object.html#af6068f8a9b06233a8df8cded2e651c2f">ImageObject::SetTexture</a></div><div class="ttdeci">void SetTexture(string path)</div><div class="ttdef"><b>Definition</b> ImageObject.cpp:17</div></div>
+<div class="ttc" id="aclass_drawable_object_html"><div class="ttname"><a href="class_drawable_object.html">DrawableObject</a></div><div class="ttdoc">The class for creating drawable object.</div><div class="ttdef"><b>Definition</b> DrawableObject.h:9</div></div>
+<div class="ttc" id="aclass_image_object_html"><div class="ttname"><a href="class_image_object.html">ImageObject</a></div><div class="ttdoc">The class for creating object that render using texture.</div><div class="ttdef"><b>Definition</b> ImageObject.h:10</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_6d4df9efd498d26f51c1f56f8b8733de.html">KrillEngine</a></li><li class="navelem"><a class="el" href="_image_object_8h.html">ImageObject.h</a></li>
+    <li class="navelem"><a class="el" href="dir_59da17abec228c27645b7992b0f149e7.html">KrillKrew</a></li><li class="navelem"><a class="el" href="dir_25c75a9f311d1ca54d5f2fe7c2cd0f03.html">KrillEngine</a></li><li class="navelem"><a class="el" href="dir_9e886aff71ad1017d2a9414a1b9a87c4.html">KrillEngine</a></li><li class="navelem"><b>ImageObject.h</b></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.12.0 </li>
   </ul>
 </div>

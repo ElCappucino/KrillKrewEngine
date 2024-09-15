@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.12.0"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>KrillKrewEngine: KrillEngine/Shader.h Source File</title>
+<title>KrillKrewEngine: KrillKrew/KrillEngine/KrillEngine/Shader.h Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -106,39 +106,39 @@ $(function(){initNavTree('_shader_8h_source.html',''); initResizable(true); });
   <div class="headertitle"><div class="title">Shader.h</div></div>
 </div><!--header-->
 <div class="contents">
-<a href="_shader_8h.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="preprocessor">#pragma once</span></div>
+<div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="preprocessor">#pragma once</span></div>
 <div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span> </div>
 <div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span><span class="preprocessor">#include &lt;string&gt;</span></div>
 <div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="preprocessor">#include &lt;GL\glew.h&gt;</span></div>
 <div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="keyword">using namespace </span>std;</div>
 <div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span> </div>
-<div class="foldopen" id="foldopen00007" data-start="{" data-end="};">
-<div class="line"><a id="l00007" name="l00007"></a><span class="lineno"><a class="line" href="class_shader.html">    7</a></span><span class="keyword">class </span><a class="code hl_class" href="class_shader.html">Shader</a></div>
-<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span>{</div>
-<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span>    GLuint shaderId;</div>
-<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span>    <span class="keywordtype">string</span> fileName;</div>
-<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span>    GLenum shaderType;</div>
-<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span> </div>
-<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span><span class="keyword">public</span>:</div>
-<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span>    GLuint <a class="code hl_function" href="class_shader.html#ae0dce08d0eed4dbc200c3c567ca00202">getShaderId</a>();</div>
-<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span>    <span class="keywordtype">bool</span> <a class="code hl_function" href="class_shader.html#a5c9c7faff990224de406f996b1068c6c">LoadSource</a>();</div>
-<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span>    <span class="keywordtype">void</span> <a class="code hl_function" href="class_shader.html#a226c40eb41d60afeaa149b8ea00ba35b">PrintShaderLog</a>();</div>
-<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span>    <a class="code hl_function" href="class_shader.html#af23ac266900ae0a0f02ed98747b19e9a">Shader</a>(<span class="keywordtype">string</span> fileName, GLenum shaderType);</div>
-<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span>    <a class="code hl_function" href="class_shader.html#aff01df87e8a102f270b5b135a295e59d">~Shader</a>();</div>
-<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span>};</div>
+<div class="foldopen" id="foldopen00008" data-start="{" data-end="};">
+<div class="line"><a id="l00008" name="l00008"></a><span class="lineno"><a class="line" href="class_shader.html">    8</a></span><span class="keyword">class </span><a class="code hl_class" href="class_shader.html">Shader</a></div>
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span>{</div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span>    GLuint shaderId;</div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span>    <span class="keywordtype">string</span> fileName;</div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span>    GLenum shaderType;</div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span> </div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span><span class="keyword">public</span>:</div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span>    GLuint <a class="code hl_function" href="class_shader.html#ae0dce08d0eed4dbc200c3c567ca00202">getShaderId</a>();</div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span>    <span class="keywordtype">bool</span> <a class="code hl_function" href="class_shader.html#a5c9c7faff990224de406f996b1068c6c">LoadSource</a>();</div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span>    <span class="keywordtype">void</span> <a class="code hl_function" href="class_shader.html#a226c40eb41d60afeaa149b8ea00ba35b">PrintShaderLog</a>();</div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span>    <a class="code hl_function" href="class_shader.html#af23ac266900ae0a0f02ed98747b19e9a">Shader</a>(<span class="keywordtype">string</span> fileName, GLenum shaderType);</div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span>    <a class="code hl_function" href="class_shader.html#aff01df87e8a102f270b5b135a295e59d">~Shader</a>();</div>
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span>};</div>
 </div>
-<div class="ttc" id="aclass_shader_html"><div class="ttname"><a href="class_shader.html">Shader</a></div><div class="ttdef"><b>Definition</b> Shader.h:8</div></div>
-<div class="ttc" id="aclass_shader_html_a226c40eb41d60afeaa149b8ea00ba35b"><div class="ttname"><a href="class_shader.html#a226c40eb41d60afeaa149b8ea00ba35b">Shader::PrintShaderLog</a></div><div class="ttdeci">void PrintShaderLog()</div><div class="ttdef"><b>Definition</b> Shader.cpp:58</div></div>
-<div class="ttc" id="aclass_shader_html_a5c9c7faff990224de406f996b1068c6c"><div class="ttname"><a href="class_shader.html#a5c9c7faff990224de406f996b1068c6c">Shader::LoadSource</a></div><div class="ttdeci">bool LoadSource()</div><div class="ttdef"><b>Definition</b> Shader.cpp:14</div></div>
-<div class="ttc" id="aclass_shader_html_ae0dce08d0eed4dbc200c3c567ca00202"><div class="ttname"><a href="class_shader.html#ae0dce08d0eed4dbc200c3c567ca00202">Shader::getShaderId</a></div><div class="ttdeci">GLuint getShaderId()</div><div class="ttdef"><b>Definition</b> Shader.cpp:9</div></div>
-<div class="ttc" id="aclass_shader_html_af23ac266900ae0a0f02ed98747b19e9a"><div class="ttname"><a href="class_shader.html#af23ac266900ae0a0f02ed98747b19e9a">Shader::Shader</a></div><div class="ttdeci">Shader(string fileName, GLenum shaderType)</div><div class="ttdef"><b>Definition</b> Shader.cpp:91</div></div>
-<div class="ttc" id="aclass_shader_html_aff01df87e8a102f270b5b135a295e59d"><div class="ttname"><a href="class_shader.html#aff01df87e8a102f270b5b135a295e59d">Shader::~Shader</a></div><div class="ttdeci">~Shader()</div><div class="ttdef"><b>Definition</b> Shader.cpp:97</div></div>
+<div class="ttc" id="aclass_shader_html"><div class="ttname"><a href="class_shader.html">Shader</a></div><div class="ttdoc">The class for store the shader data.</div><div class="ttdef"><b>Definition</b> Shader.h:9</div></div>
+<div class="ttc" id="aclass_shader_html_a226c40eb41d60afeaa149b8ea00ba35b"><div class="ttname"><a href="class_shader.html#a226c40eb41d60afeaa149b8ea00ba35b">Shader::PrintShaderLog</a></div><div class="ttdeci">void PrintShaderLog()</div><div class="ttdoc">The function for print the information log of shader.</div><div class="ttdef"><b>Definition</b> Shader.cpp:58</div></div>
+<div class="ttc" id="aclass_shader_html_a5c9c7faff990224de406f996b1068c6c"><div class="ttname"><a href="class_shader.html#a5c9c7faff990224de406f996b1068c6c">Shader::LoadSource</a></div><div class="ttdeci">bool LoadSource()</div><div class="ttdoc">The function using for reading shader information and setup shaderId.</div><div class="ttdef"><b>Definition</b> Shader.cpp:14</div></div>
+<div class="ttc" id="aclass_shader_html_ae0dce08d0eed4dbc200c3c567ca00202"><div class="ttname"><a href="class_shader.html#ae0dce08d0eed4dbc200c3c567ca00202">Shader::getShaderId</a></div><div class="ttdeci">GLuint getShaderId()</div><div class="ttdoc">The getter of the shader id.</div><div class="ttdef"><b>Definition</b> Shader.cpp:9</div></div>
+<div class="ttc" id="aclass_shader_html_af23ac266900ae0a0f02ed98747b19e9a"><div class="ttname"><a href="class_shader.html#af23ac266900ae0a0f02ed98747b19e9a">Shader::Shader</a></div><div class="ttdeci">Shader(string fileName, GLenum shaderType)</div><div class="ttdoc">The constructor.</div><div class="ttdef"><b>Definition</b> Shader.cpp:91</div></div>
+<div class="ttc" id="aclass_shader_html_aff01df87e8a102f270b5b135a295e59d"><div class="ttname"><a href="class_shader.html#aff01df87e8a102f270b5b135a295e59d">Shader::~Shader</a></div><div class="ttdeci">~Shader()</div><div class="ttdoc">The destructor.</div><div class="ttdef"><b>Definition</b> Shader.cpp:97</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_6d4df9efd498d26f51c1f56f8b8733de.html">KrillEngine</a></li><li class="navelem"><a class="el" href="_shader_8h.html">Shader.h</a></li>
+    <li class="navelem"><a class="el" href="dir_59da17abec228c27645b7992b0f149e7.html">KrillKrew</a></li><li class="navelem"><a class="el" href="dir_25c75a9f311d1ca54d5f2fe7c2cd0f03.html">KrillEngine</a></li><li class="navelem"><a class="el" href="dir_9e886aff71ad1017d2a9414a1b9a87c4.html">KrillEngine</a></li><li class="navelem"><b>Shader.h</b></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.12.0 </li>
   </ul>
 </div>

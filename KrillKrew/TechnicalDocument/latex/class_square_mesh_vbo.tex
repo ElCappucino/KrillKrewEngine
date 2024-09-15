@@ -2,6 +2,11 @@
 \hypertarget{class_square_mesh_vbo}{}\label{class_square_mesh_vbo}\index{SquareMeshVbo@{SquareMeshVbo}}
 
 
+The class for store the Vbo data of square mesh.  
+
+
+
+
 {\ttfamily \#include $<$Square\+Mesh\+Vbo.\+h$>$}
 
 Inheritance diagram for Square\+Mesh\+Vbo\+:\begin{figure}[H]
@@ -13,8 +18,6 @@ Inheritance diagram for Square\+Mesh\+Vbo\+:\begin{figure}[H]
 \doxysubsubsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-\mbox{\hyperlink{class_square_mesh_vbo_a9b20d1b9c5e643616fb0132fe4faa6a8}{Square\+Mesh\+Vbo}} ()
-\item 
 virtual string \mbox{\hyperlink{class_square_mesh_vbo_a8f20ac0e747c78bc2f8ca9faca35db9f}{Get\+Mesh\+Name}} ()
 \item 
 virtual void \mbox{\hyperlink{class_square_mesh_vbo_adbc9ffb50b34c14368b3eaaaf8700b7a}{Render}} ()
@@ -24,41 +27,34 @@ virtual void \mbox{\hyperlink{class_square_mesh_vbo_a162f1a09f8fd10d54958a55bd3a
 \doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{class_mesh_vbo}{Mesh\+Vbo}}}
 \begin{DoxyCompactItemize}
 \item 
-\mbox{\hyperlink{class_mesh_vbo_ab3ebfdcbf5045ab07a0fdc540c2ef4ae}{Mesh\+Vbo}} ()
+GLuint {\bfseries Get\+Pos\+Id} ()
 \item 
-GLuint \mbox{\hyperlink{class_mesh_vbo_ab8de0fb11a153863779cf0939e3b7513}{Get\+Pos\+Id}} ()
+GLuint {\bfseries Get\+Tex\+Id} ()
 \item 
-GLuint \mbox{\hyperlink{class_mesh_vbo_af88365133098f28d2b6afd7d4db0125b}{Get\+Tex\+Id}} ()
-\item 
-void \mbox{\hyperlink{class_mesh_vbo_a491b7cb2e94453c062c4ff756d67970e}{Set\+Attrib\+Id}} (GLuint pos\+Id, GLuint tex\+Id)
+void {\bfseries Set\+Attrib\+Id} (GLuint pos\+Id, GLuint tex\+Id)
 \end{DoxyCompactItemize}
 \doxysubsubsection*{Static Public Attributes}
 \begin{DoxyCompactItemize}
 \item 
-static string const \mbox{\hyperlink{class_square_mesh_vbo_a83f86004cb14b1e547dd8c5c0b76640b}{MESH\+\_\+\+NAME}} = "{}square"{}
+\Hypertarget{class_square_mesh_vbo_a83f86004cb14b1e547dd8c5c0b76640b}\label{class_square_mesh_vbo_a83f86004cb14b1e547dd8c5c0b76640b} 
+static string const {\bfseries MESH\+\_\+\+NAME} = "{}square"{}
 \end{DoxyCompactItemize}
 \doxysubsubsection*{Additional Inherited Members}
 \doxysubsection*{Protected Attributes inherited from \mbox{\hyperlink{class_mesh_vbo}{Mesh\+Vbo}}}
 \begin{DoxyCompactItemize}
 \item 
-GLuint \mbox{\hyperlink{class_mesh_vbo_a7b093ff56dceedfbcdfcdff526fe8a7a}{pos\+Vbo\+Id}} = -\/1
+GLuint {\bfseries pos\+Vbo\+Id} = -\/1
 \item 
-GLuint \mbox{\hyperlink{class_mesh_vbo_a7b5a216788ddc57f00b5d8b62361525d}{tex\+Vbo\+Id}} = -\/1
+GLuint {\bfseries tex\+Vbo\+Id} = -\/1
 \item 
-GLuint \mbox{\hyperlink{class_mesh_vbo_aab7ac9585bcd6d34ca4a0decdf0eca5c}{pos\+Attrib\+Id}} = -\/1
+GLuint {\bfseries pos\+Attrib\+Id} = -\/1
 \item 
-GLuint \mbox{\hyperlink{class_mesh_vbo_aed3031047d0fac5ca162b9fa796046be}{tex\+Attrib\+Id}} = -\/1
+GLuint {\bfseries tex\+Attrib\+Id} = -\/1
 \end{DoxyCompactItemize}
 
 
-\doxysubsection{Constructor \& Destructor Documentation}
-\Hypertarget{class_square_mesh_vbo_a9b20d1b9c5e643616fb0132fe4faa6a8}\index{SquareMeshVbo@{SquareMeshVbo}!SquareMeshVbo@{SquareMeshVbo}}
-\index{SquareMeshVbo@{SquareMeshVbo}!SquareMeshVbo@{SquareMeshVbo}}
-\doxysubsubsection{\texorpdfstring{SquareMeshVbo()}{SquareMeshVbo()}}
-{\footnotesize\ttfamily \label{class_square_mesh_vbo_a9b20d1b9c5e643616fb0132fe4faa6a8} 
-Square\+Mesh\+Vbo\+::\+Square\+Mesh\+Vbo (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
-
-
+\doxysubsection{Detailed Description}
+The class for store the Vbo data of square mesh. 
 
 \doxysubsection{Member Function Documentation}
 \Hypertarget{class_square_mesh_vbo_a8f20ac0e747c78bc2f8ca9faca35db9f}\index{SquareMeshVbo@{SquareMeshVbo}!GetMeshName@{GetMeshName}}
@@ -69,7 +65,7 @@ string Square\+Mesh\+Vbo\+::\+Get\+Mesh\+Name (\begin{DoxyParamCaption}{}{}\end{
 
 
 
-Implements \mbox{\hyperlink{class_mesh_vbo_a683bf0a5c94d77236ccfe86d89593d5e}{Mesh\+Vbo}}.
+Implements \mbox{\hyperlink{class_mesh_vbo}{Mesh\+Vbo}}.
 
 \Hypertarget{class_square_mesh_vbo_a162f1a09f8fd10d54958a55bd3ac33f0}\index{SquareMeshVbo@{SquareMeshVbo}!LoadData@{LoadData}}
 \index{LoadData@{LoadData}!SquareMeshVbo@{SquareMeshVbo}}
@@ -79,7 +75,7 @@ void Square\+Mesh\+Vbo\+::\+Load\+Data (\begin{DoxyParamCaption}{}{}\end{DoxyPar
 
 
 
-Implements \mbox{\hyperlink{class_mesh_vbo_a9586e9783a615dc20eb2f5b3935afbbf}{Mesh\+Vbo}}.
+Implements \mbox{\hyperlink{class_mesh_vbo}{Mesh\+Vbo}}.
 
 \Hypertarget{class_square_mesh_vbo_adbc9ffb50b34c14368b3eaaaf8700b7a}\index{SquareMeshVbo@{SquareMeshVbo}!Render@{Render}}
 \index{Render@{Render}!SquareMeshVbo@{SquareMeshVbo}}
@@ -89,14 +85,5 @@ void Square\+Mesh\+Vbo\+::\+Render (\begin{DoxyParamCaption}{}{}\end{DoxyParamCa
 
 
 
-Implements \mbox{\hyperlink{class_mesh_vbo_ac3f99afd959a389df1c7178518661373}{Mesh\+Vbo}}.
-
-
-
-\doxysubsection{Member Data Documentation}
-\Hypertarget{class_square_mesh_vbo_a83f86004cb14b1e547dd8c5c0b76640b}\index{SquareMeshVbo@{SquareMeshVbo}!MESH\_NAME@{MESH\_NAME}}
-\index{MESH\_NAME@{MESH\_NAME}!SquareMeshVbo@{SquareMeshVbo}}
-\doxysubsubsection{\texorpdfstring{MESH\_NAME}{MESH\_NAME}}
-{\footnotesize\ttfamily \label{class_square_mesh_vbo_a83f86004cb14b1e547dd8c5c0b76640b} 
-string const Square\+Mesh\+Vbo\+::\+MESH\+\_\+\+NAME = "{}square"{}\hspace{0.3cm}{\ttfamily [static]}}
+Implements \mbox{\hyperlink{class_mesh_vbo}{Mesh\+Vbo}}.
 

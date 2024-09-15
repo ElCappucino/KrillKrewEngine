@@ -1,37 +1,37 @@
 \doxysection{Game\+State\+Controller.\+h}
-\hypertarget{_game_state_controller_8h_source}{}\label{_game_state_controller_8h_source}\index{KrillEngine/GameStateController.h@{KrillEngine/GameStateController.h}}
-\mbox{\hyperlink{_game_state_controller_8h}{Go to the documentation of this file.}}
+\hypertarget{_game_state_controller_8h_source}{}\label{_game_state_controller_8h_source}\index{KrillKrew/KrillEngine/KrillEngine/GameStateController.h@{KrillKrew/KrillEngine/KrillEngine/GameStateController.h}}
+
 \begin{DoxyCode}{0}
 \DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
 \DoxyCodeLine{00002\ }
-\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_game_state_list_8h}{GameStateList.h}}"{}}}
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ "{}GameStateList.h"{}}}
 \DoxyCodeLine{00004\ }
 \DoxyCodeLine{00005\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_level}{Level}};}
 \DoxyCodeLine{00006\ }
-\DoxyCodeLine{00007\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_game_state_controller}{GameStateController}}}
-\DoxyCodeLine{00008\ \{}
-\DoxyCodeLine{00009\ \textcolor{keyword}{private}:}
-\DoxyCodeLine{00010\ \ \ \ \ \mbox{\hyperlink{class_level}{Level}}*\ currentLevel;}
-\DoxyCodeLine{00011\ }
-\DoxyCodeLine{00012\ \textcolor{keyword}{public}:}
-\DoxyCodeLine{00013\ }
-\DoxyCodeLine{00014\ \ \ \ \ \mbox{\hyperlink{_game_state_list_8h_a7899b65f1ea0f655e4bbf8d2a5714285}{GameState}}\ \mbox{\hyperlink{class_game_state_controller_a29921f0c8d663997d7335a127fffe4f6}{gameStateCurr}};}
-\DoxyCodeLine{00015\ \ \ \ \ \mbox{\hyperlink{_game_state_list_8h_a7899b65f1ea0f655e4bbf8d2a5714285}{GameState}}\ \mbox{\hyperlink{class_game_state_controller_afb6a7127932213c43aca54102d9803d4}{gameStatePrev}};}
-\DoxyCodeLine{00016\ \ \ \ \ \mbox{\hyperlink{_game_state_list_8h_a7899b65f1ea0f655e4bbf8d2a5714285}{GameState}}\ \mbox{\hyperlink{class_game_state_controller_a571f84a92c0a7bee3fb83e744ee2aee8}{gameStateNext}};}
-\DoxyCodeLine{00017\ \ \ \ \ }
-\DoxyCodeLine{00018\ }
-\DoxyCodeLine{00019\ \ \ \ \ \mbox{\hyperlink{class_game_state_controller_a9a3b16878733c7e4b5ee82f553e1e448}{GameStateController}}();}
-\DoxyCodeLine{00020\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_game_state_controller_ac5881b2b81a2c42f74c4fce8d44a6abf}{Init}}(\mbox{\hyperlink{_game_state_list_8h_a7899b65f1ea0f655e4bbf8d2a5714285}{GameState}}\ gameStateInit);}
-\DoxyCodeLine{00021\ }
-\DoxyCodeLine{00022\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_game_state_controller_afdc6e70c41968b49906c7df700d414e3}{LoadLevel}}();}
-\DoxyCodeLine{00023\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_game_state_controller_a98cadebcefec8b79ffba19475eddcc13}{InitLevel}}();}
-\DoxyCodeLine{00024\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_game_state_controller_a9ac91ec5a9dceb805efb3c82bbab62c1}{UpdateLevel}}();}
-\DoxyCodeLine{00025\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_game_state_controller_afb1b58c2a574bfcc174d8cdcd0d4ab8d}{DrawLevel}}();}
-\DoxyCodeLine{00026\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_game_state_controller_a63f464dff07ff5b9a316cdef6b288a75}{Freelevel}}();}
-\DoxyCodeLine{00027\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_game_state_controller_a33855730ef98224c789d246b65d828ab}{UnloadLevel}}();}
-\DoxyCodeLine{00028\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_game_state_controller_a98fa23854cf938269787f8d32d3c1564}{HandleKeyLevel}}(\textcolor{keywordtype}{char}\ key);}
-\DoxyCodeLine{00029\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_game_state_controller_ae902bccb45f33b855a028427a471575d}{HandleMouseLevel}}(\textcolor{keywordtype}{int}\ type,\ \textcolor{keywordtype}{int}\ x,\ \textcolor{keywordtype}{int}\ y);}
-\DoxyCodeLine{00030\ }
-\DoxyCodeLine{00031\ \};}
+\DoxyCodeLine{00008\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_game_state_controller}{GameStateController}}}
+\DoxyCodeLine{00009\ \{}
+\DoxyCodeLine{00010\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00011\ \ \ \ \ \mbox{\hyperlink{class_level}{Level}}*\ currentLevel;}
+\DoxyCodeLine{00012\ }
+\DoxyCodeLine{00013\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00014\ }
+\DoxyCodeLine{00015\ \ \ \ \ GameState\ gameStateCurr;}
+\DoxyCodeLine{00016\ \ \ \ \ GameState\ gameStatePrev;}
+\DoxyCodeLine{00017\ \ \ \ \ GameState\ gameStateNext;}
+\DoxyCodeLine{00018\ \ \ \ \ }
+\DoxyCodeLine{00019\ }
+\DoxyCodeLine{00020\ \ \ \ \ \mbox{\hyperlink{class_game_state_controller}{GameStateController}}();}
+\DoxyCodeLine{00021\ \ \ \ \ \textcolor{keywordtype}{void}\ Init(GameState\ gameStateInit);}
+\DoxyCodeLine{00022\ }
+\DoxyCodeLine{00023\ \ \ \ \ \textcolor{keywordtype}{void}\ LoadLevel();}
+\DoxyCodeLine{00024\ \ \ \ \ \textcolor{keywordtype}{void}\ InitLevel();}
+\DoxyCodeLine{00025\ \ \ \ \ \textcolor{keywordtype}{void}\ UpdateLevel();}
+\DoxyCodeLine{00026\ \ \ \ \ \textcolor{keywordtype}{void}\ DrawLevel();}
+\DoxyCodeLine{00027\ \ \ \ \ \textcolor{keywordtype}{void}\ Freelevel();}
+\DoxyCodeLine{00028\ \ \ \ \ \textcolor{keywordtype}{void}\ UnloadLevel();}
+\DoxyCodeLine{00029\ \ \ \ \ \textcolor{keywordtype}{void}\ HandleKeyLevel(\textcolor{keywordtype}{char}\ key);}
+\DoxyCodeLine{00030\ \ \ \ \ \textcolor{keywordtype}{void}\ HandleMouseLevel(\textcolor{keywordtype}{int}\ type,\ \textcolor{keywordtype}{int}\ x,\ \textcolor{keywordtype}{int}\ y);}
+\DoxyCodeLine{00031\ }
+\DoxyCodeLine{00032\ \};}
 
 \end{DoxyCode}

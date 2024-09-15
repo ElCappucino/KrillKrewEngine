@@ -1,5 +1,6 @@
 var searchData=
 [
-  ['main_0',['main',['../_krill_engine_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4',1,'main():&#160;KrillEngine.cpp'],['../_main_8cpp.html#a0ddf1224851353fc92bfbff6f499fa97',1,'main(int argc, char *argv[]):&#160;Main.cpp']]],
-  ['meshvbo_1',['MeshVbo',['../class_mesh_vbo.html#ab3ebfdcbf5045ab07a0fdc540c2ef4ae',1,'MeshVbo']]]
+  ['_7ecombineobject_0',['~CombineObject',['../class_combine_object.html#ae785bfd31113fe856f8cef101c461a81',1,'CombineObject']]],
+  ['_7eglrenderer_1',['~GLRenderer',['../class_g_l_renderer.html#ad5da817f69b340641532b763aefc698f',1,'GLRenderer']]],
+  ['_7eshader_2',['~Shader',['../class_shader.html#aff01df87e8a102f270b5b135a295e59d',1,'Shader']]]
 ];

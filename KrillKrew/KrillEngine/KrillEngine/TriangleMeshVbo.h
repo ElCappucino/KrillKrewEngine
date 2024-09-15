@@ -2,6 +2,7 @@
 
 #include "MeshVbo.h"
 
+/// @brief The class for store the Vbo data of triangle mesh
 class TriangleMeshVbo : public MeshVbo {
 protected:
 

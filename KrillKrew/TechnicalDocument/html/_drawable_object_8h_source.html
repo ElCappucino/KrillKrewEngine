@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.12.0"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>KrillKrewEngine: KrillEngine/DrawableObject.h Source File</title>
+<title>KrillKrewEngine: KrillKrew/KrillEngine/KrillEngine/DrawableObject.h Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -106,50 +106,41 @@ $(function(){initNavTree('_drawable_object_8h_source.html',''); initResizable(tr
   <div class="headertitle"><div class="title">DrawableObject.h</div></div>
 </div><!--header-->
 <div class="contents">
-<a href="_drawable_object_8h.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="preprocessor">#pragma once</span></div>
+<div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="preprocessor">#pragma once</span></div>
 <div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="preprocessor">#include &quot;glm.hpp&quot;</span></div>
 <div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span><span class="preprocessor">#include &lt;vector&gt;</span></div>
 <div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span> </div>
 <div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="keyword">using namespace </span>std;</div>
 <div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span> </div>
-<div class="foldopen" id="foldopen00007" data-start="{" data-end="};">
-<div class="line"><a id="l00007" name="l00007"></a><span class="lineno"><a class="line" href="class_drawable_object.html">    7</a></span><span class="keyword">class </span><a class="code hl_class" href="class_drawable_object.html">DrawableObject</a></div>
-<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span>{</div>
-<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span><span class="keyword">protected</span>:</div>
-<div class="line"><a id="l00010" name="l00010"></a><span class="lineno"><a class="line" href="class_drawable_object.html#a6aa0e674b5a140de7fd5afb95d7a680e">   10</a></span>    glm::vec3 <a class="code hl_variable" href="class_drawable_object.html#a6aa0e674b5a140de7fd5afb95d7a680e">pos</a>;</div>
-<div class="line"><a id="l00011" name="l00011"></a><span class="lineno"><a class="line" href="class_drawable_object.html#a1dba675b2b1fe6c160da82f79ea58027">   11</a></span>    glm::vec3 <a class="code hl_variable" href="class_drawable_object.html#a1dba675b2b1fe6c160da82f79ea58027">size</a>;</div>
-<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span> </div>
-<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span><span class="keyword">public</span>:</div>
-<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span>    glm::mat4 <a class="code hl_function" href="class_drawable_object.html#a86f155d814b5e9b34b7eb72ed4dd795d">getTransform</a>();</div>
-<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span> </div>
-<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span>    <a class="code hl_function" href="class_drawable_object.html#ac41cf4bfc6ebce29e0c1123f2c067cf0">DrawableObject</a>();</div>
-<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span>    <a class="code hl_function" href="class_drawable_object.html#a4f324725016a6a5ad312eff92e6f4576">~DrawableObject</a>();</div>
-<div class="line"><a id="l00018" name="l00018"></a><span class="lineno"><a class="line" href="class_drawable_object.html#a0162efd85614cdf9aac0475aa738bc18">   18</a></span>    <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code hl_function" href="class_drawable_object.html#a0162efd85614cdf9aac0475aa738bc18">Render</a>(glm::mat4 globalModelTransform) = 0;</div>
-<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span>    <span class="keywordtype">void</span> <a class="code hl_function" href="class_drawable_object.html#a12876534224a9e42238ae726261b67ca">SetSize</a>(<span class="keywordtype">float</span> sizeX, <span class="keywordtype">float</span> sizeY);</div>
-<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span>    <span class="keywordtype">void</span> <a class="code hl_function" href="class_drawable_object.html#adc269b02edf37e2423a425bba0b107af">SetPosition</a>(glm::vec3 newPosition);</div>
-<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span>    <span class="keywordtype">void</span> <a class="code hl_function" href="class_drawable_object.html#a526365f23ad585ededf384d7c3e870fd">Translate</a>(glm::vec3 moveDistance);</div>
-<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span> </div>
-<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span>    <span class="comment">//Rotate, Scale ???</span></div>
-<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span> </div>
-<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span>};</div>
+<div class="foldopen" id="foldopen00008" data-start="{" data-end="};">
+<div class="line"><a id="l00008" name="l00008"></a><span class="lineno"><a class="line" href="class_drawable_object.html">    8</a></span><span class="keyword">class </span><a class="code hl_class" href="class_drawable_object.html">DrawableObject</a></div>
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span>{</div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><span class="keyword">protected</span>:</div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span>    glm::vec3 pos;</div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span>    glm::vec3 size;</div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span> </div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span><span class="keyword">public</span>:</div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span>    glm::mat4 getTransform();</div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span> </div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span>    <a class="code hl_class" href="class_drawable_object.html">DrawableObject</a>();</div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span>    <a class="code hl_class" href="class_drawable_object.html">~DrawableObject</a>();</div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span>    <span class="keyword">virtual</span> <span class="keywordtype">void</span> Render(glm::mat4 globalModelTransform) = 0;</div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span>    <span class="keywordtype">void</span> SetSize(<span class="keywordtype">float</span> sizeX, <span class="keywordtype">float</span> sizeY);</div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span>    <span class="keywordtype">void</span> SetPosition(glm::vec3 newPosition);</div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span>    <span class="keywordtype">void</span> Translate(glm::vec3 moveDistance);</div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span> </div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span>    <span class="comment">//Rotate, Scale ???</span></div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span> </div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span>};</div>
 </div>
-<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span> </div>
-<div class="ttc" id="aclass_drawable_object_html"><div class="ttname"><a href="class_drawable_object.html">DrawableObject</a></div><div class="ttdef"><b>Definition</b> DrawableObject.h:8</div></div>
-<div class="ttc" id="aclass_drawable_object_html_a0162efd85614cdf9aac0475aa738bc18"><div class="ttname"><a href="class_drawable_object.html#a0162efd85614cdf9aac0475aa738bc18">DrawableObject::Render</a></div><div class="ttdeci">virtual void Render(glm::mat4 globalModelTransform)=0</div></div>
-<div class="ttc" id="aclass_drawable_object_html_a12876534224a9e42238ae726261b67ca"><div class="ttname"><a href="class_drawable_object.html#a12876534224a9e42238ae726261b67ca">DrawableObject::SetSize</a></div><div class="ttdeci">void SetSize(float sizeX, float sizeY)</div><div class="ttdef"><b>Definition</b> DrawableObject.cpp:28</div></div>
-<div class="ttc" id="aclass_drawable_object_html_a1dba675b2b1fe6c160da82f79ea58027"><div class="ttname"><a href="class_drawable_object.html#a1dba675b2b1fe6c160da82f79ea58027">DrawableObject::size</a></div><div class="ttdeci">glm::vec3 size</div><div class="ttdef"><b>Definition</b> DrawableObject.h:11</div></div>
-<div class="ttc" id="aclass_drawable_object_html_a4f324725016a6a5ad312eff92e6f4576"><div class="ttname"><a href="class_drawable_object.html#a4f324725016a6a5ad312eff92e6f4576">DrawableObject::~DrawableObject</a></div><div class="ttdeci">~DrawableObject()</div><div class="ttdef"><b>Definition</b> DrawableObject.cpp:24</div></div>
-<div class="ttc" id="aclass_drawable_object_html_a526365f23ad585ededf384d7c3e870fd"><div class="ttname"><a href="class_drawable_object.html#a526365f23ad585ededf384d7c3e870fd">DrawableObject::Translate</a></div><div class="ttdeci">void Translate(glm::vec3 moveDistance)</div><div class="ttdef"><b>Definition</b> DrawableObject.cpp:38</div></div>
-<div class="ttc" id="aclass_drawable_object_html_a6aa0e674b5a140de7fd5afb95d7a680e"><div class="ttname"><a href="class_drawable_object.html#a6aa0e674b5a140de7fd5afb95d7a680e">DrawableObject::pos</a></div><div class="ttdeci">glm::vec3 pos</div><div class="ttdef"><b>Definition</b> DrawableObject.h:10</div></div>
-<div class="ttc" id="aclass_drawable_object_html_a86f155d814b5e9b34b7eb72ed4dd795d"><div class="ttname"><a href="class_drawable_object.html#a86f155d814b5e9b34b7eb72ed4dd795d">DrawableObject::getTransform</a></div><div class="ttdeci">glm::mat4 getTransform()</div><div class="ttdef"><b>Definition</b> DrawableObject.cpp:9</div></div>
-<div class="ttc" id="aclass_drawable_object_html_ac41cf4bfc6ebce29e0c1123f2c067cf0"><div class="ttname"><a href="class_drawable_object.html#ac41cf4bfc6ebce29e0c1123f2c067cf0">DrawableObject::DrawableObject</a></div><div class="ttdeci">DrawableObject()</div><div class="ttdef"><b>Definition</b> DrawableObject.cpp:17</div></div>
-<div class="ttc" id="aclass_drawable_object_html_adc269b02edf37e2423a425bba0b107af"><div class="ttname"><a href="class_drawable_object.html#adc269b02edf37e2423a425bba0b107af">DrawableObject::SetPosition</a></div><div class="ttdeci">void SetPosition(glm::vec3 newPosition)</div><div class="ttdef"><b>Definition</b> DrawableObject.cpp:33</div></div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span> </div>
+<div class="ttc" id="aclass_drawable_object_html"><div class="ttname"><a href="class_drawable_object.html">DrawableObject</a></div><div class="ttdoc">The class for creating drawable object.</div><div class="ttdef"><b>Definition</b> DrawableObject.h:9</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_6d4df9efd498d26f51c1f56f8b8733de.html">KrillEngine</a></li><li class="navelem"><a class="el" href="_drawable_object_8h.html">DrawableObject.h</a></li>
+    <li class="navelem"><a class="el" href="dir_59da17abec228c27645b7992b0f149e7.html">KrillKrew</a></li><li class="navelem"><a class="el" href="dir_25c75a9f311d1ca54d5f2fe7c2cd0f03.html">KrillEngine</a></li><li class="navelem"><a class="el" href="dir_9e886aff71ad1017d2a9414a1b9a87c4.html">KrillEngine</a></li><li class="navelem"><b>DrawableObject.h</b></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.12.0 </li>
   </ul>
 </div>

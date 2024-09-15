@@ -1,6 +1,7 @@
 #pragma once
 #include "Level.h"
 
+/// @brief The class for level inherit test from P'tiam
 class LevelTest : public Level
 {
 private:

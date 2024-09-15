@@ -110,22 +110,32 @@ $(function(){initNavTree('class_shader.html',''); initResizable(true); });
 </div><!--header-->
 <div class="contents">
 
+<p>The class for store the shader data.  
+ <a href="#details">More...</a></p>
+
 <p><code>#include &lt;<a class="el" href="_shader_8h_source.html">Shader.h</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:ae0dce08d0eed4dbc200c3c567ca00202" id="r_ae0dce08d0eed4dbc200c3c567ca00202"><td class="memItemLeft" align="right" valign="top">GLuint&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae0dce08d0eed4dbc200c3c567ca00202">getShaderId</a> ()</td></tr>
+<tr class="memdesc:ae0dce08d0eed4dbc200c3c567ca00202"><td class="mdescLeft">&#160;</td><td class="mdescRight">The getter of the shader id.  <br /></td></tr>
 <tr class="separator:ae0dce08d0eed4dbc200c3c567ca00202"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5c9c7faff990224de406f996b1068c6c" id="r_a5c9c7faff990224de406f996b1068c6c"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a5c9c7faff990224de406f996b1068c6c">LoadSource</a> ()</td></tr>
+<tr class="memdesc:a5c9c7faff990224de406f996b1068c6c"><td class="mdescLeft">&#160;</td><td class="mdescRight">The function using for reading shader information and setup shaderId.  <br /></td></tr>
 <tr class="separator:a5c9c7faff990224de406f996b1068c6c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a226c40eb41d60afeaa149b8ea00ba35b" id="r_a226c40eb41d60afeaa149b8ea00ba35b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a226c40eb41d60afeaa149b8ea00ba35b">PrintShaderLog</a> ()</td></tr>
+<tr class="memdesc:a226c40eb41d60afeaa149b8ea00ba35b"><td class="mdescLeft">&#160;</td><td class="mdescRight">The function for print the information log of shader.  <br /></td></tr>
 <tr class="separator:a226c40eb41d60afeaa149b8ea00ba35b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af23ac266900ae0a0f02ed98747b19e9a" id="r_af23ac266900ae0a0f02ed98747b19e9a"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af23ac266900ae0a0f02ed98747b19e9a">Shader</a> (string fileName, GLenum shaderType)</td></tr>
+<tr class="memdesc:af23ac266900ae0a0f02ed98747b19e9a"><td class="mdescLeft">&#160;</td><td class="mdescRight">The constructor.  <br /></td></tr>
 <tr class="separator:af23ac266900ae0a0f02ed98747b19e9a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aff01df87e8a102f270b5b135a295e59d" id="r_aff01df87e8a102f270b5b135a295e59d"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aff01df87e8a102f270b5b135a295e59d">~Shader</a> ()</td></tr>
+<tr class="memdesc:aff01df87e8a102f270b5b135a295e59d"><td class="mdescLeft">&#160;</td><td class="mdescRight">The destructor.  <br /></td></tr>
 <tr class="separator:aff01df87e8a102f270b5b135a295e59d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>The class for store the shader data. </p>
+</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="af23ac266900ae0a0f02ed98747b19e9a" name="af23ac266900ae0a0f02ed98747b19e9a"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#af23ac266900ae0a0f02ed98747b19e9a">&#9670;&#160;</a></span>Shader()</h2>
 
@@ -145,6 +155,16 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>The constructor. </p>
+<p>Using for setup the shader information. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">fileName</td><td>describes shader information's file name. </td></tr>
+    <tr><td class="paramname">shaderType</td><td>describes shader type using GLenum type. <br  />
+ </td></tr>
+  </table>
+  </dd>
+</dl>
+
 </div>
 </div>
 <a id="aff01df87e8a102f270b5b135a295e59d" name="aff01df87e8a102f270b5b135a295e59d"></a>
@@ -161,6 +181,9 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>The destructor. </p>
+<dl class="section note"><dt>Note</dt><dd>There is no any command. </dd></dl>
 
 </div>
 </div>
@@ -180,6 +203,9 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>The getter of the shader id. </p>
+<dl class="section return"><dt>Returns</dt><dd>it will return the shader id. </dd></dl>
+
 </div>
 </div>
 <a id="a5c9c7faff990224de406f996b1068c6c" name="a5c9c7faff990224de406f996b1068c6c"></a>
@@ -197,6 +223,9 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>The function using for reading shader information and setup shaderId. </p>
+<dl class="section return"><dt>Returns</dt><dd>This function returns true if it compile completely. false if there is error. </dd></dl>
+
 </div>
 </div>
 <a id="a226c40eb41d60afeaa149b8ea00ba35b" name="a226c40eb41d60afeaa149b8ea00ba35b"></a>
@@ -213,6 +242,9 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>The function for print the information log of shader. </p>
+<p>It will print error if it's not a shader. </p>
 
 </div>
 </div>

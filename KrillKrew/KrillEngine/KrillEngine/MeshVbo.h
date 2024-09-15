@@ -5,6 +5,7 @@
 
 using namespace std;
 
+/// @brief The class for store the Vbo data
 class MeshVbo {
 protected:
 	GLuint posVboId = -1;

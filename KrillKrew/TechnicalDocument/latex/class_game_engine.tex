@@ -2,102 +2,53 @@
 \hypertarget{class_game_engine}{}\label{class_game_engine}\index{GameEngine@{GameEngine}}
 
 
+The class for creating game engine instance to control the renderer and game state.  
+
+
+
+
 {\ttfamily \#include $<$Game\+Engine.\+h$>$}
 
 \doxysubsubsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-\mbox{\hyperlink{class_g_l_renderer}{GLRenderer}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{class_game_engine_aa020e69849d7b431197064cb98afd81b}{Get\+Renderer}} ()
+\Hypertarget{class_game_engine_aa020e69849d7b431197064cb98afd81b}\label{class_game_engine_aa020e69849d7b431197064cb98afd81b} 
+\mbox{\hyperlink{class_g_l_renderer}{GLRenderer}} \texorpdfstring{$\ast$}{*} {\bfseries Get\+Renderer} ()
 \item 
-\mbox{\hyperlink{class_game_state_controller}{Game\+State\+Controller}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{class_game_engine_ae01b0881f12bd7b6425356b004bfca3b}{Get\+State\+Controller}} ()
+\Hypertarget{class_game_engine_ae01b0881f12bd7b6425356b004bfca3b}\label{class_game_engine_ae01b0881f12bd7b6425356b004bfca3b} 
+\mbox{\hyperlink{class_game_state_controller}{Game\+State\+Controller}} \texorpdfstring{$\ast$}{*} {\bfseries Get\+State\+Controller} ()
 \item 
-void \mbox{\hyperlink{class_game_engine_a110e8e23be4d3012150db01b01053008}{Init}} (int width, int height)
+\Hypertarget{class_game_engine_a110e8e23be4d3012150db01b01053008}\label{class_game_engine_a110e8e23be4d3012150db01b01053008} 
+void {\bfseries Init} (int width, int height)
 \item 
-void \mbox{\hyperlink{class_game_engine_a1fed893fa34148e75378c8d9d3f975e9}{Set\+Draw\+Area}} (float left, float right, float bottom, float top)
+\Hypertarget{class_game_engine_a1fed893fa34148e75378c8d9d3f975e9}\label{class_game_engine_a1fed893fa34148e75378c8d9d3f975e9} 
+void {\bfseries Set\+Draw\+Area} (float left, float right, float bottom, float top)
 \item 
-void \mbox{\hyperlink{class_game_engine_a9c21cfdff5e4ea563e470f365c1c13f1}{Set\+Background\+Color}} (float r, float g, float b)
+\Hypertarget{class_game_engine_a9c21cfdff5e4ea563e470f365c1c13f1}\label{class_game_engine_a9c21cfdff5e4ea563e470f365c1c13f1} 
+void {\bfseries Set\+Background\+Color} (float r, float g, float b)
 \item 
-void \mbox{\hyperlink{class_game_engine_a95ccac15772ea81775446abad4b114fb}{Add\+Mesh}} (string name, \mbox{\hyperlink{class_mesh_vbo}{Mesh\+Vbo}} \texorpdfstring{$\ast$}{*}mesh)
+\Hypertarget{class_game_engine_a95ccac15772ea81775446abad4b114fb}\label{class_game_engine_a95ccac15772ea81775446abad4b114fb} 
+void {\bfseries Add\+Mesh} (string name, \mbox{\hyperlink{class_mesh_vbo}{Mesh\+Vbo}} \texorpdfstring{$\ast$}{*}mesh)
 \item 
-void \mbox{\hyperlink{class_game_engine_abb72be73b87858b2ff22f3984f09c5b4}{Clear\+Mesh}} ()
+\Hypertarget{class_game_engine_abb72be73b87858b2ff22f3984f09c5b4}\label{class_game_engine_abb72be73b87858b2ff22f3984f09c5b4} 
+void {\bfseries Clear\+Mesh} ()
 \item 
-void \mbox{\hyperlink{class_game_engine_a56dd8442785c937298646540c90861e1}{Render}} (vector$<$ \mbox{\hyperlink{class_drawable_object}{Drawable\+Object}} \texorpdfstring{$\ast$}{*} $>$ render\+Objects)
+\Hypertarget{class_game_engine_a56dd8442785c937298646540c90861e1}\label{class_game_engine_a56dd8442785c937298646540c90861e1} 
+void {\bfseries Render} (vector$<$ \mbox{\hyperlink{class_drawable_object}{Drawable\+Object}} \texorpdfstring{$\ast$}{*} $>$ render\+Objects)
 \item 
-int \mbox{\hyperlink{class_game_engine_ac8f7c0fbf2b5573ead70ff287fcb957c}{Get\+Window\+Width}} ()
+\Hypertarget{class_game_engine_ac8f7c0fbf2b5573ead70ff287fcb957c}\label{class_game_engine_ac8f7c0fbf2b5573ead70ff287fcb957c} 
+int {\bfseries Get\+Window\+Width} ()
 \item 
-int \mbox{\hyperlink{class_game_engine_a99fb321c7465f9cd7e5a7c364c274be9}{Get\+Window\+Height}} ()
+\Hypertarget{class_game_engine_a99fb321c7465f9cd7e5a7c364c274be9}\label{class_game_engine_a99fb321c7465f9cd7e5a7c364c274be9} 
+int {\bfseries Get\+Window\+Height} ()
 \end{DoxyCompactItemize}
 \doxysubsubsection*{Static Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-static \mbox{\hyperlink{class_game_engine}{Game\+Engine}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{class_game_engine_a3d6962cd9df4dfd96ede3a96c961f8d3}{Get\+Instance}} ()
+\Hypertarget{class_game_engine_a3d6962cd9df4dfd96ede3a96c961f8d3}\label{class_game_engine_a3d6962cd9df4dfd96ede3a96c961f8d3} 
+static \mbox{\hyperlink{class_game_engine}{Game\+Engine}} \texorpdfstring{$\ast$}{*} {\bfseries Get\+Instance} ()
 \end{DoxyCompactItemize}
 
 
-\doxysubsection{Member Function Documentation}
-\Hypertarget{class_game_engine_a95ccac15772ea81775446abad4b114fb}\index{GameEngine@{GameEngine}!AddMesh@{AddMesh}}
-\index{AddMesh@{AddMesh}!GameEngine@{GameEngine}}
-\doxysubsubsection{\texorpdfstring{AddMesh()}{AddMesh()}}
-{\footnotesize\ttfamily \label{class_game_engine_a95ccac15772ea81775446abad4b114fb} 
-void Game\+Engine\+::\+Add\+Mesh (\begin{DoxyParamCaption}\item[{string}]{name}{, }\item[{\mbox{\hyperlink{class_mesh_vbo}{Mesh\+Vbo}} \texorpdfstring{$\ast$}{*}}]{mesh}{}\end{DoxyParamCaption})}
-
-\Hypertarget{class_game_engine_abb72be73b87858b2ff22f3984f09c5b4}\index{GameEngine@{GameEngine}!ClearMesh@{ClearMesh}}
-\index{ClearMesh@{ClearMesh}!GameEngine@{GameEngine}}
-\doxysubsubsection{\texorpdfstring{ClearMesh()}{ClearMesh()}}
-{\footnotesize\ttfamily \label{class_game_engine_abb72be73b87858b2ff22f3984f09c5b4} 
-void Game\+Engine\+::\+Clear\+Mesh (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
-
-\Hypertarget{class_game_engine_a3d6962cd9df4dfd96ede3a96c961f8d3}\index{GameEngine@{GameEngine}!GetInstance@{GetInstance}}
-\index{GetInstance@{GetInstance}!GameEngine@{GameEngine}}
-\doxysubsubsection{\texorpdfstring{GetInstance()}{GetInstance()}}
-{\footnotesize\ttfamily \label{class_game_engine_a3d6962cd9df4dfd96ede3a96c961f8d3} 
-\mbox{\hyperlink{class_game_engine}{Game\+Engine}} \texorpdfstring{$\ast$}{*} Game\+Engine\+::\+Get\+Instance (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
-
-\Hypertarget{class_game_engine_aa020e69849d7b431197064cb98afd81b}\index{GameEngine@{GameEngine}!GetRenderer@{GetRenderer}}
-\index{GetRenderer@{GetRenderer}!GameEngine@{GameEngine}}
-\doxysubsubsection{\texorpdfstring{GetRenderer()}{GetRenderer()}}
-{\footnotesize\ttfamily \label{class_game_engine_aa020e69849d7b431197064cb98afd81b} 
-\mbox{\hyperlink{class_g_l_renderer}{GLRenderer}} \texorpdfstring{$\ast$}{*} Game\+Engine\+::\+Get\+Renderer (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
-
-\Hypertarget{class_game_engine_ae01b0881f12bd7b6425356b004bfca3b}\index{GameEngine@{GameEngine}!GetStateController@{GetStateController}}
-\index{GetStateController@{GetStateController}!GameEngine@{GameEngine}}
-\doxysubsubsection{\texorpdfstring{GetStateController()}{GetStateController()}}
-{\footnotesize\ttfamily \label{class_game_engine_ae01b0881f12bd7b6425356b004bfca3b} 
-\mbox{\hyperlink{class_game_state_controller}{Game\+State\+Controller}} \texorpdfstring{$\ast$}{*} Game\+Engine\+::\+Get\+State\+Controller (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
-
-\Hypertarget{class_game_engine_a99fb321c7465f9cd7e5a7c364c274be9}\index{GameEngine@{GameEngine}!GetWindowHeight@{GetWindowHeight}}
-\index{GetWindowHeight@{GetWindowHeight}!GameEngine@{GameEngine}}
-\doxysubsubsection{\texorpdfstring{GetWindowHeight()}{GetWindowHeight()}}
-{\footnotesize\ttfamily \label{class_game_engine_a99fb321c7465f9cd7e5a7c364c274be9} 
-int Game\+Engine\+::\+Get\+Window\+Height (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
-
-\Hypertarget{class_game_engine_ac8f7c0fbf2b5573ead70ff287fcb957c}\index{GameEngine@{GameEngine}!GetWindowWidth@{GetWindowWidth}}
-\index{GetWindowWidth@{GetWindowWidth}!GameEngine@{GameEngine}}
-\doxysubsubsection{\texorpdfstring{GetWindowWidth()}{GetWindowWidth()}}
-{\footnotesize\ttfamily \label{class_game_engine_ac8f7c0fbf2b5573ead70ff287fcb957c} 
-int Game\+Engine\+::\+Get\+Window\+Width (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
-
-\Hypertarget{class_game_engine_a110e8e23be4d3012150db01b01053008}\index{GameEngine@{GameEngine}!Init@{Init}}
-\index{Init@{Init}!GameEngine@{GameEngine}}
-\doxysubsubsection{\texorpdfstring{Init()}{Init()}}
-{\footnotesize\ttfamily \label{class_game_engine_a110e8e23be4d3012150db01b01053008} 
-void Game\+Engine\+::\+Init (\begin{DoxyParamCaption}\item[{int}]{width}{, }\item[{int}]{height}{}\end{DoxyParamCaption})}
-
-\Hypertarget{class_game_engine_a56dd8442785c937298646540c90861e1}\index{GameEngine@{GameEngine}!Render@{Render}}
-\index{Render@{Render}!GameEngine@{GameEngine}}
-\doxysubsubsection{\texorpdfstring{Render()}{Render()}}
-{\footnotesize\ttfamily \label{class_game_engine_a56dd8442785c937298646540c90861e1} 
-void Game\+Engine\+::\+Render (\begin{DoxyParamCaption}\item[{vector$<$ \mbox{\hyperlink{class_drawable_object}{Drawable\+Object}} \texorpdfstring{$\ast$}{*} $>$}]{render\+Objects}{}\end{DoxyParamCaption})}
-
-\Hypertarget{class_game_engine_a9c21cfdff5e4ea563e470f365c1c13f1}\index{GameEngine@{GameEngine}!SetBackgroundColor@{SetBackgroundColor}}
-\index{SetBackgroundColor@{SetBackgroundColor}!GameEngine@{GameEngine}}
-\doxysubsubsection{\texorpdfstring{SetBackgroundColor()}{SetBackgroundColor()}}
-{\footnotesize\ttfamily \label{class_game_engine_a9c21cfdff5e4ea563e470f365c1c13f1} 
-void Game\+Engine\+::\+Set\+Background\+Color (\begin{DoxyParamCaption}\item[{float}]{r}{, }\item[{float}]{g}{, }\item[{float}]{b}{}\end{DoxyParamCaption})}
-
-\Hypertarget{class_game_engine_a1fed893fa34148e75378c8d9d3f975e9}\index{GameEngine@{GameEngine}!SetDrawArea@{SetDrawArea}}
-\index{SetDrawArea@{SetDrawArea}!GameEngine@{GameEngine}}
-\doxysubsubsection{\texorpdfstring{SetDrawArea()}{SetDrawArea()}}
-{\footnotesize\ttfamily \label{class_game_engine_a1fed893fa34148e75378c8d9d3f975e9} 
-void Game\+Engine\+::\+Set\+Draw\+Area (\begin{DoxyParamCaption}\item[{float}]{left}{, }\item[{float}]{right}{, }\item[{float}]{bottom}{, }\item[{float}]{top}{}\end{DoxyParamCaption})}
-
+\doxysubsection{Detailed Description}
+The class for creating game engine instance to control the renderer and game state. 

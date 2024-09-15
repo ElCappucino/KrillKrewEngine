@@ -1,35 +1,37 @@
 \doxysection{Game\+Engine.\+h}
-\hypertarget{_game_engine_8h_source}{}\label{_game_engine_8h_source}\index{KrillEngine/GameEngine.h@{KrillEngine/GameEngine.h}}
-\mbox{\hyperlink{_game_engine_8h}{Go to the documentation of this file.}}
+\hypertarget{_game_engine_8h_source}{}\label{_game_engine_8h_source}\index{KrillKrew/KrillEngine/KrillEngine/GameEngine.h@{KrillKrew/KrillEngine/KrillEngine/GameEngine.h}}
+
 \begin{DoxyCode}{0}
 \DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
 \DoxyCodeLine{00002\ }
 \DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ <vector>}}
-\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_drawable_object_8h}{DrawableObject.h}}"{}}}
-\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_g_l_renderer_8h}{GLRenderer.h}}"{}}}
-\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_game_state_controller_8h}{GameStateController.h}}"{}}}
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ "{}DrawableObject.h"{}}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ "{}GLRenderer.h"{}}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ "{}GameStateController.h"{}}}
 \DoxyCodeLine{00007\ }
-\DoxyCodeLine{00008\ \textcolor{keyword}{using\ namespace\ }std;}
-\DoxyCodeLine{00009\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_game_engine}{GameEngine}}}
-\DoxyCodeLine{00010\ \{}
-\DoxyCodeLine{00011\ \ \ \ \ \textcolor{keyword}{static}\ \mbox{\hyperlink{class_game_engine}{GameEngine}}*\ instance;}
-\DoxyCodeLine{00012\ \ \ \ \ \textcolor{keywordtype}{int}\ winWidth,\ winHeight;}
-\DoxyCodeLine{00013\ \ \ \ \ }
-\DoxyCodeLine{00014\ \ \ \ \ \mbox{\hyperlink{class_g_l_renderer}{GLRenderer}}\ *renderer;}
-\DoxyCodeLine{00015\ \ \ \ \ \mbox{\hyperlink{class_game_state_controller}{GameStateController}}*\ stateController;}
-\DoxyCodeLine{00016\ \ \ \ \ \mbox{\hyperlink{class_game_engine}{GameEngine}}();}
-\DoxyCodeLine{00017\ \textcolor{keyword}{public}:}
-\DoxyCodeLine{00018\ \ \ \ \ \textcolor{keyword}{static}\ \mbox{\hyperlink{class_game_engine}{GameEngine}}*\ \mbox{\hyperlink{class_game_engine_a3d6962cd9df4dfd96ede3a96c961f8d3}{GetInstance}}();}
-\DoxyCodeLine{00019\ \ \ \ \ \mbox{\hyperlink{class_g_l_renderer}{GLRenderer}}\ *\ \mbox{\hyperlink{class_game_engine_aa020e69849d7b431197064cb98afd81b}{GetRenderer}}();}
-\DoxyCodeLine{00020\ \ \ \ \ \mbox{\hyperlink{class_game_state_controller}{GameStateController}}*\ \mbox{\hyperlink{class_game_engine_ae01b0881f12bd7b6425356b004bfca3b}{GetStateController}}();}
-\DoxyCodeLine{00021\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_game_engine_a110e8e23be4d3012150db01b01053008}{Init}}(\textcolor{keywordtype}{int}\ width,\ \textcolor{keywordtype}{int}\ height);}
-\DoxyCodeLine{00022\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_game_engine_a1fed893fa34148e75378c8d9d3f975e9}{SetDrawArea}}(\textcolor{keywordtype}{float}\ left,\ \textcolor{keywordtype}{float}\ right,\ \textcolor{keywordtype}{float}\ bottom,\ \textcolor{keywordtype}{float}\ top);}
-\DoxyCodeLine{00023\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_game_engine_a9c21cfdff5e4ea563e470f365c1c13f1}{SetBackgroundColor}}(\textcolor{keywordtype}{float}\ r,\ \textcolor{keywordtype}{float}\ g,\ \textcolor{keywordtype}{float}\ b);}
-\DoxyCodeLine{00024\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_game_engine_a95ccac15772ea81775446abad4b114fb}{AddMesh}}(\textcolor{keywordtype}{string}\ name,\ \mbox{\hyperlink{class_mesh_vbo}{MeshVbo}}*\ mesh);}
-\DoxyCodeLine{00025\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_game_engine_abb72be73b87858b2ff22f3984f09c5b4}{ClearMesh}}();}
-\DoxyCodeLine{00026\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_game_engine_a56dd8442785c937298646540c90861e1}{Render}}(vector<DrawableObject*>\ renderObjects);}
-\DoxyCodeLine{00027\ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{class_game_engine_ac8f7c0fbf2b5573ead70ff287fcb957c}{GetWindowWidth}}();}
-\DoxyCodeLine{00028\ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{class_game_engine_a99fb321c7465f9cd7e5a7c364c274be9}{GetWindowHeight}}();}
-\DoxyCodeLine{00029\ \};}
+\DoxyCodeLine{00008\ }
+\DoxyCodeLine{00009\ \textcolor{keyword}{using\ namespace\ }std;}
+\DoxyCodeLine{00010\ }
+\DoxyCodeLine{00012\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_game_engine}{GameEngine}}}
+\DoxyCodeLine{00013\ \{}
+\DoxyCodeLine{00014\ \ \ \ \ \textcolor{keyword}{static}\ \mbox{\hyperlink{class_game_engine}{GameEngine}}*\ instance;}
+\DoxyCodeLine{00015\ \ \ \ \ \textcolor{keywordtype}{int}\ winWidth,\ winHeight;}
+\DoxyCodeLine{00016\ \ \ \ \ }
+\DoxyCodeLine{00017\ \ \ \ \ \mbox{\hyperlink{class_g_l_renderer}{GLRenderer}}\ *renderer;}
+\DoxyCodeLine{00018\ \ \ \ \ \mbox{\hyperlink{class_game_state_controller}{GameStateController}}*\ stateController;}
+\DoxyCodeLine{00019\ \ \ \ \ \mbox{\hyperlink{class_game_engine}{GameEngine}}();}
+\DoxyCodeLine{00020\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00021\ \ \ \ \ \textcolor{keyword}{static}\ \mbox{\hyperlink{class_game_engine}{GameEngine}}*\ GetInstance();}
+\DoxyCodeLine{00022\ \ \ \ \ \mbox{\hyperlink{class_g_l_renderer}{GLRenderer}}\ *\ GetRenderer();}
+\DoxyCodeLine{00023\ \ \ \ \ \mbox{\hyperlink{class_game_state_controller}{GameStateController}}*\ GetStateController();}
+\DoxyCodeLine{00024\ \ \ \ \ \textcolor{keywordtype}{void}\ Init(\textcolor{keywordtype}{int}\ width,\ \textcolor{keywordtype}{int}\ height);}
+\DoxyCodeLine{00025\ \ \ \ \ \textcolor{keywordtype}{void}\ SetDrawArea(\textcolor{keywordtype}{float}\ left,\ \textcolor{keywordtype}{float}\ right,\ \textcolor{keywordtype}{float}\ bottom,\ \textcolor{keywordtype}{float}\ top);}
+\DoxyCodeLine{00026\ \ \ \ \ \textcolor{keywordtype}{void}\ SetBackgroundColor(\textcolor{keywordtype}{float}\ r,\ \textcolor{keywordtype}{float}\ g,\ \textcolor{keywordtype}{float}\ b);}
+\DoxyCodeLine{00027\ \ \ \ \ \textcolor{keywordtype}{void}\ AddMesh(\textcolor{keywordtype}{string}\ name,\ \mbox{\hyperlink{class_mesh_vbo}{MeshVbo}}*\ mesh);}
+\DoxyCodeLine{00028\ \ \ \ \ \textcolor{keywordtype}{void}\ ClearMesh();}
+\DoxyCodeLine{00029\ \ \ \ \ \textcolor{keywordtype}{void}\ Render(vector<DrawableObject*>\ renderObjects);}
+\DoxyCodeLine{00030\ \ \ \ \ \textcolor{keywordtype}{int}\ GetWindowWidth();}
+\DoxyCodeLine{00031\ \ \ \ \ \textcolor{keywordtype}{int}\ GetWindowHeight();}
+\DoxyCodeLine{00032\ \};}
 
 \end{DoxyCode}
