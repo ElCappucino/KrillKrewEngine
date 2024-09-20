@@ -101,5 +101,4 @@ public:
 	/// @param path describes the file path of the texture file.
 	/// @return It will return the array of integer that store texture name;
 	GLuint LoadTexture(string path);
-
 };

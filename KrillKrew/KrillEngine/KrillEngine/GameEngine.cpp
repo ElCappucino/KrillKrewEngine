@@ -46,7 +46,12 @@ void GameEngine::Render(vector<DrawableObject*> renderObjects)
 
 void GameEngine::SetDrawArea(float left, float right, float bottom, float top)
 {
-	renderer->SetOrthoProjection(-3, 3, -3, 3);
+	this->left = left;
+	this->right = right;
+	this->bottom = bottom;
+	this->top = top;
+	printf("Left = %f | Right = %f | Bottom = %f | Top = %f \n", left, right, bottom, top);
+	renderer->SetOrthoProjection(left, right, bottom, top);
 }
 
 void GameEngine::SetBackgroundColor(float r, float g, float b)
@@ -72,4 +77,28 @@ int GameEngine::GetWindowWidth()
 int GameEngine::GetWindowHeight()
 {
 	return winHeight;
+}
+
+float GameEngine::getLeft() {
+
+	return left;
+
+}
+
+float GameEngine::getRight() {
+
+	return right;
+
+}
+
+float GameEngine::getBottom() {
+
+	return bottom;
+
+}
+
+float GameEngine::getTop() {
+
+	return top;
+
 }

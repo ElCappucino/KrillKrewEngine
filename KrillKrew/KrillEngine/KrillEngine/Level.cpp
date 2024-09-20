@@ -60,6 +60,22 @@ void Level::HandleKey(char key)
 		case 'q': GameEngine::GetInstance()->GetStateController()->gameStateNext = GameState::GS_QUIT; ; break;
 		case 'r': GameEngine::GetInstance()->GetStateController()->gameStateNext = GameState::GS_RESTART; ; break;
 		case 'e': GameEngine::GetInstance()->GetStateController()->gameStateNext = GameState::GS_LEVEL2; ; break;
+
+		case 'i': 
+			
+			GameEngine::GetInstance()->SetDrawArea(GameEngine::GetInstance()->getLeft() + 0.2f,
+												   GameEngine::GetInstance()->getRight() - 0.2f,
+												   GameEngine::GetInstance()->getBottom() + 0.2f, 
+												   GameEngine::GetInstance()->getTop() - 0.2f);
+			break;
+
+		case 'o': 
+
+			GameEngine::GetInstance()->SetDrawArea(GameEngine::GetInstance()->getLeft() - 0.2f,
+												   GameEngine::GetInstance()->getRight() + 0.2f,
+												   GameEngine::GetInstance()->getBottom() - 0.2f,
+												   GameEngine::GetInstance()->getTop() + 0.2f);
+			break;
 	}
 }
 
