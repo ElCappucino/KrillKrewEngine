@@ -8,6 +8,7 @@ var class_g_l_renderer =
     [ "GetMesh", "class_g_l_renderer.html#ab0f5019cbad4f20178396d82acca670d", null ],
     [ "GetModelMatrixAttrId", "class_g_l_renderer.html#a67ca07326d7bcd181c79d653fb9e8bef", null ],
     [ "GetModeUniformId", "class_g_l_renderer.html#a318759d23fdbe8073ec9c269b25c8e2d", null ],
+    [ "GetOrthovalue", "class_g_l_renderer.html#ae077f8393c4a27e17861324369b1d3ca", null ],
     [ "GetProjectionMatrixAttrId", "class_g_l_renderer.html#ad12e36cf1810f8e745996c70742ea609", null ],
     [ "InitGL", "class_g_l_renderer.html#acfaac661744f2eb445f84ab8d0479649", null ],
     [ "LoadTexture", "class_g_l_renderer.html#af06a96f18bcca1ab22a4b02473c72c43", null ],

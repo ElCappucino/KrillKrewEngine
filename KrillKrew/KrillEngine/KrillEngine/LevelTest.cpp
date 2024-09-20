@@ -11,6 +11,9 @@ void LevelTest::LevelLoad()
 
 void LevelTest::LevelInit()
 {
+
+	GameEngine::GetInstance()->GetRenderer()->SetOrthoProjection(-3, 3, -3, 3);
+
 	GameObject * obj = new GameObject();
 	obj->SetColor(0.0, 1.0, 0.0);
 	objectsList.push_back(obj);

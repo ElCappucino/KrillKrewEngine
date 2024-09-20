@@ -12,6 +12,8 @@ private:
 	vector<DrawableObject*> objectsList;
 	ImageObject * player;
 
+	float dt = 0;
+
 public:
 	virtual void LevelLoad();
 	virtual void LevelInit();

@@ -17,49 +17,59 @@
 \DoxyCodeLine{00013\ }
 \DoxyCodeLine{00014\ \textcolor{keyword}{using\ namespace\ }std;}
 \DoxyCodeLine{00015\ }
-\DoxyCodeLine{00018\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_g_l_renderer}{GLRenderer}}}
-\DoxyCodeLine{00019\ \{}
-\DoxyCodeLine{00020\ \textcolor{keyword}{protected}:}
-\DoxyCodeLine{00021\ \ \ \ \ \textcolor{keywordtype}{int}\ winWidth;}
-\DoxyCodeLine{00022\ \ \ \ \ \textcolor{keywordtype}{int}\ winHeight;}
-\DoxyCodeLine{00023\ \ \ \ \ glm::mat4\ projectionMatrix;}
-\DoxyCodeLine{00024\ \ \ \ \ glm::mat4\ modelMatrix;}
-\DoxyCodeLine{00025\ \ \ \ \ GLuint\ mMatrixId\ =\ -\/1;}
-\DoxyCodeLine{00026\ \ \ \ \ GLuint\ pMatrixId\ =\ -\/1;}
-\DoxyCodeLine{00027\ \ \ \ \ GLuint\ colorUniformId\ =\ -\/1;}
-\DoxyCodeLine{00028\ \ \ \ \ GLuint\ renderModeUniformId\ =\ -\/1;}
-\DoxyCodeLine{00029\ }
-\DoxyCodeLine{00030\ \ \ \ \ GLuint\ gProgramId;}
-\DoxyCodeLine{00031\ \ \ \ \ \textcolor{keywordtype}{int}\ gPos2DLocation;}
-\DoxyCodeLine{00032\ \ \ \ \ \textcolor{keywordtype}{int}\ gTex2DLocation;}
-\DoxyCodeLine{00033\ \ \ \ \ \textcolor{keywordtype}{void}\ PrintProgramLog(GLuint\ program);}
-\DoxyCodeLine{00034\ \ \ \ \ \textcolor{keywordtype}{bool}\ Initialize(\textcolor{keywordtype}{string}\ vertexShaderFile,\ \textcolor{keywordtype}{string}\ fragmentShaderFile);}
-\DoxyCodeLine{00035\ \ \ \ \ \mbox{\hyperlink{class_shader}{Shader}}\ *vertexShader;}
-\DoxyCodeLine{00036\ \ \ \ \ \mbox{\hyperlink{class_shader}{Shader}}\ *fragmentShader;}
-\DoxyCodeLine{00037\ \ \ \ \ map\ <string,\ MeshVbo*>\ shapes;}
-\DoxyCodeLine{00038\ \ \ \ \ \textcolor{keywordtype}{void}\ SetMeshAttribId(\mbox{\hyperlink{class_mesh_vbo}{MeshVbo}}\ *\ shape);}
+\DoxyCodeLine{00016\ }
+\DoxyCodeLine{00019\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_g_l_renderer}{GLRenderer}}}
+\DoxyCodeLine{00020\ \{}
+\DoxyCodeLine{00021\ \ \ \ \ \textcolor{keyword}{struct\ }OrthographicValue\ \{}
+\DoxyCodeLine{00022\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ left;}
+\DoxyCodeLine{00023\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ right;}
+\DoxyCodeLine{00024\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ bottom;}
+\DoxyCodeLine{00025\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ top;}
+\DoxyCodeLine{00026\ \ \ \ \ \};}
+\DoxyCodeLine{00027\ }
+\DoxyCodeLine{00028\ \textcolor{keyword}{protected}:}
+\DoxyCodeLine{00029\ \ \ \ \ \textcolor{keywordtype}{int}\ winWidth;}
+\DoxyCodeLine{00030\ \ \ \ \ \textcolor{keywordtype}{int}\ winHeight;}
+\DoxyCodeLine{00031\ \ \ \ \ OrthographicValue\ orthoValue;}
+\DoxyCodeLine{00032\ }
+\DoxyCodeLine{00033\ \ \ \ \ glm::mat4\ projectionMatrix;}
+\DoxyCodeLine{00034\ \ \ \ \ glm::mat4\ modelMatrix;}
+\DoxyCodeLine{00035\ \ \ \ \ GLuint\ mMatrixId\ =\ -\/1;}
+\DoxyCodeLine{00036\ \ \ \ \ GLuint\ pMatrixId\ =\ -\/1;}
+\DoxyCodeLine{00037\ \ \ \ \ GLuint\ colorUniformId\ =\ -\/1;}
+\DoxyCodeLine{00038\ \ \ \ \ GLuint\ renderModeUniformId\ =\ -\/1;}
 \DoxyCodeLine{00039\ }
-\DoxyCodeLine{00040\ \textcolor{keyword}{public}:}
-\DoxyCodeLine{00043\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_g_l_renderer_a942ee69e79838fb4087422850d1bf65f}{Render}}(vector\ <DrawableObject*>\ \&\ objList);}
-\DoxyCodeLine{00047\ \ \ \ \ \mbox{\hyperlink{class_g_l_renderer_af506bf1e8d531b33cb668adb7c881ae7}{GLRenderer}}(\textcolor{keywordtype}{int}\ w,\ \textcolor{keywordtype}{int}\ h);}
-\DoxyCodeLine{00052\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_g_l_renderer_acfaac661744f2eb445f84ab8d0479649}{InitGL}}(\textcolor{keywordtype}{string}\ vertexShaderFile,\ \textcolor{keywordtype}{string}\ fragmentShaderFile);}
-\DoxyCodeLine{00056\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_g_l_renderer_a3e4f52ca84cc263be264fed5e19c065a}{AddMesh}}(\textcolor{keywordtype}{string}\ name,\ \mbox{\hyperlink{class_mesh_vbo}{MeshVbo}}*\ shape);}
-\DoxyCodeLine{00060\ \ \ \ \ \mbox{\hyperlink{class_mesh_vbo}{MeshVbo}}\ *\ \mbox{\hyperlink{class_g_l_renderer_ab0f5019cbad4f20178396d82acca670d}{GetMesh}}(\textcolor{keywordtype}{string}\ name);}
-\DoxyCodeLine{00062\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_g_l_renderer_aac9985a280e7674cabfdd317a5064507}{ClearMesh}}();}
-\DoxyCodeLine{00063\ }
-\DoxyCodeLine{00065\ \ \ \ \ \mbox{\hyperlink{class_g_l_renderer_ad5da817f69b340641532b763aefc698f}{\string~GLRenderer}}();}
-\DoxyCodeLine{00066\ }
-\DoxyCodeLine{00073\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_g_l_renderer_a6486523f334b3fbde582f4f97c988005}{SetOrthoProjection}}(\textcolor{keywordtype}{float}\ left,\ \textcolor{keywordtype}{float}\ right,\ \textcolor{keywordtype}{float}\ bottom,\ \textcolor{keywordtype}{float}\ top);}
-\DoxyCodeLine{00080\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_g_l_renderer_a982392af1f7357318221442e7a891dcc}{SetViewPort}}(\textcolor{keywordtype}{int}\ x,\ \textcolor{keywordtype}{int}\ y,\ \textcolor{keywordtype}{int}\ w,\ \textcolor{keywordtype}{int}\ h);}
-\DoxyCodeLine{00085\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_g_l_renderer_a38a6d40d7b39e152e0f629c8a9c26306}{SetClearColor}}(\textcolor{keywordtype}{float}\ r,\ \textcolor{keywordtype}{float}\ g,\ \textcolor{keywordtype}{float}\ b);}
-\DoxyCodeLine{00086\ }
-\DoxyCodeLine{00089\ \ \ \ \ GLuint\ \mbox{\hyperlink{class_g_l_renderer_a67ca07326d7bcd181c79d653fb9e8bef}{GetModelMatrixAttrId}}();}
-\DoxyCodeLine{00092\ \ \ \ \ GLuint\ \mbox{\hyperlink{class_g_l_renderer_ad12e36cf1810f8e745996c70742ea609}{GetProjectionMatrixAttrId}}();}
-\DoxyCodeLine{00095\ \ \ \ \ GLuint\ \mbox{\hyperlink{class_g_l_renderer_ab7327910c457b5d1196412c03dbe5bec}{GetColorUniformId}}();}
-\DoxyCodeLine{00098\ \ \ \ \ GLuint\ \mbox{\hyperlink{class_g_l_renderer_a318759d23fdbe8073ec9c269b25c8e2d}{GetModeUniformId}}();}
+\DoxyCodeLine{00040\ \ \ \ \ GLuint\ gProgramId;}
+\DoxyCodeLine{00041\ \ \ \ \ \textcolor{keywordtype}{int}\ gPos2DLocation;}
+\DoxyCodeLine{00042\ \ \ \ \ \textcolor{keywordtype}{int}\ gTex2DLocation;}
+\DoxyCodeLine{00043\ \ \ \ \ \textcolor{keywordtype}{void}\ PrintProgramLog(GLuint\ program);}
+\DoxyCodeLine{00044\ \ \ \ \ \textcolor{keywordtype}{bool}\ Initialize(\textcolor{keywordtype}{string}\ vertexShaderFile,\ \textcolor{keywordtype}{string}\ fragmentShaderFile);}
+\DoxyCodeLine{00045\ \ \ \ \ \mbox{\hyperlink{class_shader}{Shader}}\ *vertexShader;}
+\DoxyCodeLine{00046\ \ \ \ \ \mbox{\hyperlink{class_shader}{Shader}}\ *fragmentShader;}
+\DoxyCodeLine{00047\ \ \ \ \ map\ <string,\ MeshVbo*>\ shapes;}
+\DoxyCodeLine{00048\ \ \ \ \ \textcolor{keywordtype}{void}\ SetMeshAttribId(\mbox{\hyperlink{class_mesh_vbo}{MeshVbo}}\ *\ shape);}
+\DoxyCodeLine{00049\ }
+\DoxyCodeLine{00050\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00053\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_g_l_renderer_a942ee69e79838fb4087422850d1bf65f}{Render}}(vector\ <DrawableObject*>\ \&\ objList);}
+\DoxyCodeLine{00057\ \ \ \ \ \mbox{\hyperlink{class_g_l_renderer_af506bf1e8d531b33cb668adb7c881ae7}{GLRenderer}}(\textcolor{keywordtype}{int}\ w,\ \textcolor{keywordtype}{int}\ h);}
+\DoxyCodeLine{00062\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_g_l_renderer_acfaac661744f2eb445f84ab8d0479649}{InitGL}}(\textcolor{keywordtype}{string}\ vertexShaderFile,\ \textcolor{keywordtype}{string}\ fragmentShaderFile);}
+\DoxyCodeLine{00066\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_g_l_renderer_a3e4f52ca84cc263be264fed5e19c065a}{AddMesh}}(\textcolor{keywordtype}{string}\ name,\ \mbox{\hyperlink{class_mesh_vbo}{MeshVbo}}*\ shape);}
+\DoxyCodeLine{00070\ \ \ \ \ \mbox{\hyperlink{class_mesh_vbo}{MeshVbo}}\ *\ \mbox{\hyperlink{class_g_l_renderer_ab0f5019cbad4f20178396d82acca670d}{GetMesh}}(\textcolor{keywordtype}{string}\ name);}
+\DoxyCodeLine{00073\ \ \ \ \ OrthographicValue\ \mbox{\hyperlink{class_g_l_renderer_ae077f8393c4a27e17861324369b1d3ca}{GetOrthovalue}}();}
+\DoxyCodeLine{00075\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_g_l_renderer_aac9985a280e7674cabfdd317a5064507}{ClearMesh}}();}
+\DoxyCodeLine{00076\ }
+\DoxyCodeLine{00078\ \ \ \ \ \mbox{\hyperlink{class_g_l_renderer_ad5da817f69b340641532b763aefc698f}{\string~GLRenderer}}();}
+\DoxyCodeLine{00079\ }
+\DoxyCodeLine{00086\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_g_l_renderer_a6486523f334b3fbde582f4f97c988005}{SetOrthoProjection}}(\textcolor{keywordtype}{float}\ left,\ \textcolor{keywordtype}{float}\ right,\ \textcolor{keywordtype}{float}\ bottom,\ \textcolor{keywordtype}{float}\ top);}
+\DoxyCodeLine{00093\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_g_l_renderer_a982392af1f7357318221442e7a891dcc}{SetViewPort}}(\textcolor{keywordtype}{int}\ x,\ \textcolor{keywordtype}{int}\ y,\ \textcolor{keywordtype}{int}\ w,\ \textcolor{keywordtype}{int}\ h);}
+\DoxyCodeLine{00098\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_g_l_renderer_a38a6d40d7b39e152e0f629c8a9c26306}{SetClearColor}}(\textcolor{keywordtype}{float}\ r,\ \textcolor{keywordtype}{float}\ g,\ \textcolor{keywordtype}{float}\ b);}
 \DoxyCodeLine{00099\ }
-\DoxyCodeLine{00103\ \ \ \ \ GLuint\ \mbox{\hyperlink{class_g_l_renderer_af06a96f18bcca1ab22a4b02473c72c43}{LoadTexture}}(\textcolor{keywordtype}{string}\ path);}
-\DoxyCodeLine{00104\ }
-\DoxyCodeLine{00105\ \};}
+\DoxyCodeLine{00102\ \ \ \ \ GLuint\ \mbox{\hyperlink{class_g_l_renderer_a67ca07326d7bcd181c79d653fb9e8bef}{GetModelMatrixAttrId}}();}
+\DoxyCodeLine{00105\ \ \ \ \ GLuint\ \mbox{\hyperlink{class_g_l_renderer_ad12e36cf1810f8e745996c70742ea609}{GetProjectionMatrixAttrId}}();}
+\DoxyCodeLine{00108\ \ \ \ \ GLuint\ \mbox{\hyperlink{class_g_l_renderer_ab7327910c457b5d1196412c03dbe5bec}{GetColorUniformId}}();}
+\DoxyCodeLine{00111\ \ \ \ \ GLuint\ \mbox{\hyperlink{class_g_l_renderer_a318759d23fdbe8073ec9c269b25c8e2d}{GetModeUniformId}}();}
+\DoxyCodeLine{00112\ }
+\DoxyCodeLine{00116\ \ \ \ \ GLuint\ \mbox{\hyperlink{class_g_l_renderer_af06a96f18bcca1ab22a4b02473c72c43}{LoadTexture}}(\textcolor{keywordtype}{string}\ path);}
+\DoxyCodeLine{00117\ \};}
 
 \end{DoxyCode}

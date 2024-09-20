@@ -13,7 +13,6 @@ class GameEngine
 {
 	static GameEngine* instance;
 	int winWidth, winHeight;
-	float left, right, bottom, top;
 	
 	GLRenderer *renderer;
 	GameStateController* stateController;
@@ -30,8 +29,4 @@ public:
 	void Render(vector<DrawableObject*> renderObjects);
 	int GetWindowWidth();
 	int GetWindowHeight();
-	float getLeft();
-	float getRight();
-	float getBottom();
-	float getTop();
 };

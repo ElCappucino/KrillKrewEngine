@@ -9,17 +9,23 @@
 #include "MeshVbo.h"
 #include "glm.hpp"
 #include "DrawableObject.h"
+#include "InfoStruct.h"
 
 
 using namespace std;
+
 
 /// @brief This class is for rendering any drawable object
 /// @see DrawableObject
 class GLRenderer
 {
+	
+
 protected:
 	int winWidth;
 	int winHeight;
+	OrthographicValue orthoValue;
+
 	glm::mat4 projectionMatrix;
 	glm::mat4 modelMatrix;
 	GLuint mMatrixId = -1;
@@ -58,6 +64,9 @@ public:
 	/// @param name describes the name of mesh you want to get.
 	/// @return It will return the pointer to the mesh Vbo information.
 	MeshVbo * GetMesh(string name);
+	/// @brief The getter function for the orthographic value.
+	/// @return It will return the value as left, right, bottom, top, as a struct.
+	OrthographicValue GetOrthovalue();
 	/// @brief The function for clear saved mesh information.
 	void ClearMesh();
 

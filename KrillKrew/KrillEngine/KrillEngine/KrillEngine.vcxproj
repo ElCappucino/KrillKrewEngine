@@ -138,6 +138,7 @@
     <ClInclude Include="GameStateList.h" />
     <ClInclude Include="GLRenderer.h" />
     <ClInclude Include="ImageObject.h" />
+    <ClInclude Include="InfoStruct.h" />
     <ClInclude Include="Level.h" />
     <ClInclude Include="LevelTest.h" />
     <ClInclude Include="MeshVbo.h" />
@@ -151,6 +152,8 @@
     <ClCompile Include="DrawableObject.cpp" />
     <ClCompile Include="GameEngine.cpp" />
     <ClCompile Include="GameObject.cpp" />
+    <ClCompile Include="LevelGameplay.cpp" />
+    <ClCompile Include="LevelGameplay.h" />
     <ClCompile Include="GameStateController.cpp" />
     <ClCompile Include="GLRenderer.cpp" />
     <ClCompile Include="ImageObject.cpp" />

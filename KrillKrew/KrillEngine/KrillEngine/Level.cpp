@@ -19,11 +19,14 @@ void Level::LevelInit()
 
 	player = obj;
 
+	GameEngine::GetInstance()->GetRenderer()->SetOrthoProjection(-3, 3, -3, 3);
 	//cout << "Init Level" << endl;
 }
 
 void Level::LevelUpdate()
 {
+	dt += 1;
+	cout << dt << endl;
 	//cout << "Update Level" << endl;
 }
 
@@ -61,20 +64,22 @@ void Level::HandleKey(char key)
 		case 'r': GameEngine::GetInstance()->GetStateController()->gameStateNext = GameState::GS_RESTART; ; break;
 		case 'e': GameEngine::GetInstance()->GetStateController()->gameStateNext = GameState::GS_LEVEL2; ; break;
 
+
+		// This part needs to move to GameplayScene class later
 		case 'i': 
 			
-			GameEngine::GetInstance()->SetDrawArea(GameEngine::GetInstance()->getLeft() + 0.2f,
-												   GameEngine::GetInstance()->getRight() - 0.2f,
-												   GameEngine::GetInstance()->getBottom() + 0.2f, 
-												   GameEngine::GetInstance()->getTop() - 0.2f);
+			GameEngine::GetInstance()->SetDrawArea(GameEngine::GetInstance()->GetRenderer()->GetOrthovalue().left + 0.2f,
+												   GameEngine::GetInstance()->GetRenderer()->GetOrthovalue().right - 0.2f,
+												   GameEngine::GetInstance()->GetRenderer()->GetOrthovalue().bottom + 0.2f,
+												   GameEngine::GetInstance()->GetRenderer()->GetOrthovalue().top - 0.2f);
 			break;
 
 		case 'o': 
 
-			GameEngine::GetInstance()->SetDrawArea(GameEngine::GetInstance()->getLeft() - 0.2f,
-												   GameEngine::GetInstance()->getRight() + 0.2f,
-												   GameEngine::GetInstance()->getBottom() - 0.2f,
-												   GameEngine::GetInstance()->getTop() + 0.2f);
+			GameEngine::GetInstance()->SetDrawArea(GameEngine::GetInstance()->GetRenderer()->GetOrthovalue().left - 0.2f,
+												   GameEngine::GetInstance()->GetRenderer()->GetOrthovalue().right + 0.2f,
+												   GameEngine::GetInstance()->GetRenderer()->GetOrthovalue().bottom - 0.2f,
+												   GameEngine::GetInstance()->GetRenderer()->GetOrthovalue().top + 0.2f);
 			break;
 	}
 }

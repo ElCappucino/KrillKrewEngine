@@ -11,10 +11,9 @@ GLRenderer::GLRenderer(int w, int h)
 {
 	this->winWidth = w;
 	this->winHeight = h;
-	projectionMatrix = glm::ortho(-1.f, 1.f, -1.f, 1.f);
+	SetOrthoProjection(-1.f, 1.f, -1.f, 1.f);
 	glViewport(0, 0, winWidth, winHeight);
 }
-
 bool GLRenderer::InitGL(string vertexShaderFile, string fragmentShaderFile)
 {
 	// Initialize glew
@@ -168,6 +167,11 @@ MeshVbo * GLRenderer::GetMesh(string name)
 	}
 }
 
+OrthographicValue GLRenderer::GetOrthovalue()
+{
+	return this->orthoValue;
+}
+
 void GLRenderer::ClearMesh()
 {
 	for (map<string, MeshVbo*>::iterator it = shapes.begin(); it != shapes.end(); it++)
@@ -220,6 +224,10 @@ GLRenderer::~GLRenderer()
 
 void GLRenderer::SetOrthoProjection(float left, float right, float bottom, float top)
 {
+	orthoValue.left = left;
+	orthoValue.right = right;
+	orthoValue.bottom = bottom;
+	orthoValue.top = top;
 	projectionMatrix = glm::ortho(left, right, bottom, top);
 }
 
