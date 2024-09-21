@@ -1,16 +1,14 @@
 ﻿C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppBuild.targets(534,5): warning MSB8028: The intermediate directory (Debug\) contains files shared from another project (TiemEngine.vcxproj).  This can lead to incorrect clean and rebuild behavior.
-  LevelGameplay.h
-  GameStateController.cpp
-  GLRenderer.cpp
-  ImageObject.cpp
-  Level.cpp
-C:\Users\Admin\Desktop\KrillKrewEngine\KrillKrew\KrillEngine\KrillEngine\Level.cpp(92,10): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-C:\Users\Admin\Desktop\KrillKrewEngine\KrillKrew\KrillEngine\KrillEngine\Level.cpp(93,10): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-  LevelTest.cpp
-C:\Users\Admin\Desktop\KrillKrewEngine\KrillKrew\KrillEngine\KrillEngine\LevelTest.cpp(82,10): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-C:\Users\Admin\Desktop\KrillKrewEngine\KrillKrew\KrillEngine\KrillEngine\LevelTest.cpp(83,10): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-  Main.cpp
-  Generating Code...
-Debug\LevelGameplay.obj : warning LNK4042: object specified more than once; extras ignored
-     Creating library C:\Users\Admin\Desktop\KrillKrewEngine\KrillKrew\KrillEngine\Debug\KrillEngine.lib and object C:\Users\Admin\Desktop\KrillKrewEngine\KrillKrew\KrillEngine\Debug\KrillEngine.exp
+  LevelGameplay.cpp
+C:\Users\Admin\Desktop\KrillKrewEngine\KrillKrew\KrillEngine\KrillEngine\LevelGameplay.cpp(18,35): warning C4305: 'argument': truncation from 'double' to 'float'
+C:\Users\Admin\Desktop\KrillKrewEngine\KrillKrew\KrillEngine\KrillEngine\LevelGameplay.cpp(112,65): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+C:\Users\Admin\Desktop\KrillKrewEngine\KrillKrew\KrillEngine\KrillEngine\LevelGameplay.cpp(111,68): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+C:\Users\Admin\Desktop\KrillKrewEngine\KrillKrew\KrillEngine\KrillEngine\LevelGameplay.cpp(110,67): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+C:\Users\Admin\Desktop\KrillKrewEngine\KrillKrew\KrillEngine\KrillEngine\LevelGameplay.cpp(109,105): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+C:\Users\Admin\Desktop\KrillKrewEngine\KrillKrew\KrillEngine\KrillEngine\LevelGameplay.cpp(121,104): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+C:\Users\Admin\Desktop\KrillKrewEngine\KrillKrew\KrillEngine\KrillEngine\LevelGameplay.cpp(120,80): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+C:\Users\Admin\Desktop\KrillKrewEngine\KrillKrew\KrillEngine\KrillEngine\LevelGameplay.cpp(119,79): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+C:\Users\Admin\Desktop\KrillKrewEngine\KrillKrew\KrillEngine\KrillEngine\LevelGameplay.cpp(118,105): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+C:\Users\Admin\Desktop\KrillKrewEngine\KrillKrew\KrillEngine\KrillEngine\LevelGameplay.cpp(132,10): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+C:\Users\Admin\Desktop\KrillKrewEngine\KrillKrew\KrillEngine\KrillEngine\LevelGameplay.cpp(133,10): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
   KrillEngine.vcxproj -> C:\Users\Admin\Desktop\KrillKrewEngine\KrillKrew\KrillEngine\Debug\KrillEngine.exe

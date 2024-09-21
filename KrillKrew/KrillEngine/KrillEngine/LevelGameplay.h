@@ -7,8 +7,11 @@ class LevelGameplay : public Level
 {
 private:
 	vector<DrawableObject*> objectsList;
-	GameObject* player[4]; // add up to 4 players
-	CameraZoomInfo zoomInfo;
+	DrawableObject* player[4]; // add up to 4 players
+
+	CameraZoomInfo zoomInfo; // to initialize the zoom property
+	OrthographicValue targetSceneProjection; // use for lerping between the current projection and this (target projection).
+
 	float dt = 0;
 
 public:

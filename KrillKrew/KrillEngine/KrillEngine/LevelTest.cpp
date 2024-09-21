@@ -70,7 +70,7 @@ void LevelTest::HandleKey(char key)
 	case 'd': player->Translate(glm::vec3(0.3, 0, 0)); break;
 	case 'q': GameEngine::GetInstance()->GetStateController()->gameStateNext = GameState::GS_QUIT; ; break;
 	case 'r': GameEngine::GetInstance()->GetStateController()->gameStateNext = GameState::GS_RESTART; ; break;
-	case 'e': GameEngine::GetInstance()->GetStateController()->gameStateNext = GameState::GS_LEVEL1; ; break;
+	case 'e': GameEngine::GetInstance()->GetStateController()->gameStateNext = GameState::GS_LEVELGAMEPLAY; ; break;
 	}
 }
 
