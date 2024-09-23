@@ -13,6 +13,7 @@ class Level
 {
 private:
 	vector<DrawableObject*> objectsList;
+	vector<DrawableObject*> UIsList;
 	ImageObject * player;
 
 	float dt = 0;

@@ -1,14 +1,15 @@
-﻿C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppBuild.targets(534,5): warning MSB8028: The intermediate directory (Debug\) contains files shared from another project (TiemEngine.vcxproj).  This can lead to incorrect clean and rebuild behavior.
-  LevelGameplay.cpp
-C:\Users\Admin\Desktop\KrillKrewEngine\KrillKrew\KrillEngine\KrillEngine\LevelGameplay.cpp(18,35): warning C4305: 'argument': truncation from 'double' to 'float'
-C:\Users\Admin\Desktop\KrillKrewEngine\KrillKrew\KrillEngine\KrillEngine\LevelGameplay.cpp(112,65): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-C:\Users\Admin\Desktop\KrillKrewEngine\KrillKrew\KrillEngine\KrillEngine\LevelGameplay.cpp(111,68): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-C:\Users\Admin\Desktop\KrillKrewEngine\KrillKrew\KrillEngine\KrillEngine\LevelGameplay.cpp(110,67): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-C:\Users\Admin\Desktop\KrillKrewEngine\KrillKrew\KrillEngine\KrillEngine\LevelGameplay.cpp(109,105): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-C:\Users\Admin\Desktop\KrillKrewEngine\KrillKrew\KrillEngine\KrillEngine\LevelGameplay.cpp(121,104): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-C:\Users\Admin\Desktop\KrillKrewEngine\KrillKrew\KrillEngine\KrillEngine\LevelGameplay.cpp(120,80): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-C:\Users\Admin\Desktop\KrillKrewEngine\KrillKrew\KrillEngine\KrillEngine\LevelGameplay.cpp(119,79): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-C:\Users\Admin\Desktop\KrillKrewEngine\KrillKrew\KrillEngine\KrillEngine\LevelGameplay.cpp(118,105): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-C:\Users\Admin\Desktop\KrillKrewEngine\KrillKrew\KrillEngine\KrillEngine\LevelGameplay.cpp(132,10): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-C:\Users\Admin\Desktop\KrillKrewEngine\KrillKrew\KrillEngine\KrillEngine\LevelGameplay.cpp(133,10): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-  KrillEngine.vcxproj -> C:\Users\Admin\Desktop\KrillKrewEngine\KrillKrew\KrillEngine\Debug\KrillEngine.exe
+﻿C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppBuild.targets(531,5): warning MSB8028: The intermediate directory (Debug\) contains files shared from another project (TiemEngine.vcxproj).  This can lead to incorrect clean and rebuild behavior.
+  Camera.cpp
+  GameStateController.cpp
+  Generating Code...
+Debug\LevelGameplay.obj : warning LNK4042: object specified more than once; extras ignored
+     Creating library C:\Capt\KrillKrewEngine\KrillKrew\KrillEngine\Debug\KrillEngine.lib and object C:\Capt\KrillKrewEngine\KrillKrew\KrillEngine\Debug\KrillEngine.exp
+GameStateController.obj : error LNK2001: unresolved external symbol "public: virtual void __thiscall LevelGameplay::LevelLoad(void)" (?LevelLoad@LevelGameplay@@UAEXXZ)
+GameStateController.obj : error LNK2001: unresolved external symbol "public: virtual void __thiscall LevelGameplay::LevelInit(void)" (?LevelInit@LevelGameplay@@UAEXXZ)
+GameStateController.obj : error LNK2001: unresolved external symbol "public: virtual void __thiscall LevelGameplay::LevelUpdate(void)" (?LevelUpdate@LevelGameplay@@UAEXXZ)
+GameStateController.obj : error LNK2001: unresolved external symbol "public: virtual void __thiscall LevelGameplay::LevelDraw(void)" (?LevelDraw@LevelGameplay@@UAEXXZ)
+GameStateController.obj : error LNK2001: unresolved external symbol "public: virtual void __thiscall LevelGameplay::LevelFree(void)" (?LevelFree@LevelGameplay@@UAEXXZ)
+GameStateController.obj : error LNK2001: unresolved external symbol "public: virtual void __thiscall LevelGameplay::LevelUnload(void)" (?LevelUnload@LevelGameplay@@UAEXXZ)
+GameStateController.obj : error LNK2001: unresolved external symbol "public: virtual void __thiscall LevelGameplay::HandleKey(char)" (?HandleKey@LevelGameplay@@UAEXD@Z)
+GameStateController.obj : error LNK2001: unresolved external symbol "public: virtual void __thiscall LevelGameplay::HandleMouse(int,int,int)" (?HandleMouse@LevelGameplay@@UAEXHHH@Z)
+C:\Capt\KrillKrewEngine\KrillKrew\KrillEngine\Debug\KrillEngine.exe : fatal error LNK1120: 8 unresolved externals

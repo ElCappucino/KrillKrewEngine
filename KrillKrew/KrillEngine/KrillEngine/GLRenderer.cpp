@@ -228,6 +228,7 @@ void GLRenderer::SetOrthoProjection(float left, float right, float bottom, float
 	orthoValue.right = right;
 	orthoValue.bottom = bottom;
 	orthoValue.top = top;
+
 	projectionMatrix = glm::ortho(left, right, bottom, top);
 }
 

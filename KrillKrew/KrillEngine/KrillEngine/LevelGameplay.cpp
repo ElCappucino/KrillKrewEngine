@@ -29,7 +29,7 @@ void LevelGameplay::LevelInit()
 	// Example Code
 	ImageObject* obj1 = new ImageObject();
 	obj1->SetTexture("../Resource/Texture/Prinny.png");
-	obj1->SetSize(1.5f, -1.5f);
+	obj1->SetSize(1.f, -1.f);
 	obj1->SetPosition(glm::vec3(-1.f, -1.f, 0));
 	objectsList.push_back(obj1);
 
@@ -37,7 +37,7 @@ void LevelGameplay::LevelInit()
 
 	ImageObject* obj2 = new ImageObject();
 	obj2->SetTexture("../Resource/Texture/Prinny.png");
-	obj2->SetSize(1.5f, -1.5f);
+	obj2->SetSize(1.f, -1.f);
 	obj2->SetPosition(glm::vec3(1.f, -1.f, 0));
 	objectsList.push_back(obj2);
 
@@ -45,7 +45,7 @@ void LevelGameplay::LevelInit()
 
 	ImageObject* obj3 = new ImageObject();
 	obj3->SetTexture("../Resource/Texture/Prinny.png");
-	obj3->SetSize(1.5f, -1.5f);
+	obj3->SetSize(1.f, -1.f);
 	obj3->SetPosition(glm::vec3(-1.f, 1.f, 0));
 	objectsList.push_back(obj3);
 
@@ -53,7 +53,7 @@ void LevelGameplay::LevelInit()
 
 	ImageObject* obj4 = new ImageObject();
 	obj4->SetTexture("../Resource/Texture/Prinny.png");
-	obj4->SetSize(1.5f, -1.5f);
+	obj4->SetSize(1.f, -1.f);
 	obj4->SetPosition(glm::vec3(1.f, 1.f, 0));
 	objectsList.push_back(obj4);
 
@@ -107,9 +107,9 @@ void LevelGameplay::HandleKey(char key)
 	case 'i':
 
 		GameEngine::GetInstance()->SetDrawArea(GameEngine::GetInstance()->GetRenderer()->GetOrthovalue().left + SCREEN_RATIO_X * ZOOM_VELOCITY,
-		GameEngine::GetInstance()->GetRenderer()->GetOrthovalue().right - SCREEN_RATIO_X * ZOOM_VELOCITY,
-		GameEngine::GetInstance()->GetRenderer()->GetOrthovalue().bottom + SCREEN_RATIO_Y * ZOOM_VELOCITY,
-		GameEngine::GetInstance()->GetRenderer()->GetOrthovalue().top - SCREEN_RATIO_Y * ZOOM_VELOCITY);
+											   GameEngine::GetInstance()->GetRenderer()->GetOrthovalue().right - SCREEN_RATIO_X * ZOOM_VELOCITY,
+											   GameEngine::GetInstance()->GetRenderer()->GetOrthovalue().bottom + SCREEN_RATIO_Y * ZOOM_VELOCITY,
+											   GameEngine::GetInstance()->GetRenderer()->GetOrthovalue().top - SCREEN_RATIO_Y * ZOOM_VELOCITY);
 		
 		break;
 

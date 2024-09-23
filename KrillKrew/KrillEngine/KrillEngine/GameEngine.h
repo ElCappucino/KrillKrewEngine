@@ -1,6 +1,7 @@
 #pragma once
 
 #include <vector>
+#include <cmath>
 #include "DrawableObject.h"
 #include "GLRenderer.h"
 #include "GameStateController.h"

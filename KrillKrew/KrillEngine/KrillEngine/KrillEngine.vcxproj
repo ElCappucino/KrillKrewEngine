@@ -130,6 +130,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Camera.h" />
     <ClInclude Include="CombineObject.h" />
     <ClInclude Include="DrawableObject.h" />
     <ClInclude Include="GameEngine.h" />
@@ -148,6 +149,7 @@
     <ClInclude Include="TriangleMeshVbo.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Camera.cpp" />
     <ClCompile Include="CombineObject.cpp" />
     <ClCompile Include="DrawableObject.cpp" />
     <ClCompile Include="GameEngine.cpp" />
