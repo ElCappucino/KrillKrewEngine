@@ -1,5 +1,10 @@
 #include "LevelGameplay.h"
 
+float lerp(float a, float b, float t)
+{
+	return a + t * (b - a);
+}
+
 void LevelGameplay::LevelLoad()
 {
 	SquareMeshVbo* square = new SquareMeshVbo();
@@ -97,10 +102,18 @@ void LevelGameplay::HandleKey(char key)
 
 	switch (key)
 	{
-	/*case 'w': player->Translate(glm::vec3(0, 0.3, 0)); break;
-	case 's': player->Translate(glm::vec3(0, -0.3, 0)); break;
-	case 'a': player->Translate(glm::vec3(-0.3, 0, 0)); break;
-	case 'd': player->Translate(glm::vec3(0.3, 0, 0)); break;*/
+	// switch player
+	case '1': playerNum = 0; break;
+	case '2': playerNum = 1; break;
+	case '3': playerNum = 2; break;
+	case '4': playerNum = 3; break;
+	
+	// control player
+	case 'w': player[playerNum]->Translate(glm::vec3(0, 0.3, 0)); break;
+	case 's': player[playerNum]->Translate(glm::vec3(0, -0.3, 0)); break;
+	case 'a': player[playerNum]->Translate(glm::vec3(-0.3, 0, 0)); break;
+	case 'd': player[playerNum]->Translate(glm::vec3(0.3, 0, 0)); break;
+
 	case 'q': GameEngine::GetInstance()->GetStateController()->gameStateNext = GameState::GS_QUIT; ; break;
 	case 'r': GameEngine::GetInstance()->GetStateController()->gameStateNext = GameState::GS_RESTART; ; break;
 	case 'e': GameEngine::GetInstance()->GetStateController()->gameStateNext = GameState::GS_LEVEL1; ; break;
@@ -136,7 +149,65 @@ void LevelGameplay::HandleMouse(int type, int x, int y)
 }
 
 void LevelGameplay::CameraLerp() {
+
 	// check if the length of horizontal and vertical of projection + (target projection - current projection) * zoomInfo.t is not exceed the minimum and maximum.
 	// if not, calculate the lerp of left right bottom top and update using SetDrawArea().
+
+	top = 0;
+	bottom = 0;
+	right = 0;
+	left = 0;
+
+	for (int i = 0; i < 4; i++) {
+
+		if (player[i]->getPos().x > right) {
+
+			right = player[i]->getPos().x;
+		}
+
+		if (player[i]->getPos().x < left) {
+
+			left = player[i]->getPos().x;
+
+		}
+
+		if (player[i]->getPos().y > top) {
+
+			top = player[i]->getPos().y;
+
+		}
+
+		if (player[i]->getPos().y < bottom) {
+
+			bottom = player[i]->getPos().y;
+
+		}
+	}
+	x = lerp(left, right, 0.5);
+	y = lerp(bottom, top, 0.5);
+	maxX = abs(left) + abs(right);
+	maxY = abs(bottom) + abs(top);
+
+	if (maxX > maxY) {
+		diffXY = abs(abs(maxX) - abs(maxY));
+		left = (SCREEN_RATIO_X * x) - (1.5 + maxX);
+		right = (SCREEN_RATIO_X * x) + (1.5 + maxX);
+		bottom = (SCREEN_RATIO_Y * y) - (1.5 + maxY) - (diffXY);
+		top = (SCREEN_RATIO_Y * y) + (1.5 + maxY) + (diffXY);
+	}
+
+	else {
+		diffXY = abs(abs(maxY) - abs(maxX));
+		left = (SCREEN_RATIO_X * x) - (1.5 + maxX) - (diffXY);
+		right = (SCREEN_RATIO_X * x) + (1.5 + maxX) + (diffXY);
+		bottom = (SCREEN_RATIO_Y * y) - (1.5 + maxY);
+		top = (SCREEN_RATIO_Y * y) + (1.5 + maxY);
+	}
+
+	printf("diffXY = %f | ", diffXY);
+	printf("maxX = %f | maxY = %f\n", abs(left) + abs(right), abs(bottom) + abs(top));
+
+	//printf("Left = %f | Right = %f | Bottom = %f | Top = %f \n", left, right, bottom, top);
+	GameEngine::GetInstance()->SetDrawArea(left, right, bottom, top);
 
 }

@@ -15,6 +15,7 @@ private:
 	float cameraWidth;
 	float cameraHeight;
 
+
 public:
 	Camera();
 	void LerpCamera();
