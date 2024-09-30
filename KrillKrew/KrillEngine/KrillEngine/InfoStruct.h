@@ -15,3 +15,12 @@ struct CameraZoomInfo {
 	float t; // use to calculate the zoom amount based on current projection and target projection. the value is between 0-1 
 			 // (ex. t = 0.1 when using with a + (t * (b - a)) means that the zoom is increase 10% towards target projection every update time)
 };
+
+struct SpritesheetInfo {
+	float row; 
+	float column; 
+	float spritewidth; 
+	float spriteheight; 
+	float sheetwidth; 
+	float sheetheight;
+};

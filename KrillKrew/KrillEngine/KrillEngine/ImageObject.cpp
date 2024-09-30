@@ -19,6 +19,15 @@ void ImageObject::SetTexture(string path)
 	texture = GameEngine::GetInstance()->GetRenderer()->LoadTexture(path);
 }
 
+void ImageObject::SetSheetInfo(float row, float column, float spritewidth, float spriteheight, float sheetwidth, float sheetheight) {
+	sheetInfo.row = row;
+	sheetInfo.column = column;
+	sheetInfo.spritewidth = spritewidth;
+	sheetInfo.spriteheight = spriteheight;
+	sheetInfo.sheetwidth = sheetwidth;
+	sheetInfo.sheetheight = sheetheight;
+}
+
 void ImageObject::Render(glm::mat4 globalModelTransform)
 {
 	SquareMeshVbo *squareMesh = dynamic_cast<SquareMeshVbo *> (GameEngine::GetInstance()->GetRenderer()->GetMesh(SquareMeshVbo::MESH_NAME));
@@ -34,6 +43,8 @@ void ImageObject::Render(glm::mat4 globalModelTransform)
 		cout << "Error: Can't set renderMode in ImageObject " << endl;
 		return;
 	}
+
+	squareMesh->ChangeTextureData(sheetInfo.row, sheetInfo.column, sheetInfo.spritewidth, sheetInfo.spriteheight, sheetInfo.sheetwidth, sheetInfo.sheetheight);
 
 	vector <glm::mat4> matrixStack;
 

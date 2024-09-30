@@ -141,11 +141,13 @@
     <ClInclude Include="ImageObject.h" />
     <ClInclude Include="InfoStruct.h" />
     <ClInclude Include="Level.h" />
+    <ClInclude Include="LevelMapTest.h" />
     <ClInclude Include="LevelTest.h" />
     <ClInclude Include="MeshVbo.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="Shader.h" />
     <ClInclude Include="SquareMeshVbo.h" />
+    <ClInclude Include="TileMeshVbo.h" />
     <ClInclude Include="TriangleMeshVbo.h" />
   </ItemGroup>
   <ItemGroup>
@@ -160,12 +162,14 @@
     <ClCompile Include="GLRenderer.cpp" />
     <ClCompile Include="ImageObject.cpp" />
     <ClCompile Include="Level.cpp" />
+    <ClCompile Include="LevelMapTest.cpp" />
     <ClCompile Include="LevelTest.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="MeshVbo.cpp" />
     <ClCompile Include="pch.cpp" />
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="SquareMeshVbo.cpp" />
+    <ClCompile Include="TileMeshVbo.cpp" />
     <ClCompile Include="TriangleMeshVbo.cpp" />
   </ItemGroup>
   <ItemGroup>
