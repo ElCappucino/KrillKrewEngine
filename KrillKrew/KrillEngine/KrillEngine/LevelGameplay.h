@@ -6,33 +6,33 @@
 class LevelGameplay : public Level
 {
 private:
-    vector<DrawableObject> objectsList;
-    DrawableObject player[4]; // add up to 4 players
-    int playerNum = 0;
-    CameraZoomInfo zoomInfo; // to initialize the zoom property
-    OrthographicValue targetSceneProjection; // use for lerping between the current projection and this (target projection).
+	vector<DrawableObject*> objectsList;
+	DrawableObject* player[4]; // add up to 4 players
+	int playerNum = 0;
+	CameraZoomInfo zoomInfo; // to initialize the zoom property
+	OrthographicValue targetSceneProjection; // use for lerping between the current projection and this (target projection).
 
-    float top = 0;
-    float bottom = 0;
-    float right = 0;
-    float left = 0;
-    float x = 0;
-    float y = 0;
-    float maxX = 0;
-    float maxY = 0;
-    float diffXY = 0;
-    float dt = 0;
+	float top = 0;
+	float bottom = 0;
+	float right = 0;
+	float left = 0;
+	float x = 0;
+	float y = 0;
+	float maxX = 0;
+	float maxY = 0;
+	float diffXY = 0;
+	float dt = 0;
 
 public:
-    virtual void LevelLoad();
-    virtual void LevelInit();
-    virtual void LevelUpdate();
-    virtual void LevelDraw();
-    virtual void LevelFree();
-    virtual void LevelUnload();
+	virtual void LevelLoad();
+	virtual void LevelInit();
+	virtual void LevelUpdate();
+	virtual void LevelDraw();
+	virtual void LevelFree();
+	virtual void LevelUnload();
 
-    virtual void HandleKey(char key);
-    virtual void HandleMouse(int type, int x, int y);
+	virtual void HandleKey(char key);
+	virtual void HandleMouse(int type, int x, int y);
 
-    void CameraLerp();
+	void CameraLerp();
 };

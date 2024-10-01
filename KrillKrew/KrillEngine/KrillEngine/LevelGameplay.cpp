@@ -18,9 +18,9 @@ void LevelGameplay::LevelInit()
 {
 
 	GameEngine::GetInstance()->GetRenderer()->SetOrthoProjection(-SCREEN_RATIO_X * 2,
-		SCREEN_RATIO_X * 2,
-		-SCREEN_RATIO_Y * 2,
-		SCREEN_RATIO_Y * 2);
+																SCREEN_RATIO_X * 2,
+																-SCREEN_RATIO_Y * 2,
+																SCREEN_RATIO_Y * 2);
 
 	targetSceneProjection = GameEngine::GetInstance()->GetRenderer()->GetOrthovalue();
 
@@ -102,17 +102,17 @@ void LevelGameplay::HandleKey(char key)
 
 	switch (key)
 	{
-		// switch player
+	// switch player
 	case '1': playerNum = 0; break;
 	case '2': playerNum = 1; break;
 	case '3': playerNum = 2; break;
 	case '4': playerNum = 3; break;
-
-		// control player
-	case 'w': player[playerNum]->Translate(glm::vec3(0, 0.3, 0)); break;
-	case 's': player[playerNum]->Translate(glm::vec3(0, -0.3, 0)); break;
-	case 'a': player[playerNum]->Translate(glm::vec3(-0.3, 0, 0)); break;
-	case 'd': player[playerNum]->Translate(glm::vec3(0.3, 0, 0)); break;
+	
+	// control player
+	case 'w': player[playerNum]->Translate(glm::vec3(0, 0.1, 0)); break;
+	case 's': player[playerNum]->Translate(glm::vec3(0, -0.1, 0)); break;
+	case 'a': player[playerNum]->Translate(glm::vec3(-0.1, 0, 0)); break;
+	case 'd': player[playerNum]->Translate(glm::vec3(0.1, 0, 0)); break;
 
 	case 'q': GameEngine::GetInstance()->GetStateController()->gameStateNext = GameState::GS_QUIT; ; break;
 	case 'r': GameEngine::GetInstance()->GetStateController()->gameStateNext = GameState::GS_RESTART; ; break;
@@ -120,19 +120,19 @@ void LevelGameplay::HandleKey(char key)
 	case 'i':
 
 		GameEngine::GetInstance()->SetDrawArea(GameEngine::GetInstance()->GetRenderer()->GetOrthovalue().left + SCREEN_RATIO_X * ZOOM_VELOCITY,
-			GameEngine::GetInstance()->GetRenderer()->GetOrthovalue().right - SCREEN_RATIO_X * ZOOM_VELOCITY,
-			GameEngine::GetInstance()->GetRenderer()->GetOrthovalue().bottom + SCREEN_RATIO_Y * ZOOM_VELOCITY,
-			GameEngine::GetInstance()->GetRenderer()->GetOrthovalue().top - SCREEN_RATIO_Y * ZOOM_VELOCITY);
-
+											   GameEngine::GetInstance()->GetRenderer()->GetOrthovalue().right - SCREEN_RATIO_X * ZOOM_VELOCITY,
+											   GameEngine::GetInstance()->GetRenderer()->GetOrthovalue().bottom + SCREEN_RATIO_Y * ZOOM_VELOCITY,
+											   GameEngine::GetInstance()->GetRenderer()->GetOrthovalue().top - SCREEN_RATIO_Y * ZOOM_VELOCITY);
+		
 		break;
 
 	case 'o':
 
 		GameEngine::GetInstance()->SetDrawArea(GameEngine::GetInstance()->GetRenderer()->GetOrthovalue().left - SCREEN_RATIO_X * ZOOM_VELOCITY,
-			GameEngine::GetInstance()->GetRenderer()->GetOrthovalue().right + SCREEN_RATIO_X * ZOOM_VELOCITY,
-			GameEngine::GetInstance()->GetRenderer()->GetOrthovalue().bottom - SCREEN_RATIO_Y * ZOOM_VELOCITY,
-			GameEngine::GetInstance()->GetRenderer()->GetOrthovalue().top + SCREEN_RATIO_Y * ZOOM_VELOCITY);
-
+											   GameEngine::GetInstance()->GetRenderer()->GetOrthovalue().right + SCREEN_RATIO_X * ZOOM_VELOCITY,
+											   GameEngine::GetInstance()->GetRenderer()->GetOrthovalue().bottom - SCREEN_RATIO_Y * ZOOM_VELOCITY,
+		                                       GameEngine::GetInstance()->GetRenderer()->GetOrthovalue().top + SCREEN_RATIO_Y * ZOOM_VELOCITY);
+		
 		break;
 	}
 }
@@ -190,24 +190,24 @@ void LevelGameplay::CameraLerp() {
 
 	if (maxX > maxY) {
 		diffXY = abs(abs(maxX) - abs(maxY));
-		left = (SCREEN_RATIO_X * x) - (1.5 + maxX);
-		right = (SCREEN_RATIO_X * x) + (1.5 + maxX);
-		bottom = (SCREEN_RATIO_Y * y) - (1.5 + maxY) - (diffXY);
-		top = (SCREEN_RATIO_Y * y) + (1.5 + maxY) + (diffXY);
+		left = (SCREEN_RATIO_X * x) - (1 + maxX);
+		right = (SCREEN_RATIO_X * x) + (1 + maxX);
+		bottom = (SCREEN_RATIO_Y * y) - (1 + maxY) - (diffXY);
+		top = (SCREEN_RATIO_Y * y) + (1 + maxY) + (diffXY);
 	}
 
 	else {
 		diffXY = abs(abs(maxY) - abs(maxX));
-		left = (SCREEN_RATIO_X * x) - (1.5 + maxX) - (diffXY);
-		right = (SCREEN_RATIO_X * x) + (1.5 + maxX) + (diffXY);
-		bottom = (SCREEN_RATIO_Y * y) - (1.5 + maxY);
-		top = (SCREEN_RATIO_Y * y) + (1.5 + maxY);
+		left = (SCREEN_RATIO_X * x) - (1 + maxX) - (diffXY);
+		right = (SCREEN_RATIO_X * x) + (1 + maxX) + (diffXY);
+		bottom = (SCREEN_RATIO_Y * y) - (1 + maxY);
+		top = (SCREEN_RATIO_Y * y) + (1 + maxY);
 	}
 
-	printf("diffXY = %f | ", diffXY);
-	printf("maxX = %f | maxY = %f\n", abs(left) + abs(right), abs(bottom) + abs(top));
+	/*printf("diffXY = %f | ", diffXY);
+	printf("maxX = %f | maxY = %f\n", maxX, maxY);*/
 
-	//printf("Left = %f | Right = %f | Bottom = %f | Top = %f \n", left, right, bottom, top);
+	printf("Left = %f | Right = %f | Bottom = %f | Top = %f \n", left, right, bottom, top);
 	GameEngine::GetInstance()->SetDrawArea(left, right, bottom, top);
 
 }

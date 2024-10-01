@@ -36,7 +36,7 @@ void GameEngine::Init(int width, int height)
 	SetBackgroundColor(1.0f, 1.0f, 200.0f / 255);
 
 	stateController = new GameStateController();
-	stateController->Init(GameState::GS_LEVEL1);
+	stateController->Init(GameState::GS_LEVELGAMEPLAY);
 }
 
 void GameEngine::Render(vector<DrawableObject*> renderObjects)
@@ -47,7 +47,7 @@ void GameEngine::Render(vector<DrawableObject*> renderObjects)
 void GameEngine::SetDrawArea(float left, float right, float bottom, float top)
 {
 
-	printf("Left = %f | Right = %f | Bottom = %f | Top = %f \n", left, right, bottom, top);
+	//printf("Left = %f | Right = %f | Bottom = %f | Top = %f \n", left, right, bottom, top);
 	renderer->SetOrthoProjection(left, right, bottom, top);
 }
 
