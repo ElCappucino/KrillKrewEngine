@@ -1,7 +1,13 @@
 #pragma once
 #include "Level.h"
 #include "InfoStruct.h"
-#include "TileMeshVbo.h"
+#include <string>
+#include <fstream>
+#include <sstream>
+#include <iostream>
+
+#define MAP_WIDTH  21
+#define MAP_HEIGHT 15
 
 /// @brief The class for level inherit test from P'tiam
 class LevelMapTest : public Level
@@ -9,6 +15,10 @@ class LevelMapTest : public Level
 private:
 	vector<DrawableObject*> objectsList;
 	DrawableObject* player[4]; // add up to 4 players
+
+	int groundTile[MAP_HEIGHT][MAP_WIDTH] = { 0 };
+	int propsTile[MAP_HEIGHT][MAP_WIDTH] = { 0 };
+	int colliderTile[MAP_HEIGHT][MAP_WIDTH] = { 0 };
 
 	CameraZoomInfo zoomInfo; // to initialize the zoom property
 	OrthographicValue targetSceneProjection; // use for lerping between the current projection and this (target projection).
@@ -27,5 +37,5 @@ public:
 	virtual void HandleMouse(int type, int x, int y);
 
 	void CameraLerp();
+	void TileImport(int TileBuffer[][MAP_WIDTH], string fileName);
 };
-#pragma once

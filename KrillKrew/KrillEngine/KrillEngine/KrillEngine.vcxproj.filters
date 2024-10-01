@@ -128,10 +128,10 @@
     <ClCompile Include="Camera.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="LevelMapTest.cpp">
+    <ClCompile Include="TileMeshVbo.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="TileMeshVbo.cpp">
+    <ClCompile Include="LevelMapTest.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

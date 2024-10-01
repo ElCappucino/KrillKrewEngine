@@ -1,5 +1,10 @@
 #include "LevelGameplay.h"
 
+float lerp(float a, float b, float t)
+{
+	return a + t * (b - a);
+}
+
 void LevelGameplay::LevelLoad()
 {
 	SquareMeshVbo* square = new SquareMeshVbo();
@@ -12,90 +17,61 @@ void LevelGameplay::LevelLoad()
 void LevelGameplay::LevelInit()
 {
 
-	GameEngine::GetInstance()->GetRenderer()->SetOrthoProjection(-(SCREEN_RATIO_X / 2),
-																(SCREEN_RATIO_X / 2),
-																-(SCREEN_RATIO_Y / 2),
-																(SCREEN_RATIO_Y));
+	GameEngine::GetInstance()->GetRenderer()->SetOrthoProjection(-SCREEN_RATIO_X * 2,
+		SCREEN_RATIO_X * 2,
+		-SCREEN_RATIO_Y * 2,
+		SCREEN_RATIO_Y * 2);
 
-	// targetSceneProjection = GameEngine::GetInstance()->GetRenderer()->GetOrthovalue();
+	targetSceneProjection = GameEngine::GetInstance()->GetRenderer()->GetOrthovalue();
 
-	/*zoomInfo.maxZoom_horizontal = 3;
+	zoomInfo.maxZoom_horizontal = 3;
 	zoomInfo.maxZoom_vertical = 3;
 	zoomInfo.minZoom_horizontal = 1;
-	zoomInfo.minZoom_vertical = 1;*/
-
-	TileImport(groundTile, "../Resource/Texture/Tilemap1.txt");
+	zoomInfo.minZoom_vertical = 1;
 
 	// Create and Initialize 4 players object
 
-	SquareMeshVbo* square = dynamic_cast<SquareMeshVbo*> (GameEngine::GetInstance()->GetRenderer()->GetMesh(SquareMeshVbo::MESH_NAME));
+	// Example Code
+	ImageObject* obj1 = new ImageObject();
+	obj1->SetTexture("../Resource/Texture/Prinny.png");
+	obj1->SetSize(1.f, -1.f);
+	obj1->SetPosition(glm::vec3(-1.f, -1.f, 0));
+	objectsList.push_back(obj1);
 
-	for (int i = 0; i < MAP_HEIGHT; i++) {
-		for (int j = 0; j < MAP_WIDTH; j++) {
-			int flag = groundTile[i][j];
-			cout << flag << ",";
-			ImageObject* obj = new ImageObject();
-			obj->SetSheetInfo(0, flag, 128, 128, 256, 128);
-			obj->SetTexture("../Resource/Texture/groundTile.png");
-			obj->SetSize(128.f, -128.f);
-			obj->SetPosition(glm::vec3(-200.f + (j * 128), 100.f - (i * 128), 0));
-			objectsList.push_back(obj);
-		}
-		cout << endl;
-	}
+	player[0] = obj1;
 
-	//square->ChangeTextureData(0, 0, 128, 128, 256, 128);
+	ImageObject* obj2 = new ImageObject();
+	obj2->SetTexture("../Resource/Texture/Prinny.png");
+	obj2->SetSize(1.f, -1.f);
+	obj2->SetPosition(glm::vec3(1.f, -1.f, 0));
+	objectsList.push_back(obj2);
 
-	//ImageObject* obj1 = new ImageObject();
-	//obj1->SetSheetInfo(0, 0, 128, 128, 256, 128);
-	//obj1->SetTexture("../Resource/Texture/groundTile.png");
-	//obj1->SetSize(256.f, -256.f);
-	//obj1->SetPosition(glm::vec3(-500.f, -500.f, 0));
-	//objectsList.push_back(obj1);
+	player[1] = obj2;
 
-	//player[0] = obj1;
+	ImageObject* obj3 = new ImageObject();
+	obj3->SetTexture("../Resource/Texture/Prinny.png");
+	obj3->SetSize(1.f, -1.f);
+	obj3->SetPosition(glm::vec3(-1.f, 1.f, 0));
+	objectsList.push_back(obj3);
 
-	////square->ChangeTextureData(0, 1, 128, 128, 256, 128);
+	player[2] = obj3;
 
-	//ImageObject* obj2 = new ImageObject();
-	//obj2->SetSheetInfo(0, 1, 128, 128, 256, 128);
-	//obj2->SetTexture("../Resource/Texture/groundTile.png");
-	//obj2->SetSize(256.f, -256.f);
-	//obj2->SetPosition(glm::vec3(500.f, -500.f, 0));
-	//objectsList.push_back(obj2);
+	ImageObject* obj4 = new ImageObject();
+	obj4->SetTexture("../Resource/Texture/Prinny.png");
+	obj4->SetSize(1.f, -1.f);
+	obj4->SetPosition(glm::vec3(1.f, 1.f, 0));
+	objectsList.push_back(obj4);
 
-	//player[1] = obj2;
-
-	////square->ChangeTextureData(0, 0, 128, 128, 256, 128);
-
-	//ImageObject* obj3 = new ImageObject();
-	//obj3->SetSheetInfo(0, 0, 128, 128, 256, 128);
-	//obj3->SetTexture("../Resource/Texture/groundTile.png");
-	//obj3->SetSize(256.f, -256.f);
-	//obj3->SetPosition(glm::vec3(-500.f, 500.f, 0));
-	//objectsList.push_back(obj3);
-
-	//player[2] = obj3;
-
-	////square->ChangeTextureData(0, 1, 128, 128, 256, 128);
-
-	//ImageObject* obj4 = new ImageObject();
-	//obj4->SetSheetInfo(0, 1, 128, 128, 256, 128);
-	//obj4->SetTexture("../Resource/Texture/groundTile.png");
-	//obj4->SetSize(256.f, -256.f);
-	//obj4->SetPosition(glm::vec3(500.f, 500.f, 0));
-	//objectsList.push_back(obj4);
-
-	//player[3] = obj4;
+	player[3] = obj4;
 
 	//cout << "Init Level" << endl;
 }
 
 void LevelGameplay::LevelUpdate()
 {
-	// dt++;
+	dt++;
 
-	// CameraLerp(); // update smooth camera here
+	CameraLerp(); // update smooth camera here
 
 	//cout << "Update Level" << endl;
 }
@@ -126,29 +102,37 @@ void LevelGameplay::HandleKey(char key)
 
 	switch (key)
 	{
-	/*case 'w': player->Translate(glm::vec3(0, 0.3, 0)); break;
-	case 's': player->Translate(glm::vec3(0, -0.3, 0)); break;
-	case 'a': player->Translate(glm::vec3(-0.3, 0, 0)); break;
-	case 'd': player->Translate(glm::vec3(0.3, 0, 0)); break;*/
+		// switch player
+	case '1': playerNum = 0; break;
+	case '2': playerNum = 1; break;
+	case '3': playerNum = 2; break;
+	case '4': playerNum = 3; break;
+
+		// control player
+	case 'w': player[playerNum]->Translate(glm::vec3(0, 0.3, 0)); break;
+	case 's': player[playerNum]->Translate(glm::vec3(0, -0.3, 0)); break;
+	case 'a': player[playerNum]->Translate(glm::vec3(-0.3, 0, 0)); break;
+	case 'd': player[playerNum]->Translate(glm::vec3(0.3, 0, 0)); break;
+
 	case 'q': GameEngine::GetInstance()->GetStateController()->gameStateNext = GameState::GS_QUIT; ; break;
 	case 'r': GameEngine::GetInstance()->GetStateController()->gameStateNext = GameState::GS_RESTART; ; break;
 	case 'e': GameEngine::GetInstance()->GetStateController()->gameStateNext = GameState::GS_LEVEL1; ; break;
 	case 'i':
 
 		GameEngine::GetInstance()->SetDrawArea(GameEngine::GetInstance()->GetRenderer()->GetOrthovalue().left + SCREEN_RATIO_X * ZOOM_VELOCITY,
-											   GameEngine::GetInstance()->GetRenderer()->GetOrthovalue().right - SCREEN_RATIO_X * ZOOM_VELOCITY,
-											   GameEngine::GetInstance()->GetRenderer()->GetOrthovalue().bottom + SCREEN_RATIO_Y * ZOOM_VELOCITY,
-											   GameEngine::GetInstance()->GetRenderer()->GetOrthovalue().top - SCREEN_RATIO_Y * ZOOM_VELOCITY);
-		
+			GameEngine::GetInstance()->GetRenderer()->GetOrthovalue().right - SCREEN_RATIO_X * ZOOM_VELOCITY,
+			GameEngine::GetInstance()->GetRenderer()->GetOrthovalue().bottom + SCREEN_RATIO_Y * ZOOM_VELOCITY,
+			GameEngine::GetInstance()->GetRenderer()->GetOrthovalue().top - SCREEN_RATIO_Y * ZOOM_VELOCITY);
+
 		break;
 
 	case 'o':
 
 		GameEngine::GetInstance()->SetDrawArea(GameEngine::GetInstance()->GetRenderer()->GetOrthovalue().left - SCREEN_RATIO_X * ZOOM_VELOCITY,
-											   GameEngine::GetInstance()->GetRenderer()->GetOrthovalue().right + SCREEN_RATIO_X * ZOOM_VELOCITY,
-											   GameEngine::GetInstance()->GetRenderer()->GetOrthovalue().bottom - SCREEN_RATIO_Y * ZOOM_VELOCITY,
-		                                       GameEngine::GetInstance()->GetRenderer()->GetOrthovalue().top + SCREEN_RATIO_Y * ZOOM_VELOCITY);
-		
+			GameEngine::GetInstance()->GetRenderer()->GetOrthovalue().right + SCREEN_RATIO_X * ZOOM_VELOCITY,
+			GameEngine::GetInstance()->GetRenderer()->GetOrthovalue().bottom - SCREEN_RATIO_Y * ZOOM_VELOCITY,
+			GameEngine::GetInstance()->GetRenderer()->GetOrthovalue().top + SCREEN_RATIO_Y * ZOOM_VELOCITY);
+
 		break;
 	}
 }
@@ -165,45 +149,65 @@ void LevelGameplay::HandleMouse(int type, int x, int y)
 }
 
 void LevelGameplay::CameraLerp() {
+
 	// check if the length of horizontal and vertical of projection + (target projection - current projection) * zoomInfo.t is not exceed the minimum and maximum.
 	// if not, calculate the lerp of left right bottom top and update using SetDrawArea().
 
-}
+	top = 0;
+	bottom = 0;
+	right = 0;
+	left = 0;
 
-void LevelGameplay::TileImport(int TileBuffer[][MAP_WIDTH], string fileName) {
-	ifstream mapfile(fileName);
-	string line;
-	int row = 0;
-	int column = 1;
-	if (!mapfile.is_open()) {
-		// error
-	}
-	else {
-		int counter = 0;
-		while (!mapfile.eof()) {
-			//string line;
-			if (getline(mapfile, line, ',')) {
-				
-				TileBuffer[counter / MAP_WIDTH][counter % MAP_WIDTH] = stoi(line);
-				cout << line <<"(" << counter << ":" << counter / MAP_HEIGHT << ":" << counter % MAP_WIDTH << "),";
-				
-				
-				/*if (column == MAP_WIDTH - 1 ) {
-					cout << endl;
-					column = 0;
-				}
-				column++;*/
-				counter++;
-			}
+	for (int i = 0; i < 4; i++) {
+
+		if (player[i]->getPos().x > right) {
+
+			right = player[i]->getPos().x;
 		}
-		cout << endl << "--------------------------------------------" << endl;
-		mapfile.close();
 
-		/*for (int i = 0; i < MAP_HEIGHT; i++) {
-			for (int j = 0; j < MAP_WIDTH; j++) {
-				cout << TileBuffer[i][j] << " ";
-			}
-			cout << endl;
-		}*/
+		if (player[i]->getPos().x < left) {
+
+			left = player[i]->getPos().x;
+
+		}
+
+		if (player[i]->getPos().y > top) {
+
+			top = player[i]->getPos().y;
+
+		}
+
+		if (player[i]->getPos().y < bottom) {
+
+			bottom = player[i]->getPos().y;
+
+		}
 	}
+	x = lerp(left, right, 0.5);
+	y = lerp(bottom, top, 0.5);
+	maxX = abs(left) + abs(right);
+	maxY = abs(bottom) + abs(top);
+
+	if (maxX > maxY) {
+		diffXY = abs(abs(maxX) - abs(maxY));
+		left = (SCREEN_RATIO_X * x) - (1.5 + maxX);
+		right = (SCREEN_RATIO_X * x) + (1.5 + maxX);
+		bottom = (SCREEN_RATIO_Y * y) - (1.5 + maxY) - (diffXY);
+		top = (SCREEN_RATIO_Y * y) + (1.5 + maxY) + (diffXY);
+	}
+
+	else {
+		diffXY = abs(abs(maxY) - abs(maxX));
+		left = (SCREEN_RATIO_X * x) - (1.5 + maxX) - (diffXY);
+		right = (SCREEN_RATIO_X * x) + (1.5 + maxX) + (diffXY);
+		bottom = (SCREEN_RATIO_Y * y) - (1.5 + maxY);
+		top = (SCREEN_RATIO_Y * y) + (1.5 + maxY);
+	}
+
+	printf("diffXY = %f | ", diffXY);
+	printf("maxX = %f | maxY = %f\n", abs(left) + abs(right), abs(bottom) + abs(top));
+
+	//printf("Left = %f | Right = %f | Bottom = %f | Top = %f \n", left, right, bottom, top);
+	GameEngine::GetInstance()->SetDrawArea(left, right, bottom, top);
+
 }
