@@ -1,15 +1,2 @@
 ﻿C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppBuild.targets(531,5): warning MSB8028: The intermediate directory (Debug\) contains files shared from another project (TiemEngine.vcxproj).  This can lead to incorrect clean and rebuild behavior.
-  Camera.cpp
-  GameStateController.cpp
-  Generating Code...
-Debug\LevelGameplay.obj : warning LNK4042: object specified more than once; extras ignored
-     Creating library C:\Capt\KrillKrewEngine\KrillKrew\KrillEngine\Debug\KrillEngine.lib and object C:\Capt\KrillKrewEngine\KrillKrew\KrillEngine\Debug\KrillEngine.exp
-GameStateController.obj : error LNK2001: unresolved external symbol "public: virtual void __thiscall LevelGameplay::LevelLoad(void)" (?LevelLoad@LevelGameplay@@UAEXXZ)
-GameStateController.obj : error LNK2001: unresolved external symbol "public: virtual void __thiscall LevelGameplay::LevelInit(void)" (?LevelInit@LevelGameplay@@UAEXXZ)
-GameStateController.obj : error LNK2001: unresolved external symbol "public: virtual void __thiscall LevelGameplay::LevelUpdate(void)" (?LevelUpdate@LevelGameplay@@UAEXXZ)
-GameStateController.obj : error LNK2001: unresolved external symbol "public: virtual void __thiscall LevelGameplay::LevelDraw(void)" (?LevelDraw@LevelGameplay@@UAEXXZ)
-GameStateController.obj : error LNK2001: unresolved external symbol "public: virtual void __thiscall LevelGameplay::LevelFree(void)" (?LevelFree@LevelGameplay@@UAEXXZ)
-GameStateController.obj : error LNK2001: unresolved external symbol "public: virtual void __thiscall LevelGameplay::LevelUnload(void)" (?LevelUnload@LevelGameplay@@UAEXXZ)
-GameStateController.obj : error LNK2001: unresolved external symbol "public: virtual void __thiscall LevelGameplay::HandleKey(char)" (?HandleKey@LevelGameplay@@UAEXD@Z)
-GameStateController.obj : error LNK2001: unresolved external symbol "public: virtual void __thiscall LevelGameplay::HandleMouse(int,int,int)" (?HandleMouse@LevelGameplay@@UAEXHHH@Z)
-C:\Capt\KrillKrewEngine\KrillKrew\KrillEngine\Debug\KrillEngine.exe : fatal error LNK1120: 8 unresolved externals
+  KrillEngine.vcxproj -> C:\Users\ddctl\OneDrive\Documents\GitHub\KrillKrewEngine\KrillKrew\KrillEngine\Debug\KrillEngine.exe

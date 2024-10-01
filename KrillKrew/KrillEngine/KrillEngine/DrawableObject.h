@@ -20,7 +20,7 @@ public:
 	void SetSize(float sizeX, float sizeY);
 	void SetPosition(glm::vec3 newPosition);
 	void Translate(glm::vec3 moveDistance);
-
+	glm::vec3 getPos();
 	//Rotate, Scale ???
 
 };
