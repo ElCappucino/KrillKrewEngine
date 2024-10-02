@@ -12,16 +12,9 @@ private:
 	CameraZoomInfo zoomInfo; // to initialize the zoom property
 	OrthographicValue targetSceneProjection; // use for lerping between the current projection and this (target projection).
 
-	float top = 0;
-	float bottom = 0;
-	float right = 0;
-	float left = 0;
-	float x = 0;
-	float y = 0;
-	float maxX = 0;
-	float maxY = 0;
-	float diffXY = 0;
 	float dt = 0;
+
+	float lastWidth = 0, lastHeight = 0;
 
 public:
 	virtual void LevelLoad();

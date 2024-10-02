@@ -122,9 +122,6 @@
     <ClCompile Include="LevelGameplay.h">
       <Filter>Header Files</Filter>
     </ClCompile>
-    <ClCompile Include="LevelGameplay.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Camera.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -132,6 +129,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="LevelMapTest.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="LevelGameplay.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

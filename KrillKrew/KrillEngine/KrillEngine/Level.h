@@ -4,9 +4,12 @@
 #include "GameObject.h"
 #include "ImageObject.h"
 
-#define SCREEN_RATIO_X 1920
-#define SCREEN_RATIO_Y 1080
-#define ZOOM_VELOCITY 0.2
+#define SCREEN_WIDTH 1280
+#define SCREEN_HEIGHT 720
+#define SCREEN_RATIO_X 1.78
+#define SCREEN_RATIO_Y 1
+#define CAMERA_PADDING 150
+#define ZOOM_VELOCITY 0.05
 /// @brief The class for setup object in the level
 /// @brief It intent to inherit this class for creating any new unique scene.
 class Level

@@ -13,10 +13,10 @@ void LevelMapTest::LevelInit()
 {
 	cout << "Init Level" << endl;
 	
-	GameEngine::GetInstance()->GetRenderer()->SetOrthoProjection(-(SCREEN_RATIO_X / 2),
-		(SCREEN_RATIO_X / 2),
-		-(SCREEN_RATIO_Y / 2),
-		(SCREEN_RATIO_Y));
+	GameEngine::GetInstance()->GetRenderer()->SetOrthoProjection(-(SCREEN_WIDTH / 2),
+																  (SCREEN_WIDTH / 2),
+																 -(SCREEN_HEIGHT / 2),
+																  (SCREEN_HEIGHT / 2));
 
 	// targetSceneProjection = GameEngine::GetInstance()->GetRenderer()->GetOrthovalue();
 
@@ -133,22 +133,22 @@ void LevelMapTest::HandleKey(char key)
 		case 'd': player->Translate(glm::vec3(0.3, 0, 0)); break;*/
 	case 'q': GameEngine::GetInstance()->GetStateController()->gameStateNext = GameState::GS_QUIT; ; break;
 	case 'r': GameEngine::GetInstance()->GetStateController()->gameStateNext = GameState::GS_RESTART; ; break;
-	case 'e': GameEngine::GetInstance()->GetStateController()->gameStateNext = GameState::GS_LEVEL1; ; break;
+	case 'e': GameEngine::GetInstance()->GetStateController()->gameStateNext = GameState::GS_LEVELGAMEPLAY; ; break;
 	case 'i':
 
-		GameEngine::GetInstance()->SetDrawArea(GameEngine::GetInstance()->GetRenderer()->GetOrthovalue().left + SCREEN_RATIO_X * ZOOM_VELOCITY,
-			GameEngine::GetInstance()->GetRenderer()->GetOrthovalue().right - SCREEN_RATIO_X * ZOOM_VELOCITY,
-			GameEngine::GetInstance()->GetRenderer()->GetOrthovalue().bottom + SCREEN_RATIO_Y * ZOOM_VELOCITY,
-			GameEngine::GetInstance()->GetRenderer()->GetOrthovalue().top - SCREEN_RATIO_Y * ZOOM_VELOCITY);
+		GameEngine::GetInstance()->SetDrawArea(GameEngine::GetInstance()->GetRenderer()->GetOrthovalue().left + SCREEN_WIDTH * ZOOM_VELOCITY,
+			GameEngine::GetInstance()->GetRenderer()->GetOrthovalue().right - SCREEN_WIDTH * ZOOM_VELOCITY,
+			GameEngine::GetInstance()->GetRenderer()->GetOrthovalue().bottom + SCREEN_HEIGHT * ZOOM_VELOCITY,
+			GameEngine::GetInstance()->GetRenderer()->GetOrthovalue().top - SCREEN_HEIGHT * ZOOM_VELOCITY);
 
 		break;
 
 	case 'o':
 
-		GameEngine::GetInstance()->SetDrawArea(GameEngine::GetInstance()->GetRenderer()->GetOrthovalue().left - SCREEN_RATIO_X * ZOOM_VELOCITY,
-			GameEngine::GetInstance()->GetRenderer()->GetOrthovalue().right + SCREEN_RATIO_X * ZOOM_VELOCITY,
-			GameEngine::GetInstance()->GetRenderer()->GetOrthovalue().bottom - SCREEN_RATIO_Y * ZOOM_VELOCITY,
-			GameEngine::GetInstance()->GetRenderer()->GetOrthovalue().top + SCREEN_RATIO_Y * ZOOM_VELOCITY);
+		GameEngine::GetInstance()->SetDrawArea(GameEngine::GetInstance()->GetRenderer()->GetOrthovalue().left - SCREEN_WIDTH * ZOOM_VELOCITY,
+			GameEngine::GetInstance()->GetRenderer()->GetOrthovalue().right + SCREEN_WIDTH * ZOOM_VELOCITY,
+			GameEngine::GetInstance()->GetRenderer()->GetOrthovalue().bottom - SCREEN_HEIGHT * ZOOM_VELOCITY,
+			GameEngine::GetInstance()->GetRenderer()->GetOrthovalue().top + SCREEN_HEIGHT * ZOOM_VELOCITY);
 
 		break;
 	}
