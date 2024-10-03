@@ -31,6 +31,9 @@ void LevelMapTest::LevelInit()
 
 	SquareMeshVbo* square = dynamic_cast<SquareMeshVbo*> (GameEngine::GetInstance()->GetRenderer()->GetMesh(SquareMeshVbo::MESH_NAME));
 
+	float map_left = -300.f;
+	float map_top = 250.f;
+
 	for (int i = 0; i < MAP_HEIGHT; i++) {
 		for (int j = 0; j < MAP_WIDTH; j++) {
 			int flag = groundTile[i][j];
@@ -38,56 +41,14 @@ void LevelMapTest::LevelInit()
 			ImageObject* obj = new ImageObject();
 			obj->SetSheetInfo(0, flag, 128, 128, 256, 128);
 			obj->SetTexture("../Resource/Texture/groundTile.png");
-			obj->SetSize(128.f, -128.f);
-			obj->SetPosition(glm::vec3(-200.f + (j * 128), 100.f - (i * 128), 0));
+			obj->SetSize(32.f, -32.f);
+			obj->SetPosition(glm::vec3(map_left + (j * 32.f), map_top - (i * 32.f), 0));
 			objectsList.push_back(obj);
+
+			cout << "posX = " << obj->getPos().x << " posY = " << obj->getPos().y << endl;
 		}
 		cout << endl;
 	}
-
-	//square->ChangeTextureData(0, 0, 128, 128, 256, 128);
-
-	//ImageObject* obj1 = new ImageObject();
-	//obj1->SetSheetInfo(0, 0, 128, 128, 256, 128);
-	//obj1->SetTexture("../Resource/Texture/groundTile.png");
-	//obj1->SetSize(256.f, -256.f);
-	//obj1->SetPosition(glm::vec3(-500.f, -500.f, 0));
-	//objectsList.push_back(obj1);
-
-	//player[0] = obj1;
-
-	////square->ChangeTextureData(0, 1, 128, 128, 256, 128);
-
-	//ImageObject* obj2 = new ImageObject();
-	//obj2->SetSheetInfo(0, 1, 128, 128, 256, 128);
-	//obj2->SetTexture("../Resource/Texture/groundTile.png");
-	//obj2->SetSize(256.f, -256.f);
-	//obj2->SetPosition(glm::vec3(500.f, -500.f, 0));
-	//objectsList.push_back(obj2);
-
-	//player[1] = obj2;
-
-	////square->ChangeTextureData(0, 0, 128, 128, 256, 128);
-
-	//ImageObject* obj3 = new ImageObject();
-	//obj3->SetSheetInfo(0, 0, 128, 128, 256, 128);
-	//obj3->SetTexture("../Resource/Texture/groundTile.png");
-	//obj3->SetSize(256.f, -256.f);
-	//obj3->SetPosition(glm::vec3(-500.f, 500.f, 0));
-	//objectsList.push_back(obj3);
-
-	//player[2] = obj3;
-
-	////square->ChangeTextureData(0, 1, 128, 128, 256, 128);
-
-	//ImageObject* obj4 = new ImageObject();
-	//obj4->SetSheetInfo(0, 1, 128, 128, 256, 128);
-	//obj4->SetTexture("../Resource/Texture/groundTile.png");
-	//obj4->SetSize(256.f, -256.f);
-	//obj4->SetPosition(glm::vec3(500.f, 500.f, 0));
-	//objectsList.push_back(obj4);
-
-	//player[3] = obj4;
 
 	//cout << "Init Level" << endl;
 }
@@ -95,8 +56,6 @@ void LevelMapTest::LevelInit()
 void LevelMapTest::LevelUpdate()
 {
 	// dt++;
-
-	// CameraLerp(); // update smooth camera here
 
 	//cout << "Update Level" << endl;
 }
@@ -136,19 +95,19 @@ void LevelMapTest::HandleKey(char key)
 	case 'e': GameEngine::GetInstance()->GetStateController()->gameStateNext = GameState::GS_LEVELGAMEPLAY; ; break;
 	case 'i':
 
-		GameEngine::GetInstance()->SetDrawArea(GameEngine::GetInstance()->GetRenderer()->GetOrthovalue().left + SCREEN_WIDTH * ZOOM_VELOCITY,
-			GameEngine::GetInstance()->GetRenderer()->GetOrthovalue().right - SCREEN_WIDTH * ZOOM_VELOCITY,
-			GameEngine::GetInstance()->GetRenderer()->GetOrthovalue().bottom + SCREEN_HEIGHT * ZOOM_VELOCITY,
-			GameEngine::GetInstance()->GetRenderer()->GetOrthovalue().top - SCREEN_HEIGHT * ZOOM_VELOCITY);
+		GameEngine::GetInstance()->SetDrawArea(camera.getCameraOrthoValue().left + SCREEN_WIDTH * ZOOM_VELOCITY,
+			camera.getCameraOrthoValue().right - SCREEN_WIDTH * ZOOM_VELOCITY,
+			camera.getCameraOrthoValue().bottom + SCREEN_HEIGHT * ZOOM_VELOCITY,
+			camera.getCameraOrthoValue().top - SCREEN_HEIGHT * ZOOM_VELOCITY);
 
 		break;
 
 	case 'o':
 
-		GameEngine::GetInstance()->SetDrawArea(GameEngine::GetInstance()->GetRenderer()->GetOrthovalue().left - SCREEN_WIDTH * ZOOM_VELOCITY,
-			GameEngine::GetInstance()->GetRenderer()->GetOrthovalue().right + SCREEN_WIDTH * ZOOM_VELOCITY,
-			GameEngine::GetInstance()->GetRenderer()->GetOrthovalue().bottom - SCREEN_HEIGHT * ZOOM_VELOCITY,
-			GameEngine::GetInstance()->GetRenderer()->GetOrthovalue().top + SCREEN_HEIGHT * ZOOM_VELOCITY);
+		GameEngine::GetInstance()->SetDrawArea(camera.getCameraOrthoValue().left - SCREEN_WIDTH * ZOOM_VELOCITY,
+			camera.getCameraOrthoValue().right + SCREEN_WIDTH * ZOOM_VELOCITY,
+			camera.getCameraOrthoValue().bottom - SCREEN_HEIGHT * ZOOM_VELOCITY,
+			camera.getCameraOrthoValue().top + SCREEN_HEIGHT * ZOOM_VELOCITY);
 
 		break;
 	}
@@ -187,25 +146,11 @@ void LevelMapTest::TileImport(int TileBuffer[][MAP_WIDTH], string fileName) {
 			if (getline(mapfile, line, ',')) {
 
 				TileBuffer[counter / MAP_WIDTH][counter % MAP_WIDTH] = stoi(line);
-				cout << line << "(" << counter << ":" << counter / MAP_HEIGHT << ":" << counter % MAP_WIDTH << "),";
 
-
-				/*if (column == MAP_WIDTH - 1 ) {
-					cout << endl;
-					column = 0;
-				}
-				column++;*/
 				counter++;
 			}
 		}
-		cout << endl << "--------------------------------------------" << endl;
 		mapfile.close();
 
-		/*for (int i = 0; i < MAP_HEIGHT; i++) {
-			for (int j = 0; j < MAP_WIDTH; j++) {
-				cout << TileBuffer[i][j] << " ";
-			}
-			cout << endl;
-		}*/
 	}
 }

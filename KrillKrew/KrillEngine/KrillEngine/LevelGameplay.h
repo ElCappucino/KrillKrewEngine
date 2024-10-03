@@ -11,10 +11,11 @@ private:
 	int playerNum = 0;
 	CameraZoomInfo zoomInfo; // to initialize the zoom property
 	OrthographicValue targetSceneProjection; // use for lerping between the current projection and this (target projection).
+	Camera camera;
 
 	float dt = 0;
 
-	float lastWidth = 0, lastHeight = 0;
+	float previousWidth = 0, previousHeight = 0;
 
 public:
 	virtual void LevelLoad();
@@ -27,5 +28,5 @@ public:
 	virtual void HandleKey(char key);
 	virtual void HandleMouse(int type, int x, int y);
 
-	void CameraLerp();
+	// void CameraLerp();
 };

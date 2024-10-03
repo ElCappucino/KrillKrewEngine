@@ -75,14 +75,13 @@ void LevelGameplay::LevelUpdate()
 {
 	dt++;
 
-	CameraLerp(); // update smooth camera here
-
-	// cout << "Playere Num = " << playerNum << endl;
+	camera.LerpCamera(player[0]->getPos(), player[1]->getPos(), player[2]->getPos(), player[3]->getPos()); // update smooth camera here
 }
 
 void LevelGameplay::LevelDraw()
 {
 	GameEngine::GetInstance()->Render(objectsList);
+
 	// cout << "Draw Level" << endl;
 }
 
@@ -92,12 +91,14 @@ void LevelGameplay::LevelFree()
 		delete obj;
 	}
 	objectsList.clear();
+
 	//cout << "Free Level" << endl;
 }
 
 void LevelGameplay::LevelUnload()
 {
 	GameEngine::GetInstance()->ClearMesh();
+
 	//cout << "Unload Level" << endl;
 }
 
@@ -123,19 +124,19 @@ void LevelGameplay::HandleKey(char key)
 	case 'e': GameEngine::GetInstance()->GetStateController()->gameStateNext = GameState::GS_LEVELMAPTEST; ; break;
 	case 'i':
 
-		GameEngine::GetInstance()->SetDrawArea(GameEngine::GetInstance()->GetRenderer()->GetOrthovalue().left + SCREEN_WIDTH * ZOOM_VELOCITY,
-											   GameEngine::GetInstance()->GetRenderer()->GetOrthovalue().right - SCREEN_WIDTH * ZOOM_VELOCITY,
-											   GameEngine::GetInstance()->GetRenderer()->GetOrthovalue().bottom + SCREEN_HEIGHT * ZOOM_VELOCITY,
-											   GameEngine::GetInstance()->GetRenderer()->GetOrthovalue().top - SCREEN_HEIGHT * ZOOM_VELOCITY);
+		GameEngine::GetInstance()->SetDrawArea(camera.getCameraOrthoValue().left + SCREEN_WIDTH * ZOOM_VELOCITY,
+											   camera.getCameraOrthoValue().right - SCREEN_WIDTH * ZOOM_VELOCITY,
+											   camera.getCameraOrthoValue().bottom + SCREEN_HEIGHT * ZOOM_VELOCITY,
+											   camera.getCameraOrthoValue().top - SCREEN_HEIGHT * ZOOM_VELOCITY);
 		
 		break;
 
 	case 'o':
 
-		GameEngine::GetInstance()->SetDrawArea(GameEngine::GetInstance()->GetRenderer()->GetOrthovalue().left - SCREEN_WIDTH * ZOOM_VELOCITY,
-											   GameEngine::GetInstance()->GetRenderer()->GetOrthovalue().right + SCREEN_WIDTH * ZOOM_VELOCITY,
-											   GameEngine::GetInstance()->GetRenderer()->GetOrthovalue().bottom - SCREEN_HEIGHT * ZOOM_VELOCITY,
-		                                       GameEngine::GetInstance()->GetRenderer()->GetOrthovalue().top + SCREEN_HEIGHT * ZOOM_VELOCITY);
+		GameEngine::GetInstance()->SetDrawArea(camera.getCameraOrthoValue().left - SCREEN_WIDTH * ZOOM_VELOCITY,
+												camera.getCameraOrthoValue().right + SCREEN_WIDTH * ZOOM_VELOCITY,
+												camera.getCameraOrthoValue().bottom - SCREEN_HEIGHT * ZOOM_VELOCITY,
+												camera.getCameraOrthoValue().top + SCREEN_HEIGHT * ZOOM_VELOCITY);
 		
 		break;
 	}
@@ -148,100 +149,4 @@ void LevelGameplay::HandleMouse(int type, int x, int y)
 	// Calculate Real X Y 
 	realX = x;
 	realY = y;
-
-	// player->SetPosition(glm::vec3(realX, realY, 0));
-}
-
-void LevelGameplay::CameraLerp() {
-
-	// check if the length of horizontal and vertical of projection + (target projection - current projection) * zoomInfo.t is not exceed the minimum and maximum.
-	// if not, calculate the lerp of left right bottom top and update using SetDrawArea().
-
-	float current_top = GameEngine::GetInstance()->GetRenderer()->GetOrthovalue().top;
-	float current_bottom = GameEngine::GetInstance()->GetRenderer()->GetOrthovalue().bottom;
-	float current_left = GameEngine::GetInstance()->GetRenderer()->GetOrthovalue().left;
-	float current_right = GameEngine::GetInstance()->GetRenderer()->GetOrthovalue().right;
-
-	float currentWidth = current_right - current_left;
-	float currentHeight = current_top - current_bottom;
-
-	float currentRatio = std::round((currentWidth / currentHeight) * 100.f) / 100.f;
-
-	float maxLeft = 0;
-	float maxRight = 0;
-	float maxTop = 0;
-	float maxBottom = 0;
-
-	for (int i = 0; i < 4; i++) {
-
-		if (player[i]->getPos().x > maxRight) {
-
-			maxRight = player[i]->getPos().x;
-		}
-
-		if (player[i]->getPos().x < maxLeft) {
-
-			maxLeft = player[i]->getPos().x;
-
-		}
-
-		if (player[i]->getPos().y > maxTop) {
-
-			maxTop = player[i]->getPos().y;
-
-		}
-
-		if (player[i]->getPos().y < maxBottom) {
-
-			maxBottom = player[i]->getPos().y;
-
-		}
-	}
-
-	float newWidth = maxRight - maxLeft;
-	float newHeight = maxTop - maxBottom;
-
-	if (newWidth == lastWidth && newHeight == lastHeight) {
-		return;
-	}
-	else {
-		float newRatio = std::round(newWidth / newHeight * 100.f) / 100.f;
-		cout << newRatio << endl;
-		if (newRatio > SCREEN_RATIO_X)
-		{
-			current_left = maxLeft;
-			current_right = maxRight;
-			current_top = maxTop + (((newWidth / SCREEN_RATIO_X) - newHeight) / 2.f);
-			current_bottom = maxBottom - (((newWidth / SCREEN_RATIO_X) - newHeight) / 2.f);
-
-			lastWidth = newWidth;
-			lastHeight = newHeight;
-
-			// add padding
-			current_left -= CAMERA_PADDING * SCREEN_RATIO_X;
-			current_right += CAMERA_PADDING * SCREEN_RATIO_X;
-			current_top += CAMERA_PADDING * SCREEN_RATIO_Y;
-			current_bottom -= CAMERA_PADDING * SCREEN_RATIO_Y;
-
-			GameEngine::GetInstance()->SetDrawArea(current_left, current_right, current_bottom, current_top);
-		}
-		else if (newRatio < SCREEN_RATIO_X)
-		{
-			current_top = maxTop;
-			current_bottom = maxBottom;
-			current_left = maxLeft - (((newHeight * SCREEN_RATIO_X) - newWidth) / 2.f);
-			current_right = maxRight + (((newHeight * SCREEN_RATIO_X) - newWidth) / 2.f);
-
-			lastWidth = newWidth;
-			lastHeight = newHeight;
-
-			// add padding
-			current_left -= CAMERA_PADDING * SCREEN_RATIO_X;
-			current_right += CAMERA_PADDING * SCREEN_RATIO_X;
-			current_top += CAMERA_PADDING * SCREEN_RATIO_Y;
-			current_bottom -= CAMERA_PADDING * SCREEN_RATIO_Y;
-
-			GameEngine::GetInstance()->SetDrawArea(current_left, current_right, current_bottom, current_top);
-		}
-	}
 }

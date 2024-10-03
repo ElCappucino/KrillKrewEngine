@@ -20,8 +20,9 @@ private:
 	int propsTile[MAP_HEIGHT][MAP_WIDTH] = { 0 };
 	int colliderTile[MAP_HEIGHT][MAP_WIDTH] = { 0 };
 
-	CameraZoomInfo zoomInfo; // to initialize the zoom property
-	OrthographicValue targetSceneProjection; // use for lerping between the current projection and this (target projection).
+	Camera camera;
+	// CameraZoomInfo zoomInfo; // to initialize the zoom property
+	// OrthographicValue targetSceneProjection; // use for lerping between the current projection and this (target projection).
 
 	float dt = 0;
 
