@@ -25,6 +25,9 @@
     <Filter Include="Header Files\Core">
       <UniqueIdentifier>{872d9389-ec31-466e-9d7a-b5e695d8af63}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Utilities">
+      <UniqueIdentifier>{1d3b692f-d170-45eb-b231-d26a03192bce}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h">
@@ -79,7 +82,16 @@
       <Filter>Header Files\Core</Filter>
     </ClInclude>
     <ClInclude Include="Camera.h">
-      <Filter>Header Files\Level</Filter>
+      <Filter>Header Files\Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerObject.h">
+      <Filter>Header Files\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Collider.h">
+      <Filter>Header Files\Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="Ability.h">
+      <Filter>Header Files\Utilities</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -139,6 +151,9 @@
     </ClCompile>
     <ClCompile Include="LevelGameplay.h">
       <Filter>Header Files\Level</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayereObject.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -32,7 +32,7 @@ void LevelGameplay::LevelInit()
 	// Create and Initialize 4 players object
 
 	// Example Code
-	ImageObject* obj1 = new ImageObject();
+	PlayerObject* obj1 = new PlayerObject();
 	obj1->SetSheetInfo(0, 0, 538, 581, 538, 581);
 	obj1->SetTexture("../Resource/Texture/Prinny.png");
 	obj1->SetSize(256.f, -256.f);
@@ -41,7 +41,7 @@ void LevelGameplay::LevelInit()
 
 	player[0] = obj1;
 
-	ImageObject* obj2 = new ImageObject();
+	PlayerObject* obj2 = new PlayerObject();
 	obj2->SetSheetInfo(0, 0, 538, 581, 538, 581);
 	obj2->SetTexture("../Resource/Texture/Prinny.png");
 	obj2->SetSize(256.f, -256.f);
@@ -50,7 +50,7 @@ void LevelGameplay::LevelInit()
 
 	player[1] = obj2;
 
-	ImageObject* obj3 = new ImageObject();
+	PlayerObject* obj3 = new PlayerObject();
 	obj3->SetSheetInfo(0, 0, 538, 581, 538, 581);
 	obj3->SetTexture("../Resource/Texture/Prinny.png");
 	obj3->SetSize(256.f, -256.f);
@@ -59,7 +59,7 @@ void LevelGameplay::LevelInit()
 
 	player[2] = obj3;
 
-	ImageObject* obj4 = new ImageObject();
+	PlayerObject* obj4 = new PlayerObject();
 	obj4->SetSheetInfo(0, 0, 538, 581, 538, 581);
 	obj4->SetTexture("../Resource/Texture/Prinny.png");
 	obj4->SetSize(256.f, -256.f);
