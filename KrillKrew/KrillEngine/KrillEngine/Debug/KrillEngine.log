@@ -1,5 +1,0 @@
-﻿C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppBuild.targets(534,5): warning MSB8028: The intermediate directory (Debug\) contains files shared from another project (TiemEngine.vcxproj).  This can lead to incorrect clean and rebuild behavior.
-  PlayerObject.cpp
-Debug\LevelGameplay.obj : warning LNK4042: object specified more than once; extras ignored
-     Creating library C:\Users\Admin\Desktop\KrillKrewEngine\KrillKrew\KrillEngine\Debug\KrillEngine.lib and object C:\Users\Admin\Desktop\KrillKrewEngine\KrillKrew\KrillEngine\Debug\KrillEngine.exp
-  KrillEngine.vcxproj -> C:\Users\Admin\Desktop\KrillKrewEngine\KrillKrew\KrillEngine\Debug\KrillEngine.exe
