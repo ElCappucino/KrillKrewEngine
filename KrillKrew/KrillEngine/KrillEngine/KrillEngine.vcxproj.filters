@@ -93,6 +93,9 @@
     <ClInclude Include="Ability.h">
       <Filter>Header Files\Utilities</Filter>
     </ClInclude>
+    <ClInclude Include="Joystick.h">
+      <Filter>Header Files\Utilities</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CombineObject.cpp">
@@ -152,7 +155,7 @@
     <ClCompile Include="LevelGameplay.h">
       <Filter>Header Files\Level</Filter>
     </ClCompile>
-    <ClCompile Include="PlayereObject.cpp">
+    <ClCompile Include="PlayerObject.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

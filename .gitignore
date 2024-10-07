@@ -1,2 +1,12 @@
 
 /KrillKrew/KrillEngine/.vs
+
+*.pdb
+*.exe
+*.ilk
+*.log
+*.tlog
+*.obj
+*.idb
+*.vcxproj
+*.filters
