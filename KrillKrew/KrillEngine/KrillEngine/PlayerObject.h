@@ -16,6 +16,7 @@ class PlayerObject :public ImageObject
 	SpritesheetInfo sheetInfo;
 	Collider* hitbox;
 	std::array<Ability*, 3> abilities;
+	glm::vec3 velocity;
 
 public:
 	PlayerObject();
@@ -23,4 +24,6 @@ public:
 	void SetTexture(string path);
 	void SetSheetInfo(float row, float column, float spritewidth, float spriteheight, float sheetwidth, float sheetheight);
 	void Render(glm::mat4 globalModelTransform);
+	void setVelocity(float speed, bool axisX);
+	glm::vec3 getVelocity();
 };

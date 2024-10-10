@@ -61,3 +61,17 @@ void PlayerObject::Render(glm::mat4 globalModelTransform)
 	}
 }
 
+void PlayerObject::setVelocity(float speed,bool axisX) {
+
+	if (axisX) {
+		velocity = glm::vec3(speed, 0, 0);
+	}
+
+	else {
+		velocity = glm::vec3(0, speed, 0);
+	}
+}
+
+glm::vec3 PlayerObject::getVelocity(){
+	return velocity;
+}

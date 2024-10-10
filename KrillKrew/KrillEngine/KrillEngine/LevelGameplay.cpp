@@ -74,7 +74,7 @@ void LevelGameplay::LevelInit()
 void LevelGameplay::LevelUpdate()
 {
 	dt++;
-
+	player[playerNum]->Translate(player[playerNum]->getVelocity());
 	camera.LerpCamera(player[0]->getPos(), player[1]->getPos(), player[2]->getPos(), player[3]->getPos()); // update smooth camera here
 }
 
@@ -114,10 +114,10 @@ void LevelGameplay::HandleKey(char key)
 	case '4': this->playerNum = 3; break;
 	
 	// control player
-	case 'w': player[playerNum]->Translate(glm::vec3(0, 5, 0)); break;
-	case 's': player[playerNum]->Translate(glm::vec3(0, -5, 0)); break;
-	case 'a': player[playerNum]->Translate(glm::vec3(-5, 0, 0)); break;
-	case 'd': player[playerNum]->Translate(glm::vec3(5, 0, 0)); break;
+	case 'w': player[playerNum]->setVelocity(5, false); break;
+	case 's': player[playerNum]->setVelocity(-5, false); break;
+	case 'a': player[playerNum]->setVelocity(-5, true); break;
+	case 'd': player[playerNum]->setVelocity(5, true); break;
 
 	case 'q': GameEngine::GetInstance()->GetStateController()->gameStateNext = GameState::GS_QUIT; ; break;
 	case 'r': GameEngine::GetInstance()->GetStateController()->gameStateNext = GameState::GS_RESTART; ; break;
