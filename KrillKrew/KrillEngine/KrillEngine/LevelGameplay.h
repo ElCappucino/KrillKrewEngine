@@ -2,6 +2,7 @@
 #include "Level.h"
 #include "InfoStruct.h"
 #include "PlayerObject.h"
+#include "Joystick.h"
 
 /// @brief The class for level inherit test from P'tiam
 class LevelGameplay : public Level

@@ -76,6 +76,12 @@ void LevelGameplay::LevelUpdate()
 	dt++;
 
 	camera.LerpCamera(player[0]->getPos(), player[1]->getPos(), player[2]->getPos(), player[3]->getPos()); // update smooth camera here
+
+	/*cout << "Joystick left stick X axis: " << Joystick::GetAxis(0, Joystick::Axis::LeftStickHorizontal)
+		<< " A: " << Joystick::GetButton(0, Joystick::Button::A)
+		<< " B: " << Joystick::GetButton(0, Joystick::Button::B)
+		<< " X: " << Joystick::GetButton(0, Joystick::Button::X)
+		<< " Y: " << Joystick::GetButton(0, Joystick::Button::Y) << endl;*/
 }
 
 void LevelGameplay::LevelDraw()
