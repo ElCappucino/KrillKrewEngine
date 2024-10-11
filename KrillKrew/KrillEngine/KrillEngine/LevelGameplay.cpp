@@ -75,6 +75,8 @@ void LevelGameplay::LevelUpdate()
 {
 	dt++;
 	player[playerNum]->Translate(player[playerNum]->getVelocity());
+	player[playerNum]->setVelocity(0, true);
+	player[playerNum]->setVelocity(0, false);
 	camera.LerpCamera(player[0]->getPos(), player[1]->getPos(), player[2]->getPos(), player[3]->getPos()); // update smooth camera here
 }
 

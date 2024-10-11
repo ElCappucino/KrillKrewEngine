@@ -1,12 +1,7 @@
 
-                         Simple DirectMedia Layer
+# Simple DirectMedia Layer (SDL) Version 2.0
 
-                                  (SDL)
-
-                                Version 2.0
-
----
-http://www.libsdl.org/
+https://www.libsdl.org/
 
 Simple DirectMedia Layer is a cross-platform development library designed
 to provide low level access to audio, keyboard, mouse, joystick, and graphics
@@ -18,4 +13,5 @@ More extensive documentation is available in the docs directory, starting
 with README.md
 
 Enjoy!
-	Sam Lantinga				(slouken@libsdl.org)
+
+Sam Lantinga (slouken@libsdl.org)
