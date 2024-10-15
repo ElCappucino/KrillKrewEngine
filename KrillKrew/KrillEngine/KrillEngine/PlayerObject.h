@@ -24,6 +24,6 @@ public:
 	void SetTexture(string path);
 	void SetSheetInfo(float row, float column, float spritewidth, float spriteheight, float sheetwidth, float sheetheight);
 	void Render(glm::mat4 globalModelTransform);
-	void setVelocity(float speed, bool axisX);
+	void setVelocity(float axisX, float axisY, bool isPositiveX, bool isPositiveY);
 	glm::vec3 getVelocity();
 };

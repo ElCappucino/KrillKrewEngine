@@ -15,7 +15,7 @@ public:
 	virtual void LevelDraw();
 	virtual void LevelFree();
 	virtual void LevelUnload();
-
+	virtual void Movement(float axisX, float axisY, bool isPositiveX, bool isPositiveY);
 	virtual void HandleKey(char key);
 	virtual void HandleMouse(int type, int x, int y);
 };

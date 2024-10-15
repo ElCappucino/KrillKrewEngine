@@ -84,3 +84,7 @@ void LevelTest::HandleMouse(int type, int x, int y)
 
 	player->SetPosition(glm::vec3(realX, realY, 0));
 }
+
+void LevelTest::Movement(float axisX, float axisY, bool isPositiveX, bool isPositiveY) {
+	
+}

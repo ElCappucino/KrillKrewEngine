@@ -75,8 +75,8 @@ void LevelGameplay::LevelUpdate()
 {
 	dt++;
 	player[playerNum]->Translate(player[playerNum]->getVelocity());
-	player[playerNum]->setVelocity(0, true);
-	player[playerNum]->setVelocity(0, false);
+	/*player[playerNum]->setVelocity(0, true);
+	player[playerNum]->setVelocity(0, false);*/
 	camera.LerpCamera(player[0]->getPos(), player[1]->getPos(), player[2]->getPos(), player[3]->getPos()); // update smooth camera here
 }
 
@@ -116,10 +116,10 @@ void LevelGameplay::HandleKey(char key)
 	case '4': this->playerNum = 3; break;
 	
 	// control player
-	case 'w': player[playerNum]->setVelocity(5, false); break;
+	/*case 'w': player[playerNum]->setVelocity(5, false); break;
 	case 's': player[playerNum]->setVelocity(-5, false); break;
 	case 'a': player[playerNum]->setVelocity(-5, true); break;
-	case 'd': player[playerNum]->setVelocity(5, true); break;
+	case 'd': player[playerNum]->setVelocity(5, true); break;*/
 
 	case 'q': GameEngine::GetInstance()->GetStateController()->gameStateNext = GameState::GS_QUIT; ; break;
 	case 'r': GameEngine::GetInstance()->GetStateController()->gameStateNext = GameState::GS_RESTART; ; break;
@@ -141,6 +141,13 @@ void LevelGameplay::HandleKey(char key)
 												camera.getCameraOrthoValue().top + SCREEN_HEIGHT * ZOOM_VELOCITY);
 		
 		break;
+	case 'y':
+		this->playerNum++;
+		if (this->playerNum >= 4) {
+			this->playerNum = 0;
+		}
+		cout << "Player " << this->playerNum << endl;
+		break;
 	}
 }
 
@@ -151,4 +158,8 @@ void LevelGameplay::HandleMouse(int type, int x, int y)
 	// Calculate Real X Y 
 	realX = x;
 	realY = y;
+}
+
+void LevelGameplay::Movement(float axisX, float axisY, bool isPositiveX, bool isPositiveY) {
+	player[playerNum]->setVelocity(axisX, axisY, isPositiveX, isPositiveY);
 }

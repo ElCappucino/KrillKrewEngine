@@ -111,4 +111,6 @@ void Level::HandleMouse(int type, int x, int y)
 		"Player position y : " << cameraHeight / (float)GameEngine::GetInstance()->GetWindowHeight() * realY << endl;
 }
 
+void Level::Movement(float axisX, float axisY, bool isPositiveX, bool isPositiveY) {
 
+}

@@ -154,3 +154,7 @@ void LevelMapTest::TileImport(int TileBuffer[][MAP_WIDTH], string fileName) {
 
 	}
 }
+
+void LevelMapTest::Movement(float axisX, float axisY, bool isPositiveX, bool isPositiveY) {
+
+}
