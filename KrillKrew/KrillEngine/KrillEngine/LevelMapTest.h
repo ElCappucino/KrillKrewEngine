@@ -5,6 +5,8 @@
 #include <fstream>
 #include <sstream>
 #include <iostream>
+#include <map>
+#include <bitset>
 
 #define MAP_WIDTH  21
 #define MAP_HEIGHT 15
@@ -13,7 +15,7 @@
 class LevelMapTest : public Level
 {
 private:
-	vector<DrawableObject*> objectsList;
+	std::vector<DrawableObject*> objectsList;
 	DrawableObject* player[4]; // add up to 4 players
 
 	int groundTile[MAP_HEIGHT][MAP_WIDTH] = { 0 };
@@ -21,12 +23,13 @@ private:
 	int colliderTile[MAP_HEIGHT][MAP_WIDTH] = { 0 };
 
 	Camera camera;
-	// CameraZoomInfo zoomInfo; // to initialize the zoom property
-	// OrthographicValue targetSceneProjection; // use for lerping between the current projection and this (target projection).
+	
+	// struct SheetPosition { int row, column; };
 
 	float dt = 0;
 
 public:
+
 	virtual void LevelLoad();
 	virtual void LevelInit();
 	virtual void LevelUpdate();
@@ -38,5 +41,5 @@ public:
 	virtual void HandleMouse(int type, int x, int y);
 
 	void CameraLerp();
-	void TileImport(int TileBuffer[][MAP_WIDTH], string fileName);
+	void TileImport(int TileBuffer[][MAP_WIDTH], std::string fileName);
 };
