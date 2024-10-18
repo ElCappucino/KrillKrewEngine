@@ -133,7 +133,6 @@
     <ClInclude Include="Ability.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="Collider.h" />
-    <ClInclude Include="CombineObject.h" />
     <ClInclude Include="DrawableObject.h" />
     <ClInclude Include="GameEngine.h" />
     <ClInclude Include="GameObject.h" />
@@ -145,7 +144,6 @@
     <ClInclude Include="Joystick.h" />
     <ClInclude Include="Level.h" />
     <ClInclude Include="LevelMapTest.h" />
-    <ClInclude Include="LevelTest.h" />
     <ClInclude Include="MeshVbo.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="PlayerObject.h" />
@@ -155,7 +153,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Camera.cpp" />
-    <ClCompile Include="CombineObject.cpp" />
     <ClCompile Include="DrawableObject.cpp" />
     <ClCompile Include="GameEngine.cpp" />
     <ClCompile Include="GameObject.cpp" />
@@ -167,7 +164,6 @@
     <ClCompile Include="ImageObject.cpp" />
     <ClCompile Include="Level.cpp" />
     <ClCompile Include="LevelMapTest.cpp" />
-    <ClCompile Include="LevelTest.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="MeshVbo.cpp" />
     <ClCompile Include="pch.cpp" />

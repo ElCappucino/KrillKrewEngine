@@ -39,7 +39,7 @@ void GameEngine::Init(int width, int height)
 	stateController->Init(GameState::GS_LEVELGAMEPLAY);
 }
 
-void GameEngine::Render(vector<DrawableObject*> renderObjects)
+void GameEngine::Render(std::vector<DrawableObject*> renderObjects)
 {
 	this->GetRenderer()->Render(renderObjects);
 }
@@ -56,7 +56,7 @@ void GameEngine::SetBackgroundColor(float r, float g, float b)
 	renderer->SetClearColor(1.0f, 1.0f, 200.0f / 255);
 }
 
-void GameEngine::AddMesh(string name, MeshVbo* mesh)
+void GameEngine::AddMesh(std::string name, MeshVbo* mesh)
 {
 	renderer->AddMesh(name, mesh);
 }

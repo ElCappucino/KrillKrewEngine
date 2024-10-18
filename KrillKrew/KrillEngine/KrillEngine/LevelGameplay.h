@@ -8,7 +8,7 @@
 class LevelGameplay : public Level
 {
 private:
-	vector<DrawableObject*> objectsList;
+	std::vector<DrawableObject*> objectsList;
 	DrawableObject* player[4]; // add up to 4 players
 	int playerNum = 0;
 	CameraZoomInfo zoomInfo; // to initialize the zoom property

@@ -68,7 +68,7 @@ void LevelGameplay::LevelInit()
 
 	player[3] = obj4;
 
-	cout << "Init Level" << endl;
+	std::cout << "Init Level" << std::endl;
 }
 
 void LevelGameplay::LevelUpdate()

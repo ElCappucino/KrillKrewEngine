@@ -8,9 +8,9 @@ class SquareMeshVbo : public MeshVbo {
 protected:
 
 public:
-	static string const MESH_NAME;
+	static std::string const MESH_NAME;
 	SquareMeshVbo();
-	virtual string GetMeshName();
+	virtual std::string GetMeshName();
 	virtual void Render();
 	virtual void LoadData();
 	void ChangeTextureData(float row, float column, float spritewidth, float spriteheight, float sheetwidth, float sheetheight);

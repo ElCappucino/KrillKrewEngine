@@ -1,6 +1,5 @@
 #include "GameStateController.h"
 #include "Level.h"
-#include "LevelTest.h"
 #include "LevelGameplay.h"
 #include "LevelMapTest.h"
 
@@ -30,9 +29,6 @@ void GameStateController::LoadLevel()
 		case GameState::GS_LEVEL1:
 			currentLevel = new Level();
 			break;
-		case GameState::GS_LEVEL2:
-			currentLevel = new LevelTest();
-			break;
 		case GameState::GS_LEVELMAPTEST:
 			currentLevel = new LevelMapTest();
 			break;
@@ -41,7 +37,7 @@ void GameStateController::LoadLevel()
 			break;
 		
 		default:
-			cout << "gGameStateCurr : invalid state!!" << endl;
+			std::cout << "gGameStateCurr : invalid state!!" << std::endl;
 			exit(1);
 	}
 

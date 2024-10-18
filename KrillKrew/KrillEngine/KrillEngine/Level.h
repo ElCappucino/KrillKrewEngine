@@ -10,8 +10,8 @@
 class Level
 {
 private:
-	vector<DrawableObject*> objectsList;
-	vector<DrawableObject*> UIsList;
+	std::vector<DrawableObject*> objectsList;
+	std::vector<DrawableObject*> UIsList;
 	ImageObject * player;
 	Camera camera;
 

@@ -1,7 +1,7 @@
 
 #include "SquareMeshVbo.h"
 
-string const SquareMeshVbo::MESH_NAME = "square";
+std::string const SquareMeshVbo::MESH_NAME = "square";
 
 void SquareMeshVbo::LoadData()
 {
@@ -52,7 +52,7 @@ SquareMeshVbo::SquareMeshVbo()
 {
 }
 
-string SquareMeshVbo::GetMeshName()
+std::string SquareMeshVbo::GetMeshName()
 {
 	return MESH_NAME;
 }

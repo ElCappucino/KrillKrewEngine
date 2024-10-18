@@ -1,7 +1,7 @@
 
 #include "TriangleMeshVbo.h"
 
-string const TriangleMeshVbo::MESH_NAME = "Triangle";
+std::string const TriangleMeshVbo::MESH_NAME = "Triangle";
 
 void TriangleMeshVbo::LoadData()
 {
@@ -37,7 +37,7 @@ TriangleMeshVbo::TriangleMeshVbo()
 {
 }
 
-string TriangleMeshVbo::GetMeshName()
+std::string TriangleMeshVbo::GetMeshName()
 {
 	return MESH_NAME;
 }

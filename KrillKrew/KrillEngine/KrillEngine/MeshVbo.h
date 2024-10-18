@@ -3,7 +3,6 @@
 #include <GL\glew.h>
 #include <string>
 
-using namespace std;
 
 /// @brief The class for store the Vbo data
 class MeshVbo {
@@ -17,7 +16,7 @@ public:
 
 	MeshVbo();
 	virtual void LoadData() = 0;
-	virtual string GetMeshName() = 0;
+	virtual std::string GetMeshName() = 0;
 	GLuint GetPosId();
 	GLuint GetTexId();
 	virtual void Render() = 0;

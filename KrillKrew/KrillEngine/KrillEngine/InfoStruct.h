@@ -1,13 +1,15 @@
 #pragma once
 
-struct OrthographicValue {
+struct OrthographicValue 
+{
 	float left;
 	float right;
 	float bottom;
 	float top;
 };
 
-struct CameraZoomInfo {
+struct CameraZoomInfo 
+{
 	float minZoom_horizontal; // minimum of the length between left and right
 	float minZoom_vertical; // minimum of the length between bottom and top
 	float maxZoom_horizontal; // maximum of the length between left and right
@@ -16,7 +18,8 @@ struct CameraZoomInfo {
 			 // (ex. t = 0.1 when using with a + (t * (b - a)) means that the zoom is increase 10% towards target projection every update time)
 };
 
-struct SpritesheetInfo {
+struct SpritesheetInfo 
+{
 	float row; 
 	float column; 
 	float spritewidth; 

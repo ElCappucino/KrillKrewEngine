@@ -28,15 +28,15 @@ void GameObject::Render(glm::mat4 globalModelTransform)
 	GLuint renderModeId = GameEngine::GetInstance()->GetRenderer()->GetModeUniformId();
 
 	if (modelMatixId == -1) {
-		cout << "Error: Can't perform transformation " << endl;
+		std::cout << "Error: Can't perform transformation " << std::endl;
 		return;
 	}
 	if (colorId == -1) {
-		cout << "Error: Can't set color " << endl;
+		std::cout << "Error: Can't set color " << std::endl;
 		return;
 	}
 	if (renderModeId == -1) {
-		cout << "Error: Can't set renderMode in ImageObject " << endl;
+		std::cout << "Error: Can't set renderMode in ImageObject " << std::endl;
 		return;
 	}
 	//vector <glm::mat4> matrixStack;

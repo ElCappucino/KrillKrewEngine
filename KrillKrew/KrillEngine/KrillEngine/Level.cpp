@@ -98,17 +98,17 @@ void Level::HandleMouse(int type, int x, int y)
 	GameEngine::GetInstance()->GetWindowWidth();
 	GameEngine::GetInstance()->GetWindowHeight();
 
-	cout << "X : " << realX << " Y : " << realY << endl;
+	std::cout << "X : " << realX << " Y : " << realY << std::endl;
 
 	float cameraWidth = GameEngine::GetInstance()->GetRenderer()->GetOrthovalue().right - GameEngine::GetInstance()->GetRenderer()->GetOrthovalue().left;
 	float cameraHeight = GameEngine::GetInstance()->GetRenderer()->GetOrthovalue().top - GameEngine::GetInstance()->GetRenderer()->GetOrthovalue().bottom;
 
-	cout << "cameraWidth : " << cameraWidth << " cameraHeight : " << cameraHeight << endl;
+	std::cout << "cameraWidth : " << cameraWidth << " cameraHeight : " << cameraHeight << std::endl;
 
 	player->SetPosition(glm::vec3(((cameraWidth / (float)GameEngine::GetInstance()->GetWindowWidth()) * realX) - (cameraWidth / 2.f), -(((cameraHeight / (float)GameEngine::GetInstance()->GetWindowHeight()) * realY) - (cameraHeight / 2.f)), 0));
 
-	cout << "Player position x : " << cameraWidth / (float)GameEngine::GetInstance()->GetWindowWidth() * realX <<
-		"Player position y : " << cameraHeight / (float)GameEngine::GetInstance()->GetWindowHeight() * realY << endl;
+	std::cout << "Player position x : " << cameraWidth / (float)GameEngine::GetInstance()->GetWindowWidth() * realX <<
+		"Player position y : " << cameraHeight / (float)GameEngine::GetInstance()->GetWindowHeight() * realY << std::endl;
 }
 
 

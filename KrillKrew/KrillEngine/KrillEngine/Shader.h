@@ -2,13 +2,12 @@
 
 #include <string>
 #include <GL\glew.h>
-using namespace std;
 
 /// @brief The class for store the shader data
 class Shader
 {
 	GLuint shaderId;
-	string fileName;
+	std::string fileName;
 	GLenum shaderType;
 
 public:
@@ -24,7 +23,7 @@ public:
 	/// @brief The constructor. Using for setup the shader information.
 	/// @param fileName describes shader information's file name.
 	/// @param shaderType describes shader type using GLenum type. 
-	Shader(string fileName, GLenum shaderType);
+	Shader(std::string fileName, GLenum shaderType);
 	/// @brief The destructor.
 	/// @note There is no any command.
 	~Shader();

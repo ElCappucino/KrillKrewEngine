@@ -20,7 +20,7 @@ class PlayerObject :public ImageObject
 public:
 	PlayerObject();
 	~PlayerObject();
-	void SetTexture(string path);
+	void SetTexture(std::string path);
 	void SetSheetInfo(float row, float column, float spritewidth, float spriteheight, float sheetwidth, float sheetheight);
 	void Render(glm::mat4 globalModelTransform);
 };

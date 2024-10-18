@@ -16,7 +16,7 @@ bool Shader::LoadSource()
 	ifstream shaderFile(this->fileName);
 
 	if (!shaderFile) {
-		cout << "Can't open the shader file " << fileName << endl;
+		std::cout << "Can't open the shader file " << fileName << std::endl;
 		return false;
 	}
 	else {
@@ -44,7 +44,7 @@ bool Shader::LoadSource()
 		glGetShaderiv(this->shaderId, GL_COMPILE_STATUS, &vShaderCompiled);
 		if (vShaderCompiled != GL_TRUE)
 		{
-			cout << "Unable to compile shader " << this->shaderId << endl;
+			std::cout << "Unable to compile shader " << this->shaderId << std::endl;
 			PrintShaderLog();
 			return  false;
 		}
@@ -75,7 +75,7 @@ void Shader::PrintShaderLog()
 		if (infoLogLength > 0)
 		{
 			//Print Log
-			cout << infoLog << endl;
+			std::cout << infoLog << std::endl;
 
 		}
 
@@ -84,11 +84,11 @@ void Shader::PrintShaderLog()
 	}
 	else
 	{
-		cout << "Name " << this->shaderId << " is not a shader " << endl;
+		std::cout << "Name " << this->shaderId << " is not a shader " << std::endl;
 	}
 }
 
-Shader::Shader(string fileName, GLenum shaderType)
+Shader::Shader(std::string fileName, GLenum shaderType)
 {
 	this->fileName = fileName;
 	this->shaderType = shaderType;
