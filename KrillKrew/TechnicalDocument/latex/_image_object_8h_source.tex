@@ -8,16 +8,19 @@
 \DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ "{}gtc/matrix\_transform.hpp"{}}}
 \DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ "{}gtc/type\_ptr.hpp"{}}}
 \DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ <string>}}
-\DoxyCodeLine{00007\ }
-\DoxyCodeLine{00009\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_image_object}{ImageObject}}\ :\textcolor{keyword}{public}\ \mbox{\hyperlink{class_drawable_object}{DrawableObject}}}
-\DoxyCodeLine{00010\ \{}
-\DoxyCodeLine{00011\ \ \ \ \ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ texture;}
-\DoxyCodeLine{00012\ }
-\DoxyCodeLine{00013\ \textcolor{keyword}{public}:}
-\DoxyCodeLine{00014\ \ \ \ \ \mbox{\hyperlink{class_image_object}{ImageObject}}();}
-\DoxyCodeLine{00015\ \ \ \ \ \mbox{\hyperlink{class_image_object}{\string~ImageObject}}();}
-\DoxyCodeLine{00016\ \ \ \ \ \textcolor{keywordtype}{void}\ SetTexture(\textcolor{keywordtype}{string}\ path);}
-\DoxyCodeLine{00017\ \ \ \ \ \textcolor{keywordtype}{void}\ Render(glm::mat4\ globalModelTransform);}
-\DoxyCodeLine{00018\ \};}
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ "{}InfoStruct.h"{}}}
+\DoxyCodeLine{00008\ }
+\DoxyCodeLine{00010\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_image_object}{ImageObject}}\ :\textcolor{keyword}{public}\ \mbox{\hyperlink{class_drawable_object}{DrawableObject}}}
+\DoxyCodeLine{00011\ \{}
+\DoxyCodeLine{00012\ \ \ \ \ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ texture;}
+\DoxyCodeLine{00013\ \ \ \ \ \mbox{\hyperlink{struct_spritesheet_info}{SpritesheetInfo}}\ sheetInfo;}
+\DoxyCodeLine{00014\ }
+\DoxyCodeLine{00015\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00016\ \ \ \ \ \mbox{\hyperlink{class_image_object}{ImageObject}}();}
+\DoxyCodeLine{00017\ \ \ \ \ \mbox{\hyperlink{class_image_object}{\string~ImageObject}}();}
+\DoxyCodeLine{00018\ \ \ \ \ \textcolor{keywordtype}{void}\ SetTexture(\textcolor{keywordtype}{string}\ path);}
+\DoxyCodeLine{00019\ \ \ \ \ \textcolor{keywordtype}{void}\ SetSheetInfo(\textcolor{keywordtype}{float}\ row,\ \textcolor{keywordtype}{float}\ column,\ \textcolor{keywordtype}{float}\ spritewidth,\ \textcolor{keywordtype}{float}\ spriteheight,\ \textcolor{keywordtype}{float}\ sheetwidth,\ \textcolor{keywordtype}{float}\ sheetheight);}
+\DoxyCodeLine{00020\ \ \ \ \ \textcolor{keywordtype}{void}\ Render(glm::mat4\ globalModelTransform);}
+\DoxyCodeLine{00021\ \};}
 
 \end{DoxyCode}

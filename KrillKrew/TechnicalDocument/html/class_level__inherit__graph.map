@@ -1,0 +1,9 @@
+<map id="Level" name="Level">
+<area shape="rect" id="Node000001" title="The class for setup object in the level." alt="" coords="166,5,218,32"/>
+<area shape="rect" id="Node000002" href="$class_level_gameplay.html" title="The class for level inherit test from P&#39;tiam." alt="" coords="5,80,117,107"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="157,42,85,82,83,77,154,38"/>
+<area shape="rect" id="Node000003" href="$class_level_map_test.html" title="The class for level inherit test from P&#39;tiam." alt="" coords="140,80,243,107"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="194,48,194,80,189,80,189,48"/>
+<area shape="rect" id="Node000004" href="$class_level_test.html" title="The class for level inherit test from P&#39;tiam." alt="" coords="266,80,344,107"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="226,38,287,77,284,82,223,43"/>
+</map>

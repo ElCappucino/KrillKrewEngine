@@ -1,0 +1,31 @@
+\doxysection{Player\+Object.\+h}
+\hypertarget{_player_object_8h_source}{}\label{_player_object_8h_source}\index{KrillKrew/KrillEngine/KrillEngine/PlayerObject.h@{KrillKrew/KrillEngine/KrillEngine/PlayerObject.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ }
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ "{}DrawableObject.h"{}}}
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ "{}gtc/matrix\_transform.hpp"{}}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ "{}gtc/type\_ptr.hpp"{}}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ <string>}}
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ <array>}}
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#include\ "{}ImageObject.h"{}}}
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#include\ "{}Collider.h"{}}}
+\DoxyCodeLine{00010\ \textcolor{preprocessor}{\#include\ "{}Ability.h"{}}}
+\DoxyCodeLine{00011\ }
+\DoxyCodeLine{00013\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_player_object}{PlayerObject}}\ :\textcolor{keyword}{public}\ \mbox{\hyperlink{class_image_object}{ImageObject}}}
+\DoxyCodeLine{00014\ \{}
+\DoxyCodeLine{00015\ \ \ \ \ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ texture;}
+\DoxyCodeLine{00016\ \ \ \ \ \mbox{\hyperlink{struct_spritesheet_info}{SpritesheetInfo}}\ sheetInfo;}
+\DoxyCodeLine{00017\ \ \ \ \ \mbox{\hyperlink{class_collider}{Collider}}*\ hitbox;}
+\DoxyCodeLine{00018\ \ \ \ \ std::array<Ability*,\ 3>\ abilities;}
+\DoxyCodeLine{00019\ }
+\DoxyCodeLine{00020\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00021\ \ \ \ \ \mbox{\hyperlink{class_player_object}{PlayerObject}}();}
+\DoxyCodeLine{00022\ \ \ \ \ \mbox{\hyperlink{class_player_object}{\string~PlayerObject}}();}
+\DoxyCodeLine{00023\ \ \ \ \ \textcolor{keywordtype}{void}\ SetTexture(\textcolor{keywordtype}{string}\ path);}
+\DoxyCodeLine{00024\ \ \ \ \ \textcolor{keywordtype}{void}\ SetSheetInfo(\textcolor{keywordtype}{float}\ row,\ \textcolor{keywordtype}{float}\ column,\ \textcolor{keywordtype}{float}\ spritewidth,\ \textcolor{keywordtype}{float}\ spriteheight,\ \textcolor{keywordtype}{float}\ sheetwidth,\ \textcolor{keywordtype}{float}\ sheetheight);}
+\DoxyCodeLine{00025\ \ \ \ \ \textcolor{keywordtype}{void}\ Render(glm::mat4\ globalModelTransform);}
+\DoxyCodeLine{00026\ \};}
+
+\end{DoxyCode}

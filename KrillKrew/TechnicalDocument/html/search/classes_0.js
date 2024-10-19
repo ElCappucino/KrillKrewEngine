@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['combineobject_0',['CombineObject',['../class_combine_object.html',1,'']]]
+  ['ability_0',['Ability',['../class_ability.html',1,'']]]
 ];

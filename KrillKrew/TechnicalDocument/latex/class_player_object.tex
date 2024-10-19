@@ -1,0 +1,86 @@
+\doxysection{Player\+Object Class Reference}
+\hypertarget{class_player_object}{}\label{class_player_object}\index{PlayerObject@{PlayerObject}}
+
+
+The class for creating object that render using texture.  
+
+
+
+
+{\ttfamily \#include $<$Player\+Object.\+h$>$}
+
+
+
+Inheritance diagram for Player\+Object\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=166pt]{class_player_object__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for Player\+Object\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=166pt]{class_player_object__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_player_object_a6d9c7890e4a44d00f81bb7130d355f46}\label{class_player_object_a6d9c7890e4a44d00f81bb7130d355f46} 
+void {\bfseries Set\+Texture} (string path)
+\item 
+\Hypertarget{class_player_object_a362083b27ffcd4c445494c04208a61d2}\label{class_player_object_a362083b27ffcd4c445494c04208a61d2} 
+void {\bfseries Set\+Sheet\+Info} (float row, float column, float spritewidth, float spriteheight, float sheetwidth, float sheetheight)
+\item 
+void \mbox{\hyperlink{class_player_object_a6a2348aa6a95bab45d4976992334a959}{Render}} (glm\+::mat4 global\+Model\+Transform)
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{class_image_object}{Image\+Object}}}
+\begin{DoxyCompactItemize}
+\item 
+void {\bfseries Set\+Texture} (string path)
+\item 
+void {\bfseries Set\+Sheet\+Info} (float row, float column, float spritewidth, float spriteheight, float sheetwidth, float sheetheight)
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{class_drawable_object}{Drawable\+Object}}}
+\begin{DoxyCompactItemize}
+\item 
+glm\+::mat4 {\bfseries get\+Transform} ()
+\item 
+void {\bfseries Set\+Size} (float sizeX, float sizeY)
+\item 
+void {\bfseries Set\+Position} (glm\+::vec3 new\+Position)
+\item 
+void {\bfseries Translate} (glm\+::vec3 move\+Distance)
+\item 
+glm\+::vec3 {\bfseries get\+Pos} ()
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Additional Inherited Members}
+\doxysubsection*{Protected Attributes inherited from \mbox{\hyperlink{class_drawable_object}{Drawable\+Object}}}
+\begin{DoxyCompactItemize}
+\item 
+glm\+::vec3 {\bfseries pos}
+\item 
+glm\+::vec3 {\bfseries size}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+The class for creating object that render using texture. 
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_player_object_a6a2348aa6a95bab45d4976992334a959}\index{PlayerObject@{PlayerObject}!Render@{Render}}
+\index{Render@{Render}!PlayerObject@{PlayerObject}}
+\doxysubsubsection{\texorpdfstring{Render()}{Render()}}
+{\footnotesize\ttfamily \label{class_player_object_a6a2348aa6a95bab45d4976992334a959} 
+void Player\+Object\+::\+Render (\begin{DoxyParamCaption}\item[{glm\+::mat4}]{global\+Model\+Transform}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_image_object}{Image\+Object}}.
+

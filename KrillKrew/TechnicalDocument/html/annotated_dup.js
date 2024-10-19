@@ -1,5 +1,9 @@
 var annotated_dup =
 [
+    [ "Ability", "class_ability.html", null ],
+    [ "Camera", "class_camera.html", null ],
+    [ "CameraZoomInfo", "struct_camera_zoom_info.html", null ],
+    [ "Collider", "class_collider.html", null ],
     [ "CombineObject", "class_combine_object.html", "class_combine_object" ],
     [ "DrawableObject", "class_drawable_object.html", null ],
     [ "GameEngine", "class_game_engine.html", null ],
@@ -7,10 +11,17 @@ var annotated_dup =
     [ "GameStateController", "class_game_state_controller.html", null ],
     [ "GLRenderer", "class_g_l_renderer.html", "class_g_l_renderer" ],
     [ "ImageObject", "class_image_object.html", null ],
+    [ "Joystick", "class_joystick.html", null ],
     [ "Level", "class_level.html", null ],
+    [ "LevelGameplay", "class_level_gameplay.html", null ],
+    [ "LevelMapTest", "class_level_map_test.html", null ],
     [ "LevelTest", "class_level_test.html", null ],
     [ "MeshVbo", "class_mesh_vbo.html", null ],
+    [ "OrthographicValue", "struct_orthographic_value.html", null ],
+    [ "PlayerObject", "class_player_object.html", null ],
     [ "Shader", "class_shader.html", "class_shader" ],
+    [ "SpritesheetInfo", "struct_spritesheet_info.html", null ],
     [ "SquareMeshVbo", "class_square_mesh_vbo.html", null ],
+    [ "TileMeshVbo", "class_tile_mesh_vbo.html", null ],
     [ "TriangleMeshVbo", "class_triangle_mesh_vbo.html", null ]
 ];

@@ -1,0 +1,47 @@
+\doxysection{Level\+Map\+Test.\+h}
+\hypertarget{_level_map_test_8h_source}{}\label{_level_map_test_8h_source}\index{KrillKrew/KrillEngine/KrillEngine/LevelMapTest.h@{KrillKrew/KrillEngine/KrillEngine/LevelMapTest.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#include\ "{}Level.h"{}}}
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ "{}InfoStruct.h"{}}}
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ <string>}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ <fstream>}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ <sstream>}}
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ <iostream>}}
+\DoxyCodeLine{00008\ }
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#define\ MAP\_WIDTH\ \ 21}}
+\DoxyCodeLine{00010\ \textcolor{preprocessor}{\#define\ MAP\_HEIGHT\ 15}}
+\DoxyCodeLine{00011\ }
+\DoxyCodeLine{00013\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_level_map_test}{LevelMapTest}}\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{class_level}{Level}}}
+\DoxyCodeLine{00014\ \{}
+\DoxyCodeLine{00015\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00016\ \ \ \ \ vector<DrawableObject*>\ objectsList;}
+\DoxyCodeLine{00017\ \ \ \ \ \mbox{\hyperlink{class_drawable_object}{DrawableObject}}*\ player[4];\ \textcolor{comment}{//\ add\ up\ to\ 4\ players}}
+\DoxyCodeLine{00018\ }
+\DoxyCodeLine{00019\ \ \ \ \ \textcolor{keywordtype}{int}\ groundTile[MAP\_HEIGHT][MAP\_WIDTH]\ =\ \{\ 0\ \};}
+\DoxyCodeLine{00020\ \ \ \ \ \textcolor{keywordtype}{int}\ propsTile[MAP\_HEIGHT][MAP\_WIDTH]\ =\ \{\ 0\ \};}
+\DoxyCodeLine{00021\ \ \ \ \ \textcolor{keywordtype}{int}\ colliderTile[MAP\_HEIGHT][MAP\_WIDTH]\ =\ \{\ 0\ \};}
+\DoxyCodeLine{00022\ }
+\DoxyCodeLine{00023\ \ \ \ \ \mbox{\hyperlink{class_camera}{Camera}}\ camera;}
+\DoxyCodeLine{00024\ \ \ \ \ \textcolor{comment}{//\ CameraZoomInfo\ zoomInfo;\ //\ to\ initialize\ the\ zoom\ property}}
+\DoxyCodeLine{00025\ \ \ \ \ \textcolor{comment}{//\ OrthographicValue\ targetSceneProjection;\ //\ use\ for\ lerping\ between\ the\ current\ projection\ and\ this\ (target\ projection).}}
+\DoxyCodeLine{00026\ }
+\DoxyCodeLine{00027\ \ \ \ \ \textcolor{keywordtype}{float}\ dt\ =\ 0;}
+\DoxyCodeLine{00028\ }
+\DoxyCodeLine{00029\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00030\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ LevelLoad();}
+\DoxyCodeLine{00031\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ LevelInit();}
+\DoxyCodeLine{00032\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ LevelUpdate();}
+\DoxyCodeLine{00033\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ LevelDraw();}
+\DoxyCodeLine{00034\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ LevelFree();}
+\DoxyCodeLine{00035\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ LevelUnload();}
+\DoxyCodeLine{00036\ }
+\DoxyCodeLine{00037\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ HandleKey(\textcolor{keywordtype}{char}\ key);}
+\DoxyCodeLine{00038\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ HandleMouse(\textcolor{keywordtype}{int}\ type,\ \textcolor{keywordtype}{int}\ x,\ \textcolor{keywordtype}{int}\ y);}
+\DoxyCodeLine{00039\ }
+\DoxyCodeLine{00040\ \ \ \ \ \textcolor{keywordtype}{void}\ CameraLerp();}
+\DoxyCodeLine{00041\ \ \ \ \ \textcolor{keywordtype}{void}\ TileImport(\textcolor{keywordtype}{int}\ TileBuffer[][MAP\_WIDTH],\ \textcolor{keywordtype}{string}\ fileName);}
+\DoxyCodeLine{00042\ \};}
+
+\end{DoxyCode}

@@ -9,10 +9,24 @@ The class for creating object that render using texture.
 
 {\ttfamily \#include $<$Image\+Object.\+h$>$}
 
-Inheritance diagram for Image\+Object\+:\begin{figure}[H]
+
+
+Inheritance diagram for Image\+Object\+:
+\nopagebreak
+\begin{figure}[H]
 \begin{center}
 \leavevmode
-\includegraphics[height=2.000000cm]{class_image_object}
+\includegraphics[width=166pt]{class_image_object__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for Image\+Object\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=166pt]{class_image_object__coll__graph}
 \end{center}
 \end{figure}
 \doxysubsubsection*{Public Member Functions}
@@ -20,6 +34,9 @@ Inheritance diagram for Image\+Object\+:\begin{figure}[H]
 \item 
 \Hypertarget{class_image_object_af6068f8a9b06233a8df8cded2e651c2f}\label{class_image_object_af6068f8a9b06233a8df8cded2e651c2f} 
 void {\bfseries Set\+Texture} (string path)
+\item 
+\Hypertarget{class_image_object_a030488fd0d4abe5eca4f49b610f98ba7}\label{class_image_object_a030488fd0d4abe5eca4f49b610f98ba7} 
+void {\bfseries Set\+Sheet\+Info} (float row, float column, float spritewidth, float spriteheight, float sheetwidth, float sheetheight)
 \item 
 void \mbox{\hyperlink{class_image_object_a4e1a150373ad2197c807538975c5c9ee}{Render}} (glm\+::mat4 global\+Model\+Transform)
 \end{DoxyCompactItemize}
@@ -33,6 +50,8 @@ void {\bfseries Set\+Size} (float sizeX, float sizeY)
 void {\bfseries Set\+Position} (glm\+::vec3 new\+Position)
 \item 
 void {\bfseries Translate} (glm\+::vec3 move\+Distance)
+\item 
+glm\+::vec3 {\bfseries get\+Pos} ()
 \end{DoxyCompactItemize}
 \doxysubsubsection*{Additional Inherited Members}
 \doxysubsection*{Protected Attributes inherited from \mbox{\hyperlink{class_drawable_object}{Drawable\+Object}}}

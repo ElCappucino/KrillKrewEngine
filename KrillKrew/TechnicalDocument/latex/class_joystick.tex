@@ -1,0 +1,67 @@
+\doxysection{Joystick Class Reference}
+\hypertarget{class_joystick}{}\label{class_joystick}\index{Joystick@{Joystick}}
+\doxysubsubsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_joystick_ab1921855da24b839ed4231b71dc13009}\label{class_joystick_ab1921855da24b839ed4231b71dc13009} 
+enum class {\bfseries Axis} \{ \newline
+{\bfseries Left\+Stick\+Horizontal}
+, {\bfseries Left\+Stick\+Vertical}
+, {\bfseries Right\+Stick\+Horizontal}
+, {\bfseries Right\+Stick\+Vertical}
+, \newline
+{\bfseries Left\+Trigger}
+, {\bfseries Right\+Trigger}
+, {\bfseries Count}
+ \}
+\item 
+\Hypertarget{class_joystick_a45a955286b817c291c510e63a0599cd9}\label{class_joystick_a45a955286b817c291c510e63a0599cd9} 
+enum class {\bfseries Button} \{ \newline
+{\bfseries A}
+, {\bfseries B}
+, {\bfseries X}
+, {\bfseries Y}
+, \newline
+{\bfseries Back}
+, {\bfseries Guide}
+, {\bfseries Start}
+, {\bfseries LS}
+, \newline
+{\bfseries RS}
+, {\bfseries LB}
+, {\bfseries RB}
+, {\bfseries DPAD\+\_\+\+Up}
+, \newline
+{\bfseries DPAD\+\_\+\+Down}
+, {\bfseries DPAD\+\_\+\+Left}
+, {\bfseries DPAD\+\_\+\+Right}
+, {\bfseries Count}
+ \}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_joystick_ab5644a4a52fa0b950face4c15fd7ce0e}\label{class_joystick_ab5644a4a52fa0b950face4c15fd7ce0e} 
+static void {\bfseries On\+Joystick\+Connected} (SDL\+\_\+\+Controller\+Device\+Event \&e)
+\item 
+\Hypertarget{class_joystick_a5aae90d537730b3615a375a921707fbf}\label{class_joystick_a5aae90d537730b3615a375a921707fbf} 
+static void {\bfseries On\+Joystick\+Disconnected} (SDL\+\_\+\+Controller\+Device\+Event \&e)
+\item 
+\Hypertarget{class_joystick_a3ea8c4a6e56455618d1d63fdfbe3e2f6}\label{class_joystick_a3ea8c4a6e56455618d1d63fdfbe3e2f6} 
+static void {\bfseries Shutdown} ()
+\item 
+\Hypertarget{class_joystick_a2b5600a1246b1afddee2b82ead9da9e9}\label{class_joystick_a2b5600a1246b1afddee2b82ead9da9e9} 
+static void {\bfseries Update} ()
+\item 
+\Hypertarget{class_joystick_ab8f4982d61ae75d037e5e5df14c874f8}\label{class_joystick_ab8f4982d61ae75d037e5e5df14c874f8} 
+static bool {\bfseries Get\+Button} (int joystick\+Id, Button button)
+\item 
+\Hypertarget{class_joystick_a9a6c9ad44b5b691a8fefe54444bd1864}\label{class_joystick_a9a6c9ad44b5b691a8fefe54444bd1864} 
+static bool {\bfseries Get\+Button\+Down} (int joystick\+Id, Button button)
+\item 
+\Hypertarget{class_joystick_ae00808822d58d194b92d33c5094addd9}\label{class_joystick_ae00808822d58d194b92d33c5094addd9} 
+static bool {\bfseries Get\+Button\+Up} (int joystick\+Id, Button button)
+\item 
+\Hypertarget{class_joystick_adbde7e7c7c74e626d6e38be89623cf15}\label{class_joystick_adbde7e7c7c74e626d6e38be89623cf15} 
+static float {\bfseries Get\+Axis} (int joystick\+Id, Axis axis)
+\end{DoxyCompactItemize}

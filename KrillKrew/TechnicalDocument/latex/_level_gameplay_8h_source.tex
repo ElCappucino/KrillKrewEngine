@@ -1,0 +1,39 @@
+\doxysection{Level\+Gameplay.\+h}
+\hypertarget{_level_gameplay_8h_source}{}\label{_level_gameplay_8h_source}\index{KrillKrew/KrillEngine/KrillEngine/LevelGameplay.h@{KrillKrew/KrillEngine/KrillEngine/LevelGameplay.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#include\ "{}Level.h"{}}}
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ "{}InfoStruct.h"{}}}
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ "{}PlayerObject.h"{}}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ "{}Joystick.h"{}}}
+\DoxyCodeLine{00006\ }
+\DoxyCodeLine{00008\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_level_gameplay}{LevelGameplay}}\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{class_level}{Level}}}
+\DoxyCodeLine{00009\ \{}
+\DoxyCodeLine{00010\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00011\ \ \ \ \ vector<DrawableObject*>\ objectsList;}
+\DoxyCodeLine{00012\ \ \ \ \ \mbox{\hyperlink{class_drawable_object}{DrawableObject}}*\ player[4];\ \textcolor{comment}{//\ add\ up\ to\ 4\ players}}
+\DoxyCodeLine{00013\ \ \ \ \ \textcolor{keywordtype}{int}\ playerNum\ =\ 0;}
+\DoxyCodeLine{00014\ \ \ \ \ \mbox{\hyperlink{struct_camera_zoom_info}{CameraZoomInfo}}\ zoomInfo;\ \textcolor{comment}{//\ to\ initialize\ the\ zoom\ property}}
+\DoxyCodeLine{00015\ \ \ \ \ \mbox{\hyperlink{struct_orthographic_value}{OrthographicValue}}\ targetSceneProjection;\ \textcolor{comment}{//\ use\ for\ lerping\ between\ the\ current\ projection\ and\ this\ (target\ projection).}}
+\DoxyCodeLine{00016\ \ \ \ \ \mbox{\hyperlink{class_camera}{Camera}}\ camera;}
+\DoxyCodeLine{00017\ }
+\DoxyCodeLine{00018\ \ \ \ \ \textcolor{keywordtype}{float}\ dt\ =\ 0;}
+\DoxyCodeLine{00019\ }
+\DoxyCodeLine{00020\ \ \ \ \ \textcolor{keywordtype}{float}\ previousWidth\ =\ 0,\ previousHeight\ =\ 0;}
+\DoxyCodeLine{00021\ }
+\DoxyCodeLine{00022\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00023\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ LevelLoad();}
+\DoxyCodeLine{00024\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ LevelInit();}
+\DoxyCodeLine{00025\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ LevelUpdate();}
+\DoxyCodeLine{00026\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ LevelDraw();}
+\DoxyCodeLine{00027\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ LevelFree();}
+\DoxyCodeLine{00028\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ LevelUnload();}
+\DoxyCodeLine{00029\ }
+\DoxyCodeLine{00030\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ HandleKey(\textcolor{keywordtype}{char}\ key);}
+\DoxyCodeLine{00031\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ HandleMouse(\textcolor{keywordtype}{int}\ type,\ \textcolor{keywordtype}{int}\ x,\ \textcolor{keywordtype}{int}\ y);}
+\DoxyCodeLine{00032\ }
+\DoxyCodeLine{00033\ \ \ \ \ \textcolor{comment}{//\ void\ CameraLerp();}}
+\DoxyCodeLine{00034\ \};}
+
+\end{DoxyCode}

@@ -117,18 +117,34 @@ $(function(){initNavTree('class_image_object.html',''); initResizable(true); });
 <div class="dynheader">
 Inheritance diagram for ImageObject:</div>
 <div class="dyncontent">
- <div class="center">
-  <img src="class_image_object.png" usemap="#ImageObject_map" alt=""/>
-  <map id="ImageObject_map" name="ImageObject_map">
-<area href="class_drawable_object.html" title="The class for creating drawable object." alt="DrawableObject" shape="rect" coords="0,0,103,24"/>
-  </map>
-</div></div>
+<div class="center"><img src="class_image_object__inherit__graph.png" border="0" usemap="#a_image_object_inherit__map" alt="Inheritance graph"/></div>
+<map name="a_image_object_inherit__map" id="a_image_object_inherit__map">
+<area shape="rect" title="The class for creating object that render using texture." alt="" coords="15,80,110,107"/>
+<area shape="rect" href="class_player_object.html" title="The class for creating object that render using texture." alt="" coords="14,155,111,181"/>
+<area shape="poly" title=" " alt="" coords="65,122,65,154,60,154,60,122"/>
+<area shape="rect" href="class_drawable_object.html" title="The class for creating drawable object." alt="" coords="5,5,120,32"/>
+<area shape="poly" title=" " alt="" coords="65,48,65,80,60,80,60,48"/>
+</map>
+<center><span class="legend">[<a target="top" href="graph_legend.html">legend</a>]</span></center></div>
+<div class="dynheader">
+Collaboration diagram for ImageObject:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_image_object__coll__graph.png" border="0" usemap="#a_image_object_coll__map" alt="Collaboration graph"/></div>
+<map name="a_image_object_coll__map" id="a_image_object_coll__map">
+<area shape="rect" title="The class for creating object that render using texture." alt="" coords="15,80,110,107"/>
+<area shape="rect" href="class_drawable_object.html" title="The class for creating drawable object." alt="" coords="5,5,120,32"/>
+<area shape="poly" title=" " alt="" coords="65,48,65,80,60,80,60,48"/>
+</map>
+<center><span class="legend">[<a target="top" href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:af6068f8a9b06233a8df8cded2e651c2f" id="r_af6068f8a9b06233a8df8cded2e651c2f"><td class="memItemLeft" align="right" valign="top"><a id="af6068f8a9b06233a8df8cded2e651c2f" name="af6068f8a9b06233a8df8cded2e651c2f"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>SetTexture</b> (string path)</td></tr>
 <tr class="separator:af6068f8a9b06233a8df8cded2e651c2f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a030488fd0d4abe5eca4f49b610f98ba7" id="r_a030488fd0d4abe5eca4f49b610f98ba7"><td class="memItemLeft" align="right" valign="top"><a id="a030488fd0d4abe5eca4f49b610f98ba7" name="a030488fd0d4abe5eca4f49b610f98ba7"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>SetSheetInfo</b> (float row, float column, float spritewidth, float spriteheight, float sheetwidth, float sheetheight)</td></tr>
+<tr class="separator:a030488fd0d4abe5eca4f49b610f98ba7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4e1a150373ad2197c807538975c5c9ee" id="r_a4e1a150373ad2197c807538975c5c9ee"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a4e1a150373ad2197c807538975c5c9ee">Render</a> (glm::mat4 globalModelTransform)</td></tr>
 <tr class="separator:a4e1a150373ad2197c807538975c5c9ee"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_class_drawable_object"><td colspan="2" onclick="javascript:dynsection.toggleInherit('pub_methods_class_drawable_object')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="class_drawable_object.html">DrawableObject</a></td></tr>
@@ -144,6 +160,9 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>SetPosition</b> (glm:
 <tr class="memitem:a526365f23ad585ededf384d7c3e870fd inherit pub_methods_class_drawable_object" id="r_a526365f23ad585ededf384d7c3e870fd"><td class="memItemLeft" align="right" valign="top">
 void&#160;</td><td class="memItemRight" valign="bottom"><b>Translate</b> (glm::vec3 moveDistance)</td></tr>
 <tr class="separator:a526365f23ad585ededf384d7c3e870fd inherit pub_methods_class_drawable_object"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaf0ad13274fdbf91e83d944eb456cfb9 inherit pub_methods_class_drawable_object" id="r_aaf0ad13274fdbf91e83d944eb456cfb9"><td class="memItemLeft" align="right" valign="top">
+glm::vec3&#160;</td><td class="memItemRight" valign="bottom"><b>getPos</b> ()</td></tr>
+<tr class="separator:aaf0ad13274fdbf91e83d944eb456cfb9 inherit pub_methods_class_drawable_object"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="inherited" name="inherited"></a>
 Additional Inherited Members</h2></td></tr>

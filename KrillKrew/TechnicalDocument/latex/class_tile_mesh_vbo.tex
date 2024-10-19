@@ -1,0 +1,106 @@
+\doxysection{Tile\+Mesh\+Vbo Class Reference}
+\hypertarget{class_tile_mesh_vbo}{}\label{class_tile_mesh_vbo}\index{TileMeshVbo@{TileMeshVbo}}
+
+
+The class for store the Vbo data of square mesh.  
+
+
+
+
+{\ttfamily \#include $<$Tile\+Mesh\+Vbo.\+h$>$}
+
+
+
+Inheritance diagram for Tile\+Mesh\+Vbo\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=153pt]{class_tile_mesh_vbo__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for Tile\+Mesh\+Vbo\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=153pt]{class_tile_mesh_vbo__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+virtual string \mbox{\hyperlink{class_tile_mesh_vbo_aaa623b0db2a0f834a8e9418149cb820c}{Get\+Mesh\+Name}} ()
+\item 
+virtual void \mbox{\hyperlink{class_tile_mesh_vbo_af7fa1073d1bef7b79ea297df988a9751}{Render}} ()
+\item 
+virtual void \mbox{\hyperlink{class_tile_mesh_vbo_a8a78041f4cd2b73dd0831081426d6b5e}{Load\+Data}} ()
+\item 
+\Hypertarget{class_tile_mesh_vbo_a908b46e5aa41cd4ce1dda6e9cf035341}\label{class_tile_mesh_vbo_a908b46e5aa41cd4ce1dda6e9cf035341} 
+virtual void {\bfseries Load\+Data} (float row, float column, float spritewidth, float spriteheight, float sheetwidth, float sheetheight)
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{class_mesh_vbo}{Mesh\+Vbo}}}
+\begin{DoxyCompactItemize}
+\item 
+GLuint {\bfseries Get\+Pos\+Id} ()
+\item 
+GLuint {\bfseries Get\+Tex\+Id} ()
+\item 
+void {\bfseries Set\+Attrib\+Id} (GLuint pos\+Id, GLuint tex\+Id)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Static Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_tile_mesh_vbo_af5c1fb2d9c04a28887bbb322e8423ff7}\label{class_tile_mesh_vbo_af5c1fb2d9c04a28887bbb322e8423ff7} 
+static string const {\bfseries MESH\+\_\+\+NAME} = "{}Tile"{}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Additional Inherited Members}
+\doxysubsection*{Protected Attributes inherited from \mbox{\hyperlink{class_mesh_vbo}{Mesh\+Vbo}}}
+\begin{DoxyCompactItemize}
+\item 
+GLuint {\bfseries pos\+Vbo\+Id} = -\/1
+\item 
+GLuint {\bfseries tex\+Vbo\+Id} = -\/1
+\item 
+GLuint {\bfseries pos\+Attrib\+Id} = -\/1
+\item 
+GLuint {\bfseries tex\+Attrib\+Id} = -\/1
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+The class for store the Vbo data of square mesh. 
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_tile_mesh_vbo_aaa623b0db2a0f834a8e9418149cb820c}\index{TileMeshVbo@{TileMeshVbo}!GetMeshName@{GetMeshName}}
+\index{GetMeshName@{GetMeshName}!TileMeshVbo@{TileMeshVbo}}
+\doxysubsubsection{\texorpdfstring{GetMeshName()}{GetMeshName()}}
+{\footnotesize\ttfamily \label{class_tile_mesh_vbo_aaa623b0db2a0f834a8e9418149cb820c} 
+string Tile\+Mesh\+Vbo\+::\+Get\+Mesh\+Name (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_mesh_vbo}{Mesh\+Vbo}}.
+
+\Hypertarget{class_tile_mesh_vbo_a8a78041f4cd2b73dd0831081426d6b5e}\index{TileMeshVbo@{TileMeshVbo}!LoadData@{LoadData}}
+\index{LoadData@{LoadData}!TileMeshVbo@{TileMeshVbo}}
+\doxysubsubsection{\texorpdfstring{LoadData()}{LoadData()}}
+{\footnotesize\ttfamily \label{class_tile_mesh_vbo_a8a78041f4cd2b73dd0831081426d6b5e} 
+void Tile\+Mesh\+Vbo\+::\+Load\+Data (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_mesh_vbo}{Mesh\+Vbo}}.
+
+\Hypertarget{class_tile_mesh_vbo_af7fa1073d1bef7b79ea297df988a9751}\index{TileMeshVbo@{TileMeshVbo}!Render@{Render}}
+\index{Render@{Render}!TileMeshVbo@{TileMeshVbo}}
+\doxysubsubsection{\texorpdfstring{Render()}{Render()}}
+{\footnotesize\ttfamily \label{class_tile_mesh_vbo_af7fa1073d1bef7b79ea297df988a9751} 
+void Tile\+Mesh\+Vbo\+::\+Render (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_mesh_vbo}{Mesh\+Vbo}}.
+

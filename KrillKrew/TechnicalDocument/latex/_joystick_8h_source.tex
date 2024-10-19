@@ -1,0 +1,74 @@
+\doxysection{Joystick.\+h}
+\hypertarget{_joystick_8h_source}{}\label{_joystick_8h_source}\index{KrillKrew/KrillEngine/KrillEngine/Joystick.h@{KrillKrew/KrillEngine/KrillEngine/Joystick.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#include\ "{}SDL.h"{}}}
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ <array>}}
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ <memory>}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ <unordered\_map>}}
+\DoxyCodeLine{00006\ }
+\DoxyCodeLine{00007\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_joystick}{Joystick}}}
+\DoxyCodeLine{00008\ \{}
+\DoxyCodeLine{00009\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00010\ \ \ \ \ \textcolor{comment}{//\ Adapt\ from\ SDL\ -\/\ SDL\_GameControllerAxis}}
+\DoxyCodeLine{00011\ \ \ \ \ \textcolor{keyword}{enum\ class}\ Axis}
+\DoxyCodeLine{00012\ \ \ \ \ \{}
+\DoxyCodeLine{00013\ \ \ \ \ \ \ \ \ LeftStickHorizontal,}
+\DoxyCodeLine{00014\ \ \ \ \ \ \ \ \ LeftStickVertical,}
+\DoxyCodeLine{00015\ \ \ \ \ \ \ \ \ RightStickHorizontal,}
+\DoxyCodeLine{00016\ \ \ \ \ \ \ \ \ RightStickVertical,}
+\DoxyCodeLine{00017\ \ \ \ \ \ \ \ \ LeftTrigger,}
+\DoxyCodeLine{00018\ \ \ \ \ \ \ \ \ RightTrigger,}
+\DoxyCodeLine{00019\ \ \ \ \ \ \ \ \ Count}
+\DoxyCodeLine{00020\ \ \ \ \ \};}
+\DoxyCodeLine{00021\ }
+\DoxyCodeLine{00022\ \ \ \ \ \textcolor{comment}{//\ Adapt\ from\ SDL\ -\/\ SDL\_GameControllerButton}}
+\DoxyCodeLine{00023\ \ \ \ \ \textcolor{keyword}{enum\ class}\ Button}
+\DoxyCodeLine{00024\ \ \ \ \ \{}
+\DoxyCodeLine{00025\ \ \ \ \ \ \ \ A,}
+\DoxyCodeLine{00026\ \ \ \ \ \ \ \ B,}
+\DoxyCodeLine{00027\ \ \ \ \ \ \ \ X,}
+\DoxyCodeLine{00028\ \ \ \ \ \ \ \ Y,}
+\DoxyCodeLine{00029\ \ \ \ \ \ \ \ Back,}
+\DoxyCodeLine{00030\ \ \ \ \ \ \ \ Guide,}
+\DoxyCodeLine{00031\ \ \ \ \ \ \ \ Start,}
+\DoxyCodeLine{00032\ \ \ \ \ \ \ \ LS,}
+\DoxyCodeLine{00033\ \ \ \ \ \ \ \ RS,}
+\DoxyCodeLine{00034\ \ \ \ \ \ \ \ LB,}
+\DoxyCodeLine{00035\ \ \ \ \ \ \ \ RB,}
+\DoxyCodeLine{00036\ \ \ \ \ \ \ \ DPAD\_Up,}
+\DoxyCodeLine{00037\ \ \ \ \ \ \ \ DPAD\_Down,}
+\DoxyCodeLine{00038\ \ \ \ \ \ \ \ DPAD\_Left,}
+\DoxyCodeLine{00039\ \ \ \ \ \ \ \ DPAD\_Right,}
+\DoxyCodeLine{00040\ \ \ \ \ \ \ \ Count}
+\DoxyCodeLine{00041\ \ \ \ \ \};}
+\DoxyCodeLine{00042\ }
+\DoxyCodeLine{00043\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ OnJoystickConnected(SDL\_ControllerDeviceEvent\&\ e);}
+\DoxyCodeLine{00044\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ OnJoystickDisconnected(SDL\_ControllerDeviceEvent\&\ e);}
+\DoxyCodeLine{00045\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ Shutdown();}
+\DoxyCodeLine{00046\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ Update();}
+\DoxyCodeLine{00047\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{bool}\ GetButton(\textcolor{keywordtype}{int}\ joystickId,\ Button\ button);}
+\DoxyCodeLine{00048\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{bool}\ GetButtonDown(\textcolor{keywordtype}{int}\ joystickId,\ Button\ button);}
+\DoxyCodeLine{00049\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{bool}\ GetButtonUp(\textcolor{keywordtype}{int}\ joystickId,\ Button\ button);}
+\DoxyCodeLine{00050\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{float}\ GetAxis(\textcolor{keywordtype}{int}\ joystickId,\ Axis\ axis);}
+\DoxyCodeLine{00051\ }
+\DoxyCodeLine{00052\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00053\ }
+\DoxyCodeLine{00054\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{int}\ GetNextFreeIndex();}
+\DoxyCodeLine{00055\ }
+\DoxyCodeLine{00056\ \ \ \ \ \textcolor{keyword}{struct\ }Controller}
+\DoxyCodeLine{00057\ \ \ \ \ \{}
+\DoxyCodeLine{00058\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ joystickIndex\ =\ -\/1;}
+\DoxyCodeLine{00059\ \ \ \ \ \ \ \ \ SDL\_GameController*\ gc\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{00060\ }
+\DoxyCodeLine{00061\ \ \ \ \ \ \ \ \ std::array<bool,\ (int)Button::Count>\ buttons;}
+\DoxyCodeLine{00062\ \ \ \ \ \ \ \ \ std::array<bool,\ (int)Button::Count>\ lastButtons;}
+\DoxyCodeLine{00063\ \ \ \ \ \ \ \ \ std::array<float,\ (int)Axis::Count>\ axes;\ \textcolor{comment}{//\ -\/1\ to\ 1}}
+\DoxyCodeLine{00064\ \ \ \ \ \ \ \ \ std::array<float,\ (int)Axis::Count>\ lastAxes;}
+\DoxyCodeLine{00065\ \ \ \ \ \};}
+\DoxyCodeLine{00066\ }
+\DoxyCodeLine{00067\ \ \ \ \ \textcolor{keyword}{static}\ std::unordered\_map<int,\ std::unique\_ptr<Controller>>\ availableJoysticks;}
+\DoxyCodeLine{00068\ \};}
+
+\end{DoxyCode}
