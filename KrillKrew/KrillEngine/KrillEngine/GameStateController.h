@@ -15,7 +15,7 @@ public:
 	GameState gameStateCurr;
 	GameState gameStatePrev;
 	GameState gameStateNext;
-	
+	GameState loadingState;
 
 	GameStateController();
 	void Init(GameState gameStateInit);

@@ -2,6 +2,7 @@
 #include "Level.h"
 #include "LevelGameplay.h"
 #include "LevelMapTest.h"
+#include "LevelLoading.h"
 
 GameStateController::GameStateController()
 {
@@ -34,6 +35,9 @@ void GameStateController::LoadLevel()
 			break;
 		case GameState::GS_LEVELGAMEPLAY:
 			currentLevel = new LevelGameplay();
+			break;
+		case GameState::GS_LEVELLOADING:
+			currentLevel = new LevelLoading();
 			break;
 		
 		default:

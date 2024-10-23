@@ -103,13 +103,15 @@ void LevelMapTest::LevelInit()
 				j == MAP_WIDTH - 1 ||
 				flag == 0)
 			{
-				auto it = blob_lookup_table.find(256);
+				continue;
+
+				/*auto it = blob_lookup_table.find(256);
 				if (it != blob_lookup_table.end())
 				{
 					pos = it->second;
 					std::cout << "Bitset = " << 256 << std::endl;
 					std::cout << "pair = " << it->second.first << " " << it->second.second << std::endl;
-				}
+				}*/
 				
 			}
 			else 
@@ -124,7 +126,7 @@ void LevelMapTest::LevelInit()
 				surround[6] = groundTile[i]    [j - 1];
 				surround[7] = groundTile[i - 1][j - 1];
 
-				if (!(surround[0] && surround[2])) { surround[1] = 0; }
+				if (!(surround[0] && surround[2])) { surround[1] = 0; } 
 				if (!(surround[2] && surround[4])) { surround[3] = 0; }
 				if (!(surround[4] && surround[6])) { surround[5] = 0; }
 				if (!(surround[6] && surround[0])) { surround[7] = 0; }

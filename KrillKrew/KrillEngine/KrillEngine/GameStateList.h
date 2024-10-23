@@ -7,6 +7,7 @@ enum GameState
 	GS_LEVEL1 = 0,
 	GS_LEVELGAMEPLAY,
 	GS_LEVELMAPTEST,
+	GS_LEVELLOADING,
 	
 
 	// special game state. Do not change
