@@ -7,10 +7,10 @@
 class Joystick
 {
 public:
-	// Adapt from SDL - SDL_GameControllerAxis
+	// This reference from PS5 controller config
 	enum class Axis
 	{
-        LeftStickHorizontal,
+        LeftStickHorizontal = 0,
         LeftStickVertical,
         RightStickHorizontal,
         RightStickVertical,
@@ -19,24 +19,32 @@ public:
         Count
 	};
 
-    // Adapt from SDL - SDL_GameControllerButton
+    // This reference from PS5 controller config
     enum class Button
     {
-       A,
-       B,
-       X,
-       Y,
-       Back,
-       Guide,
-       Start,
-       LS,
-       RS,
-       LB,
-       RB,
+       Square = 0,
+       Cross,
+       Circle,
+       Triangle,
+       L1,
+       R1,
+       L2,
+       R2,
        DPAD_Up,
        DPAD_Down,
        DPAD_Left,
        DPAD_Right,
+       LeftStickUp,
+       RightStickUp,
+       LeftStickDown,
+       RightStickDown,
+       LeftStickLeft,
+       RightSticLeft,
+       LeftStickRight,
+       RightStickRight,
+       P5Button,
+       ShareButton,
+       OptionsButton,
        Count
     };
 
@@ -56,7 +64,7 @@ private:
     struct Controller
     {
         int joystickIndex = -1;
-        SDL_GameController* gc = nullptr;
+        SDL_Joystick* gc = nullptr;
 
         std::array<bool, (int)Button::Count> buttons;
         std::array<bool, (int)Button::Count> lastButtons;

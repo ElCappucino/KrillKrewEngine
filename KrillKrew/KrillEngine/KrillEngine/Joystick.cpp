@@ -11,10 +11,10 @@ std::unordered_map<int, std::unique_ptr<Joystick::Controller>> Joystick::availab
 void Joystick::OnJoystickConnected(SDL_ControllerDeviceEvent& e) 
 {
 	int deviceIndex = e.which;
-	if (SDL_IsGameController(deviceIndex)) 
+	if (SDL_JoystickOpen(deviceIndex) != NULL) 
 	{
 		auto c = std::make_unique<Controller>();
-		c->gc = SDL_GameControllerOpen(deviceIndex);
+		c->gc = SDL_JoystickOpen(deviceIndex);
 		if (c->gc)
 		{
 			c->joystickIndex = deviceIndex;
@@ -43,7 +43,7 @@ void Joystick::OnJoystickDisconnected(SDL_ControllerDeviceEvent& e)
 		Controller* c = it->second.get();
 		if (c->joystickIndex == deviceIndex)
 		{
-			SDL_GameControllerClose(c->gc);
+			SDL_JoystickClose(c->gc);
 			availableJoysticks.erase(it);
 			break;
 		}
@@ -54,7 +54,7 @@ void Joystick::Shutdown()
 	for (auto it = availableJoysticks.begin(); it != availableJoysticks.end();)
 	{
 		Controller* c = it->second.get();
-		SDL_GameControllerClose(c->gc);
+		SDL_JoystickClose(c->gc);
 		availableJoysticks.erase(it);
 	}
 }
@@ -63,16 +63,19 @@ void Joystick::Update()
 	for (auto it = availableJoysticks.begin(); it != availableJoysticks.end(); it++)
 	{
 		Controller* c = it->second.get();
-		if (c && c->gc) {
+		if (c && c->gc) 
+		{
 			c->lastButtons = c->buttons;
 			c->lastAxes = c->axes;
 
-			for (unsigned int i = 0; i < static_cast<int>(Button::Count); i++) {
-				c->buttons[i] = SDL_GameControllerGetButton(c->gc, static_cast<SDL_GameControllerButton>(i));
+			for (unsigned int i = 0; i < static_cast<int>(Button::Count); i++) 
+			{
+				c->buttons[i] = SDL_JoystickGetButton(c->gc, i);
 			}
 
-			for (unsigned int i = 0; i < static_cast<int>(Axis::Count); i++) {
-				c->axes[i] = SDL_GameControllerGetAxis(c->gc, static_cast<SDL_GameControllerAxis>(i));
+			for (unsigned int i = 0; i < static_cast<int>(Axis::Count); i++) 
+			{
+				c->axes[i] = SDL_JoystickGetAxis(c->gc, i);
 			}
 		}
 	}

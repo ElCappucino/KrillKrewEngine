@@ -1,4 +1,5 @@
 #include "LevelMapTest.h"
+#include "Joystick.h"
 
 void LevelMapTest::LevelLoad()
 {
@@ -164,6 +165,21 @@ void LevelMapTest::LevelUpdate()
 {
 	// dt++;
 
+	if (SDL_NumJoysticks() > 0)
+	{
+		Joystick::Update();
+
+		printf("Joystick No.1 Triangle: %d Square: %d Cross: %d Circle: %d Leftstick: %f\n",
+			Joystick::GetButton(0, Joystick::Button::Triangle),
+			Joystick::GetButton(0, Joystick::Button::Square),
+			Joystick::GetButton(0, Joystick::Button::Cross),
+			Joystick::GetButton(0, Joystick::Button::Circle),
+			Joystick::GetAxis(0, Joystick::Axis::LeftStickHorizontal));
+	}
+	
+
+	
+
 	//cout << "Update Level" << endl;
 }
 
@@ -214,6 +230,9 @@ void LevelMapTest::HandleKey(char key)
 
 		break;
 	}
+
+	
+
 }
 
 void LevelMapTest::HandleMouse(int type, int x, int y)
