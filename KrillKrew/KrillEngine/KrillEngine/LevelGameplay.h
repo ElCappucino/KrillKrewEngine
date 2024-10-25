@@ -2,6 +2,7 @@
 #include "Level.h"
 #include "InfoStruct.h"
 #include "PlayerObject.h"
+#include "ProjectileObject.h"
 
 /// @brief The class for level inherit test from P'tiam
 class LevelGameplay : public Level
@@ -14,7 +15,7 @@ private:
 	OrthographicValue targetSceneProjection; // use for lerping between the current projection and this (target projection).
 	Camera camera;
 
-	float dt = 0;
+	int dt = 0;
 
 	float previousWidth = 0, previousHeight = 0;
 
@@ -28,6 +29,7 @@ public:
 	virtual void Movement(float axisX, float axisY, bool isPositiveX, bool isPositiveY);
 	virtual void HandleKey(char key);
 	virtual void HandleMouse(int type, int x, int y);
+
 
 	// void CameraLerp();
 };

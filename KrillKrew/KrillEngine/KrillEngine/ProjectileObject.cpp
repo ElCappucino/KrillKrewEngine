@@ -1,25 +1,25 @@
 
-#include "PlayerObject.h"
+#include "ProjectileObject.h"
 #include "GameEngine.h"
 #include "SquareMeshVbo.h"
 
 
-PlayerObject::PlayerObject()
+ProjectileObject::ProjectileObject()
 {
 
 }
 
 
-PlayerObject::~PlayerObject()
+ProjectileObject::~ProjectileObject()
 {
 }
 
-void PlayerObject::SetTexture(string path)
+void ProjectileObject::SetTexture(string path)
 {
 	texture = GameEngine::GetInstance()->GetRenderer()->LoadTexture(path);
 }
 
-void PlayerObject::SetSheetInfo(float row, float column, float spritewidth, float spriteheight, float sheetwidth, float sheetheight) {
+void ProjectileObject::SetSheetInfo(float row, float column, float spritewidth, float spriteheight, float sheetwidth, float sheetheight) {
 	sheetInfo.row = row;
 	sheetInfo.column = column;
 	sheetInfo.spritewidth = spritewidth;
@@ -28,7 +28,7 @@ void PlayerObject::SetSheetInfo(float row, float column, float spritewidth, floa
 	sheetInfo.sheetheight = sheetheight;
 }
 
-void PlayerObject::Render(glm::mat4 globalModelTransform)
+void ProjectileObject::Render(glm::mat4 globalModelTransform)
 {
 	SquareMeshVbo* squareMesh = dynamic_cast<SquareMeshVbo*> (GameEngine::GetInstance()->GetRenderer()->GetMesh(SquareMeshVbo::MESH_NAME));
 
@@ -61,28 +61,23 @@ void PlayerObject::Render(glm::mat4 globalModelTransform)
 	}
 }
 
-void PlayerObject::setVelocity(float axisX, float axisY , bool isPositiveX, bool isPositiveY) {
+void ProjectileObject::setVelocity(glm::vec3 veloPlayer) {
 
-	if (!isPositiveX) {
-		axisX = -axisX;
-	}
-	if (!isPositiveY) {
-		axisY = -axisY;
-	}
-	/*cout << " X | " << axisX << endl;
-	cout << " Y | " << axisY << endl;*/
-	velocity = glm::vec3(axisX * 5.f, axisY * 5.f, 0);
-	
-	
+	velocity = veloPlayer;
+
 }
 
-glm::vec3 PlayerObject::getVelocity(){
+glm::vec3 ProjectileObject::getVelocity() {
 	return velocity;
 }
 
-void PlayerObject::setisShooting(bool isShoot) {
-	isShooting = isShoot;
+void ProjectileObject::setLifeTime(int lifeTime) {
+	this->lifeTime = lifeTime;
 }
-bool PlayerObject::getIsShooting() {
-	return isShooting;
+
+void ProjectileObject::reduceLifeTime() {
+	lifeTime -= 1;
+}
+int ProjectileObject::getLifetime() {
+	return lifeTime;
 }

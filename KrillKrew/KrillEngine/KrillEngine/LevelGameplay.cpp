@@ -75,9 +75,25 @@ void LevelGameplay::LevelUpdate()
 {
 	dt++;
 	player[playerNum]->Translate(player[playerNum]->getVelocity());
-	/*player[playerNum]->setVelocity(0, true);
-	player[playerNum]->setVelocity(0, false);*/
 	camera.LerpCamera(player[0]->getPos(), player[1]->getPos(), player[2]->getPos(), player[3]->getPos()); // update smooth camera here
+
+	for (int i = 0; i < objectsList.size(); i++) {
+		ProjectileObject* projectile = dynamic_cast<ProjectileObject*>(objectsList[i]);
+		if (projectile != nullptr) {
+
+			if ((dt % 50) == 0) {
+				projectile->reduceLifeTime();
+			}
+
+			if (projectile->getLifetime() <= 0) {
+				objectsList.erase(objectsList.begin() + i);
+				player[playerNum]->setisShooting(false);
+				cout << "delete projectile" << endl;
+			}
+			projectile->Translate(projectile->getVelocity());
+		}
+
+	}
 }
 
 void LevelGameplay::LevelDraw()
@@ -148,7 +164,24 @@ void LevelGameplay::HandleKey(char key)
 		}
 		cout << "Player " << this->playerNum << endl;
 		break;
+
+	case 'n':
+		if (player[playerNum]->getIsShooting() == false) {
+			player[playerNum]->setisShooting(true);
+			ProjectileObject* projectile = new ProjectileObject();
+			projectile->SetSheetInfo(0, 0, 256, 256, 256, 256);
+			projectile->SetTexture("../Resource/Texture/Bomb_icon.png");
+			projectile->SetPosition(player[playerNum]->getPos());
+			projectile->SetSize(256.f, -256.f);
+			projectile->setLifeTime(10);
+			projectile->setVelocity(player[playerNum]->getVelocity());
+			objectsList.push_back(projectile);
+		}
+
+		break;
 	}
+
+	
 }
 
 void LevelGameplay::HandleMouse(int type, int x, int y)
@@ -163,3 +196,4 @@ void LevelGameplay::HandleMouse(int type, int x, int y)
 void LevelGameplay::Movement(float axisX, float axisY, bool isPositiveX, bool isPositiveY) {
 	player[playerNum]->setVelocity(axisX, axisY, isPositiveX, isPositiveY);
 }
+

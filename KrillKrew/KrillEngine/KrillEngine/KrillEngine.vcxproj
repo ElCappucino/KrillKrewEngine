@@ -149,6 +149,7 @@
     <ClInclude Include="MeshVbo.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="PlayerObject.h" />
+    <ClInclude Include="ProjectileObject.h" />
     <ClInclude Include="Shader.h" />
     <ClInclude Include="SquareMeshVbo.h" />
     <ClInclude Include="TriangleMeshVbo.h" />
@@ -172,6 +173,7 @@
     <ClCompile Include="MeshVbo.cpp" />
     <ClCompile Include="pch.cpp" />
     <ClCompile Include="PlayerObject.cpp" />
+    <ClCompile Include="ProjectileObject.cpp" />
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="SquareMeshVbo.cpp" />
     <ClCompile Include="TriangleMeshVbo.cpp" />

@@ -10,24 +10,24 @@
 #include "Ability.h"
 
 /// @brief The class for creating object that render using texture
-class PlayerObject :public ImageObject
+class ProjectileObject :public ImageObject
 {
 	unsigned int texture;
 	SpritesheetInfo sheetInfo;
 	Collider* hitbox;
-	std::array<Ability*, 3> abilities;
 	glm::vec3 velocity;
-	bool isShooting = false;
+	int lifeTime;
 
 public:
-	
-	PlayerObject();
-	~PlayerObject();
+	ProjectileObject();
+	~ProjectileObject();
 	void SetTexture(string path);
 	void SetSheetInfo(float row, float column, float spritewidth, float spriteheight, float sheetwidth, float sheetheight);
 	void Render(glm::mat4 globalModelTransform);
-	void setVelocity(float axisX, float axisY, bool isPositiveX, bool isPositiveY);
-	void setisShooting(bool isShoot);
+	void setVelocity(glm::vec3 veloPlayer);
+	void setLifeTime(int lifeTime);
 	glm::vec3 getVelocity();
-	bool getIsShooting();
+	void reduceLifeTime();
+	int getLifetime();
 };
+#pragma once
