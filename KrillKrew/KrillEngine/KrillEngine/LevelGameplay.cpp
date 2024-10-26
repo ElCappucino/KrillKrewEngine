@@ -68,20 +68,32 @@ void LevelGameplay::LevelInit()
 
 	player[3] = obj4;
 
-	std::cout << "Init Level" << std::endl;
+	cout << "Init Level" << endl;
 }
 
 void LevelGameplay::LevelUpdate()
 {
 	dt++;
-
+	player[playerNum]->Translate(player[playerNum]->getVelocity());
 	camera.LerpCamera(player[0]->getPos(), player[1]->getPos(), player[2]->getPos(), player[3]->getPos()); // update smooth camera here
 
-	/*cout << "Joystick left stick X axis: " << Joystick::GetAxis(0, Joystick::Axis::LeftStickHorizontal)
-		<< " A: " << Joystick::GetButton(0, Joystick::Button::A)
-		<< " B: " << Joystick::GetButton(0, Joystick::Button::B)
-		<< " X: " << Joystick::GetButton(0, Joystick::Button::X)
-		<< " Y: " << Joystick::GetButton(0, Joystick::Button::Y) << endl;*/
+	for (int i = 0; i < objectsList.size(); i++) {
+		ProjectileObject* projectile = dynamic_cast<ProjectileObject*>(objectsList[i]);
+		if (projectile != nullptr) {
+
+			if ((dt % 50) == 0) {
+				projectile->reduceLifeTime();
+			}
+
+			if (projectile->getLifetime() <= 0) {
+				objectsList.erase(objectsList.begin() + i);
+				player[playerNum]->setisShooting(false);
+				cout << "delete projectile" << endl;
+			}
+			projectile->Translate(projectile->getVelocity());
+		}
+
+	}
 }
 
 void LevelGameplay::LevelDraw()
@@ -120,17 +132,14 @@ void LevelGameplay::HandleKey(char key)
 	case '4': this->playerNum = 3; break;
 	
 	// control player
-	case 'w': player[playerNum]->Translate(glm::vec3(0, 5, 0)); break;
-	case 's': player[playerNum]->Translate(glm::vec3(0, -5, 0)); break;
-	case 'a': player[playerNum]->Translate(glm::vec3(-5, 0, 0)); break;
-	case 'd': player[playerNum]->Translate(glm::vec3(5, 0, 0)); break;
+	/*case 'w': player[playerNum]->setVelocity(5, false); break;
+	case 's': player[playerNum]->setVelocity(-5, false); break;
+	case 'a': player[playerNum]->setVelocity(-5, true); break;
+	case 'd': player[playerNum]->setVelocity(5, true); break;*/
 
 	case 'q': GameEngine::GetInstance()->GetStateController()->gameStateNext = GameState::GS_QUIT; ; break;
 	case 'r': GameEngine::GetInstance()->GetStateController()->gameStateNext = GameState::GS_RESTART; ; break;
-	case 'e': 
-		GameEngine::GetInstance()->GetStateController()->loadingState = GameState::GS_LEVELMAPTEST;
-		GameEngine::GetInstance()->GetStateController()->gameStateNext = GameState::GS_LEVELLOADING;
-		break;
+	case 'e': GameEngine::GetInstance()->GetStateController()->gameStateNext = GameState::GS_LEVELMAPTEST; ; break;
 	case 'i':
 
 		GameEngine::GetInstance()->SetDrawArea(camera.getCameraOrthoValue().left + SCREEN_WIDTH * ZOOM_VELOCITY,
@@ -148,7 +157,31 @@ void LevelGameplay::HandleKey(char key)
 												camera.getCameraOrthoValue().top + SCREEN_HEIGHT * ZOOM_VELOCITY);
 		
 		break;
+	case 'y':
+		this->playerNum++;
+		if (this->playerNum >= 4) {
+			this->playerNum = 0;
+		}
+		cout << "Player " << this->playerNum << endl;
+		break;
+
+	case 'n':
+		if (player[playerNum]->getIsShooting() == false) {
+			player[playerNum]->setisShooting(true);
+			ProjectileObject* projectile = new ProjectileObject();
+			projectile->SetSheetInfo(0, 0, 256, 256, 256, 256);
+			projectile->SetTexture("../Resource/Texture/Bomb_icon.png");
+			projectile->SetPosition(player[playerNum]->getPos());
+			projectile->SetSize(256.f, -256.f);
+			projectile->setLifeTime(10);
+			projectile->setVelocity(player[playerNum]->getVelocity());
+			objectsList.push_back(projectile);
+		}
+
+		break;
 	}
+
+	
 }
 
 void LevelGameplay::HandleMouse(int type, int x, int y)
@@ -159,3 +192,8 @@ void LevelGameplay::HandleMouse(int type, int x, int y)
 	realX = x;
 	realY = y;
 }
+
+void LevelGameplay::Movement(float axisX, float axisY, bool isPositiveX, bool isPositiveY) {
+	player[playerNum]->setVelocity(axisX, axisY, isPositiveX, isPositiveY);
+}
+

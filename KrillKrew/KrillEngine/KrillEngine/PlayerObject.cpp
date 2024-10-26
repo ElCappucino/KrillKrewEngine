@@ -67,3 +67,28 @@ void PlayerObject::Render(glm::mat4 globalModelTransform)
 	}
 }
 
+void PlayerObject::setVelocity(float axisX, float axisY , bool isPositiveX, bool isPositiveY) {
+
+	if (!isPositiveX) {
+		axisX = -axisX;
+	}
+	if (!isPositiveY) {
+		axisY = -axisY;
+	}
+	/*cout << " X | " << axisX << endl;
+	cout << " Y | " << axisY << endl;*/
+	velocity = glm::vec3(axisX * 5.f, axisY * 5.f, 0);
+	
+	
+}
+
+glm::vec3 PlayerObject::getVelocity(){
+	return velocity;
+}
+
+void PlayerObject::setisShooting(bool isShoot) {
+	isShooting = isShoot;
+}
+bool PlayerObject::getIsShooting() {
+	return isShooting;
+}

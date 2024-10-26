@@ -16,11 +16,18 @@ class PlayerObject :public ImageObject
 	SpritesheetInfo sheetInfo;
 	Collider* hitbox;
 	std::array<Ability*, 3> abilities;
+	glm::vec3 velocity;
+	bool isShooting = false;
 
 public:
+	
 	PlayerObject();
 	~PlayerObject();
 	void SetTexture(std::string path);
 	void SetSheetInfo(float row, float column, float spritewidth, float spriteheight, float sheetwidth, float sheetheight);
 	void Render(glm::mat4 globalModelTransform);
+	void setVelocity(float axisX, float axisY, bool isPositiveX, bool isPositiveY);
+	void setisShooting(bool isShoot);
+	glm::vec3 getVelocity();
+	bool getIsShooting();
 };

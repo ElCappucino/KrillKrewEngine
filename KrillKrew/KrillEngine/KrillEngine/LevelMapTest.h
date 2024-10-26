@@ -39,6 +39,7 @@ public:
 
 	virtual void HandleKey(char key);
 	virtual void HandleMouse(int type, int x, int y);
+	virtual void Movement(float axisX, float axisY, bool isPositiveX, bool isPositiveY);
 
 	void CameraLerp();
 	void TileImport(int TileBuffer[][MAP_WIDTH], std::string fileName);

@@ -82,3 +82,7 @@ void GameStateController::HandleMouseLevel(int type, int x, int y)
 {
 	currentLevel->HandleMouse(type, x, y);
 }
+
+void GameStateController::MovementLevel(float axisX, float axisY, bool isPositiveX, bool isPositiveY) {
+	currentLevel->Movement(axisX, axisY, isPositiveX, isPositiveY);
+}
