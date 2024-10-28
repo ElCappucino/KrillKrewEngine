@@ -21,7 +21,7 @@ class ProjectileObject :public ImageObject
 public:
 	ProjectileObject();
 	~ProjectileObject();
-	void SetTexture(string path);
+	void SetTexture(std::string path);
 	void SetSheetInfo(float row, float column, float spritewidth, float spriteheight, float sheetwidth, float sheetheight);
 	void Render(glm::mat4 globalModelTransform);
 	void setVelocity(glm::vec3 veloPlayer);

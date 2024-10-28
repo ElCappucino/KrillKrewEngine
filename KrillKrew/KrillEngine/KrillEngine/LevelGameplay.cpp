@@ -68,7 +68,7 @@ void LevelGameplay::LevelInit()
 
 	player[3] = obj4;
 
-	cout << "Init Level" << endl;
+	std::cout << "Init Level" << std::endl;
 }
 
 void LevelGameplay::LevelUpdate()
@@ -88,7 +88,7 @@ void LevelGameplay::LevelUpdate()
 			if (projectile->getLifetime() <= 0) {
 				objectsList.erase(objectsList.begin() + i);
 				player[playerNum]->setisShooting(false);
-				cout << "delete projectile" << endl;
+				std::cout << "delete projectile" << std::endl;
 			}
 			projectile->Translate(projectile->getVelocity());
 		}
@@ -162,7 +162,7 @@ void LevelGameplay::HandleKey(char key)
 		if (this->playerNum >= 4) {
 			this->playerNum = 0;
 		}
-		cout << "Player " << this->playerNum << endl;
+		std::cout << "Player " << this->playerNum << std::endl;
 		break;
 
 	case 'n':

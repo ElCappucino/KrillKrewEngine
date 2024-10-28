@@ -14,7 +14,7 @@ ProjectileObject::~ProjectileObject()
 {
 }
 
-void ProjectileObject::SetTexture(string path)
+void ProjectileObject::SetTexture(std::string path)
 {
 	texture = GameEngine::GetInstance()->GetRenderer()->LoadTexture(path);
 }
@@ -36,17 +36,17 @@ void ProjectileObject::Render(glm::mat4 globalModelTransform)
 	GLuint renderModeId = GameEngine::GetInstance()->GetRenderer()->GetModeUniformId();
 
 	if (modelMatixId == -1) {
-		cout << "Error: Can't perform transformation " << endl;
+		std::cout << "Error: Can't perform transformation " << std::endl;
 		return;
 	}
 	if (renderModeId == -1) {
-		cout << "Error: Can't set renderMode in ImageObject " << endl;
+		std::cout << "Error: Can't set renderMode in ImageObject " << std::endl;
 		return;
 	}
 
 	squareMesh->ChangeTextureData(sheetInfo.row, sheetInfo.column, sheetInfo.spritewidth, sheetInfo.spriteheight, sheetInfo.sheetwidth, sheetInfo.sheetheight);
 
-	vector <glm::mat4> matrixStack;
+	std::vector <glm::mat4> matrixStack;
 
 	glm::mat4 currentMatrix = this->getTransform();
 
