@@ -4,6 +4,7 @@
 #include "GameObject.h"
 #include "ImageObject.h"
 #include "Camera.h"
+#include "Joystick.h"
 
 /// @brief The class for setup object in the level
 /// @brief It intent to inherit this class for creating any new unique scene.

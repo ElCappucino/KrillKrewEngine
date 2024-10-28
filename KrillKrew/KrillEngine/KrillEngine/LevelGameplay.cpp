@@ -74,6 +74,54 @@ void LevelGameplay::LevelInit()
 void LevelGameplay::LevelUpdate()
 {
 	dt++;
+
+	if (SDL_NumJoysticks() > 0)
+	{
+		Joystick::Update();
+
+		printf("Joystick No.1 Triangle: %d Square: %d Cross: %d Circle: %d Leftstick: %f\n",
+			Joystick::GetButton(0, Joystick::Button::Triangle),
+			Joystick::GetButton(0, Joystick::Button::Square),
+			Joystick::GetButton(0, Joystick::Button::Cross),
+			Joystick::GetButton(0, Joystick::Button::Circle),
+			Joystick::GetAxis(0, Joystick::Axis::LeftStickHorizontal));
+
+		float axisX = Joystick::GetAxis(0, Joystick::Axis::LeftStickHorizontal) / 32768.0f;
+		float axisY = Joystick::GetAxis(0, Joystick::Axis::LeftStickVertical) / 32768.0f;
+		bool isPositiveX = false;
+		bool isPositiveY = false;
+
+		if (abs(axisX) < 0.2)
+		{
+			axisX = 0;
+		}
+		
+		if (abs(axisY) < 0.2)
+		{
+			axisY = 0;
+		}
+
+		if (axisX > 0)
+		{
+			isPositiveX = true;
+		}
+		else if (axisX < 0) 
+		{
+			isPositiveX = false;
+		}
+
+		if (axisY > 0)
+		{
+			isPositiveY = false;
+		}
+		else if (axisY < 0)
+		{
+			isPositiveY = true;
+		}
+
+		player[playerNum]->setVelocity(abs(axisX), abs(axisY), isPositiveX, isPositiveY);
+	}
+
 	player[playerNum]->Translate(player[playerNum]->getVelocity());
 	camera.LerpCamera(player[0]->getPos(), player[1]->getPos(), player[2]->getPos(), player[3]->getPos()); // update smooth camera here
 
@@ -182,6 +230,7 @@ void LevelGameplay::HandleKey(char key)
 	}
 
 	
+	
 }
 
 void LevelGameplay::HandleMouse(int type, int x, int y)
@@ -194,6 +243,6 @@ void LevelGameplay::HandleMouse(int type, int x, int y)
 }
 
 void LevelGameplay::Movement(float axisX, float axisY, bool isPositiveX, bool isPositiveY) {
-	player[playerNum]->setVelocity(axisX, axisY, isPositiveX, isPositiveY);
+	// player[playerNum]->setVelocity(axisX, axisY, isPositiveX, isPositiveY);
 }
 

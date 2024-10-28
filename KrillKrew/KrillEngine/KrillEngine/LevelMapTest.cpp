@@ -1,5 +1,4 @@
 #include "LevelMapTest.h"
-#include "Joystick.h"
 
 void LevelMapTest::LevelLoad()
 {
