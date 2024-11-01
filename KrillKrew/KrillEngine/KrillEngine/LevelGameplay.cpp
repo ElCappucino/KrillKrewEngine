@@ -122,6 +122,11 @@ void LevelGameplay::LevelUpdate()
 		if (player[playerNum]->getIsAiming() == false) {
 			player[playerNum]->setVelocity(abs(axisX), abs(axisY), isPositiveX, isPositiveY);
 		}
+
+		//Select ability
+		if (Joystick::GetButtonDown(0, Joystick::Button::L1)) {
+
+		}
 		
 
 		//Shoot
@@ -161,6 +166,11 @@ void LevelGameplay::LevelUpdate()
 					projectile->SetPosition(player[playerNum]->getPos() + (projectile->getVelocity() * glm::vec3(15.f ,15.f ,0.f)));
 				}
 			}
+		}
+
+		//Place trap
+		if (Joystick::GetButtonDown(0, Joystick::Button::R2)) {
+
 		}
 	}
 

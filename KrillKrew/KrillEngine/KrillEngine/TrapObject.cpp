@@ -1,25 +1,25 @@
 
-#include "ProjectileObject.h"
+#include "TrapObject.h"
 #include "GameEngine.h"
 #include "SquareMeshVbo.h"
 
 
-ProjectileObject::ProjectileObject()
+TrapObject::TrapObject()
 {
 
 }
 
 
-ProjectileObject::~ProjectileObject()
+TrapObject::~TrapObject()
 {
 }
 
-void ProjectileObject::SetTexture(std::string path)
+void TrapObject::SetTexture(std::string path)
 {
 	texture = GameEngine::GetInstance()->GetRenderer()->LoadTexture(path);
 }
 
-void ProjectileObject::SetSheetInfo(float row, float column, float spritewidth, float spriteheight, float sheetwidth, float sheetheight) {
+void TrapObject::SetSheetInfo(float row, float column, float spritewidth, float spriteheight, float sheetwidth, float sheetheight) {
 	sheetInfo.row = row;
 	sheetInfo.column = column;
 	sheetInfo.spritewidth = spritewidth;
@@ -28,7 +28,7 @@ void ProjectileObject::SetSheetInfo(float row, float column, float spritewidth, 
 	sheetInfo.sheetheight = sheetheight;
 }
 
-void ProjectileObject::Render(glm::mat4 globalModelTransform)
+void TrapObject::Render(glm::mat4 globalModelTransform)
 {
 	SquareMeshVbo* squareMesh = dynamic_cast<SquareMeshVbo*> (GameEngine::GetInstance()->GetRenderer()->GetMesh(SquareMeshVbo::MESH_NAME));
 
@@ -61,39 +61,21 @@ void ProjectileObject::Render(glm::mat4 globalModelTransform)
 	}
 }
 
-void ProjectileObject::setVelocity(float axisX, float axisY, bool isPositiveX, bool isPositiveY) {
-
-	if (!isPositiveX) {
-		axisX = -axisX;
-	}
-	if (!isPositiveY) {
-		axisY = -axisY;
-	}
-	/*cout << " X | " << axisX << endl;
-	cout << " Y | " << axisY << endl;*/
-	velocity = glm::vec3(axisX * 5.f, axisY * 5.f, 0);
-
-}
-
-glm::vec3 ProjectileObject::getVelocity() {
-	return velocity;
-}
-
-void ProjectileObject::setLifeTime(int lifeTime) {
+void TrapObject::setLifeTime(int lifeTime) {
 	this->lifeTime = lifeTime;
 }
 
-void ProjectileObject::reduceLifeTime() {
+void TrapObject::reduceLifeTime() {
 	lifeTime -= 1;
 }
-int ProjectileObject::getLifetime() {
+int TrapObject::getLifetime() {
 	return lifeTime;
 }
 
-void ProjectileObject::setNumOwner(int num) {
+void TrapObject::setNumOwner(int num) {
 	playerNumOwner = num;
 }
 
-int ProjectileObject::getNumOwner() {
+int TrapObject::getNumOwner() {
 	return playerNumOwner;
 }
