@@ -78,17 +78,23 @@ void PlayerObject::setVelocity(float axisX, float axisY , bool isPositiveX, bool
 	/*cout << " X | " << axisX << endl;
 	cout << " Y | " << axisY << endl;*/
 	velocity = glm::vec3(axisX * 5.f, axisY * 5.f, 0);
-	
-	
 }
 
 glm::vec3 PlayerObject::getVelocity(){
 	return velocity;
 }
 
-void PlayerObject::setisShooting(bool isShoot) {
+void PlayerObject::setIsShooting(bool isShoot) {
 	isShooting = isShoot;
 }
 bool PlayerObject::getIsShooting() {
 	return isShooting;
+}
+
+void PlayerObject::setIsAiming(bool isAim) {
+	isAiming = isAim;
+}
+
+bool  PlayerObject::getIsAiming() {
+	return isAiming;
 }

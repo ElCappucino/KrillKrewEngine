@@ -18,6 +18,7 @@ class PlayerObject :public ImageObject
 	std::array<Ability*, 3> abilities;
 	glm::vec3 velocity;
 	bool isShooting = false;
+	bool isAiming = false;
 
 public:
 	
@@ -27,7 +28,9 @@ public:
 	void SetSheetInfo(float row, float column, float spritewidth, float spriteheight, float sheetwidth, float sheetheight);
 	void Render(glm::mat4 globalModelTransform);
 	void setVelocity(float axisX, float axisY, bool isPositiveX, bool isPositiveY);
-	void setisShooting(bool isShoot);
+	void setIsShooting(bool isShoot);
+	void setIsAiming(bool isAim);
 	glm::vec3 getVelocity();
 	bool getIsShooting();
+	bool getIsAiming();
 };

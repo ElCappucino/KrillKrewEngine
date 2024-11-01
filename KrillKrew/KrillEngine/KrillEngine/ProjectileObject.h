@@ -24,7 +24,7 @@ public:
 	void SetTexture(std::string path);
 	void SetSheetInfo(float row, float column, float spritewidth, float spriteheight, float sheetwidth, float sheetheight);
 	void Render(glm::mat4 globalModelTransform);
-	void setVelocity(glm::vec3 veloPlayer);
+	void setVelocity(float axisX, float axisY, bool isPositiveX, bool isPositiveY);
 	void setLifeTime(int lifeTime);
 	glm::vec3 getVelocity();
 	void reduceLifeTime();
