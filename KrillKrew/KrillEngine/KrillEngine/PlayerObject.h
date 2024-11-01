@@ -30,4 +30,5 @@ public:
 	void setisShooting(bool isShoot);
 	glm::vec3 getVelocity();
 	bool getIsShooting();
+	Collider* GetCollider();
 };

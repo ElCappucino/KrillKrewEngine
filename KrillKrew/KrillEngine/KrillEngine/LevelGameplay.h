@@ -3,6 +3,8 @@
 #include "InfoStruct.h"
 #include "PlayerObject.h"
 #include "ProjectileObject.h"
+#include "GizmosObject.h"
+
 
 /// @brief The class for level inherit test from P'tiam
 class LevelGameplay : public Level

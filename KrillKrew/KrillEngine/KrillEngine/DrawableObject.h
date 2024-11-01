@@ -20,6 +20,7 @@ public:
 	void SetPosition(glm::vec3 newPosition);
 	void Translate(glm::vec3 moveDistance);
 	glm::vec3 getPos();
+	glm::vec3 getSize();
 	//Rotate, Scale ???
 
 };

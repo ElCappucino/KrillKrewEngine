@@ -6,7 +6,7 @@
 
 PlayerObject::PlayerObject()
 {
-
+	hitbox = new Collider();
 }
 
 
@@ -91,4 +91,9 @@ void PlayerObject::setisShooting(bool isShoot) {
 }
 bool PlayerObject::getIsShooting() {
 	return isShooting;
+}
+
+Collider* PlayerObject::GetCollider()
+{
+	return hitbox;
 }

@@ -46,4 +46,10 @@ glm::vec3 DrawableObject::getPos() {
 
 }
 
+glm::vec3 DrawableObject::getSize() {
+
+	return size;
+
+}
+
 
