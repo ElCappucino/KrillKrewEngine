@@ -120,6 +120,21 @@ void LevelGameplay::LevelUpdate()
 		}
 
 		player[playerNum]->setVelocity(abs(axisX), abs(axisY), isPositiveX, isPositiveY);
+
+		//Shoot
+		if (Joystick::GetButton(0, Joystick::Button::R1)) {
+			if (player[playerNum]->getIsShooting() == false) {
+				player[playerNum]->setisShooting(true);
+				ProjectileObject* projectile = new ProjectileObject();
+				projectile->SetSheetInfo(0, 0, 256, 256, 256, 256);
+				projectile->SetTexture("../Resource/Texture/Bomb_icon.png");
+				projectile->SetPosition(player[playerNum]->getPos());
+				projectile->SetSize(256.f, -256.f);
+				projectile->setLifeTime(10);
+				projectile->setVelocity(player[playerNum]->getVelocity());
+				objectsList.push_back(projectile);
+			}
+		}
 	}
 
 	player[playerNum]->Translate(player[playerNum]->getVelocity());
@@ -213,23 +228,7 @@ void LevelGameplay::HandleKey(char key)
 		std::cout << "Player " << this->playerNum << std::endl;
 		break;
 
-	case 'n':
-		if (player[playerNum]->getIsShooting() == false) {
-			player[playerNum]->setisShooting(true);
-			ProjectileObject* projectile = new ProjectileObject();
-			projectile->SetSheetInfo(0, 0, 256, 256, 256, 256);
-			projectile->SetTexture("../Resource/Texture/Bomb_icon.png");
-			projectile->SetPosition(player[playerNum]->getPos());
-			projectile->SetSize(256.f, -256.f);
-			projectile->setLifeTime(10);
-			projectile->setVelocity(player[playerNum]->getVelocity());
-			objectsList.push_back(projectile);
-		}
-
-		break;
 	}
-
-	
 	
 }
 
