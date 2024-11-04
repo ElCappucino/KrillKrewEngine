@@ -78,103 +78,112 @@ void LevelGameplay::LevelUpdate()
 	if (SDL_NumJoysticks() > 0)
 	{
 		Joystick::Update();
+		for (int i = 0; i < SDL_NumJoysticks(); i++) {
 
-		/*printf("Joystick No.1 Triangle: %d Square: %d Cross: %d Circle: %d Leftstick: %f\n",
-			Joystick::GetButton(0, Joystick::Button::Triangle),
-			Joystick::GetButton(0, Joystick::Button::Square),
-			Joystick::GetButton(0, Joystick::Button::Cross),
-			Joystick::GetButton(0, Joystick::Button::Circle),
-			Joystick::GetAxis(0, Joystick::Axis::LeftStickHorizontal));*/
-
-		float axisX = Joystick::GetAxis(0, Joystick::Axis::LeftStickHorizontal) / 32768.0f;
-		float axisY = Joystick::GetAxis(0, Joystick::Axis::LeftStickVertical) / 32768.0f;
-		bool isPositiveX = false;
-		bool isPositiveY = false;
-
-		if (abs(axisX) < 0.1)
-		{
-			axisX = 0;
-		}
-		
-		if (abs(axisY) < 0.1)
-		{
-			axisY = 0;
-		}
-
-		if (axisX > 0)
-		{
-			isPositiveX = true;
-		}
-		else if (axisX < 0) 
-		{
-			isPositiveX = false;
-		}
-
-		if (axisY > 0)
-		{
-			isPositiveY = false;
-		}
-		else if (axisY < 0)
-		{
-			isPositiveY = true;
-		}
-
-		if (player[playerNum]->getIsAiming() == false) {
-			player[playerNum]->setVelocity(abs(axisX), abs(axisY), isPositiveX, isPositiveY);
-		}
-
-		//Select ability
-		if (Joystick::GetButtonDown(0, Joystick::Button::L1)) {
-
-		}
-		
-
-		//Shoot
-		if (Joystick::GetButton(0, Joystick::Button::R1)) {
-			if (player[playerNum]->getIsShooting() == false && player[playerNum]->getIsAiming() == false) {
-				player[playerNum]->setVelocity(0, 0, isPositiveX, isPositiveY);
-				player[playerNum]->setIsAiming(true);
-				ProjectileObject* projectile = new ProjectileObject();
-				projectile->SetSheetInfo(0, 0, 256, 256, 256, 256);
-				projectile->SetTexture("../Resource/Texture/Bomb_icon.png");
-				projectile->SetPosition(player[playerNum]->getPos());
-				projectile->SetSize(256.f, -256.f);
-				projectile->setLifeTime(9999);
-				objectsList.push_back(projectile);
-			}
-		}
-
-		if (Joystick::GetButtonUp(0, Joystick::Button::R1)) {
 			
-			if (player[playerNum]->getIsShooting() == false) {
-				player[playerNum]->setIsShooting(true);
-				player[playerNum]->setIsAiming(false);
-				for (int i = 0; i < objectsList.size(); i++) {
-					ProjectileObject* projectile = dynamic_cast<ProjectileObject*>(objectsList[i]);
-					if (projectile != nullptr) {
-						projectile->setLifeTime(10);
+
+			/*printf("Joystick No.1 Triangle: %d Square: %d Cross: %d Circle: %d Leftstick: %f\n",
+				Joystick::GetButton(0, Joystick::Button::Triangle),
+				Joystick::GetButton(0, Joystick::Button::Square),
+				Joystick::GetButton(0, Joystick::Button::Cross),
+				Joystick::GetButton(0, Joystick::Button::Circle),
+				Joystick::GetAxis(0, Joystick::Axis::LeftStickHorizontal));*/
+
+			float axisX = Joystick::GetAxis(i, Joystick::Axis::LeftStickHorizontal) / 32768.0f;
+			float axisY = Joystick::GetAxis(i, Joystick::Axis::LeftStickVertical) / 32768.0f;
+			bool isPositiveX = false;
+			bool isPositiveY = false;
+
+			if (abs(axisX) < 0.1)
+			{
+				axisX = 0;
+			}
+
+			if (abs(axisY) < 0.1)
+			{
+				axisY = 0;
+			}
+
+			if (axisX > 0)
+			{
+				isPositiveX = true;
+			}
+			else if (axisX < 0)
+			{
+				isPositiveX = false;
+			}
+
+			if (axisY > 0)
+			{
+				isPositiveY = false;
+			}
+			else if (axisY < 0)
+			{
+				isPositiveY = true;
+			}
+
+			if (player[i]->getIsAiming() == false) {
+				player[i]->setVelocity(abs(axisX), abs(axisY), isPositiveX, isPositiveY);
+			}
+
+			//Select ability
+			if (Joystick::GetButtonDown(i, Joystick::Button::L1)) {
+
+			}
+
+
+			//Aim
+			if (Joystick::GetButtonDown(i, Joystick::Button::R1)) {
+				
+				if (player[i]->getIsShooting() == false && player[i]->getIsAiming() == false) {
+					player[i]->setVelocity(0, 0, isPositiveX, isPositiveY);
+					player[i]->setIsAiming(true);
+					ProjectileObject* projectile = new ProjectileObject();
+					projectile->SetSheetInfo(0, 0, 256, 256, 256, 256);
+					projectile->SetTexture("../Resource/Texture/Bomb_icon.png");
+					projectile->SetPosition(player[i]->getPos());
+					projectile->SetSize(256.f, -256.f);
+					projectile->setLifeTime(9999);
+					projectile->setNumOwner(i);
+					std::cout << "Owner " << projectile->getNumOwner() << std::endl;
+					objectsList.push_back(projectile);
+				}
+			}
+			//Shoot
+			if (Joystick::GetButtonUp(i, Joystick::Button::R1)) {
+				std::cout << "Shoot " << i << std::endl;
+				if (player[i]->getIsShooting() == false) {
+					player[i]->setIsShooting(true);
+					player[i]->setIsAiming(false);
+					for (int j = 0; j < objectsList.size(); j++) {
+						ProjectileObject* projectile = dynamic_cast<ProjectileObject*>(objectsList[j]);
+						if (projectile != nullptr) {
+							projectile->setLifeTime(5);
+						}
 					}
 				}
 			}
-		}
 
-		if (player[playerNum]->getIsAiming()) {
-			for (int i = 0; i < objectsList.size(); i++) {
-				ProjectileObject* projectile = dynamic_cast<ProjectileObject*>(objectsList[i]);
-				if (projectile != nullptr) {
-					projectile->setVelocity(abs(axisX), abs(axisY), isPositiveX, isPositiveY);
-					projectile->SetPosition(player[playerNum]->getPos() + (projectile->getVelocity() * glm::vec3(15.f ,15.f ,0.f)));
+			if (player[i]->getIsAiming()) {
+				for (int j = 0; j < objectsList.size(); j++) {
+					ProjectileObject* projectile = dynamic_cast<ProjectileObject*>(objectsList[j]);
+					if (projectile != nullptr && i == projectile->getNumOwner()) {
+						projectile->setVelocity(abs(axisX), abs(axisY), isPositiveX, isPositiveY);
+						projectile->SetPosition(player[i]->getPos() + (projectile->getVelocity() * glm::vec3(15.f, 15.f, 0.f)));
+					}
 				}
 			}
-		}
 
-		//Place trap
-		if (Joystick::GetButtonDown(0, Joystick::Button::R2)) {
+			//Place trap
+			if (Joystick::GetButtonDown(i, Joystick::Button::R2)) {
 
+			}
+			player[i]->Translate(player[i]->getVelocity());
 		}
+		
 	}
 
-	player[playerNum]->Translate(player[playerNum]->getVelocity());
+	
 	camera.LerpCamera(player[0]->getPos(), player[1]->getPos(), player[2]->getPos(), player[3]->getPos()); // update smooth camera here
 
 	for (int i = 0; i < objectsList.size(); i++) {
@@ -186,9 +195,11 @@ void LevelGameplay::LevelUpdate()
 			}
 
 			if (projectile->getLifetime() <= 0) {
+				std::cout << "delete projectile " << projectile->getNumOwner() << std::endl;
+				player[projectile->getNumOwner()]->setIsShooting(false);
 				objectsList.erase(objectsList.begin() + i);
-				player[playerNum]->setIsShooting(false);
-				std::cout << "delete projectile" << std::endl;
+				
+				
 			}
 			projectile->Translate(projectile->getVelocity());
 		}

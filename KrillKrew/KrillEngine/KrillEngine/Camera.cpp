@@ -56,7 +56,7 @@ void Camera::LerpCamera(glm::vec3 p_1, glm::vec3 p_2, glm::vec3 p_3, glm::vec3 p
 	}
 	else {
 		float newRatio = std::round(newWidth / newHeight * 100.f) / 100.f;
-		std::cout << newRatio << std::endl;
+		//std::cout << newRatio << std::endl;
 		if (newRatio > SCREEN_RATIO_X)
 		{
 			current_left = maxLeft;
