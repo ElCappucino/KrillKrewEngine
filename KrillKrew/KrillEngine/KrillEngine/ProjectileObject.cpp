@@ -69,8 +69,6 @@ void ProjectileObject::setVelocity(float axisX, float axisY, bool isPositiveX, b
 	if (!isPositiveY) {
 		axisY = -axisY;
 	}
-	/*cout << " X | " << axisX << endl;
-	cout << " Y | " << axisY << endl;*/
 	velocity = glm::vec3(axisX * 5.f, axisY * 5.f, 0);
 
 }

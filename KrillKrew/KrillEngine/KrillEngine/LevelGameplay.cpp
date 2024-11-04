@@ -91,17 +91,30 @@ void LevelGameplay::LevelUpdate()
 
 			float axisX = Joystick::GetAxis(i, Joystick::Axis::LeftStickHorizontal) / 32768.0f;
 			float axisY = Joystick::GetAxis(i, Joystick::Axis::LeftStickVertical) / 32768.0f;
+			float norAxisX = 0;
+			float norAxisY = 0;
+
 			bool isPositiveX = false;
 			bool isPositiveY = false;
 
 			if (abs(axisX) < 0.1)
 			{
-				axisX = 0;
+				norAxisX = 0;
+			}
+
+			else {
+				float axis = atan2(axisY, axisX);
+				norAxisX = cos(axis);
 			}
 
 			if (abs(axisY) < 0.1)
 			{
-				axisY = 0;
+				norAxisY = 0;
+			}
+
+			else {
+				float axis = atan2(axisY, axisX);
+				norAxisY = sin(axis);
 			}
 
 			if (axisX > 0)
@@ -121,9 +134,13 @@ void LevelGameplay::LevelUpdate()
 			{
 				isPositiveY = true;
 			}
+			
 
+			
+			std::cout << "AxisX " << axisX << std::endl;
+			std::cout << "AxisY " << axisY << std::endl;
 			if (player[i]->getIsAiming() == false) {
-				player[i]->setVelocity(abs(axisX), abs(axisY), isPositiveX, isPositiveY);
+				player[i]->setVelocity(abs(norAxisX), abs(norAxisY), isPositiveX, isPositiveY);
 			}
 
 			//Select ability
@@ -168,7 +185,9 @@ void LevelGameplay::LevelUpdate()
 				for (int j = 0; j < objectsList.size(); j++) {
 					ProjectileObject* projectile = dynamic_cast<ProjectileObject*>(objectsList[j]);
 					if (projectile != nullptr && i == projectile->getNumOwner()) {
-						projectile->setVelocity(abs(axisX), abs(axisY), isPositiveX, isPositiveY);
+						if (abs(norAxisX) > 0 || norAxisY > 0) {
+							projectile->setVelocity(abs(norAxisX), abs(norAxisY), isPositiveX, isPositiveY);
+						}
 						projectile->SetPosition(player[i]->getPos() + (projectile->getVelocity() * glm::vec3(15.f, 15.f, 0.f)));
 					}
 				}
