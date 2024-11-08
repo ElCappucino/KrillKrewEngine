@@ -1,6 +1,7 @@
 #pragma once
 #include "Level.h"
 #include "InfoStruct.h"
+#include "EntityObject.h"
 #include "PlayerObject.h"
 #include "ProjectileObject.h"
 #include "GizmosObject.h"

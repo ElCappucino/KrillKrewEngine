@@ -1,31 +1,25 @@
 
-#include "PlayerObject.h"
+#include "EntityObject.h"
 #include "GameEngine.h"
 #include "SquareMeshVbo.h"
 
 
-PlayerObject::PlayerObject()
+EntityObject::EntityObject()
 {
-	hitbox = new Collider(Collider::Trigger);
+	
 }
 
 
-PlayerObject::~PlayerObject()
+EntityObject::~EntityObject()
 {
 }
 
-void PlayerObject::SetTexture(std::string path)
+void EntityObject::SetTexture(std::string path)
 {
 	texture = GameEngine::GetInstance()->GetRenderer()->LoadTexture(path);
 }
 
-void PlayerObject::SetSheetInfo(float row, 
-								float column, 
-								float spritewidth, 
-								float spriteheight, 
-								float sheetwidth, 
-								float sheetheight) 
-{
+void EntityObject::SetSheetInfo(float row, float column, float spritewidth, float spriteheight, float sheetwidth, float sheetheight) {
 	sheetInfo.row = row;
 	sheetInfo.column = column;
 	sheetInfo.spritewidth = spritewidth;
@@ -34,7 +28,7 @@ void PlayerObject::SetSheetInfo(float row,
 	sheetInfo.sheetheight = sheetheight;
 }
 
-void PlayerObject::Render(glm::mat4 globalModelTransform)
+void EntityObject::Render(glm::mat4 globalModelTransform)
 {
 	SquareMeshVbo* squareMesh = dynamic_cast<SquareMeshVbo*> (GameEngine::GetInstance()->GetRenderer()->GetMesh(SquareMeshVbo::MESH_NAME));
 
@@ -66,34 +60,7 @@ void PlayerObject::Render(glm::mat4 globalModelTransform)
 
 	}
 }
-
-void PlayerObject::setVelocity(float axisX, float axisY , bool isPositiveX, bool isPositiveY) {
-
-	if (!isPositiveX) {
-		axisX = -axisX;
-	}
-	if (!isPositiveY) {
-		axisY = -axisY;
-	}
-	/*cout << " X | " << axisX << endl;
-	cout << " Y | " << axisY << endl;*/
-	velocity = glm::vec3(axisX * 5.f, axisY * 5.f, 0);
-	
-	
-}
-
-glm::vec3 PlayerObject::getVelocity(){
-	return velocity;
-}
-
-void PlayerObject::setisShooting(bool isShoot) {
-	isShooting = isShoot;
-}
-bool PlayerObject::getIsShooting() {
-	return isShooting;
-}
-
-Collider* PlayerObject::GetCollider()
+Collider* EntityObject::GetCollider()
 {
 	return hitbox;
 }

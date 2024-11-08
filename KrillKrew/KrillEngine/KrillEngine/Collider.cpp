@@ -1,14 +1,21 @@
 #include "Collider.h"
 
-Collider::Collider()
+Collider::Collider(CollisionType type)
 {
-	
-
+	collisionType = type;
 	gizmos = new GizmosObject();
-	gizmos->SetColor(1.f, 0, 0);
-	
-
-
+	switch (type)
+	{
+		case CollisionType::Trigger:
+			gizmos->SetColor(1.f, 0, 0);
+			break;
+		case CollisionType::Kinematic:
+			gizmos->SetColor(0, 1.f, 0);
+			break;
+		case CollisionType::Static:
+			gizmos->SetColor(0, 0, 1.f);
+			break;
+	}
 }
 void Collider::Update(glm::vec3 size, glm::vec3 position)
 {
@@ -36,6 +43,31 @@ glm::vec3 Collider::GetPreviousPos()
 {
 	return previousPos;
 }
+void Collider::SetPreviousPos(glm::vec3 pos)
+{
+	previousPos = pos;
+}
+Collider::CollisionType Collider::GetCollisionType()
+{
+	return collisionType;
+}
+void Collider::SetCollisionType(Collider::CollisionType type)
+{
+	collisionType = type;
+	switch (type)
+	{
+	case CollisionType::Trigger:
+		gizmos->SetColor(1.f, 0, 0);
+		break;
+	case CollisionType::Kinematic:
+		gizmos->SetColor(0, 1.f, 0);
+		break;
+	case CollisionType::Static:
+		gizmos->SetColor(0, 0, 1.f);
+		break;
+	}
+}
+
 //void Collider::OnColliderEnter()
 //{
 //

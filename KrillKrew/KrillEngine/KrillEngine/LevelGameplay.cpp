@@ -45,6 +45,7 @@ void LevelGameplay::LevelInit()
 
 
 	PlayerObject* obj1 = new PlayerObject();
+	obj1->GetCollider()->SetCollisionType(Collider::Kinematic);
 	obj1->SetSheetInfo(0, 0, 538, 581, 538, 581);
 	obj1->SetTexture("../Resource/Texture/Prinny.png");
 	obj1->SetSize(256.f, -256.f);
@@ -54,6 +55,7 @@ void LevelGameplay::LevelInit()
 	player[0] = obj1;
 
 	PlayerObject* obj2 = new PlayerObject();
+	obj2->GetCollider()->SetCollisionType(Collider::Static);
 	obj2->SetSheetInfo(0, 0, 538, 581, 538, 581);
 	obj2->SetTexture("../Resource/Texture/Prinny.png");
 	obj2->SetSize(256.f, -256.f);
@@ -168,8 +170,8 @@ void LevelGameplay::LevelUpdate()
 	{
 		// std::cout << "i = " << i << std::endl;
 		// std::cout << "Hello" << std::endl;
-		PlayerObject* player1 = dynamic_cast<PlayerObject*>(objectsList[i]);
-		if (player1 == nullptr)
+		EntityObject* entity1 = dynamic_cast<EntityObject*>(objectsList[i]);
+		if (entity1 == nullptr || entity1->GetCollider()->GetCollisionType() == Collider::Static)
 		{
 			continue;
 		}
@@ -182,30 +184,62 @@ void LevelGameplay::LevelUpdate()
 				{
 					continue;
 				}
-				PlayerObject* player2 = dynamic_cast<PlayerObject*>(objectsList[j]);
-				if (player2 != nullptr)
+				EntityObject* entity2 = dynamic_cast<EntityObject*>(objectsList[j]);
+				if (entity2 != nullptr)
 				{
-					Collider col1 = *player1->GetCollider();
-					Collider col2 = *player2->GetCollider();
+					Collider col1 = *entity1->GetCollider();
+					Collider col2 = *entity2->GetCollider();
 
-					glm::vec2 delta = glm::vec2(abs(player1->getPos().x - player2->getPos().x),
-												abs(player1->getPos().y - player2->getPos().y));
-					
+					glm::vec2 delta = glm::vec2(abs(entity1->getPos().x - entity2->getPos().x),
+												abs(entity1->getPos().y - entity2->getPos().y));
+
+					glm::vec2 previousDelta = glm::vec2(abs(col1.GetPreviousPos().x - col2.GetPreviousPos().x),
+														abs(col1.GetPreviousPos().y - col2.GetPreviousPos().y));
+
 					// std::cout << "i = " << i << " j = " << j << " delta = " << delta.x << ", " << delta.y << std::endl;
 
 					float overlapX = (abs(col1.GetHalfSize().x)) + (abs(col2.GetHalfSize().x)) - delta.x;
 					float overlapY = (abs(col1.GetHalfSize().y)) + (abs(col2.GetHalfSize().y)) - delta.y;
 
+					float previousOverlapX = (abs(col1.GetHalfSize().x)) + (abs(col2.GetHalfSize().x)) - previousDelta.x;
+					float previousOverlapY = (abs(col1.GetHalfSize().y)) + (abs(col2.GetHalfSize().y)) - previousDelta.y;
+
 					// std::cout << i << ", " << j << " overlapX = " << overlapX << " overlapY = " << overlapY << std::endl;
 					if (overlapX > 0 && overlapY > 0)
 					{
-						std::cout << i << " Overlapping with " << j << std::endl;
-					}
+						// std::cout << i << " Overlapping with " << j << std::endl;
+						if (col1.GetCollisionType() == Collider::Kinematic &&
+							col2.GetCollisionType() == Collider::Static)
+						{
+							std::cout << "Kinematic Static " << std::endl;
+							glm::vec3 newPos(entity1->getPos().x, entity1->getPos().y, entity1->getPos().z);
 
+							if (previousOverlapX > 0)
+							{
+								std::cout << "previousOverlapX > 0 " << std::endl;
+								bool isTopSide = (col1.GetPreviousPos().y - col2.GetPreviousPos().y) > 0 ? true : false;
+								
+								newPos.y = entity1->getPos().y + (overlapY * (isTopSide ? 1 : -1));
+							}
+							if (previousOverlapY > 0)
+							{
+								std::cout << "previousOverlapY > 0 " << std::endl;
+								bool isLeftSide = (col1.GetPreviousPos().x - col2.GetPreviousPos().x) < 0 ? true : false;
+								newPos.x = entity1->getPos().x + (overlapX * (isLeftSide ? -1 : 1));
+							}
+							entity1->SetPosition(newPos);
+						}
+					}
+					
+					entity2->GetCollider()->SetPreviousPos(entity2->getPos());
+					
 				}
 			}
+			entity1->GetCollider()->SetPreviousPos(entity1->getPos());
 		}
+
 	}
+
 }
 
 void LevelGameplay::LevelDraw()
