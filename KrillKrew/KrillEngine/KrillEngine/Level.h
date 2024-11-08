@@ -1,6 +1,7 @@
 #pragma once
 #include "GameEngine.h"
 #include "SquareMeshVbo.h"
+#include "LineMeshVbo.h"
 #include "GameObject.h"
 #include "ImageObject.h"
 #include "Camera.h"

@@ -1,9 +1,9 @@
 
-#include "SquareMeshVbo.h"
+#include "LineMeshVbo.h"
 
-std::string const SquareMeshVbo::MESH_NAME = "square";
+std::string const LineMeshVbo::MESH_NAME = "line";
 
-void SquareMeshVbo::LoadData()
+void LineMeshVbo::LoadData()
 {
 	//VBO data
 	GLfloat vertexData[] =
@@ -34,30 +34,16 @@ void SquareMeshVbo::LoadData()
 
 }
 
-void SquareMeshVbo::ChangeTextureData(float row, float column, float spritewidth, float spriteheight, float sheetwidth, float sheetheight) {
-	
-	GLfloat texData[] =
-	{
-	  column * spritewidth / sheetwidth,			row * spriteheight / sheetheight,
-	  (column + 1) * spritewidth / sheetwidth,		row * spriteheight / sheetheight,
-	  (column + 1) * spritewidth / sheetwidth,		(row + 1) * spriteheight / sheetheight,
-	  column * spritewidth / sheetwidth,			(row + 1) * spriteheight / sheetheight
-	};
-
-	glBindBuffer(GL_ARRAY_BUFFER, this->texVboId);
-	glBufferData(GL_ARRAY_BUFFER, 2 * 4 * sizeof(GLfloat), texData, GL_STATIC_DRAW);
-}
-
-SquareMeshVbo::SquareMeshVbo()
+LineMeshVbo::LineMeshVbo()
 {
 }
 
-std::string SquareMeshVbo::GetMeshName()
+std::string LineMeshVbo::GetMeshName()
 {
 	return MESH_NAME;
 }
 
-void SquareMeshVbo::Render()
+void LineMeshVbo::Render()
 {
 	if (this->posAttribId != -1) {
 		glBindBuffer(GL_ARRAY_BUFFER, this->posVboId);
@@ -69,8 +55,8 @@ void SquareMeshVbo::Render()
 	}
 	// Draw the filled square
 
-	glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
+	// glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
 
 	// Draw the border as a line loop
-	// glDrawArrays(GL_LINE_LOOP, 0, 4);
+	glDrawArrays(GL_LINE_LOOP, 0, 4);
 }

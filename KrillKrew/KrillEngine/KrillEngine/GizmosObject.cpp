@@ -1,28 +1,28 @@
 
-#include "GameObject.h"
+#include "GizmosObject.h"
 #include "GameEngine.h"
 #include "SquareMeshVbo.h"
+#include "LineMeshVbo.h"
 
-
-GameObject::GameObject()
+GizmosObject::GizmosObject()
 {
-	color = glm::vec3(0.0, 0.0, 0.0);
+	borderColor = glm::vec3(0.0, 0.0, 0.0);
 }
 
 
-GameObject::~GameObject()
+GizmosObject::~GizmosObject()
 {
 }
 
-void GameObject::SetColor(float r, float g, float b)
+void GizmosObject::SetColor(float r, float g, float b)
 {
-	color = glm::vec3(r, g, b);
+	borderColor = glm::vec3(r, g, b);
 }
 
-void GameObject::Render(glm::mat4 globalModelTransform)
+void GizmosObject::Render(glm::mat4 globalModelTransform)
 {
 	// std::cout << "Hello" << std::endl;
-	SquareMeshVbo *squareMesh = dynamic_cast<SquareMeshVbo *> (GameEngine::GetInstance()->GetRenderer()->GetMesh(SquareMeshVbo::MESH_NAME));
+	LineMeshVbo* squareMesh = dynamic_cast<LineMeshVbo*> (GameEngine::GetInstance()->GetRenderer()->GetMesh(LineMeshVbo::MESH_NAME));
 
 	GLuint modelMatixId = GameEngine::GetInstance()->GetRenderer()->GetModelMatrixAttrId();
 	GLuint colorId = GameEngine::GetInstance()->GetRenderer()->GetColorUniformId();
@@ -48,9 +48,14 @@ void GameObject::Render(glm::mat4 globalModelTransform)
 
 		currentMatrix = globalModelTransform * currentMatrix;
 		glUniformMatrix4fv(modelMatixId, 1, GL_FALSE, glm::value_ptr(currentMatrix));
-		glUniform3f(colorId, color.x, color.y, color.z);
-		glUniform1i(renderModeId, 0);
+		glUniform3f(colorId, borderColor.x, borderColor.y, borderColor.z); // Set the fill color
+		glUniform1i(renderModeId, 0); // Set the render mode for filled polygons
 		squareMesh->Render();
+
+		// Render the border
+		//glUniform3f(colorId, borderColor.x, borderColor.y, borderColor.z); // Set the border color
+		//glUniform1i(renderModeId, 1); // Set the render mode for line drawing
+		//squareMesh->Render();
 
 	}
 }
