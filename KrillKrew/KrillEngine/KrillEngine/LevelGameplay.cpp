@@ -11,6 +11,9 @@ void LevelGameplay::LevelLoad()
 	square->LoadData();
 	GameEngine::GetInstance()->AddMesh(SquareMeshVbo::MESH_NAME, square);
 
+	LineMeshVbo* line = new LineMeshVbo();
+	line->LoadData();
+	GameEngine::GetInstance()->AddMesh(LineMeshVbo::MESH_NAME, line);
 	//cout << "Load Level" << endl;
 }
 
@@ -37,6 +40,7 @@ void LevelGameplay::LevelInit()
 	obj1->SetTexture("../Resource/Texture/Prinny.png");
 	obj1->SetSize(256.f, -256.f);
 	obj1->SetPosition(glm::vec3(-200.f, -200.f, 0));
+	obj1->setNumber(0);
 	objectsList.push_back(obj1);
 
 	player[0] = obj1;
@@ -46,6 +50,7 @@ void LevelGameplay::LevelInit()
 	obj2->SetTexture("../Resource/Texture/Prinny.png");
 	obj2->SetSize(256.f, -256.f);
 	obj2->SetPosition(glm::vec3(200.f, -200.f, 0));
+	obj2->setNumber(1);
 	objectsList.push_back(obj2);
 
 	player[1] = obj2;
@@ -55,6 +60,7 @@ void LevelGameplay::LevelInit()
 	obj3->SetTexture("../Resource/Texture/Prinny.png");
 	obj3->SetSize(256.f, -256.f);
 	obj3->SetPosition(glm::vec3(-200.f, 200.f, 0));
+	obj3->setNumber(2);
 	objectsList.push_back(obj3);
 
 	player[2] = obj3;
@@ -64,9 +70,15 @@ void LevelGameplay::LevelInit()
 	obj4->SetTexture("../Resource/Texture/Prinny.png");
 	obj4->SetSize(256.f, -256.f);
 	obj4->SetPosition(glm::vec3(200.f, 200.f, 0));
+	obj4->setNumber(3);
 	objectsList.push_back(obj4);
 
 	player[3] = obj4;
+
+	/*objectsList.push_back(player[0]->GetCollider()->GetGizmos());
+	objectsList.push_back(player[1]->GetCollider()->GetGizmos());
+	objectsList.push_back(player[2]->GetCollider()->GetGizmos());
+	objectsList.push_back(player[3]->GetCollider()->GetGizmos());*/
 
 	std::cout << "Init Level" << std::endl;
 }
@@ -136,9 +148,6 @@ void LevelGameplay::LevelUpdate()
 			}
 			
 
-			
-			std::cout << "AxisX " << axisX << std::endl;
-			std::cout << "AxisY " << axisY << std::endl;
 			if (player[i]->getIsAiming() == false) {
 				player[i]->setVelocity(abs(norAxisX), abs(norAxisY), isPositiveX, isPositiveY);
 			}
@@ -161,9 +170,10 @@ void LevelGameplay::LevelUpdate()
 					projectile->SetPosition(player[i]->getPos());
 					projectile->SetSize(256.f, -256.f);
 					projectile->setLifeTime(9999);
-					projectile->setNumOwner(i);
+					projectile->setNumOwner(player[i]->getNumber());
 					std::cout << "Owner " << projectile->getNumOwner() << std::endl;
 					objectsList.push_back(projectile);
+					//objectsList.push_back(projectile->GetCollider()->GetGizmos());
 				}
 			}
 			//Shoot
@@ -205,6 +215,99 @@ void LevelGameplay::LevelUpdate()
 	
 	camera.LerpCamera(player[0]->getPos(), player[1]->getPos(), player[2]->getPos(), player[3]->getPos()); // update smooth camera here
 
+	
+
+	// player collier player
+	for (int i = 0; i < objectsList.size(); i++)
+	{
+
+		PlayerObject* player1 = dynamic_cast<PlayerObject*>(objectsList[i]);
+		if (player1 == nullptr)
+		{
+			continue;
+		}
+		else
+		{
+			for (int j = 0; j < objectsList.size(); j++)
+			{
+				// std::cout << "j = " << j << std::endl;
+				if (i == j)
+				{
+					continue;
+				}
+				PlayerObject* player2 = dynamic_cast<PlayerObject*>(objectsList[j]);
+				if (player2 != nullptr)
+				{
+
+					Collider col1 = *player1->GetCollider();
+					Collider col2 = *player2->GetCollider();
+
+					glm::vec2 delta = glm::vec2(abs(player1->getPos().x - player2->getPos().x),
+						abs(player1->getPos().y - player2->getPos().y));
+
+					// std::cout << "i = " << i << " j = " << j << " delta = " << delta.x << ", " << delta.y << std::endl;
+
+					float overlapX = (abs(col1.GetHalfSize().x)) + (abs(col2.GetHalfSize().x)) - delta.x;
+					float overlapY = (abs(col1.GetHalfSize().y)) + (abs(col2.GetHalfSize().y)) - delta.y;
+
+					// std::cout << i << ", " << j << " overlapX = " << overlapX << " overlapY = " << overlapY << std::endl;
+					if (overlapX > 0 && overlapY > 0)
+					{
+						std::cout << i << " Overlapping with " << j << std::endl;
+					}
+
+				}
+			}
+		}
+	}
+
+	// projectile collier player
+
+	for (int i = 0; i < objectsList.size(); i++) {
+		ProjectileObject* projectile = dynamic_cast<ProjectileObject*>(objectsList[i]);
+		if (projectile != nullptr) 
+		{
+			//std::cout << "Have projectile" << std::endl;
+			for (int j = 0; j < objectsList.size(); j++)
+				{
+					if (i == j)
+					{
+						continue;
+					}
+					PlayerObject* player2 = dynamic_cast<PlayerObject*>(objectsList[j]);
+					if (player2 != nullptr)
+					{
+						if (projectile->getNumOwner() != player2->getNumber()) {
+							Collider col1 = *projectile->GetCollider();
+							Collider col2 = *player2->GetCollider();
+
+							glm::vec2 delta = glm::vec2(abs(projectile->getPos().x - player2->getPos().x),
+								abs(projectile->getPos().y - player2->getPos().y));
+
+							// std::cout << "i = " << i << " j = " << j << " delta = " << delta.x << ", " << delta.y << std::endl;
+
+							float overlapX = (abs(col1.GetHalfSize().x)) + (abs(col2.GetHalfSize().x)) - delta.x;
+							float overlapY = (abs(col1.GetHalfSize().y)) + (abs(col2.GetHalfSize().y)) - delta.y;
+
+							// std::cout << i << ", " << j << " overlapX = " << overlapX << " overlapY = " << overlapY << std::endl;
+							if (overlapX > 0 && overlapY > 0)
+							{
+								std::cout << "Fireball :" << projectile->getNumOwner() << " hit " << "Player" << player2->getNumber() << std::endl;
+								player[projectile->getNumOwner()]->setIsShooting(false);
+								objectsList.erase(objectsList.begin() + i);
+							}
+						}
+					}
+				}
+		}
+		else
+		{
+			//std::cout << "No projectile" << std::endl;
+			continue;
+		}
+	}
+
+	// delete projectile
 	for (int i = 0; i < objectsList.size(); i++) {
 		ProjectileObject* projectile = dynamic_cast<ProjectileObject*>(objectsList[i]);
 		if (projectile != nullptr) {
@@ -217,18 +320,38 @@ void LevelGameplay::LevelUpdate()
 				std::cout << "delete projectile " << projectile->getNumOwner() << std::endl;
 				player[projectile->getNumOwner()]->setIsShooting(false);
 				objectsList.erase(objectsList.begin() + i);
-				
-				
 			}
 			projectile->Translate(projectile->getVelocity());
 		}
 
 	}
+
+	/*for (int i = 0; i < objectsList.size(); i++) {
+		ProjectileObject* projectile = dynamic_cast<ProjectileObject*>(objectsList[i]);
+		if (projectile != nullptr) {
+			std::cout << "Have projectile" << std::endl;
+		}
+
+	}*/
 }
 
 void LevelGameplay::LevelDraw()
 {
 	GameEngine::GetInstance()->Render(objectsList);
+
+	for (int i = 0; i < objectsList.size(); i++)
+	{
+		// std::cout << "Hello" << std::endl;
+		PlayerObject* player = dynamic_cast<PlayerObject*>(objectsList[i]);
+		ProjectileObject* projectile = dynamic_cast<ProjectileObject*>(objectsList[i]);
+		if (player != nullptr)
+		{
+			player->GetCollider()->Update(player->getSize(), player->getPos());
+		}
+		if (projectile != nullptr) {
+			projectile->GetCollider()->Update(projectile->getSize(), projectile->getPos());
+		}
+	}
 
 	// cout << "Draw Level" << endl;
 }

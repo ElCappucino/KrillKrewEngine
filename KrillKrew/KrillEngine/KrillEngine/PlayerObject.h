@@ -19,6 +19,7 @@ class PlayerObject :public ImageObject
 	glm::vec3 velocity;
 	bool isShooting = false;
 	bool isAiming = false;
+	int number;
 
 public:
 	
@@ -30,7 +31,10 @@ public:
 	void setVelocity(float axisX, float axisY, bool isPositiveX, bool isPositiveY);
 	void setIsShooting(bool isShoot);
 	void setIsAiming(bool isAim);
+	void setNumber(int num);
 	glm::vec3 getVelocity();
 	bool getIsShooting();
 	bool getIsAiming();
+	Collider* GetCollider();
+	int getNumber();
 };

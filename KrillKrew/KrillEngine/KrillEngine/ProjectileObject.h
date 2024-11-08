@@ -32,5 +32,5 @@ public:
 	void reduceLifeTime();
 	int getLifetime();
 	int getNumOwner();
-	
+	Collider* GetCollider();
 };

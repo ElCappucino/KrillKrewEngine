@@ -6,7 +6,7 @@
 
 PlayerObject::PlayerObject()
 {
-
+	hitbox = new Collider();
 }
 
 
@@ -67,7 +67,8 @@ void PlayerObject::Render(glm::mat4 globalModelTransform)
 	}
 }
 
-void PlayerObject::setVelocity(float axisX, float axisY , bool isPositiveX, bool isPositiveY) {
+void PlayerObject::setVelocity(float axisX, float axisY , bool isPositiveX, bool isPositiveY) 
+{
 
 	if (!isPositiveX) {
 		axisX = -axisX;
@@ -80,21 +81,41 @@ void PlayerObject::setVelocity(float axisX, float axisY , bool isPositiveX, bool
 	velocity = glm::vec3(axisX * 5.f, axisY * 5.f, 0);
 }
 
-glm::vec3 PlayerObject::getVelocity(){
+glm::vec3 PlayerObject::getVelocity()
+{
 	return velocity;
 }
 
-void PlayerObject::setIsShooting(bool isShoot) {
+void PlayerObject::setIsShooting(bool isShoot) 
+{
 	isShooting = isShoot;
 }
-bool PlayerObject::getIsShooting() {
+bool PlayerObject::getIsShooting() 
+{
 	return isShooting;
 }
 
-void PlayerObject::setIsAiming(bool isAim) {
+void PlayerObject::setIsAiming(bool isAim) 
+{
 	isAiming = isAim;
 }
 
-bool  PlayerObject::getIsAiming() {
+bool  PlayerObject::getIsAiming() 
+{
 	return isAiming;
+}
+
+Collider* PlayerObject::GetCollider()
+{
+	return hitbox;
+}
+
+void PlayerObject::setNumber(int num) 
+{
+	number = num;
+}
+
+int PlayerObject::getNumber()
+{
+	return number;
 }
