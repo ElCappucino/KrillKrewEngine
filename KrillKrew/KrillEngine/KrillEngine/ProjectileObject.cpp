@@ -6,7 +6,7 @@
 
 ProjectileObject::ProjectileObject()
 {
-
+	collider = new Collider(Collider::Trigger, this);
 }
 
 

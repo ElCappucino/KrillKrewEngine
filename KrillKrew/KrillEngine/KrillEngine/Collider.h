@@ -33,7 +33,7 @@ private:
 public:
 
 
-	Collider(CollisionType type);
+	Collider(CollisionType type, EntityObject* parent);
 	void Update(glm::vec3 size, glm::vec3 position);
 	GizmosObject* GetGizmos();
 	glm::vec3 GetSize();

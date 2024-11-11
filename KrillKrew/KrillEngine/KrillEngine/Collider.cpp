@@ -1,8 +1,10 @@
 #include "Collider.h"
 
-Collider::Collider(CollisionType type)
+Collider::Collider(CollisionType type, EntityObject* parent)
 {
 	collisionType = type;
+	this->parent = parent;
+
 	gizmos = new GizmosObject();
 	switch (type)
 	{
@@ -16,6 +18,7 @@ Collider::Collider(CollisionType type)
 			gizmos->SetColor(0, 0, 1.f);
 			break;
 	}
+	
 }
 void Collider::Update(glm::vec3 size, glm::vec3 position)
 {

@@ -82,10 +82,19 @@ void LevelGameplay::LevelInit()
 
 	player[3] = obj4;
 
+	TrapObject* trap1 = new TrapObject();
+	trap1->GetCollider()->SetCollisionType(Collider::Trigger);
+	trap1->SetSheetInfo(0, 0, 538, 581, 538, 581);
+	trap1->SetTexture("../Resource/Texture/Prinny.png");
+	trap1->SetSize(256.f, -256.f);
+	trap1->SetPosition(glm::vec3(500.f, 500.f, 0));
+	objectsList.push_back(trap1);
+
 	objectsList.push_back(player[0]->GetCollider()->GetGizmos());
 	objectsList.push_back(player[1]->GetCollider()->GetGizmos());
 	objectsList.push_back(player[2]->GetCollider()->GetGizmos());
 	objectsList.push_back(player[3]->GetCollider()->GetGizmos());
+	objectsList.push_back(trap1->GetCollider()->GetGizmos());
 
 	std::cout << "Init Level" << std::endl;
 }
@@ -207,6 +216,9 @@ void LevelGameplay::LevelUpdate()
 					// std::cout << i << ", " << j << " overlapX = " << overlapX << " overlapY = " << overlapY << std::endl;
 					if (overlapX > 0 && overlapY > 0)
 					{
+						entity1->OnColliderEnter(entity2->GetCollider());
+						entity2->OnColliderEnter(entity1->GetCollider());
+
 						// std::cout << i << " Overlapping with " << j << std::endl;
 						if (col1.GetCollisionType() == Collider::Kinematic &&
 							col2.GetCollisionType() == Collider::Static)
@@ -254,6 +266,16 @@ void LevelGameplay::LevelDraw()
 		{
 			player->GetCollider()->Update(player->getSize(), player->getPos());
 		}
+		else
+		{
+			EntityObject* object = dynamic_cast<EntityObject*>(objectsList[i]);
+			if (object != nullptr)
+			{
+				object->GetCollider()->Update(object->getSize(), object->getPos());
+			}
+		}
+
+
 	}
 
 	// cout << "Draw Level" << endl;

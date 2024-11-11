@@ -6,7 +6,7 @@
 
 PlayerObject::PlayerObject()
 {
-	collider = new Collider(Collider::Trigger);
+	collider = new Collider(Collider::Trigger, this);
 }
 
 

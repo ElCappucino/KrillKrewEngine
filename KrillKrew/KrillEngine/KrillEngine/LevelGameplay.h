@@ -5,6 +5,7 @@
 #include "PlayerObject.h"
 #include "ProjectileObject.h"
 #include "GizmosObject.h"
+#include "TrapObject.h"
 
 
 /// @brief The class for level inherit test from P'tiam

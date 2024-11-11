@@ -5,7 +5,7 @@
 
 TrapObject::TrapObject()
 {
-
+	collider = new Collider(Collider::Trigger, this);
 }
 
 
