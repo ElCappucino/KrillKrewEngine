@@ -6,7 +6,7 @@
 
 PlayerObject::PlayerObject()
 {
-	hitbox = new Collider(Collider::Trigger);
+	collider = new Collider(Collider::Trigger);
 }
 
 
@@ -95,5 +95,48 @@ bool PlayerObject::getIsShooting() {
 
 Collider* PlayerObject::GetCollider()
 {
-	return hitbox;
+	return collider;
+}
+
+void PlayerObject::OnColliderEnter(Collider* other)
+{
+	// Base
+	EntityObject::OnColliderEnter(other);
+
+	// Behavior
+}
+void PlayerObject::OnColliderStay(Collider* other)
+{
+	// Base
+	EntityObject::OnColliderStay(other);
+
+	// Behavior
+}
+void PlayerObject::OnColliderExit(Collider* other)
+{
+	// Base
+	EntityObject::OnColliderExit(other);
+
+	// Behavior
+}
+void PlayerObject::OnTriggerEnter(Collider* other)
+{
+	// Base
+	EntityObject::OnTriggerEnter(other);
+
+	// Behavior
+}
+void PlayerObject::OnTriggerStay(Collider* other)
+{
+	// Base
+	EntityObject::OnTriggerStay(other);
+
+	// Behavior
+}
+void PlayerObject::OnTriggerExit(Collider* other)
+{
+	// Base
+	EntityObject::OnTriggerExit(other);
+
+	// Behavior
 }

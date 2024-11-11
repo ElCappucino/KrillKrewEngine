@@ -62,5 +62,29 @@ void EntityObject::Render(glm::mat4 globalModelTransform)
 }
 Collider* EntityObject::GetCollider()
 {
-	return hitbox;
+	return collider;
+}
+void EntityObject::OnColliderEnter(Collider* other)
+{
+	std::cout << "On Collider Enter" << std::endl;
+}
+void EntityObject::OnColliderStay(Collider* other)
+{
+	std::cout << "On Collider Stay" << std::endl;
+}
+void EntityObject::OnColliderExit(Collider* other)
+{
+	std::cout << "On Collider Exit" << std::endl;
+}
+void EntityObject::OnTriggerEnter(Collider* other)
+{
+	std::cout << "On Trigger Enter" << std::endl;
+}
+void EntityObject::OnTriggerStay(Collider* other)
+{
+	std::cout << "On Trigger Enter" << std::endl;
+}
+void EntityObject::OnTriggerExit(Collider* other)
+{
+	std::cout << "On Trigger Enter" << std::endl;
 }

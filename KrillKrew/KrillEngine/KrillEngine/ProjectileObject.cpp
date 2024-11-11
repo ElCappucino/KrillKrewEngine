@@ -61,23 +61,73 @@ void ProjectileObject::Render(glm::mat4 globalModelTransform)
 	}
 }
 
-void ProjectileObject::setVelocity(glm::vec3 veloPlayer) {
-
+void ProjectileObject::setVelocity(glm::vec3 veloPlayer) 
+{
 	velocity = veloPlayer;
-
 }
 
-glm::vec3 ProjectileObject::getVelocity() {
+glm::vec3 ProjectileObject::getVelocity() 
+{
 	return velocity;
 }
 
-void ProjectileObject::setLifeTime(int lifeTime) {
+void ProjectileObject::setLifeTime(int lifeTime) 
+{
 	this->lifeTime = lifeTime;
 }
 
-void ProjectileObject::reduceLifeTime() {
+void ProjectileObject::reduceLifeTime() 
+{
 	lifeTime -= 1;
 }
-int ProjectileObject::getLifetime() {
+int ProjectileObject::getLifetime() 
+{
 	return lifeTime;
+}
+Collider* ProjectileObject::GetCollider()
+{
+	return collider;
+}
+
+void ProjectileObject::OnColliderEnter(Collider* other)
+{
+	// Base
+	EntityObject::OnColliderEnter(other);
+
+	// Behavior
+}
+void ProjectileObject::OnColliderStay(Collider* other)
+{
+	// Base
+	EntityObject::OnColliderStay(other);
+
+	// Behavior
+}
+void ProjectileObject::OnColliderExit(Collider* other)
+{
+	// Base
+	EntityObject::OnColliderExit(other);
+
+	// Behavior
+}
+void ProjectileObject::OnTriggerEnter(Collider* other)
+{
+	// Base
+	EntityObject::OnTriggerEnter(other);
+
+	// Behavior
+}
+void ProjectileObject::OnTriggerStay(Collider* other)
+{
+	// Base
+	EntityObject::OnTriggerStay(other);
+
+	// Behavior
+}
+void ProjectileObject::OnTriggerExit(Collider* other)
+{
+	// Base
+	EntityObject::OnTriggerExit(other);
+
+	// Behavior
 }

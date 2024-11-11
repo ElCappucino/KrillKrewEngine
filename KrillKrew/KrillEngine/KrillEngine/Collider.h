@@ -3,6 +3,8 @@
 #include "SquareMeshVbo.h"
 #include "GizmosObject.h"
 
+class EntityObject;
+
 class Collider {
 
 public:
@@ -17,6 +19,7 @@ public:
 private:
 
 	// use pos and scale from Object class
+	EntityObject* parent;
 	glm::vec3 previousPos;
 	CollisionType collisionType;
 	GizmosObject* gizmos;
@@ -40,10 +43,13 @@ public:
 	void SetGismosColor(glm::vec3 color);
 	CollisionType GetCollisionType();
 	void SetCollisionType(CollisionType type);
-	/*void OnColliderEnter();
-	void OnColliderStay();
-	void OnColliderExit();
+	//void OnColliderEnter();
+	//void OnColliderStay();
+	//void OnColliderExit();
+	//void OnTriggerEnter();
+	//void OnColliderStay();
+	//void OnColliderExit();
 	bool IsOverlap(Collider anotherCollider);
-	bool IsInside(glm::vec3 pointPos);*/
+	bool IsInside(glm::vec3 pointPos);
 
 };

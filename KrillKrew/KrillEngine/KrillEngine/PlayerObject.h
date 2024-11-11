@@ -27,5 +27,13 @@ public:
 	void setisShooting(bool isShoot);
 	glm::vec3 getVelocity();
 	bool getIsShooting();
-	Collider* GetCollider();
+
+	virtual Collider* GetCollider();
+
+	virtual void OnColliderEnter(Collider* other);
+	virtual void OnColliderStay(Collider* other);
+	virtual void OnColliderExit(Collider* other);
+	virtual void OnTriggerEnter(Collider* other);
+	virtual void OnTriggerStay(Collider* other);
+	virtual void OnTriggerExit(Collider* other);
 };

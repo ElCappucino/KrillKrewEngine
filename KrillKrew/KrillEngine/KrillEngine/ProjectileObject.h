@@ -5,16 +5,15 @@
 #include "gtc/type_ptr.hpp"
 #include <string>
 #include <array>
-#include "ImageObject.h"
+#include "EntityObject.h"
 #include "Collider.h"
 #include "Ability.h"
 
 /// @brief The class for creating object that render using texture
-class ProjectileObject :public ImageObject
+class ProjectileObject : public EntityObject
 {
 	unsigned int texture;
 	SpritesheetInfo sheetInfo;
-	Collider* hitbox;
 	glm::vec3 velocity;
 	int lifeTime;
 
@@ -29,5 +28,13 @@ public:
 	glm::vec3 getVelocity();
 	void reduceLifeTime();
 	int getLifetime();
+
+	virtual Collider* GetCollider();
+
+	virtual void OnColliderEnter(Collider* other);
+	virtual void OnColliderStay(Collider* other);
+	virtual void OnColliderExit(Collider* other);
+	virtual void OnTriggerEnter(Collider* other);
+	virtual void OnTriggerStay(Collider* other);
+	virtual void OnTriggerExit(Collider* other);
 };
-#pragma once
