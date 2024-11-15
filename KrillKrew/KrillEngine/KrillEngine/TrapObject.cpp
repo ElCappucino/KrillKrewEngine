@@ -6,7 +6,7 @@
 
 TrapObject::TrapObject()
 {
-
+	hitbox = new Collider();
 }
 
 
@@ -78,4 +78,9 @@ void TrapObject::setNumOwner(int num) {
 
 int TrapObject::getNumOwner() {
 	return playerNumOwner;
+}
+
+Collider* TrapObject::GetCollider()
+{
+	return hitbox;
 }

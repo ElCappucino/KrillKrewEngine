@@ -20,6 +20,10 @@ class PlayerObject :public ImageObject
 	bool isShooting = false;
 	bool isAiming = false;
 	int number;
+	float cooldown[3];
+	float slowness = 2;
+	float durationSlowness;
+	bool isSlowness;
 
 public:
 	
@@ -32,9 +36,17 @@ public:
 	void setIsShooting(bool isShoot);
 	void setIsAiming(bool isAim);
 	void setNumber(int num);
+	void setCooldown(int skill, int time);
+	void reduceCooldown();
+	void setDurationSlowness(int time);
+	void reduceDurationSlowness();
+	void setIsSlowness(bool isSlow);
 	glm::vec3 getVelocity();
 	bool getIsShooting();
 	bool getIsAiming();
 	Collider* GetCollider();
 	int getNumber();
+	float getCooldown(int skill);
+	float getDurationSlowness();
+	bool getIsSlowness();
 };

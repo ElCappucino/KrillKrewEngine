@@ -3,6 +3,7 @@
 #include "InfoStruct.h"
 #include "PlayerObject.h"
 #include "ProjectileObject.h"
+#include "TrapObject.h"
 #include "GizmosObject.h"
 
 

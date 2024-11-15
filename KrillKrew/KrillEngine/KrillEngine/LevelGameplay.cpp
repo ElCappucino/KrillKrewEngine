@@ -148,8 +148,8 @@ void LevelGameplay::LevelUpdate()
 			}
 			
 
-			if (player[i]->getIsAiming() == false) {
-				player[i]->setVelocity(abs(norAxisX), abs(norAxisY), isPositiveX, isPositiveY);
+			if (player[i + playerNum]->getIsAiming() == false) {
+				player[i + playerNum]->setVelocity(abs(norAxisX), abs(norAxisY), isPositiveX, isPositiveY);
 			}
 
 			//Select ability
@@ -159,29 +159,31 @@ void LevelGameplay::LevelUpdate()
 
 
 			//Aim
-			if (Joystick::GetButtonDown(i, Joystick::Button::R1)) {
+			if (Joystick::GetButtonDown(i, Joystick::Button::R1)) 
+			{
 				
-				if (player[i]->getIsShooting() == false && player[i]->getIsAiming() == false) {
-					player[i]->setVelocity(0, 0, isPositiveX, isPositiveY);
-					player[i]->setIsAiming(true);
+				if (player[i + playerNum]->getIsShooting() == false && player[i + playerNum]->getIsAiming() == false) {
+					player[i + playerNum]->setVelocity(0, 0, isPositiveX, isPositiveY);
+					player[i + playerNum]->setIsAiming(true);
 					ProjectileObject* projectile = new ProjectileObject();
 					projectile->SetSheetInfo(0, 0, 256, 256, 256, 256);
 					projectile->SetTexture("../Resource/Texture/Bomb_icon.png");
-					projectile->SetPosition(player[i]->getPos());
+					projectile->SetPosition(player[i + playerNum]->getPos());
 					projectile->SetSize(256.f, -256.f);
 					projectile->setLifeTime(9999);
-					projectile->setNumOwner(player[i]->getNumber());
+					projectile->setNumOwner(player[i + playerNum]->getNumber());
 					std::cout << "Owner " << projectile->getNumOwner() << std::endl;
 					objectsList.push_back(projectile);
 					//objectsList.push_back(projectile->GetCollider()->GetGizmos());
 				}
 			}
 			//Shoot
-			if (Joystick::GetButtonUp(i, Joystick::Button::R1)) {
-				std::cout << "Shoot " << i << std::endl;
-				if (player[i]->getIsShooting() == false) {
-					player[i]->setIsShooting(true);
-					player[i]->setIsAiming(false);
+			if (Joystick::GetButtonUp(i, Joystick::Button::R1)) 
+			{
+				std::cout << "Shoot " << i + playerNum << std::endl;
+				if (player[i + playerNum]->getIsShooting() == false) {
+					player[i + playerNum]->setIsShooting(true);
+					player[i + playerNum]->setIsAiming(false);
 					for (int j = 0; j < objectsList.size(); j++) {
 						ProjectileObject* projectile = dynamic_cast<ProjectileObject*>(objectsList[j]);
 						if (projectile != nullptr) {
@@ -191,23 +193,46 @@ void LevelGameplay::LevelUpdate()
 				}
 			}
 
-			if (player[i]->getIsAiming()) {
+			if (player[i + playerNum]->getIsAiming())
+			{
 				for (int j = 0; j < objectsList.size(); j++) {
 					ProjectileObject* projectile = dynamic_cast<ProjectileObject*>(objectsList[j]);
-					if (projectile != nullptr && i == projectile->getNumOwner()) {
+					if (projectile != nullptr && i + playerNum == projectile->getNumOwner()) {
 						if (abs(norAxisX) > 0 || norAxisY > 0) {
 							projectile->setVelocity(abs(norAxisX), abs(norAxisY), isPositiveX, isPositiveY);
 						}
-						projectile->SetPosition(player[i]->getPos() + (projectile->getVelocity() * glm::vec3(15.f, 15.f, 0.f)));
+						projectile->SetPosition(player[i + playerNum]->getPos() + (projectile->getVelocity() * glm::vec3(15.f, 15.f, 0.f)));
 					}
 				}
 			}
 
 			//Place trap
-			if (Joystick::GetButtonDown(i, Joystick::Button::R2)) {
-
+			if (Joystick::GetButtonDown(i, Joystick::Button::Triangle)) 
+			{
+				if (player[i + playerNum]->getCooldown(1) <= 0) {
+					player[i + playerNum]->setCooldown(1, 100);
+					TrapObject* Trap = new TrapObject();
+					Trap->SetSheetInfo(0, 0, 512, 512, 512, 512);
+					Trap->SetTexture("../Resource/Texture/trap.png");
+					Trap->SetPosition(player[i + playerNum]->getPos());
+					Trap->SetSize(128.f, -128.f);
+					Trap->setNumOwner(player[i + playerNum]->getNumber());
+					//std::cout << "Owner " << Trap->getNumOwner() << std::endl;
+					objectsList.push_back(Trap);
+				}
 			}
-			player[i]->Translate(player[i]->getVelocity());
+
+			// Debug other player
+			if (Joystick::GetButtonDown(i, Joystick::Button::L1))
+			{
+				playerNum += 1;
+				if (playerNum >= 4) {
+					playerNum = 0;
+				}
+				std::cout << "Control player " << playerNum << std::endl;
+			}
+
+			player[i + playerNum]->Translate(player[i + playerNum]->getVelocity());
 		}
 		
 	}
@@ -307,6 +332,52 @@ void LevelGameplay::LevelUpdate()
 		}
 	}
 
+	// trap collier player
+	for (int i = 0; i < objectsList.size(); i++) {
+		TrapObject* trap = dynamic_cast<TrapObject*>(objectsList[i]);
+		if (trap != nullptr)
+		{
+			//std::cout << "Have projectile" << std::endl;
+			for (int j = 0; j < objectsList.size(); j++)
+			{
+				if (i == j)
+				{
+					continue;
+				}
+				PlayerObject* player2 = dynamic_cast<PlayerObject*>(objectsList[j]);
+				if (player2 != nullptr)
+				{
+					if (trap->getNumOwner() != player2->getNumber()) {
+						Collider col1 = *trap->GetCollider();
+						Collider col2 = *player2->GetCollider();
+
+						glm::vec2 delta = glm::vec2(abs(trap->getPos().x - player2->getPos().x),
+							abs(trap->getPos().y - player2->getPos().y));
+
+						// std::cout << "i = " << i << " j = " << j << " delta = " << delta.x << ", " << delta.y << std::endl;
+
+						float overlapX = (abs(col1.GetHalfSize().x)) + (abs(col2.GetHalfSize().x)) - delta.x;
+						float overlapY = (abs(col1.GetHalfSize().y)) + (abs(col2.GetHalfSize().y)) - delta.y;
+
+						// std::cout << i << ", " << j << " overlapX = " << overlapX << " overlapY = " << overlapY << std::endl;
+						if (overlapX > 0 && overlapY > 0)
+						{
+							std::cout << "Trap :" << trap->getNumOwner() << " hit " << "Player" << player2->getNumber() << std::endl;
+							player2->setDurationSlowness(100);
+							player2->setIsSlowness(true);
+							objectsList.erase(objectsList.begin() + i);
+						}
+					}
+				}
+			}
+		}
+		else
+		{
+			//std::cout << "No Trap" << std::endl;
+			continue;
+		}
+	}
+
 	// delete projectile
 	for (int i = 0; i < objectsList.size(); i++) {
 		ProjectileObject* projectile = dynamic_cast<ProjectileObject*>(objectsList[i]);
@@ -326,13 +397,22 @@ void LevelGameplay::LevelUpdate()
 
 	}
 
-	/*for (int i = 0; i < objectsList.size(); i++) {
-		ProjectileObject* projectile = dynamic_cast<ProjectileObject*>(objectsList[i]);
-		if (projectile != nullptr) {
-			std::cout << "Have projectile" << std::endl;
+	// reduce cooldown skill
+	for (int i = 0; i < SDL_NumJoysticks() + playerNum; i++) {
+		player[i]->reduceCooldown();
+	}
+
+	// slowness
+	for (int i = 0; i < SDL_NumJoysticks() + playerNum; i++) {
+		if (player[i]->getIsSlowness() == true) 
+		{
+			player[i]->reduceDurationSlowness();
 		}
 
-	}*/
+		if (player[i]->getDurationSlowness() <= 0) {
+			player[i]->setIsSlowness(false);
+		}
+	}
 }
 
 void LevelGameplay::LevelDraw()
