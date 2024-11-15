@@ -15,6 +15,8 @@ void LevelGameplay::LevelLoad()
 	line->LoadData();
 	GameEngine::GetInstance()->AddMesh(LineMeshVbo::MESH_NAME, line);
 
+	spriteList["Prinny"] = SpritesheetInfo("Prinny", "../Resource/Texture/Prinny.png", 538, 538, 538, 538);
+	spriteList["Bomb"] = SpritesheetInfo("Bomb", "../Resource/Texture/Bomb_icon.png", 256, 256, 256, 256);
 	//cout << "Load Level" << endl;
 }
 
@@ -46,8 +48,8 @@ void LevelGameplay::LevelInit()
 
 	PlayerObject* obj1 = new PlayerObject();
 	obj1->GetCollider()->SetCollisionType(Collider::Kinematic);
-	obj1->SetSheetInfo(0, 0, 538, 581, 538, 581);
-	obj1->SetTexture("../Resource/Texture/Prinny.png");
+	obj1->SetSpriteInfo(spriteList.find("Prinny")->second);
+	obj1->SetTexture(spriteList.find("Prinny")->second.texture);
 	obj1->SetSize(256.f, -256.f);
 	obj1->SetPosition(glm::vec3(-200.f, -200.f, 0));
 	objectsList.push_back(obj1);
@@ -56,8 +58,8 @@ void LevelGameplay::LevelInit()
 
 	PlayerObject* obj2 = new PlayerObject();
 	obj2->GetCollider()->SetCollisionType(Collider::Static);
-	obj2->SetSheetInfo(0, 0, 538, 581, 538, 581);
-	obj2->SetTexture("../Resource/Texture/Prinny.png");
+	obj2->SetSpriteInfo(spriteList.find("Prinny")->second);
+	obj2->SetTexture(spriteList.find("Prinny")->second.texture);
 	obj2->SetSize(256.f, -256.f);
 	obj2->SetPosition(glm::vec3(200.f, -200.f, 0));
 	objectsList.push_back(obj2);
@@ -65,8 +67,8 @@ void LevelGameplay::LevelInit()
 	player[1] = obj2;
 
 	PlayerObject* obj3 = new PlayerObject();
-	obj3->SetSheetInfo(0, 0, 538, 581, 538, 581);
-	obj3->SetTexture("../Resource/Texture/Prinny.png");
+	obj3->SetSpriteInfo(spriteList.find("Prinny")->second);
+	obj3->SetTexture(spriteList.find("Prinny")->second.texture);
 	obj3->SetSize(256.f, -256.f);
 	obj3->SetPosition(glm::vec3(-200.f, 200.f, 0));
 	objectsList.push_back(obj3);
@@ -74,8 +76,8 @@ void LevelGameplay::LevelInit()
 	player[2] = obj3;
 
 	PlayerObject* obj4 = new PlayerObject();
-	obj4->SetSheetInfo(0, 0, 538, 581, 538, 581);
-	obj4->SetTexture("../Resource/Texture/Prinny.png");
+	obj4->SetSpriteInfo(spriteList.find("Prinny")->second);
+	obj4->SetTexture(spriteList.find("Prinny")->second.texture);
 	obj4->SetSize(256.f, -256.f);
 	obj4->SetPosition(glm::vec3(200.f, 200.f, 0));
 	objectsList.push_back(obj4);
@@ -84,8 +86,8 @@ void LevelGameplay::LevelInit()
 
 	TrapObject* trap1 = new TrapObject();
 	trap1->GetCollider()->SetCollisionType(Collider::Trigger);
-	trap1->SetSheetInfo(0, 0, 538, 581, 538, 581);
-	trap1->SetTexture("../Resource/Texture/Prinny.png");
+	trap1->SetSpriteInfo(spriteList.find("Prinny")->second);
+	trap1->SetTexture(spriteList.find("Prinny")->second.texture);
 	trap1->SetSize(256.f, -256.f);
 	trap1->SetPosition(glm::vec3(500.f, 500.f, 0));
 	objectsList.push_back(trap1);
@@ -258,9 +260,9 @@ void LevelGameplay::LevelDraw()
 {
 	GameEngine::GetInstance()->Render(objectsList);
 
+	// Collider Gizmos update
 	for (int i = 0; i < objectsList.size(); i++)
 	{
-		// std::cout << "Hello" << std::endl;
 		PlayerObject* player = dynamic_cast<PlayerObject*>(objectsList[i]);
 		if (player != nullptr)
 		{
@@ -301,63 +303,63 @@ void LevelGameplay::LevelUnload()
 void LevelGameplay::HandleKey(char key)
 {
 
-	//switch (key)
-	//{
-	//// switch player
-	//case '1': this->playerNum = 0; break;
-	//case '2': this->playerNum = 1; break;
-	//case '3': this->playerNum = 2; break;
-	//case '4': this->playerNum = 3; break;
-	//
-	//// control player
-	///*case 'w': player[playerNum]->setVelocity(5, false); break;
-	//case 's': player[playerNum]->setVelocity(-5, false); break;
-	//case 'a': player[playerNum]->setVelocity(-5, true); break;
-	//case 'd': player[playerNum]->setVelocity(5, true); break;*/
+	switch (key)
+	{
+	// switch player
+	case '1': this->playerNum = 0; break;
+	case '2': this->playerNum = 1; break;
+	case '3': this->playerNum = 2; break;
+	case '4': this->playerNum = 3; break;
+	
+	// control player
+	/*case 'w': player[playerNum]->setVelocity(5, false); break;
+	case 's': player[playerNum]->setVelocity(-5, false); break;
+	case 'a': player[playerNum]->setVelocity(-5, true); break;
+	case 'd': player[playerNum]->setVelocity(5, true); break;*/
 
-	//case 'q': GameEngine::GetInstance()->GetStateController()->gameStateNext = GameState::GS_QUIT; ; break;
-	//case 'r': GameEngine::GetInstance()->GetStateController()->gameStateNext = GameState::GS_RESTART; ; break;
-	//case 'e': GameEngine::GetInstance()->GetStateController()->gameStateNext = GameState::GS_LEVELMAPTEST; ; break;
-	//case 'i':
+	case 'q': GameEngine::GetInstance()->GetStateController()->gameStateNext = GameState::GS_QUIT; ; break;
+	case 'r': GameEngine::GetInstance()->GetStateController()->gameStateNext = GameState::GS_RESTART; ; break;
+	case 'e': GameEngine::GetInstance()->GetStateController()->gameStateNext = GameState::GS_LEVELMAPTEST; ; break;
+	case 'i':
 
-	//	GameEngine::GetInstance()->SetDrawArea(camera.getCameraOrthoValue().left + SCREEN_WIDTH * ZOOM_VELOCITY,
-	//										   camera.getCameraOrthoValue().right - SCREEN_WIDTH * ZOOM_VELOCITY,
-	//										   camera.getCameraOrthoValue().bottom + SCREEN_HEIGHT * ZOOM_VELOCITY,
-	//										   camera.getCameraOrthoValue().top - SCREEN_HEIGHT * ZOOM_VELOCITY);
-	//	
-	//	break;
+		GameEngine::GetInstance()->SetDrawArea(camera.getCameraOrthoValue().left + SCREEN_WIDTH * ZOOM_VELOCITY,
+											   camera.getCameraOrthoValue().right - SCREEN_WIDTH * ZOOM_VELOCITY,
+											   camera.getCameraOrthoValue().bottom + SCREEN_HEIGHT * ZOOM_VELOCITY,
+											   camera.getCameraOrthoValue().top - SCREEN_HEIGHT * ZOOM_VELOCITY);
+		
+		break;
 
-	//case 'o':
+	case 'o':
 
-	//	GameEngine::GetInstance()->SetDrawArea(camera.getCameraOrthoValue().left - SCREEN_WIDTH * ZOOM_VELOCITY,
-	//											camera.getCameraOrthoValue().right + SCREEN_WIDTH * ZOOM_VELOCITY,
-	//											camera.getCameraOrthoValue().bottom - SCREEN_HEIGHT * ZOOM_VELOCITY,
-	//											camera.getCameraOrthoValue().top + SCREEN_HEIGHT * ZOOM_VELOCITY);
-	//	
-	//	break;
-	//case 'y':
-	//	this->playerNum++;
-	//	if (this->playerNum >= 4) {
-	//		this->playerNum = 0;
-	//	}
-	//	std::cout << "Player " << this->playerNum << std::endl;
-	//	break;
+		GameEngine::GetInstance()->SetDrawArea(camera.getCameraOrthoValue().left - SCREEN_WIDTH * ZOOM_VELOCITY,
+												camera.getCameraOrthoValue().right + SCREEN_WIDTH * ZOOM_VELOCITY,
+												camera.getCameraOrthoValue().bottom - SCREEN_HEIGHT * ZOOM_VELOCITY,
+												camera.getCameraOrthoValue().top + SCREEN_HEIGHT * ZOOM_VELOCITY);
+		
+		break;
+	case 'y':
+		this->playerNum++;
+		if (this->playerNum >= 4) {
+			this->playerNum = 0;
+		}
+		std::cout << "Player " << this->playerNum << std::endl;
+		break;
 
-	//case 'n':
-	//	if (player[playerNum]->getIsShooting() == false) {
-	//		player[playerNum]->setisShooting(true);
-	//		ProjectileObject* projectile = new ProjectileObject();
-	//		projectile->SetSheetInfo(0, 0, 256, 256, 256, 256);
-	//		projectile->SetTexture("../Resource/Texture/Bomb_icon.png");
-	//		projectile->SetPosition(player[playerNum]->getPos());
-	//		projectile->SetSize(256.f, -256.f);
-	//		projectile->setLifeTime(10);
-	//		projectile->setVelocity(player[playerNum]->getVelocity());
-	//		objectsList.push_back(projectile);
-	//	}
+	case 'n':
+		if (player[playerNum]->getIsShooting() == false) {
+			player[playerNum]->setisShooting(true);
+			ProjectileObject* projectile = new ProjectileObject();
+			projectile->SetSpriteInfo(spriteList.find("Bomb")->second);
+			projectile->SetTexture(spriteList.find("Bomb")->second.texture);
+			projectile->SetPosition(player[playerNum]->getPos());
+			projectile->SetSize(256.f, -256.f);
+			projectile->setLifeTime(10);
+			projectile->setVelocity(player[playerNum]->getVelocity());
+			objectsList.push_back(projectile);
+		}
 
-	//	break;
-	//}
+		break;
+	}
 
 	
 	

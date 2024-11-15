@@ -6,7 +6,7 @@
 
 PlayerObject::PlayerObject()
 {
-	collider = new Collider(Collider::Trigger, this);
+	
 }
 
 
@@ -17,21 +17,6 @@ PlayerObject::~PlayerObject()
 void PlayerObject::SetTexture(std::string path)
 {
 	texture = GameEngine::GetInstance()->GetRenderer()->LoadTexture(path);
-}
-
-void PlayerObject::SetSheetInfo(float row, 
-								float column, 
-								float spritewidth, 
-								float spriteheight, 
-								float sheetwidth, 
-								float sheetheight) 
-{
-	sheetInfo.row = row;
-	sheetInfo.column = column;
-	sheetInfo.spritewidth = spritewidth;
-	sheetInfo.spriteheight = spriteheight;
-	sheetInfo.sheetwidth = sheetwidth;
-	sheetInfo.sheetheight = sheetheight;
 }
 
 void PlayerObject::Render(glm::mat4 globalModelTransform)
@@ -50,7 +35,12 @@ void PlayerObject::Render(glm::mat4 globalModelTransform)
 		return;
 	}
 
-	squareMesh->ChangeTextureData(sheetInfo.row, sheetInfo.column, sheetInfo.spritewidth, sheetInfo.spriteheight, sheetInfo.sheetwidth, sheetInfo.sheetheight);
+	squareMesh->ChangeTextureData(spriteRenderer->GetRow(),
+		spriteRenderer->GetColumn(),
+		spriteRenderer->GetSpriteWidth(),
+		spriteRenderer->GetSpriteHeight(),
+		spriteRenderer->GetSheetWidth(),
+		spriteRenderer->GetSheetHeight());
 
 	std::vector <glm::mat4> matrixStack;
 

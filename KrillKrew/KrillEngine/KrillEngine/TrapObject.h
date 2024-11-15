@@ -18,9 +18,8 @@ class TrapObject :public EntityObject
 public:
 	TrapObject();
 	~TrapObject();
-	void SetTexture(std::string path);
-	void SetSheetInfo(float row, float column, float spritewidth, float spriteheight, float sheetwidth, float sheetheight);
 	void Render(glm::mat4 globalModelTransform);
+	void SetTexture(std::string path);
 	void setLifeTime(int lifeTime);
 	void setNumOwner(int Num);
 	void reduceLifeTime();

@@ -5,17 +5,19 @@
 #include "gtc/type_ptr.hpp"
 #include <string>
 #include "InfoStruct.h"
+#include "SpriteRenderer.h"
 
 /// @brief The class for creating object that render using texture
 class ImageObject :public DrawableObject
 {
 	unsigned int texture;
-	SpritesheetInfo sheetInfo;
+	SpriteRenderer* spriteRenderer;
 
 public:
 	ImageObject();
 	~ImageObject();
+	SpriteRenderer* GetSpriteRenderer();
+	void SetSpriteInfo(SpritesheetInfo info);
 	void SetTexture(std::string path);
-	void SetSheetInfo(float row, float column, float spritewidth, float spriteheight, float sheetwidth, float sheetheight);
 	void Render(glm::mat4 globalModelTransform);
 };

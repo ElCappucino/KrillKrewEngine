@@ -7,6 +7,8 @@ void LevelLoading::LevelLoad()
 	square->LoadData();
 	GameEngine::GetInstance()->AddMesh(SquareMeshVbo::MESH_NAME, square);
 
+	spriteList["LoadPage"] = SpritesheetInfo("LoadPage", "../Resource/Texture/loading.png", 1920, 1080, 1920, 1080);
+
 	//cout << "Load Level" << endl;
 }
 
@@ -21,8 +23,8 @@ void LevelLoading::LevelInit()
 
 	// Example Code
 	ImageObject* obj1 = new ImageObject();
-	obj1->SetSheetInfo(0, 0, 1920, 1080, 1920, 1080);
-	obj1->SetTexture("../Resource/Texture/loading.png");
+	obj1->SetSpriteInfo(spriteList.find("LoadPage")->second);
+	obj1->SetTexture(spriteList.find("LoadPage")->second.texture);
 	obj1->SetSize(SCREEN_WIDTH, -SCREEN_HEIGHT);
 	obj1->SetPosition(glm::vec3(0.f, 0.f, 0));
 	objectsList.push_back(obj1);

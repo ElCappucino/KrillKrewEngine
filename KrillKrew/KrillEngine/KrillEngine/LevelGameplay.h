@@ -6,6 +6,7 @@
 #include "ProjectileObject.h"
 #include "GizmosObject.h"
 #include "TrapObject.h"
+#include <map>
 
 
 /// @brief The class for level inherit test from P'tiam
@@ -18,6 +19,7 @@ private:
 	CameraZoomInfo zoomInfo; // to initialize the zoom property
 	OrthographicValue targetSceneProjection; // use for lerping between the current projection and this (target projection).
 	Camera camera;
+	
 
 	int dt = 0;
 

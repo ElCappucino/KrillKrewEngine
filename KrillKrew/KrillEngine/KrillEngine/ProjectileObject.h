@@ -13,7 +13,6 @@
 class ProjectileObject : public EntityObject
 {
 	unsigned int texture;
-	SpritesheetInfo sheetInfo;
 	glm::vec3 velocity;
 	int lifeTime;
 
@@ -21,7 +20,6 @@ public:
 	ProjectileObject();
 	~ProjectileObject();
 	void SetTexture(std::string path);
-	void SetSheetInfo(float row, float column, float spritewidth, float spriteheight, float sheetwidth, float sheetheight);
 	void Render(glm::mat4 globalModelTransform);
 	void setVelocity(glm::vec3 veloPlayer);
 	void setLifeTime(int lifeTime);

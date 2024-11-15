@@ -6,6 +6,8 @@ void LevelMapTest::LevelLoad()
 	square->LoadData();
 	GameEngine::GetInstance()->AddMesh(SquareMeshVbo::MESH_NAME, square);
 
+	spriteList["Blobtile"] = SpritesheetInfo("Blobtile", "../Resource/Texture/blobtile_test_kf1.png", 128, 128, 1536, 512);
+
 	//cout << "Load Level" << endl;
 }
 
@@ -146,8 +148,9 @@ void LevelMapTest::LevelInit()
 
 			// std::cout << flag << ",";
 			ImageObject* obj = new ImageObject();
-			obj->SetSheetInfo(pos.first - 1, pos.second - 1, 128, 128, 1536, 512);
-			obj->SetTexture("../Resource/Texture/blobtile_test.png");
+			obj->SetSpriteInfo(spriteList.find("Blobtile")->second);
+			obj->GetSpriteRenderer()->ShiftTo(pos.first - 1, pos.second - 1);
+			obj->SetTexture(spriteList.find("Blobtile")->second.texture);
 			obj->SetSize(32.f, -32.f);
 			obj->SetPosition(glm::vec3(map_left + (j * 32.f), map_top - (i * 32.f), 0));
 			objectsList.push_back(obj);

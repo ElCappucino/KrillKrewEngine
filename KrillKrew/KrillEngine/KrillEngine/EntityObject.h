@@ -6,8 +6,10 @@
 #include <string>
 #include <array>
 #include "ImageObject.h"
+#include "SpriteRenderer.h"
 #include "Collider.h"
 #include "Ability.h"
+#include "InfoStruct.h"
 
 /// @brief The class for creating object that render using texture
 class EntityObject : public ImageObject
@@ -16,14 +18,16 @@ protected:
 	unsigned int texture;
 	SpritesheetInfo sheetInfo;
 	Collider* collider;
-
+	SpriteRenderer* spriteRenderer;
+	bool isAnimated;
 public:
 
 	EntityObject();
 	~EntityObject();
 
+	void SetSpriteInfo(SpritesheetInfo info);
 	void SetTexture(std::string path);
-	void SetSheetInfo(float row, float column, float spritewidth, float spriteheight, float sheetwidth, float sheetheight);
+	// void SetSheetInfo(float row, float column, float spritewidth, float spriteheight, float sheetwidth, float sheetheight);
 	void Render(glm::mat4 globalModelTransform);
 
 	virtual Collider* GetCollider();

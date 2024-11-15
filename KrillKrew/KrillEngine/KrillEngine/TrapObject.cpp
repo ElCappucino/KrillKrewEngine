@@ -18,15 +18,6 @@ void TrapObject::SetTexture(std::string path)
 	texture = GameEngine::GetInstance()->GetRenderer()->LoadTexture(path);
 }
 
-void TrapObject::SetSheetInfo(float row, float column, float spritewidth, float spriteheight, float sheetwidth, float sheetheight) {
-	sheetInfo.row = row;
-	sheetInfo.column = column;
-	sheetInfo.spritewidth = spritewidth;
-	sheetInfo.spriteheight = spriteheight;
-	sheetInfo.sheetwidth = sheetwidth;
-	sheetInfo.sheetheight = sheetheight;
-}
-
 void TrapObject::Render(glm::mat4 globalModelTransform)
 {
 	SquareMeshVbo* squareMesh = dynamic_cast<SquareMeshVbo*> (GameEngine::GetInstance()->GetRenderer()->GetMesh(SquareMeshVbo::MESH_NAME));
@@ -43,7 +34,12 @@ void TrapObject::Render(glm::mat4 globalModelTransform)
 		return;
 	}
 
-	squareMesh->ChangeTextureData(sheetInfo.row, sheetInfo.column, sheetInfo.spritewidth, sheetInfo.spriteheight, sheetInfo.sheetwidth, sheetInfo.sheetheight);
+	squareMesh->ChangeTextureData(spriteRenderer->GetRow(),
+		spriteRenderer->GetColumn(),
+		spriteRenderer->GetSpriteWidth(),
+		spriteRenderer->GetSpriteHeight(),
+		spriteRenderer->GetSheetWidth(),
+		spriteRenderer->GetSheetHeight());
 
 	std::vector <glm::mat4> matrixStack;
 
