@@ -66,3 +66,11 @@ void ImageObject::Render(glm::mat4 globalModelTransform)
 	}
 }
 
+void ImageObject::SetIsAnimated(bool value)
+{
+	this->isAnimated = value;
+}
+bool ImageObject::GetIsAnimated()
+{
+	return isAnimated;
+}

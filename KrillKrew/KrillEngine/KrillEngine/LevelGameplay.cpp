@@ -17,6 +17,7 @@ void LevelGameplay::LevelLoad()
 
 	spriteList["Prinny"] = SpritesheetInfo("Prinny", "../Resource/Texture/Prinny.png", 538, 538, 538, 538);
 	spriteList["Bomb"] = SpritesheetInfo("Bomb", "../Resource/Texture/Bomb_icon.png", 256, 256, 256, 256);
+	spriteList["Shark"] = SpritesheetInfo("Shark", "../Resource/Texture/shark_run_test.png", 256, 256, 1024, 256);
 	//cout << "Load Level" << endl;
 }
 
@@ -48,8 +49,10 @@ void LevelGameplay::LevelInit()
 
 	PlayerObject* obj1 = new PlayerObject();
 	obj1->GetCollider()->SetCollisionType(Collider::Kinematic);
-	obj1->SetSpriteInfo(spriteList.find("Prinny")->second);
-	obj1->SetTexture(spriteList.find("Prinny")->second.texture);
+	obj1->SetSpriteInfo(spriteList.find("Shark")->second);
+	obj1->SetTexture(spriteList.find("Shark")->second.texture);
+	obj1->SetIsAnimated(true);
+	obj1->GetSpriteRenderer()->SetFrame(10);
 	obj1->SetSize(256.f, -256.f);
 	obj1->SetPosition(glm::vec3(-200.f, -200.f, 0));
 	objectsList.push_back(obj1);
@@ -58,8 +61,10 @@ void LevelGameplay::LevelInit()
 
 	PlayerObject* obj2 = new PlayerObject();
 	obj2->GetCollider()->SetCollisionType(Collider::Static);
-	obj2->SetSpriteInfo(spriteList.find("Prinny")->second);
-	obj2->SetTexture(spriteList.find("Prinny")->second.texture);
+	obj2->SetSpriteInfo(spriteList.find("Shark")->second);
+	obj2->SetTexture(spriteList.find("Shark")->second.texture);
+	obj2->SetIsAnimated(true);
+	obj2->GetSpriteRenderer()->SetFrame(15);
 	obj2->SetSize(256.f, -256.f);
 	obj2->SetPosition(glm::vec3(200.f, -200.f, 0));
 	objectsList.push_back(obj2);
@@ -67,8 +72,8 @@ void LevelGameplay::LevelInit()
 	player[1] = obj2;
 
 	PlayerObject* obj3 = new PlayerObject();
-	obj3->SetSpriteInfo(spriteList.find("Prinny")->second);
-	obj3->SetTexture(spriteList.find("Prinny")->second.texture);
+	obj3->SetSpriteInfo(spriteList.find("Shark")->second);
+	obj3->SetTexture(spriteList.find("Shark")->second.texture);
 	obj3->SetSize(256.f, -256.f);
 	obj3->SetPosition(glm::vec3(-200.f, 200.f, 0));
 	objectsList.push_back(obj3);
@@ -76,8 +81,8 @@ void LevelGameplay::LevelInit()
 	player[2] = obj3;
 
 	PlayerObject* obj4 = new PlayerObject();
-	obj4->SetSpriteInfo(spriteList.find("Prinny")->second);
-	obj4->SetTexture(spriteList.find("Prinny")->second.texture);
+	obj4->SetSpriteInfo(spriteList.find("Shark")->second);
+	obj4->SetTexture(spriteList.find("Shark")->second.texture);
 	obj4->SetSize(256.f, -256.f);
 	obj4->SetPosition(glm::vec3(200.f, 200.f, 0));
 	objectsList.push_back(obj4);
@@ -252,6 +257,26 @@ void LevelGameplay::LevelUpdate()
 			entity1->GetCollider()->SetPreviousPos(entity1->getPos());
 		}
 
+	}
+
+	// Set Animation
+	for (int i = 0; i < objectsList.size(); i++)
+	{
+		// std::cout << "i = " << i << std::endl;
+		// std::cout << "Hello" << std::endl;
+		EntityObject* entity = dynamic_cast<EntityObject*>(objectsList[i]);
+		if (entity == nullptr)
+		{
+			continue;
+		}
+		else
+		{
+			if (entity->GetIsAnimated() && 
+				dt % entity->GetSpriteRenderer()->GetFrame() == 0)
+			{
+				entity->GetSpriteRenderer()->ShiftColumn();
+			}
+		}
 	}
 
 }

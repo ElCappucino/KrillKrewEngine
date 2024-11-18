@@ -4,7 +4,9 @@
 
 class SpriteRenderer
 {
+
 private:
+
 	std::string texture;
 
 	float row;
@@ -13,16 +15,25 @@ private:
 	float spriteheight;
 	float sheetwidth;
 	float sheetheight;
+
+	float frame;
+
 public:
+
 	void SetSpriteInfo(float spritewidth, float spriteheight, float sheetwidth, float sheetheight);
+	void SetFrame(int frame);
+
 	void ShiftColumn();
 	void ShiftRow();
 	void ShiftTo(float row, float column);
+
 	float GetRow();
 	float GetColumn();
 	float GetSpriteWidth();
 	float GetSpriteHeight();
 	float GetSheetWidth();
 	float GetSheetHeight();
+	int GetFrame();
+
 	SpriteRenderer(std::string texture);
 };

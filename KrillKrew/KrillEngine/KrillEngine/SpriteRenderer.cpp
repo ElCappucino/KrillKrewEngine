@@ -7,6 +7,10 @@ void SpriteRenderer::SetSpriteInfo(float spritewidth, float spriteheight, float 
 	this->sheetwidth = sheetwidth;
 	this->sheetheight = sheetheight;
 }
+void SpriteRenderer::SetFrame(int frame)
+{
+	this->frame = frame;
+}
 void SpriteRenderer::ShiftColumn()
 {
 	if (column == (sheetwidth / spritewidth) - 1)
@@ -44,8 +48,6 @@ SpriteRenderer::SpriteRenderer(std::string texture)
 	this->spriteheight = 0;
 	this->sheetwidth = 0;
 	this->sheetheight = 0;
-
-	
 }
 
 float SpriteRenderer::GetRow()
@@ -71,4 +73,8 @@ float SpriteRenderer::GetSheetWidth()
 float SpriteRenderer::GetSheetHeight()
 {
 	return sheetheight;
+}
+int SpriteRenderer::GetFrame()
+{
+	return frame;
 }

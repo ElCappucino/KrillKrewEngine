@@ -10,8 +10,11 @@
 /// @brief The class for creating object that render using texture
 class ImageObject :public DrawableObject
 {
+protected:
 	unsigned int texture;
 	SpriteRenderer* spriteRenderer;
+	SpritesheetInfo sheetInfo;
+	bool isAnimated;
 
 public:
 	ImageObject();
@@ -20,4 +23,7 @@ public:
 	void SetSpriteInfo(SpritesheetInfo info);
 	void SetTexture(std::string path);
 	void Render(glm::mat4 globalModelTransform);
+
+	void SetIsAnimated(bool value);
+	bool GetIsAnimated();
 };

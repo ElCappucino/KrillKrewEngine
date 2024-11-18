@@ -15,11 +15,9 @@
 class EntityObject : public ImageObject
 {
 protected:
-	unsigned int texture;
-	SpritesheetInfo sheetInfo;
+	
 	Collider* collider;
-	SpriteRenderer* spriteRenderer;
-	bool isAnimated;
+	
 public:
 
 	EntityObject();
