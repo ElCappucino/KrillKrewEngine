@@ -25,6 +25,8 @@ void LevelGameplay::LevelInit()
 																 -(SCREEN_HEIGHT / 2),
 																  (SCREEN_HEIGHT / 2));
 
+	timer = Timer::Instance();
+
 	/*targetSceneProjection = GameEngine::GetInstance()->GetRenderer()->GetOrthovalue();
 
 	zoomInfo.maxZoom_horizontal = 3;
@@ -399,7 +401,14 @@ void LevelGameplay::LevelUpdate()
 
 	// reduce cooldown skill
 	for (int i = 0; i < SDL_NumJoysticks() + playerNum; i++) {
-		player[i]->reduceCooldown();
+		timer->reset();
+		timer->tick();
+		time[i] += timer->getDeltaTime();
+		if (time[i] >= 1.0f) {
+			player[i]->reduceCooldown();
+			time[i] = 0;
+		}
+		
 	}
 
 	// slowness

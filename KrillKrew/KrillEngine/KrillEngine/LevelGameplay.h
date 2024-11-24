@@ -7,6 +7,7 @@
 #include "GizmosObject.h"
 
 
+
 /// @brief The class for level inherit test from P'tiam
 class LevelGameplay : public Level
 {
@@ -17,9 +18,10 @@ private:
 	CameraZoomInfo zoomInfo; // to initialize the zoom property
 	OrthographicValue targetSceneProjection; // use for lerping between the current projection and this (target projection).
 	Camera camera;
+	Timer* timer;
 
 	int dt = 0;
-
+	float time[4] = {0};
 	float previousWidth = 0, previousHeight = 0;
 
 public:

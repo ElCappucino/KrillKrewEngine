@@ -5,6 +5,7 @@
 #include "gtc/type_ptr.hpp"
 #include <string>
 #include <array>
+#include <chrono>
 #include "ImageObject.h"
 #include "Collider.h"
 #include "Ability.h"
