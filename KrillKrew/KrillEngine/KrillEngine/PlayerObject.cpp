@@ -136,7 +136,7 @@ void PlayerObject::reduceCooldown()
 	for (int i = 0; i < 3; i++) {
 		if (cooldown[i] > 0) {
 			cooldown[i] -= 1;
-			//std::cout << "Skill" << i << " " << getCooldown(i) << std::endl;
+			std::cout << "Skill" << i << " " << getCooldown(i) << std::endl;
 		}
 	}
 }

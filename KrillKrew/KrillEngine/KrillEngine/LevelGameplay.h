@@ -5,6 +5,7 @@
 #include "ProjectileObject.h"
 #include "TrapObject.h"
 #include "GizmosObject.h"
+#include "UiObject.h"
 
 
 

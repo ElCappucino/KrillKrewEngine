@@ -153,8 +153,10 @@
     <ClInclude Include="ProjectileObject.h" />
     <ClInclude Include="Shader.h" />
     <ClInclude Include="SquareMeshVbo.h" />
+    <ClInclude Include="Timer.h" />
     <ClInclude Include="TrapObject.h" />
     <ClInclude Include="TriangleMeshVbo.h" />
+    <ClInclude Include="UiObject.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Camera.cpp" />
@@ -180,8 +182,10 @@
     <ClCompile Include="ProjectileObject.cpp" />
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="SquareMeshVbo.cpp" />
+    <ClCompile Include="Timer.cpp" />
     <ClCompile Include="TrapObject.cpp" />
     <ClCompile Include="TriangleMeshVbo.cpp" />
+    <ClCompile Include="UiObject.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\Resource\Shader\fragment.shd" />

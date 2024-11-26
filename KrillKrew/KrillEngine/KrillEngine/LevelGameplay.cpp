@@ -82,6 +82,14 @@ void LevelGameplay::LevelInit()
 	objectsList.push_back(player[2]->GetCollider()->GetGizmos());
 	objectsList.push_back(player[3]->GetCollider()->GetGizmos());*/
 
+	UiObject* uiSkills = new UiObject();
+	uiSkills->SetSheetInfo(0, 0, 256, 256, 256, 256);
+	uiSkills->SetTexture("../Resource/Texture/trap.png");
+	uiSkills->SetPosition(glm::vec3(0,0,0));
+	uiSkills->SetSize(128.f, -128.f);
+	uiSkills->setNumOwner(0);
+	objectsList.push_back(uiSkills);
+
 	std::cout << "Init Level" << std::endl;
 }
 
@@ -212,7 +220,7 @@ void LevelGameplay::LevelUpdate()
 			if (Joystick::GetButtonDown(i, Joystick::Button::Triangle)) 
 			{
 				if (player[i + playerNum]->getCooldown(1) <= 0) {
-					player[i + playerNum]->setCooldown(1, 100);
+					player[i + playerNum]->setCooldown(1, 3);
 					TrapObject* Trap = new TrapObject();
 					Trap->SetSheetInfo(0, 0, 512, 512, 512, 512);
 					Trap->SetTexture("../Resource/Texture/trap.png");
@@ -401,14 +409,16 @@ void LevelGameplay::LevelUpdate()
 
 	// reduce cooldown skill
 	for (int i = 0; i < SDL_NumJoysticks() + playerNum; i++) {
-		timer->reset();
 		timer->tick();
-		time[i] += timer->getDeltaTime();
-		if (time[i] >= 1.0f) {
-			player[i]->reduceCooldown();
-			time[i] = 0;
+		timer->reset();
+		time[i + playerNum] += timer->getDeltaTime();
+		//std::cout << time[i] << std::endl;
+		for (int j = 0; j < 3; j++) {
+			if (time[i + playerNum] >= 1.0f && player[i + playerNum]->getCooldown(j) > 0) {
+				player[i + playerNum]->reduceCooldown();
+				time[i + playerNum] = 0.0f;
+			}
 		}
-		
 	}
 
 	// slowness
@@ -422,11 +432,25 @@ void LevelGameplay::LevelUpdate()
 			player[i]->setIsSlowness(false);
 		}
 	}
+
+	//Ui Skills
+	for (int i = 0; i < objectsList.size(); i++)
+	{
+		//std::cout << "Height | " << camera.GetCameraHeight() << std::endl;
+		//std::cout << "Width | " << camera.GetCameraWidth() << std::endl;
+		UiObject* ui = dynamic_cast<UiObject*>(objectsList[i]);
+		if (ui != nullptr) {
+			ui->SetPosition(glm::vec3(GameEngine::GetInstance()->GetRenderer()->GetOrthovalue().left + (100 * camera.GetCameraWidth() / 1246),
+									  GameEngine::GetInstance()->GetRenderer()->GetOrthovalue().bottom + (100 * camera.GetCameraHeight() / 720), 0));
+			ui->SetSize(128 * camera.GetCameraWidth() / 1246, -128 * camera.GetCameraHeight() / 720);
+		}
+	}
 }
 
 void LevelGameplay::LevelDraw()
 {
 	GameEngine::GetInstance()->Render(objectsList);
+	
 
 	for (int i = 0; i < objectsList.size(); i++)
 	{
