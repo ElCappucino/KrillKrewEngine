@@ -39,5 +39,4 @@ public:
 	virtual void OnTriggerExit(Collider* other);
 	
 	int getNumOwner();
-	Collider* GetCollider();
 };

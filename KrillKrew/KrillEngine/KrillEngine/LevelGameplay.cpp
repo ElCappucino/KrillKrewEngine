@@ -18,6 +18,12 @@ void LevelGameplay::LevelLoad()
 	spriteList["Prinny"] = SpritesheetInfo("Prinny", "../Resource/Texture/Prinny.png", 538, 538, 538, 538);
 	spriteList["Bomb"] = SpritesheetInfo("Bomb", "../Resource/Texture/Bomb_icon.png", 256, 256, 256, 256);
 	spriteList["Shark"] = SpritesheetInfo("Shark", "../Resource/Texture/shark_run_test.png", 256, 256, 1024, 256);
+	spriteList["Trap"] = SpritesheetInfo("Bomb", "../Resource/Texture/Trap.png", 512, 512, 512, 512);
+
+	spriteList["Xoey_UI"] = SpritesheetInfo("Xoey_UI", "../Resource/Texture/xoey.png", 430, 220, 430, 220);
+	spriteList["Byssa_UI"] = SpritesheetInfo("Byssa_UI", "../Resource/Texture/byssa.png", 430, 220, 430, 220);
+	spriteList["Crunk_UI"] = SpritesheetInfo("Crunk_UI", "../Resource/Texture/crunk.png", 430, 220, 430, 220);
+	spriteList["Ham_UI"] = SpritesheetInfo("Ham_UI", "../Resource/Texture/Ham.png", 430, 220, 430, 220);
 	//cout << "Load Level" << endl;
 }
 
@@ -120,8 +126,8 @@ void LevelGameplay::LevelInit()
 		{
 			if (count == 0) {
 				UiObject* uiSkills = new UiObject();
-				uiSkills->SetSheetInfo(0, 0, 430, 200, 430, 200);
-				uiSkills->SetTexture("../Resource/Texture/xoey.png");
+				uiSkills->SetSpriteInfo(spriteList.find("Xoey_UI")->second);
+				uiSkills->SetTexture(spriteList.find("Xoey_UI")->second.texture);
 				uiSkills->SetPosition(glm::vec3(0, 0, 0));
 				uiSkills->SetSize(215.f, -100.f);
 				uiSkills->setNumOwner(0);
@@ -131,8 +137,8 @@ void LevelGameplay::LevelInit()
 			}
 			else if (count == 1) {
 				UiObject* uiSkills1 = new UiObject();
-				uiSkills1->SetSheetInfo(0, 0, 430, 200, 430, 200);
-				uiSkills1->SetTexture("../Resource/Texture/Ham.png");
+				uiSkills1->SetSpriteInfo(spriteList.find("Ham_UI")->second);
+				uiSkills1->SetTexture(spriteList.find("Ham_UI")->second.texture);
 				uiSkills1->SetPosition(glm::vec3(0, 0, 0));
 				uiSkills1->SetSize(215.f, -100.f);
 				uiSkills1->setNumOwner(1);
@@ -142,8 +148,8 @@ void LevelGameplay::LevelInit()
 			}
 			else if (count == 2) {
 				UiObject* uiSkills2 = new UiObject();
-				uiSkills2->SetSheetInfo(0, 0, 430, 200, 430, 200);
-				uiSkills2->SetTexture("../Resource/Texture/byssa.png");
+				uiSkills2->SetSpriteInfo(spriteList.find("Byssa_UI")->second);
+				uiSkills2->SetTexture(spriteList.find("Byssa_UI")->second.texture);
 				uiSkills2->SetPosition(glm::vec3(0, 0, 0));
 				uiSkills2->SetSize(215.f, -100.f);
 				uiSkills2->setNumOwner(2);
@@ -153,8 +159,8 @@ void LevelGameplay::LevelInit()
 			}
 			else if (count == 3) {
 				UiObject* uiSkills3 = new UiObject();
-				uiSkills3->SetSheetInfo(0, 0, 430, 200, 430, 200);
-				uiSkills3->SetTexture("../Resource/Texture/crunk.png");
+				uiSkills3->SetSpriteInfo(spriteList.find("Crunk_UI")->second);
+				uiSkills3->SetTexture(spriteList.find("Crunk_UI")->second.texture);
 				uiSkills3->SetPosition(glm::vec3(0, 0, 0));
 				uiSkills3->SetSize(215.f, -100.f);
 				uiSkills3->setNumOwner(3);
@@ -252,8 +258,8 @@ void LevelGameplay::LevelUpdate()
 					player[i + playerNum]->setVelocity(0, 0, isPositiveX, isPositiveY);
 					player[i + playerNum]->setIsAiming(true);
 					ProjectileObject* projectile = new ProjectileObject();
-					projectile->SetSheetInfo(0, 0, 256, 256, 256, 256);
-					projectile->SetTexture("../Resource/Texture/Bomb_icon.png");
+					projectile->SetSpriteInfo(spriteList.find("Bomb")->second);
+					projectile->SetTexture(spriteList.find("Bomb")->second.texture);
 					projectile->SetPosition(player[i + playerNum]->getPos());
 					projectile->SetSize(256.f, -256.f);
 					projectile->setLifeTime(9999);
@@ -298,8 +304,8 @@ void LevelGameplay::LevelUpdate()
 				if (player[i + playerNum]->getCooldown(1) <= 0) {
 					player[i + playerNum]->setCooldown(1, 3);
 					TrapObject* Trap = new TrapObject();
-					Trap->SetSheetInfo(0, 0, 512, 512, 512, 512);
-					Trap->SetTexture("../Resource/Texture/trap.png");
+					Trap->SetSpriteInfo(spriteList.find("trap")->second);
+					Trap->SetTexture(spriteList.find("trap")->second.texture);
 					Trap->SetPosition(player[i + playerNum]->getPos());
 					Trap->SetSize(128.f, -128.f);
 					Trap->setNumOwner(player[i + playerNum]->getNumber());
@@ -631,17 +637,11 @@ void LevelGameplay::HandleKey(char key)
 
 	switch (key)
 	{
-	// switch player
+		// switch player
 	case '1': this->playerNum = 0; break;
 	case '2': this->playerNum = 1; break;
 	case '3': this->playerNum = 2; break;
 	case '4': this->playerNum = 3; break;
-	
-	// control player
-	/*case 'w': player[playerNum]->setVelocity(5, false); break;
-	case 's': player[playerNum]->setVelocity(-5, false); break;
-	case 'a': player[playerNum]->setVelocity(-5, true); break;
-	case 'd': player[playerNum]->setVelocity(5, true); break;*/
 
 	case 'q': GameEngine::GetInstance()->GetStateController()->gameStateNext = GameState::GS_QUIT; ; break;
 	case 'r': GameEngine::GetInstance()->GetStateController()->gameStateNext = GameState::GS_RESTART; ; break;
@@ -649,19 +649,19 @@ void LevelGameplay::HandleKey(char key)
 	case 'i':
 
 		GameEngine::GetInstance()->SetDrawArea(camera.getCameraOrthoValue().left + SCREEN_WIDTH * ZOOM_VELOCITY,
-											   camera.getCameraOrthoValue().right - SCREEN_WIDTH * ZOOM_VELOCITY,
-											   camera.getCameraOrthoValue().bottom + SCREEN_HEIGHT * ZOOM_VELOCITY,
-											   camera.getCameraOrthoValue().top - SCREEN_HEIGHT * ZOOM_VELOCITY);
-		
+			camera.getCameraOrthoValue().right - SCREEN_WIDTH * ZOOM_VELOCITY,
+			camera.getCameraOrthoValue().bottom + SCREEN_HEIGHT * ZOOM_VELOCITY,
+			camera.getCameraOrthoValue().top - SCREEN_HEIGHT * ZOOM_VELOCITY);
+
 		break;
 
 	case 'o':
 
 		GameEngine::GetInstance()->SetDrawArea(camera.getCameraOrthoValue().left - SCREEN_WIDTH * ZOOM_VELOCITY,
-												camera.getCameraOrthoValue().right + SCREEN_WIDTH * ZOOM_VELOCITY,
-												camera.getCameraOrthoValue().bottom - SCREEN_HEIGHT * ZOOM_VELOCITY,
-												camera.getCameraOrthoValue().top + SCREEN_HEIGHT * ZOOM_VELOCITY);
-		
+			camera.getCameraOrthoValue().right + SCREEN_WIDTH * ZOOM_VELOCITY,
+			camera.getCameraOrthoValue().bottom - SCREEN_HEIGHT * ZOOM_VELOCITY,
+			camera.getCameraOrthoValue().top + SCREEN_HEIGHT * ZOOM_VELOCITY);
+
 		break;
 	case 'y':
 		this->playerNum++;
@@ -670,69 +670,33 @@ void LevelGameplay::HandleKey(char key)
 		}
 		std::cout << "Player " << this->playerNum << std::endl;
 		break;
-
-	case 'n':
+	}
+	/*case 'n':
 		if (player[playerNum]->getIsShooting() == false) {
-			player[playerNum]->setisShooting(true);
+			player[playerNum]->setIsShooting(true);
 			ProjectileObject* projectile = new ProjectileObject();
 			projectile->SetSpriteInfo(spriteList.find("Bomb")->second);
 			projectile->SetTexture(spriteList.find("Bomb")->second.texture);
 			projectile->SetPosition(player[playerNum]->getPos());
 			projectile->SetSize(256.f, -256.f);
 			projectile->setLifeTime(10);
-			projectile->setVelocity(player[playerNum]->getVelocity());
+			projectile->setVelocity(player[playerNum]->getVelocity().x, );
 			objectsList.push_back(projectile);
 		}
 
 		break;
-	
 
-	
-	// control player
-	/*case 'w': player[playerNum]->setVelocity(5, false); break;
-	case 's': player[playerNum]->setVelocity(-5, false); break;
-	case 'a': player[playerNum]->setVelocity(-5, true); break;
-	case 'd': player[playerNum]->setVelocity(5, true); break;*/
-
-	case 'q': GameEngine::GetInstance()->GetStateController()->gameStateNext = GameState::GS_QUIT; ; break;
-	case 'r': GameEngine::GetInstance()->GetStateController()->gameStateNext = GameState::GS_RESTART; ; break;
-	case 'e': GameEngine::GetInstance()->GetStateController()->gameStateNext = GameState::GS_LEVELMAPTEST; ; break;
-	case 'i':
-
-		GameEngine::GetInstance()->SetDrawArea(camera.getCameraOrthoValue().left + SCREEN_WIDTH * ZOOM_VELOCITY,
-											   camera.getCameraOrthoValue().right - SCREEN_WIDTH * ZOOM_VELOCITY,
-											   camera.getCameraOrthoValue().bottom + SCREEN_HEIGHT * ZOOM_VELOCITY,
-											   camera.getCameraOrthoValue().top - SCREEN_HEIGHT * ZOOM_VELOCITY);
-		
-		break;
-
-	case 'o':
-
-		GameEngine::GetInstance()->SetDrawArea(camera.getCameraOrthoValue().left - SCREEN_WIDTH * ZOOM_VELOCITY,
-												camera.getCameraOrthoValue().right + SCREEN_WIDTH * ZOOM_VELOCITY,
-												camera.getCameraOrthoValue().bottom - SCREEN_HEIGHT * ZOOM_VELOCITY,
-												camera.getCameraOrthoValue().top + SCREEN_HEIGHT * ZOOM_VELOCITY);
-		
-		break;
-	case 'y':
-		this->playerNum++;
-		if (this->playerNum >= 4) {
-			this->playerNum = 0;
-		}
-		std::cout << "Player " << this->playerNum << std::endl;
-		break;
-
-	}
+	}*/
 	
 }
 
 void LevelGameplay::HandleMouse(int type, int x, int y)
 {
-	float realX, realY;
+	//float realX, realY;
 
-	// Calculate Real X Y 
-	realX = x;
-	realY = y;
+	//// Calculate Real X Y 
+	//realX = x;
+	//realY = y;
 }
 
 void LevelGameplay::Movement(float axisX, float axisY, bool isPositiveX, bool isPositiveY) {

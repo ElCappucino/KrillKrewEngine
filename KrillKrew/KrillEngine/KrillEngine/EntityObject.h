@@ -23,7 +23,7 @@ public:
 	EntityObject();
 	~EntityObject();
 
-	void SetSpriteInfo(SpritesheetInfo info);
+	virtual void SetSpriteInfo(SpritesheetInfo info);
 	void SetTexture(std::string path);
 	// void SetSheetInfo(float row, float column, float spritewidth, float spriteheight, float sheetwidth, float sheetheight);
 	void Render(glm::mat4 globalModelTransform);

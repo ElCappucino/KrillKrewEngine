@@ -8,6 +8,7 @@
 #include "GizmosObject.h"
 #include "TrapObject.h"
 #include <map>
+#include "Timer.h"
 #include "UiObject.h"
 
 
@@ -17,6 +18,7 @@ class LevelGameplay : public Level
 {
 private:
 	std::vector<DrawableObject*> objectsList;
+	std::map<std::string, SpritesheetInfo> spriteList;
 	PlayerObject* player[4]; // add up to 4 players
 	int playerSize = 0;
 	int playerNum = 0;

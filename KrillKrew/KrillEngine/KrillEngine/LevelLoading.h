@@ -13,6 +13,7 @@ class LevelLoading : public Level
 private:
 	std::vector<DrawableObject*> objectsList;
 	std::vector<DrawableObject*> UIsList;
+	std::map<std::string, SpritesheetInfo> spriteList;
 	ImageObject* player;
 	Camera camera;
 

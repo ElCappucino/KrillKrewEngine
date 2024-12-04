@@ -89,26 +89,26 @@ void Level::HandleKey(char key)
 
 void Level::HandleMouse(int type, int x, int y)
 {
-	float realX, realY;
+	//float realX, realY;
 
-	// Calculate Real X Y 
-	realX = x;
-	realY = y;
+	//// Calculate Real X Y 
+	//realX = x;
+	//realY = y;
 
-	GameEngine::GetInstance()->GetWindowWidth();
-	GameEngine::GetInstance()->GetWindowHeight();
+	//GameEngine::GetInstance()->GetWindowWidth();
+	//GameEngine::GetInstance()->GetWindowHeight();
 
-	std::cout << "X : " << realX << " Y : " << realY << std::endl;
+	//std::cout << "X : " << realX << " Y : " << realY << std::endl;
 
-	float cameraWidth = GameEngine::GetInstance()->GetRenderer()->GetOrthovalue().right - GameEngine::GetInstance()->GetRenderer()->GetOrthovalue().left;
-	float cameraHeight = GameEngine::GetInstance()->GetRenderer()->GetOrthovalue().top - GameEngine::GetInstance()->GetRenderer()->GetOrthovalue().bottom;
+	//float cameraWidth = GameEngine::GetInstance()->GetRenderer()->GetOrthovalue().right - GameEngine::GetInstance()->GetRenderer()->GetOrthovalue().left;
+	//float cameraHeight = GameEngine::GetInstance()->GetRenderer()->GetOrthovalue().top - GameEngine::GetInstance()->GetRenderer()->GetOrthovalue().bottom;
 
-	std::cout << "cameraWidth : " << cameraWidth << " cameraHeight : " << cameraHeight << std::endl;
+	//std::cout << "cameraWidth : " << cameraWidth << " cameraHeight : " << cameraHeight << std::endl;
 
-	player->SetPosition(glm::vec3(((cameraWidth / (float)GameEngine::GetInstance()->GetWindowWidth()) * realX) - (cameraWidth / 2.f), -(((cameraHeight / (float)GameEngine::GetInstance()->GetWindowHeight()) * realY) - (cameraHeight / 2.f)), 0));
+	//player->SetPosition(glm::vec3(((cameraWidth / (float)GameEngine::GetInstance()->GetWindowWidth()) * realX) - (cameraWidth / 2.f), -(((cameraHeight / (float)GameEngine::GetInstance()->GetWindowHeight()) * realY) - (cameraHeight / 2.f)), 0));
 
-	std::cout << "Player position x : " << cameraWidth / (float)GameEngine::GetInstance()->GetWindowWidth() * realX <<
-		"Player position y : " << cameraHeight / (float)GameEngine::GetInstance()->GetWindowHeight() * realY << std::endl;
+	//std::cout << "Player position x : " << cameraWidth / (float)GameEngine::GetInstance()->GetWindowWidth() * realX <<
+	//	"Player position y : " << cameraHeight / (float)GameEngine::GetInstance()->GetWindowHeight() * realY << std::endl;
 }
 
 void Level::Movement(float axisX, float axisY, bool isPositiveX, bool isPositiveY) {

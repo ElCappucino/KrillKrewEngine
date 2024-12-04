@@ -16,6 +16,7 @@ class LevelMapTest : public Level
 {
 private:
 	std::vector<DrawableObject*> objectsList;
+	std::map<std::string, SpritesheetInfo> spriteList;
 	DrawableObject* player[4]; // add up to 4 players
 
 	int groundTile[MAP_HEIGHT][MAP_WIDTH] = { 0 };
@@ -27,7 +28,7 @@ private:
 	// struct SheetPosition { int row, column; };
 
 	float dt = 0;
-
+	
 public:
 
 	virtual void LevelLoad();

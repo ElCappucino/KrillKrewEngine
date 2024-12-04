@@ -8,6 +8,7 @@
 #include "Joystick.h"
 #include "Timer.h"
 #include <math.h>
+#include <map>
 #include <chrono>
 
 /// @brief The class for setup object in the level
@@ -17,6 +18,7 @@ class Level
 private:
 	std::vector<DrawableObject*> objectsList;
 	std::vector<DrawableObject*> UIsList;
+	
 	ImageObject * player;
 	Camera camera;
 

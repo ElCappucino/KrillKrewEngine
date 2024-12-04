@@ -142,8 +142,3 @@ void ProjectileObject::setNumOwner(int num) {
 int ProjectileObject::getNumOwner() {
 	return playerNumOwner;
 }
-
-Collider* ProjectileObject::GetCollider()
-{
-	return hitbox;
-}

@@ -148,7 +148,6 @@ void PlayerObject::OnTriggerExit(Collider* other)
 	EntityObject::OnTriggerExit(other);
 
 	// Behavior
-	return hitbox;
 }
 
 void PlayerObject::setNumber(int num) 

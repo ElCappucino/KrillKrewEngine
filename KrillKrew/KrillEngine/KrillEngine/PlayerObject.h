@@ -52,7 +52,6 @@ public:
 	virtual void OnTriggerExit(Collider* other);
 	
 	bool getIsAiming();
-	Collider* GetCollider();
 	int getNumber();
 	float getCooldown(int skill);
 	float getDurationSlowness();
