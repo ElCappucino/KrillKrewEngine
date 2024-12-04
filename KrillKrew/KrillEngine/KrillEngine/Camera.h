@@ -16,6 +16,7 @@ private:
 	glm::vec2 rightVector;
 	glm::vec2 upVector;
 	glm::vec2 center;
+	glm::vec3 playerPos[4];
 
 	float cameraWidth;
 	float cameraHeight;
@@ -25,9 +26,10 @@ private:
 
 public:
 	Camera();
-	void LerpCamera(glm::vec3 p_1, glm::vec3 p_2, glm::vec3 p_3, glm::vec3 p_4);
+	void LerpCamera(int size);
 	float GetCameraWidth();
 	float GetCameraHeight();
+	void setPlayerPos(int playerNum, glm::vec3 pos);
 	glm::vec3 ScreenToCameraPosition(glm::vec3 screenPos);
 	glm::vec3 CameraToScreenPosition(glm::vec3 cameraPos);
 	glm::vec3 WorldToCameraPosition(glm::vec3 screenPos);

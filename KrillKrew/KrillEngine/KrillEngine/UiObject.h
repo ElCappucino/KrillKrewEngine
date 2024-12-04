@@ -5,25 +5,24 @@
 #include "gtc/type_ptr.hpp"
 #include <string>
 #include <array>
-#include "EntityObject.h"
+#include "ImageObject.h"
 #include "Collider.h"
 #include "Ability.h"
 
 /// @brief The class for creating object that render using texture
-class TrapObject :public EntityObject
+class UiObject :public ImageObject
 {
-	int lifeTime;
+	unsigned int texture;
+	SpritesheetInfo sheetInfo;
 	int playerNumOwner;
 
 public:
-	TrapObject();
-	~TrapObject();
-	void Render(glm::mat4 globalModelTransform);
+	UiObject();
+	~UiObject();
 	void SetTexture(std::string path);
-	void setLifeTime(int lifeTime);
+	void SetSheetInfo(float row, float column, float spritewidth, float spriteheight, float sheetwidth, float sheetheight);
+	void Render(glm::mat4 globalModelTransform);
 	void setNumOwner(int Num);
-	void reduceLifeTime();
-	int getLifetime();
 	int getNumOwner();
-
 };
+#pragma once

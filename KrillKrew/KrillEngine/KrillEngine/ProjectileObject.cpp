@@ -58,9 +58,16 @@ void ProjectileObject::Render(glm::mat4 globalModelTransform)
 	}
 }
 
-void ProjectileObject::setVelocity(glm::vec3 veloPlayer) 
-{
-	velocity = veloPlayer;
+void ProjectileObject::setVelocity(float axisX, float axisY, bool isPositiveX, bool isPositiveY) {
+
+	if (!isPositiveX) {
+		axisX = -axisX;
+	}
+	if (!isPositiveY) {
+		axisY = -axisY;
+	}
+	velocity = glm::vec3(axisX * 5.f, axisY * 5.f, 0);
+
 }
 
 glm::vec3 ProjectileObject::getVelocity() 
@@ -127,4 +134,16 @@ void ProjectileObject::OnTriggerExit(Collider* other)
 	EntityObject::OnTriggerExit(other);
 
 	// Behavior
+}
+void ProjectileObject::setNumOwner(int num) {
+	playerNumOwner = num;
+}
+
+int ProjectileObject::getNumOwner() {
+	return playerNumOwner;
+}
+
+Collider* ProjectileObject::GetCollider()
+{
+	return hitbox;
 }

@@ -1,25 +1,34 @@
 
-#include "TrapObject.h"
+#include "UiObject.h"
 #include "GameEngine.h"
 #include "SquareMeshVbo.h"
 
 
-TrapObject::TrapObject()
+UiObject::UiObject()
 {
-	collider = new Collider(Collider::Trigger, this);
+	
 }
 
 
-TrapObject::~TrapObject()
+UiObject::~UiObject()
 {
 }
 
-void TrapObject::SetTexture(std::string path)
+void UiObject::SetTexture(std::string path)
 {
 	texture = GameEngine::GetInstance()->GetRenderer()->LoadTexture(path);
 }
 
-void TrapObject::Render(glm::mat4 globalModelTransform)
+void UiObject::SetSheetInfo(float row, float column, float spritewidth, float spriteheight, float sheetwidth, float sheetheight) {
+	sheetInfo.row = row;
+	sheetInfo.column = column;
+	sheetInfo.spritewidth = spritewidth;
+	sheetInfo.spriteheight = spriteheight;
+	sheetInfo.sheetwidth = sheetwidth;
+	sheetInfo.sheetheight = sheetheight;
+}
+
+void UiObject::Render(glm::mat4 globalModelTransform)
 {
 	SquareMeshVbo* squareMesh = dynamic_cast<SquareMeshVbo*> (GameEngine::GetInstance()->GetRenderer()->GetMesh(SquareMeshVbo::MESH_NAME));
 
@@ -35,12 +44,7 @@ void TrapObject::Render(glm::mat4 globalModelTransform)
 		return;
 	}
 
-	squareMesh->ChangeTextureData(spriteRenderer->GetRow(),
-		spriteRenderer->GetColumn(),
-		spriteRenderer->GetSpriteWidth(),
-		spriteRenderer->GetSpriteHeight(),
-		spriteRenderer->GetSheetWidth(),
-		spriteRenderer->GetSheetHeight());
+	squareMesh->ChangeTextureData(sheetInfo.row, sheetInfo.column, sheetInfo.spritewidth, sheetInfo.spriteheight, sheetInfo.sheetwidth, sheetInfo.sheetheight);
 
 	std::vector <glm::mat4> matrixStack;
 
@@ -57,21 +61,11 @@ void TrapObject::Render(glm::mat4 globalModelTransform)
 	}
 }
 
-void TrapObject::setLifeTime(int lifeTime) {
-	this->lifeTime = lifeTime;
-}
-
-void TrapObject::reduceLifeTime() {
-	lifeTime -= 1;
-}
-int TrapObject::getLifetime() {
-	return lifeTime;
-}
-
-void TrapObject::setNumOwner(int num) {
+void UiObject::setNumOwner(int num) {
 	playerNumOwner = num;
 }
 
-int TrapObject::getNumOwner() {
+int UiObject::getNumOwner() {
 	return playerNumOwner;
 }
+

@@ -57,7 +57,8 @@ void PlayerObject::Render(glm::mat4 globalModelTransform)
 	}
 }
 
-void PlayerObject::setVelocity(float axisX, float axisY , bool isPositiveX, bool isPositiveY) {
+void PlayerObject::setVelocity(float axisX, float axisY , bool isPositiveX, bool isPositiveY) 
+{
 
 	if (!isPositiveX) {
 		axisX = -axisX;
@@ -67,20 +68,38 @@ void PlayerObject::setVelocity(float axisX, float axisY , bool isPositiveX, bool
 	}
 	/*cout << " X | " << axisX << endl;
 	cout << " Y | " << axisY << endl;*/
-	velocity = glm::vec3(axisX * 5.f, axisY * 5.f, 0);
-	
+	if (isSlowness) {
+		velocity = glm::vec3(axisX * 5.f, axisY * 5.f, 0) / slowness;
+	}
+	else 
+	{
+		velocity = glm::vec3(axisX * 5.f, axisY * 5.f, 0);
+	}
 	
 }
 
-glm::vec3 PlayerObject::getVelocity(){
+glm::vec3 PlayerObject::getVelocity()
+{
 	return velocity;
 }
 
-void PlayerObject::setisShooting(bool isShoot) {
+void PlayerObject::setIsShooting(bool isShoot) 
+{
 	isShooting = isShoot;
 }
-bool PlayerObject::getIsShooting() {
+bool PlayerObject::getIsShooting() 
+{
 	return isShooting;
+}
+
+void PlayerObject::setIsAiming(bool isAim) 
+{
+	isAiming = isAim;
+}
+
+bool  PlayerObject::getIsAiming() 
+{
+	return isAiming;
 }
 
 Collider* PlayerObject::GetCollider()
@@ -129,4 +148,60 @@ void PlayerObject::OnTriggerExit(Collider* other)
 	EntityObject::OnTriggerExit(other);
 
 	// Behavior
+	return hitbox;
+}
+
+void PlayerObject::setNumber(int num) 
+{
+	number = num;
+}
+
+int PlayerObject::getNumber()
+{
+	return number;
+}
+
+void PlayerObject::setCooldown(int skill, int time) 
+{
+	cooldown[skill] = time;
+}
+void PlayerObject::reduceCooldown() 
+{
+	for (int i = 0; i < 3; i++) {
+		if (cooldown[i] > 0) {
+			cooldown[i] -= 1;
+			std::cout << "Skill" << i << " " << getCooldown(i) << std::endl;
+		}
+	}
+}
+float PlayerObject::getCooldown(int skill) 
+{
+	return cooldown[skill];
+}
+
+void PlayerObject::setDurationSlowness(int time) 
+{
+	durationSlowness = time;
+}
+void PlayerObject::reduceDurationSlowness()
+{
+	
+	durationSlowness -= 1;
+	std::cout << "durationSlowness player" << getNumber() << " " << durationSlowness << std::endl;
+	
+}
+
+void PlayerObject::setIsSlowness(bool isSlow)
+{
+	isSlowness = isSlow;
+}
+
+float PlayerObject::getDurationSlowness() 
+{
+	return durationSlowness;
+}
+
+bool PlayerObject::getIsSlowness()
+{
+	return isSlowness;
 }
