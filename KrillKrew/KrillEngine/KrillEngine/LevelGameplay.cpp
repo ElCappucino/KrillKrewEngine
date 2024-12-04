@@ -44,7 +44,7 @@ void LevelGameplay::LevelInit()
 	obj1->SetPosition(glm::vec3(-200.f, -200.f, 0));
 	obj1->setNumber(0);
 	objectsList.push_back(obj1);
-
+	playerSize++;
 	player[0] = obj1;
 
 	PlayerObject* obj2 = new PlayerObject();
@@ -54,7 +54,7 @@ void LevelGameplay::LevelInit()
 	obj2->SetPosition(glm::vec3(200.f, -200.f, 0));
 	obj2->setNumber(1);
 	objectsList.push_back(obj2);
-
+	playerSize++;
 	player[1] = obj2;
 
 	PlayerObject* obj3 = new PlayerObject();
@@ -64,31 +64,79 @@ void LevelGameplay::LevelInit()
 	obj3->SetPosition(glm::vec3(-200.f, 200.f, 0));
 	obj3->setNumber(2);
 	objectsList.push_back(obj3);
-
+	playerSize++;
 	player[2] = obj3;
 
-	PlayerObject* obj4 = new PlayerObject();
+	/*PlayerObject* obj4 = new PlayerObject();
 	obj4->SetSheetInfo(0, 0, 538, 581, 538, 581);
 	obj4->SetTexture("../Resource/Texture/Prinny.png");
 	obj4->SetSize(256.f, -256.f);
 	obj4->SetPosition(glm::vec3(200.f, 200.f, 0));
 	obj4->setNumber(3);
 	objectsList.push_back(obj4);
-
-	player[3] = obj4;
+	playerSize++;
+	player[3] = obj4;*/
 
 	/*objectsList.push_back(player[0]->GetCollider()->GetGizmos());
 	objectsList.push_back(player[1]->GetCollider()->GetGizmos());
 	objectsList.push_back(player[2]->GetCollider()->GetGizmos());
 	objectsList.push_back(player[3]->GetCollider()->GetGizmos());*/
 
-	UiObject* uiSkills = new UiObject();
-	uiSkills->SetSheetInfo(0, 0, 256, 256, 256, 256);
-	uiSkills->SetTexture("../Resource/Texture/trap.png");
-	uiSkills->SetPosition(glm::vec3(0,0,0));
-	uiSkills->SetSize(128.f, -128.f);
-	uiSkills->setNumOwner(0);
-	objectsList.push_back(uiSkills);
+	//create Ui by PlayerObject
+	int sizePlayer = objectsList.size();
+	int count = 0;
+	for (int i = 0; i < sizePlayer; i++) {
+		
+		PlayerObject* player = dynamic_cast<PlayerObject*>(objectsList[i]);
+		if (player != nullptr)
+		{
+			if (count == 0) {
+				UiObject* uiSkills = new UiObject();
+				uiSkills->SetSheetInfo(0, 0, 430, 200, 430, 200);
+				uiSkills->SetTexture("../Resource/Texture/xoey.png");
+				uiSkills->SetPosition(glm::vec3(0, 0, 0));
+				uiSkills->SetSize(215.f, -100.f);
+				uiSkills->setNumOwner(0);
+				objectsList.push_back(uiSkills);
+				count++;
+				std::cout << "create Ui xoey" << std::endl;
+			}
+			else if (count == 1) {
+				UiObject* uiSkills1 = new UiObject();
+				uiSkills1->SetSheetInfo(0, 0, 430, 200, 430, 200);
+				uiSkills1->SetTexture("../Resource/Texture/Ham.png");
+				uiSkills1->SetPosition(glm::vec3(0, 0, 0));
+				uiSkills1->SetSize(215.f, -100.f);
+				uiSkills1->setNumOwner(1);
+				objectsList.push_back(uiSkills1);
+				count++;
+				std::cout << "create Ui Ham" << std::endl;
+			}
+			else if (count == 2) {
+				UiObject* uiSkills2 = new UiObject();
+				uiSkills2->SetSheetInfo(0, 0, 430, 200, 430, 200);
+				uiSkills2->SetTexture("../Resource/Texture/byssa.png");
+				uiSkills2->SetPosition(glm::vec3(0, 0, 0));
+				uiSkills2->SetSize(215.f, -100.f);
+				uiSkills2->setNumOwner(2);
+				objectsList.push_back(uiSkills2);
+				count++;
+				std::cout << "create Ui byssa" << std::endl;
+			}
+			else if (count == 3) {
+				UiObject* uiSkills3 = new UiObject();
+				uiSkills3->SetSheetInfo(0, 0, 430, 200, 430, 200);
+				uiSkills3->SetTexture("../Resource/Texture/crunk.png");
+				uiSkills3->SetPosition(glm::vec3(0, 0, 0));
+				uiSkills3->SetSize(215.f, -100.f);
+				uiSkills3->setNumOwner(3);
+				objectsList.push_back(uiSkills3);
+				count++;
+				std::cout << "create Ui crunk" << std::endl;
+			}
+		}
+	}
+	
 
 	std::cout << "Init Level" << std::endl;
 }
@@ -247,8 +295,10 @@ void LevelGameplay::LevelUpdate()
 		
 	}
 
-	
-	camera.LerpCamera(player[0]->getPos(), player[1]->getPos(), player[2]->getPos(), player[3]->getPos()); // update smooth camera here
+	for(int i = 0; i < playerSize; i++){
+		camera.setPlayerPos(i, player[i]->getPos());
+	}
+	camera.LerpCamera(playerSize); // update smooth camera here
 
 	
 
@@ -440,9 +490,10 @@ void LevelGameplay::LevelUpdate()
 		//std::cout << "Width | " << camera.GetCameraWidth() << std::endl;
 		UiObject* ui = dynamic_cast<UiObject*>(objectsList[i]);
 		if (ui != nullptr) {
-			ui->SetPosition(glm::vec3(GameEngine::GetInstance()->GetRenderer()->GetOrthovalue().left + (100 * camera.GetCameraWidth() / 1246),
-									  GameEngine::GetInstance()->GetRenderer()->GetOrthovalue().bottom + (100 * camera.GetCameraHeight() / 720), 0));
-			ui->SetSize(128 * camera.GetCameraWidth() / 1246, -128 * camera.GetCameraHeight() / 720);
+			//std::cout << "Ui id | " << ui->getNumOwner() << std::endl;
+			ui->SetPosition(glm::vec3(GameEngine::GetInstance()->GetRenderer()->GetOrthovalue().left + ((300 * (ui->getNumOwner() + 1)) * camera.GetCameraWidth() / 1246) - (85 * ui->getNumOwner()),
+									  GameEngine::GetInstance()->GetRenderer()->GetOrthovalue().bottom + (50 * camera.GetCameraHeight() / 720), 0));
+			ui->SetSize(215.f * camera.GetCameraWidth() / 1246, -100.f * camera.GetCameraHeight() / 720);
 		}
 	}
 }

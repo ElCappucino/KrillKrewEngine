@@ -15,6 +15,7 @@ class LevelGameplay : public Level
 private:
 	std::vector<DrawableObject*> objectsList;
 	PlayerObject* player[4]; // add up to 4 players
+	int playerSize = 0;
 	int playerNum = 0;
 	CameraZoomInfo zoomInfo; // to initialize the zoom property
 	OrthographicValue targetSceneProjection; // use for lerping between the current projection and this (target projection).

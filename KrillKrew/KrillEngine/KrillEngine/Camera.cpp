@@ -4,9 +4,8 @@ Camera::Camera()
 {
 
 }
-void Camera::LerpCamera(glm::vec3 p_1, glm::vec3 p_2, glm::vec3 p_3, glm::vec3 p_4)
+void Camera::LerpCamera(int size)
 {
-	glm::vec3 playerPos[4] = { p_1, p_2, p_3, p_4 };
 	float current_top = GameEngine::GetInstance()->GetRenderer()->GetOrthovalue().top;
 	float current_bottom = GameEngine::GetInstance()->GetRenderer()->GetOrthovalue().bottom;
 	float current_left = GameEngine::GetInstance()->GetRenderer()->GetOrthovalue().left;
@@ -22,7 +21,7 @@ void Camera::LerpCamera(glm::vec3 p_1, glm::vec3 p_2, glm::vec3 p_3, glm::vec3 p
 	float maxTop = 0;
 	float maxBottom = 0;
 
-	for (int i = 0; i < 4; i++) {
+	for (int i = 0; i < size; i++) {
 
 		if (playerPos[i].x > maxRight) {
 
@@ -104,6 +103,9 @@ float Camera::GetCameraHeight()
 {
 	return GameEngine::GetInstance()->GetRenderer()->GetOrthovalue().top -
 		   GameEngine::GetInstance()->GetRenderer()->GetOrthovalue().bottom;
+}
+void Camera::setPlayerPos(int playerNum, glm::vec3 pos) {
+	playerPos[playerNum] = pos;
 }
 glm::vec3 Camera::ScreenToCameraPosition(glm::vec3 screenPos)
 {
