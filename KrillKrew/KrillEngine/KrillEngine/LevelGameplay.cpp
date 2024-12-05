@@ -552,9 +552,9 @@ void LevelGameplay::LevelUpdate()
 	for (int i = 0; i < objectsList.size(); i++)
 	{
 		UiObject* ui = dynamic_cast<UiObject*>(objectsList[i]);
-		if (ui != nullptr) 
-		{
-			ui->SetPosition(glm::vec3(GameEngine::GetInstance()->GetRenderer()->GetOrthovalue().left + ((300 * (ui->getNumOwner() + 1)) * camera.GetCameraWidth() / 1246) - (85 * ui->getNumOwner()),
+		if (ui != nullptr) {
+			//std::cout << "Ui id | " << ui->getNumOwner() << std::endl;
+			ui->SetPosition(glm::vec3(GameEngine::GetInstance()->GetRenderer()->GetOrthovalue().left + (((300 * (ui->getNumOwner() + 1)) - (85 * ui->getNumOwner())) * camera.GetCameraWidth() / 1246),
 									  GameEngine::GetInstance()->GetRenderer()->GetOrthovalue().bottom + (50 * camera.GetCameraHeight() / 720), 0));
 			ui->SetSize(215.f * camera.GetCameraWidth() / 1246, -100.f * camera.GetCameraHeight() / 720);
 		}
