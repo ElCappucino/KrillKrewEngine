@@ -9,6 +9,7 @@ EntityObject::EntityObject()
 	isAnimated = false;
 	collider = new Collider(Collider::Trigger, this);
 	spriteRenderer = new SpriteRenderer("");
+	this->pos = glm::vec3(0, 0, 0);
 }
 
 

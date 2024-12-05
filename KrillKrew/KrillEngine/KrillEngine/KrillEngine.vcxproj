@@ -147,6 +147,7 @@
     <ClInclude Include="Level.h" />
     <ClInclude Include="LevelLoading.h" />
     <ClInclude Include="LevelMapTest.h" />
+    <ClInclude Include="LevelShowcase.h" />
     <ClInclude Include="LineMeshVbo.h" />
     <ClInclude Include="MeshVbo.h" />
     <ClInclude Include="pch.h" />
@@ -177,6 +178,7 @@
     <ClCompile Include="Level.cpp" />
     <ClCompile Include="LevelLoading.cpp" />
     <ClCompile Include="LevelMapTest.cpp" />
+    <ClCompile Include="LevelShowcase.cpp" />
     <ClCompile Include="LineMeshVbo.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="MeshVbo.cpp" />

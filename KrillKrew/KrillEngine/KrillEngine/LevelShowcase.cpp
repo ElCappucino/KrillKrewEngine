@@ -1,11 +1,11 @@
-#include "LevelGameplay.h"
+#include "LevelShowcase.h"
 
-float lerp(float a, float b, float t)
-{
-	return a + t * (b - a);
-}
+//float lerp(float a, float b, float t)
+//{
+//	return a + t * (b - a);
+//}
 
-void LevelGameplay::LevelLoad()
+void LevelShowcase::LevelLoad()
 {
 	SquareMeshVbo* square = new SquareMeshVbo();
 	square->LoadData();
@@ -24,19 +24,160 @@ void LevelGameplay::LevelLoad()
 	spriteList["Byssa_UI"] = SpritesheetInfo("Byssa_UI", "../Resource/Texture/byssa.png", 430, 220, 430, 220);
 	spriteList["Crunk_UI"] = SpritesheetInfo("Crunk_UI", "../Resource/Texture/crunk.png", 430, 220, 430, 220);
 	spriteList["Ham_UI"] = SpritesheetInfo("Ham_UI", "../Resource/Texture/Ham.png", 430, 220, 430, 220);
+	
+	spriteList["Blobtile"] = SpritesheetInfo("Blobtile", "../Resource/Texture/blobtile_test_kf1.png", 128, 128, 1536, 512);
 	//cout << "Load Level" << endl;
 }
 
-void LevelGameplay::LevelInit()
+void LevelShowcase::LevelInit()
 {
+	std::cout << "Init Level" << std::endl;
+
 
 	GameEngine::GetInstance()->GetRenderer()->SetOrthoProjection(-(SCREEN_WIDTH / 2),
-																  (SCREEN_WIDTH / 2),
-																 -(SCREEN_HEIGHT / 2),
-																  (SCREEN_HEIGHT / 2));
+		(SCREEN_WIDTH / 2),
+		-(SCREEN_HEIGHT / 2),
+		(SCREEN_HEIGHT / 2));
 
 	timer = Timer::Instance();
 
+	std::map<int, std::pair<int, int>> blob_lookup_table = {
+	{16,	{1, 1}},
+	{17,	{2, 1}},
+	{1,		{3, 1}},
+	{0,		{4, 1}},
+
+	{20,	{1, 2}},
+	{21,	{2, 2}},
+	{5,		{3, 2}},
+	{4,		{4, 2}},
+
+	{84,	{1, 3}},
+	{85,	{2, 3}},
+	{69,	{3, 3}},
+	{68,	{4, 3}},
+
+	{80,	{1, 4}},
+	{81,	{2, 4}},
+	{65,	{3, 4}},
+	{64,	{4, 4}},
+
+	{213,	{1, 5}},
+	{29,	{2, 5}},
+	{23,	{3, 5}},
+	{117,	{4, 5}},
+
+	{92,	{1, 6}},
+	{127,	{2, 6}},
+	{223,	{3, 6}},
+	{71,	{4, 6}},
+
+	{116,	{1, 7}},
+	{253,	{2, 7}},
+	{247,	{3, 7}},
+	{197,	{4, 7}},
+
+	{87,	{1, 8}},
+	{113,	{2, 8}},
+	{209,	{3, 8}},
+	{93,	{4, 8}},
+
+	{28,	{1, 9}},
+	{31,	{2, 9}},
+	{95,	{3, 9}},
+	{7,		{4, 9}},
+
+	{125,	{1, 10}},
+	{119,	{2, 10}},
+	{255,	{3, 10}},
+	{199,	{4, 10}},
+
+	{124,	{1, 11}},
+	{256,	{2, 11}}, // blank
+	{221,	{3, 11}},
+	{215,	{4, 11}},
+
+	{112,	{1, 12}},
+	{245,	{2, 12}},
+	{241,	{3, 12}},
+	{193,	{4, 12}},
+	};
+
+	TileImport(groundTile, "../Resource/Texture/Tilemap1.txt");
+
+	// Create and Initialize 4 players object
+
+	float map_left = -300.f;
+	float map_top = 250.f;
+
+	for (int i = 0; i < MAP_HEIGHT; i++)
+	{
+		for (int j = 0; j < MAP_WIDTH; j++)
+		{
+			int flag = groundTile[i][j];
+
+			std::pair<int, int> pos;
+
+			if (i == 0 ||
+				i == MAP_HEIGHT - 1 ||
+				j == 0 ||
+				j == MAP_WIDTH - 1 ||
+				flag == 0)
+			{
+				continue;
+
+				/*auto it = blob_lookup_table.find(256);
+				if (it != blob_lookup_table.end())
+				{
+					pos = it->second;
+					std::cout << "Bitset = " << 256 << std::endl;
+					std::cout << "pair = " << it->second.first << " " << it->second.second << std::endl;
+				}*/
+
+			}
+			else
+			{
+				std::bitset<8> surround;
+				surround[0] = groundTile[i - 1][j];
+				surround[1] = groundTile[i - 1][j + 1];
+				surround[2] = groundTile[i][j + 1];
+				surround[3] = groundTile[i + 1][j + 1];
+				surround[4] = groundTile[i + 1][j];
+				surround[5] = groundTile[i + 1][j - 1];
+				surround[6] = groundTile[i][j - 1];
+				surround[7] = groundTile[i - 1][j - 1];
+
+				if (!(surround[0] && surround[2])) { surround[1] = 0; }
+				if (!(surround[2] && surround[4])) { surround[3] = 0; }
+				if (!(surround[4] && surround[6])) { surround[5] = 0; }
+				if (!(surround[6] && surround[0])) { surround[7] = 0; }
+
+				auto it = blob_lookup_table.find((int)(surround.to_ulong()));
+				std::cout << "Bitset = " << (int)surround.to_ulong() << std::endl;
+				if (it != blob_lookup_table.end())
+				{
+					pos = it->second;
+
+					std::cout << "pair = " << it->second.first << " " << it->second.second << std::endl;
+				}
+				else {
+					std::cout << "blob_lookup_table.end()" << std::endl;
+				}
+			}
+
+			// std::cout << flag << ",";
+			ImageObject* obj = new ImageObject();
+			obj->SetSpriteInfo(spriteList.find("Blobtile")->second);
+			obj->GetSpriteRenderer()->ShiftTo(pos.first - 1, pos.second - 1);
+			obj->SetTexture(spriteList.find("Blobtile")->second.texture);
+			obj->SetSize(128.f, -128.f);
+			obj->SetPosition(glm::vec3(map_left + (j * 128.f), map_top - (i * 128.f), 0));
+			objectsList.push_back(obj);
+
+			// std::cout << "posX = " << obj->getPos().x << " posY = " << obj->getPos().y << std::endl;
+		}
+		std::cout << std::endl;
+	}
 	// Create and Initialize 4 players object
 
 	// Example Code
@@ -104,7 +245,7 @@ void LevelGameplay::LevelInit()
 	int sizePlayer = objectsList.size();
 	int count = 0;
 	for (int i = 0; i < sizePlayer; i++) {
-		
+
 		PlayerObject* player = dynamic_cast<PlayerObject*>(objectsList[i]);
 		if (player != nullptr)
 		{
@@ -158,14 +299,14 @@ void LevelGameplay::LevelInit()
 	std::cout << "Init Level" << std::endl;
 }
 
-void LevelGameplay::LevelUpdate()
+void LevelShowcase::LevelUpdate()
 {
 	dt++;
 
 	// UpdateInput();
 	UpdateInput();
 
-	for(int i = 0; i < playerSize; i++){
+	for (int i = 0; i < playerSize; i++) {
 		camera.setPlayerPos(i, players[i]->getPos());
 	}
 	camera.LerpCamera(playerSize); // update smooth camera here
@@ -180,7 +321,7 @@ void LevelGameplay::LevelUpdate()
 		}
 		else
 		{
-			if (entity->GetIsAnimated() && 
+			if (entity->GetIsAnimated() &&
 				dt % entity->GetSpriteRenderer()->GetFrame() == 0)
 			{
 				entity->GetSpriteRenderer()->ShiftColumn();
@@ -203,7 +344,7 @@ void LevelGameplay::LevelUpdate()
 	//Ui Skills
 	UpdateUI();
 }
-void LevelGameplay::UpdateInput()
+void LevelShowcase::UpdateInput()
 {
 	if (SDL_NumJoysticks() > 0)
 	{
@@ -222,7 +363,7 @@ void LevelGameplay::UpdateInput()
 			{
 				norAxisX = 0;
 			}
-			else 
+			else
 			{
 				float axis = atan2(axisY, axisX);
 				norAxisX = cos(axis);
@@ -232,7 +373,7 @@ void LevelGameplay::UpdateInput()
 			{
 				norAxisY = 0;
 			}
-			else 
+			else
 			{
 				float axis = atan2(axisY, axisX);
 				norAxisY = sin(axis);
@@ -257,7 +398,7 @@ void LevelGameplay::UpdateInput()
 			}
 
 
-			if (players[i + playerNum]->getIsAiming() == false) 
+			if (players[i + playerNum]->getIsAiming() == false)
 			{
 				players[i + playerNum]->setVelocity(abs(norAxisX), abs(norAxisY), isPositiveX, isPositiveY);
 			}
@@ -347,7 +488,7 @@ void LevelGameplay::UpdateInput()
 	}
 }
 
-void LevelGameplay::UpdateCollision()
+void LevelShowcase::UpdateCollision()
 {
 	// trap collider player
 	for (int i = 0; i < objectsList.size(); i++)
@@ -412,10 +553,10 @@ void LevelGameplay::UpdateCollision()
 				Collider col2 = *entity2->GetCollider();
 
 				glm::vec2 delta = glm::vec2(abs(entity1->getPos().x - entity2->getPos().x),
-											abs(entity1->getPos().y - entity2->getPos().y));
+					abs(entity1->getPos().y - entity2->getPos().y));
 
 				glm::vec2 previousDelta = glm::vec2(abs(col1.GetPreviousPos().x - col2.GetPreviousPos().x),
-													abs(col1.GetPreviousPos().y - col2.GetPreviousPos().y));
+					abs(col1.GetPreviousPos().y - col2.GetPreviousPos().y));
 
 				float overlapX = (abs(col1.GetHalfSize().x)) + (abs(col2.GetHalfSize().x)) - delta.x;
 				float overlapY = (abs(col1.GetHalfSize().y)) + (abs(col2.GetHalfSize().y)) - delta.y;
@@ -457,7 +598,7 @@ void LevelGameplay::UpdateCollision()
 	}
 
 	// projectile
-	for (int i = 0; i < objectsList.size(); i++) 
+	for (int i = 0; i < objectsList.size(); i++)
 	{
 		ProjectileObject* projectile = dynamic_cast<ProjectileObject*>(objectsList[i]);
 
@@ -477,7 +618,7 @@ void LevelGameplay::UpdateCollision()
 
 			if (player != nullptr)
 			{
-				if (projectile->getNumOwner() != player->getNumber()) 
+				if (projectile->getNumOwner() != player->getNumber())
 				{
 					Collider col1 = *projectile->GetCollider();
 					Collider col2 = *player->GetCollider();
@@ -499,7 +640,7 @@ void LevelGameplay::UpdateCollision()
 	}
 }
 
-void LevelGameplay::UpdateProjectile()
+void LevelShowcase::UpdateProjectile()
 {
 	for (int i = 0; i < objectsList.size(); i++)
 	{
@@ -522,7 +663,7 @@ void LevelGameplay::UpdateProjectile()
 	}
 }
 
-void LevelGameplay::UpdateCooldown()
+void LevelShowcase::UpdateCooldown()
 {
 	for (int i = 0; i < SDL_NumJoysticks() + playerNum; i++)
 	{
@@ -541,7 +682,7 @@ void LevelGameplay::UpdateCooldown()
 	}
 }
 
-void LevelGameplay::UpdateMovement()
+void LevelShowcase::UpdateMovement()
 {
 	for (int i = 0; i < SDL_NumJoysticks() + playerNum; i++)
 	{
@@ -557,7 +698,7 @@ void LevelGameplay::UpdateMovement()
 	}
 }
 
-void LevelGameplay::UpdateUI()
+void LevelShowcase::UpdateUI()
 {
 	for (int i = 0; i < objectsList.size(); i++)
 	{
@@ -571,10 +712,10 @@ void LevelGameplay::UpdateUI()
 	}
 }
 
-void LevelGameplay::LevelDraw()
+void LevelShowcase::LevelDraw()
 {
 	GameEngine::GetInstance()->Render(objectsList);
-	
+
 
 	// Collider Gizmos update
 	for (int i = 0; i < objectsList.size(); i++)
@@ -600,7 +741,7 @@ void LevelGameplay::LevelDraw()
 	// cout << "Draw Level" << endl;
 }
 
-void LevelGameplay::LevelFree()
+void LevelShowcase::LevelFree()
 {
 	for (DrawableObject* obj : objectsList) {
 		delete obj;
@@ -610,14 +751,14 @@ void LevelGameplay::LevelFree()
 	//cout << "Free Level" << endl;
 }
 
-void LevelGameplay::LevelUnload()
+void LevelShowcase::LevelUnload()
 {
 	GameEngine::GetInstance()->ClearMesh();
 
 	//cout << "Unload Level" << endl;
 }
 
-void LevelGameplay::HandleKey(char key)
+void LevelShowcase::HandleKey(char key)
 {
 
 	switch (key)
@@ -631,12 +772,12 @@ void LevelGameplay::HandleKey(char key)
 	case 'q': GameEngine::GetInstance()->GetStateController()->gameStateNext = GameState::GS_QUIT; ; break;
 	case 'r': GameEngine::GetInstance()->GetStateController()->gameStateNext = GameState::GS_RESTART; ; break;
 	case 'e':
-		GameEngine::GetInstance()->GetStateController()->loadingState = GameState::GS_LEVELMAPTEST;
+		GameEngine::GetInstance()->GetStateController()->loadingState = GameState::GS_LEVELGAMEPLAY;
 		GameEngine::GetInstance()->GetStateController()->gameStateNext = GameState::GS_LEVELLOADING; ; break;
 	case 'i':
 
 		GameEngine::GetInstance()->SetDrawArea
-			(camera.getCameraOrthoValue().left + SCREEN_WIDTH * ZOOM_VELOCITY,
+		(camera.getCameraOrthoValue().left + SCREEN_WIDTH * ZOOM_VELOCITY,
 			camera.getCameraOrthoValue().right - SCREEN_WIDTH * ZOOM_VELOCITY,
 			camera.getCameraOrthoValue().bottom + SCREEN_HEIGHT * ZOOM_VELOCITY,
 			camera.getCameraOrthoValue().top - SCREEN_HEIGHT * ZOOM_VELOCITY);
@@ -646,7 +787,7 @@ void LevelGameplay::HandleKey(char key)
 	case 'o':
 
 		GameEngine::GetInstance()->SetDrawArea
-			(camera.getCameraOrthoValue().left - SCREEN_WIDTH * ZOOM_VELOCITY,
+		(camera.getCameraOrthoValue().left - SCREEN_WIDTH * ZOOM_VELOCITY,
 			camera.getCameraOrthoValue().right + SCREEN_WIDTH * ZOOM_VELOCITY,
 			camera.getCameraOrthoValue().bottom - SCREEN_HEIGHT * ZOOM_VELOCITY,
 			camera.getCameraOrthoValue().top + SCREEN_HEIGHT * ZOOM_VELOCITY);
@@ -663,13 +804,37 @@ void LevelGameplay::HandleKey(char key)
 	}
 }
 
-void LevelGameplay::HandleMouse(int type, int x, int y)
+void LevelShowcase::HandleMouse(int type, int x, int y)
 {
-	
+
 }
 
-void LevelGameplay::Movement(float axisX, float axisY, bool isPositiveX, bool isPositiveY) 
+void LevelShowcase::Movement(float axisX, float axisY, bool isPositiveX, bool isPositiveY)
 {
-	
+
 }
 
+void LevelShowcase::TileImport(int TileBuffer[][MAP_WIDTH], std::string fileName) {
+	std::ifstream mapfile(fileName);
+	std::string line;
+	int row = 0;
+	int column = 1;
+	if (!mapfile.is_open()) {
+		// error
+		std::cout << "Error: reading tile information" << std::endl;
+	}
+	else {
+		int counter = 0;
+		while (!mapfile.eof()) {
+			//string line;
+			if (getline(mapfile, line, ',')) {
+
+				TileBuffer[counter / MAP_WIDTH][counter % MAP_WIDTH] = std::stoi(line);
+
+				counter++;
+			}
+		}
+		mapfile.close();
+
+	}
+}

@@ -6,6 +6,8 @@
 
 ImageObject::ImageObject()
 {
+	this->isAnimated = false;
+	this->texture = 0;
 	spriteRenderer = new SpriteRenderer("");
 }
 

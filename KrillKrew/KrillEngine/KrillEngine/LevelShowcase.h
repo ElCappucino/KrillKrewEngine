@@ -7,19 +7,32 @@
 #include "TrapObject.h"
 #include "GizmosObject.h"
 #include "TrapObject.h"
-#include <map>
 #include "Timer.h"
 #include "UiObject.h"
 
+#include <string>
+#include <fstream>
+#include <sstream>
+#include <iostream>
+#include <map>
+#include <bitset>
 
+#define MAP_WIDTH  21
+#define MAP_HEIGHT 15
 
 /// @brief The class for level inherit test from P'tiam
-class LevelGameplay : public Level
+class LevelShowcase : public Level
 {
 private:
 	std::vector<DrawableObject*> objectsList;
 	std::map<std::string, SpritesheetInfo> spriteList;
+
 	PlayerObject* players[4]; // add up to 4 players
+
+	int groundTile[MAP_HEIGHT][MAP_WIDTH] = { 0 };
+	int propsTile[MAP_HEIGHT][MAP_WIDTH] = { 0 };
+	int colliderTile[MAP_HEIGHT][MAP_WIDTH] = { 0 };
+
 	int playerSize = 0;
 	int playerNum = 0;
 	CameraZoomInfo zoomInfo; // to initialize the zoom property
@@ -28,7 +41,7 @@ private:
 	Timer* timer;
 
 	int dt = 0;
-	float time[4] = {0};
+	float time[4] = { 0 };
 	float previousWidth = 0, previousHeight = 0;
 
 public:
@@ -48,6 +61,8 @@ public:
 	void UpdateCooldown();
 	void UpdateMovement();
 	void UpdateUI();
-	
+
+	void TileImport(int TileBuffer[][MAP_WIDTH], std::string fileName);
+
 	// void CameraLerp();
 };

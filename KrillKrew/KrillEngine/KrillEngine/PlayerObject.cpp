@@ -6,7 +6,13 @@
 
 PlayerObject::PlayerObject()
 {
-	
+	this->isShooting = false;
+	this->isAiming = false;
+	this->number = 0;
+	this->slowness = 2;
+	this->durationSlowness = 0;
+	this->isSlowness = false;
+	this->pos = glm::vec3(0, 0, 0);
 }
 
 
@@ -97,7 +103,7 @@ void PlayerObject::setIsAiming(bool isAim)
 	isAiming = isAim;
 }
 
-bool  PlayerObject::getIsAiming() 
+bool PlayerObject::getIsAiming() 
 {
 	return isAiming;
 }

@@ -16,10 +16,10 @@ class PlayerObject :public EntityObject
 {
 	std::array<Ability*, 3> abilities;
 	glm::vec3 velocity;
-	bool isShooting = false;
-	bool isAiming = false;
+	bool isShooting;
+	bool isAiming;
 	int number;
-	float cooldown[3];
+	float cooldown[3] = {0};
 	float slowness = 2;
 	float durationSlowness;
 	bool isSlowness;
