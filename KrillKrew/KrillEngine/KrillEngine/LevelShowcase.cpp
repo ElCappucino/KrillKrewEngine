@@ -25,7 +25,7 @@ void LevelShowcase::LevelLoad()
 	spriteList["Crunk_UI"] = SpritesheetInfo("Crunk_UI", "../Resource/Texture/crunk.png", 430, 220, 430, 220);
 	spriteList["Ham_UI"] = SpritesheetInfo("Ham_UI", "../Resource/Texture/Ham.png", 430, 220, 430, 220);
 	
-	spriteList["Blobtile"] = SpritesheetInfo("Blobtile", "../Resource/Texture/blobtile_test_kf1.png", 128, 128, 1536, 512);
+	spriteList["Blobtile"] = SpritesheetInfo("Blobtile", "../Resource/Texture/tileset_01.png", 128, 128, 1664, 512);
 	//cout << "Load Level" << endl;
 }
 
@@ -33,8 +33,10 @@ void LevelShowcase::LevelInit()
 {
 	std::cout << "Init Level" << std::endl;
 
+	glClearColor(0.f, 180.f / 255.f, 171.f / 255.f, 1.f);
 
-	GameEngine::GetInstance()->GetRenderer()->SetOrthoProjection(-(SCREEN_WIDTH / 2),
+	GameEngine::GetInstance()->GetRenderer()->SetOrthoProjection(
+		-(SCREEN_WIDTH / 2),
 		(SCREEN_WIDTH / 2),
 		-(SCREEN_HEIGHT / 2),
 		(SCREEN_HEIGHT / 2));
@@ -42,73 +44,142 @@ void LevelShowcase::LevelInit()
 	timer = Timer::Instance();
 
 	std::map<int, std::pair<int, int>> blob_lookup_table = {
-	{16,	{1, 1}},
-	{17,	{2, 1}},
-	{1,		{3, 1}},
+
+	{666,	{1, 1}},
+	{777,	{2, 1}},
+	{888,	{3, 1}},
+	{999,	{4, 1}},
+
+	{16,	{1, 2}},
+	{17,	{2, 2}},
+	{1,		{3, 2}},
+	{0,		{4, 2}},
+
+	{20,	{1, 3}},
+	{21,	{2, 3}},
+	{5,		{3, 3}},
+	{4,		{4, 3}},
+
+	{84,	{1, 4}},
+	{85,	{2, 4}},
+	{69,	{3, 4}},
+	{68,	{4, 4}},
+
+	{80,	{1, 5}},
+	{81,	{2, 5}},
+	{65,	{3, 5}},
+	{64,	{4, 5}},
+
+	{213,	{1, 6}},
+	{29,	{2, 6}},
+	{23,	{3, 6}},
+	{117,	{4, 6}},
+
+	{92,	{1, 7}},
+	{127,	{2, 7}},
+	{223,	{3, 7}},
+	{71,	{4, 7}},
+
+	{116,	{1, 8}},
+	{253,	{2, 8}},
+	{247,	{3, 8}},
+	{197,	{4, 8}},
+
+	{87,	{1, 9}},
+	{113,	{2, 9}},
+	{209,	{3, 9}},
+	{93,	{4, 9}},
+
+	{28,	{1, 10}},
+	{31,	{2, 10}},
+	{95,	{3, 10}},
+	{7,		{4, 10}},
+
+	{125,	{1, 11}},
+	{119,	{2, 11}},
+	{255,	{3, 11}},
+	{199,	{4, 11}},
+
+	{124,	{1, 12}},
+	{256,	{2, 12}}, // blank
+	{221,	{3, 12}},
+	{215,	{4, 12}},
+
+	{112,	{1, 13}},
+	{245,	{2, 13}},
+	{241,	{3, 13}},
+	{193,	{4, 13}},
+	};
+
+	std::map<int, std::pair<int, int>> blob_lookup_table_underground = {
+	// 1
+	{16,	{2, 12}},
+	{17,	{2, 12}},
+	{1,		{4, 1}},
 	{0,		{4, 1}},
+	// 2
+	{20,	{2, 12}},
+	{21,	{2, 12}},
+	{5,		{3, 1}},
+	{4,		{3, 1}},
+	// 3
+	{84,	{2, 12} },
+	{ 85,	{2, 12} },
+	{ 69,	{2, 1} },
+	{68,	{2, 1}},
+	// 4
+	{80,	{2, 12}},
+	{81,	{2, 12}},
+	{65,	{1, 1}},
+	{64,	{1, 1}},
+	// 5
+	{213,	{2, 12}},
+	{29,	{2, 12}},
+	{23,	{2, 12}},
+	{117,	{2, 12}},
+	// 6
+	{92,	{2, 12}},
+	{127,	{2, 12}},
+	{223,	{2, 12}},
+	{71,	{2, 1}},
+	// 7
+	{116,	{2, 12}},
+	{253,	{2, 12}},
+	{247,	{2, 12}},
+	{197,	{2, 1}},
+	// 8
+	{87,	{2, 12}},
+	{113,	{2, 12}},
+	{209,	{2, 12}},
+	{93,	{2, 12}},
 
-	{20,	{1, 2}},
-	{21,	{2, 2}},
-	{5,		{3, 2}},
-	{4,		{4, 2}},
+	{28,	{2, 12}},
+	{31,	{2, 12}},
+	{95,	{2, 12}},
+	{7,		{3, 1}},
 
-	{84,	{1, 3}},
-	{85,	{2, 3}},
-	{69,	{3, 3}},
-	{68,	{4, 3}},
+	{125,	{2, 12}},
+	{119,	{2, 12}},
+	{255,	{2, 12}},
+	{199,	{2, 1}},
 
-	{80,	{1, 4}},
-	{81,	{2, 4}},
-	{65,	{3, 4}},
-	{64,	{4, 4}},
+	{124,	{2, 12}},
+	{256,	{2, 12}}, // blank
+	{221,	{2, 12}},
+	{215,	{2, 12}},
 
-	{213,	{1, 5}},
-	{29,	{2, 5}},
-	{23,	{3, 5}},
-	{117,	{4, 5}},
-
-	{92,	{1, 6}},
-	{127,	{2, 6}},
-	{223,	{3, 6}},
-	{71,	{4, 6}},
-
-	{116,	{1, 7}},
-	{253,	{2, 7}},
-	{247,	{3, 7}},
-	{197,	{4, 7}},
-
-	{87,	{1, 8}},
-	{113,	{2, 8}},
-	{209,	{3, 8}},
-	{93,	{4, 8}},
-
-	{28,	{1, 9}},
-	{31,	{2, 9}},
-	{95,	{3, 9}},
-	{7,		{4, 9}},
-
-	{125,	{1, 10}},
-	{119,	{2, 10}},
-	{255,	{3, 10}},
-	{199,	{4, 10}},
-
-	{124,	{1, 11}},
-	{256,	{2, 11}}, // blank
-	{221,	{3, 11}},
-	{215,	{4, 11}},
-
-	{112,	{1, 12}},
-	{245,	{2, 12}},
-	{241,	{3, 12}},
-	{193,	{4, 12}},
+	{112,	{2, 12}	},
+	{245,	{2, 12}	},
+	{241,	{2, 12}	},
+	{193,	{1, 1}	},
 	};
 
 	TileImport(groundTile, "../Resource/Texture/Tilemap1.txt");
 
 	// Create and Initialize 4 players object
 
-	float map_left = -300.f;
-	float map_top = 250.f;
+	float map_left = -1280.f;
+	float map_top = 1080.f;
 
 	for (int i = 0; i < MAP_HEIGHT; i++)
 	{
@@ -121,19 +192,53 @@ void LevelShowcase::LevelInit()
 			if (i == 0 ||
 				i == MAP_HEIGHT - 1 ||
 				j == 0 ||
-				j == MAP_WIDTH - 1 ||
-				flag == 0)
+				j == MAP_WIDTH - 1)
 			{
 				continue;
-
-				/*auto it = blob_lookup_table.find(256);
-				if (it != blob_lookup_table.end())
+			}
+			else if (flag == 0)
+			{
+				if (groundTile[i - 1][j] == 0)
 				{
-					pos = it->second;
-					std::cout << "Bitset = " << 256 << std::endl;
-					std::cout << "pair = " << it->second.first << " " << it->second.second << std::endl;
-				}*/
+					pos = { 2, 12 };
+				}
+				else
+				{
 
+					int upperPos = i - 1;
+
+					std::bitset<8> surround;
+					surround[0] = groundTile[upperPos - 1][j];
+					surround[1] = groundTile[upperPos - 1][j + 1];
+					surround[2] = groundTile[upperPos][j + 1];
+					surround[3] = groundTile[upperPos + 1][j + 1];
+					surround[4] = groundTile[upperPos + 1][j];
+					surround[5] = groundTile[upperPos + 1][j - 1];
+					surround[6] = groundTile[upperPos][j - 1];
+					surround[7] = groundTile[upperPos - 1][j - 1];
+
+					if (!(surround[0] && surround[2])) { surround[1] = 0; }
+					if (!(surround[2] && surround[4])) { surround[3] = 0; }
+					if (!(surround[4] && surround[6])) { surround[5] = 0; }
+					if (!(surround[6] && surround[0])) { surround[7] = 0; }
+
+					auto it = blob_lookup_table_underground.find((int)(surround.to_ulong()));
+
+					std::cout << "Bitset = " << (int)surround.to_ulong() << std::endl;
+
+					if (it != blob_lookup_table_underground.end())
+					{
+						pos = it->second;
+
+						std::cout << "pair = " << it->second.first << " " << it->second.second << std::endl;
+					}
+					else 
+					{
+						pos = { 2, 12 };
+						std::cout << "blob_lookup_table.end()" << std::endl;
+					}
+				}
+				
 			}
 			else
 			{
@@ -188,7 +293,7 @@ void LevelShowcase::LevelInit()
 	obj1->SetIsAnimated(true);
 	obj1->GetSpriteRenderer()->SetFrame(10);
 	obj1->SetSize(256.f, -256.f);
-	obj1->SetPosition(glm::vec3(-200.f, -200.f, 0));
+	obj1->SetPosition(glm::vec3(-1000.f, -700.f, 0));
 	obj1->setNumber(0);
 	objectsList.push_back(obj1);
 	playerSize++;
@@ -201,7 +306,7 @@ void LevelShowcase::LevelInit()
 	obj2->SetIsAnimated(true);
 	obj2->GetSpriteRenderer()->SetFrame(15);
 	obj2->SetSize(256.f, -256.f);
-	obj2->SetPosition(glm::vec3(200.f, -200.f, 0));
+	obj2->SetPosition(glm::vec3(1000.f, -700.f, 0));
 	obj2->setNumber(1);
 	objectsList.push_back(obj2);
 	playerSize++;
@@ -211,7 +316,7 @@ void LevelShowcase::LevelInit()
 	obj3->SetSpriteInfo(spriteList.find("Shark")->second);
 	obj3->SetTexture(spriteList.find("Shark")->second.texture);
 	obj3->SetSize(256.f, -256.f);
-	obj3->SetPosition(glm::vec3(-200.f, 200.f, 0));
+	obj3->SetPosition(glm::vec3(-1000.f, 700.f, 0));
 	obj3->setNumber(2);
 	objectsList.push_back(obj3);
 	playerSize++;
@@ -221,7 +326,7 @@ void LevelShowcase::LevelInit()
 	obj4->SetSpriteInfo(spriteList.find("Shark")->second);
 	obj4->SetTexture(spriteList.find("Shark")->second.texture);
 	obj4->SetSize(256.f, -256.f);
-	obj4->SetPosition(glm::vec3(200.f, 200.f, 0));
+	obj4->SetPosition(glm::vec3(1000.f, 700.f, 0));
 	obj4->setNumber(3);
 	objectsList.push_back(obj4);
 	playerSize++;
@@ -329,6 +434,7 @@ void LevelShowcase::LevelUpdate()
 		}
 	}
 
+
 	// projectile collier player
 	UpdateCollision();
 
@@ -383,7 +489,7 @@ void LevelShowcase::UpdateInput()
 			{
 				isPositiveX = true;
 			}
-			else if (axisX < 0)
+			else if (axisX <= 0)
 			{
 				isPositiveX = false;
 			}
@@ -397,16 +503,19 @@ void LevelShowcase::UpdateInput()
 				isPositiveY = true;
 			}
 
-
+			if (abs(axisX) > 0.2f) { players[i + playerNum]->UpdateFacingSide(!isPositiveX); }
 			if (players[i + playerNum]->getIsAiming() == false)
 			{
 				players[i + playerNum]->setVelocity(abs(norAxisX), abs(norAxisY), isPositiveX, isPositiveY);
 			}
+			
+			// update facing
+			
 
 			//Select ability
-			if (Joystick::GetButtonDown(i, Joystick::Button::L1)) {
+			/*if (Joystick::GetButtonDown(i, Joystick::Button::L1)) {
 
-			}
+			}*/
 
 
 			//Aim
@@ -483,6 +592,12 @@ void LevelShowcase::UpdateInput()
 			}
 
 			players[i + playerNum]->Translate(players[i + playerNum]->getVelocity());
+
+			if (Joystick::GetButtonDown(i, Joystick::Button::P5Button))
+			{
+				GameEngine::GetInstance()->GetStateController()->loadingState = GameState::GS_LEVELGAMEPLAY;
+				GameEngine::GetInstance()->GetStateController()->gameStateNext = GameState::GS_LEVELLOADING;
+			}
 		}
 
 	}

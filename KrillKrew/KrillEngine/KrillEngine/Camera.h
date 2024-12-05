@@ -7,7 +7,7 @@
 #define SCREEN_HEIGHT 720
 #define SCREEN_RATIO_X 1.78
 #define SCREEN_RATIO_Y 1
-#define CAMERA_PADDING 150
+#define CAMERA_PADDING 500
 #define ZOOM_VELOCITY 0.05
 
 class Camera 

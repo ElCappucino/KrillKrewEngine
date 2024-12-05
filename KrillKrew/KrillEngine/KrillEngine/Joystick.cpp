@@ -60,9 +60,11 @@ void Joystick::Shutdown()
 }
 void Joystick::Update()
 {
+	
 	for (auto it = availableJoysticks.begin(); it != availableJoysticks.end(); it++)
 	{
 		Controller* c = it->second.get();
+		// std::cout << "SDL_JoystickGetType = " << SDL_JoystickGetType(it->second->gc) << std::endl;
 		if (c && c->gc) 
 		{
 			c->lastButtons = c->buttons;

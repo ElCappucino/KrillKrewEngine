@@ -18,6 +18,7 @@ class PlayerObject :public EntityObject
 	glm::vec3 velocity;
 	bool isShooting;
 	bool isAiming;
+	bool isFacingLeft;
 	int number;
 	float cooldown[3] = {0};
 	float slowness = 2;
@@ -28,6 +29,7 @@ public:
 	
 	PlayerObject();
 	~PlayerObject();
+	void UpdateFacingSide(bool isLeft);
 	void SetTexture(std::string path);
 	void Render(glm::mat4 globalModelTransform);
 	void setVelocity(float axisX, float axisY, bool isPositiveX, bool isPositiveY);

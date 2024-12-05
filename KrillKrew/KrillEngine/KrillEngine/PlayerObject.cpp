@@ -8,6 +8,7 @@ PlayerObject::PlayerObject()
 {
 	this->isShooting = false;
 	this->isAiming = false;
+	this->isFacingLeft = true;
 	this->number = 0;
 	this->slowness = 2;
 	this->durationSlowness = 0;
@@ -27,6 +28,9 @@ void PlayerObject::SetTexture(std::string path)
 
 void PlayerObject::Render(glm::mat4 globalModelTransform)
 {
+
+	
+
 	SquareMeshVbo* squareMesh = dynamic_cast<SquareMeshVbo*> (GameEngine::GetInstance()->GetRenderer()->GetMesh(SquareMeshVbo::MESH_NAME));
 
 	GLuint modelMatixId = GameEngine::GetInstance()->GetRenderer()->GetModelMatrixAttrId();
@@ -209,4 +213,13 @@ float PlayerObject::getDurationSlowness()
 bool PlayerObject::getIsSlowness()
 {
 	return isSlowness;
+}
+
+void PlayerObject::UpdateFacingSide(bool isLeft)
+{
+	if (isLeft && isFacingLeft == false || !isLeft && isFacingLeft == true)
+	{
+		this->size.x = this->size.x * -1;
+		isFacingLeft = isLeft;
+	}
 }

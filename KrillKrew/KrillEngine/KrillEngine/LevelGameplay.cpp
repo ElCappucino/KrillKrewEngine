@@ -35,6 +35,7 @@ void LevelGameplay::LevelInit()
 																 -(SCREEN_HEIGHT / 2),
 																  (SCREEN_HEIGHT / 2));
 
+	GameEngine::GetInstance()->GetRenderer()->SetClearColor(1.0f, 1.0f, 200.0f / 255);
 	timer = Timer::Instance();
 
 	// Create and Initialize 4 players object
@@ -202,14 +203,18 @@ void LevelGameplay::LevelUpdate()
 
 	//Ui Skills
 	UpdateUI();
+
 }
+
 void LevelGameplay::UpdateInput()
 {
 	if (SDL_NumJoysticks() > 0)
 	{
+		
 		Joystick::Update();
 		for (int i = 0; i < SDL_NumJoysticks(); i++)
 		{
+
 			float axisX = Joystick::GetAxis(i, Joystick::Axis::LeftStickHorizontal) / 32768.0f;
 			float axisY = Joystick::GetAxis(i, Joystick::Axis::LeftStickVertical) / 32768.0f;
 			float norAxisX = 0;
@@ -264,14 +269,14 @@ void LevelGameplay::UpdateInput()
 
 			//Select ability
 			if (Joystick::GetButtonDown(i, Joystick::Button::L1)) {
-
+				std::cout << "SDL_NumJoysticks() > 0" << std::endl;
 			}
 
 
 			//Aim
 			if (Joystick::GetButtonDown(i, Joystick::Button::R1))
 			{
-
+				std::cout << "Shoot " << i + playerNum << std::endl;
 				if (players[i + playerNum]->getIsShooting() == false && players[i + playerNum]->getIsAiming() == false) {
 					players[i + playerNum]->setVelocity(0, 0, isPositiveX, isPositiveY);
 					players[i + playerNum]->setIsAiming(true);
@@ -316,9 +321,76 @@ void LevelGameplay::UpdateInput()
 				}
 			}
 
+			
 			//Place trap
+			if (Joystick::GetButtonDown(i, Joystick::Button::Square))
+			{
+				std::cout << "Square" << std::endl;
+			}
+			if (Joystick::GetButtonDown(i, Joystick::Button::Cross))
+			{
+				std::cout << "Cross" << std::endl;
+			}
+			if (Joystick::GetButtonDown(i, Joystick::Button::Circle))
+			{
+				std::cout << "Circle" << std::endl;
+			}
+			if (Joystick::GetButtonDown(i, Joystick::Button::L1))
+			{
+				std::cout << "L1" << std::endl;
+			}
+			if (Joystick::GetButtonDown(i, Joystick::Button::R1))
+			{
+				std::cout << "R1" << std::endl;
+			}
+			if (Joystick::GetButtonDown(i, Joystick::Button::LeftStickDown))
+			{
+				std::cout << "LeftStickDown" << std::endl;
+			}
+			if (Joystick::GetButtonDown(i, Joystick::Button::RightStickDown))
+			{
+				std::cout << "RightStickDown" << std::endl;
+			}
+			if (Joystick::GetButtonDown(i, Joystick::Button::DPAD_Up))
+			{
+				std::cout << "DPAD_Up" << std::endl;
+			}
+			if (Joystick::GetButtonDown(i, Joystick::Button::DPAD_Down))
+			{
+				std::cout << "DPAD_Down" << std::endl;
+			}
+			if (Joystick::GetButtonDown(i, Joystick::Button::DPAD_Left))
+			{
+				std::cout << "DPAD_Left" << std::endl;
+			}
+			if (Joystick::GetButtonDown(i, Joystick::Button::DPAD_Right))
+			{
+				std::cout << "DPAD_Right" << std::endl;
+			}
+			if (Joystick::GetButtonDown(i, Joystick::Button::ShareButton))
+			{
+				std::cout << "Back" << std::endl;
+			}
+			if (Joystick::GetButtonDown(i, Joystick::Button::P5Button))
+			{
+				std::cout << "Guide" << std::endl;
+			}
+			if (Joystick::GetButtonDown(i, Joystick::Button::OptionsButton))
+			{
+				std::cout << "Start" << std::endl;
+			}
+			if (Joystick::GetButtonDown(i, Joystick::Button::P5Button))
+			{
+				GameEngine::GetInstance()->GetStateController()->loadingState = GameState::GS_LEVELMAPTEST;
+				GameEngine::GetInstance()->GetStateController()->gameStateNext = GameState::GS_LEVELLOADING;
+			}
+			if (Joystick::GetButtonDown(i, Joystick::Button::Touchpad))
+			{
+				std::cout << "SDL_CONTROLLER_BUTTON_TOUCHPAD" << std::endl;
+			}
 			if (Joystick::GetButtonDown(i, Joystick::Button::Triangle))
 			{
+				std::cout << "Triangle" << std::endl;
 				if (players[i + playerNum]->getCooldown(1) <= 0) {
 					players[i + playerNum]->setCooldown(1, 3);
 					TrapObject* Trap = new TrapObject();

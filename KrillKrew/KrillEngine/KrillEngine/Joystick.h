@@ -22,7 +22,8 @@ public:
     // This reference from PS5 controller config
     enum class Button
     {
-       Square = 0,
+        // Debug Version
+       /*Square = 0,
        Cross,
        Circle,
        Triangle,
@@ -45,6 +46,25 @@ public:
        P5Button,
        ShareButton,
        OptionsButton,
+       Count*/
+        
+       // Release Version
+       Cross = 0,
+       Circle,
+       Square,
+       Triangle,
+       ShareButton,
+       P5Button,
+       OptionsButton,
+       LeftStickDown,
+       RightStickDown,
+       L1,
+       R1,
+       DPAD_Up,
+       DPAD_Down,
+       DPAD_Left,
+       DPAD_Right,
+       Touchpad,    
        Count
     };
 

@@ -20,6 +20,8 @@ void LevelMapTest::LevelInit()
 																 -(SCREEN_HEIGHT / 2),
 																  (SCREEN_HEIGHT / 2));
 
+	GameEngine::GetInstance()->GetRenderer()->SetClearColor(1.0f, 1.0f, 200.0f / 255);
+
 	std::map<int, std::pair<int, int>> blob_lookup_table = {
 	{16,	{1, 1}},
 	{17,	{2, 1}},
@@ -177,7 +179,11 @@ void LevelMapTest::LevelUpdate()
 			Joystick::GetAxis(0, Joystick::Axis::LeftStickHorizontal));
 	}
 	
-
+	if (Joystick::GetButtonDown(0, Joystick::Button::P5Button))
+	{
+		GameEngine::GetInstance()->GetStateController()->loadingState = GameState::GS_LEVELSHOWCASE;
+		GameEngine::GetInstance()->GetStateController()->gameStateNext = GameState::GS_LEVELLOADING;
+	}
 	
 
 	//cout << "Update Level" << endl;
