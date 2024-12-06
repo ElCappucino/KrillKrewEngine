@@ -5,6 +5,7 @@
 #include "gtc/type_ptr.hpp"
 #include <string>
 #include <array>
+#include <map>
 #include "EntityObject.h"
 #include <chrono>
 #include "ImageObject.h"
@@ -14,6 +15,20 @@
 /// @brief The class for creating object that render using texture
 class PlayerObject :public EntityObject
 {
+public:
+	virtual enum class AnimationState
+	{
+		Idle,
+		Running,
+		Melee,
+		Shooting,
+		PlaceItem
+	};
+
+private:
+
+	AnimationState currAnimState;
+	std::map<AnimationState, SpritesheetInfo> animList;
 	std::array<Ability*, 3> abilities;
 	glm::vec3 velocity;
 	bool isShooting;
@@ -43,6 +58,10 @@ public:
 	void setIsSlowness(bool isSlow);
 	glm::vec3 getVelocity();
 	bool getIsShooting();
+
+	virtual void SetAnimationSprite(AnimationState state, SpritesheetInfo spriteInfo);
+	virtual void ChangeAnimationState(AnimationState anim);
+	virtual void UpdateCurrentAnimation();
 
 	virtual Collider* GetCollider();
 

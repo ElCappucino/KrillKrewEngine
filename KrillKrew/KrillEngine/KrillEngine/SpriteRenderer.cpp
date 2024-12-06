@@ -7,6 +7,10 @@ void SpriteRenderer::SetSpriteInfo(float spritewidth, float spriteheight, float 
 	this->sheetwidth = sheetwidth;
 	this->sheetheight = sheetheight;
 }
+void SpriteRenderer::SetTexture(std::string texture)
+{
+	this->texture = texture;
+}
 void SpriteRenderer::SetFrame(int frame)
 {
 	this->frame = frame;

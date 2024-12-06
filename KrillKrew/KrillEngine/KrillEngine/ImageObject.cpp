@@ -76,3 +76,4 @@ bool ImageObject::GetIsAnimated()
 {
 	return isAnimated;
 }
+

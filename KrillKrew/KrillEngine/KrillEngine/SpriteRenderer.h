@@ -21,6 +21,7 @@ private:
 public:
 
 	void SetSpriteInfo(float spritewidth, float spriteheight, float sheetwidth, float sheetheight);
+	void SetTexture(std::string texture);
 	void SetFrame(int frame);
 
 	void ShiftColumn();

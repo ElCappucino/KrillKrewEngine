@@ -17,7 +17,9 @@ void LevelGameplay::LevelLoad()
 
 	spriteList["Prinny"] = SpritesheetInfo("Prinny", "../Resource/Texture/Prinny.png", 538, 538, 538, 538);
 	spriteList["Bomb"] = SpritesheetInfo("Bomb", "../Resource/Texture/Bomb_icon.png", 256, 256, 256, 256);
-	spriteList["Shark"] = SpritesheetInfo("Shark", "../Resource/Texture/shark_run_test.png", 256, 256, 1024, 256);
+	spriteList["Shark_run"] = SpritesheetInfo("Shark_run", "../Resource/Texture/shark_run_test.png", 256, 256, 1024, 256);
+	spriteList["Shark_idle"] = SpritesheetInfo("Shart_idle", "../Resource/Texture/shark_Idle_test.png", 256, 256, 256, 256);
+	
 	spriteList["Trap"] = SpritesheetInfo("Bomb", "../Resource/Texture/Trap.png", 512, 512, 512, 512);
 
 	spriteList["Xoey_UI"] = SpritesheetInfo("Xoey_UI", "../Resource/Texture/xoey.png", 430, 220, 430, 220);
@@ -43,46 +45,55 @@ void LevelGameplay::LevelInit()
 	// Example Code
 	PlayerObject* obj1 = new PlayerObject();
 	obj1->GetCollider()->SetCollisionType(Collider::Kinematic);
-	obj1->SetSpriteInfo(spriteList.find("Shark")->second);
-	obj1->SetTexture(spriteList.find("Shark")->second.texture);
+	obj1->SetSpriteInfo(spriteList.find("Shark_idle")->second);
+	obj1->SetTexture(spriteList.find("Shark_idle")->second.texture);
 	obj1->SetIsAnimated(true);
 	obj1->GetSpriteRenderer()->SetFrame(10);
 	obj1->SetSize(256.f, -256.f);
 	obj1->SetPosition(glm::vec3(-200.f, -200.f, 0));
 	obj1->setNumber(0);
+	obj1->SetAnimationSprite(PlayerObject::AnimationState::Idle, spriteList.find("Shark_idle")->second);
+	obj1->SetAnimationSprite(PlayerObject::AnimationState::Running, spriteList.find("Shark_run")->second);
 	objectsList.push_back(obj1);
 	playerSize++;
 	players[0] = obj1;
 
 	PlayerObject* obj2 = new PlayerObject();
 	obj2->GetCollider()->SetCollisionType(Collider::Static);
-	obj2->SetSpriteInfo(spriteList.find("Shark")->second);
-	obj2->SetTexture(spriteList.find("Shark")->second.texture);
+	obj2->SetSpriteInfo(spriteList.find("Shark_idle")->second);
+	obj2->SetTexture(spriteList.find("Shark_idle")->second.texture);
 	obj2->SetIsAnimated(true);
 	obj2->GetSpriteRenderer()->SetFrame(15);
 	obj2->SetSize(256.f, -256.f);
 	obj2->SetPosition(glm::vec3(200.f, -200.f, 0));
 	obj2->setNumber(1);
+	obj2->SetAnimationSprite(PlayerObject::AnimationState::Idle, spriteList.find("Shark_idle")->second);
+	obj2->SetAnimationSprite(PlayerObject::AnimationState::Running, spriteList.find("Shark_run")->second);
 	objectsList.push_back(obj2);
 	playerSize++;
 	players[1] = obj2;
 
 	PlayerObject* obj3 = new PlayerObject();
-	obj3->SetSpriteInfo(spriteList.find("Shark")->second);
-	obj3->SetTexture(spriteList.find("Shark")->second.texture);
+	obj3->SetSpriteInfo(spriteList.find("Shark_idle")->second);
+	obj3->SetTexture(spriteList.find("Shark_idle")->second.texture);
 	obj3->SetSize(256.f, -256.f);
 	obj3->SetPosition(glm::vec3(-200.f, 200.f, 0));
 	obj3->setNumber(2);
+	obj3->SetAnimationSprite(PlayerObject::AnimationState::Idle, spriteList.find("Shark_idle")->second);
+	obj3->SetAnimationSprite(PlayerObject::AnimationState::Running, spriteList.find("Shark_run")->second);
 	objectsList.push_back(obj3);
 	playerSize++;
 	players[2] = obj3;
+	
 
 	PlayerObject* obj4 = new PlayerObject();
-	obj4->SetSpriteInfo(spriteList.find("Shark")->second);
-	obj4->SetTexture(spriteList.find("Shark")->second.texture);
+	obj4->SetSpriteInfo(spriteList.find("Shark_idle")->second);
+	obj4->SetTexture(spriteList.find("Shark_idle")->second.texture);
 	obj4->SetSize(256.f, -256.f);
 	obj4->SetPosition(glm::vec3(200.f, 200.f, 0));
 	obj4->setNumber(3);
+	obj4->SetAnimationSprite(PlayerObject::AnimationState::Idle, spriteList.find("Shark_idle")->second);
+	obj4->SetAnimationSprite(PlayerObject::AnimationState::Running, spriteList.find("Shark_run")->second);
 	objectsList.push_back(obj4);
 	playerSize++;
 	players[3] = obj4;
@@ -185,6 +196,7 @@ void LevelGameplay::LevelUpdate()
 				dt % entity->GetSpriteRenderer()->GetFrame() == 0)
 			{
 				entity->GetSpriteRenderer()->ShiftColumn();
+				entity->UpdateCurrentAnimation();
 			}
 		}
 	}

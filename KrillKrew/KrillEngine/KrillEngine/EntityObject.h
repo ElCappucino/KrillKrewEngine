@@ -14,10 +14,16 @@
 /// @brief The class for creating object that render using texture
 class EntityObject : public ImageObject
 {
+	virtual enum class AnimationState
+	{
+		Idle
+	};
 protected:
 	
 	Collider* collider;
-	
+	std::map<AnimationState, SpritesheetInfo> animList;
+	AnimationState currAnimState;
+
 public:
 
 	EntityObject();
@@ -36,4 +42,8 @@ public:
 	virtual void OnTriggerEnter(Collider* other);
 	virtual void OnTriggerStay(Collider* other);
 	virtual void OnTriggerExit(Collider* other);
+
+	virtual void SetAnimationSprite(AnimationState state, SpritesheetInfo spriteInfo);
+	virtual void ChangeAnimationState(AnimationState anim);
+	virtual void UpdateCurrentAnimation();
 };

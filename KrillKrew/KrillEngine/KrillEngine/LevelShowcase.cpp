@@ -17,7 +17,10 @@ void LevelShowcase::LevelLoad()
 
 	spriteList["Prinny"] = SpritesheetInfo("Prinny", "../Resource/Texture/Prinny.png", 538, 538, 538, 538);
 	spriteList["Bomb"] = SpritesheetInfo("Bomb", "../Resource/Texture/Bomb_icon.png", 256, 256, 256, 256);
-	spriteList["Shark"] = SpritesheetInfo("Shark", "../Resource/Texture/shark_run_test.png", 256, 256, 1024, 256);
+
+	spriteList["Shark_run"] = SpritesheetInfo("Shark_run", "../Resource/Texture/shark_run_test.png", 256, 256, 1024, 256);
+	spriteList["Shark_idle"] = SpritesheetInfo("Shart_idle", "../Resource/Texture/shark_Idle_test.png", 256, 256, 256, 256);
+	
 	spriteList["Trap"] = SpritesheetInfo("Bomb", "../Resource/Texture/Trap.png", 512, 512, 512, 512);
 
 	spriteList["Xoey_UI"] = SpritesheetInfo("Xoey_UI", "../Resource/Texture/xoey.png", 430, 220, 430, 220);
@@ -288,63 +291,62 @@ void LevelShowcase::LevelInit()
 	// Example Code
 	PlayerObject* obj1 = new PlayerObject();
 	obj1->GetCollider()->SetCollisionType(Collider::Kinematic);
-	obj1->SetSpriteInfo(spriteList.find("Shark")->second);
-	obj1->SetTexture(spriteList.find("Shark")->second.texture);
+	obj1->SetSpriteInfo(spriteList.find("Shark_idle")->second);
+	obj1->SetTexture(spriteList.find("Shark_idle")->second.texture);
 	obj1->SetIsAnimated(true);
 	obj1->GetSpriteRenderer()->SetFrame(10);
 	obj1->SetSize(256.f, -256.f);
 	obj1->SetPosition(glm::vec3(-1000.f, -700.f, 0));
 	obj1->setNumber(0);
+	obj1->SetAnimationSprite(PlayerObject::AnimationState::Idle, spriteList.find("Shark_idle")->second);
+	obj1->SetAnimationSprite(PlayerObject::AnimationState::Running, spriteList.find("Shark_run")->second);
 	objectsList.push_back(obj1);
 	playerSize++;
 	players[0] = obj1;
 
 	PlayerObject* obj2 = new PlayerObject();
 	obj2->GetCollider()->SetCollisionType(Collider::Static);
-	obj2->SetSpriteInfo(spriteList.find("Shark")->second);
-	obj2->SetTexture(spriteList.find("Shark")->second.texture);
+	obj2->SetSpriteInfo(spriteList.find("Shark_idle")->second);
+	obj2->SetTexture(spriteList.find("Shark_idle")->second.texture);
 	obj2->SetIsAnimated(true);
 	obj2->GetSpriteRenderer()->SetFrame(15);
 	obj2->SetSize(256.f, -256.f);
 	obj2->SetPosition(glm::vec3(1000.f, -700.f, 0));
 	obj2->setNumber(1);
+	obj2->SetAnimationSprite(PlayerObject::AnimationState::Idle, spriteList.find("Shark_idle")->second);
+	obj2->SetAnimationSprite(PlayerObject::AnimationState::Running, spriteList.find("Shark_run")->second);
 	objectsList.push_back(obj2);
 	playerSize++;
 	players[1] = obj2;
 
 	PlayerObject* obj3 = new PlayerObject();
-	obj3->SetSpriteInfo(spriteList.find("Shark")->second);
-	obj3->SetTexture(spriteList.find("Shark")->second.texture);
+	obj3->SetSpriteInfo(spriteList.find("Shark_idle")->second);
+	obj3->SetTexture(spriteList.find("Shark_idle")->second.texture);
 	obj3->SetSize(256.f, -256.f);
 	obj3->SetPosition(glm::vec3(-1000.f, 700.f, 0));
 	obj3->setNumber(2);
+	obj3->SetAnimationSprite(PlayerObject::AnimationState::Idle, spriteList.find("Shark_idle")->second);
+	obj3->SetAnimationSprite(PlayerObject::AnimationState::Running, spriteList.find("Shark_run")->second);
 	objectsList.push_back(obj3);
 	playerSize++;
 	players[2] = obj3;
 
 	PlayerObject* obj4 = new PlayerObject();
-	obj4->SetSpriteInfo(spriteList.find("Shark")->second);
-	obj4->SetTexture(spriteList.find("Shark")->second.texture);
+	obj4->SetSpriteInfo(spriteList.find("Shark_idle")->second);
+	obj4->SetTexture(spriteList.find("Shark_idle")->second.texture);
 	obj4->SetSize(256.f, -256.f);
 	obj4->SetPosition(glm::vec3(1000.f, 700.f, 0));
 	obj4->setNumber(3);
+	obj4->SetAnimationSprite(PlayerObject::AnimationState::Idle, spriteList.find("Shark_idle")->second);
+	obj4->SetAnimationSprite(PlayerObject::AnimationState::Running, spriteList.find("Shark_run")->second);
 	objectsList.push_back(obj4);
 	playerSize++;
 	players[3] = obj4;
-
-	TrapObject* trap1 = new TrapObject();
-	trap1->GetCollider()->SetCollisionType(Collider::Trigger);
-	trap1->SetSpriteInfo(spriteList.find("Trap")->second);
-	trap1->SetTexture(spriteList.find("Trap")->second.texture);
-	trap1->SetSize(256.f, -256.f);
-	trap1->SetPosition(glm::vec3(500.f, 500.f, 0));
-	objectsList.push_back(trap1);
 
 	objectsList.push_back(players[0]->GetCollider()->GetGizmos());
 	objectsList.push_back(players[1]->GetCollider()->GetGizmos());
 	objectsList.push_back(players[2]->GetCollider()->GetGizmos());
 	objectsList.push_back(players[3]->GetCollider()->GetGizmos());
-	objectsList.push_back(trap1->GetCollider()->GetGizmos());
 
 	//create Ui by PlayerObject
 	int sizePlayer = objectsList.size();
@@ -430,6 +432,7 @@ void LevelShowcase::LevelUpdate()
 				dt % entity->GetSpriteRenderer()->GetFrame() == 0)
 			{
 				entity->GetSpriteRenderer()->ShiftColumn();
+				entity->UpdateCurrentAnimation();
 			}
 		}
 	}
@@ -780,7 +783,7 @@ void LevelShowcase::UpdateProjectile()
 
 void LevelShowcase::UpdateCooldown()
 {
-	for (int i = 0; i < SDL_NumJoysticks() + playerNum; i++)
+	for (int i = 0; i < playerNum; i++)
 	{
 		timer->tick();
 		timer->reset();

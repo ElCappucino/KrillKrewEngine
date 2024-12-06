@@ -10,6 +10,7 @@
 /// @brief The class for creating object that render using texture
 class ImageObject :public DrawableObject
 {
+
 protected:
 	unsigned int texture;
 	SpriteRenderer* spriteRenderer;
@@ -26,4 +27,5 @@ public:
 
 	void SetIsAnimated(bool value);
 	bool GetIsAnimated();
+
 };

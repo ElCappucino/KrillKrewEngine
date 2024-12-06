@@ -14,6 +14,9 @@ PlayerObject::PlayerObject()
 	this->durationSlowness = 0;
 	this->isSlowness = false;
 	this->pos = glm::vec3(0, 0, 0);
+
+	currAnimState = AnimationState::Idle;
+
 }
 
 
@@ -28,8 +31,6 @@ void PlayerObject::SetTexture(std::string path)
 
 void PlayerObject::Render(glm::mat4 globalModelTransform)
 {
-
-	
 
 	SquareMeshVbo* squareMesh = dynamic_cast<SquareMeshVbo*> (GameEngine::GetInstance()->GetRenderer()->GetMesh(SquareMeshVbo::MESH_NAME));
 
@@ -221,5 +222,35 @@ void PlayerObject::UpdateFacingSide(bool isLeft)
 	{
 		this->size.x = this->size.x * -1;
 		isFacingLeft = isLeft;
+	}
+}
+void PlayerObject::SetAnimationSprite(AnimationState state, SpritesheetInfo spriteInfo)
+{
+	animList.insert({ state, spriteInfo });
+}
+void PlayerObject::ChangeAnimationState(AnimationState anim)
+{
+	if (currAnimState != anim)
+	{
+		currAnimState = anim;
+		this->SetSpriteInfo(animList.find(anim)->second);
+		this->spriteRenderer->SetTexture(animList.find(anim)->second.texture);
+		this->SetTexture(animList.find(anim)->second.texture);
+		this->spriteRenderer->ShiftTo(0, 0);
+	}
+
+	std::cout << "Player " << number << " height width = " << std::endl;
+	std::cout << this->spriteRenderer->GetSheetHeight() << this->spriteRenderer->GetSheetWidth() << std::endl;
+	std::cout << this->spriteRenderer->GetSpriteHeight() << this->spriteRenderer->GetSpriteWidth() << std::endl;
+}
+void PlayerObject::UpdateCurrentAnimation()
+{
+	if (abs(this->velocity.x) > 0 || abs(this->velocity.y > 0) && currAnimState != AnimationState::Running)
+	{
+		ChangeAnimationState(AnimationState::Running);
+	}
+	else if (abs(this->velocity.x) <= 0 || abs(this->velocity.y <= 0) && currAnimState == AnimationState::Running)
+	{
+		ChangeAnimationState(AnimationState::Idle);
 	}
 }

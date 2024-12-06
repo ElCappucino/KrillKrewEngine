@@ -100,3 +100,21 @@ void EntityObject::OnTriggerExit(Collider* other)
 {
 	std::cout << "On Trigger Enter" << std::endl;
 }
+
+void EntityObject::SetAnimationSprite(AnimationState state, SpritesheetInfo spriteInfo)
+{
+	animList.insert({ state, spriteInfo });
+}
+void EntityObject::ChangeAnimationState(AnimationState anim)
+{
+	if (currAnimState != anim)
+	{
+		currAnimState = anim;
+		this->SetSpriteInfo(animList.find(anim)->second);
+	}
+}
+void EntityObject::UpdateCurrentAnimation()
+{
+	std::cout << "Update Animation Entity" << std::endl;
+	// ChangeAnimationState(AnimationState::Idle);
+}

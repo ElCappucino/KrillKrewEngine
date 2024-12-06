@@ -36,7 +36,7 @@ void GameEngine::Init(int width, int height)
 	SetBackgroundColor(1.0f, 1.0f, 200.0f / 255);
 
 	stateController = new GameStateController();
-	stateController->Init(GameState::GS_LEVELGAMEPLAY);
+	stateController->Init(GameState::GS_LEVELSHOWCASE);
 }
 
 void GameEngine::Render(std::vector<DrawableObject*> renderObjects)
