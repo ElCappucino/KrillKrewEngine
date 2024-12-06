@@ -43,13 +43,6 @@ public:
 	void SetGismosColor(glm::vec3 color);
 	CollisionType GetCollisionType();
 	void SetCollisionType(CollisionType type);
-	//void OnColliderEnter();
-	//void OnColliderStay();
-	//void OnColliderExit();
-	//void OnTriggerEnter();
-	//void OnColliderStay();
-	//void OnColliderExit();
-	bool IsOverlap(Collider anotherCollider);
-	bool IsInside(glm::vec3 pointPos);
+
 
 };

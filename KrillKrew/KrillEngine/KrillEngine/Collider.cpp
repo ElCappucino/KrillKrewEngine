@@ -22,7 +22,6 @@ Collider::Collider(CollisionType type, EntityObject* parent)
 }
 void Collider::Update(glm::vec3 size, glm::vec3 position)
 {
-	// std::cout << position.x << " " << position.y << " " << position.z << std::endl;
 	this->size = size;
 	this->halfSize = glm::vec3(size.x / 2, size.y / 2, 1);
 	gizmos->SetSize(size.x, size.y);
@@ -38,22 +37,27 @@ glm::vec3 Collider::GetSize()
 {
 	return size;
 }
+
 glm::vec3 Collider::GetHalfSize()
 {
 	return halfSize;
 }
+
 glm::vec3 Collider::GetPreviousPos()
 {
 	return previousPos;
 }
+
 void Collider::SetPreviousPos(glm::vec3 pos)
 {
 	previousPos = pos;
 }
+
 Collider::CollisionType Collider::GetCollisionType()
 {
 	return collisionType;
 }
+
 void Collider::SetCollisionType(Collider::CollisionType type)
 {
 	collisionType = type;
@@ -70,24 +74,3 @@ void Collider::SetCollisionType(Collider::CollisionType type)
 		break;
 	}
 }
-
-//void Collider::OnColliderEnter()
-//{
-//
-//}
-//void Collider::OnColliderStay()
-//{
-//
-//}
-//void Collider::OnColliderExit()
-//{
-//
-//}
-//bool Collider::IsOverlap(Collider anotherCollider)
-//{
-//
-//}
-//bool Collider::IsInside(glm::vec3 pointPos)
-//{
-//
-//}

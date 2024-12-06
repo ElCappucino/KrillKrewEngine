@@ -296,7 +296,7 @@ void LevelShowcase::LevelInit()
 	obj1->SetIsAnimated(true);
 	obj1->GetSpriteRenderer()->SetFrame(10);
 	obj1->SetSize(256.f, -256.f);
-	obj1->SetPosition(glm::vec3(-1000.f, -700.f, 0));
+	obj1->SetPosition(glm::vec3(-800.f, -700.f, 0));
 	obj1->setNumber(0);
 	obj1->SetAnimationSprite(PlayerObject::AnimationState::Idle, spriteList.find("Shark_idle")->second);
 	obj1->SetAnimationSprite(PlayerObject::AnimationState::Running, spriteList.find("Shark_run")->second);
@@ -311,7 +311,7 @@ void LevelShowcase::LevelInit()
 	obj2->SetIsAnimated(true);
 	obj2->GetSpriteRenderer()->SetFrame(15);
 	obj2->SetSize(256.f, -256.f);
-	obj2->SetPosition(glm::vec3(1000.f, -700.f, 0));
+	obj2->SetPosition(glm::vec3(800.f, -700.f, 0));
 	obj2->setNumber(1);
 	obj2->SetAnimationSprite(PlayerObject::AnimationState::Idle, spriteList.find("Shark_idle")->second);
 	obj2->SetAnimationSprite(PlayerObject::AnimationState::Running, spriteList.find("Shark_run")->second);
@@ -322,8 +322,10 @@ void LevelShowcase::LevelInit()
 	PlayerObject* obj3 = new PlayerObject();
 	obj3->SetSpriteInfo(spriteList.find("Shark_idle")->second);
 	obj3->SetTexture(spriteList.find("Shark_idle")->second.texture);
+	obj3->SetIsAnimated(true);
+	obj3->GetSpriteRenderer()->SetFrame(15);
 	obj3->SetSize(256.f, -256.f);
-	obj3->SetPosition(glm::vec3(-1000.f, 700.f, 0));
+	obj3->SetPosition(glm::vec3(-800.f, 700.f, 0));
 	obj3->setNumber(2);
 	obj3->SetAnimationSprite(PlayerObject::AnimationState::Idle, spriteList.find("Shark_idle")->second);
 	obj3->SetAnimationSprite(PlayerObject::AnimationState::Running, spriteList.find("Shark_run")->second);
@@ -334,8 +336,10 @@ void LevelShowcase::LevelInit()
 	PlayerObject* obj4 = new PlayerObject();
 	obj4->SetSpriteInfo(spriteList.find("Shark_idle")->second);
 	obj4->SetTexture(spriteList.find("Shark_idle")->second.texture);
+	obj4->SetIsAnimated(true);
+	obj4->GetSpriteRenderer()->SetFrame(15);
 	obj4->SetSize(256.f, -256.f);
-	obj4->SetPosition(glm::vec3(1000.f, 700.f, 0));
+	obj4->SetPosition(glm::vec3(800.f, 700.f, 0));
 	obj4->setNumber(3);
 	obj4->SetAnimationSprite(PlayerObject::AnimationState::Idle, spriteList.find("Shark_idle")->second);
 	obj4->SetAnimationSprite(PlayerObject::AnimationState::Running, spriteList.find("Shark_run")->second);
@@ -452,7 +456,9 @@ void LevelShowcase::LevelUpdate()
 
 	//Ui Skills
 	UpdateUI();
+
 }
+
 void LevelShowcase::UpdateInput()
 {
 	if (SDL_NumJoysticks() > 0)
@@ -507,6 +513,7 @@ void LevelShowcase::UpdateInput()
 			}
 
 			if (abs(axisX) > 0.2f) { players[i + playerNum]->UpdateFacingSide(!isPositiveX); }
+
 			if (players[i + playerNum]->getIsAiming() == false)
 			{
 				players[i + playerNum]->setVelocity(abs(norAxisX), abs(norAxisY), isPositiveX, isPositiveY);
@@ -540,6 +547,7 @@ void LevelShowcase::UpdateInput()
 					//objectsList.push_back(projectile->GetCollider()->GetGizmos());
 				}
 			}
+
 			//Shoot
 			if (Joystick::GetButtonUp(i, Joystick::Button::R1))
 			{

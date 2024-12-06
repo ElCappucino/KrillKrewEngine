@@ -18,7 +18,7 @@
 #include <bitset>
 
 #define MAP_WIDTH  21
-#define MAP_HEIGHT 15
+#define MAP_HEIGHT 16
 
 /// @brief The class for level inherit test from P'tiam
 class LevelShowcase : public Level

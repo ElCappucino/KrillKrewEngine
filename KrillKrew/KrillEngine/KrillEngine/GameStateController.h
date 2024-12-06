@@ -29,4 +29,5 @@ public:
 	void HandleKeyLevel(char key);
 	void HandleMouseLevel(int type, int x, int y);
 	void MovementLevel(float axisX, float axisY, bool isPositiveX, bool isPositiveY);
+
 };

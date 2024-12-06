@@ -26,14 +26,6 @@ void EntityObject::SetSpriteInfo(SpritesheetInfo info)
 {
 	spriteRenderer->SetSpriteInfo(info.spritewidth, info.spriteheight, info.sheetwidth, info.sheetheight);
 }
-//void EntityObject::SetSheetInfo(float row, float column, float spritewidth, float spriteheight, float sheetwidth, float sheetheight) {
-//	sheetInfo.row = row;
-//	sheetInfo.column = column;
-//	sheetInfo.spritewidth = spritewidth;
-//	sheetInfo.spriteheight = spriteheight;
-//	sheetInfo.sheetwidth = sheetwidth;
-//	sheetInfo.sheetheight = sheetheight;
-//}
 
 void EntityObject::Render(glm::mat4 globalModelTransform)
 {
