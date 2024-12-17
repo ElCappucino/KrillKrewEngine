@@ -79,9 +79,14 @@ void PlayerObject::setVelocity(float axisX, float axisY , bool isPositiveX, bool
 	}
 	/*cout << " X | " << axisX << endl;
 	cout << " Y | " << axisY << endl;*/
-	if (isSlowness) {
+	if (isDash) {
+		velocity = glm::vec3(axisX * 5.f, axisY * 5.f, 0) * dashSpeed;
+	}
+
+	else if (isSlowness) {
 		velocity = glm::vec3(axisX * 5.f, axisY * 5.f, 0) / slowness;
 	}
+
 	else 
 	{
 		velocity = glm::vec3(axisX * 5.f, axisY * 5.f, 0);
@@ -175,14 +180,18 @@ void PlayerObject::setCooldown(int skill, int time)
 {
 	cooldown[skill] = time;
 }
-void PlayerObject::reduceCooldown() 
+void PlayerObject::reduceCooldown(int skill) 
 {
-	for (int i = 0; i < 3; i++) {
-		if (cooldown[i] > 0) {
-			cooldown[i] -= 1;
+	/*for (int i = 0; i < 3; i++) {
+		if (cooldown[skill] > 0) {
+			cooldown[skill] -= 1;
 			std::cout << "Skill" << i << " " << getCooldown(i) << std::endl;
 		}
-	}
+	}*/
+
+	cooldown[skill] -= 1;
+	std::cout << "Skill" << skill << " " << getCooldown(skill) << std::endl;
+
 }
 float PlayerObject::getCooldown(int skill) 
 {
@@ -216,6 +225,26 @@ bool PlayerObject::getIsSlowness()
 	return isSlowness;
 }
 
+void PlayerObject::setIsDash(bool isDash) {
+	this->isDash = isDash;
+}
+
+bool PlayerObject::getIsDash() {
+	return isDash;
+}
+
+void PlayerObject::setDurationDash(int time) {
+	durationDash = time;
+}
+
+void PlayerObject::reduceDurationDash() {
+	durationDash -= 1;
+}
+
+float PlayerObject::getDurationDash() {
+	return durationDash;
+}
+
 void PlayerObject::UpdateFacingSide(bool isLeft)
 {
 	if (isLeft && isFacingLeft == false || !isLeft && isFacingLeft == true)
@@ -239,9 +268,9 @@ void PlayerObject::ChangeAnimationState(AnimationState anim)
 		this->spriteRenderer->ShiftTo(0, 0);
 	}
 
-	std::cout << "Player " << number << " height width = " << std::endl;
+	/*std::cout << "Player " << number << " height width = " << std::endl;
 	std::cout << this->spriteRenderer->GetSheetHeight() << this->spriteRenderer->GetSheetWidth() << std::endl;
-	std::cout << this->spriteRenderer->GetSpriteHeight() << this->spriteRenderer->GetSpriteWidth() << std::endl;
+	std::cout << this->spriteRenderer->GetSpriteHeight() << this->spriteRenderer->GetSpriteWidth() << std::endl;*/
 }
 void PlayerObject::UpdateCurrentAnimation()
 {

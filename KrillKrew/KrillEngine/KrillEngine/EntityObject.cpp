@@ -70,27 +70,27 @@ Collider* EntityObject::GetCollider()
 }
 void EntityObject::OnColliderEnter(Collider* other)
 {
-	std::cout << "On Collider Enter" << std::endl;
+	//std::cout << "On Collider Enter" << std::endl;
 }
 void EntityObject::OnColliderStay(Collider* other)
 {
-	std::cout << "On Collider Stay" << std::endl;
+	//std::cout << "On Collider Stay" << std::endl;
 }
 void EntityObject::OnColliderExit(Collider* other)
 {
-	std::cout << "On Collider Exit" << std::endl;
+	//std::cout << "On Collider Exit" << std::endl;
 }
 void EntityObject::OnTriggerEnter(Collider* other)
 {
-	std::cout << "On Trigger Enter" << std::endl;
+	//std::cout << "On Trigger Enter" << std::endl;
 }
 void EntityObject::OnTriggerStay(Collider* other)
 {
-	std::cout << "On Trigger Enter" << std::endl;
+	//std::cout << "On Trigger Enter" << std::endl;
 }
 void EntityObject::OnTriggerExit(Collider* other)
 {
-	std::cout << "On Trigger Enter" << std::endl;
+	//std::cout << "On Trigger Enter" << std::endl;
 }
 
 void EntityObject::SetAnimationSprite(AnimationState state, SpritesheetInfo spriteInfo)

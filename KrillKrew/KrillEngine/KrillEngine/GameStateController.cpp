@@ -41,7 +41,7 @@ void GameStateController::LoadLevel()
 			currentLevel = new LevelLoading();
 			break;
 		case GameState::GS_LEVELSHOWCASE:
-			currentLevel = new LevelShowcase();
+			currentLevel = new LevelGameplay();
 			break;
 		
 		default:

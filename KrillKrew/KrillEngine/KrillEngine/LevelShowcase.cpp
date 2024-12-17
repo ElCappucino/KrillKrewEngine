@@ -529,7 +529,7 @@ void LevelShowcase::UpdateInput()
 
 
 			//Aim
-			if (Joystick::GetButtonDown(i, Joystick::Button::R1))
+			if (Joystick::GetButtonDown(i, Joystick::Button::L1))
 			{
 
 				if (players[i + playerNum]->getIsShooting() == false && players[i + playerNum]->getIsAiming() == false) {
@@ -549,7 +549,7 @@ void LevelShowcase::UpdateInput()
 			}
 
 			//Shoot
-			if (Joystick::GetButtonUp(i, Joystick::Button::R1))
+			if (Joystick::GetButtonUp(i, Joystick::Button::L1))
 			{
 				std::cout << "Shoot " << i + playerNum << std::endl;
 				if (players[i + playerNum]->getIsShooting() == false) {
@@ -801,7 +801,7 @@ void LevelShowcase::UpdateCooldown()
 		{
 			if (time[i + playerNum] >= 1.0f && players[i + playerNum]->getCooldown(j) > 0)
 			{
-				players[i + playerNum]->reduceCooldown();
+				players[i + playerNum]->reduceCooldown(j);
 				time[i + playerNum] = 0.0f;
 			}
 		}
