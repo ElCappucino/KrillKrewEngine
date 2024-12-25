@@ -7,7 +7,6 @@
 #include <array>
 #include "EntityObject.h"
 #include "Collider.h"
-#include "Ability.h"
 
 /// @brief The class for creating object that render using texture
 class ProjectileObject : public EntityObject

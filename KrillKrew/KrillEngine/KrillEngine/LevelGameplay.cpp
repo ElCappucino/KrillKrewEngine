@@ -27,6 +27,8 @@ void LevelGameplay::LevelLoad()
 	spriteList["Crunk_UI"] = SpritesheetInfo("Crunk_UI", "../Resource/Texture/crunk.png", 430, 220, 430, 220);
 	spriteList["Ham_UI"] = SpritesheetInfo("Ham_UI", "../Resource/Texture/Ham.png", 430, 220, 430, 220);
 	//cout << "Load Level" << endl;
+
+	
 }
 
 void LevelGameplay::LevelInit()

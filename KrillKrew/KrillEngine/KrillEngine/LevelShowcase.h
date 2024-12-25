@@ -16,6 +16,7 @@
 #include <iostream>
 #include <map>
 #include <bitset>
+#include <functional>
 
 #define MAP_WIDTH  21
 #define MAP_HEIGHT 16
@@ -27,6 +28,9 @@ private:
 	std::vector<DrawableObject*> objectsList;
 	std::map<std::string, SpritesheetInfo> spriteList;
 
+	typedef std::function<void(int, PlayerObject*, std::vector<DrawableObject*>&, SpritesheetInfo)> ability;
+	std::map<std::string, ability> abilities;
+
 	PlayerObject* players[4]; // add up to 4 players
 
 	int groundTile[MAP_HEIGHT][MAP_WIDTH] = { 0 };
@@ -35,7 +39,6 @@ private:
 
 	int playerSize = 0;
 	int playerNum = 0;
-	CameraZoomInfo zoomInfo; // to initialize the zoom property
 	OrthographicValue targetSceneProjection; // use for lerping between the current projection and this (target projection).
 	Camera camera;
 	Timer* timer;

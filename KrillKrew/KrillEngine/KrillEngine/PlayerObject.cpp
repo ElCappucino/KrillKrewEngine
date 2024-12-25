@@ -239,9 +239,9 @@ void PlayerObject::ChangeAnimationState(AnimationState anim)
 		this->spriteRenderer->ShiftTo(0, 0);
 	}
 
-	std::cout << "Player " << number << " height width = " << std::endl;
-	std::cout << this->spriteRenderer->GetSheetHeight() << this->spriteRenderer->GetSheetWidth() << std::endl;
-	std::cout << this->spriteRenderer->GetSpriteHeight() << this->spriteRenderer->GetSpriteWidth() << std::endl;
+	// std::cout << "Player " << number << " height width = " << std::endl;
+	// std::cout << this->spriteRenderer->GetSheetHeight() << this->spriteRenderer->GetSheetWidth() << std::endl;
+	// std::cout << this->spriteRenderer->GetSpriteHeight() << this->spriteRenderer->GetSpriteWidth() << std::endl;
 }
 void PlayerObject::UpdateCurrentAnimation()
 {

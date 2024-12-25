@@ -5,6 +5,31 @@
 //	return a + t * (b - a);
 //}
 
+void getAim(int playerNum)
+{
+	// std::cout << "Owner " << std::endl;
+}
+
+void HoldBomb(int playerNum, 
+			  PlayerObject* playerObj, 
+			  std::vector<DrawableObject*>& objectList, 
+			  SpritesheetInfo sheetinfo)
+{
+	std::cout << "Hold" << std::endl;
+	playerObj->setVelocity(0, 0, false, false);
+	playerObj->setIsAiming(true);
+	ProjectileObject* projectile = new ProjectileObject();
+	projectile->SetSpriteInfo(sheetinfo);
+	projectile->SetTexture(sheetinfo.texture);
+	projectile->SetPosition(playerObj->getPos());
+	projectile->SetSize(256.f, -256.f);
+	projectile->setLifeTime(9999);
+	projectile->setNumOwner(playerObj->getNumber());
+	// std::cout << "Owner " << projectile->getNumOwner() << std::endl;
+	objectList.push_back(projectile);
+	//objectsList.push_back(projectile->GetCollider()->GetGizmos());
+}
+
 void LevelShowcase::LevelLoad()
 {
 	SquareMeshVbo* square = new SquareMeshVbo();
@@ -29,6 +54,8 @@ void LevelShowcase::LevelLoad()
 	spriteList["Ham_UI"] = SpritesheetInfo("Ham_UI", "../Resource/Texture/Ham.png", 430, 220, 430, 220);
 	
 	spriteList["Blobtile"] = SpritesheetInfo("Blobtile", "../Resource/Texture/tileset_01.png", 128, 128, 1664, 512);
+
+	abilities.emplace(std::string("HoldBomb"), HoldBomb);
 	//cout << "Load Level" << endl;
 }
 
@@ -227,18 +254,18 @@ void LevelShowcase::LevelInit()
 
 					auto it = blob_lookup_table_underground.find((int)(surround.to_ulong()));
 
-					std::cout << "Bitset = " << (int)surround.to_ulong() << std::endl;
+					// std::cout << "Bitset = " << (int)surround.to_ulong() << std::endl;
 
 					if (it != blob_lookup_table_underground.end())
 					{
 						pos = it->second;
 
-						std::cout << "pair = " << it->second.first << " " << it->second.second << std::endl;
+						// std::cout << "pair = " << it->second.first << " " << it->second.second << std::endl;
 					}
 					else 
 					{
 						pos = { 2, 12 };
-						std::cout << "blob_lookup_table.end()" << std::endl;
+						// std::cout << "blob_lookup_table.end()" << std::endl;
 					}
 				}
 				
@@ -261,15 +288,15 @@ void LevelShowcase::LevelInit()
 				if (!(surround[6] && surround[0])) { surround[7] = 0; }
 
 				auto it = blob_lookup_table.find((int)(surround.to_ulong()));
-				std::cout << "Bitset = " << (int)surround.to_ulong() << std::endl;
+				// std::cout << "Bitset = " << (int)surround.to_ulong() << std::endl;
 				if (it != blob_lookup_table.end())
 				{
 					pos = it->second;
 
-					std::cout << "pair = " << it->second.first << " " << it->second.second << std::endl;
+					// std::cout << "pair = " << it->second.first << " " << it->second.second << std::endl;
 				}
 				else {
-					std::cout << "blob_lookup_table.end()" << std::endl;
+					// std::cout << "blob_lookup_table.end()" << std::endl;
 				}
 			}
 
@@ -284,7 +311,7 @@ void LevelShowcase::LevelInit()
 
 			// std::cout << "posX = " << obj->getPos().x << " posY = " << obj->getPos().y << std::endl;
 		}
-		std::cout << std::endl;
+		// std::cout << std::endl;
 	}
 	// Create and Initialize 4 players object
 
@@ -369,7 +396,7 @@ void LevelShowcase::LevelInit()
 				uiSkills->setNumOwner(0);
 				objectsList.push_back(uiSkills);
 				count++;
-				std::cout << "create Ui xoey" << std::endl;
+				// std::cout << "create Ui xoey" << std::endl;
 			}
 			else if (count == 1) {
 				UiObject* uiSkills1 = new UiObject();
@@ -380,7 +407,7 @@ void LevelShowcase::LevelInit()
 				uiSkills1->setNumOwner(1);
 				objectsList.push_back(uiSkills1);
 				count++;
-				std::cout << "create Ui Ham" << std::endl;
+				// std::cout << "create Ui Ham" << std::endl;
 			}
 			else if (count == 2) {
 				UiObject* uiSkills2 = new UiObject();
@@ -391,7 +418,7 @@ void LevelShowcase::LevelInit()
 				uiSkills2->setNumOwner(2);
 				objectsList.push_back(uiSkills2);
 				count++;
-				std::cout << "create Ui byssa" << std::endl;
+				// std::cout << "create Ui byssa" << std::endl;
 			}
 			else if (count == 3) {
 				UiObject* uiSkills3 = new UiObject();
@@ -402,7 +429,7 @@ void LevelShowcase::LevelInit()
 				uiSkills3->setNumOwner(3);
 				objectsList.push_back(uiSkills3);
 				count++;
-				std::cout << "create Ui crunk" << std::endl;
+				// std::cout << "create Ui crunk" << std::endl;
 			}
 		}
 	}
@@ -532,26 +559,29 @@ void LevelShowcase::UpdateInput()
 			if (Joystick::GetButtonDown(i, Joystick::Button::R1))
 			{
 
-				if (players[i + playerNum]->getIsShooting() == false && players[i + playerNum]->getIsAiming() == false) {
-					players[i + playerNum]->setVelocity(0, 0, isPositiveX, isPositiveY);
-					players[i + playerNum]->setIsAiming(true);
-					ProjectileObject* projectile = new ProjectileObject();
-					projectile->SetSpriteInfo(spriteList.find("Bomb")->second);
-					projectile->SetTexture(spriteList.find("Bomb")->second.texture);
-					projectile->SetPosition(players[i + playerNum]->getPos());
-					projectile->SetSize(256.f, -256.f);
-					projectile->setLifeTime(9999);
-					projectile->setNumOwner(players[i + playerNum]->getNumber());
-					std::cout << "Owner " << projectile->getNumOwner() << std::endl;
-					objectsList.push_back(projectile);
-					//objectsList.push_back(projectile->GetCollider()->GetGizmos());
+				if (players[i + playerNum]->getIsShooting() == false && players[i + playerNum]->getIsAiming() == false) 
+				{
+					//players[i + playerNum]->setVelocity(0, 0, isPositiveX, isPositiveY);
+					//players[i + playerNum]->setIsAiming(true);
+					//ProjectileObject* projectile = new ProjectileObject();
+					//projectile->SetSpriteInfo(spriteList.find("Bomb")->second);
+					//projectile->SetTexture(spriteList.find("Bomb")->second.texture);
+					//projectile->SetPosition(players[i + playerNum]->getPos());
+					//projectile->SetSize(256.f, -256.f);
+					//projectile->setLifeTime(9999);
+					//projectile->setNumOwner(players[i + playerNum]->getNumber());
+					//std::cout << "Owner " << projectile->getNumOwner() << std::endl;
+					//objectsList.push_back(projectile);
+					////objectsList.push_back(projectile->GetCollider()->GetGizmos());
+
+					(abilities.find("HoldBomb")->second)(i, players[i + playerNum], objectsList, spriteList.find("Bomb")->second);
 				}
 			}
 
 			//Shoot
 			if (Joystick::GetButtonUp(i, Joystick::Button::R1))
 			{
-				std::cout << "Shoot " << i + playerNum << std::endl;
+				// std::cout << "Shoot " << i + playerNum << std::endl;
 				if (players[i + playerNum]->getIsShooting() == false) {
 					players[i + playerNum]->setIsShooting(true);
 					players[i + playerNum]->setIsAiming(false);
@@ -645,7 +675,7 @@ void LevelShowcase::UpdateCollision()
 
 					if (overlapX > 0 && overlapY > 0)
 					{
-						std::cout << "Trap :" << trap->getNumOwner() << " hit " << "Player" << player2->getNumber() << std::endl;
+						// std::cout << "Trap :" << trap->getNumOwner() << " hit " << "Player" << player2->getNumber() << std::endl;
 						player2->setDurationSlowness(100);
 						player2->setIsSlowness(true);
 						objectsList.erase(objectsList.begin() + i);
@@ -925,7 +955,7 @@ void LevelShowcase::HandleKey(char key)
 		if (this->playerNum >= 4) {
 			this->playerNum = 0;
 		}
-		std::cout << "Player " << this->playerNum << std::endl;
+		// std::cout << "Player " << this->playerNum << std::endl;
 		break;
 	}
 }

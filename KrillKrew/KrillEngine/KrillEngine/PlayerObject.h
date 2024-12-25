@@ -10,7 +10,6 @@
 #include <chrono>
 #include "ImageObject.h"
 #include "Collider.h"
-#include "Ability.h"
 
 /// @brief The class for creating object that render using texture
 class PlayerObject :public EntityObject
@@ -29,7 +28,7 @@ private:
 
 	AnimationState currAnimState;
 	std::map<AnimationState, SpritesheetInfo> animList;
-	std::array<Ability*, 3> abilities;
+	std::array<std::string, 3> abilities;
 	glm::vec3 velocity;
 	bool isShooting;
 	bool isAiming;

@@ -8,7 +8,6 @@
 #include "ImageObject.h"
 #include "SpriteRenderer.h"
 #include "Collider.h"
-#include "Ability.h"
 #include "InfoStruct.h"
 
 /// @brief The class for creating object that render using texture
@@ -18,6 +17,7 @@ class EntityObject : public ImageObject
 	{
 		Idle
 	};
+
 protected:
 	
 	Collider* collider;
