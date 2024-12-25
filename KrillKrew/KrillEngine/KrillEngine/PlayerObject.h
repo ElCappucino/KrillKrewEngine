@@ -29,7 +29,8 @@ private:
 
 	AnimationState currAnimState;
 	std::map<AnimationState, SpritesheetInfo> animList;
-	std::array<Ability*, 3> abilities;
+	//std::array<Ability*, 3> abilities;
+	int abilities[3] = { 0 };
 	glm::vec3 velocity;
 	bool isShooting;
 	bool isAiming;
@@ -64,6 +65,7 @@ public:
 	void reduceDurationDash();
 	glm::vec3 getVelocity();
 	bool getIsShooting();
+	void setAbility(int numberAbility, int idAbility);
 
 	virtual void SetAnimationSprite(AnimationState state, SpritesheetInfo spriteInfo);
 	virtual void ChangeAnimationState(AnimationState anim);

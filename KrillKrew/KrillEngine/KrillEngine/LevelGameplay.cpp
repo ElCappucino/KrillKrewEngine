@@ -413,15 +413,16 @@ void LevelGameplay::UpdateInput()
 			{
 				std::cout << "Triangle" << std::endl;
 				if (players[i + playerNum]->getCooldown(1) <= 0) {
-					players[i + playerNum]->setCooldown(1, 3);
-					TrapObject* Trap = new TrapObject();
-					Trap->SetSpriteInfo(spriteList.find("Trap")->second);
-					Trap->SetTexture(spriteList.find("Trap")->second.texture);
-					Trap->SetPosition(players[i + playerNum]->getPos());
-					Trap->SetSize(128.f, -128.f);
-					Trap->setNumOwner(players[i + playerNum]->getNumber());
-					//std::cout << "Owner " << Trap->getNumOwner() << std::endl;
-					objectsList.push_back(Trap);
+					//players[i + playerNum]->setCooldown(1, 3);
+					//TrapObject* Trap = new TrapObject();
+					//Trap->SetSpriteInfo(spriteList.find("Trap")->second);
+					//Trap->SetTexture(spriteList.find("Trap")->second.texture);
+					//Trap->SetPosition(players[i + playerNum]->getPos());
+					//Trap->SetSize(128.f, -128.f);
+					//Trap->setNumOwner(players[i + playerNum]->getNumber());
+					////std::cout << "Owner " << Trap->getNumOwner() << std::endl;
+					//objectsList.push_back(Trap);
+					trap(i + playerNum);
 				}
 			}
 
@@ -784,3 +785,73 @@ void LevelGameplay::Movement(float axisX, float axisY, bool isPositiveX, bool is
 	
 }
 
+void LevelGameplay::usingAbility(int numPlayer, int numberAbility) {
+
+	if (players[numPlayer + playerNum]->getCooldown(numberAbility) <= 0) {
+		switch (numberAbility) {
+
+		case 1 :
+
+			aimFireball(numPlayer);
+			break;
+		case 2 :
+
+			trap(numPlayer);
+			break;
+
+		case 3 :
+			dash(numPlayer);
+			break;
+		}
+		
+	}
+
+}
+
+void LevelGameplay::aimFireball(int num) {
+	players[num + playerNum]->setVelocity(0, 0, false, false);
+	players[num + playerNum]->setIsAiming(true);
+	ProjectileObject* projectile = new ProjectileObject();
+	projectile->SetSpriteInfo(spriteList.find("Bomb")->second);
+	projectile->SetTexture(spriteList.find("Bomb")->second.texture);
+	projectile->SetPosition(players[num + playerNum]->getPos());
+	projectile->SetSize(256.f, -256.f);
+	projectile->setLifeTime(9999);
+	projectile->setNumOwner(players[num + playerNum]->getNumber());
+	std::cout << "Owner " << projectile->getNumOwner() << std::endl;
+	objectsList.push_back(projectile);
+	//objectsList.push_back(projectile->GetCollider()->GetGizmos());
+}
+
+
+
+void LevelGameplay::shootFireball(int num) {
+	if (players[num + playerNum]->getIsShooting() == false) {
+		players[num + playerNum]->setIsShooting(true);
+		players[num + playerNum]->setIsAiming(false);
+		for (int j = 0; j < objectsList.size(); j++) {
+			ProjectileObject* projectile = dynamic_cast<ProjectileObject*>(objectsList[j]);
+			if (projectile != nullptr) {
+				projectile->setLifeTime(5);
+			}
+		}
+	}
+}
+
+void LevelGameplay::trap(int num) {
+	players[num + playerNum]->setCooldown(1, 3);
+	TrapObject* Trap = new TrapObject();
+	Trap->SetSpriteInfo(spriteList.find("Trap")->second);
+	Trap->SetTexture(spriteList.find("Trap")->second.texture);
+	Trap->SetPosition(players[num + playerNum]->getPos());
+	Trap->SetSize(128.f, -128.f);
+	Trap->setNumOwner(players[num + playerNum]->getNumber());
+	//std::cout << "Owner " << Trap->getNumOwner() << std::endl;
+	objectsList.push_back(Trap);
+}
+
+void LevelGameplay::dash(int num) {
+	players[num + playerNum]->setCooldown(2, 3);
+	players[num + playerNum]->setIsDash(true);
+	players[num + playerNum]->setDurationDash(2);
+}

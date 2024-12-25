@@ -283,3 +283,7 @@ void PlayerObject::UpdateCurrentAnimation()
 		ChangeAnimationState(AnimationState::Idle);
 	}
 }
+
+void PlayerObject::setAbility(int numberAbility, int idAbility) {
+	abilities[numberAbility] = idAbility;
+}
