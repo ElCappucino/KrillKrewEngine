@@ -10,6 +10,7 @@
 #include <map>
 #include "Timer.h"
 #include "UiObject.h"
+#include "Ability.h"
 
 
 
@@ -50,4 +51,12 @@ public:
 	void UpdateUI();
 	
 	// void CameraLerp();
+	
+
+	//ability function
+	void usingAbility(int numberPlayer, int numberAbility);
+	void aimFireball(int num);
+	void shootFireball(int num);
+	void trap(int num);
+	void dash(int num);
 };

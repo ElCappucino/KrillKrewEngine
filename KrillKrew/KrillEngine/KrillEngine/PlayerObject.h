@@ -28,7 +28,8 @@ private:
 
 	AnimationState currAnimState;
 	std::map<AnimationState, SpritesheetInfo> animList;
-	std::array<std::string, 3> abilities;
+	//std::array<Ability*, 3> abilities;
+	int abilities[3] = { 0 };
 	glm::vec3 velocity;
 	bool isShooting;
 	bool isAiming;
@@ -38,6 +39,9 @@ private:
 	float slowness = 2;
 	float durationSlowness;
 	bool isSlowness;
+	bool isDash;
+	float dashSpeed = 5;
+	float durationDash;
 
 public:
 	
@@ -51,12 +55,16 @@ public:
 	void setIsAiming(bool isAim);
 	void setNumber(int num);
 	void setCooldown(int skill, int time);
-	void reduceCooldown();
+	void reduceCooldown(int skill);
 	void setDurationSlowness(int time);
 	void reduceDurationSlowness();
 	void setIsSlowness(bool isSlow);
+	void setIsDash(bool isDash);
+	void setDurationDash(int time);
+	void reduceDurationDash();
 	glm::vec3 getVelocity();
 	bool getIsShooting();
+	void setAbility(int numberAbility, int idAbility);
 
 	virtual void SetAnimationSprite(AnimationState state, SpritesheetInfo spriteInfo);
 	virtual void ChangeAnimationState(AnimationState anim);
@@ -76,4 +84,6 @@ public:
 	float getCooldown(int skill);
 	float getDurationSlowness();
 	bool getIsSlowness();
+	bool getIsDash();
+	float getDurationDash();
 };

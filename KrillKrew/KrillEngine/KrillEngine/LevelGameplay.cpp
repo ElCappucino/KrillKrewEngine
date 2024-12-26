@@ -209,11 +209,11 @@ void LevelGameplay::LevelUpdate()
 	// delete projectile
 	UpdateProjectile();
 
-	// reduce cooldown skill
+	// reduce cooldown skill 
 	UpdateCooldown();
 
-	// slowness
-	UpdateMovement();
+	// slowness & dash
+	//UpdateMovement();
 
 	//Ui Skills
 	UpdateUI();
@@ -282,13 +282,13 @@ void LevelGameplay::UpdateInput()
 			}
 
 			//Select ability
-			if (Joystick::GetButtonDown(i, Joystick::Button::L1)) {
+			if (Joystick::GetButtonDown(i, Joystick::Button::R1)) {
 				std::cout << "SDL_NumJoysticks() > 0" << std::endl;
 			}
 
 
 			//Aim
-			if (Joystick::GetButtonDown(i, Joystick::Button::R1))
+			if (Joystick::GetButtonDown(i, Joystick::Button::Square))
 			{
 				std::cout << "Shoot " << i + playerNum << std::endl;
 				if (players[i + playerNum]->getIsShooting() == false && players[i + playerNum]->getIsAiming() == false) {
@@ -307,7 +307,7 @@ void LevelGameplay::UpdateInput()
 				}
 			}
 			//Shoot
-			if (Joystick::GetButtonUp(i, Joystick::Button::R1))
+			if (Joystick::GetButtonUp(i, Joystick::Button::Square))
 			{
 				std::cout << "Shoot " << i + playerNum << std::endl;
 				if (players[i + playerNum]->getIsShooting() == false) {
@@ -345,9 +345,16 @@ void LevelGameplay::UpdateInput()
 			{
 				std::cout << "Cross" << std::endl;
 			}
+
+			//Dash
 			if (Joystick::GetButtonDown(i, Joystick::Button::Circle))
 			{
-				std::cout << "Circle" << std::endl;
+				if (players[i + playerNum]->getCooldown(2) <= 0) {
+					players[i + playerNum]->setCooldown(2, 3);
+					players[i + playerNum]->setIsDash(true);
+					players[i + playerNum]->setDurationDash(2);
+				}
+
 			}
 			if (Joystick::GetButtonDown(i, Joystick::Button::L1))
 			{
@@ -395,31 +402,34 @@ void LevelGameplay::UpdateInput()
 			}
 			if (Joystick::GetButtonDown(i, Joystick::Button::P5Button))
 			{
-				GameEngine::GetInstance()->GetStateController()->loadingState = GameState::GS_LEVELMAPTEST;
-				GameEngine::GetInstance()->GetStateController()->gameStateNext = GameState::GS_LEVELLOADING;
+				/*GameEngine::GetInstance()->GetStateController()->loadingState = GameState::GS_LEVELMAPTEST;
+				GameEngine::GetInstance()->GetStateController()->gameStateNext = GameState::GS_LEVELLOADING;*/
 			}
 			if (Joystick::GetButtonDown(i, Joystick::Button::Touchpad))
 			{
 				std::cout << "SDL_CONTROLLER_BUTTON_TOUCHPAD" << std::endl;
 			}
+
+			//Trap
 			if (Joystick::GetButtonDown(i, Joystick::Button::Triangle))
 			{
 				std::cout << "Triangle" << std::endl;
 				if (players[i + playerNum]->getCooldown(1) <= 0) {
-					players[i + playerNum]->setCooldown(1, 3);
-					TrapObject* Trap = new TrapObject();
-					Trap->SetSpriteInfo(spriteList.find("Trap")->second);
-					Trap->SetTexture(spriteList.find("Trap")->second.texture);
-					Trap->SetPosition(players[i + playerNum]->getPos());
-					Trap->SetSize(128.f, -128.f);
-					Trap->setNumOwner(players[i + playerNum]->getNumber());
-					//std::cout << "Owner " << Trap->getNumOwner() << std::endl;
-					objectsList.push_back(Trap);
+					//players[i + playerNum]->setCooldown(1, 3);
+					//TrapObject* Trap = new TrapObject();
+					//Trap->SetSpriteInfo(spriteList.find("Trap")->second);
+					//Trap->SetTexture(spriteList.find("Trap")->second.texture);
+					//Trap->SetPosition(players[i + playerNum]->getPos());
+					//Trap->SetSize(128.f, -128.f);
+					//Trap->setNumOwner(players[i + playerNum]->getNumber());
+					////std::cout << "Owner " << Trap->getNumOwner() << std::endl;
+					//objectsList.push_back(Trap);
+					trap(i + playerNum);
 				}
 			}
 
 			// Debug other player
-			if (Joystick::GetButtonDown(i, Joystick::Button::L1))
+			if (Joystick::GetButtonDown(i, Joystick::Button::R1))
 			{
 				playerNum += 1;
 				if (playerNum >= 4) {
@@ -616,13 +626,21 @@ void LevelGameplay::UpdateCooldown()
 		timer->reset();
 		time[i + playerNum] += timer->getDeltaTime();
 
+		//slowness & dash
+		UpdateMovement();
+
 		for (int j = 0; j < 3; j++)
 		{
 			if (time[i + playerNum] >= 1.0f && players[i + playerNum]->getCooldown(j) > 0)
 			{
-				players[i + playerNum]->reduceCooldown();
-				time[i + playerNum] = 0.0f;
+				std::cout << j << std::endl;
+				players[i + playerNum]->reduceCooldown(j);
+				
 			}
+			
+		}
+		if (time[i + playerNum] >= 1.0f) {
+			time[i + playerNum] = 0.0f;
 		}
 	}
 }
@@ -631,14 +649,24 @@ void LevelGameplay::UpdateMovement()
 {
 	for (int i = 0; i < SDL_NumJoysticks() + playerNum; i++)
 	{
-		if (players[i]->getIsSlowness() == true)
+		if (time[i + playerNum] >= 1.0f && players[i + playerNum]->getIsSlowness() == true)
 		{
-			players[i]->reduceDurationSlowness();
+			players[i + playerNum]->reduceDurationSlowness();
 		}
 
 		if (players[i]->getDurationSlowness() <= 0)
 		{
 			players[i]->setIsSlowness(false);
+		}
+
+		if (time[i + playerNum] >= 1.0f && players[i + playerNum]->getIsDash() == true) {
+			std::cout << "reduce dash time" << std::endl;
+			players[i]->reduceDurationDash();
+		}
+
+		if (players[i + playerNum]->getDurationDash() <= 0)
+		{
+			players[i]->setIsDash(false);
 		}
 	}
 }
@@ -759,3 +787,73 @@ void LevelGameplay::Movement(float axisX, float axisY, bool isPositiveX, bool is
 	
 }
 
+void LevelGameplay::usingAbility(int numPlayer, int numberAbility) {
+
+	if (players[numPlayer + playerNum]->getCooldown(numberAbility) <= 0) {
+		switch (numberAbility) {
+
+		case 1 :
+
+			aimFireball(numPlayer);
+			break;
+		case 2 :
+
+			trap(numPlayer);
+			break;
+
+		case 3 :
+			dash(numPlayer);
+			break;
+		}
+		
+	}
+
+}
+
+void LevelGameplay::aimFireball(int num) {
+	players[num + playerNum]->setVelocity(0, 0, false, false);
+	players[num + playerNum]->setIsAiming(true);
+	ProjectileObject* projectile = new ProjectileObject();
+	projectile->SetSpriteInfo(spriteList.find("Bomb")->second);
+	projectile->SetTexture(spriteList.find("Bomb")->second.texture);
+	projectile->SetPosition(players[num + playerNum]->getPos());
+	projectile->SetSize(256.f, -256.f);
+	projectile->setLifeTime(9999);
+	projectile->setNumOwner(players[num + playerNum]->getNumber());
+	std::cout << "Owner " << projectile->getNumOwner() << std::endl;
+	objectsList.push_back(projectile);
+	//objectsList.push_back(projectile->GetCollider()->GetGizmos());
+}
+
+
+
+void LevelGameplay::shootFireball(int num) {
+	if (players[num + playerNum]->getIsShooting() == false) {
+		players[num + playerNum]->setIsShooting(true);
+		players[num + playerNum]->setIsAiming(false);
+		for (int j = 0; j < objectsList.size(); j++) {
+			ProjectileObject* projectile = dynamic_cast<ProjectileObject*>(objectsList[j]);
+			if (projectile != nullptr) {
+				projectile->setLifeTime(5);
+			}
+		}
+	}
+}
+
+void LevelGameplay::trap(int num) {
+	players[num + playerNum]->setCooldown(1, 3);
+	TrapObject* Trap = new TrapObject();
+	Trap->SetSpriteInfo(spriteList.find("Trap")->second);
+	Trap->SetTexture(spriteList.find("Trap")->second.texture);
+	Trap->SetPosition(players[num + playerNum]->getPos());
+	Trap->SetSize(128.f, -128.f);
+	Trap->setNumOwner(players[num + playerNum]->getNumber());
+	//std::cout << "Owner " << Trap->getNumOwner() << std::endl;
+	objectsList.push_back(Trap);
+}
+
+void LevelGameplay::dash(int num) {
+	players[num + playerNum]->setCooldown(2, 3);
+	players[num + playerNum]->setIsDash(true);
+	players[num + playerNum]->setDurationDash(2);
+}
