@@ -1,0 +1,47 @@
+\doxysection{Projectile\+Object.\+h}
+\hypertarget{_projectile_object_8h_source}{}\label{_projectile_object_8h_source}\index{KrillKrew/KrillEngine/KrillEngine/ProjectileObject.h@{KrillKrew/KrillEngine/KrillEngine/ProjectileObject.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ }
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ "{}DrawableObject.h"{}}}
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ "{}gtc/matrix\_transform.hpp"{}}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ "{}gtc/type\_ptr.hpp"{}}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ <string>}}
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ <array>}}
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#include\ "{}EntityObject.h"{}}}
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#include\ "{}Collider.h"{}}}
+\DoxyCodeLine{00010\ \textcolor{preprocessor}{\#include\ "{}Ability.h"{}}}
+\DoxyCodeLine{00011\ }
+\DoxyCodeLine{00013\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_projectile_object}{ProjectileObject}}\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{class_entity_object}{EntityObject}}}
+\DoxyCodeLine{00014\ \{}
+\DoxyCodeLine{00015\ \ \ \ \ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ texture;}
+\DoxyCodeLine{00016\ \ \ \ \ glm::vec3\ velocity;}
+\DoxyCodeLine{00017\ \ \ \ \ \textcolor{keywordtype}{int}\ lifeTime;}
+\DoxyCodeLine{00018\ \ \ \ \ \textcolor{keywordtype}{int}\ playerNumOwner;}
+\DoxyCodeLine{00019\ }
+\DoxyCodeLine{00020\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00021\ \ \ \ \ \mbox{\hyperlink{class_projectile_object}{ProjectileObject}}();}
+\DoxyCodeLine{00022\ \ \ \ \ \mbox{\hyperlink{class_projectile_object}{\string~ProjectileObject}}();}
+\DoxyCodeLine{00023\ \ \ \ \ \textcolor{keywordtype}{void}\ SetTexture(std::string\ path);}
+\DoxyCodeLine{00024\ \ \ \ \ \textcolor{keywordtype}{void}\ Render(glm::mat4\ globalModelTransform);}
+\DoxyCodeLine{00025\ \ \ \ \ \textcolor{keywordtype}{void}\ setVelocity(\textcolor{keywordtype}{float}\ axisX,\ \textcolor{keywordtype}{float}\ axisY,\ \textcolor{keywordtype}{bool}\ isPositiveX,\ \textcolor{keywordtype}{bool}\ isPositiveY);}
+\DoxyCodeLine{00026\ \ \ \ \ \textcolor{keywordtype}{void}\ setLifeTime(\textcolor{keywordtype}{int}\ lifeTime);}
+\DoxyCodeLine{00027\ \ \ \ \ \textcolor{keywordtype}{void}\ setNumOwner(\textcolor{keywordtype}{int}\ Num);}
+\DoxyCodeLine{00028\ \ \ \ \ glm::vec3\ getVelocity();}
+\DoxyCodeLine{00029\ \ \ \ \ \textcolor{keywordtype}{void}\ reduceLifeTime();}
+\DoxyCodeLine{00030\ \ \ \ \ \textcolor{keywordtype}{int}\ getLifetime();}
+\DoxyCodeLine{00031\ }
+\DoxyCodeLine{00032\ \ \ \ \ \textcolor{keyword}{virtual}\ \mbox{\hyperlink{class_collider}{Collider}}*\ GetCollider();}
+\DoxyCodeLine{00033\ }
+\DoxyCodeLine{00034\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ OnColliderEnter(\mbox{\hyperlink{class_collider}{Collider}}*\ other);}
+\DoxyCodeLine{00035\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ OnColliderStay(\mbox{\hyperlink{class_collider}{Collider}}*\ other);}
+\DoxyCodeLine{00036\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ OnColliderExit(\mbox{\hyperlink{class_collider}{Collider}}*\ other);}
+\DoxyCodeLine{00037\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ OnTriggerEnter(\mbox{\hyperlink{class_collider}{Collider}}*\ other);}
+\DoxyCodeLine{00038\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ OnTriggerStay(\mbox{\hyperlink{class_collider}{Collider}}*\ other);}
+\DoxyCodeLine{00039\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ OnTriggerExit(\mbox{\hyperlink{class_collider}{Collider}}*\ other);}
+\DoxyCodeLine{00040\ \ \ \ \ }
+\DoxyCodeLine{00041\ \ \ \ \ \textcolor{keywordtype}{int}\ getNumOwner();}
+\DoxyCodeLine{00042\ \};}
+
+\end{DoxyCode}

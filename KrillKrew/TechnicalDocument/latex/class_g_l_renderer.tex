@@ -11,8 +11,7 @@ This class is for rendering any drawable object.
 
 
 
-Collaboration diagram for GLRenderer\+:
-\nopagebreak
+Collaboration diagram for GLRenderer\+:\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -22,15 +21,15 @@ Collaboration diagram for GLRenderer\+:
 \doxysubsubsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-void \mbox{\hyperlink{class_g_l_renderer_a942ee69e79838fb4087422850d1bf65f}{Render}} (vector$<$ \mbox{\hyperlink{class_drawable_object}{Drawable\+Object}} \texorpdfstring{$\ast$}{*} $>$ \&obj\+List)
+void \mbox{\hyperlink{class_g_l_renderer_a6fe8d227fe8e76cb4b7bb383e824b818}{Render}} (std\+::vector$<$ \mbox{\hyperlink{class_drawable_object}{Drawable\+Object}} \texorpdfstring{$\ast$}{*} $>$ \&obj\+List)
 \begin{DoxyCompactList}\small\item\em The function for rendering all drawable object in object list. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{class_g_l_renderer_af506bf1e8d531b33cb668adb7c881ae7}{GLRenderer}} (int w, int h)
 \begin{DoxyCompactList}\small\item\em The constructor. \end{DoxyCompactList}\item 
-bool \mbox{\hyperlink{class_g_l_renderer_acfaac661744f2eb445f84ab8d0479649}{Init\+GL}} (string vertex\+Shader\+File, string fragment\+Shader\+File)
+bool \mbox{\hyperlink{class_g_l_renderer_a355ffe66b137b83628192592a18f84e2}{Init\+GL}} (std\+::string vertex\+Shader\+File, std\+::string fragment\+Shader\+File)
 \begin{DoxyCompactList}\small\item\em The function using for initialize the shader information. \end{DoxyCompactList}\item 
-void \mbox{\hyperlink{class_g_l_renderer_a3e4f52ca84cc263be264fed5e19c065a}{Add\+Mesh}} (string name, \mbox{\hyperlink{class_mesh_vbo}{Mesh\+Vbo}} \texorpdfstring{$\ast$}{*}shape)
+void \mbox{\hyperlink{class_g_l_renderer_a05e90f4e200f126f471c02c57ae95980}{Add\+Mesh}} (std\+::string name, \mbox{\hyperlink{class_mesh_vbo}{Mesh\+Vbo}} \texorpdfstring{$\ast$}{*}shape)
 \begin{DoxyCompactList}\small\item\em The function for adding the mesh information. \end{DoxyCompactList}\item 
-\mbox{\hyperlink{class_mesh_vbo}{Mesh\+Vbo}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{class_g_l_renderer_ab0f5019cbad4f20178396d82acca670d}{Get\+Mesh}} (string name)
+\mbox{\hyperlink{class_mesh_vbo}{Mesh\+Vbo}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{class_g_l_renderer_a8afa54dd61b5ea7c3aeb05a61968108f}{Get\+Mesh}} (std\+::string name)
 \begin{DoxyCompactList}\small\item\em The getter function for the saved mesh Vbo. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{struct_orthographic_value}{Orthographic\+Value}} \mbox{\hyperlink{class_g_l_renderer_ae077f8393c4a27e17861324369b1d3ca}{Get\+Orthovalue}} ()
 \begin{DoxyCompactList}\small\item\em The getter function for the orthographic value. \end{DoxyCompactList}\item 
@@ -54,7 +53,7 @@ GLuint \mbox{\hyperlink{class_g_l_renderer_ab7327910c457b5d1196412c03dbe5bec}{Ge
 \begin{DoxyCompactList}\small\item\em The getter function for color uniform of current shader. \end{DoxyCompactList}\item 
 GLuint \mbox{\hyperlink{class_g_l_renderer_a318759d23fdbe8073ec9c269b25c8e2d}{Get\+Mode\+Uniform\+Id}} ()
 \begin{DoxyCompactList}\small\item\em The getter function for mode uniform of current shader. \end{DoxyCompactList}\item 
-GLuint \mbox{\hyperlink{class_g_l_renderer_af06a96f18bcca1ab22a4b02473c72c43}{Load\+Texture}} (string path)
+GLuint \mbox{\hyperlink{class_g_l_renderer_a5a7ca3d47a273d568da7e4e3256e3b5b}{Load\+Texture}} (std\+::string path)
 \begin{DoxyCompactList}\small\item\em The function for loading texture data. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \doxysubsubsection*{Protected Member Functions}
 \begin{DoxyCompactItemize}
@@ -62,8 +61,8 @@ GLuint \mbox{\hyperlink{class_g_l_renderer_af06a96f18bcca1ab22a4b02473c72c43}{Lo
 \Hypertarget{class_g_l_renderer_a2be1b11d115f8fd2e71b1325237c07c3}\label{class_g_l_renderer_a2be1b11d115f8fd2e71b1325237c07c3} 
 void {\bfseries Print\+Program\+Log} (GLuint program)
 \item 
-\Hypertarget{class_g_l_renderer_a5146fae681750001f0445ce8993aa353}\label{class_g_l_renderer_a5146fae681750001f0445ce8993aa353} 
-bool {\bfseries Initialize} (string vertex\+Shader\+File, string fragment\+Shader\+File)
+\Hypertarget{class_g_l_renderer_a5218b23d7e3b7207c1decc23dadd1634}\label{class_g_l_renderer_a5218b23d7e3b7207c1decc23dadd1634} 
+bool {\bfseries Initialize} (std\+::string vertex\+Shader\+File, std\+::string fragment\+Shader\+File)
 \item 
 \Hypertarget{class_g_l_renderer_af18736274cbb0b38ba6111d28f8f2a45}\label{class_g_l_renderer_af18736274cbb0b38ba6111d28f8f2a45} 
 void {\bfseries Set\+Mesh\+Attrib\+Id} (\mbox{\hyperlink{class_mesh_vbo}{Mesh\+Vbo}} \texorpdfstring{$\ast$}{*}shape)
@@ -113,8 +112,8 @@ int {\bfseries g\+Tex2\+DLocation}
 \Hypertarget{class_g_l_renderer_aa5b8d710d6ba5cccbc33cb5ffbe850af}\label{class_g_l_renderer_aa5b8d710d6ba5cccbc33cb5ffbe850af} 
 \mbox{\hyperlink{class_shader}{Shader}} \texorpdfstring{$\ast$}{*} {\bfseries fragment\+Shader}
 \item 
-\Hypertarget{class_g_l_renderer_ada79855934349882bb784a8c1a15c05c}\label{class_g_l_renderer_ada79855934349882bb784a8c1a15c05c} 
-map$<$ string, \mbox{\hyperlink{class_mesh_vbo}{Mesh\+Vbo}} \texorpdfstring{$\ast$}{*} $>$ {\bfseries shapes}
+\Hypertarget{class_g_l_renderer_ac2f3423466b9836b9977fbf4facd4ed8}\label{class_g_l_renderer_ac2f3423466b9836b9977fbf4facd4ed8} 
+std\+::map$<$ std\+::string, \mbox{\hyperlink{class_mesh_vbo}{Mesh\+Vbo}} \texorpdfstring{$\ast$}{*} $>$ {\bfseries shapes}
 \end{DoxyCompactItemize}
 
 
@@ -147,11 +146,11 @@ Using for setup the camera projection value.
 
 
 \doxysubsection{Member Function Documentation}
-\Hypertarget{class_g_l_renderer_a3e4f52ca84cc263be264fed5e19c065a}\index{GLRenderer@{GLRenderer}!AddMesh@{AddMesh}}
+\Hypertarget{class_g_l_renderer_a05e90f4e200f126f471c02c57ae95980}\index{GLRenderer@{GLRenderer}!AddMesh@{AddMesh}}
 \index{AddMesh@{AddMesh}!GLRenderer@{GLRenderer}}
 \doxysubsubsection{\texorpdfstring{AddMesh()}{AddMesh()}}
-{\footnotesize\ttfamily \label{class_g_l_renderer_a3e4f52ca84cc263be264fed5e19c065a} 
-void GLRenderer\+::\+Add\+Mesh (\begin{DoxyParamCaption}\item[{string}]{name}{, }\item[{\mbox{\hyperlink{class_mesh_vbo}{Mesh\+Vbo}} \texorpdfstring{$\ast$}{*}}]{shape}{}\end{DoxyParamCaption})}
+{\footnotesize\ttfamily \label{class_g_l_renderer_a05e90f4e200f126f471c02c57ae95980} 
+void GLRenderer\+::\+Add\+Mesh (\begin{DoxyParamCaption}\item[{std\+::string}]{name}{, }\item[{\mbox{\hyperlink{class_mesh_vbo}{Mesh\+Vbo}} \texorpdfstring{$\ast$}{*}}]{shape}{}\end{DoxyParamCaption})}
 
 
 
@@ -177,11 +176,11 @@ The getter function for color uniform of current shader.
 \begin{DoxyReturn}{Returns}
 It will return the color uniform attribute if there is the color uniform in the shader data. return -\/1 if not. 
 \end{DoxyReturn}
-\Hypertarget{class_g_l_renderer_ab0f5019cbad4f20178396d82acca670d}\index{GLRenderer@{GLRenderer}!GetMesh@{GetMesh}}
+\Hypertarget{class_g_l_renderer_a8afa54dd61b5ea7c3aeb05a61968108f}\index{GLRenderer@{GLRenderer}!GetMesh@{GetMesh}}
 \index{GetMesh@{GetMesh}!GLRenderer@{GLRenderer}}
 \doxysubsubsection{\texorpdfstring{GetMesh()}{GetMesh()}}
-{\footnotesize\ttfamily \label{class_g_l_renderer_ab0f5019cbad4f20178396d82acca670d} 
-\mbox{\hyperlink{class_mesh_vbo}{Mesh\+Vbo}} \texorpdfstring{$\ast$}{*} GLRenderer\+::\+Get\+Mesh (\begin{DoxyParamCaption}\item[{string}]{name}{}\end{DoxyParamCaption})}
+{\footnotesize\ttfamily \label{class_g_l_renderer_a8afa54dd61b5ea7c3aeb05a61968108f} 
+\mbox{\hyperlink{class_mesh_vbo}{Mesh\+Vbo}} \texorpdfstring{$\ast$}{*} GLRenderer\+::\+Get\+Mesh (\begin{DoxyParamCaption}\item[{std\+::string}]{name}{}\end{DoxyParamCaption})}
 
 
 
@@ -247,11 +246,11 @@ The getter function for Projection attribute of current shader.
 \begin{DoxyReturn}{Returns}
 It will return the projection attribute if there is the projection matrix in the shader data. return -\/1 if not. 
 \end{DoxyReturn}
-\Hypertarget{class_g_l_renderer_acfaac661744f2eb445f84ab8d0479649}\index{GLRenderer@{GLRenderer}!InitGL@{InitGL}}
+\Hypertarget{class_g_l_renderer_a355ffe66b137b83628192592a18f84e2}\index{GLRenderer@{GLRenderer}!InitGL@{InitGL}}
 \index{InitGL@{InitGL}!GLRenderer@{GLRenderer}}
 \doxysubsubsection{\texorpdfstring{InitGL()}{InitGL()}}
-{\footnotesize\ttfamily \label{class_g_l_renderer_acfaac661744f2eb445f84ab8d0479649} 
-bool GLRenderer\+::\+Init\+GL (\begin{DoxyParamCaption}\item[{string}]{vertex\+Shader\+File}{, }\item[{string}]{fragment\+Shader\+File}{}\end{DoxyParamCaption})}
+{\footnotesize\ttfamily \label{class_g_l_renderer_a355ffe66b137b83628192592a18f84e2} 
+bool GLRenderer\+::\+Init\+GL (\begin{DoxyParamCaption}\item[{std\+::string}]{vertex\+Shader\+File}{, }\item[{std\+::string}]{fragment\+Shader\+File}{}\end{DoxyParamCaption})}
 
 
 
@@ -267,11 +266,11 @@ The function using for initialize the shader information.
 \begin{DoxyReturn}{Returns}
 It will return false if it can\textquotesingle{}t initialize GLEW or Open\+GL. return true if it\textquotesingle{}s work normally. 
 \end{DoxyReturn}
-\Hypertarget{class_g_l_renderer_af06a96f18bcca1ab22a4b02473c72c43}\index{GLRenderer@{GLRenderer}!LoadTexture@{LoadTexture}}
+\Hypertarget{class_g_l_renderer_a5a7ca3d47a273d568da7e4e3256e3b5b}\index{GLRenderer@{GLRenderer}!LoadTexture@{LoadTexture}}
 \index{LoadTexture@{LoadTexture}!GLRenderer@{GLRenderer}}
 \doxysubsubsection{\texorpdfstring{LoadTexture()}{LoadTexture()}}
-{\footnotesize\ttfamily \label{class_g_l_renderer_af06a96f18bcca1ab22a4b02473c72c43} 
-GLuint GLRenderer\+::\+Load\+Texture (\begin{DoxyParamCaption}\item[{string}]{path}{}\end{DoxyParamCaption})}
+{\footnotesize\ttfamily \label{class_g_l_renderer_a5a7ca3d47a273d568da7e4e3256e3b5b} 
+GLuint GLRenderer\+::\+Load\+Texture (\begin{DoxyParamCaption}\item[{std\+::string}]{path}{}\end{DoxyParamCaption})}
 
 
 
@@ -285,11 +284,11 @@ The function for loading texture data.
 \begin{DoxyReturn}{Returns}
 It will return the array of integer that store texture name; 
 \end{DoxyReturn}
-\Hypertarget{class_g_l_renderer_a942ee69e79838fb4087422850d1bf65f}\index{GLRenderer@{GLRenderer}!Render@{Render}}
+\Hypertarget{class_g_l_renderer_a6fe8d227fe8e76cb4b7bb383e824b818}\index{GLRenderer@{GLRenderer}!Render@{Render}}
 \index{Render@{Render}!GLRenderer@{GLRenderer}}
 \doxysubsubsection{\texorpdfstring{Render()}{Render()}}
-{\footnotesize\ttfamily \label{class_g_l_renderer_a942ee69e79838fb4087422850d1bf65f} 
-void GLRenderer\+::\+Render (\begin{DoxyParamCaption}\item[{vector$<$ \mbox{\hyperlink{class_drawable_object}{Drawable\+Object}} \texorpdfstring{$\ast$}{*} $>$ \&}]{obj\+List}{}\end{DoxyParamCaption})}
+{\footnotesize\ttfamily \label{class_g_l_renderer_a6fe8d227fe8e76cb4b7bb383e824b818} 
+void GLRenderer\+::\+Render (\begin{DoxyParamCaption}\item[{std\+::vector$<$ \mbox{\hyperlink{class_drawable_object}{Drawable\+Object}} \texorpdfstring{$\ast$}{*} $>$ \&}]{obj\+List}{}\end{DoxyParamCaption})}
 
 
 

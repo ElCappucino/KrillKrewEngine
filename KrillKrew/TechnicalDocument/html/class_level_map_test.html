@@ -153,12 +153,14 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a13d63d1634f72c57ef2196881dab3728"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9c3bf9a898caf4e65831e26cf8437fda" id="r_a9c3bf9a898caf4e65831e26cf8437fda"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a9c3bf9a898caf4e65831e26cf8437fda">HandleMouse</a> (int type, int x, int y)</td></tr>
 <tr class="separator:a9c3bf9a898caf4e65831e26cf8437fda"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acd9593962fca7c763d75414e7791f09a" id="r_acd9593962fca7c763d75414e7791f09a"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#acd9593962fca7c763d75414e7791f09a">Movement</a> (float axisX, float axisY, bool isPositiveX, bool isPositiveY)</td></tr>
+<tr class="separator:acd9593962fca7c763d75414e7791f09a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a70d56e4b0cb62c1eabe5737be293c8d9" id="r_a70d56e4b0cb62c1eabe5737be293c8d9"><td class="memItemLeft" align="right" valign="top"><a id="a70d56e4b0cb62c1eabe5737be293c8d9" name="a70d56e4b0cb62c1eabe5737be293c8d9"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>CameraLerp</b> ()</td></tr>
 <tr class="separator:a70d56e4b0cb62c1eabe5737be293c8d9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0efffde47df1d7572127adf5b18f90ab" id="r_a0efffde47df1d7572127adf5b18f90ab"><td class="memItemLeft" align="right" valign="top"><a id="a0efffde47df1d7572127adf5b18f90ab" name="a0efffde47df1d7572127adf5b18f90ab"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>TileImport</b> (int TileBuffer[][MAP_WIDTH], string fileName)</td></tr>
-<tr class="separator:a0efffde47df1d7572127adf5b18f90ab"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aefcc3c98e1079a0b8583c01ee6d0dad5" id="r_aefcc3c98e1079a0b8583c01ee6d0dad5"><td class="memItemLeft" align="right" valign="top"><a id="aefcc3c98e1079a0b8583c01ee6d0dad5" name="aefcc3c98e1079a0b8583c01ee6d0dad5"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>TileImport</b> (int TileBuffer[][MAP_WIDTH], std::string fileName)</td></tr>
+<tr class="separator:aefcc3c98e1079a0b8583c01ee6d0dad5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_class_level"><td colspan="2" onclick="javascript:dynsection.toggleInherit('pub_methods_class_level')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="class_level.html">Level</a></td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
@@ -376,6 +378,47 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>TileImport</b> (int T
           <td>(</td>
           <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
           <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Reimplemented from <a class="el" href="class_level.html">Level</a>.</p>
+
+</div>
+</div>
+<a id="acd9593962fca7c763d75414e7791f09a" name="acd9593962fca7c763d75414e7791f09a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acd9593962fca7c763d75414e7791f09a">&#9670;&#160;</a></span>Movement()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void LevelMapTest::Movement </td>
+          <td>(</td>
+          <td class="paramtype">float</td>          <td class="paramname"><span class="paramname"><em>axisX</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float</td>          <td class="paramname"><span class="paramname"><em>axisY</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool</td>          <td class="paramname"><span class="paramname"><em>isPositiveX</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool</td>          <td class="paramname"><span class="paramname"><em>isPositiveY</em></span>&#160;)</td>
         </tr>
       </table>
   </td>

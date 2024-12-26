@@ -1,5 +1,9 @@
 <map id="ImageObject" name="ImageObject">
-<area shape="rect" id="Node000001" title="The class for creating object that render using texture." alt="" coords="15,80,110,107"/>
+<area shape="rect" id="Node000001" title="The class for creating object that render using texture." alt="" coords="151,96,246,123"/>
 <area shape="rect" id="Node000002" href="$class_drawable_object.html" title="The class for creating drawable object." alt="" coords="5,5,120,32"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="65,48,65,80,60,80,60,48"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="96,39,180,93,178,98,93,43"/>
+<area shape="rect" id="Node000003" href="$class_sprite_renderer.html" title=" " alt="" coords="144,5,253,32"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="201,48,201,95,196,95,196,48"/>
+<area shape="rect" id="Node000004" href="$struct_spritesheet_info.html" title=" " alt="" coords="277,5,386,32"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="319,47,295,74,272,88,247,98,245,93,269,83,291,70,315,43"/>
 </map>

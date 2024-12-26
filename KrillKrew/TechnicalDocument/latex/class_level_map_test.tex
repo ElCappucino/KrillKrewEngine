@@ -11,8 +11,7 @@ The class for level inherit test from P\textquotesingle{}tiam.
 
 
 
-Inheritance diagram for Level\+Map\+Test\+:
-\nopagebreak
+Inheritance diagram for Level\+Map\+Test\+:\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -21,8 +20,7 @@ Inheritance diagram for Level\+Map\+Test\+:
 \end{figure}
 
 
-Collaboration diagram for Level\+Map\+Test\+:
-\nopagebreak
+Collaboration diagram for Level\+Map\+Test\+:\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -48,11 +46,13 @@ virtual void \mbox{\hyperlink{class_level_map_test_a13d63d1634f72c57ef2196881dab
 \item 
 virtual void \mbox{\hyperlink{class_level_map_test_a9c3bf9a898caf4e65831e26cf8437fda}{Handle\+Mouse}} (int type, int x, int y)
 \item 
+virtual void \mbox{\hyperlink{class_level_map_test_acd9593962fca7c763d75414e7791f09a}{Movement}} (float axisX, float axisY, bool is\+PositiveX, bool is\+PositiveY)
+\item 
 \Hypertarget{class_level_map_test_a70d56e4b0cb62c1eabe5737be293c8d9}\label{class_level_map_test_a70d56e4b0cb62c1eabe5737be293c8d9} 
 void {\bfseries Camera\+Lerp} ()
 \item 
-\Hypertarget{class_level_map_test_a0efffde47df1d7572127adf5b18f90ab}\label{class_level_map_test_a0efffde47df1d7572127adf5b18f90ab} 
-void {\bfseries Tile\+Import} (int Tile\+Buffer\mbox{[}$\,$\mbox{]}\mbox{[}MAP\+\_\+\+WIDTH\mbox{]}, string file\+Name)
+\Hypertarget{class_level_map_test_aefcc3c98e1079a0b8583c01ee6d0dad5}\label{class_level_map_test_aefcc3c98e1079a0b8583c01ee6d0dad5} 
+void {\bfseries Tile\+Import} (int Tile\+Buffer\mbox{[}$\,$\mbox{]}\mbox{[}MAP\+\_\+\+WIDTH\mbox{]}, std\+::string file\+Name)
 \end{DoxyCompactItemize}
 \doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{class_level}{Level}}}
 
@@ -136,6 +136,16 @@ Reimplemented from \mbox{\hyperlink{class_level}{Level}}.
 \doxysubsubsection{\texorpdfstring{LevelUpdate()}{LevelUpdate()}}
 {\footnotesize\ttfamily \label{class_level_map_test_aeb35c76104c90122a02e84d14f86c85a} 
 void Level\+Map\+Test\+::\+Level\+Update (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_level}{Level}}.
+
+\Hypertarget{class_level_map_test_acd9593962fca7c763d75414e7791f09a}\index{LevelMapTest@{LevelMapTest}!Movement@{Movement}}
+\index{Movement@{Movement}!LevelMapTest@{LevelMapTest}}
+\doxysubsubsection{\texorpdfstring{Movement()}{Movement()}}
+{\footnotesize\ttfamily \label{class_level_map_test_acd9593962fca7c763d75414e7791f09a} 
+void Level\+Map\+Test\+::\+Movement (\begin{DoxyParamCaption}\item[{float}]{axisX}{, }\item[{float}]{axisY}{, }\item[{bool}]{is\+PositiveX}{, }\item[{bool}]{is\+PositiveY}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
 
 
 

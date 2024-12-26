@@ -1,0 +1,72 @@
+\doxysection{Level\+Showcase.\+h}
+\hypertarget{_level_showcase_8h_source}{}\label{_level_showcase_8h_source}\index{KrillKrew/KrillEngine/KrillEngine/LevelShowcase.h@{KrillKrew/KrillEngine/KrillEngine/LevelShowcase.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#include\ "{}Level.h"{}}}
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ "{}InfoStruct.h"{}}}
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ "{}EntityObject.h"{}}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ "{}PlayerObject.h"{}}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ "{}ProjectileObject.h"{}}}
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ "{}TrapObject.h"{}}}
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#include\ "{}GizmosObject.h"{}}}
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#include\ "{}TrapObject.h"{}}}
+\DoxyCodeLine{00010\ \textcolor{preprocessor}{\#include\ "{}Timer.h"{}}}
+\DoxyCodeLine{00011\ \textcolor{preprocessor}{\#include\ "{}UiObject.h"{}}}
+\DoxyCodeLine{00012\ }
+\DoxyCodeLine{00013\ \textcolor{preprocessor}{\#include\ <string>}}
+\DoxyCodeLine{00014\ \textcolor{preprocessor}{\#include\ <fstream>}}
+\DoxyCodeLine{00015\ \textcolor{preprocessor}{\#include\ <sstream>}}
+\DoxyCodeLine{00016\ \textcolor{preprocessor}{\#include\ <iostream>}}
+\DoxyCodeLine{00017\ \textcolor{preprocessor}{\#include\ <map>}}
+\DoxyCodeLine{00018\ \textcolor{preprocessor}{\#include\ <bitset>}}
+\DoxyCodeLine{00019\ }
+\DoxyCodeLine{00020\ \textcolor{preprocessor}{\#define\ MAP\_WIDTH\ \ 21}}
+\DoxyCodeLine{00021\ \textcolor{preprocessor}{\#define\ MAP\_HEIGHT\ 16}}
+\DoxyCodeLine{00022\ }
+\DoxyCodeLine{00024\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_level_showcase}{LevelShowcase}}\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{class_level}{Level}}}
+\DoxyCodeLine{00025\ \{}
+\DoxyCodeLine{00026\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00027\ \ \ \ \ std::vector<DrawableObject*>\ objectsList;}
+\DoxyCodeLine{00028\ \ \ \ \ std::map<std::string,\ SpritesheetInfo>\ spriteList;}
+\DoxyCodeLine{00029\ }
+\DoxyCodeLine{00030\ \ \ \ \ \mbox{\hyperlink{class_player_object}{PlayerObject}}*\ players[4];\ \textcolor{comment}{//\ add\ up\ to\ 4\ players}}
+\DoxyCodeLine{00031\ }
+\DoxyCodeLine{00032\ \ \ \ \ \textcolor{keywordtype}{int}\ groundTile[MAP\_HEIGHT][MAP\_WIDTH]\ =\ \{\ 0\ \};}
+\DoxyCodeLine{00033\ \ \ \ \ \textcolor{keywordtype}{int}\ propsTile[MAP\_HEIGHT][MAP\_WIDTH]\ =\ \{\ 0\ \};}
+\DoxyCodeLine{00034\ \ \ \ \ \textcolor{keywordtype}{int}\ colliderTile[MAP\_HEIGHT][MAP\_WIDTH]\ =\ \{\ 0\ \};}
+\DoxyCodeLine{00035\ }
+\DoxyCodeLine{00036\ \ \ \ \ \textcolor{keywordtype}{int}\ playerSize\ =\ 0;}
+\DoxyCodeLine{00037\ \ \ \ \ \textcolor{keywordtype}{int}\ playerNum\ =\ 0;}
+\DoxyCodeLine{00038\ \ \ \ \ \mbox{\hyperlink{struct_orthographic_value}{OrthographicValue}}\ targetSceneProjection;\ \textcolor{comment}{//\ use\ for\ lerping\ between\ the\ current\ projection\ and\ this\ (target\ projection).}}
+\DoxyCodeLine{00039\ \ \ \ \ \mbox{\hyperlink{class_camera}{Camera}}\ camera;}
+\DoxyCodeLine{00040\ \ \ \ \ \mbox{\hyperlink{class_timer}{Timer}}*\ timer;}
+\DoxyCodeLine{00041\ }
+\DoxyCodeLine{00042\ \ \ \ \ \textcolor{keywordtype}{int}\ dt\ =\ 0;}
+\DoxyCodeLine{00043\ \ \ \ \ \textcolor{keywordtype}{float}\ time[4]\ =\ \{\ 0\ \};}
+\DoxyCodeLine{00044\ \ \ \ \ \textcolor{keywordtype}{float}\ previousWidth\ =\ 0,\ previousHeight\ =\ 0;}
+\DoxyCodeLine{00045\ }
+\DoxyCodeLine{00046\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00047\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ LevelLoad();}
+\DoxyCodeLine{00048\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ LevelInit();}
+\DoxyCodeLine{00049\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ LevelUpdate();}
+\DoxyCodeLine{00050\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ LevelDraw();}
+\DoxyCodeLine{00051\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ LevelFree();}
+\DoxyCodeLine{00052\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ LevelUnload();}
+\DoxyCodeLine{00053\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ Movement(\textcolor{keywordtype}{float}\ axisX,\ \textcolor{keywordtype}{float}\ axisY,\ \textcolor{keywordtype}{bool}\ isPositiveX,\ \textcolor{keywordtype}{bool}\ isPositiveY);}
+\DoxyCodeLine{00054\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ HandleKey(\textcolor{keywordtype}{char}\ key);}
+\DoxyCodeLine{00055\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ HandleMouse(\textcolor{keywordtype}{int}\ type,\ \textcolor{keywordtype}{int}\ x,\ \textcolor{keywordtype}{int}\ y);}
+\DoxyCodeLine{00056\ }
+\DoxyCodeLine{00057\ \ \ \ \ \textcolor{keywordtype}{void}\ UpdateInput();}
+\DoxyCodeLine{00058\ \ \ \ \ \textcolor{keywordtype}{void}\ UpdateCollision();}
+\DoxyCodeLine{00059\ \ \ \ \ \textcolor{keywordtype}{void}\ UpdateProjectile();}
+\DoxyCodeLine{00060\ \ \ \ \ \textcolor{keywordtype}{void}\ UpdateCooldown();}
+\DoxyCodeLine{00061\ \ \ \ \ \textcolor{keywordtype}{void}\ UpdateMovement();}
+\DoxyCodeLine{00062\ \ \ \ \ \textcolor{keywordtype}{void}\ UpdateUI();}
+\DoxyCodeLine{00063\ }
+\DoxyCodeLine{00064\ \ \ \ \ \textcolor{keywordtype}{void}\ TileImport(\textcolor{keywordtype}{int}\ TileBuffer[][MAP\_WIDTH],\ std::string\ fileName);}
+\DoxyCodeLine{00065\ }
+\DoxyCodeLine{00066\ \ \ \ \ \textcolor{comment}{//\ void\ CameraLerp();}}
+\DoxyCodeLine{00067\ \};}
+
+\end{DoxyCode}

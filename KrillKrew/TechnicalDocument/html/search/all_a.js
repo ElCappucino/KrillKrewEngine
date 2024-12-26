@@ -1,4 +1,6 @@
 var searchData=
 [
-  ['render_0',['Render',['../class_combine_object.html#af51c2202fd25b728df20c22c676d2ee0',1,'CombineObject::Render()'],['../class_g_l_renderer.html#a942ee69e79838fb4087422850d1bf65f',1,'GLRenderer::Render()']]]
+  ['playerobject_0',['PlayerObject',['../class_player_object.html',1,'']]],
+  ['printshaderlog_1',['PrintShaderLog',['../class_shader.html#a226c40eb41d60afeaa149b8ea00ba35b',1,'Shader']]],
+  ['projectileobject_2',['ProjectileObject',['../class_projectile_object.html',1,'']]]
 ];

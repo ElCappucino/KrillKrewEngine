@@ -1,9 +1,9 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="Node000000" href="$class_level.html" title="The class for setup object in the level." alt="" coords="5,56,58,83"/>
-<area shape="rect" id="Node000001" href="$class_level_gameplay.html" title="The class for level inherit test from P&#39;tiam." alt="" coords="106,5,217,32"/>
-<area shape="poly" id="edge5_Node000000_Node000001" title=" " alt="" coords="71,51,124,30,126,35,73,56"/>
-<area shape="rect" id="Node000002" href="$class_level_map_test.html" title="The class for level inherit test from P&#39;tiam." alt="" coords="110,56,212,83"/>
-<area shape="poly" id="edge6_Node000000_Node000002" title=" " alt="" coords="73,67,110,67,110,72,73,72"/>
-<area shape="rect" id="Node000003" href="$class_level_test.html" title="The class for level inherit test from P&#39;tiam." alt="" coords="123,107,200,133"/>
-<area shape="poly" id="edge7_Node000000_Node000003" title=" " alt="" coords="73,82,126,104,124,109,71,87"/>
+<area shape="rect" id="Node000000" href="$class_mesh_vbo.html" title="The class for store the Vbo data." alt="" coords="5,56,82,83"/>
+<area shape="rect" id="Node000001" href="$class_line_mesh_vbo.html" title="The class for store the Vbo data of square mesh." alt="" coords="141,5,241,32"/>
+<area shape="poly" id="edge13_Node000000_Node000001" title=" " alt="" coords="95,49,149,30,151,35,97,54"/>
+<area shape="rect" id="Node000002" href="$class_square_mesh_vbo.html" title="The class for store the Vbo data of square mesh." alt="" coords="132,56,250,83"/>
+<area shape="poly" id="edge14_Node000000_Node000002" title=" " alt="" coords="97,67,132,67,132,72,97,72"/>
+<area shape="rect" id="Node000003" href="$class_triangle_mesh_vbo.html" title="The class for store the Vbo data of triangle mesh." alt="" coords="130,107,252,133"/>
+<area shape="poly" id="edge15_Node000000_Node000003" title=" " alt="" coords="97,85,151,104,149,109,95,90"/>
 </map>

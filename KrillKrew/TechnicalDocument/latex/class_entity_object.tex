@@ -1,0 +1,146 @@
+\doxysection{Entity\+Object Class Reference}
+\hypertarget{class_entity_object}{}\label{class_entity_object}\index{EntityObject@{EntityObject}}
+
+
+The class for creating object that render using texture.  
+
+
+
+
+{\ttfamily \#include $<$Entity\+Object.\+h$>$}
+
+
+
+Inheritance diagram for Entity\+Object\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=338pt]{class_entity_object__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for Entity\+Object\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_entity_object__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_entity_object_a0fe0118839f34ed3701a0c9bb7206bc9}\label{class_entity_object_a0fe0118839f34ed3701a0c9bb7206bc9} 
+virtual void {\bfseries Set\+Sprite\+Info} (\mbox{\hyperlink{struct_spritesheet_info}{Spritesheet\+Info}} info)
+\item 
+\Hypertarget{class_entity_object_a9e2a2ae40ac1653a5630a89cde41dae6}\label{class_entity_object_a9e2a2ae40ac1653a5630a89cde41dae6} 
+void {\bfseries Set\+Texture} (std\+::string path)
+\item 
+void \mbox{\hyperlink{class_entity_object_a8cca95a93e92daa5029a240a697a6606}{Render}} (glm\+::mat4 global\+Model\+Transform)
+\item 
+\Hypertarget{class_entity_object_aeb63a97b686b575ffdf223bdf3e7f284}\label{class_entity_object_aeb63a97b686b575ffdf223bdf3e7f284} 
+virtual \mbox{\hyperlink{class_collider}{Collider}} \texorpdfstring{$\ast$}{*} {\bfseries Get\+Collider} ()
+\item 
+\Hypertarget{class_entity_object_aa22f5c7cf6b57a10bf8b8a130ecd4420}\label{class_entity_object_aa22f5c7cf6b57a10bf8b8a130ecd4420} 
+virtual void {\bfseries On\+Collider\+Enter} (\mbox{\hyperlink{class_collider}{Collider}} \texorpdfstring{$\ast$}{*}other)
+\item 
+\Hypertarget{class_entity_object_a549fe3e3c51f46a20ccd8e5788d91463}\label{class_entity_object_a549fe3e3c51f46a20ccd8e5788d91463} 
+virtual void {\bfseries On\+Collider\+Stay} (\mbox{\hyperlink{class_collider}{Collider}} \texorpdfstring{$\ast$}{*}other)
+\item 
+\Hypertarget{class_entity_object_a08e5743d8b4ce96cf48e19379607f509}\label{class_entity_object_a08e5743d8b4ce96cf48e19379607f509} 
+virtual void {\bfseries On\+Collider\+Exit} (\mbox{\hyperlink{class_collider}{Collider}} \texorpdfstring{$\ast$}{*}other)
+\item 
+\Hypertarget{class_entity_object_a890c3b26118aa792ef0c6ff79ba75244}\label{class_entity_object_a890c3b26118aa792ef0c6ff79ba75244} 
+virtual void {\bfseries On\+Trigger\+Enter} (\mbox{\hyperlink{class_collider}{Collider}} \texorpdfstring{$\ast$}{*}other)
+\item 
+\Hypertarget{class_entity_object_aa6a265f8d886c6d3d81d5afa0e4b2896}\label{class_entity_object_aa6a265f8d886c6d3d81d5afa0e4b2896} 
+virtual void {\bfseries On\+Trigger\+Stay} (\mbox{\hyperlink{class_collider}{Collider}} \texorpdfstring{$\ast$}{*}other)
+\item 
+\Hypertarget{class_entity_object_af6b5f5045489c8c0dc2e45c28a19713f}\label{class_entity_object_af6b5f5045489c8c0dc2e45c28a19713f} 
+virtual void {\bfseries On\+Trigger\+Exit} (\mbox{\hyperlink{class_collider}{Collider}} \texorpdfstring{$\ast$}{*}other)
+\item 
+\Hypertarget{class_entity_object_a7d672b8f229bab61574f05324e98facb}\label{class_entity_object_a7d672b8f229bab61574f05324e98facb} 
+virtual void {\bfseries Set\+Animation\+Sprite} (Animation\+State state, \mbox{\hyperlink{struct_spritesheet_info}{Spritesheet\+Info}} sprite\+Info)
+\item 
+\Hypertarget{class_entity_object_a2a17d256dc48ec556514dd4f7b311eca}\label{class_entity_object_a2a17d256dc48ec556514dd4f7b311eca} 
+virtual void {\bfseries Change\+Animation\+State} (Animation\+State anim)
+\item 
+\Hypertarget{class_entity_object_a74fb644fb8901eab0d998ced797d7bbf}\label{class_entity_object_a74fb644fb8901eab0d998ced797d7bbf} 
+virtual void {\bfseries Update\+Current\+Animation} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{class_image_object}{Image\+Object}}}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_sprite_renderer}{Sprite\+Renderer}} \texorpdfstring{$\ast$}{*} {\bfseries Get\+Sprite\+Renderer} ()
+\item 
+void {\bfseries Set\+Sprite\+Info} (\mbox{\hyperlink{struct_spritesheet_info}{Spritesheet\+Info}} info)
+\item 
+void {\bfseries Set\+Texture} (std\+::string path)
+\item 
+void \mbox{\hyperlink{class_image_object_a4e1a150373ad2197c807538975c5c9ee}{Render}} (glm\+::mat4 global\+Model\+Transform)
+\item 
+void {\bfseries Set\+Is\+Animated} (bool value)
+\item 
+bool {\bfseries Get\+Is\+Animated} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{class_drawable_object}{Drawable\+Object}}}
+\begin{DoxyCompactItemize}
+\item 
+glm\+::mat4 {\bfseries get\+Transform} ()
+\item 
+void {\bfseries Set\+Size} (float sizeX, float sizeY)
+\item 
+void {\bfseries Set\+Position} (glm\+::vec3 new\+Position)
+\item 
+void {\bfseries Translate} (glm\+::vec3 move\+Distance)
+\item 
+glm\+::vec3 {\bfseries get\+Pos} ()
+\item 
+glm\+::vec3 {\bfseries get\+Size} ()
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_entity_object_ad61a357a4358606df761b623a98ef23f}\label{class_entity_object_ad61a357a4358606df761b623a98ef23f} 
+\mbox{\hyperlink{class_collider}{Collider}} \texorpdfstring{$\ast$}{*} {\bfseries collider}
+\item 
+\Hypertarget{class_entity_object_a823292e76c90b1915c3d090fa9eee8f0}\label{class_entity_object_a823292e76c90b1915c3d090fa9eee8f0} 
+std\+::map$<$ Animation\+State, \mbox{\hyperlink{struct_spritesheet_info}{Spritesheet\+Info}} $>$ {\bfseries anim\+List}
+\item 
+\Hypertarget{class_entity_object_a4df30f437f8388f6758126e7fa9fe000}\label{class_entity_object_a4df30f437f8388f6758126e7fa9fe000} 
+Animation\+State {\bfseries curr\+Anim\+State}
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Attributes inherited from \mbox{\hyperlink{class_image_object}{Image\+Object}}}
+\begin{DoxyCompactItemize}
+\item 
+unsigned int {\bfseries texture}
+\item 
+\mbox{\hyperlink{class_sprite_renderer}{Sprite\+Renderer}} \texorpdfstring{$\ast$}{*} {\bfseries sprite\+Renderer}
+\item 
+\mbox{\hyperlink{struct_spritesheet_info}{Spritesheet\+Info}} {\bfseries sheet\+Info}
+\item 
+bool {\bfseries is\+Animated}
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Attributes inherited from \mbox{\hyperlink{class_drawable_object}{Drawable\+Object}}}
+\begin{DoxyCompactItemize}
+\item 
+glm\+::vec3 {\bfseries pos}
+\item 
+glm\+::vec3 {\bfseries size}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+The class for creating object that render using texture. 
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_entity_object_a8cca95a93e92daa5029a240a697a6606}\index{EntityObject@{EntityObject}!Render@{Render}}
+\index{Render@{Render}!EntityObject@{EntityObject}}
+\doxysubsubsection{\texorpdfstring{Render()}{Render()}}
+{\footnotesize\ttfamily \label{class_entity_object_a8cca95a93e92daa5029a240a697a6606} 
+void Entity\+Object\+::\+Render (\begin{DoxyParamCaption}\item[{glm\+::mat4}]{global\+Model\+Transform}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_drawable_object}{Drawable\+Object}}.
+

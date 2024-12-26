@@ -1,0 +1,28 @@
+\doxysection{Timer.\+h}
+\hypertarget{_timer_8h_source}{}\label{_timer_8h_source}\index{KrillKrew/KrillEngine/KrillEngine/Timer.h@{KrillKrew/KrillEngine/KrillEngine/Timer.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ }
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ <chrono>}}
+\DoxyCodeLine{00004\ }
+\DoxyCodeLine{00005\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_timer}{Timer}}\ \{}
+\DoxyCodeLine{00006\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00007\ \ \ \ \ \textcolor{keyword}{static}\ \mbox{\hyperlink{class_timer}{Timer}}*\ sIntance;}
+\DoxyCodeLine{00008\ \ \ \ \ std::chrono::system\_clock::time\_point\ startTime;}
+\DoxyCodeLine{00009\ \ \ \ \ std::chrono::duration<float>\ deltaTime;}
+\DoxyCodeLine{00010\ \ \ \ \ \textcolor{keywordtype}{float}\ timerScale;}
+\DoxyCodeLine{00011\ }
+\DoxyCodeLine{00012\ \textcolor{keyword}{protected}:}
+\DoxyCodeLine{00013\ \ \ \ \ \mbox{\hyperlink{class_timer}{Timer}}();}
+\DoxyCodeLine{00014\ }
+\DoxyCodeLine{00015\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00016\ \ \ \ \ \textcolor{keyword}{static}\ \mbox{\hyperlink{class_timer}{Timer}}*\ Instance();}
+\DoxyCodeLine{00017\ \ \ \ \ \textcolor{keywordtype}{void}\ reset();}
+\DoxyCodeLine{00018\ \ \ \ \ \textcolor{keywordtype}{float}\ getDeltaTime();}
+\DoxyCodeLine{00019\ \ \ \ \ \textcolor{keywordtype}{void}\ setTimeScale(\textcolor{keywordtype}{float}\ T);}
+\DoxyCodeLine{00020\ \ \ \ \ \textcolor{keywordtype}{float}\ getTimeScale();}
+\DoxyCodeLine{00021\ \ \ \ \ \textcolor{keywordtype}{void}\ tick();}
+\DoxyCodeLine{00022\ \};}
+
+\end{DoxyCode}

@@ -1,0 +1,227 @@
+\doxysection{Projectile\+Object Class Reference}
+\hypertarget{class_projectile_object}{}\label{class_projectile_object}\index{ProjectileObject@{ProjectileObject}}
+
+
+The class for creating object that render using texture.  
+
+
+
+
+{\ttfamily \#include $<$Projectile\+Object.\+h$>$}
+
+
+
+Inheritance diagram for Projectile\+Object\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=166pt]{class_projectile_object__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for Projectile\+Object\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_projectile_object__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_projectile_object_ae6044cd7191870b946be9861a561541b}\label{class_projectile_object_ae6044cd7191870b946be9861a561541b} 
+void {\bfseries Set\+Texture} (std\+::string path)
+\item 
+void \mbox{\hyperlink{class_projectile_object_a85a2b8227dcb4e76f1f844128285143e}{Render}} (glm\+::mat4 global\+Model\+Transform)
+\item 
+\Hypertarget{class_projectile_object_a0a186d3db0482239b3a3dfc9bfaabc1b}\label{class_projectile_object_a0a186d3db0482239b3a3dfc9bfaabc1b} 
+void {\bfseries set\+Velocity} (float axisX, float axisY, bool is\+PositiveX, bool is\+PositiveY)
+\item 
+\Hypertarget{class_projectile_object_aca10153dfbb4221852f24a6871d8f54c}\label{class_projectile_object_aca10153dfbb4221852f24a6871d8f54c} 
+void {\bfseries set\+Life\+Time} (int life\+Time)
+\item 
+\Hypertarget{class_projectile_object_a4daab6a569e17c69ca8c3aa1170cd52e}\label{class_projectile_object_a4daab6a569e17c69ca8c3aa1170cd52e} 
+void {\bfseries set\+Num\+Owner} (int Num)
+\item 
+\Hypertarget{class_projectile_object_a4605c91cefcab09f2adfeb4474aa95aa}\label{class_projectile_object_a4605c91cefcab09f2adfeb4474aa95aa} 
+glm\+::vec3 {\bfseries get\+Velocity} ()
+\item 
+\Hypertarget{class_projectile_object_a20b4e3e6bdccd80f74d288da6236ae7e}\label{class_projectile_object_a20b4e3e6bdccd80f74d288da6236ae7e} 
+void {\bfseries reduce\+Life\+Time} ()
+\item 
+\Hypertarget{class_projectile_object_ad0f36cfc3005f052b909e753f3cf5f21}\label{class_projectile_object_ad0f36cfc3005f052b909e753f3cf5f21} 
+int {\bfseries get\+Lifetime} ()
+\item 
+virtual \mbox{\hyperlink{class_collider}{Collider}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{class_projectile_object_a06e7d1f7250888f09517769cc08c35c4}{Get\+Collider}} ()
+\item 
+virtual void \mbox{\hyperlink{class_projectile_object_ac0b200760f76af582f8e5114153c8cc5}{On\+Collider\+Enter}} (\mbox{\hyperlink{class_collider}{Collider}} \texorpdfstring{$\ast$}{*}other)
+\item 
+virtual void \mbox{\hyperlink{class_projectile_object_abc078992dd94914c09c0803b04cb5373}{On\+Collider\+Stay}} (\mbox{\hyperlink{class_collider}{Collider}} \texorpdfstring{$\ast$}{*}other)
+\item 
+virtual void \mbox{\hyperlink{class_projectile_object_a2dc9a8d13dbf99f14fe82b70c2d238bb}{On\+Collider\+Exit}} (\mbox{\hyperlink{class_collider}{Collider}} \texorpdfstring{$\ast$}{*}other)
+\item 
+virtual void \mbox{\hyperlink{class_projectile_object_ae7a62a4d442de80a7b333b286c31a8af}{On\+Trigger\+Enter}} (\mbox{\hyperlink{class_collider}{Collider}} \texorpdfstring{$\ast$}{*}other)
+\item 
+virtual void \mbox{\hyperlink{class_projectile_object_a94be3cf2cdf40f45c89d6617c9380b87}{On\+Trigger\+Stay}} (\mbox{\hyperlink{class_collider}{Collider}} \texorpdfstring{$\ast$}{*}other)
+\item 
+virtual void \mbox{\hyperlink{class_projectile_object_ae01cbde216614f618b602273b6ed44db}{On\+Trigger\+Exit}} (\mbox{\hyperlink{class_collider}{Collider}} \texorpdfstring{$\ast$}{*}other)
+\item 
+\Hypertarget{class_projectile_object_a613171fe99ae6339a74379c4fe921e4b}\label{class_projectile_object_a613171fe99ae6339a74379c4fe921e4b} 
+int {\bfseries get\+Num\+Owner} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{class_entity_object}{Entity\+Object}}}
+\begin{DoxyCompactItemize}
+\item 
+virtual void {\bfseries Set\+Sprite\+Info} (\mbox{\hyperlink{struct_spritesheet_info}{Spritesheet\+Info}} info)
+\item 
+void {\bfseries Set\+Texture} (std\+::string path)
+\item 
+virtual void {\bfseries Set\+Animation\+Sprite} (Animation\+State state, \mbox{\hyperlink{struct_spritesheet_info}{Spritesheet\+Info}} sprite\+Info)
+\item 
+virtual void {\bfseries Change\+Animation\+State} (Animation\+State anim)
+\item 
+virtual void {\bfseries Update\+Current\+Animation} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{class_image_object}{Image\+Object}}}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_sprite_renderer}{Sprite\+Renderer}} \texorpdfstring{$\ast$}{*} {\bfseries Get\+Sprite\+Renderer} ()
+\item 
+void {\bfseries Set\+Sprite\+Info} (\mbox{\hyperlink{struct_spritesheet_info}{Spritesheet\+Info}} info)
+\item 
+void {\bfseries Set\+Texture} (std\+::string path)
+\item 
+void {\bfseries Set\+Is\+Animated} (bool value)
+\item 
+bool {\bfseries Get\+Is\+Animated} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{class_drawable_object}{Drawable\+Object}}}
+\begin{DoxyCompactItemize}
+\item 
+glm\+::mat4 {\bfseries get\+Transform} ()
+\item 
+void {\bfseries Set\+Size} (float sizeX, float sizeY)
+\item 
+void {\bfseries Set\+Position} (glm\+::vec3 new\+Position)
+\item 
+void {\bfseries Translate} (glm\+::vec3 move\+Distance)
+\item 
+glm\+::vec3 {\bfseries get\+Pos} ()
+\item 
+glm\+::vec3 {\bfseries get\+Size} ()
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Additional Inherited Members}
+\doxysubsection*{Protected Attributes inherited from \mbox{\hyperlink{class_entity_object}{Entity\+Object}}}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_collider}{Collider}} \texorpdfstring{$\ast$}{*} {\bfseries collider}
+\item 
+std\+::map$<$ Animation\+State, \mbox{\hyperlink{struct_spritesheet_info}{Spritesheet\+Info}} $>$ {\bfseries anim\+List}
+\item 
+Animation\+State {\bfseries curr\+Anim\+State}
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Attributes inherited from \mbox{\hyperlink{class_image_object}{Image\+Object}}}
+\begin{DoxyCompactItemize}
+\item 
+unsigned int {\bfseries texture}
+\item 
+\mbox{\hyperlink{class_sprite_renderer}{Sprite\+Renderer}} \texorpdfstring{$\ast$}{*} {\bfseries sprite\+Renderer}
+\item 
+\mbox{\hyperlink{struct_spritesheet_info}{Spritesheet\+Info}} {\bfseries sheet\+Info}
+\item 
+bool {\bfseries is\+Animated}
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Attributes inherited from \mbox{\hyperlink{class_drawable_object}{Drawable\+Object}}}
+\begin{DoxyCompactItemize}
+\item 
+glm\+::vec3 {\bfseries pos}
+\item 
+glm\+::vec3 {\bfseries size}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+The class for creating object that render using texture. 
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_projectile_object_a06e7d1f7250888f09517769cc08c35c4}\index{ProjectileObject@{ProjectileObject}!GetCollider@{GetCollider}}
+\index{GetCollider@{GetCollider}!ProjectileObject@{ProjectileObject}}
+\doxysubsubsection{\texorpdfstring{GetCollider()}{GetCollider()}}
+{\footnotesize\ttfamily \label{class_projectile_object_a06e7d1f7250888f09517769cc08c35c4} 
+\mbox{\hyperlink{class_collider}{Collider}} \texorpdfstring{$\ast$}{*} Projectile\+Object\+::\+Get\+Collider (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_entity_object}{Entity\+Object}}.
+
+\Hypertarget{class_projectile_object_ac0b200760f76af582f8e5114153c8cc5}\index{ProjectileObject@{ProjectileObject}!OnColliderEnter@{OnColliderEnter}}
+\index{OnColliderEnter@{OnColliderEnter}!ProjectileObject@{ProjectileObject}}
+\doxysubsubsection{\texorpdfstring{OnColliderEnter()}{OnColliderEnter()}}
+{\footnotesize\ttfamily \label{class_projectile_object_ac0b200760f76af582f8e5114153c8cc5} 
+void Projectile\+Object\+::\+On\+Collider\+Enter (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_collider}{Collider}} \texorpdfstring{$\ast$}{*}}]{other}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_entity_object}{Entity\+Object}}.
+
+\Hypertarget{class_projectile_object_a2dc9a8d13dbf99f14fe82b70c2d238bb}\index{ProjectileObject@{ProjectileObject}!OnColliderExit@{OnColliderExit}}
+\index{OnColliderExit@{OnColliderExit}!ProjectileObject@{ProjectileObject}}
+\doxysubsubsection{\texorpdfstring{OnColliderExit()}{OnColliderExit()}}
+{\footnotesize\ttfamily \label{class_projectile_object_a2dc9a8d13dbf99f14fe82b70c2d238bb} 
+void Projectile\+Object\+::\+On\+Collider\+Exit (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_collider}{Collider}} \texorpdfstring{$\ast$}{*}}]{other}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_entity_object}{Entity\+Object}}.
+
+\Hypertarget{class_projectile_object_abc078992dd94914c09c0803b04cb5373}\index{ProjectileObject@{ProjectileObject}!OnColliderStay@{OnColliderStay}}
+\index{OnColliderStay@{OnColliderStay}!ProjectileObject@{ProjectileObject}}
+\doxysubsubsection{\texorpdfstring{OnColliderStay()}{OnColliderStay()}}
+{\footnotesize\ttfamily \label{class_projectile_object_abc078992dd94914c09c0803b04cb5373} 
+void Projectile\+Object\+::\+On\+Collider\+Stay (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_collider}{Collider}} \texorpdfstring{$\ast$}{*}}]{other}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_entity_object}{Entity\+Object}}.
+
+\Hypertarget{class_projectile_object_ae7a62a4d442de80a7b333b286c31a8af}\index{ProjectileObject@{ProjectileObject}!OnTriggerEnter@{OnTriggerEnter}}
+\index{OnTriggerEnter@{OnTriggerEnter}!ProjectileObject@{ProjectileObject}}
+\doxysubsubsection{\texorpdfstring{OnTriggerEnter()}{OnTriggerEnter()}}
+{\footnotesize\ttfamily \label{class_projectile_object_ae7a62a4d442de80a7b333b286c31a8af} 
+void Projectile\+Object\+::\+On\+Trigger\+Enter (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_collider}{Collider}} \texorpdfstring{$\ast$}{*}}]{other}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_entity_object}{Entity\+Object}}.
+
+\Hypertarget{class_projectile_object_ae01cbde216614f618b602273b6ed44db}\index{ProjectileObject@{ProjectileObject}!OnTriggerExit@{OnTriggerExit}}
+\index{OnTriggerExit@{OnTriggerExit}!ProjectileObject@{ProjectileObject}}
+\doxysubsubsection{\texorpdfstring{OnTriggerExit()}{OnTriggerExit()}}
+{\footnotesize\ttfamily \label{class_projectile_object_ae01cbde216614f618b602273b6ed44db} 
+void Projectile\+Object\+::\+On\+Trigger\+Exit (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_collider}{Collider}} \texorpdfstring{$\ast$}{*}}]{other}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_entity_object}{Entity\+Object}}.
+
+\Hypertarget{class_projectile_object_a94be3cf2cdf40f45c89d6617c9380b87}\index{ProjectileObject@{ProjectileObject}!OnTriggerStay@{OnTriggerStay}}
+\index{OnTriggerStay@{OnTriggerStay}!ProjectileObject@{ProjectileObject}}
+\doxysubsubsection{\texorpdfstring{OnTriggerStay()}{OnTriggerStay()}}
+{\footnotesize\ttfamily \label{class_projectile_object_a94be3cf2cdf40f45c89d6617c9380b87} 
+void Projectile\+Object\+::\+On\+Trigger\+Stay (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_collider}{Collider}} \texorpdfstring{$\ast$}{*}}]{other}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_entity_object}{Entity\+Object}}.
+
+\Hypertarget{class_projectile_object_a85a2b8227dcb4e76f1f844128285143e}\index{ProjectileObject@{ProjectileObject}!Render@{Render}}
+\index{Render@{Render}!ProjectileObject@{ProjectileObject}}
+\doxysubsubsection{\texorpdfstring{Render()}{Render()}}
+{\footnotesize\ttfamily \label{class_projectile_object_a85a2b8227dcb4e76f1f844128285143e} 
+void Projectile\+Object\+::\+Render (\begin{DoxyParamCaption}\item[{glm\+::mat4}]{global\+Model\+Transform}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_entity_object}{Entity\+Object}}.
+

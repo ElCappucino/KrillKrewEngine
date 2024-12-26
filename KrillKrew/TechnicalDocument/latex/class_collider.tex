@@ -1,2 +1,44 @@
 \doxysection{Collider Class Reference}
 \hypertarget{class_collider}{}\label{class_collider}\index{Collider@{Collider}}
+\doxysubsubsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_collider_aa0b9bfba5f41076956d59ac33b9303b9}\label{class_collider_aa0b9bfba5f41076956d59ac33b9303b9} 
+enum {\bfseries Collision\+Type} \{ {\bfseries Static}
+, {\bfseries Kinematic}
+, {\bfseries Trigger}
+ \}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_collider_a01509cdc2d9d3e3aa8918e7186f2e6e3}\label{class_collider_a01509cdc2d9d3e3aa8918e7186f2e6e3} 
+{\bfseries Collider} (Collision\+Type type, \mbox{\hyperlink{class_entity_object}{Entity\+Object}} \texorpdfstring{$\ast$}{*}parent)
+\item 
+\Hypertarget{class_collider_a04cf037cf2fd7caf52c358c6f181ed15}\label{class_collider_a04cf037cf2fd7caf52c358c6f181ed15} 
+void {\bfseries Update} (glm\+::vec3 size, glm\+::vec3 position)
+\item 
+\Hypertarget{class_collider_a22ee633a838eda879a3a1663896e4131}\label{class_collider_a22ee633a838eda879a3a1663896e4131} 
+\mbox{\hyperlink{class_gizmos_object}{Gizmos\+Object}} \texorpdfstring{$\ast$}{*} {\bfseries Get\+Gizmos} ()
+\item 
+\Hypertarget{class_collider_a0d819d15be8085d838e7a4ed254ed5e1}\label{class_collider_a0d819d15be8085d838e7a4ed254ed5e1} 
+glm\+::vec3 {\bfseries Get\+Size} ()
+\item 
+\Hypertarget{class_collider_a005124c709220390a6da5797118bcbaa}\label{class_collider_a005124c709220390a6da5797118bcbaa} 
+glm\+::vec3 {\bfseries Get\+Previous\+Pos} ()
+\item 
+\Hypertarget{class_collider_a219045ce38297252b52643dcfbf21e6f}\label{class_collider_a219045ce38297252b52643dcfbf21e6f} 
+void {\bfseries Set\+Previous\+Pos} (glm\+::vec3 pos)
+\item 
+\Hypertarget{class_collider_a1088a6f4a1bc1041af7e0261a37ed6a2}\label{class_collider_a1088a6f4a1bc1041af7e0261a37ed6a2} 
+glm\+::vec3 {\bfseries Get\+Half\+Size} ()
+\item 
+\Hypertarget{class_collider_ab7284c2d9cb9ec9ccce2f12efc5e0bb5}\label{class_collider_ab7284c2d9cb9ec9ccce2f12efc5e0bb5} 
+void {\bfseries Set\+Gismos\+Color} (glm\+::vec3 color)
+\item 
+\Hypertarget{class_collider_a427d8e69398e2a733f9f96d4d4b21f24}\label{class_collider_a427d8e69398e2a733f9f96d4d4b21f24} 
+Collision\+Type {\bfseries Get\+Collision\+Type} ()
+\item 
+\Hypertarget{class_collider_a3cb75cd0634b6a6523f325c79f4e30cf}\label{class_collider_a3cb75cd0634b6a6523f325c79f4e30cf} 
+void {\bfseries Set\+Collision\+Type} (Collision\+Type type)
+\end{DoxyCompactItemize}

@@ -11,8 +11,7 @@ The class for level inherit test from P\textquotesingle{}tiam.
 
 
 
-Inheritance diagram for Level\+Gameplay\+:
-\nopagebreak
+Inheritance diagram for Level\+Gameplay\+:\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -21,8 +20,7 @@ Inheritance diagram for Level\+Gameplay\+:
 \end{figure}
 
 
-Collaboration diagram for Level\+Gameplay\+:
-\nopagebreak
+Collaboration diagram for Level\+Gameplay\+:\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -44,9 +42,29 @@ virtual void \mbox{\hyperlink{class_level_gameplay_a3e48acac6dacb9dd134e78cc0deb
 \item 
 virtual void \mbox{\hyperlink{class_level_gameplay_a2a1c2773ed3e8e73570fb4331e6b0ce2}{Level\+Unload}} ()
 \item 
+virtual void \mbox{\hyperlink{class_level_gameplay_a5598d40c327f6f6ae029e54db139d342}{Movement}} (float axisX, float axisY, bool is\+PositiveX, bool is\+PositiveY)
+\item 
 virtual void \mbox{\hyperlink{class_level_gameplay_a61e298883ed1f41653db472a937b5299}{Handle\+Key}} (char key)
 \item 
 virtual void \mbox{\hyperlink{class_level_gameplay_ae4afb3ec43db4f9ae1661ee4db6884ee}{Handle\+Mouse}} (int type, int x, int y)
+\item 
+\Hypertarget{class_level_gameplay_ad6e4c0ba0c3f3fd5ae79152e73c373f3}\label{class_level_gameplay_ad6e4c0ba0c3f3fd5ae79152e73c373f3} 
+void {\bfseries Update\+Input} ()
+\item 
+\Hypertarget{class_level_gameplay_a42e9f4cafd9238443dba56c785b046d8}\label{class_level_gameplay_a42e9f4cafd9238443dba56c785b046d8} 
+void {\bfseries Update\+Collision} ()
+\item 
+\Hypertarget{class_level_gameplay_a922fccc1156b58ce04aa43d99448c1ab}\label{class_level_gameplay_a922fccc1156b58ce04aa43d99448c1ab} 
+void {\bfseries Update\+Projectile} ()
+\item 
+\Hypertarget{class_level_gameplay_ab98f5023727e0f3f5a3703821a6764f3}\label{class_level_gameplay_ab98f5023727e0f3f5a3703821a6764f3} 
+void {\bfseries Update\+Cooldown} ()
+\item 
+\Hypertarget{class_level_gameplay_a0278cd9511dc153dd3d177e3d5800b14}\label{class_level_gameplay_a0278cd9511dc153dd3d177e3d5800b14} 
+void {\bfseries Update\+Movement} ()
+\item 
+\Hypertarget{class_level_gameplay_acb82209dfa51e1623c47e41daca35224}\label{class_level_gameplay_acb82209dfa51e1623c47e41daca35224} 
+void {\bfseries Update\+UI} ()
 \end{DoxyCompactItemize}
 \doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{class_level}{Level}}}
 
@@ -130,6 +148,16 @@ Reimplemented from \mbox{\hyperlink{class_level}{Level}}.
 \doxysubsubsection{\texorpdfstring{LevelUpdate()}{LevelUpdate()}}
 {\footnotesize\ttfamily \label{class_level_gameplay_acdea1d182b13fc451c9d1758afca84d2} 
 void Level\+Gameplay\+::\+Level\+Update (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_level}{Level}}.
+
+\Hypertarget{class_level_gameplay_a5598d40c327f6f6ae029e54db139d342}\index{LevelGameplay@{LevelGameplay}!Movement@{Movement}}
+\index{Movement@{Movement}!LevelGameplay@{LevelGameplay}}
+\doxysubsubsection{\texorpdfstring{Movement()}{Movement()}}
+{\footnotesize\ttfamily \label{class_level_gameplay_a5598d40c327f6f6ae029e54db139d342} 
+void Level\+Gameplay\+::\+Movement (\begin{DoxyParamCaption}\item[{float}]{axisX}{, }\item[{float}]{axisY}{, }\item[{bool}]{is\+PositiveX}{, }\item[{bool}]{is\+PositiveY}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
 
 
 

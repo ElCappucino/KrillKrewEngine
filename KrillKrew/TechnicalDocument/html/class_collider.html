@@ -103,9 +103,55 @@ $(function(){initNavTree('class_collider.html',''); initResizable(true); });
 </div>
 
 <div class="header">
+  <div class="summary">
+<a href="#pub-types">Public Types</a> &#124;
+<a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="class_collider-members.html">List of all members</a>  </div>
   <div class="headertitle"><div class="title">Collider Class Reference</div></div>
 </div><!--header-->
 <div class="contents">
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-types" name="pub-types"></a>
+Public Types</h2></td></tr>
+<tr class="memitem:aa0b9bfba5f41076956d59ac33b9303b9" id="r_aa0b9bfba5f41076956d59ac33b9303b9"><td class="memItemLeft" align="right" valign="top"><a id="aa0b9bfba5f41076956d59ac33b9303b9" name="aa0b9bfba5f41076956d59ac33b9303b9"></a>enum &#160;</td><td class="memItemRight" valign="bottom"><b>CollisionType</b> { <b>Static</b>
+, <b>Kinematic</b>
+, <b>Trigger</b>
+ }</td></tr>
+<tr class="separator:aa0b9bfba5f41076956d59ac33b9303b9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
+Public Member Functions</h2></td></tr>
+<tr class="memitem:a01509cdc2d9d3e3aa8918e7186f2e6e3" id="r_a01509cdc2d9d3e3aa8918e7186f2e6e3"><td class="memItemLeft" align="right" valign="top"><a id="a01509cdc2d9d3e3aa8918e7186f2e6e3" name="a01509cdc2d9d3e3aa8918e7186f2e6e3"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>Collider</b> (CollisionType type, <a class="el" href="class_entity_object.html">EntityObject</a> *parent)</td></tr>
+<tr class="separator:a01509cdc2d9d3e3aa8918e7186f2e6e3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a04cf037cf2fd7caf52c358c6f181ed15" id="r_a04cf037cf2fd7caf52c358c6f181ed15"><td class="memItemLeft" align="right" valign="top"><a id="a04cf037cf2fd7caf52c358c6f181ed15" name="a04cf037cf2fd7caf52c358c6f181ed15"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>Update</b> (glm::vec3 size, glm::vec3 position)</td></tr>
+<tr class="separator:a04cf037cf2fd7caf52c358c6f181ed15"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a22ee633a838eda879a3a1663896e4131" id="r_a22ee633a838eda879a3a1663896e4131"><td class="memItemLeft" align="right" valign="top"><a id="a22ee633a838eda879a3a1663896e4131" name="a22ee633a838eda879a3a1663896e4131"></a>
+<a class="el" href="class_gizmos_object.html">GizmosObject</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>GetGizmos</b> ()</td></tr>
+<tr class="separator:a22ee633a838eda879a3a1663896e4131"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0d819d15be8085d838e7a4ed254ed5e1" id="r_a0d819d15be8085d838e7a4ed254ed5e1"><td class="memItemLeft" align="right" valign="top"><a id="a0d819d15be8085d838e7a4ed254ed5e1" name="a0d819d15be8085d838e7a4ed254ed5e1"></a>
+glm::vec3&#160;</td><td class="memItemRight" valign="bottom"><b>GetSize</b> ()</td></tr>
+<tr class="separator:a0d819d15be8085d838e7a4ed254ed5e1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a005124c709220390a6da5797118bcbaa" id="r_a005124c709220390a6da5797118bcbaa"><td class="memItemLeft" align="right" valign="top"><a id="a005124c709220390a6da5797118bcbaa" name="a005124c709220390a6da5797118bcbaa"></a>
+glm::vec3&#160;</td><td class="memItemRight" valign="bottom"><b>GetPreviousPos</b> ()</td></tr>
+<tr class="separator:a005124c709220390a6da5797118bcbaa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a219045ce38297252b52643dcfbf21e6f" id="r_a219045ce38297252b52643dcfbf21e6f"><td class="memItemLeft" align="right" valign="top"><a id="a219045ce38297252b52643dcfbf21e6f" name="a219045ce38297252b52643dcfbf21e6f"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>SetPreviousPos</b> (glm::vec3 pos)</td></tr>
+<tr class="separator:a219045ce38297252b52643dcfbf21e6f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1088a6f4a1bc1041af7e0261a37ed6a2" id="r_a1088a6f4a1bc1041af7e0261a37ed6a2"><td class="memItemLeft" align="right" valign="top"><a id="a1088a6f4a1bc1041af7e0261a37ed6a2" name="a1088a6f4a1bc1041af7e0261a37ed6a2"></a>
+glm::vec3&#160;</td><td class="memItemRight" valign="bottom"><b>GetHalfSize</b> ()</td></tr>
+<tr class="separator:a1088a6f4a1bc1041af7e0261a37ed6a2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab7284c2d9cb9ec9ccce2f12efc5e0bb5" id="r_ab7284c2d9cb9ec9ccce2f12efc5e0bb5"><td class="memItemLeft" align="right" valign="top"><a id="ab7284c2d9cb9ec9ccce2f12efc5e0bb5" name="ab7284c2d9cb9ec9ccce2f12efc5e0bb5"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>SetGismosColor</b> (glm::vec3 color)</td></tr>
+<tr class="separator:ab7284c2d9cb9ec9ccce2f12efc5e0bb5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a427d8e69398e2a733f9f96d4d4b21f24" id="r_a427d8e69398e2a733f9f96d4d4b21f24"><td class="memItemLeft" align="right" valign="top"><a id="a427d8e69398e2a733f9f96d4d4b21f24" name="a427d8e69398e2a733f9f96d4d4b21f24"></a>
+CollisionType&#160;</td><td class="memItemRight" valign="bottom"><b>GetCollisionType</b> ()</td></tr>
+<tr class="separator:a427d8e69398e2a733f9f96d4d4b21f24"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3cb75cd0634b6a6523f325c79f4e30cf" id="r_a3cb75cd0634b6a6523f325c79f4e30cf"><td class="memItemLeft" align="right" valign="top"><a id="a3cb75cd0634b6a6523f325c79f4e30cf" name="a3cb75cd0634b6a6523f325c79f4e30cf"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>SetCollisionType</b> (CollisionType type)</td></tr>
+<tr class="separator:a3cb75cd0634b6a6523f325c79f4e30cf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

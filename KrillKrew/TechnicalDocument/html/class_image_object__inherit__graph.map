@@ -1,7 +1,15 @@
 <map id="ImageObject" name="ImageObject">
-<area shape="rect" id="Node000001" title="The class for creating object that render using texture." alt="" coords="15,80,110,107"/>
-<area shape="rect" id="Node000003" href="$class_player_object.html" title="The class for creating object that render using texture." alt="" coords="14,155,111,181"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="65,122,65,154,60,154,60,122"/>
-<area shape="rect" id="Node000002" href="$class_drawable_object.html" title="The class for creating drawable object." alt="" coords="5,5,120,32"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="65,48,65,80,60,80,60,48"/>
+<area shape="rect" id="Node000001" title="The class for creating object that render using texture." alt="" coords="188,80,284,107"/>
+<area shape="rect" id="Node000003" href="$class_entity_object.html" title="The class for creating object that render using texture." alt="" coords="136,155,230,181"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="220,121,194,156,190,153,216,118"/>
+<area shape="rect" id="Node000007" href="$class_ui_object.html" title="The class for creating object that render using texture." alt="" coords="253,155,326,181"/>
+<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="257,118,282,153,278,156,252,121"/>
+<area shape="rect" id="Node000002" href="$class_drawable_object.html" title="The class for creating drawable object." alt="" coords="179,5,293,32"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="239,48,239,80,234,80,234,48"/>
+<area shape="rect" id="Node000004" href="$class_player_object.html" title="The class for creating object that render using texture." alt="" coords="5,229,102,256"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="148,192,78,231,75,226,146,187"/>
+<area shape="rect" id="Node000005" href="$class_projectile_object.html" title="The class for creating object that render using texture." alt="" coords="126,229,240,256"/>
+<area shape="poly" id="edge4_Node000003_Node000005" title=" " alt="" coords="186,197,186,229,180,229,180,197"/>
+<area shape="rect" id="Node000006" href="$class_trap_object.html" title="The class for creating object that render using texture." alt="" coords="264,229,350,256"/>
+<area shape="poly" id="edge5_Node000003_Node000006" title=" " alt="" coords="218,187,286,226,284,231,216,192"/>
 </map>
