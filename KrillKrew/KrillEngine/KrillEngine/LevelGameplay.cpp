@@ -100,19 +100,10 @@ void LevelGameplay::LevelInit()
 	playerSize++;
 	players[3] = obj4;
 
-	TrapObject* trap1 = new TrapObject();
-	trap1->GetCollider()->SetCollisionType(Collider::Trigger);
-	trap1->SetSpriteInfo(spriteList.find("Trap")->second);
-	trap1->SetTexture(spriteList.find("Trap")->second.texture);
-	trap1->SetSize(256.f, -256.f);
-	trap1->SetPosition(glm::vec3(500.f, 500.f, 0));
-	objectsList.push_back(trap1);
-
 	objectsList.push_back(players[0]->GetCollider()->GetGizmos());
 	objectsList.push_back(players[1]->GetCollider()->GetGizmos());
 	objectsList.push_back(players[2]->GetCollider()->GetGizmos());
 	objectsList.push_back(players[3]->GetCollider()->GetGizmos());
-	objectsList.push_back(trap1->GetCollider()->GetGizmos());
 
 	//create Ui by PlayerObject
 	int sizePlayer = objectsList.size();
@@ -285,7 +276,6 @@ void LevelGameplay::UpdateInput()
 			if (Joystick::GetButtonDown(i, Joystick::Button::R1)) {
 				std::cout << "SDL_NumJoysticks() > 0" << std::endl;
 			}
-
 
 			//Aim
 			if (Joystick::GetButtonDown(i, Joystick::Button::Square))
@@ -635,9 +625,7 @@ void LevelGameplay::UpdateCooldown()
 			{
 				std::cout << j << std::endl;
 				players[i + playerNum]->reduceCooldown(j);
-				
 			}
-			
 		}
 		if (time[i + playerNum] >= 1.0f) {
 			time[i + playerNum] = 0.0f;
@@ -659,7 +647,8 @@ void LevelGameplay::UpdateMovement()
 			players[i]->setIsSlowness(false);
 		}
 
-		if (time[i + playerNum] >= 1.0f && players[i + playerNum]->getIsDash() == true) {
+		if (time[i + playerNum] >= 1.0f && players[i + playerNum]->getIsDash() == true) 
+		{
 			std::cout << "reduce dash time" << std::endl;
 			players[i]->reduceDurationDash();
 		}
@@ -676,7 +665,8 @@ void LevelGameplay::UpdateUI()
 	for (int i = 0; i < objectsList.size(); i++)
 	{
 		UiObject* ui = dynamic_cast<UiObject*>(objectsList[i]);
-		if (ui != nullptr) {
+		if (ui != nullptr) 
+		{
 			//std::cout << "Ui id | " << ui->getNumOwner() << std::endl;
 			ui->SetPosition(glm::vec3(GameEngine::GetInstance()->GetRenderer()->GetOrthovalue().left + (((300 * (ui->getNumOwner() + 1)) - (85 * ui->getNumOwner())) * camera.GetCameraWidth() / 1246),
 				GameEngine::GetInstance()->GetRenderer()->GetOrthovalue().bottom + (50 * camera.GetCameraHeight() / 720), 0));
@@ -688,7 +678,6 @@ void LevelGameplay::UpdateUI()
 void LevelGameplay::LevelDraw()
 {
 	GameEngine::GetInstance()->Render(objectsList);
-	
 
 	// Collider Gizmos update
 	for (int i = 0; i < objectsList.size(); i++)
@@ -707,10 +696,7 @@ void LevelGameplay::LevelDraw()
 				object->GetCollider()->Update(object->getSize(), object->getPos());
 			}
 		}
-
-
 	}
-
 	// cout << "Draw Level" << endl;
 }
 
@@ -787,27 +773,23 @@ void LevelGameplay::Movement(float axisX, float axisY, bool isPositiveX, bool is
 	
 }
 
-void LevelGameplay::usingAbility(int numPlayer, int numberAbility) {
-
-	if (players[numPlayer + playerNum]->getCooldown(numberAbility) <= 0) {
-		switch (numberAbility) {
-
+void LevelGameplay::usingAbility(int numPlayer, int numberAbility) 
+{
+	if (players[numPlayer + playerNum]->getCooldown(numberAbility) <= 0) 
+	{
+		switch (numberAbility) 
+		{
 		case 1 :
-
 			aimFireball(numPlayer);
 			break;
 		case 2 :
-
 			trap(numPlayer);
 			break;
-
 		case 3 :
 			dash(numPlayer);
 			break;
 		}
-		
 	}
-
 }
 
 void LevelGameplay::aimFireball(int num) {
@@ -824,8 +806,6 @@ void LevelGameplay::aimFireball(int num) {
 	objectsList.push_back(projectile);
 	//objectsList.push_back(projectile->GetCollider()->GetGizmos());
 }
-
-
 
 void LevelGameplay::shootFireball(int num) {
 	if (players[num + playerNum]->getIsShooting() == false) {

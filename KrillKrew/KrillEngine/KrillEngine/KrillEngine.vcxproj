@@ -82,7 +82,8 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>../Resource/glew/include;../Resource/glm;../Resource/SDL2-2.0.5/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../Resource/glew/include;../Resource/glm;../Resource/SDL2-2.0.5/include;../Resource/spdlog/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -99,7 +100,8 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>../Resource/glew/include;../Resource/glm;../Resource/SDL2-2.0.5/include;../Resource</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../Resource/glew/include;../Resource/glm;../Resource/SDL2-2.0.5/include;../Resource;../Resource/spdlog/include</AdditionalIncludeDirectories>
+      <AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -159,6 +161,7 @@
     <ClInclude Include="LevelMapTest.h" />
     <ClInclude Include="LevelShowcase.h" />
     <ClInclude Include="LineMeshVbo.h" />
+    <ClInclude Include="Log.h" />
     <ClInclude Include="MeshVbo.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="PlayerObject.h" />
@@ -190,6 +193,7 @@
     <ClCompile Include="LevelMapTest.cpp" />
     <ClCompile Include="LevelShowcase.cpp" />
     <ClCompile Include="LineMeshVbo.cpp" />
+    <ClCompile Include="Log.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="MeshVbo.cpp" />
     <ClCompile Include="pch.cpp" />
