@@ -48,12 +48,11 @@ void LevelGameplay::LevelInit()
 	PlayerObject* obj1 = new PlayerObject();
 	obj1->GetCollider()->SetCollisionType(Collider::Kinematic);
 	obj1->SetSpriteInfo(spriteList.find("Shark_idle")->second);
-	obj1->SetTexture(spriteList.find("Shark_idle")->second.texture);
 	obj1->SetIsAnimated(true);
 	obj1->GetSpriteRenderer()->SetFrame(10);
 	obj1->SetSize(256.f, -256.f);
 	obj1->SetPosition(glm::vec3(-200.f, -200.f, 0));
-	obj1->setNumber(0);
+	obj1->SetPlayerNumber(0);
 	obj1->SetAnimationSprite(PlayerObject::AnimationState::Idle, spriteList.find("Shark_idle")->second);
 	obj1->SetAnimationSprite(PlayerObject::AnimationState::Running, spriteList.find("Shark_run")->second);
 	objectsList.push_back(obj1);
@@ -68,7 +67,7 @@ void LevelGameplay::LevelInit()
 	obj2->GetSpriteRenderer()->SetFrame(15);
 	obj2->SetSize(256.f, -256.f);
 	obj2->SetPosition(glm::vec3(200.f, -200.f, 0));
-	obj2->setNumber(1);
+	obj2->SetPlayerNumber(1);
 	obj2->SetAnimationSprite(PlayerObject::AnimationState::Idle, spriteList.find("Shark_idle")->second);
 	obj2->SetAnimationSprite(PlayerObject::AnimationState::Running, spriteList.find("Shark_run")->second);
 	objectsList.push_back(obj2);
@@ -80,7 +79,7 @@ void LevelGameplay::LevelInit()
 	obj3->SetTexture(spriteList.find("Shark_idle")->second.texture);
 	obj3->SetSize(256.f, -256.f);
 	obj3->SetPosition(glm::vec3(-200.f, 200.f, 0));
-	obj3->setNumber(2);
+	obj3->SetPlayerNumber(2);
 	obj3->SetAnimationSprite(PlayerObject::AnimationState::Idle, spriteList.find("Shark_idle")->second);
 	obj3->SetAnimationSprite(PlayerObject::AnimationState::Running, spriteList.find("Shark_run")->second);
 	objectsList.push_back(obj3);
@@ -93,7 +92,7 @@ void LevelGameplay::LevelInit()
 	obj4->SetTexture(spriteList.find("Shark_idle")->second.texture);
 	obj4->SetSize(256.f, -256.f);
 	obj4->SetPosition(glm::vec3(200.f, 200.f, 0));
-	obj4->setNumber(3);
+	obj4->SetPlayerNumber(3);
 	obj4->SetAnimationSprite(PlayerObject::AnimationState::Idle, spriteList.find("Shark_idle")->second);
 	obj4->SetAnimationSprite(PlayerObject::AnimationState::Running, spriteList.find("Shark_run")->second);
 	objectsList.push_back(obj4);
@@ -267,7 +266,7 @@ void LevelGameplay::UpdateInput()
 			}
 
 
-			if (players[i + playerNum]->getIsAiming() == false) 
+			if (players[i + playerNum]->GetIsAiming() == false) 
 			{
 				players[i + playerNum]->setVelocity(abs(norAxisX), abs(norAxisY), isPositiveX, isPositiveY);
 			}
@@ -281,7 +280,7 @@ void LevelGameplay::UpdateInput()
 			if (Joystick::GetButtonDown(i, Joystick::Button::Square))
 			{
 				std::cout << "Shoot " << i + playerNum << std::endl;
-				if (players[i + playerNum]->getIsShooting() == false && players[i + playerNum]->getIsAiming() == false) {
+				if (players[i + playerNum]->getIsShooting() == false && players[i + playerNum]->GetIsAiming() == false) {
 					players[i + playerNum]->setVelocity(0, 0, isPositiveX, isPositiveY);
 					players[i + playerNum]->setIsAiming(true);
 					ProjectileObject* projectile = new ProjectileObject();
@@ -290,7 +289,7 @@ void LevelGameplay::UpdateInput()
 					projectile->SetPosition(players[i + playerNum]->getPos());
 					projectile->SetSize(256.f, -256.f);
 					projectile->setLifeTime(9999);
-					projectile->setNumOwner(players[i + playerNum]->getNumber());
+					projectile->setNumOwner(players[i + playerNum]->GetPlayerNumber());
 					std::cout << "Owner " << projectile->getNumOwner() << std::endl;
 					objectsList.push_back(projectile);
 					//objectsList.push_back(projectile->GetCollider()->GetGizmos());
@@ -312,7 +311,7 @@ void LevelGameplay::UpdateInput()
 				}
 			}
 
-			if (players[i + playerNum]->getIsAiming())
+			if (players[i + playerNum]->GetIsAiming())
 			{
 				for (int j = 0; j < objectsList.size(); j++) {
 					ProjectileObject* projectile = dynamic_cast<ProjectileObject*>(objectsList[j]);
@@ -339,7 +338,7 @@ void LevelGameplay::UpdateInput()
 			//Dash
 			if (Joystick::GetButtonDown(i, Joystick::Button::Circle))
 			{
-				if (players[i + playerNum]->getCooldown(2) <= 0) {
+				if (players[i + playerNum]->GetCooldown(2) <= 0) {
 					players[i + playerNum]->setCooldown(2, 3);
 					players[i + playerNum]->setIsDash(true);
 					players[i + playerNum]->setDurationDash(2);
@@ -404,7 +403,7 @@ void LevelGameplay::UpdateInput()
 			if (Joystick::GetButtonDown(i, Joystick::Button::Triangle))
 			{
 				std::cout << "Triangle" << std::endl;
-				if (players[i + playerNum]->getCooldown(1) <= 0) {
+				if (players[i + playerNum]->GetCooldown(1) <= 0) {
 					//players[i + playerNum]->setCooldown(1, 3);
 					//TrapObject* Trap = new TrapObject();
 					//Trap->SetSpriteInfo(spriteList.find("Trap")->second);
@@ -452,7 +451,7 @@ void LevelGameplay::UpdateCollision()
 			PlayerObject* player2 = dynamic_cast<PlayerObject*>(objectsList[j]);
 			if (player2 != nullptr)
 			{
-				if (trap->getNumOwner() != player2->getNumber()) {
+				if (trap->getNumOwner() != player2->GetPlayerNumber()) {
 					Collider col1 = *trap->GetCollider();
 					Collider col2 = *player2->GetCollider();
 
@@ -464,7 +463,7 @@ void LevelGameplay::UpdateCollision()
 
 					if (overlapX > 0 && overlapY > 0)
 					{
-						std::cout << "Trap :" << trap->getNumOwner() << " hit " << "Player" << player2->getNumber() << std::endl;
+						std::cout << "Trap :" << trap->getNumOwner() << " hit " << "Player" << player2->GetPlayerNumber() << std::endl;
 						player2->setDurationSlowness(100);
 						player2->setIsSlowness(true);
 						objectsList.erase(objectsList.begin() + i);
@@ -563,7 +562,7 @@ void LevelGameplay::UpdateCollision()
 
 			if (player != nullptr)
 			{
-				if (projectile->getNumOwner() != player->getNumber()) 
+				if (projectile->getNumOwner() != player->GetPlayerNumber()) 
 				{
 					Collider col1 = *projectile->GetCollider();
 					Collider col2 = *player->GetCollider();
@@ -621,7 +620,7 @@ void LevelGameplay::UpdateCooldown()
 
 		for (int j = 0; j < 3; j++)
 		{
-			if (time[i + playerNum] >= 1.0f && players[i + playerNum]->getCooldown(j) > 0)
+			if (time[i + playerNum] >= 1.0f && players[i + playerNum]->GetCooldown(j) > 0)
 			{
 				std::cout << j << std::endl;
 				players[i + playerNum]->reduceCooldown(j);
@@ -637,23 +636,23 @@ void LevelGameplay::UpdateMovement()
 {
 	for (int i = 0; i < SDL_NumJoysticks() + playerNum; i++)
 	{
-		if (time[i + playerNum] >= 1.0f && players[i + playerNum]->getIsSlowness() == true)
+		if (time[i + playerNum] >= 1.0f && players[i + playerNum]->IsSlow() == true)
 		{
 			players[i + playerNum]->reduceDurationSlowness();
 		}
 
-		if (players[i]->getDurationSlowness() <= 0)
+		if (players[i]->GetDurationSlowness() <= 0)
 		{
 			players[i]->setIsSlowness(false);
 		}
 
-		if (time[i + playerNum] >= 1.0f && players[i + playerNum]->getIsDash() == true) 
+		if (time[i + playerNum] >= 1.0f && players[i + playerNum]->IsDash() == true) 
 		{
 			std::cout << "reduce dash time" << std::endl;
 			players[i]->reduceDurationDash();
 		}
 
-		if (players[i + playerNum]->getDurationDash() <= 0)
+		if (players[i + playerNum]->GetDurationDash() <= 0)
 		{
 			players[i]->setIsDash(false);
 		}
@@ -775,7 +774,7 @@ void LevelGameplay::Movement(float axisX, float axisY, bool isPositiveX, bool is
 
 void LevelGameplay::usingAbility(int numPlayer, int numberAbility) 
 {
-	if (players[numPlayer + playerNum]->getCooldown(numberAbility) <= 0) 
+	if (players[numPlayer + playerNum]->GetCooldown(numberAbility) <= 0) 
 	{
 		switch (numberAbility) 
 		{
@@ -801,7 +800,7 @@ void LevelGameplay::aimFireball(int num) {
 	projectile->SetPosition(players[num + playerNum]->getPos());
 	projectile->SetSize(256.f, -256.f);
 	projectile->setLifeTime(9999);
-	projectile->setNumOwner(players[num + playerNum]->getNumber());
+	projectile->setNumOwner(players[num + playerNum]->GetPlayerNumber());
 	std::cout << "Owner " << projectile->getNumOwner() << std::endl;
 	objectsList.push_back(projectile);
 	//objectsList.push_back(projectile->GetCollider()->GetGizmos());
@@ -827,7 +826,7 @@ void LevelGameplay::trap(int num) {
 	Trap->SetTexture(spriteList.find("Trap")->second.texture);
 	Trap->SetPosition(players[num + playerNum]->getPos());
 	Trap->SetSize(128.f, -128.f);
-	Trap->setNumOwner(players[num + playerNum]->getNumber());
+	Trap->setNumOwner(players[num + playerNum]->GetPlayerNumber());
 	//std::cout << "Owner " << Trap->getNumOwner() << std::endl;
 	objectsList.push_back(Trap);
 }

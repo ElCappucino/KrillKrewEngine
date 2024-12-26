@@ -113,7 +113,7 @@ void PlayerObject::setIsAiming(bool isAim)
 	isAiming = isAim;
 }
 
-bool PlayerObject::getIsAiming() 
+bool PlayerObject::GetIsAiming() 
 {
 	return isAiming;
 }
@@ -166,12 +166,12 @@ void PlayerObject::OnTriggerExit(Collider* other)
 	// Behavior
 }
 
-void PlayerObject::setNumber(int num) 
+void PlayerObject::SetPlayerNumber(int num) 
 {
 	number = num;
 }
 
-int PlayerObject::getNumber()
+int PlayerObject::GetPlayerNumber()
 {
 	return number;
 }
@@ -190,10 +190,10 @@ void PlayerObject::reduceCooldown(int skill)
 	}*/
 
 	cooldown[skill] -= 1;
-	std::cout << "Skill" << skill << " " << getCooldown(skill) << std::endl;
+	std::cout << "Skill" << skill << " " << GetCooldown(skill) << std::endl;
 
 }
-float PlayerObject::getCooldown(int skill) 
+float PlayerObject::GetCooldown(int skill) 
 {
 	return cooldown[skill];
 }
@@ -206,7 +206,7 @@ void PlayerObject::reduceDurationSlowness()
 {
 	
 	durationSlowness -= 1;
-	std::cout << "durationSlowness player" << getNumber() << " " << durationSlowness << std::endl;
+	std::cout << "durationSlowness player" << GetPlayerNumber() << " " << durationSlowness << std::endl;
 	
 }
 
@@ -215,12 +215,12 @@ void PlayerObject::setIsSlowness(bool isSlow)
 	isSlowness = isSlow;
 }
 
-float PlayerObject::getDurationSlowness() 
+float PlayerObject::GetDurationSlowness() 
 {
 	return durationSlowness;
 }
 
-bool PlayerObject::getIsSlowness()
+bool PlayerObject::IsSlow()
 {
 	return isSlowness;
 }
@@ -229,7 +229,7 @@ void PlayerObject::setIsDash(bool isDash) {
 	this->isDash = isDash;
 }
 
-bool PlayerObject::getIsDash() {
+bool PlayerObject::IsDash() {
 	return isDash;
 }
 
@@ -241,7 +241,7 @@ void PlayerObject::reduceDurationDash() {
 	durationDash -= 1;
 }
 
-float PlayerObject::getDurationDash() {
+float PlayerObject::GetDurationDash() {
 	return durationDash;
 }
 

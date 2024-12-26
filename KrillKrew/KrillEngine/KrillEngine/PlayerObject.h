@@ -53,7 +53,7 @@ public:
 	void setVelocity(float axisX, float axisY, bool isPositiveX, bool isPositiveY);
 	void setIsShooting(bool isShoot);
 	void setIsAiming(bool isAim);
-	void setNumber(int num);
+	void SetPlayerNumber(int num);
 	void setCooldown(int skill, int time);
 	void reduceCooldown(int skill);
 	void setDurationSlowness(int time);
@@ -79,11 +79,11 @@ public:
 	virtual void OnTriggerStay(Collider* other);
 	virtual void OnTriggerExit(Collider* other);
 	
-	bool getIsAiming();
-	int getNumber();
-	float getCooldown(int skill);
-	float getDurationSlowness();
-	bool getIsSlowness();
-	bool getIsDash();
-	float getDurationDash();
+	bool IsAiming();
+	bool IsSlow();
+	bool IsDash();
+	int GetPlayerNumber();
+	float GetCooldown(int skill);
+	float GetDurationSlowness();
+	float GetDashDuration();
 };

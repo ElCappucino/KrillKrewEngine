@@ -24,7 +24,7 @@ void HoldBomb(int playerNum,
 	projectile->SetPosition(playerObj->getPos());
 	projectile->SetSize(256.f, -256.f);
 	projectile->setLifeTime(9999);
-	projectile->setNumOwner(playerObj->getNumber());
+	projectile->setNumOwner(playerObj->GetPlayerNumber());
 	// std::cout << "Owner " << projectile->getNumOwner() << std::endl;
 	objectList.push_back(projectile);
 	//objectsList.push_back(projectile->GetCollider()->GetGizmos());
@@ -324,7 +324,7 @@ void LevelShowcase::LevelInit()
 	obj1->GetSpriteRenderer()->SetFrame(10);
 	obj1->SetSize(256.f, -256.f);
 	obj1->SetPosition(glm::vec3(-800.f, -700.f, 0));
-	obj1->setNumber(0);
+	obj1->SetPlayerNumber(0);
 	obj1->SetAnimationSprite(PlayerObject::AnimationState::Idle, spriteList.find("Shark_idle")->second);
 	obj1->SetAnimationSprite(PlayerObject::AnimationState::Running, spriteList.find("Shark_run")->second);
 	objectsList.push_back(obj1);
@@ -339,7 +339,7 @@ void LevelShowcase::LevelInit()
 	obj2->GetSpriteRenderer()->SetFrame(15);
 	obj2->SetSize(256.f, -256.f);
 	obj2->SetPosition(glm::vec3(800.f, -700.f, 0));
-	obj2->setNumber(1);
+	obj2->SetPlayerNumber(1);
 	obj2->SetAnimationSprite(PlayerObject::AnimationState::Idle, spriteList.find("Shark_idle")->second);
 	obj2->SetAnimationSprite(PlayerObject::AnimationState::Running, spriteList.find("Shark_run")->second);
 	objectsList.push_back(obj2);
@@ -353,7 +353,7 @@ void LevelShowcase::LevelInit()
 	obj3->GetSpriteRenderer()->SetFrame(15);
 	obj3->SetSize(256.f, -256.f);
 	obj3->SetPosition(glm::vec3(-800.f, 700.f, 0));
-	obj3->setNumber(2);
+	obj3->SetPlayerNumber(2);
 	obj3->SetAnimationSprite(PlayerObject::AnimationState::Idle, spriteList.find("Shark_idle")->second);
 	obj3->SetAnimationSprite(PlayerObject::AnimationState::Running, spriteList.find("Shark_run")->second);
 	objectsList.push_back(obj3);
@@ -367,7 +367,7 @@ void LevelShowcase::LevelInit()
 	obj4->GetSpriteRenderer()->SetFrame(15);
 	obj4->SetSize(256.f, -256.f);
 	obj4->SetPosition(glm::vec3(800.f, 700.f, 0));
-	obj4->setNumber(3);
+	obj4->SetPlayerNumber(3);
 	obj4->SetAnimationSprite(PlayerObject::AnimationState::Idle, spriteList.find("Shark_idle")->second);
 	obj4->SetAnimationSprite(PlayerObject::AnimationState::Running, spriteList.find("Shark_run")->second);
 	objectsList.push_back(obj4);
@@ -541,7 +541,7 @@ void LevelShowcase::UpdateInput()
 
 			if (abs(axisX) > 0.2f) { players[i + playerNum]->UpdateFacingSide(!isPositiveX); }
 
-			if (players[i + playerNum]->getIsAiming() == false)
+			if (players[i + playerNum]->GetIsAiming() == false)
 			{
 				players[i + playerNum]->setVelocity(abs(norAxisX), abs(norAxisY), isPositiveX, isPositiveY);
 			}
@@ -559,7 +559,7 @@ void LevelShowcase::UpdateInput()
 			if (Joystick::GetButtonDown(i, Joystick::Button::L1))
 			{
 
-				if (players[i + playerNum]->getIsShooting() == false && players[i + playerNum]->getIsAiming() == false) 
+				if (players[i + playerNum]->getIsShooting() == false && players[i + playerNum]->GetIsAiming() == false) 
 				{
 					//players[i + playerNum]->setVelocity(0, 0, isPositiveX, isPositiveY);
 					//players[i + playerNum]->setIsAiming(true);
@@ -594,7 +594,7 @@ void LevelShowcase::UpdateInput()
 				}
 			}
 
-			if (players[i + playerNum]->getIsAiming())
+			if (players[i + playerNum]->GetIsAiming())
 			{
 				for (int j = 0; j < objectsList.size(); j++) {
 					ProjectileObject* projectile = dynamic_cast<ProjectileObject*>(objectsList[j]);
@@ -610,14 +610,14 @@ void LevelShowcase::UpdateInput()
 			//Place trap
 			if (Joystick::GetButtonDown(i, Joystick::Button::Triangle))
 			{
-				if (players[i + playerNum]->getCooldown(1) <= 0) {
+				if (players[i + playerNum]->GetCooldown(1) <= 0) {
 					players[i + playerNum]->setCooldown(1, 3);
 					TrapObject* Trap = new TrapObject();
 					Trap->SetSpriteInfo(spriteList.find("Trap")->second);
 					Trap->SetTexture(spriteList.find("Trap")->second.texture);
 					Trap->SetPosition(players[i + playerNum]->getPos());
 					Trap->SetSize(128.f, -128.f);
-					Trap->setNumOwner(players[i + playerNum]->getNumber());
+					Trap->setNumOwner(players[i + playerNum]->GetPlayerNumber());
 					//std::cout << "Owner " << Trap->getNumOwner() << std::endl;
 					objectsList.push_back(Trap);
 				}
@@ -663,7 +663,7 @@ void LevelShowcase::UpdateCollision()
 			PlayerObject* player2 = dynamic_cast<PlayerObject*>(objectsList[j]);
 			if (player2 != nullptr)
 			{
-				if (trap->getNumOwner() != player2->getNumber()) {
+				if (trap->getNumOwner() != player2->GetPlayerNumber()) {
 					Collider col1 = *trap->GetCollider();
 					Collider col2 = *player2->GetCollider();
 
@@ -774,7 +774,7 @@ void LevelShowcase::UpdateCollision()
 
 			if (player != nullptr)
 			{
-				if (projectile->getNumOwner() != player->getNumber())
+				if (projectile->getNumOwner() != player->GetPlayerNumber())
 				{
 					Collider col1 = *projectile->GetCollider();
 					Collider col2 = *player->GetCollider();
@@ -829,7 +829,7 @@ void LevelShowcase::UpdateCooldown()
 
 		for (int j = 0; j < 3; j++)
 		{
-			if (time[i + playerNum] >= 1.0f && players[i + playerNum]->getCooldown(j) > 0)
+			if (time[i + playerNum] >= 1.0f && players[i + playerNum]->GetCooldown(j) > 0)
 			{
 				players[i + playerNum]->reduceCooldown(j);
 				time[i + playerNum] = 0.0f;
@@ -842,12 +842,12 @@ void LevelShowcase::UpdateMovement()
 {
 	for (int i = 0; i < SDL_NumJoysticks() + playerNum; i++)
 	{
-		if (players[i]->getIsSlowness() == true)
+		if (players[i]->IsSlow() == true)
 		{
 			players[i]->reduceDurationSlowness();
 		}
 
-		if (players[i]->getDurationSlowness() <= 0)
+		if (players[i]->GetDurationSlowness() <= 0)
 		{
 			players[i]->setIsSlowness(false);
 		}

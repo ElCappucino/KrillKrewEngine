@@ -38,11 +38,6 @@ void GameEngine::Init(int width, int height)
 	// Init Logger
 	Krill::Log::Init();
 
-	/*KK_TRACE("Initialized Logger!");
-	KK_INFO("Initialized Logger!");
-	KK_WARN("Initialized Logger!");
-	KK_ERROR("Initialized Logger!");*/
-
 	std::string f = "First";
 	std::string s = "Second";
 	KK_TRACE("Initialized Logger! {0}", f);

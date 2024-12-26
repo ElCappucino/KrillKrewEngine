@@ -25,6 +25,7 @@ void EntityObject::SetTexture(std::string path)
 void EntityObject::SetSpriteInfo(SpritesheetInfo info)
 {
 	spriteRenderer->SetSpriteInfo(info.spritewidth, info.spriteheight, info.sheetwidth, info.sheetheight);
+	this->SetTexture(info.texture);
 }
 
 void EntityObject::Render(glm::mat4 globalModelTransform)
@@ -64,6 +65,7 @@ void EntityObject::Render(glm::mat4 globalModelTransform)
 
 	}
 }
+
 Collider* EntityObject::GetCollider()
 {
 	return collider;
