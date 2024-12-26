@@ -16,8 +16,8 @@ void HoldBomb(int playerNum,
 			  SpritesheetInfo sheetinfo)
 {
 	std::cout << "Hold" << std::endl;
-	playerObj->setVelocity(0, 0, false, false);
-	playerObj->setIsAiming(true);
+	playerObj->SetVelocity(0, 0, false, false);
+	playerObj->SetIsAiming(true);
 	ProjectileObject* projectile = new ProjectileObject();
 	projectile->SetSpriteInfo(sheetinfo);
 	projectile->SetTexture(sheetinfo.texture);
@@ -543,7 +543,7 @@ void LevelShowcase::UpdateInput()
 
 			if (players[i + playerNum]->GetIsAiming() == false)
 			{
-				players[i + playerNum]->setVelocity(abs(norAxisX), abs(norAxisY), isPositiveX, isPositiveY);
+				players[i + playerNum]->SetVelocity(abs(norAxisX), abs(norAxisY), isPositiveX, isPositiveY);
 			}
 			
 			// update facing
@@ -559,7 +559,7 @@ void LevelShowcase::UpdateInput()
 			if (Joystick::GetButtonDown(i, Joystick::Button::L1))
 			{
 
-				if (players[i + playerNum]->getIsShooting() == false && players[i + playerNum]->GetIsAiming() == false) 
+				if (players[i + playerNum]->GetIsShooting() == false && players[i + playerNum]->GetIsAiming() == false) 
 				{
 					//players[i + playerNum]->setVelocity(0, 0, isPositiveX, isPositiveY);
 					//players[i + playerNum]->setIsAiming(true);
@@ -582,9 +582,9 @@ void LevelShowcase::UpdateInput()
 			if (Joystick::GetButtonUp(i, Joystick::Button::L1))
 			{
 				// std::cout << "Shoot " << i + playerNum << std::endl;
-				if (players[i + playerNum]->getIsShooting() == false) {
-					players[i + playerNum]->setIsShooting(true);
-					players[i + playerNum]->setIsAiming(false);
+				if (players[i + playerNum]->GetIsShooting() == false) {
+					players[i + playerNum]->SetIsShooting(true);
+					players[i + playerNum]->SetIsAiming(false);
 					for (int j = 0; j < objectsList.size(); j++) {
 						ProjectileObject* projectile = dynamic_cast<ProjectileObject*>(objectsList[j]);
 						if (projectile != nullptr) {
@@ -611,7 +611,7 @@ void LevelShowcase::UpdateInput()
 			if (Joystick::GetButtonDown(i, Joystick::Button::Triangle))
 			{
 				if (players[i + playerNum]->GetCooldown(1) <= 0) {
-					players[i + playerNum]->setCooldown(1, 3);
+					players[i + playerNum]->SetAbilityCooldown(1, 3);
 					TrapObject* Trap = new TrapObject();
 					Trap->SetSpriteInfo(spriteList.find("Trap")->second);
 					Trap->SetTexture(spriteList.find("Trap")->second.texture);
@@ -632,7 +632,7 @@ void LevelShowcase::UpdateInput()
 				}
 			}
 
-			players[i + playerNum]->Translate(players[i + playerNum]->getVelocity());
+			players[i + playerNum]->Translate(players[i + playerNum]->GetVelocity());
 
 			if (Joystick::GetButtonDown(i, Joystick::Button::P5Button))
 			{
@@ -676,8 +676,8 @@ void LevelShowcase::UpdateCollision()
 					if (overlapX > 0 && overlapY > 0)
 					{
 						// std::cout << "Trap :" << trap->getNumOwner() << " hit " << "Player" << player2->getNumber() << std::endl;
-						player2->setDurationSlowness(100);
-						player2->setIsSlowness(true);
+						player2->SetSlowDuration(100);
+						player2->SetIsSlow(true);
 						objectsList.erase(objectsList.begin() + i);
 					}
 				}
@@ -787,7 +787,7 @@ void LevelShowcase::UpdateCollision()
 
 					if (overlapX > 0 && overlapY > 0)
 					{
-						players[projectile->getNumOwner()]->setIsShooting(false);
+						players[projectile->getNumOwner()]->SetIsShooting(false);
 						objectsList.erase(objectsList.begin() + i);
 					}
 				}
@@ -809,7 +809,7 @@ void LevelShowcase::UpdateProjectile()
 
 			if (projectile->getLifetime() <= 0)
 			{
-				players[projectile->getNumOwner()]->setIsShooting(false);
+				players[projectile->getNumOwner()]->SetIsShooting(false);
 				objectsList.erase(objectsList.begin() + i);
 			}
 
@@ -831,7 +831,7 @@ void LevelShowcase::UpdateCooldown()
 		{
 			if (time[i + playerNum] >= 1.0f && players[i + playerNum]->GetCooldown(j) > 0)
 			{
-				players[i + playerNum]->reduceCooldown(j);
+				players[i + playerNum]->ReduceAbilityCooldown(j);
 				time[i + playerNum] = 0.0f;
 			}
 		}
@@ -842,14 +842,14 @@ void LevelShowcase::UpdateMovement()
 {
 	for (int i = 0; i < SDL_NumJoysticks() + playerNum; i++)
 	{
-		if (players[i]->IsSlow() == true)
+		if (players[i]->GetIsSlow() == true)
 		{
-			players[i]->reduceDurationSlowness();
+			players[i]->ReduceSlowDuration();
 		}
 
 		if (players[i]->GetDurationSlowness() <= 0)
 		{
-			players[i]->setIsSlowness(false);
+			players[i]->SetIsSlow(false);
 		}
 	}
 }

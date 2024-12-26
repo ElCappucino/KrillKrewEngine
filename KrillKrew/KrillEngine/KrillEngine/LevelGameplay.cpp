@@ -268,7 +268,7 @@ void LevelGameplay::UpdateInput()
 
 			if (players[i + playerNum]->GetIsAiming() == false) 
 			{
-				players[i + playerNum]->setVelocity(abs(norAxisX), abs(norAxisY), isPositiveX, isPositiveY);
+				players[i + playerNum]->SetVelocity(abs(norAxisX), abs(norAxisY), isPositiveX, isPositiveY);
 			}
 
 			//Select ability
@@ -280,9 +280,9 @@ void LevelGameplay::UpdateInput()
 			if (Joystick::GetButtonDown(i, Joystick::Button::Square))
 			{
 				std::cout << "Shoot " << i + playerNum << std::endl;
-				if (players[i + playerNum]->getIsShooting() == false && players[i + playerNum]->GetIsAiming() == false) {
-					players[i + playerNum]->setVelocity(0, 0, isPositiveX, isPositiveY);
-					players[i + playerNum]->setIsAiming(true);
+				if (players[i + playerNum]->GetIsShooting() == false && players[i + playerNum]->GetIsAiming() == false) {
+					players[i + playerNum]->SetVelocity(0, 0, isPositiveX, isPositiveY);
+					players[i + playerNum]->SetIsAiming(true);
 					ProjectileObject* projectile = new ProjectileObject();
 					projectile->SetSpriteInfo(spriteList.find("Bomb")->second);
 					projectile->SetTexture(spriteList.find("Bomb")->second.texture);
@@ -299,9 +299,9 @@ void LevelGameplay::UpdateInput()
 			if (Joystick::GetButtonUp(i, Joystick::Button::Square))
 			{
 				std::cout << "Shoot " << i + playerNum << std::endl;
-				if (players[i + playerNum]->getIsShooting() == false) {
-					players[i + playerNum]->setIsShooting(true);
-					players[i + playerNum]->setIsAiming(false);
+				if (players[i + playerNum]->GetIsShooting() == false) {
+					players[i + playerNum]->SetIsShooting(true);
+					players[i + playerNum]->SetIsAiming(false);
 					for (int j = 0; j < objectsList.size(); j++) {
 						ProjectileObject* projectile = dynamic_cast<ProjectileObject*>(objectsList[j]);
 						if (projectile != nullptr) {
@@ -339,9 +339,9 @@ void LevelGameplay::UpdateInput()
 			if (Joystick::GetButtonDown(i, Joystick::Button::Circle))
 			{
 				if (players[i + playerNum]->GetCooldown(2) <= 0) {
-					players[i + playerNum]->setCooldown(2, 3);
-					players[i + playerNum]->setIsDash(true);
-					players[i + playerNum]->setDurationDash(2);
+					players[i + playerNum]->SetAbilityCooldown(2, 3);
+					players[i + playerNum]->SetIsDashing(true);
+					players[i + playerNum]->SetDashDuration(2);
 				}
 
 			}
@@ -426,7 +426,7 @@ void LevelGameplay::UpdateInput()
 				}
 			}
 
-			players[i + playerNum]->Translate(players[i + playerNum]->getVelocity());
+			players[i + playerNum]->Translate(players[i + playerNum]->GetVelocity());
 		}
 
 	}
@@ -464,8 +464,8 @@ void LevelGameplay::UpdateCollision()
 					if (overlapX > 0 && overlapY > 0)
 					{
 						std::cout << "Trap :" << trap->getNumOwner() << " hit " << "Player" << player2->GetPlayerNumber() << std::endl;
-						player2->setDurationSlowness(100);
-						player2->setIsSlowness(true);
+						player2->SetSlowDuration(100);
+						player2->SetIsSlow(true);
 						objectsList.erase(objectsList.begin() + i);
 					}
 				}
@@ -575,7 +575,7 @@ void LevelGameplay::UpdateCollision()
 
 					if (overlapX > 0 && overlapY > 0)
 					{
-						players[projectile->getNumOwner()]->setIsShooting(false);
+						players[projectile->getNumOwner()]->SetIsShooting(false);
 						objectsList.erase(objectsList.begin() + i);
 					}
 				}
@@ -597,7 +597,7 @@ void LevelGameplay::UpdateProjectile()
 
 			if (projectile->getLifetime() <= 0)
 			{
-				players[projectile->getNumOwner()]->setIsShooting(false);
+				players[projectile->getNumOwner()]->SetIsShooting(false);
 				objectsList.erase(objectsList.begin() + i);
 			}
 
@@ -623,7 +623,7 @@ void LevelGameplay::UpdateCooldown()
 			if (time[i + playerNum] >= 1.0f && players[i + playerNum]->GetCooldown(j) > 0)
 			{
 				std::cout << j << std::endl;
-				players[i + playerNum]->reduceCooldown(j);
+				players[i + playerNum]->ReduceAbilityCooldown(j);
 			}
 		}
 		if (time[i + playerNum] >= 1.0f) {
@@ -636,25 +636,25 @@ void LevelGameplay::UpdateMovement()
 {
 	for (int i = 0; i < SDL_NumJoysticks() + playerNum; i++)
 	{
-		if (time[i + playerNum] >= 1.0f && players[i + playerNum]->IsSlow() == true)
+		if (time[i + playerNum] >= 1.0f && players[i + playerNum]->GetIsSlow() == true)
 		{
-			players[i + playerNum]->reduceDurationSlowness();
+			players[i + playerNum]->ReduceSlowDuration();
 		}
 
 		if (players[i]->GetDurationSlowness() <= 0)
 		{
-			players[i]->setIsSlowness(false);
+			players[i]->SetIsSlow(false);
 		}
 
-		if (time[i + playerNum] >= 1.0f && players[i + playerNum]->IsDash() == true) 
+		if (time[i + playerNum] >= 1.0f && players[i + playerNum]->GetIsDashing() == true) 
 		{
 			std::cout << "reduce dash time" << std::endl;
-			players[i]->reduceDurationDash();
+			players[i]->ReduceDashDuration();
 		}
 
-		if (players[i + playerNum]->GetDurationDash() <= 0)
+		if (players[i + playerNum]->GetDashDuration() <= 0)
 		{
-			players[i]->setIsDash(false);
+			players[i]->SetIsDashing(false);
 		}
 	}
 }
@@ -792,8 +792,8 @@ void LevelGameplay::usingAbility(int numPlayer, int numberAbility)
 }
 
 void LevelGameplay::aimFireball(int num) {
-	players[num + playerNum]->setVelocity(0, 0, false, false);
-	players[num + playerNum]->setIsAiming(true);
+	players[num + playerNum]->SetVelocity(0, 0, false, false);
+	players[num + playerNum]->SetIsAiming(true);
 	ProjectileObject* projectile = new ProjectileObject();
 	projectile->SetSpriteInfo(spriteList.find("Bomb")->second);
 	projectile->SetTexture(spriteList.find("Bomb")->second.texture);
@@ -807,9 +807,9 @@ void LevelGameplay::aimFireball(int num) {
 }
 
 void LevelGameplay::shootFireball(int num) {
-	if (players[num + playerNum]->getIsShooting() == false) {
-		players[num + playerNum]->setIsShooting(true);
-		players[num + playerNum]->setIsAiming(false);
+	if (players[num + playerNum]->GetIsShooting() == false) {
+		players[num + playerNum]->SetIsShooting(true);
+		players[num + playerNum]->SetIsAiming(false);
 		for (int j = 0; j < objectsList.size(); j++) {
 			ProjectileObject* projectile = dynamic_cast<ProjectileObject*>(objectsList[j]);
 			if (projectile != nullptr) {
@@ -820,7 +820,7 @@ void LevelGameplay::shootFireball(int num) {
 }
 
 void LevelGameplay::trap(int num) {
-	players[num + playerNum]->setCooldown(1, 3);
+	players[num + playerNum]->SetAbilityCooldown(1, 3);
 	TrapObject* Trap = new TrapObject();
 	Trap->SetSpriteInfo(spriteList.find("Trap")->second);
 	Trap->SetTexture(spriteList.find("Trap")->second.texture);
@@ -832,7 +832,7 @@ void LevelGameplay::trap(int num) {
 }
 
 void LevelGameplay::dash(int num) {
-	players[num + playerNum]->setCooldown(2, 3);
-	players[num + playerNum]->setIsDash(true);
-	players[num + playerNum]->setDurationDash(2);
+	players[num + playerNum]->SetAbilityCooldown(2, 3);
+	players[num + playerNum]->SetIsDashing(true);
+	players[num + playerNum]->SetDashDuration(2);
 }

@@ -29,48 +29,55 @@ private:
 	AnimationState currAnimState;
 	std::map<AnimationState, SpritesheetInfo> animList;
 	//std::array<Ability*, 3> abilities;
-	int abilities[3] = { 0 };
+	
 	glm::vec3 velocity;
+
 	bool isShooting;
 	bool isAiming;
 	bool isFacingLeft;
-	int number;
-	float cooldown[3] = {0};
+	bool isSlow;
+	bool isDashing;
+
+	int playerNumber;
+
+	int abilities[3] = { 0 };
+	float abilityCooldown[3] = {0};
+
 	float slowness = 2;
-	float durationSlowness;
-	bool isSlowness;
-	bool isDash;
+	float slowDuration; // add value if slow and decrease over time
+	
 	float dashSpeed = 5;
-	float durationDash;
+	float dashDuration; // add value if dashing and decrease over time
 
 public:
 	
 	PlayerObject();
 	~PlayerObject();
-	void UpdateFacingSide(bool isLeft);
+	
 	void SetTexture(std::string path);
 	void Render(glm::mat4 globalModelTransform);
-	void setVelocity(float axisX, float axisY, bool isPositiveX, bool isPositiveY);
-	void setIsShooting(bool isShoot);
-	void setIsAiming(bool isAim);
+	void UpdateFacingSide(bool isLeft);
+
+	void SetVelocity(float axisX, float axisY, bool isPositiveX, bool isPositiveY);
+	void SetIsShooting(bool isShooting);
+	void SetIsAiming(bool isAiming);
 	void SetPlayerNumber(int num);
-	void setCooldown(int skill, int time);
-	void reduceCooldown(int skill);
-	void setDurationSlowness(int time);
-	void reduceDurationSlowness();
-	void setIsSlowness(bool isSlow);
-	void setIsDash(bool isDash);
-	void setDurationDash(int time);
-	void reduceDurationDash();
-	glm::vec3 getVelocity();
-	bool getIsShooting();
-	void setAbility(int numberAbility, int idAbility);
+	void SetAbilityCooldown(int skill, int duration);
+	void SetSlowDuration(int time);
+	void SetIsSlow(bool isSlow);
+	void SetIsDashing(bool isDashing);
+	void SetDashDuration(int duration);
+	void SetAbility(int numberAbility, int idAbility);
+
+	void ReduceAbilityCooldown(int skill);
+	void ReduceSlowDuration();
+	void ReduceDashDuration();
 
 	virtual void SetAnimationSprite(AnimationState state, SpritesheetInfo spriteInfo);
 	virtual void ChangeAnimationState(AnimationState anim);
 	virtual void UpdateCurrentAnimation();
 
-	virtual Collider* GetCollider();
+	virtual Collider* GetCollider() const;
 
 	virtual void OnColliderEnter(Collider* other);
 	virtual void OnColliderStay(Collider* other);
@@ -79,11 +86,13 @@ public:
 	virtual void OnTriggerStay(Collider* other);
 	virtual void OnTriggerExit(Collider* other);
 	
-	bool IsAiming();
-	bool IsSlow();
-	bool IsDash();
-	int GetPlayerNumber();
-	float GetCooldown(int skill);
-	float GetDurationSlowness();
-	float GetDashDuration();
+	glm::vec3 GetVelocity() const;
+	bool GetIsAiming() const;
+	bool GetIsSlow() const;
+	bool GetIsDashing() const;
+	bool GetIsShooting() const;
+	int GetPlayerNumber() const;
+	float GetCooldown(int skill) const;
+	float GetDurationSlowness() const;
+	float GetDashDuration() const;
 };
