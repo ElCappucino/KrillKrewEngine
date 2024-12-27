@@ -38,6 +38,7 @@ public:
 	GizmosObject* GetGizmos();
 	glm::vec3 GetSize();
 	glm::vec3 GetPreviousPos();
+	EntityObject* GetParent();
 	void SetPreviousPos(glm::vec3 pos);
 	glm::vec3 GetHalfSize();
 	void SetGismosColor(glm::vec3 color);

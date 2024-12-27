@@ -9,10 +9,10 @@ class DrawableObject
 protected:
 	glm::vec3 pos;
 	glm::vec3 size;
-
+	bool isActive = true;
 public:
 	glm::mat4 getTransform();
-
+	bool GetIsActive();
 	DrawableObject();
 	~DrawableObject();
 	virtual void Render(glm::mat4 globalModelTransform) = 0;

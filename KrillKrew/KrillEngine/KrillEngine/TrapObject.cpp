@@ -76,3 +76,50 @@ void TrapObject::setNumOwner(int num) {
 int TrapObject::getNumOwner() {
 	return playerNumOwner;
 }
+
+void TrapObject::OnColliderEnter(Collider* other)
+{
+	PlayerObject* player = dynamic_cast<PlayerObject*>(other->GetParent());
+	if (player != nullptr)
+	{
+		if (this->getNumOwner() != player->GetPlayerNumber()) {
+			Collider col1 = *this->GetCollider();
+			Collider col2 = *player->GetCollider();
+
+			glm::vec2 delta = glm::vec2(abs(this->getPos().x - player->getPos().x),
+				abs(this->getPos().y - player->getPos().y));
+
+			float overlapX = (abs(col1.GetHalfSize().x)) + (abs(col2.GetHalfSize().x)) - delta.x;
+			float overlapY = (abs(col1.GetHalfSize().y)) + (abs(col2.GetHalfSize().y)) - delta.y;
+
+			if (overlapX > 0 && overlapY > 0)
+			{
+				KK_TRACE("Trap of player {0} hit player {1}", this->getNumOwner(), player->GetPlayerNumber());
+				player->SetSlowDuration(100);
+				player->SetIsSlow(true);
+				this->isActive = false;
+			}
+		}
+	}
+	
+}
+void TrapObject::OnColliderStay(Collider* other)
+{
+
+}
+void TrapObject::OnColliderExit(Collider* other)
+{
+
+}
+void TrapObject::OnTriggerEnter(Collider* other)
+{
+
+}
+void TrapObject::OnTriggerStay(Collider* other)
+{
+
+}
+void TrapObject::OnTriggerExit(Collider* other)
+{
+
+}

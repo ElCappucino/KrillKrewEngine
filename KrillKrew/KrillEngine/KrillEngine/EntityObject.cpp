@@ -66,6 +66,7 @@ void EntityObject::Render(glm::mat4 globalModelTransform)
 	}
 }
 
+
 Collider* EntityObject::GetCollider()
 {
 	return collider;

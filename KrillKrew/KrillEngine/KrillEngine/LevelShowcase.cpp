@@ -441,6 +441,14 @@ void LevelShowcase::LevelUpdate()
 {
 	dt++;
 
+	for (int i = 0; i < objectsList.size(); i++)
+	{
+		if (objectsList[i]->GetIsActive() == false)
+		{
+			objectsList.erase(objectsList.begin() + i);
+		}
+	}
+
 	// UpdateInput();
 	UpdateInput();
 
@@ -574,7 +582,7 @@ void LevelShowcase::UpdateInput()
 					//objectsList.push_back(projectile);
 					////objectsList.push_back(projectile->GetCollider()->GetGizmos());
 
-					(abilities.find("HoldBomb")->second)(i, players[i + playerNum], objectsList, spriteList.find("Bomb")->second);
+					// (abilities.find("HoldBomb")->second)(i, players[i + playerNum], objectsList, spriteList.find("Bomb")->second);
 				}
 			}
 
@@ -646,45 +654,6 @@ void LevelShowcase::UpdateInput()
 
 void LevelShowcase::UpdateCollision()
 {
-	// trap collider player
-	for (int i = 0; i < objectsList.size(); i++)
-	{
-		TrapObject* trap = dynamic_cast<TrapObject*>(objectsList[i]);
-		if (trap == nullptr)
-		{
-			continue;
-		}
-		for (int j = 0; j < objectsList.size(); j++)
-		{
-			if (i == j)
-			{
-				continue;
-			}
-			PlayerObject* player2 = dynamic_cast<PlayerObject*>(objectsList[j]);
-			if (player2 != nullptr)
-			{
-				if (trap->getNumOwner() != player2->GetPlayerNumber()) {
-					Collider col1 = *trap->GetCollider();
-					Collider col2 = *player2->GetCollider();
-
-					glm::vec2 delta = glm::vec2(abs(trap->getPos().x - player2->getPos().x),
-						abs(trap->getPos().y - player2->getPos().y));
-
-					float overlapX = (abs(col1.GetHalfSize().x)) + (abs(col2.GetHalfSize().x)) - delta.x;
-					float overlapY = (abs(col1.GetHalfSize().y)) + (abs(col2.GetHalfSize().y)) - delta.y;
-
-					if (overlapX > 0 && overlapY > 0)
-					{
-						// std::cout << "Trap :" << trap->getNumOwner() << " hit " << "Player" << player2->getNumber() << std::endl;
-						player2->SetSlowDuration(100);
-						player2->SetIsSlow(true);
-						objectsList.erase(objectsList.begin() + i);
-					}
-				}
-			}
-		}
-	}
-
 	// player collier player
 	for (int i = 0; i < objectsList.size(); i++)
 	{
@@ -849,6 +818,7 @@ void LevelShowcase::UpdateMovement()
 
 		if (players[i]->GetDurationSlowness() <= 0)
 		{
+			KK_WARN("SlowDuration < 0");
 			players[i]->SetIsSlow(false);
 		}
 	}

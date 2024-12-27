@@ -7,6 +7,7 @@
 #include <array>
 #include "EntityObject.h"
 #include "Collider.h"
+#include "PlayerObject.h"
 
 /// @brief The class for creating object that render using texture
 class TrapObject :public EntityObject
@@ -24,5 +25,12 @@ public:
 	void reduceLifeTime();
 	int getLifetime();
 	int getNumOwner();
+
+	virtual void OnColliderEnter(Collider* other);
+	virtual void OnColliderStay(Collider* other);
+	virtual void OnColliderExit(Collider* other);
+	virtual void OnTriggerEnter(Collider* other);
+	virtual void OnTriggerStay(Collider* other);
+	virtual void OnTriggerExit(Collider* other);
 
 };

@@ -19,6 +19,7 @@ class EntityObject : public ImageObject
 	};
 
 protected:
+
 	
 	Collider* collider;
 	std::map<AnimationState, SpritesheetInfo> animList;
@@ -34,8 +35,9 @@ public:
 	// void SetSheetInfo(float row, float column, float spritewidth, float spriteheight, float sheetwidth, float sheetheight);
 	void Render(glm::mat4 globalModelTransform);
 
+	
 	virtual Collider* GetCollider();
-
+	
 	virtual void OnColliderEnter(Collider* other);
 	virtual void OnColliderStay(Collider* other);
 	virtual void OnColliderExit(Collider* other);

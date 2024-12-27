@@ -47,7 +47,10 @@ glm::vec3 Collider::GetPreviousPos()
 {
 	return previousPos;
 }
-
+EntityObject* Collider::GetParent()
+{
+	return parent;
+}
 void Collider::SetPreviousPos(glm::vec3 pos)
 {
 	previousPos = pos;

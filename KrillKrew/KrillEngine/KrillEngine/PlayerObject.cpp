@@ -90,6 +90,7 @@ void PlayerObject::SetVelocity(float axisX, float axisY, bool isPositiveX, bool 
 	}
 	else if (isSlow) 
 	{
+		std::cout << "IsSlow" << std::endl;
 		velocity = glm::vec3(axisX * 5.f, axisY * 5.f, 0) / slowness;
 	}
 	else

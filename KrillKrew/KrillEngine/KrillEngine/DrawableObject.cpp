@@ -51,5 +51,9 @@ glm::vec3 DrawableObject::getSize() {
 	return size;
 
 }
+bool DrawableObject::GetIsActive()
+{
+	return isActive;
+}
 
 

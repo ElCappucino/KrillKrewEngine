@@ -166,6 +166,14 @@ void LevelGameplay::LevelUpdate()
 {
 	dt++;
 
+	for (int i = 0; i < objectsList.size(); i++)
+	{
+		if (objectsList[i]->GetIsActive() == false)
+		{
+			objectsList.erase(objectsList.begin() + i);
+		}
+	}
+
 	// UpdateInput();
 	UpdateInput();
 
@@ -435,7 +443,7 @@ void LevelGameplay::UpdateInput()
 void LevelGameplay::UpdateCollision()
 {
 	// trap collider player
-	for (int i = 0; i < objectsList.size(); i++)
+	/*for (int i = 0; i < objectsList.size(); i++)
 	{
 		TrapObject* trap = dynamic_cast<TrapObject*>(objectsList[i]);
 		if (trap == nullptr)
@@ -471,7 +479,7 @@ void LevelGameplay::UpdateCollision()
 				}
 			}
 		}
-	}
+	}*/
 
 	// player collier player
 	for (int i = 0; i < objectsList.size(); i++)
@@ -511,9 +519,11 @@ void LevelGameplay::UpdateCollision()
 
 				if (overlapX > 0 && overlapY > 0)
 				{
+					// OnEnter collider for all types of collision
 					entity1->OnColliderEnter(entity2->GetCollider());
 					entity2->OnColliderEnter(entity1->GetCollider());
 
+					// resolve collider for kinematic and static
 					if (col1.GetCollisionType() == Collider::Kinematic &&
 						col2.GetCollisionType() == Collider::Static)
 					{
@@ -643,6 +653,7 @@ void LevelGameplay::UpdateMovement()
 
 		if (players[i]->GetDurationSlowness() <= 0)
 		{
+			KK_WARN("SlowDuration < 0");
 			players[i]->SetIsSlow(false);
 		}
 
