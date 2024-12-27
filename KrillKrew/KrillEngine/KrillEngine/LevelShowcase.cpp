@@ -1,10 +1,5 @@
 #include "LevelShowcase.h"
 
-//float lerp(float a, float b, float t)
-//{
-//	return a + t * (b - a);
-//}
-
 void getAim(int playerNum)
 {
 	// std::cout << "Owner " << std::endl;
@@ -42,17 +37,13 @@ void LevelShowcase::LevelLoad()
 
 	spriteList["Prinny"] = SpritesheetInfo("Prinny", "../Resource/Texture/Prinny.png", 538, 538, 538, 538);
 	spriteList["Bomb"] = SpritesheetInfo("Bomb", "../Resource/Texture/Bomb_icon.png", 256, 256, 256, 256);
-
 	spriteList["Shark_run"] = SpritesheetInfo("Shark_run", "../Resource/Texture/shark_run_test.png", 256, 256, 1024, 256);
 	spriteList["Shark_idle"] = SpritesheetInfo("Shart_idle", "../Resource/Texture/shark_Idle_test.png", 256, 256, 256, 256);
-	
 	spriteList["Trap"] = SpritesheetInfo("Bomb", "../Resource/Texture/Trap.png", 512, 512, 512, 512);
-
 	spriteList["Xoey_UI"] = SpritesheetInfo("Xoey_UI", "../Resource/Texture/xoey.png", 430, 220, 430, 220);
 	spriteList["Byssa_UI"] = SpritesheetInfo("Byssa_UI", "../Resource/Texture/byssa.png", 430, 220, 430, 220);
 	spriteList["Crunk_UI"] = SpritesheetInfo("Crunk_UI", "../Resource/Texture/crunk.png", 430, 220, 430, 220);
 	spriteList["Ham_UI"] = SpritesheetInfo("Ham_UI", "../Resource/Texture/Ham.png", 430, 220, 430, 220);
-	
 	spriteList["Blobtile"] = SpritesheetInfo("Blobtile", "../Resource/Texture/tileset_01.png", 128, 128, 1664, 512);
 
 	abilities.emplace(std::string("HoldBomb"), HoldBomb);
@@ -548,21 +539,13 @@ void LevelShowcase::UpdateInput()
 				isPositiveY = true;
 			}
 
+			// update facing
 			if (abs(axisX) > 0.2f) { players[i + playerNum]->UpdateFacingSide(!isPositiveX); }
 
 			if (players[i + playerNum]->GetIsAiming() == false)
 			{
 				players[i + playerNum]->SetVelocity(abs(norAxisX), abs(norAxisY), isPositiveX, isPositiveY);
 			}
-			
-			// update facing
-			
-
-			//Select ability
-			/*if (Joystick::GetButtonDown(i, Joystick::Button::L1)) {
-
-			}*/
-
 
 			//Aim
 			if (Joystick::GetButtonDown(i, Joystick::Button::L1))
@@ -769,7 +752,6 @@ void LevelShowcase::UpdateCooldown()
 
 void LevelShowcase::UpdateMovement()
 {
-	// KK_TRACE("Update Movement: SDL_NumJoysticks() = {0} playerNum = {1} SDL_NumJoysticks() + playerNum = {2}", SDL_NumJoysticks(), playerNum, SDL_NumJoysticks() + playerNum);
 	for (int i = 0; i < SDL_NumJoysticks() + playerNum; i++)
 	{
 		if (players[i]->GetIsSlow() == true)
@@ -789,9 +771,10 @@ void LevelShowcase::UpdateUI()
 	for (int i = 0; i < objectsList.size(); i++)
 	{
 		UiObject* ui = dynamic_cast<UiObject*>(objectsList[i]);
-		if (ui != nullptr) {
-			//std::cout << "Ui id | " << ui->getNumOwner() << std::endl;
-			ui->SetPosition(glm::vec3(GameEngine::GetInstance()->GetRenderer()->GetOrthovalue().left + (((300 * (ui->getNumOwner() + 1)) - (85 * ui->getNumOwner())) * camera.GetCameraWidth() / 1246),
+		if (ui != nullptr) 
+		{
+			ui->SetPosition(glm::vec3(
+				GameEngine::GetInstance()->GetRenderer()->GetOrthovalue().left + (((300 * (ui->getNumOwner() + 1)) - (85 * ui->getNumOwner())) * camera.GetCameraWidth() / 1246),
 				GameEngine::GetInstance()->GetRenderer()->GetOrthovalue().bottom + (50 * camera.GetCameraHeight() / 720), 0));
 			ui->SetSize(215.f * camera.GetCameraWidth() / 1246, -100.f * camera.GetCameraHeight() / 720);
 		}
