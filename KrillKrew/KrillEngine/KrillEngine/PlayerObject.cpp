@@ -101,6 +101,7 @@ void PlayerObject::SetVelocity(float axisX, float axisY, bool isPositiveX, bool 
 }
 void PlayerObject::SetIsShooting(bool isShooting)
 {
+	KK_WARN("Set is shooting = {0}", isShooting);
 	this->isShooting = isShooting;
 }
 void PlayerObject::SetIsAiming(bool isAiming)
@@ -250,7 +251,7 @@ float PlayerObject::GetCooldown(int skill) const
 {
 	return abilityCooldown[skill];
 }
-float PlayerObject::GetDurationSlowness() const
+float PlayerObject::GetSlowDuration() const
 {
 	return slowDuration;
 }

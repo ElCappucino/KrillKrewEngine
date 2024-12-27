@@ -307,7 +307,7 @@ void LevelGameplay::UpdateInput()
 			if (Joystick::GetButtonUp(i, Joystick::Button::Square))
 			{
 				std::cout << "Shoot " << i + playerNum << std::endl;
-				if (players[i + playerNum]->GetIsShooting() == false) {
+				if (players[i + playerNum]->GetIsAiming() == true) {
 					players[i + playerNum]->SetIsShooting(true);
 					players[i + playerNum]->SetIsAiming(false);
 					for (int j = 0; j < objectsList.size(); j++) {
@@ -651,7 +651,7 @@ void LevelGameplay::UpdateMovement()
 			players[i + playerNum]->ReduceSlowDuration();
 		}
 
-		if (players[i]->GetDurationSlowness() <= 0)
+		if (players[i]->GetSlowDuration() <= 0)
 		{
 			KK_WARN("SlowDuration < 0");
 			players[i]->SetIsSlow(false);

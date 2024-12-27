@@ -441,6 +441,7 @@ void LevelShowcase::LevelUpdate()
 {
 	dt++;
 
+	// Clear inactive object
 	for (int i = 0; i < objectsList.size(); i++)
 	{
 		if (objectsList[i]->GetIsActive() == false)
@@ -569,18 +570,19 @@ void LevelShowcase::UpdateInput()
 
 				if (players[i + playerNum]->GetIsShooting() == false && players[i + playerNum]->GetIsAiming() == false) 
 				{
-					//players[i + playerNum]->setVelocity(0, 0, isPositiveX, isPositiveY);
-					//players[i + playerNum]->setIsAiming(true);
-					//ProjectileObject* projectile = new ProjectileObject();
-					//projectile->SetSpriteInfo(spriteList.find("Bomb")->second);
-					//projectile->SetTexture(spriteList.find("Bomb")->second.texture);
-					//projectile->SetPosition(players[i + playerNum]->getPos());
-					//projectile->SetSize(256.f, -256.f);
-					//projectile->setLifeTime(9999);
-					//projectile->setNumOwner(players[i + playerNum]->getNumber());
-					//std::cout << "Owner " << projectile->getNumOwner() << std::endl;
-					//objectsList.push_back(projectile);
-					////objectsList.push_back(projectile->GetCollider()->GetGizmos());
+					players[i + playerNum]->SetVelocity(0, 0, isPositiveX, isPositiveY);
+					players[i + playerNum]->SetIsAiming(true);
+					ProjectileObject* projectile = new ProjectileObject();
+					projectile->SetSpriteInfo(spriteList.find("Bomb")->second);
+					projectile->SetTexture(spriteList.find("Bomb")->second.texture);
+					projectile->SetPosition(players[i + playerNum]->getPos());
+					projectile->SetSize(256.f, -256.f);
+					projectile->setLifeTime(9999);
+					projectile->setNumOwner(players[i + playerNum]->GetPlayerNumber());
+					projectile->setOwner(players[i + playerNum]);
+					std::cout << "Owner " << projectile->getNumOwner() << std::endl;
+					objectsList.push_back(projectile);
+					//objectsList.push_back(projectile->GetCollider()->GetGizmos());
 
 					// (abilities.find("HoldBomb")->second)(i, players[i + playerNum], objectsList, spriteList.find("Bomb")->second);
 				}
@@ -590,7 +592,7 @@ void LevelShowcase::UpdateInput()
 			if (Joystick::GetButtonUp(i, Joystick::Button::L1))
 			{
 				// std::cout << "Shoot " << i + playerNum << std::endl;
-				if (players[i + playerNum]->GetIsShooting() == false) {
+				if (players[i + playerNum]->GetIsAiming() == true) {
 					players[i + playerNum]->SetIsShooting(true);
 					players[i + playerNum]->SetIsAiming(false);
 					for (int j = 0; j < objectsList.size(); j++) {
@@ -632,7 +634,7 @@ void LevelShowcase::UpdateInput()
 			}
 
 			// Debug other player
-			if (Joystick::GetButtonDown(i, Joystick::Button::L1))
+			if (Joystick::GetButtonDown(i, Joystick::Button::R1))
 			{
 				playerNum += 1;
 				if (playerNum >= 4) {
@@ -721,48 +723,6 @@ void LevelShowcase::UpdateCollision()
 		}
 		entity1->GetCollider()->SetPreviousPos(entity1->getPos());
 	}
-
-	// projectile
-	for (int i = 0; i < objectsList.size(); i++)
-	{
-		ProjectileObject* projectile = dynamic_cast<ProjectileObject*>(objectsList[i]);
-
-		if (projectile == nullptr)
-		{
-			continue;
-		}
-
-		for (int j = 0; j < objectsList.size(); j++)
-		{
-			if (i == j)
-			{
-				continue;
-			}
-
-			PlayerObject* player = dynamic_cast<PlayerObject*>(objectsList[j]);
-
-			if (player != nullptr)
-			{
-				if (projectile->getNumOwner() != player->GetPlayerNumber())
-				{
-					Collider col1 = *projectile->GetCollider();
-					Collider col2 = *player->GetCollider();
-
-					glm::vec2 delta = glm::vec2(abs(projectile->getPos().x - player->getPos().x),
-						abs(projectile->getPos().y - player->getPos().y));
-
-					float overlapX = (abs(col1.GetHalfSize().x)) + (abs(col2.GetHalfSize().x)) - delta.x;
-					float overlapY = (abs(col1.GetHalfSize().y)) + (abs(col2.GetHalfSize().y)) - delta.y;
-
-					if (overlapX > 0 && overlapY > 0)
-					{
-						players[projectile->getNumOwner()]->SetIsShooting(false);
-						objectsList.erase(objectsList.begin() + i);
-					}
-				}
-			}
-		}
-	}
 }
 
 void LevelShowcase::UpdateProjectile()
@@ -809,6 +769,7 @@ void LevelShowcase::UpdateCooldown()
 
 void LevelShowcase::UpdateMovement()
 {
+	// KK_TRACE("Update Movement: SDL_NumJoysticks() = {0} playerNum = {1} SDL_NumJoysticks() + playerNum = {2}", SDL_NumJoysticks(), playerNum, SDL_NumJoysticks() + playerNum);
 	for (int i = 0; i < SDL_NumJoysticks() + playerNum; i++)
 	{
 		if (players[i]->GetIsSlow() == true)
@@ -816,9 +777,8 @@ void LevelShowcase::UpdateMovement()
 			players[i]->ReduceSlowDuration();
 		}
 
-		if (players[i]->GetDurationSlowness() <= 0)
+		if (players[i]->GetSlowDuration() <= 0)
 		{
-			KK_WARN("SlowDuration < 0");
 			players[i]->SetIsSlow(false);
 		}
 	}
@@ -840,29 +800,17 @@ void LevelShowcase::UpdateUI()
 
 void LevelShowcase::LevelDraw()
 {
-	GameEngine::GetInstance()->Render(objectsList);
-
-
-	// Collider Gizmos update
+	// Collider position update
 	for (int i = 0; i < objectsList.size(); i++)
 	{
-		PlayerObject* player = dynamic_cast<PlayerObject*>(objectsList[i]);
-		ProjectileObject* projectile = dynamic_cast<ProjectileObject*>(objectsList[i]);
-		if (player != nullptr)
+		EntityObject* object = dynamic_cast<EntityObject*>(objectsList[i]);
+		if (object != nullptr)
 		{
-			player->GetCollider()->Update(player->getSize(), player->getPos());
+			object->GetCollider()->Update(object->getSize(), object->getPos());
 		}
-		else
-		{
-			EntityObject* object = dynamic_cast<EntityObject*>(objectsList[i]);
-			if (object != nullptr)
-			{
-				object->GetCollider()->Update(object->getSize(), object->getPos());
-			}
-		}
-
-
 	}
+
+	GameEngine::GetInstance()->Render(objectsList);
 
 	// cout << "Draw Level" << endl;
 }
@@ -922,10 +870,10 @@ void LevelShowcase::HandleKey(char key)
 
 	case 'y':
 		this->playerNum++;
+
 		if (this->playerNum >= 4) {
 			this->playerNum = 0;
 		}
-		// std::cout << "Player " << this->playerNum << std::endl;
 		break;
 	}
 }

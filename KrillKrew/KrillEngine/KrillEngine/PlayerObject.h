@@ -93,6 +93,6 @@ public:
 	bool GetIsShooting() const;
 	int GetPlayerNumber() const;
 	float GetCooldown(int skill) const;
-	float GetDurationSlowness() const;
+	float GetSlowDuration() const;
 	float GetDashDuration() const;
 };

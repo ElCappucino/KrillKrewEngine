@@ -7,6 +7,7 @@
 #include <array>
 #include "EntityObject.h"
 #include "Collider.h"
+#include "PlayerObject.h"
 
 /// @brief The class for creating object that render using texture
 class ProjectileObject : public EntityObject
@@ -15,6 +16,7 @@ class ProjectileObject : public EntityObject
 	glm::vec3 velocity;
 	int lifeTime;
 	int playerNumOwner;
+	PlayerObject* owner;
 
 public:
 	ProjectileObject();
@@ -24,6 +26,7 @@ public:
 	void setVelocity(float axisX, float axisY, bool isPositiveX, bool isPositiveY);
 	void setLifeTime(int lifeTime);
 	void setNumOwner(int Num);
+	void setOwner(PlayerObject* player);
 	glm::vec3 getVelocity();
 	void reduceLifeTime();
 	int getLifetime();
