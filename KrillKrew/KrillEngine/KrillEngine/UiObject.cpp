@@ -1,8 +1,4 @@
-
 #include "UiObject.h"
-#include "GameEngine.h"
-#include "SquareMeshVbo.h"
-
 
 UiObject::UiObject()
 {

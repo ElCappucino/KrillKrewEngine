@@ -1,7 +1,6 @@
 
 #include "EntityObject.h"
-#include "GameEngine.h"
-#include "SquareMeshVbo.h"
+
 
 
 EntityObject::EntityObject()

@@ -1,7 +1,6 @@
 
 #include "ImageObject.h"
-#include "GameEngine.h"
-#include "SquareMeshVbo.h"
+
 
 
 ImageObject::ImageObject()

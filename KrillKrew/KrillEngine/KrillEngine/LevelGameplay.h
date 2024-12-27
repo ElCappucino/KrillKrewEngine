@@ -1,18 +1,6 @@
 #pragma once
 #include "Level.h"
-#include "InfoStruct.h"
-#include "EntityObject.h"
-#include "PlayerObject.h"
-#include "ProjectileObject.h"
-#include "TrapObject.h"
-#include "GizmosObject.h"
-#include "TrapObject.h"
-#include <map>
-#include "Timer.h"
-#include "UiObject.h"
-#include "Ability.h"
-
-
+#include "Utilities.h"
 
 /// @brief The class for level inherit test from P'tiam
 class LevelGameplay : public Level

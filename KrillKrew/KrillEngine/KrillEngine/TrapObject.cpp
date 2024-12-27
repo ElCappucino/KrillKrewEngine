@@ -1,7 +1,6 @@
 
 #include "TrapObject.h"
-#include "GameEngine.h"
-#include "SquareMeshVbo.h"
+
 
 
 TrapObject::TrapObject()

@@ -1,8 +1,6 @@
 
 #include "GizmosObject.h"
-#include "GameEngine.h"
-#include "SquareMeshVbo.h"
-#include "LineMeshVbo.h"
+
 
 GizmosObject::GizmosObject()
 {

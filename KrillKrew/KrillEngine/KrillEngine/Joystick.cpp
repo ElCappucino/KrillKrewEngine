@@ -1,11 +1,5 @@
 #include "Joystick.h"
 
-#include <algorithm>
-#include <iostream>
-
-#include "SDL_events.h"
-#include "SDL_gamecontroller.h"
-
 std::unordered_map<int, std::unique_ptr<Joystick::Controller>> Joystick::availableJoysticks;
 
 void Joystick::OnJoystickConnected(SDL_ControllerDeviceEvent& e) 

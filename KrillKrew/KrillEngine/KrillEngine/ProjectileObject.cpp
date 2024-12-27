@@ -1,7 +1,6 @@
 
 #include "ProjectileObject.h"
-#include "GameEngine.h"
-#include "SquareMeshVbo.h"
+
 
 
 ProjectileObject::ProjectileObject()

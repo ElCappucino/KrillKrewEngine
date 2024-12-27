@@ -10,6 +10,8 @@
 #include <chrono>
 #include "ImageObject.h"
 #include "Collider.h"
+#include "GameEngine.h"
+#include "SquareMeshVbo.h"
 
 /// @brief The class for creating object that render using texture
 class PlayerObject :public EntityObject

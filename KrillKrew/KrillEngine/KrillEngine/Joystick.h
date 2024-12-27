@@ -3,6 +3,11 @@
 #include <array>
 #include <memory>
 #include <unordered_map>
+#include <algorithm>
+#include <iostream>
+
+#include "SDL_events.h"
+#include "SDL_gamecontroller.h"
 
 class Joystick
 {

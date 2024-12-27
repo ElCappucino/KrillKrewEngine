@@ -1,22 +1,6 @@
 #pragma once
 #include "Level.h"
-#include "InfoStruct.h"
-#include "EntityObject.h"
-#include "PlayerObject.h"
-#include "ProjectileObject.h"
-#include "TrapObject.h"
-#include "GizmosObject.h"
-#include "TrapObject.h"
-#include "Timer.h"
-#include "UiObject.h"
-
-#include <string>
-#include <fstream>
-#include <sstream>
-#include <iostream>
-#include <map>
-#include <bitset>
-#include <functional>
+#include "Utilities.h"
 
 #define MAP_WIDTH  21
 #define MAP_HEIGHT 16

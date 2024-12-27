@@ -1,12 +1,6 @@
 #pragma once
 #include "Level.h"
-#include "InfoStruct.h"
-#include <string>
-#include <fstream>
-#include <sstream>
-#include <iostream>
-#include <map>
-#include <bitset>
+#include "Utilities.h"
 
 #define MAP_WIDTH  21
 #define MAP_HEIGHT 15

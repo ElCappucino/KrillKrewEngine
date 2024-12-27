@@ -1,12 +1,13 @@
 #pragma once
 
+// Only using in the Level Class
+
 // Core Classes
 
 #include "GameEngine.h"
 #include "GameStateController.h"
 #include "GameStateList.h"
 #include "GLRenderer.h"
-#include "Level.h"
 
 // Object Classes
 

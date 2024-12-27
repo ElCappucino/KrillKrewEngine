@@ -1,6 +1,8 @@
 #pragma once
 
 #include <string>
+#include <fstream>
+#include <iostream>
 #include <GL\glew.h>
 
 /// @brief The class for store the shader data

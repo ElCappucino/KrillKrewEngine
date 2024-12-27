@@ -8,6 +8,8 @@
 #include "EntityObject.h"
 #include "Collider.h"
 #include "PlayerObject.h"
+#include "GameEngine.h"
+#include "SquareMeshVbo.h"
 
 /// @brief The class for creating object that render using texture
 class TrapObject :public EntityObject

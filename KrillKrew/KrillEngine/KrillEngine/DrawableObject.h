@@ -1,7 +1,8 @@
 #pragma once
 #include "glm.hpp"
 #include <vector>
-
+#include "gtc/matrix_transform.hpp"
+#include "gtc/type_ptr.hpp"
 
 /// @brief The class for creating drawable object
 class DrawableObject

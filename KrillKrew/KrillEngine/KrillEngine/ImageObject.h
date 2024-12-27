@@ -6,6 +6,8 @@
 #include <string>
 #include "InfoStruct.h"
 #include "SpriteRenderer.h"
+#include "GameEngine.h"
+#include "SquareMeshVbo.h"
 
 /// @brief The class for creating object that render using texture
 class ImageObject :public DrawableObject

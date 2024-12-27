@@ -9,6 +9,8 @@
 #include "SpriteRenderer.h"
 #include "Collider.h"
 #include "InfoStruct.h"
+#include "GameEngine.h"
+#include "SquareMeshVbo.h"
 
 /// @brief The class for creating object that render using texture
 class EntityObject : public ImageObject

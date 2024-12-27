@@ -10,6 +10,10 @@
 #include "glm.hpp"
 #include "DrawableObject.h"
 #include "InfoStruct.h"
+#include "gtc/matrix_transform.hpp"
+#include "gtc/type_ptr.hpp"
+#include "SDL_surface.h"
+#include "SDL_image.h"
 
 /// @brief This class is for rendering any drawable object
 /// @see DrawableObject
