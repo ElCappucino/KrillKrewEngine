@@ -135,6 +135,10 @@ void PlayerObject::SetAbility(int abilityNumber, int abilityID)
 {
 	abilities[abilityNumber] = abilityID;
 }
+void PlayerObject::SetPlayerUI(UiObject* ui)
+{
+	this->playerUI = ui;
+}
 void PlayerObject::ReduceAbilityCooldown(int skill)
 {
 	abilityCooldown[skill] -= 1;

@@ -38,7 +38,7 @@
 #include "Timer.h"
 #include "InfoStruct.h"
 #include "PlayerObjectFactory.h"
-
+#include "UiObjectFactory.h"
 // Library
 #include <string>
 #include <vector>

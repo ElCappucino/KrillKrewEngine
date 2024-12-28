@@ -104,6 +104,10 @@ float Camera::GetCameraHeight()
 	return GameEngine::GetInstance()->GetRenderer()->GetOrthovalue().top -
 		   GameEngine::GetInstance()->GetRenderer()->GetOrthovalue().bottom;
 }
+float Camera::GetCenterX()
+{
+	return GameEngine::GetInstance()->GetRenderer()->GetOrthovalue().left + ((GameEngine::GetInstance()->GetRenderer()->GetOrthovalue().right - GameEngine::GetInstance()->GetRenderer()->GetOrthovalue().left) / 2);
+}
 void Camera::setPlayerPos(int playerNum, glm::vec3 pos) {
 	playerPos[playerNum] = pos;
 }

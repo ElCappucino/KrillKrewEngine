@@ -94,7 +94,7 @@ void PlayerObjectFactory::Reset()
 	dashSpeed = 5;
 	dashDuration = 0;
 }
-PlayerObject* PlayerObjectFactory::Create()
+PlayerObject* PlayerObjectFactory::CreateObject()
 {
 	PlayerObject* obj = new PlayerObject();
 	obj->GetCollider()->SetCollisionType(Collider::Kinematic);

@@ -29,6 +29,7 @@ public:
 	void LerpCamera(int size);
 	float GetCameraWidth();
 	float GetCameraHeight();
+	float GetCenterX();
 	void setPlayerPos(int playerNum, glm::vec3 pos);
 	glm::vec3 ScreenToCameraPosition(glm::vec3 screenPos);
 	glm::vec3 CameraToScreenPosition(glm::vec3 cameraPos);

@@ -1,7 +1,8 @@
 #pragma once
 #include "PlayerObject.h"
+#include "ObjectFactory.h"
 
-class PlayerObjectFactory
+class PlayerObjectFactory : public ObjectFactory
 {
 	PlayerObject::AnimationState currAnimState;
 	std::map< PlayerObject::AnimationState, SpritesheetInfo> animList;
@@ -45,5 +46,5 @@ public:
 	void SetSlowness(int val);
 	void SetDashSpeed(int val);
 	void Reset();
-	PlayerObject* Create();
+	virtual PlayerObject* CreateObject();
 };

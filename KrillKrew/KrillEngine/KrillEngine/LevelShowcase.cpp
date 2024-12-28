@@ -36,17 +36,22 @@ void LevelShowcase::LevelLoad()
 	GameEngine::GetInstance()->AddMesh(LineMeshVbo::MESH_NAME, line);
 
 	spriteList["Prinny"] = SpritesheetInfo("Prinny", "../Resource/Texture/Prinny.png", 538, 538, 538, 538);
-	spriteList["Bomb"] = SpritesheetInfo("Bomb", "../Resource/Texture/Bomb_icon.png", 256, 256, 256, 256);
+	
 	spriteList["Shark_run"] = SpritesheetInfo("Shark_run", "../Resource/Texture/shark_run_test.png", 256, 256, 1024, 256);
 	spriteList["Shark_idle"] = SpritesheetInfo("Shart_idle", "../Resource/Texture/shark_Idle_test.png", 256, 256, 256, 256);
+	
 	spriteList["Trap"] = SpritesheetInfo("Bomb", "../Resource/Texture/Trap.png", 512, 512, 512, 512);
+	spriteList["Bomb"] = SpritesheetInfo("Bomb", "../Resource/Texture/Bomb_icon.png", 256, 256, 256, 256);
+	
 	spriteList["Xoey_UI"] = SpritesheetInfo("Xoey_UI", "../Resource/Texture/xoey.png", 430, 220, 430, 220);
 	spriteList["Byssa_UI"] = SpritesheetInfo("Byssa_UI", "../Resource/Texture/byssa.png", 430, 220, 430, 220);
 	spriteList["Crunk_UI"] = SpritesheetInfo("Crunk_UI", "../Resource/Texture/crunk.png", 430, 220, 430, 220);
 	spriteList["Ham_UI"] = SpritesheetInfo("Ham_UI", "../Resource/Texture/Ham.png", 430, 220, 430, 220);
+
 	spriteList["Blobtile"] = SpritesheetInfo("Blobtile", "../Resource/Texture/tileset_01.png", 128, 128, 1664, 512);
 
 	abilities.emplace(std::string("HoldBomb"), HoldBomb);
+
 	//cout << "Load Level" << endl;
 }
 
@@ -314,7 +319,7 @@ void LevelShowcase::LevelInit()
 	playerFactory.SetAnimationSprite(PlayerObject::AnimationState::Running, spriteList.find("Shark_run")->second);
 	playerFactory.SetPosition(glm::vec3(800.f, -700.f, 0));
 	playerFactory.SetPlayerNumber(0);
-	PlayerObject* obj1 = playerFactory.Create();
+	PlayerObject* obj1 = playerFactory.CreateObject();
 	objectsList.push_back(obj1);
 	playerSize++;
 	players[0] = obj1;
@@ -324,7 +329,7 @@ void LevelShowcase::LevelInit()
 	playerFactory.SetAnimationSprite(PlayerObject::AnimationState::Running, spriteList.find("Shark_run")->second);
 	playerFactory.SetPosition(glm::vec3(-800.f, 700.f, 0));
 	playerFactory.SetPlayerNumber(1);
-	PlayerObject* obj2 = playerFactory.Create();
+	PlayerObject* obj2 = playerFactory.CreateObject();
 	objectsList.push_back(obj2);
 	playerSize++;
 	players[1] = obj2;
@@ -334,7 +339,7 @@ void LevelShowcase::LevelInit()
 	playerFactory.SetAnimationSprite(PlayerObject::AnimationState::Running, spriteList.find("Shark_run")->second);
 	playerFactory.SetPosition(glm::vec3(800.f, 700.f, 0));
 	playerFactory.SetPlayerNumber(2);
-	PlayerObject* obj3 = playerFactory.Create();
+	PlayerObject* obj3 = playerFactory.CreateObject();
 	objectsList.push_back(obj3);
 	playerSize++;
 	players[2] = obj3;
@@ -344,68 +349,10 @@ void LevelShowcase::LevelInit()
 	playerFactory.SetAnimationSprite(PlayerObject::AnimationState::Running, spriteList.find("Shark_run")->second);
 	playerFactory.SetPosition(glm::vec3(-800.f, -700.f, 0));
 	playerFactory.SetPlayerNumber(3);
-	PlayerObject* obj4 = playerFactory.Create();
+	PlayerObject* obj4 = playerFactory.CreateObject();
 	objectsList.push_back(obj4);
 	playerSize++;
 	players[3] = obj4;
-	// old one
-	/*PlayerObject* obj1 = new PlayerObject();
-	obj1->GetCollider()->SetCollisionType(Collider::Kinematic);
-	obj1->SetSpriteInfo(spriteList.find("Shark_idle")->second);
-	obj1->SetTexture(spriteList.find("Shark_idle")->second.texture);
-	obj1->SetIsAnimated(true);
-	obj1->GetSpriteRenderer()->SetFrame(10);
-	obj1->SetSize(256.f, -256.f);
-	obj1->SetPosition(glm::vec3(-800.f, -700.f, 0));
-	obj1->SetPlayerNumber(0);
-	obj1->SetAnimationSprite(PlayerObject::AnimationState::Idle, spriteList.find("Shark_idle")->second);
-	obj1->SetAnimationSprite(PlayerObject::AnimationState::Running, spriteList.find("Shark_run")->second);
-	objectsList.push_back(obj1);
-	playerSize++;
-	players[0] = obj1;*/
-
-	/*PlayerObject* obj2 = new PlayerObject();
-	obj2->GetCollider()->SetCollisionType(Collider::Static);
-	obj2->SetSpriteInfo(spriteList.find("Shark_idle")->second);
-	obj2->SetTexture(spriteList.find("Shark_idle")->second.texture);
-	obj2->SetIsAnimated(true);
-	obj2->GetSpriteRenderer()->SetFrame(15);
-	obj2->SetSize(256.f, -256.f);
-	obj2->SetPosition(glm::vec3(800.f, -700.f, 0));
-	obj2->SetPlayerNumber(1);
-	obj2->SetAnimationSprite(PlayerObject::AnimationState::Idle, spriteList.find("Shark_idle")->second);
-	obj2->SetAnimationSprite(PlayerObject::AnimationState::Running, spriteList.find("Shark_run")->second);
-	objectsList.push_back(obj2);
-	playerSize++;
-	players[1] = obj2;
-
-	PlayerObject* obj3 = new PlayerObject();
-	obj3->SetSpriteInfo(spriteList.find("Shark_idle")->second);
-	obj3->SetTexture(spriteList.find("Shark_idle")->second.texture);
-	obj3->SetIsAnimated(true);
-	obj3->GetSpriteRenderer()->SetFrame(15);
-	obj3->SetSize(256.f, -256.f);
-	obj3->SetPosition(glm::vec3(-800.f, 700.f, 0));
-	obj3->SetPlayerNumber(2);
-	obj3->SetAnimationSprite(PlayerObject::AnimationState::Idle, spriteList.find("Shark_idle")->second);
-	obj3->SetAnimationSprite(PlayerObject::AnimationState::Running, spriteList.find("Shark_run")->second);
-	objectsList.push_back(obj3);
-	playerSize++;
-	players[2] = obj3;
-
-	PlayerObject* obj4 = new PlayerObject();
-	obj4->SetSpriteInfo(spriteList.find("Shark_idle")->second);
-	obj4->SetTexture(spriteList.find("Shark_idle")->second.texture);
-	obj4->SetIsAnimated(true);
-	obj4->GetSpriteRenderer()->SetFrame(15);
-	obj4->SetSize(256.f, -256.f);
-	obj4->SetPosition(glm::vec3(800.f, 700.f, 0));
-	obj4->SetPlayerNumber(3);
-	obj4->SetAnimationSprite(PlayerObject::AnimationState::Idle, spriteList.find("Shark_idle")->second);
-	obj4->SetAnimationSprite(PlayerObject::AnimationState::Running, spriteList.find("Shark_run")->second);
-	objectsList.push_back(obj4);
-	playerSize++;
-	players[3] = obj4;*/
 
 	objectsList.push_back(players[0]->GetCollider()->GetGizmos());
 	objectsList.push_back(players[1]->GetCollider()->GetGizmos());
@@ -413,57 +360,46 @@ void LevelShowcase::LevelInit()
 	objectsList.push_back(players[3]->GetCollider()->GetGizmos());
 
 	//create Ui by PlayerObject
-	int sizePlayer = objectsList.size();
+	int playerSize = 4;
 	int count = 0;
-	for (int i = 0; i < sizePlayer; i++) {
 
-		PlayerObject* player = dynamic_cast<PlayerObject*>(objectsList[i]);
-		if (player != nullptr)
-		{
-			if (count == 0) {
-				UiObject* uiSkills = new UiObject();
-				uiSkills->SetSpriteInfo(spriteList.find("Xoey_UI")->second);
-				uiSkills->SetTexture(spriteList.find("Xoey_UI")->second.texture);
-				uiSkills->SetPosition(glm::vec3(0, 0, 0));
-				uiSkills->SetSize(215.f, -100.f);
-				uiSkills->setNumOwner(0);
-				objectsList.push_back(uiSkills);
-				count++;
-				// std::cout << "create Ui xoey" << std::endl;
-			}
-			else if (count == 1) {
-				UiObject* uiSkills1 = new UiObject();
-				uiSkills1->SetSpriteInfo(spriteList.find("Ham_UI")->second);
-				uiSkills1->SetTexture(spriteList.find("Ham_UI")->second.texture);
-				uiSkills1->SetPosition(glm::vec3(0, 0, 0));
-				uiSkills1->SetSize(215.f, -100.f);
-				uiSkills1->setNumOwner(1);
-				objectsList.push_back(uiSkills1);
-				count++;
-				// std::cout << "create Ui Ham" << std::endl;
-			}
-			else if (count == 2) {
-				UiObject* uiSkills2 = new UiObject();
-				uiSkills2->SetSpriteInfo(spriteList.find("Byssa_UI")->second);
-				uiSkills2->SetTexture(spriteList.find("Byssa_UI")->second.texture);
-				uiSkills2->SetPosition(glm::vec3(0, 0, 0));
-				uiSkills2->SetSize(215.f, -100.f);
-				uiSkills2->setNumOwner(2);
-				objectsList.push_back(uiSkills2);
-				count++;
-				// std::cout << "create Ui byssa" << std::endl;
-			}
-			else if (count == 3) {
-				UiObject* uiSkills3 = new UiObject();
-				uiSkills3->SetSpriteInfo(spriteList.find("Crunk_UI")->second);
-				uiSkills3->SetTexture(spriteList.find("Crunk_UI")->second.texture);
-				uiSkills3->SetPosition(glm::vec3(0, 0, 0));
-				uiSkills3->SetSize(215.f, -100.f);
-				uiSkills3->setNumOwner(3);
-				objectsList.push_back(uiSkills3);
-				count++;
-				// std::cout << "create Ui crunk" << std::endl;
-			}
+	UiObjectFactory uiFactory;
+
+	for (int i = 0; i < 4; i++) {
+
+		if (count == 0) {
+
+			uiFactory.SetSpriteInfo(spriteList.find("Xoey_UI")->second);
+			uiFactory.SetOwner(0);
+			UiObject* uiSkills = uiFactory.CreateObject();
+			objectsList.push_back(uiSkills);
+			count++;
+
+			// std::cout << "create Ui xoey" << std::endl;
+		}
+		else if (count == 1) {
+			uiFactory.SetSpriteInfo(spriteList.find("Ham_UI")->second);
+			uiFactory.SetOwner(1);
+			UiObject* uiSkills = uiFactory.CreateObject();
+			objectsList.push_back(uiSkills);
+			count++;
+			// std::cout << "create Ui Ham" << std::endl;
+		}
+		else if (count == 2) {
+			uiFactory.SetSpriteInfo(spriteList.find("Byssa_UI")->second);
+			uiFactory.SetOwner(2);
+			UiObject* uiSkills = uiFactory.CreateObject();
+			objectsList.push_back(uiSkills);
+			count++;
+			// std::cout << "create Ui byssa" << std::endl;
+		}
+		else if (count == 3) {
+			uiFactory.SetSpriteInfo(spriteList.find("Crunk_UI")->second);
+			uiFactory.SetOwner(3);
+			UiObject* uiSkills = uiFactory.CreateObject();
+			objectsList.push_back(uiSkills);
+			count++;
+			// std::cout << "create Ui crunk" << std::endl;
 		}
 	}
 
@@ -809,15 +745,22 @@ void LevelShowcase::UpdateMovement()
 
 void LevelShowcase::UpdateUI()
 {
+	int playerNumber = 4; // Change later
+	float uiWidth = 215.f;
+	float uiHeight = 100.f;
+	
+	float posX = camera.GetCenterX() - (uiWidth * camera.GetCameraWidth() / SCREEN_WIDTH / 2.f) * (playerNumber - 1);
+	float posY = GameEngine::GetInstance()->GetRenderer()->GetOrthovalue().bottom + ((uiHeight * camera.GetCameraHeight() / SCREEN_HEIGHT) / 2.f);
+	
 	for (int i = 0; i < objectsList.size(); i++)
 	{
 		UiObject* ui = dynamic_cast<UiObject*>(objectsList[i]);
 		if (ui != nullptr) 
 		{
-			ui->SetPosition(glm::vec3(
-				GameEngine::GetInstance()->GetRenderer()->GetOrthovalue().left + (((300 * (ui->getNumOwner() + 1)) - (85 * ui->getNumOwner())) * camera.GetCameraWidth() / 1246),
-				GameEngine::GetInstance()->GetRenderer()->GetOrthovalue().bottom + (50 * camera.GetCameraHeight() / 720), 0));
-			ui->SetSize(215.f * camera.GetCameraWidth() / 1246, -100.f * camera.GetCameraHeight() / 720);
+			ui->SetPosition(glm::vec3(posX, posY, 0));
+			ui->SetSize(uiWidth * camera.GetCameraWidth() / SCREEN_WIDTH, -uiHeight * camera.GetCameraHeight() / SCREEN_HEIGHT);
+			
+			posX += uiWidth * camera.GetCameraWidth() / SCREEN_WIDTH;
 		}
 	}
 }

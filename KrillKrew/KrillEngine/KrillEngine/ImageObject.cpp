@@ -22,6 +22,7 @@ void ImageObject::SetTexture(std::string path)
 void ImageObject::SetSpriteInfo(SpritesheetInfo info)
 {
 	spriteRenderer->SetSpriteInfo(info.spritewidth, info.spriteheight, info.sheetwidth, info.sheetheight);
+	// SetTexture(info.texture);
 }
 
 SpriteRenderer* ImageObject::GetSpriteRenderer()

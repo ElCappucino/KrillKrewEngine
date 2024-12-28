@@ -12,6 +12,7 @@
 #include "Collider.h"
 #include "GameEngine.h"
 #include "SquareMeshVbo.h"
+#include "UiObject.h"
 
 /// @brief The class for creating object that render using texture
 class PlayerObject :public EntityObject
@@ -51,6 +52,9 @@ private:
 	float dashSpeed = 5;
 	float dashDuration; // add value if dashing and decrease over time
 
+	// UI
+	UiObject* playerUI;
+
 public:
 	
 	PlayerObject();
@@ -70,6 +74,7 @@ public:
 	void SetIsDashing(bool isDashing);
 	void SetDashDuration(int duration);
 	void SetAbility(int numberAbility, int idAbility);
+	void SetPlayerUI(UiObject* ui);
 
 	void ReduceAbilityCooldown(int skill);
 	void ReduceSlowDuration();

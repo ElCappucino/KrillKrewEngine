@@ -11,7 +11,7 @@
 #include "SquareMeshVbo.h"
 
 /// @brief The class for creating object that render using texture
-class UiObject :public ImageObject
+class UiObject : public ImageObject
 {
 	unsigned int texture;
 	SpritesheetInfo sheetInfo;
