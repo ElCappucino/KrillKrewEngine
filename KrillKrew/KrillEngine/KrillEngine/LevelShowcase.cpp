@@ -307,7 +307,49 @@ void LevelShowcase::LevelInit()
 	// Create and Initialize 4 players object
 
 	// Example Code
-	PlayerObject* obj1 = new PlayerObject();
+	PlayerObjectFactory playerFactory;
+
+	playerFactory.Reset();
+	playerFactory.SetAnimationSprite(PlayerObject::AnimationState::Idle, spriteList.find("Shark_idle")->second);
+	playerFactory.SetAnimationSprite(PlayerObject::AnimationState::Running, spriteList.find("Shark_run")->second);
+	playerFactory.SetPosition(glm::vec3(800.f, -700.f, 0));
+	playerFactory.SetPlayerNumber(0);
+	PlayerObject* obj1 = playerFactory.Create();
+	objectsList.push_back(obj1);
+	playerSize++;
+	players[0] = obj1;
+
+	playerFactory.Reset();
+	playerFactory.SetAnimationSprite(PlayerObject::AnimationState::Idle, spriteList.find("Shark_idle")->second);
+	playerFactory.SetAnimationSprite(PlayerObject::AnimationState::Running, spriteList.find("Shark_run")->second);
+	playerFactory.SetPosition(glm::vec3(-800.f, 700.f, 0));
+	playerFactory.SetPlayerNumber(1);
+	PlayerObject* obj2 = playerFactory.Create();
+	objectsList.push_back(obj2);
+	playerSize++;
+	players[1] = obj2;
+
+	playerFactory.Reset();
+	playerFactory.SetAnimationSprite(PlayerObject::AnimationState::Idle, spriteList.find("Shark_idle")->second);
+	playerFactory.SetAnimationSprite(PlayerObject::AnimationState::Running, spriteList.find("Shark_run")->second);
+	playerFactory.SetPosition(glm::vec3(800.f, 700.f, 0));
+	playerFactory.SetPlayerNumber(2);
+	PlayerObject* obj3 = playerFactory.Create();
+	objectsList.push_back(obj3);
+	playerSize++;
+	players[2] = obj3;
+
+	playerFactory.Reset();
+	playerFactory.SetAnimationSprite(PlayerObject::AnimationState::Idle, spriteList.find("Shark_idle")->second);
+	playerFactory.SetAnimationSprite(PlayerObject::AnimationState::Running, spriteList.find("Shark_run")->second);
+	playerFactory.SetPosition(glm::vec3(-800.f, -700.f, 0));
+	playerFactory.SetPlayerNumber(3);
+	PlayerObject* obj4 = playerFactory.Create();
+	objectsList.push_back(obj4);
+	playerSize++;
+	players[3] = obj4;
+	// old one
+	/*PlayerObject* obj1 = new PlayerObject();
 	obj1->GetCollider()->SetCollisionType(Collider::Kinematic);
 	obj1->SetSpriteInfo(spriteList.find("Shark_idle")->second);
 	obj1->SetTexture(spriteList.find("Shark_idle")->second.texture);
@@ -320,9 +362,9 @@ void LevelShowcase::LevelInit()
 	obj1->SetAnimationSprite(PlayerObject::AnimationState::Running, spriteList.find("Shark_run")->second);
 	objectsList.push_back(obj1);
 	playerSize++;
-	players[0] = obj1;
+	players[0] = obj1;*/
 
-	PlayerObject* obj2 = new PlayerObject();
+	/*PlayerObject* obj2 = new PlayerObject();
 	obj2->GetCollider()->SetCollisionType(Collider::Static);
 	obj2->SetSpriteInfo(spriteList.find("Shark_idle")->second);
 	obj2->SetTexture(spriteList.find("Shark_idle")->second.texture);
@@ -363,7 +405,7 @@ void LevelShowcase::LevelInit()
 	obj4->SetAnimationSprite(PlayerObject::AnimationState::Running, spriteList.find("Shark_run")->second);
 	objectsList.push_back(obj4);
 	playerSize++;
-	players[3] = obj4;
+	players[3] = obj4;*/
 
 	objectsList.push_back(players[0]->GetCollider()->GetGizmos());
 	objectsList.push_back(players[1]->GetCollider()->GetGizmos());
@@ -459,8 +501,7 @@ void LevelShowcase::LevelUpdate()
 		}
 		else
 		{
-			if (entity->GetIsAnimated() &&
-				dt % entity->GetSpriteRenderer()->GetFrame() == 0)
+			if (entity->GetIsAnimated() && dt % entity->GetSpriteRenderer()->GetFrame() == 0)
 			{
 				entity->GetSpriteRenderer()->ShiftColumn();
 				entity->UpdateCurrentAnimation();

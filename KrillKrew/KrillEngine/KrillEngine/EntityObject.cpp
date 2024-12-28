@@ -110,5 +110,4 @@ void EntityObject::ChangeAnimationState(AnimationState anim)
 void EntityObject::UpdateCurrentAnimation()
 {
 	std::cout << "Update Animation Entity" << std::endl;
-	// ChangeAnimationState(AnimationState::Idle);
 }

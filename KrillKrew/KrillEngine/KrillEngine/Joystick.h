@@ -8,6 +8,7 @@
 
 #include "SDL_events.h"
 #include "SDL_gamecontroller.h"
+#include "Log.h"
 
 class Joystick
 {

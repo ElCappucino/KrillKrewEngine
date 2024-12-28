@@ -163,8 +163,10 @@
     <ClInclude Include="LineMeshVbo.h" />
     <ClInclude Include="Log.h" />
     <ClInclude Include="MeshVbo.h" />
+    <ClInclude Include="ObjectFactory.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="PlayerObject.h" />
+    <ClInclude Include="PlayerObjectFactory.h" />
     <ClInclude Include="ProjectileObject.h" />
     <ClInclude Include="Shader.h" />
     <ClInclude Include="SpriteRenderer.h" />
@@ -173,7 +175,7 @@
     <ClInclude Include="TrapObject.h" />
     <ClInclude Include="TriangleMeshVbo.h" />
     <ClInclude Include="UiObject.h" />
-    <ClInclude Include="Utilities.h" />
+    <ClInclude Include="LevelUtilities.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Camera.cpp" />
@@ -199,6 +201,7 @@
     <ClCompile Include="MeshVbo.cpp" />
     <ClCompile Include="pch.cpp" />
     <ClCompile Include="PlayerObject.cpp" />
+    <ClCompile Include="PlayerObjectFactory.cpp" />
     <ClCompile Include="ProjectileObject.cpp" />
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="SpriteRenderer.cpp" />

@@ -144,7 +144,6 @@ void PlayerObject::ReduceSlowDuration()
 {
 	slowDuration -= 1;
 	KK_TRACE("Reduce slow duration: Player Number {0} Duration: {1}", GetPlayerNumber(), slowDuration);
-	// std::cout << "durationSlowness player" << GetPlayerNumber() << " " << slowDuration << std::endl;
 }
 void PlayerObject::ReduceDashDuration() 
 {

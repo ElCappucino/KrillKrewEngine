@@ -1,6 +1,6 @@
 #pragma once
 #include "Level.h"
-#include "Utilities.h"
+#include "LevelUtilities.h"
 
 #define MAP_WIDTH  21
 #define MAP_HEIGHT 15

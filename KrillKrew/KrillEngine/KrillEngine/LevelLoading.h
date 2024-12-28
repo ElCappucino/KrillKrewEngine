@@ -1,6 +1,6 @@
 #pragma once
 #include "Level.h"
-#include "Utilities.h"
+#include "LevelUtilities.h"
 
 /// @brief The class for setup object in the level
 /// @brief It intent to inherit this class for creating any new unique scene.

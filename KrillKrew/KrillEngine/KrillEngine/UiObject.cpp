@@ -15,15 +15,6 @@ void UiObject::SetTexture(std::string path)
 	texture = GameEngine::GetInstance()->GetRenderer()->LoadTexture(path);
 }
 
-//void UiObject::SetSheetInfo(float row, float column, float spritewidth, float spriteheight, float sheetwidth, float sheetheight) {
-//	sheetInfo.row = row;
-//	sheetInfo.column = column;
-//	sheetInfo.spritewidth = spritewidth;
-//	sheetInfo.spriteheight = spriteheight;
-//	sheetInfo.sheetwidth = sheetwidth;
-//	sheetInfo.sheetheight = sheetheight;
-//}
-
 void UiObject::Render(glm::mat4 globalModelTransform)
 {
 	SquareMeshVbo* squareMesh = dynamic_cast<SquareMeshVbo*> (GameEngine::GetInstance()->GetRenderer()->GetMesh(SquareMeshVbo::MESH_NAME));
