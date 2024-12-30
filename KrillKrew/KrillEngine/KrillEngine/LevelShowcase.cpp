@@ -377,7 +377,6 @@ void LevelShowcase::LevelInit()
 
 			UiObject* uiSkills = new UiObject();
 			uiSkills->SetSpriteInfo(spriteList.find("Xoey_UI")->second);
-			uiSkills->SetTexture(spriteList.find("Xoey_UI")->second.texture);
 			uiSkills->setNumOwner(0);
 			objectsList.push_back(uiSkills);
 			count++;
@@ -388,7 +387,6 @@ void LevelShowcase::LevelInit()
 
 			UiObject* uiSkills = new UiObject();
 			uiSkills->SetSpriteInfo(spriteList.find("Ham_UI")->second);
-			uiSkills->SetTexture(spriteList.find("Ham_UI")->second.texture);
 			uiSkills->setNumOwner(1);
 			objectsList.push_back(uiSkills);
 			count++;
@@ -398,7 +396,6 @@ void LevelShowcase::LevelInit()
 
 			UiObject* uiSkills = new UiObject();
 			uiSkills->SetSpriteInfo(spriteList.find("Byssa_UI")->second);
-			uiSkills->SetTexture(spriteList.find("Byssa_UI")->second.texture);
 			uiSkills->setNumOwner(2);
 			objectsList.push_back(uiSkills);
 			count++;
@@ -408,7 +405,6 @@ void LevelShowcase::LevelInit()
 
 			UiObject* uiSkills = new UiObject();
 			uiSkills->SetSpriteInfo(spriteList.find("Crunk_UI")->second);
-			uiSkills->SetTexture(spriteList.find("Crunk_UI")->second.texture);
 			uiSkills->setNumOwner(3);
 			objectsList.push_back(uiSkills);
 			count++;
