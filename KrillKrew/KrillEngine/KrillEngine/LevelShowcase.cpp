@@ -314,12 +314,17 @@ void LevelShowcase::LevelInit()
 	// Example Code
 
 	PlayerObject* p1 = new PlayerObject();
+	// Assign all animation property
 	p1->SetAnimationSprite(PlayerObject::AnimationState::Idle, spriteList.find("Shark_idle")->second);
 	p1->SetAnimationSprite(PlayerObject::AnimationState::Running, spriteList.find("Shark_run")->second);
-	p1->SetSpriteInfo(spriteList.find("Shark_idle")->second);
-	p1->SetPosition(glm::vec3(-800.f, -700.f, 0));
 	p1->GetSpriteRenderer()->SetFrame(10);
+	// Set Sprite
+	p1->SetSpriteInfo(spriteList.find("Shark_idle")->second);
+	// Set Start Position
+	p1->SetPosition(glm::vec3(-800.f, -700.f, 0));
+	// Set Player Number
 	p1->SetPlayerNumber(0);
+	// Store inside player array
 	objectsList.push_back(p1);
 	playerSize++;
 	players[0] = p1;
@@ -366,13 +371,12 @@ void LevelShowcase::LevelInit()
 	int playerSize = 4;
 	int count = 0;
 
-	UiObjectFactory uiFactory;
-
 	for (int i = 0; i < 4; i++) {
 
 		if (count == 0) {
 
 			UiObject* uiSkills = new UiObject();
+			uiSkills->SetSpriteInfo(spriteList.find("Xoey_UI")->second);
 			uiSkills->SetTexture(spriteList.find("Xoey_UI")->second.texture);
 			uiSkills->setNumOwner(0);
 			objectsList.push_back(uiSkills);
@@ -383,8 +387,9 @@ void LevelShowcase::LevelInit()
 		else if (count == 1) {
 
 			UiObject* uiSkills = new UiObject();
+			uiSkills->SetSpriteInfo(spriteList.find("Ham_UI")->second);
 			uiSkills->SetTexture(spriteList.find("Ham_UI")->second.texture);
-			uiSkills->setNumOwner(0);
+			uiSkills->setNumOwner(1);
 			objectsList.push_back(uiSkills);
 			count++;
 			// std::cout << "create Ui Ham" << std::endl;
@@ -392,8 +397,9 @@ void LevelShowcase::LevelInit()
 		else if (count == 2) {
 
 			UiObject* uiSkills = new UiObject();
+			uiSkills->SetSpriteInfo(spriteList.find("Byssa_UI")->second);
 			uiSkills->SetTexture(spriteList.find("Byssa_UI")->second.texture);
-			uiSkills->setNumOwner(0);
+			uiSkills->setNumOwner(2);
 			objectsList.push_back(uiSkills);
 			count++;
 			// std::cout << "create Ui byssa" << std::endl;
@@ -401,8 +407,9 @@ void LevelShowcase::LevelInit()
 		else if (count == 3) {
 
 			UiObject* uiSkills = new UiObject();
+			uiSkills->SetSpriteInfo(spriteList.find("Crunk_UI")->second);
 			uiSkills->SetTexture(spriteList.find("Crunk_UI")->second.texture);
-			uiSkills->setNumOwner(0);
+			uiSkills->setNumOwner(3);
 			objectsList.push_back(uiSkills);
 			count++;
 			// std::cout << "create Ui crunk" << std::endl;
@@ -602,6 +609,7 @@ void LevelShowcase::UpdateInput()
 			// Debug other player
 			if (Joystick::GetButtonDown(i, Joystick::Button::R1))
 			{
+				players[playerNum]->ChangeAnimationState(PlayerObject::AnimationState::Idle);
 				playerNum += 1;
 				if (playerNum >= 4) {
 					playerNum = 0;
