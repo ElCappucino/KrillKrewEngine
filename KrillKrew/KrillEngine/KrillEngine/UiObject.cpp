@@ -2,7 +2,12 @@
 
 UiObject::UiObject()
 {
+	SpritesheetInfo placeholder("Xoey_UI", "../Resource/Texture/xoey.png", 430, 220, 430, 220);
+	this->sheetInfo = placeholder;
+	this->isAnimated = false;
 	this->pos = glm::vec3(0, 0, 0);
+	this->size = glm::vec3(215.f, -100.f, 0);
+	this->playerNumOwner = 0;
 }
 
 

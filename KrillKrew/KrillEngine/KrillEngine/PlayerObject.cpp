@@ -5,16 +5,28 @@
 
 PlayerObject::PlayerObject()
 {
-	this->isShooting = false;
-	this->isAiming = false;
-	this->isFacingLeft = true;
+	this->isAnimated = true;
+
 	this->playerNumber = 0;
+
 	this->slowness = 2;
 	this->slowDuration = 0;
+	this->dashSpeed = 5;
+	this->dashDuration = 0;
+
 	this->isSlow = false;
+	this->isShooting = false;
+	this->isAiming = false;
+	this->isFacingLeft = false;
+	this->isDashing = false;
+
 	this->pos = glm::vec3(0, 0, 0);
+	this->velocity = glm::vec3(0, 0, 0);
+	this->size = glm::vec3(256.f, -256.f, 0);
 
 	currAnimState = AnimationState::Idle;
+
+	this->GetCollider()->SetCollisionType(Collider::Kinematic);
 }
 
 PlayerObject::~PlayerObject()

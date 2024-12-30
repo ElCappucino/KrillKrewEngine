@@ -312,47 +312,50 @@ void LevelShowcase::LevelInit()
 	// Create and Initialize 4 players object
 
 	// Example Code
-	PlayerObjectFactory playerFactory;
 
-	playerFactory.Reset();
-	playerFactory.SetAnimationSprite(PlayerObject::AnimationState::Idle, spriteList.find("Shark_idle")->second);
-	playerFactory.SetAnimationSprite(PlayerObject::AnimationState::Running, spriteList.find("Shark_run")->second);
-	playerFactory.SetPosition(glm::vec3(800.f, -700.f, 0));
-	playerFactory.SetPlayerNumber(0);
-	PlayerObject* obj1 = playerFactory.CreateObject();
-	objectsList.push_back(obj1);
+	PlayerObject* p1 = new PlayerObject();
+	p1->SetAnimationSprite(PlayerObject::AnimationState::Idle, spriteList.find("Shark_idle")->second);
+	p1->SetAnimationSprite(PlayerObject::AnimationState::Running, spriteList.find("Shark_run")->second);
+	p1->SetSpriteInfo(spriteList.find("Shark_idle")->second);
+	p1->SetPosition(glm::vec3(-800.f, -700.f, 0));
+	p1->GetSpriteRenderer()->SetFrame(10);
+	p1->SetPlayerNumber(0);
+	objectsList.push_back(p1);
 	playerSize++;
-	players[0] = obj1;
+	players[0] = p1;
 
-	playerFactory.Reset();
-	playerFactory.SetAnimationSprite(PlayerObject::AnimationState::Idle, spriteList.find("Shark_idle")->second);
-	playerFactory.SetAnimationSprite(PlayerObject::AnimationState::Running, spriteList.find("Shark_run")->second);
-	playerFactory.SetPosition(glm::vec3(-800.f, 700.f, 0));
-	playerFactory.SetPlayerNumber(1);
-	PlayerObject* obj2 = playerFactory.CreateObject();
-	objectsList.push_back(obj2);
+	PlayerObject* p2 = new PlayerObject();
+	p2->SetAnimationSprite(PlayerObject::AnimationState::Idle, spriteList.find("Shark_idle")->second);
+	p2->SetAnimationSprite(PlayerObject::AnimationState::Running, spriteList.find("Shark_run")->second);
+	p2->SetSpriteInfo(spriteList.find("Shark_idle")->second);
+	p2->SetPosition(glm::vec3(800.f, -700.f, 0));
+	p2->GetSpriteRenderer()->SetFrame(10);
+	p2->SetPlayerNumber(1);
+	objectsList.push_back(p2);
 	playerSize++;
-	players[1] = obj2;
+	players[1] = p2;
 
-	playerFactory.Reset();
-	playerFactory.SetAnimationSprite(PlayerObject::AnimationState::Idle, spriteList.find("Shark_idle")->second);
-	playerFactory.SetAnimationSprite(PlayerObject::AnimationState::Running, spriteList.find("Shark_run")->second);
-	playerFactory.SetPosition(glm::vec3(800.f, 700.f, 0));
-	playerFactory.SetPlayerNumber(2);
-	PlayerObject* obj3 = playerFactory.CreateObject();
-	objectsList.push_back(obj3);
+	PlayerObject* p3 = new PlayerObject();
+	p3->SetAnimationSprite(PlayerObject::AnimationState::Idle, spriteList.find("Shark_idle")->second);
+	p3->SetAnimationSprite(PlayerObject::AnimationState::Running, spriteList.find("Shark_run")->second);
+	p3->SetSpriteInfo(spriteList.find("Shark_idle")->second);
+	p3->SetPosition(glm::vec3(800.f, 700.f, 0));
+	p3->GetSpriteRenderer()->SetFrame(10);
+	p3->SetPlayerNumber(2);
+	objectsList.push_back(p3);
 	playerSize++;
-	players[2] = obj3;
+	players[2] = p3;
 
-	playerFactory.Reset();
-	playerFactory.SetAnimationSprite(PlayerObject::AnimationState::Idle, spriteList.find("Shark_idle")->second);
-	playerFactory.SetAnimationSprite(PlayerObject::AnimationState::Running, spriteList.find("Shark_run")->second);
-	playerFactory.SetPosition(glm::vec3(-800.f, -700.f, 0));
-	playerFactory.SetPlayerNumber(3);
-	PlayerObject* obj4 = playerFactory.CreateObject();
-	objectsList.push_back(obj4);
+	PlayerObject* p4 = new PlayerObject();
+	p4->SetAnimationSprite(PlayerObject::AnimationState::Idle, spriteList.find("Shark_idle")->second);
+	p4->SetAnimationSprite(PlayerObject::AnimationState::Running, spriteList.find("Shark_run")->second);
+	p4->SetSpriteInfo(spriteList.find("Shark_idle")->second);
+	p4->SetPosition(glm::vec3(-800.f, 700.f, 0));
+	p4->GetSpriteRenderer()->SetFrame(10);
+	p4->SetPlayerNumber(3);
+	objectsList.push_back(p4);
 	playerSize++;
-	players[3] = obj4;
+	players[3] = p4;
 
 	objectsList.push_back(players[0]->GetCollider()->GetGizmos());
 	objectsList.push_back(players[1]->GetCollider()->GetGizmos());
@@ -369,34 +372,37 @@ void LevelShowcase::LevelInit()
 
 		if (count == 0) {
 
-			uiFactory.SetSpriteInfo(spriteList.find("Xoey_UI")->second);
-			uiFactory.SetOwner(0);
-			UiObject* uiSkills = uiFactory.CreateObject();
+			UiObject* uiSkills = new UiObject();
+			uiSkills->SetTexture(spriteList.find("Xoey_UI")->second.texture);
+			uiSkills->setNumOwner(0);
 			objectsList.push_back(uiSkills);
 			count++;
 
 			// std::cout << "create Ui xoey" << std::endl;
 		}
 		else if (count == 1) {
-			uiFactory.SetSpriteInfo(spriteList.find("Ham_UI")->second);
-			uiFactory.SetOwner(1);
-			UiObject* uiSkills = uiFactory.CreateObject();
+
+			UiObject* uiSkills = new UiObject();
+			uiSkills->SetTexture(spriteList.find("Ham_UI")->second.texture);
+			uiSkills->setNumOwner(0);
 			objectsList.push_back(uiSkills);
 			count++;
 			// std::cout << "create Ui Ham" << std::endl;
 		}
 		else if (count == 2) {
-			uiFactory.SetSpriteInfo(spriteList.find("Byssa_UI")->second);
-			uiFactory.SetOwner(2);
-			UiObject* uiSkills = uiFactory.CreateObject();
+
+			UiObject* uiSkills = new UiObject();
+			uiSkills->SetTexture(spriteList.find("Byssa_UI")->second.texture);
+			uiSkills->setNumOwner(0);
 			objectsList.push_back(uiSkills);
 			count++;
 			// std::cout << "create Ui byssa" << std::endl;
 		}
 		else if (count == 3) {
-			uiFactory.SetSpriteInfo(spriteList.find("Crunk_UI")->second);
-			uiFactory.SetOwner(3);
-			UiObject* uiSkills = uiFactory.CreateObject();
+
+			UiObject* uiSkills = new UiObject();
+			uiSkills->SetTexture(spriteList.find("Crunk_UI")->second.texture);
+			uiSkills->setNumOwner(0);
 			objectsList.push_back(uiSkills);
 			count++;
 			// std::cout << "create Ui crunk" << std::endl;
@@ -517,7 +523,7 @@ void LevelShowcase::UpdateInput()
 			}
 
 			// update facing
-			if (abs(axisX) > 0.2f) { players[i + playerNum]->UpdateFacingSide(!isPositiveX); }
+			if (abs(axisX) > 0.2f) { players[i + playerNum]->UpdateFacingSide(isPositiveX); }
 
 			if (players[i + playerNum]->GetIsAiming() == false)
 			{
