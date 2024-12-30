@@ -15,7 +15,7 @@ private:
 	typedef std::function<void(int, PlayerObject*, std::vector<DrawableObject*>&, SpritesheetInfo)> ability;
 	std::map<std::string, ability> abilities;
 
-	PlayerObject* players[4]; // add up to 4 players
+	std::array<PlayerObject*, 4> players; // add up to 4 players
 
 	int groundTile[MAP_HEIGHT][MAP_WIDTH] = { 0 };
 	int propsTile[MAP_HEIGHT][MAP_WIDTH] = { 0 };
