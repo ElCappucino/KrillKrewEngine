@@ -524,7 +524,7 @@ void LevelShowcase::UpdateInput()
 			{
 				isPositiveY = true;
 			}
-
+			// KK_TRACE("Controller player : {0} = {1}, {2}", i, norAxisX, norAxisY);
 			// update facing
 			if (abs(axisX) > 0.2f) { players[i + playerNum]->UpdateFacingSide(isPositiveX); }
 
@@ -606,6 +606,7 @@ void LevelShowcase::UpdateInput()
 			if (Joystick::GetButtonDown(i, Joystick::Button::R1))
 			{
 				players[playerNum]->ChangeAnimationState(PlayerObject::AnimationState::Idle);
+				players[playerNum]->SetVelocity(0, 0, false, false);
 				playerNum += 1;
 				if (playerNum >= 4) {
 					playerNum = 0;
@@ -741,6 +742,7 @@ void LevelShowcase::UpdateMovement()
 {
 	for (int i = 0; i < SDL_NumJoysticks() + playerNum; i++)
 	{
+		
 		if (players[i]->GetIsSlow() == true)
 		{
 			players[i]->ReduceSlowDuration();
