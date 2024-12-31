@@ -226,7 +226,8 @@ void LevelShowcase::LevelInit()
 			{
 				if (groundTile[i - 1][j] == 0)
 				{
-					pos = { 2, 12 };
+					// blank
+					pos = { 99, 99 };
 				}
 				else
 				{
@@ -260,7 +261,7 @@ void LevelShowcase::LevelInit()
 					}
 					else 
 					{
-						pos = { 2, 12 };
+						pos = { 99, 99 };
 						// std::cout << "blob_lookup_table.end()" << std::endl;
 					}
 				}
@@ -292,18 +293,24 @@ void LevelShowcase::LevelInit()
 					// std::cout << "pair = " << it->second.first << " " << it->second.second << std::endl;
 				}
 				else {
+					pos = { 99, 99 };
 					// std::cout << "blob_lookup_table.end()" << std::endl;
 				}
 			}
 
 			// std::cout << flag << ",";
-			ImageObject* obj = new ImageObject();
-			obj->SetSpriteInfo(spriteList.find("Blobtile")->second);
-			obj->GetSpriteRenderer()->ShiftTo(pos.first - 1, pos.second - 1);
-			obj->SetTexture(spriteList.find("Blobtile")->second.texture);
-			obj->SetSize(128.f, -128.f);
-			obj->SetPosition(glm::vec3(map_left + (j * 128.f), map_top - (i * 128.f), 0));
-			objectsList.push_back(obj);
+
+			if (pos.first != 99)
+			{
+				ImageObject* obj = new ImageObject();
+				obj->SetSpriteInfo(spriteList.find("Blobtile")->second);
+				obj->GetSpriteRenderer()->ShiftTo(pos.first - 1, pos.second - 1);
+				obj->SetTexture(spriteList.find("Blobtile")->second.texture);
+				obj->SetSize(128.f, -128.f);
+				obj->SetPosition(glm::vec3(map_left + (j * 126.f), map_top - (i * 126.f), 0));
+				objectsList.push_back(obj);
+			}
+			
 
 			// std::cout << "posX = " << obj->getPos().x << " posY = " << obj->getPos().y << std::endl;
 		}
