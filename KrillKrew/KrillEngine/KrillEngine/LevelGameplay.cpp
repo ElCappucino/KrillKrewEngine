@@ -54,6 +54,9 @@ void LevelGameplay::LevelInit()
 	obj1->setNumber(0);
 	obj1->SetAnimationSprite(PlayerObject::AnimationState::Idle, spriteList.find("Shark_idle")->second);
 	obj1->SetAnimationSprite(PlayerObject::AnimationState::Running, spriteList.find("Shark_run")->second);
+	obj1->setAbility(0, 1);
+	obj1->setAbility(1, 2);
+	obj1->setAbility(2, 3);
 	objectsList.push_back(obj1);
 	playerSize++;
 	players[0] = obj1;
@@ -69,6 +72,9 @@ void LevelGameplay::LevelInit()
 	obj2->setNumber(1);
 	obj2->SetAnimationSprite(PlayerObject::AnimationState::Idle, spriteList.find("Shark_idle")->second);
 	obj2->SetAnimationSprite(PlayerObject::AnimationState::Running, spriteList.find("Shark_run")->second);
+	obj2->setAbility(0, 2);
+	obj2->setAbility(1, 2);
+	obj2->setAbility(2, 2);
 	objectsList.push_back(obj2);
 	playerSize++;
 	players[1] = obj2;
@@ -81,6 +87,9 @@ void LevelGameplay::LevelInit()
 	obj3->setNumber(2);
 	obj3->SetAnimationSprite(PlayerObject::AnimationState::Idle, spriteList.find("Shark_idle")->second);
 	obj3->SetAnimationSprite(PlayerObject::AnimationState::Running, spriteList.find("Shark_run")->second);
+	obj3->setAbility(0, 3);
+	obj3->setAbility(1, 1);
+	obj3->setAbility(2, 2);
 	objectsList.push_back(obj3);
 	playerSize++;
 	players[2] = obj3;
@@ -274,7 +283,7 @@ void LevelGameplay::UpdateInput()
 			}
 
 
-			if (players[i + playerNum]->getIsAiming() == false) 
+			if (players[i + playerNum]->getIsAiming() == false && !players[i + playerNum]->getIsDash())
 			{
 				players[i + playerNum]->setVelocity(abs(norAxisX), abs(norAxisY), isPositiveX, isPositiveY);
 			}
@@ -303,6 +312,7 @@ void LevelGameplay::UpdateInput()
 					objectsList.push_back(projectile);
 					//objectsList.push_back(projectile->GetCollider()->GetGizmos());
 				}
+				usingAbility(i, 1);
 			}
 			//Shoot
 			if (Joystick::GetButtonUp(i, Joystick::Button::Square))
@@ -318,6 +328,7 @@ void LevelGameplay::UpdateInput()
 						}
 					}
 				}
+				usingAbility(i, 1);
 			}
 
 			if (players[i + playerNum]->getIsAiming())
@@ -352,6 +363,7 @@ void LevelGameplay::UpdateInput()
 					players[i + playerNum]->setIsDash(true);
 					players[i + playerNum]->setDurationDash(2);
 				}
+				usingAbility(i, 3);
 
 			}
 			if (Joystick::GetButtonDown(i, Joystick::Button::L1))
@@ -423,6 +435,7 @@ void LevelGameplay::UpdateInput()
 					////std::cout << "Owner " << Trap->getNumOwner() << std::endl;
 					//objectsList.push_back(Trap);
 					trap(i + playerNum);
+					usingAbility(i, 2);
 				}
 			}
 
@@ -785,22 +798,30 @@ void LevelGameplay::Movement(float axisX, float axisY, bool isPositiveX, bool is
 	
 }
 
+
 void LevelGameplay::usingAbility(int numPlayer, int numberAbility) {
 
 	if (players[numPlayer + playerNum]->getCooldown(numberAbility) <= 0) {
 		switch (numberAbility) {
 
 		case 1 :
-
-			aimFireball(numPlayer);
+			if (!players[numPlayer + playerNum]->getIsAiming()) {
+				aimFireball(numPlayer + playerNum);
+				break;
+			}
+			else if(players[numPlayer + playerNum]->getIsAiming())
+			{
+				shootFireball(numPlayer + playerNum);
+				break;
+			}
 			break;
-		case 2 :
 
-			trap(numPlayer);
+		case 2 :
+			trap(numPlayer + playerNum);
 			break;
 
 		case 3 :
-			dash(numPlayer);
+			dash(numPlayer + playerNum);
 			break;
 		}
 		
@@ -822,8 +843,6 @@ void LevelGameplay::aimFireball(int num) {
 	objectsList.push_back(projectile);
 	//objectsList.push_back(projectile->GetCollider()->GetGizmos());
 }
-
-
 
 void LevelGameplay::shootFireball(int num) {
 	if (players[num + playerNum]->getIsShooting() == false) {
