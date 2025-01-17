@@ -41,7 +41,7 @@ private:
 	float durationSlowness;
 	bool isSlowness;
 	bool isDash;
-	float dashSpeed = 5;
+	float dashSpeed = 5.f;
 	float durationDash;
 
 public:
@@ -87,4 +87,5 @@ public:
 	bool getIsSlowness();
 	bool getIsDash();
 	float getDurationDash();
+	int getIdAbility(int numberAbility);
 };

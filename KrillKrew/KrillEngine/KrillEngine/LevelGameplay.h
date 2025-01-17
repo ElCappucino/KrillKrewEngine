@@ -32,6 +32,14 @@ private:
 	float time[4] = {0};
 	float previousWidth = 0, previousHeight = 0;
 
+	// player
+	float axisXOld;
+	float axisYOld;
+	float norAxisXOld;
+	float norAxisYOld;
+	bool isPositiveXOld;
+	bool isPositiveYOld;
+
 public:
 	virtual void LevelLoad();
 	virtual void LevelInit();
@@ -55,8 +63,8 @@ public:
 
 	//ability function
 	void usingAbility(int numberPlayer, int numberAbility);
-	void aimFireball(int num);
-	void shootFireball(int num);
-	void trap(int num);
-	void dash(int num);
+	void aimFireball(int num, int numAbility);
+	void shootFireball(int num, int numAbility);
+	void trap(int num, int numAbility);
+	void dash(int num, int numAbility);
 };

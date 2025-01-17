@@ -287,3 +287,7 @@ void PlayerObject::UpdateCurrentAnimation()
 void PlayerObject::setAbility(int numberAbility, int idAbility) {
 	abilities[numberAbility] = idAbility;
 }
+
+int PlayerObject::getIdAbility(int numberAbility) {
+	return abilities[numberAbility];
+}
