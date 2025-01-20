@@ -143,18 +143,18 @@ void PlayerObject::SetDashDuration(int duration)
 {
 	this->dashDuration = duration;
 }
-void PlayerObject::SetAbility(int abilityNumber, int abilityID)
+void PlayerObject::SetAbility(AbilityButton button, Ability ability)
 {
-	abilities[abilityNumber] = abilityID;
+	abilities[static_cast<int>(button)] = ability;
 }
 void PlayerObject::SetPlayerUI(UiObject* ui)
 {
 	this->playerUI = ui;
 }
-void PlayerObject::ReduceAbilityCooldown(int skill)
+void PlayerObject::ReduceAbilityCooldown(AbilityButton button)
 {
-	abilityCooldown[skill] -= 1;
-	KK_TRACE("Reduce Cooldown Skill: {0} Cooldown {1}", skill, GetCooldown(skill));
+	abilityCooldown[static_cast<int>(button)] -= 1;
+	// KK_TRACE("Reduce Cooldown Skill: {0} Cooldown {1}", button, GetCooldown(button));
 }
 void PlayerObject::ReduceSlowDuration()
 {
@@ -261,9 +261,9 @@ int PlayerObject::GetPlayerNumber() const
 {
 	return playerNumber;
 }
-float PlayerObject::GetCooldown(int skill) const
+float PlayerObject::GetCooldown(AbilityButton button) const
 {
-	return abilityCooldown[skill];
+	return abilityCooldown[static_cast<int>(button)];
 }
 float PlayerObject::GetSlowDuration() const
 {
@@ -273,8 +273,8 @@ float PlayerObject::GetDashDuration() const
 {
 	return dashDuration;
 }
-int PlayerObject::GetAbilityID(int id) const
+PlayerObject::Ability PlayerObject::GetAbilityByButton(AbilityButton button) const
 {
-	return abilities[id];
+	return abilities[static_cast<int>(button)];
 }
 

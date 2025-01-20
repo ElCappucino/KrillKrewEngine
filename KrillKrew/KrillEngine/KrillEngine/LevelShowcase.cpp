@@ -596,7 +596,7 @@ void LevelShowcase::UpdateInput()
 			//Place trap
 			if (Joystick::GetButtonDown(i, Joystick::Button::Triangle))
 			{
-				if (players[i + playerNum]->GetCooldown(1) <= 0) {
+				if (players[i + playerNum]->GetCooldown(PlayerObject::AbilityButton::Triangle) <= 0) {
 					players[i + playerNum]->SetAbilityCooldown(1, 3);
 					TrapObject* Trap = new TrapObject();
 					Trap->SetSpriteInfo(spriteList.find("Trap")->second);
@@ -736,11 +736,11 @@ void LevelShowcase::UpdateCooldown()
 
 		for (int j = 0; j < 3; j++)
 		{
-			if (time[i + playerNum] >= 1.0f && players[i + playerNum]->GetCooldown(j) > 0)
+			/*if (time[i + playerNum] >= 1.0f && players[i + playerNum]->GetCooldown(static_cast<PlayerObject::AbilityButton>(j)) > 0)
 			{
-				players[i + playerNum]->ReduceAbilityCooldown(j);
+				players[i + playerNum]->ReduceAbilityCooldown(static_cast<PlayerObject::AbilityButton>(j));
 				time[i + playerNum] = 0.0f;
-			}
+			}*/
 		}
 	}
 }

@@ -50,9 +50,9 @@ public:
 	
 
 	//ability function
-	void usingAbility(int numberPlayer, int numberAbility);
-	void aimFireball(int num, int numAbility);
-	void shootFireball(int num, int numAbility);
-	void trap(int num, int numAbility);
-	void dash(int num, int numAbility);
+	void usingAbility(int num, PlayerObject::AbilityButton button);
+	void aimFireball(int num, PlayerObject::AbilityButton button);
+	void shootFireball(int num, PlayerObject::AbilityButton button);
+	void trap(int num, PlayerObject::AbilityButton button);
+	void dash(int num, PlayerObject::AbilityButton button);
 };

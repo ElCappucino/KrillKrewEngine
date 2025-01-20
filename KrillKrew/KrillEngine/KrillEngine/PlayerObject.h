@@ -27,6 +27,21 @@ public:
 		PlaceItem
 	};
 
+	enum class Ability
+	{
+		Fireball = 0,
+		Trap = 1,
+		Dash = 2
+	};
+
+	enum class AbilityButton
+	{
+		Triangle = 0,
+		Circle = 1,
+		Cross = 2
+		// Square is melee
+	};
+
 private:
 
 	AnimationState currAnimState;
@@ -43,7 +58,7 @@ private:
 
 	int playerNumber;
 
-	int abilities[3] = { 0 };
+	std::array<Ability, 3> abilities;
 	float abilityCooldown[3] = {0};
 
 	float slowness = 2;
@@ -73,10 +88,10 @@ public:
 	void SetIsSlow(bool isSlow);
 	void SetIsDashing(bool isDashing);
 	void SetDashDuration(int duration);
-	void SetAbility(int numberAbility, int idAbility);
+	void SetAbility(AbilityButton numberAbility, Ability idAbility);
 	void SetPlayerUI(UiObject* ui);
 
-	void ReduceAbilityCooldown(int skill);
+	void ReduceAbilityCooldown(AbilityButton button);
 	void ReduceSlowDuration();
 	void ReduceDashDuration();
 
@@ -99,8 +114,8 @@ public:
 	bool GetIsDashing() const;
 	bool GetIsShooting() const;
 	int GetPlayerNumber() const;
-	float GetCooldown(int skill) const;
+	float GetCooldown(AbilityButton button) const;
 	float GetSlowDuration() const;
 	float GetDashDuration() const;
-	int GetAbilityID(int id) const;
+	PlayerObject::Ability GetAbilityByButton(AbilityButton button) const;
 };
