@@ -102,4 +102,5 @@ public:
 	float GetCooldown(int skill) const;
 	float GetSlowDuration() const;
 	float GetDashDuration() const;
+	int GetAbilityID(int id) const;
 };

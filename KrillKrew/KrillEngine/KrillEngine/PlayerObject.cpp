@@ -273,4 +273,8 @@ float PlayerObject::GetDashDuration() const
 {
 	return dashDuration;
 }
+int PlayerObject::GetAbilityID(int id) const
+{
+	return abilities[id];
+}
 
