@@ -284,19 +284,22 @@ void LevelGameplay::UpdateInput()
 				isPositiveY = true;
 			}
 
-			if (players[i + playerNum]->getIsDash() == false) {
-				if (players[i + playerNum]->getIsAiming() == false)
-				{
-					players[i + playerNum]->setVelocity(abs(norAxisX), abs(norAxisY), isPositiveX, isPositiveY);
+			if (players[i + playerNum]->getIsKnockback() == false) {
+				if (players[i + playerNum]->getIsDash() == false) {
+					if (players[i + playerNum]->getIsAiming() == false)
+					{
+						players[i + playerNum]->setVelocity(abs(norAxisX), abs(norAxisY), isPositiveX, isPositiveY);
+					}
+					norAxisXOld = norAxisX;
+					norAxisYOld = norAxisY;
+					isPositiveXOld = isPositiveX;
+					isPositiveYOld = isPositiveY;
 				}
-				norAxisXOld = norAxisX;
-				norAxisYOld = norAxisY;
-				isPositiveXOld = isPositiveX;
-				isPositiveYOld = isPositiveY;
+				else {
+					players[i + playerNum]->setVelocity(abs(norAxisXOld), abs(norAxisYOld), isPositiveXOld, isPositiveYOld);
+				}
 			}
-			else {
-				players[i + playerNum]->setVelocity(abs(norAxisXOld), abs(norAxisYOld), isPositiveXOld, isPositiveYOld);
-			}
+			
 			
 
 			//Select ability
@@ -460,6 +463,14 @@ void LevelGameplay::UpdateInput()
 				}
 			}
 
+			/*if (Joystick::GetButtonDown(i, Joystick::Button::L1))
+			{
+				playerNum = 0;
+				if (playerNum <= 0) {
+					playerNum = 4;
+				}
+			}*/
+
 			players[i + playerNum]->Translate(players[i + playerNum]->getVelocity());
 		}
 
@@ -610,9 +621,11 @@ void LevelGameplay::UpdateCollision()
 					if (overlapX > 0 && overlapY > 0)
 					{
 						players[projectile->getNumOwner()]->setIsShooting(false);
+						UpdateKnockback(projectile, player);
 						objectsList.erase(objectsList.begin() + i);
 					}
 				}
+				
 			}
 		}
 	}
@@ -692,10 +705,56 @@ void LevelGameplay::UpdateMovement()
 			players[i + playerNum]->setIsDash(false);
 		}
 
-		if (players[i + playerNum]->getIsDash()) {
-			std::cout << "Dash" << std::endl;
+		if (time[1] >= 1.0f && players[1]->getIsKnockback() == true) {
+			std::cout << "i = " << i << std::endl;
+			players[1]->reduceDurationKnockback();
+		}
+
+		if (players[1]->getDurationKnockback() <= 0)
+		{
+			players[1]->setIsKnockback(false);
 		}
 	}
+}
+
+void LevelGameplay::UpdateKnockback(DrawableObject* obj1, DrawableObject* obj2) {
+	ProjectileObject* projectile = dynamic_cast<ProjectileObject*>(obj1);
+	PlayerObject* player = dynamic_cast<PlayerObject*>(obj2);
+	if (projectile->getNumOwner() != player->getNumber()) {
+		if (player != NULL && projectile != NULL) {
+			player->setIsKnockback(true);
+			player->setDurationKnockback(1);
+			glm::vec3 knockbackDirection = obj1->getPos() - player->getPos();
+			float knockbackDirectionX = false;
+			float knockbackDirectionY = false;
+			bool knockbackDirectionXisPositive;
+			bool knockbackDirectionYisPositive;
+			if (knockbackDirection.x < 0)
+			{
+				knockbackDirectionXisPositive = true;
+			}
+			else if (knockbackDirection.x > 0)
+			{
+				knockbackDirectionXisPositive = false;
+			}
+
+			if (knockbackDirection.y > 0)
+			{
+				knockbackDirectionYisPositive = false;
+			}
+			else if (knockbackDirection.y < 0)
+			{
+				knockbackDirectionYisPositive = true;
+			}
+
+			knockbackDirectionX = abs(knockbackDirection.x) * 0.001;
+			knockbackDirectionY = abs(knockbackDirection.y) * 0.001;
+			player->setVelocity(knockbackDirectionX, knockbackDirectionY, knockbackDirectionXisPositive, knockbackDirectionYisPositive);
+			std::cout << player->getNumber() << std::endl;
+		}
+	}
+	
+
 }
 
 void LevelGameplay::UpdateUI()

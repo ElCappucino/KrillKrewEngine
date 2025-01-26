@@ -291,3 +291,23 @@ void PlayerObject::setAbility(int numberAbility, int idAbility) {
 int PlayerObject::getIdAbility(int numberAbility) {
 	return abilities[numberAbility];
 }
+
+void PlayerObject::setIsKnockback(bool isKnockback) {
+	this->isKnockback = isKnockback;
+}
+
+void PlayerObject::setDurationKnockback(int time){
+	durationKnockback = time;
+}
+
+void PlayerObject::reduceDurationKnockback(){
+	durationKnockback -= 1;
+}
+
+bool PlayerObject::getIsKnockback() {
+	return isKnockback;
+}
+
+float PlayerObject::getDurationKnockback(){
+	return durationKnockback;
+}

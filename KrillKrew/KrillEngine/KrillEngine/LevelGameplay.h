@@ -57,6 +57,7 @@ public:
 	void UpdateCooldown();
 	void UpdateMovement();
 	void UpdateUI();
+	void UpdateKnockback(DrawableObject* obj1, DrawableObject* obj2);
 	
 	// void CameraLerp();
 	

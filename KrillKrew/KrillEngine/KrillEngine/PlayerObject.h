@@ -43,6 +43,8 @@ private:
 	bool isDash;
 	float dashSpeed = 5.f;
 	float durationDash;
+	bool isKnockback;
+	float durationKnockback;
 
 public:
 	
@@ -66,6 +68,9 @@ public:
 	glm::vec3 getVelocity();
 	bool getIsShooting();
 	void setAbility(int numberAbility, int idAbility);
+	void setIsKnockback(bool isKnockback);
+	void setDurationKnockback(int time);
+	void reduceDurationKnockback();
 
 	virtual void SetAnimationSprite(AnimationState state, SpritesheetInfo spriteInfo);
 	virtual void ChangeAnimationState(AnimationState anim);
@@ -88,4 +93,6 @@ public:
 	bool getIsDash();
 	float getDurationDash();
 	int getIdAbility(int numberAbility);
+	bool getIsKnockback();
+	float getDurationKnockback();
 };
