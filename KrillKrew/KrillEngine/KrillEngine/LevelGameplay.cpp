@@ -20,7 +20,8 @@ void LevelGameplay::LevelLoad()
 	spriteList["Shark_run"] = SpritesheetInfo("Shark_run", "../Resource/Texture/shark_run_test.png", 256, 256, 1024, 256);
 	spriteList["Shark_idle"] = SpritesheetInfo("Shart_idle", "../Resource/Texture/shark_Idle_test.png", 256, 256, 256, 256);
 	
-	spriteList["Trap"] = SpritesheetInfo("Bomb", "../Resource/Texture/Trap.png", 512, 512, 512, 512);
+	spriteList["Trap"] = SpritesheetInfo("Trap", "../Resource/Texture/Trap.png", 512, 512, 512, 512);
+	spriteList["TNT"] = SpritesheetInfo("TNT", "../Resource/Texture/TNT.png", 348, 348, 348, 348);
 
 	spriteList["Xoey_UI"] = SpritesheetInfo("Xoey_UI", "../Resource/Texture/xoey.png", 430, 220, 430, 220);
 	spriteList["Byssa_UI"] = SpritesheetInfo("Byssa_UI", "../Resource/Texture/byssa.png", 430, 220, 430, 220);
@@ -54,7 +55,7 @@ void LevelGameplay::LevelInit()
 	obj1->setNumber(0);
 	obj1->SetAnimationSprite(PlayerObject::AnimationState::Idle, spriteList.find("Shark_idle")->second);
 	obj1->SetAnimationSprite(PlayerObject::AnimationState::Running, spriteList.find("Shark_run")->second);
-	obj1->setAbility(0, 3);
+	obj1->setAbility(0, 4);
 	obj1->setAbility(1, 1);
 	obj1->setAbility(2, 2);
 	objectsList.push_back(obj1);
@@ -470,7 +471,7 @@ void LevelGameplay::UpdateInput()
 					playerNum = 4;
 				}
 			}*/
-
+			players[1]->Translate(players[1]->getVelocity());
 			players[i + playerNum]->Translate(players[i + playerNum]->getVelocity());
 		}
 
@@ -900,6 +901,10 @@ void LevelGameplay::usingAbility(int numPlayer, int numberAbility) {
 		case 3 :
 			dash(numPlayer, numberAbility);
 			break;
+
+		case 4 :
+			TNT(numPlayer, numberAbility);
+			break;
 		}
 		
 	}
@@ -950,4 +955,16 @@ void LevelGameplay::dash(int num, int numAbility) {
 	players[num]->setCooldown(numAbility, 3);
 	players[num]->setIsDash(true);
 	players[num]->setDurationDash(2);
+}
+
+void LevelGameplay::TNT(int num, int numAbility) {
+	players[num]->setCooldown(numAbility, 3);
+	TrapObject* TNT = new TrapObject();
+	TNT->SetSpriteInfo(spriteList.find("TNT")->second);
+	TNT->SetTexture(spriteList.find("TNT")->second.texture);
+	TNT->SetPosition(players[num]->getPos());
+	TNT->SetSize(128.f, -128.f);
+	TNT->setNumOwner(players[num]->getNumber());
+	//std::cout << "Owner " << Trap->getNumOwner() << std::endl;
+	objectsList.push_back(TNT);
 }

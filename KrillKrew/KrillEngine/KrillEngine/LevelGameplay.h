@@ -68,4 +68,5 @@ public:
 	void shootFireball(int num, int numAbility);
 	void trap(int num, int numAbility);
 	void dash(int num, int numAbility);
+	void TNT(int num, int numAbility);
 };
