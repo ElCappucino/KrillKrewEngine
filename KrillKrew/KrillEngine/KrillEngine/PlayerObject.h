@@ -45,6 +45,8 @@ private:
 	float durationDash;
 	bool isKnockback;
 	float durationKnockback;
+	bool xIsPositive;
+	bool yIsPositive;
 
 public:
 	
@@ -65,7 +67,6 @@ public:
 	void setIsDash(bool isDash);
 	void setDurationDash(int time);
 	void reduceDurationDash();
-	glm::vec3 getVelocity();
 	bool getIsShooting();
 	void setAbility(int numberAbility, int idAbility);
 	void setIsKnockback(bool isKnockback);
@@ -85,6 +86,9 @@ public:
 	virtual void OnTriggerStay(Collider* other);
 	virtual void OnTriggerExit(Collider* other);
 	
+	glm::vec3 getVelocity();
+	bool getXIsPositive();
+	bool getYIsPositive();
 	bool getIsAiming();
 	int getNumber();
 	float getCooldown(int skill);

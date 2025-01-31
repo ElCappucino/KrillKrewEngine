@@ -29,7 +29,8 @@ private:
 	Timer* timer;
 
 	int dt = 0;
-	float time[4] = {0};
+	float time1s[4] = {0};
+	float time05s[4] = { 0 };
 	float previousWidth = 0, previousHeight = 0;
 
 	// player
@@ -58,6 +59,7 @@ public:
 	void UpdateMovement();
 	void UpdateUI();
 	void UpdateKnockback(DrawableObject* obj1, DrawableObject* obj2);
+	void UpdateTime();
 	
 	// void CameraLerp();
 	

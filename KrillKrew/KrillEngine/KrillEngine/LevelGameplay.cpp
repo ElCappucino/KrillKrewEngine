@@ -55,7 +55,7 @@ void LevelGameplay::LevelInit()
 	obj1->setNumber(0);
 	obj1->SetAnimationSprite(PlayerObject::AnimationState::Idle, spriteList.find("Shark_idle")->second);
 	obj1->SetAnimationSprite(PlayerObject::AnimationState::Running, spriteList.find("Shark_run")->second);
-	obj1->setAbility(0, 4);
+	obj1->setAbility(0, 3);
 	obj1->setAbility(1, 1);
 	obj1->setAbility(2, 2);
 	objectsList.push_back(obj1);
@@ -221,10 +221,14 @@ void LevelGameplay::LevelUpdate()
 	UpdateCooldown();
 
 	// slowness & dash
-	//UpdateMovement();
+	UpdateMovement();
 
 	//Ui Skills
 	UpdateUI();
+
+	//std::cout << time[0] << std::endl;
+	//Time update
+	UpdateTime();
 
 }
 
@@ -657,36 +661,27 @@ void LevelGameplay::UpdateProjectile()
 
 void LevelGameplay::UpdateCooldown()
 {
-	for (int i = 0; i < SDL_NumJoysticks() + playerNum; i++)
+	for (int i = 0; i < /*SDL_NumJoysticks() + playerNum*/ 4 ; i++)
 	{
-		timer->tick();
-		timer->reset();
-		time[i + playerNum] += timer->getDeltaTime();
-
-		//slowness & dash
-		UpdateMovement();
-
 		for (int j = 0; j < 3; j++)
 		{
-			if (time[i + playerNum] >= 1.0f && players[i + playerNum]->getCooldown(j) > 0)
+			
+			if (time1s[i + playerNum] >= 1.0f && players[i + playerNum]->getCooldown(j) > 0)
 			{
-				std::cout << j << std::endl;
+				//std::cout << j << std::endl;
 				players[i + playerNum]->reduceCooldown(j);
 				
 			}
-			
 		}
-		if (time[i + playerNum] >= 1.0f) {
-			time[i + playerNum] = 0.0f;
-		}
+		UpdateTime();
 	}
 }
 
 void LevelGameplay::UpdateMovement()
 {
-	for (int i = 0; i < SDL_NumJoysticks() + playerNum; i++)
+	for (int i = 0; i < /*SDL_NumJoysticks() + playerNum*/ 4; i++)
 	{
-		if (time[i + playerNum] >= 1.0f && players[i + playerNum]->getIsSlowness() == true)
+		if (time1s[i + playerNum] >= 1.0f && players[i + playerNum]->getIsSlowness() == true)
 		{
 			players[i + playerNum]->reduceDurationSlowness();
 		}
@@ -696,7 +691,7 @@ void LevelGameplay::UpdateMovement()
 			players[i + playerNum]->setIsSlowness(false);
 		}
 
-		if (time[i + playerNum] >= 1.0f && players[i + playerNum]->getIsDash() == true) {
+		if (time1s[i + playerNum] >= 1.0f && players[i + playerNum]->getIsDash() == true) {
 			std::cout << "reduce dash time" << std::endl;
 			players[i + playerNum]->reduceDurationDash();
 		}
@@ -706,15 +701,33 @@ void LevelGameplay::UpdateMovement()
 			players[i + playerNum]->setIsDash(false);
 		}
 
-		if (time[1] >= 1.0f && players[1]->getIsKnockback() == true) {
-			std::cout << "i = " << i << std::endl;
-			players[1]->reduceDurationKnockback();
+		if (time05s[i + playerNum] >= 0.1f && players[i + playerNum]->getIsKnockback() == true) {
+			
+			/*players[i + playerNum]->reduceDurationKnockback();
+			std::cout << "DurationKnockback | " << players[i + playerNum]->getDurationKnockback() << std::endl;*/
+			glm::vec3 knockbackVelo = players[i + playerNum]->getVelocity();
+			float knockbackVeloX = abs(knockbackVelo.x) / 5;
+			float knockbackVeloY = abs(knockbackVelo.y) / 5;
+			/*std::cout << "knockbackVeloX | " << knockbackVeloX << std::endl;
+			std::cout << "knockbackVeloY | " << knockbackVeloY << std::endl;*/
+			players[i + playerNum]->setVelocity(knockbackVeloX / 1.1, knockbackVeloY / 1.1, players[i + playerNum]->getXIsPositive(), players[i + playerNum]->getYIsPositive());
+			//std::cout << "knockbackVeloY | " << knockbackVeloY / 1.1 << std::endl;
 		}
 
-		if (players[1]->getDurationKnockback() <= 0)
+		if (players[i + playerNum]->getDurationKnockback() <= 0)
 		{
-			players[1]->setIsKnockback(false);
+			players[i + playerNum]->setIsKnockback(false);
+			players[i + playerNum]->setVelocity(0, 0, false, false);
 		}
+
+
+		if (players[i + playerNum]->getIsKnockback() == true && (abs(players[i + playerNum]->getVelocity().x) / 5 < 0.05) && (abs(players[i + playerNum]->getVelocity().y) / 5 < 0.05))
+		{
+			players[i + playerNum]->setIsKnockback(false);
+			players[i + playerNum]->setVelocity(0, 0, false, false);
+		}
+		
+		UpdateTime();
 	}
 }
 
@@ -724,12 +737,13 @@ void LevelGameplay::UpdateKnockback(DrawableObject* obj1, DrawableObject* obj2) 
 	if (projectile->getNumOwner() != player->getNumber()) {
 		if (player != NULL && projectile != NULL) {
 			player->setIsKnockback(true);
-			player->setDurationKnockback(1);
+			player->setDurationKnockback(2);
 			glm::vec3 knockbackDirection = obj1->getPos() - player->getPos();
-			float knockbackDirectionX = false;
-			float knockbackDirectionY = false;
-			bool knockbackDirectionXisPositive;
-			bool knockbackDirectionYisPositive;
+			
+			float knockbackDirectionX = knockbackDirection.x / 255;
+			float knockbackDirectionY = knockbackDirection.y / 255;
+			bool knockbackDirectionXisPositive = false;
+			bool knockbackDirectionYisPositive = false;
 			if (knockbackDirection.x < 0)
 			{
 				knockbackDirectionXisPositive = true;
@@ -748,14 +762,42 @@ void LevelGameplay::UpdateKnockback(DrawableObject* obj1, DrawableObject* obj2) 
 				knockbackDirectionYisPositive = true;
 			}
 
-			knockbackDirectionX = abs(knockbackDirection.x) * 0.001;
-			knockbackDirectionY = abs(knockbackDirection.y) * 0.001;
+			knockbackDirectionX = abs(knockbackDirectionX);
+			knockbackDirectionY = abs(knockbackDirectionY);
+
+			
 			player->setVelocity(knockbackDirectionX, knockbackDirectionY, knockbackDirectionXisPositive, knockbackDirectionYisPositive);
-			std::cout << player->getNumber() << std::endl;
+			std::cout << knockbackDirectionY << std::endl;
 		}
 	}
 	
 
+}
+
+void LevelGameplay::UpdateTime() {
+	for (int i = 0; i < /*SDL_NumJoysticks() + playerNum*/ 4; i++)
+	{
+		timer->tick();
+		timer->reset();
+		time1s[0] += timer->getDeltaTime();
+		time1s[1] += timer->getDeltaTime();
+		time1s[2] += timer->getDeltaTime();
+		time1s[3] += timer->getDeltaTime();
+		time05s[0] += timer->getDeltaTime();
+		time05s[1] += timer->getDeltaTime();
+		time05s[2] += timer->getDeltaTime();
+		time05s[3] += timer->getDeltaTime();
+
+		if (time1s[i + playerNum] >= 1.01f) {
+			time1s[i + playerNum] = 0.0f;
+			//std::cout << "Time | " << time[i + playerNum] << std::endl;
+		}
+
+		if (time05s[i + playerNum] >= 0.11f) {
+			time05s[i + playerNum] = 0.0f;
+			//std::cout << "Time | " << time[i + playerNum] << std::endl;
+		}
+	}
 }
 
 void LevelGameplay::UpdateUI()
