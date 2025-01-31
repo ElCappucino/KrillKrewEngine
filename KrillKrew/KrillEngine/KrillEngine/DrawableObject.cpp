@@ -54,5 +54,8 @@ bool DrawableObject::GetIsActive()
 {
 	return isActive;
 }
-
+void DrawableObject::SetIsActive(bool isActive)
+{
+	this->isActive = isActive;
+}
 

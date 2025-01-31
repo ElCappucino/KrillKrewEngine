@@ -14,11 +14,12 @@ protected:
 public:
 	glm::mat4 getTransform();
 	bool GetIsActive();
+	void SetIsActive(bool isActive);
 	DrawableObject();
 	~DrawableObject();
 	virtual void Render(glm::mat4 globalModelTransform) = 0;
-	void SetSize(float sizeX, float sizeY);
-	void SetPosition(glm::vec3 newPosition);
+	virtual void SetSize(float sizeX, float sizeY);
+	virtual void SetPosition(glm::vec3 newPosition);
 	void Translate(glm::vec3 moveDistance);
 	glm::vec3 getPos();
 	glm::vec3 getSize();

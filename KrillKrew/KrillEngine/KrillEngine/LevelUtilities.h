@@ -20,6 +20,7 @@
 #include "ProjectileObject.h"
 #include "TrapObject.h"
 #include "UiObject.h"
+#include "TileObject.h"
 
 // Vbo
 

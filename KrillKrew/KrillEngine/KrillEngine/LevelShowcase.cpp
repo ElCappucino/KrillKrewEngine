@@ -302,13 +302,23 @@ void LevelShowcase::LevelInit()
 
 			if (pos.first != 99)
 			{
-				ImageObject* obj = new ImageObject();
+				TileObject* obj = new TileObject();
 				obj->SetSpriteInfo(spriteList.find("Blobtile")->second);
 				obj->GetSpriteRenderer()->ShiftTo(pos.first - 1, pos.second - 1);
 				obj->SetTexture(spriteList.find("Blobtile")->second.texture);
 				obj->SetSize(128.f, -128.f);
 				obj->SetPosition(glm::vec3(map_left + (j * 126.f), map_top - (i * 126.f), 0));
+				if (flag == 0)
+				{
+					obj->SetIsBreakable(false);
+				}
+				else if (flag == 1)
+				{
+					obj->SetIsBreakable(true);
+				}
+				
 				objectsList.push_back(obj);
+				objectsList.push_back(obj->GetOverlaySprite());
 			}
 			
 
@@ -462,7 +472,7 @@ void LevelShowcase::LevelUpdate()
 	}
 
 
-	// projectile collier player
+	// projectile collider player
 	UpdateCollision();
 
 	// delete projectile
