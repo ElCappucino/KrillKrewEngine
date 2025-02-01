@@ -11,9 +11,10 @@
 #include "InfoStruct.h"
 #include "GameEngine.h"
 #include "SquareMeshVbo.h"
+#include "PlayerObject.h"
 
 /// @brief The class for creating object that render using texture
-class TileObject : public ImageObject
+class TileObject : public EntityObject
 {
 private:
 

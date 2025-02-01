@@ -8,11 +8,15 @@
 #include <map>
 #include "EntityObject.h"
 #include <chrono>
+#include <vector>
 #include "ImageObject.h"
 #include "Collider.h"
 #include "GameEngine.h"
 #include "SquareMeshVbo.h"
 #include "UiObject.h"
+#include "TileObject.h"
+
+class TileObject;
 
 /// @brief The class for creating object that render using texture
 class PlayerObject :public EntityObject
@@ -69,6 +73,9 @@ private:
 
 	// UI
 	UiObject* playerUI;
+	Collider* attackCollider;
+	
+	std::vector<TileObject*> aimingTile;
 
 public:
 	
@@ -99,7 +106,9 @@ public:
 	virtual void ChangeAnimationState(AnimationState anim);
 	virtual void UpdateCurrentAnimation();
 
+
 	virtual Collider* GetCollider() const;
+	Collider* GetAttackCollider() const;
 
 	virtual void OnColliderEnter(Collider* other);
 	virtual void OnColliderStay(Collider* other);
@@ -118,4 +127,6 @@ public:
 	float GetSlowDuration() const;
 	float GetDashDuration() const;
 	PlayerObject::Ability GetAbilityByButton(AbilityButton button) const;
+
+	void AddAimingTile(TileObject* tile);
 };

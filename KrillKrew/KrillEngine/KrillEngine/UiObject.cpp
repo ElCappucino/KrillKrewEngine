@@ -66,3 +66,28 @@ int UiObject::getNumOwner() {
 	return playerNumOwner;
 }
 
+void UiObject::OnColliderEnter(Collider* other)
+{
+
+}
+void UiObject::OnColliderStay(Collider* other)
+{
+
+}
+void UiObject::OnColliderExit(Collider* other)
+{
+
+}
+void UiObject::OnTriggerEnter(Collider* other)
+{
+
+}
+void UiObject::OnTriggerStay(Collider* other)
+{
+
+}
+void UiObject::OnTriggerExit(Collider* other)
+{
+
+}
+

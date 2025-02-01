@@ -22,5 +22,11 @@ public:
 	void Render(glm::mat4 globalModelTransform);
 	void setNumOwner(int Num);
 	int getNumOwner();
+
+	virtual void OnColliderEnter(Collider* other);
+	virtual void OnColliderStay(Collider* other);
+	virtual void OnColliderExit(Collider* other);
+	virtual void OnTriggerEnter(Collider* other);
+	virtual void OnTriggerStay(Collider* other);
+	virtual void OnTriggerExit(Collider* other);
 };
-#pragma once

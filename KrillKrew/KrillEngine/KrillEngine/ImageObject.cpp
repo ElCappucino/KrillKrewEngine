@@ -77,3 +77,28 @@ bool ImageObject::GetIsAnimated()
 	return isAnimated;
 }
 
+void ImageObject::OnColliderEnter(Collider* other)
+{
+
+}
+void ImageObject::OnColliderStay(Collider* other)
+{
+
+}
+void ImageObject::OnColliderExit(Collider* other)
+{
+
+}
+void ImageObject::OnTriggerEnter(Collider* other)
+{
+
+}
+void ImageObject::OnTriggerStay(Collider* other)
+{
+
+}
+void ImageObject::OnTriggerExit(Collider* other)
+{
+
+}
+

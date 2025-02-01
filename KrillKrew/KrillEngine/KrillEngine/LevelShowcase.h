@@ -10,6 +10,7 @@ class LevelShowcase : public Level
 {
 private:
 	std::vector<DrawableObject*> objectsList;
+	std::vector<Collider*> collidersList;
 	std::map<std::string, SpritesheetInfo> spriteList;
 
 	typedef std::function<void(int, PlayerObject*, std::vector<DrawableObject*>&, SpritesheetInfo)> ability;

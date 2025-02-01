@@ -27,6 +27,12 @@ PlayerObject::PlayerObject()
 	currAnimState = AnimationState::Idle;
 
 	this->GetCollider()->SetCollisionType(Collider::Kinematic);
+
+	this->attackCollider = new Collider(Collider::Kinematic, this);
+	glm::vec3 attackSize = glm::vec3(this->size.x / 4, this->size.y / 4, 0);
+	glm::vec3 attackPos = glm::vec3(this->pos.x + 64.f, this->pos.y, 0);
+
+	this->attackCollider->Update(attackSize, attackPos);
 }
 
 PlayerObject::~PlayerObject()
@@ -195,6 +201,10 @@ Collider* PlayerObject::GetCollider() const
 {
 	return collider;
 }
+Collider* PlayerObject::GetAttackCollider() const
+{
+	return attackCollider;
+}
 void PlayerObject::OnColliderEnter(Collider* other)
 {
 	// Base
@@ -276,5 +286,9 @@ float PlayerObject::GetDashDuration() const
 PlayerObject::Ability PlayerObject::GetAbilityByButton(AbilityButton button) const
 {
 	return abilities[static_cast<int>(button)];
+}
+void PlayerObject::AddAimingTile(TileObject* tile)
+{
+	aimingTile.push_back(tile);
 }
 

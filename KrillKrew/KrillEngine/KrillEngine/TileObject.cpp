@@ -115,7 +115,14 @@ void TileObject::OnColliderExit(Collider* other)
 }
 void TileObject::OnTriggerEnter(Collider* other)
 {
+	KK_TRACE("Trigger Tile");
+	PlayerObject* player = dynamic_cast<PlayerObject*>(other->GetParent());
 
+	if (player != nullptr)
+	{
+		KK_TRACE("Add Tile");
+		player->AddAimingTile(this);
+	}
 }
 void TileObject::OnTriggerStay(Collider* other)
 {

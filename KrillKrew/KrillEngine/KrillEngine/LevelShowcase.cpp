@@ -379,6 +379,11 @@ void LevelShowcase::LevelInit()
 	playerSize++;
 	players[3] = p4;
 
+	objectsList.push_back(players[0]->GetAttackCollider()->GetGizmos());
+	objectsList.push_back(players[1]->GetAttackCollider()->GetGizmos());
+	objectsList.push_back(players[2]->GetAttackCollider()->GetGizmos());
+	objectsList.push_back(players[3]->GetAttackCollider()->GetGizmos());
+
 	objectsList.push_back(players[0]->GetCollider()->GetGizmos());
 	objectsList.push_back(players[1]->GetCollider()->GetGizmos());
 	objectsList.push_back(players[2]->GetCollider()->GetGizmos());
@@ -803,6 +808,14 @@ void LevelShowcase::LevelDraw()
 		if (object != nullptr)
 		{
 			object->GetCollider()->Update(object->getSize(), object->getPos());
+		}
+
+		PlayerObject* player = dynamic_cast<PlayerObject*>(objectsList[i]);
+		if (player != nullptr)
+		{
+			glm::vec3 attackSize = glm::vec3(player->getSize().x / 4, player->getSize().y / 4, 0);
+			glm::vec3 attackPos = glm::vec3(player->getPos().x + 64.f, player->getPos().y, 0);
+			player->GetAttackCollider()->Update(attackSize, attackPos);
 		}
 	}
 
