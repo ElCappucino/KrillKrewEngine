@@ -21,6 +21,7 @@
 #include "TrapObject.h"
 #include "UiObject.h"
 #include "TileObject.h"
+#include "PlayerHitboxObject.h"
 
 // Vbo
 
@@ -54,3 +55,4 @@
 #include <unordered_map>
 #include <math.h>
 #include <chrono>
+#include <set>

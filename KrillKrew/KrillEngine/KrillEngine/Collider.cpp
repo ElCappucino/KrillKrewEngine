@@ -1,4 +1,5 @@
 #include "Collider.h"
+#include "ImageObject.h"
 
 Collider::Collider(CollisionType type, ImageObject* parent)
 {

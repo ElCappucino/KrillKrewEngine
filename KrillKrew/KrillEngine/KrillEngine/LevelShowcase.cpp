@@ -318,6 +318,7 @@ void LevelShowcase::LevelInit()
 				}
 				
 				objectsList.push_back(obj);
+				objectsList.push_back(obj->GetCollider()->GetGizmos());
 				objectsList.push_back(obj->GetOverlaySprite());
 			}
 			
@@ -379,6 +380,11 @@ void LevelShowcase::LevelInit()
 	playerSize++;
 	players[3] = p4;
 
+	objectsList.push_back(players[0]->GetAttackColliderObject());
+	objectsList.push_back(players[1]->GetAttackColliderObject());
+	objectsList.push_back(players[2]->GetAttackColliderObject());
+	objectsList.push_back(players[3]->GetAttackColliderObject());
+
 	objectsList.push_back(players[0]->GetAttackCollider()->GetGizmos());
 	objectsList.push_back(players[1]->GetAttackCollider()->GetGizmos());
 	objectsList.push_back(players[2]->GetAttackCollider()->GetGizmos());
@@ -388,6 +394,9 @@ void LevelShowcase::LevelInit()
 	objectsList.push_back(players[1]->GetCollider()->GetGizmos());
 	objectsList.push_back(players[2]->GetCollider()->GetGizmos());
 	objectsList.push_back(players[3]->GetCollider()->GetGizmos());
+
+	
+
 
 	//create Ui by PlayerObject
 	int playerSize = 4;
@@ -650,9 +659,14 @@ void LevelShowcase::UpdateInput()
 void LevelShowcase::UpdateCollision()
 {
 	// player collier player
+	
+
 	for (int i = 0; i < objectsList.size(); i++)
 	{
 		EntityObject* entity1 = dynamic_cast<EntityObject*>(objectsList[i]);
+
+		PlayerHitboxObject* hitbox = dynamic_cast<PlayerHitboxObject*>(objectsList[i]);
+		
 
 		if (entity1 == nullptr || entity1->GetCollider()->GetCollisionType() == Collider::Static)
 		{
@@ -669,44 +683,74 @@ void LevelShowcase::UpdateCollision()
 
 			if (entity2 != nullptr)
 			{
-				Collider col1 = *entity1->GetCollider();
-				Collider col2 = *entity2->GetCollider();
+				
+				Collider* col1 = entity1->GetCollider();
+				Collider* col2 = entity2->GetCollider();
 
 				glm::vec2 delta = glm::vec2(abs(entity1->getPos().x - entity2->getPos().x),
 					abs(entity1->getPos().y - entity2->getPos().y));
 
-				glm::vec2 previousDelta = glm::vec2(abs(col1.GetPreviousPos().x - col2.GetPreviousPos().x),
-					abs(col1.GetPreviousPos().y - col2.GetPreviousPos().y));
+				glm::vec2 previousDelta = glm::vec2(abs(col1->GetPreviousPos().x - col2->GetPreviousPos().x),
+					abs(col1->GetPreviousPos().y - col2->GetPreviousPos().y));
 
-				float overlapX = (abs(col1.GetHalfSize().x)) + (abs(col2.GetHalfSize().x)) - delta.x;
-				float overlapY = (abs(col1.GetHalfSize().y)) + (abs(col2.GetHalfSize().y)) - delta.y;
+				float overlapX = (abs(col1->GetHalfSize().x)) + (abs(col2->GetHalfSize().x)) - delta.x;
+				float overlapY = (abs(col1->GetHalfSize().y)) + (abs(col2->GetHalfSize().y)) - delta.y;
 
 				// for resolve collider
-				float previousOverlapX = (abs(col1.GetHalfSize().x)) + (abs(col2.GetHalfSize().x)) - previousDelta.x;
-				float previousOverlapY = (abs(col1.GetHalfSize().y)) + (abs(col2.GetHalfSize().y)) - previousDelta.y;
+				float previousOverlapX = (abs(col1->GetHalfSize().x)) + (abs(col2->GetHalfSize().x)) - previousDelta.x;
+				float previousOverlapY = (abs(col1->GetHalfSize().y)) + (abs(col2->GetHalfSize().y)) - previousDelta.y;
 
 				if (overlapX > 0 && overlapY > 0)
 				{
-					entity1->OnColliderEnter(entity2->GetCollider());
-					entity2->OnColliderEnter(entity1->GetCollider());
 
-					if (col1.GetCollisionType() == Collider::Kinematic &&
-						col2.GetCollisionType() == Collider::Static)
+					/*if (hitbox != nullptr)
+					{
+						KK_TRACE("Hitbox size = {0}, {1}", hitbox->GetCollider()->GetSize().x, hitbox->GetCollider()->GetSize().y);
+						KK_TRACE("Hitbox pos = {0}, {1}", hitbox->getPos().x, hitbox->getPos().y);
+					}*/
+
+					if (previousCollisions.find({ col1, col2 }) == previousCollisions.end())
+					{
+						KK_TRACE("enter");
+						entity1->OnColliderEnter(entity2->GetCollider());
+						entity2->OnColliderEnter(entity1->GetCollider());
+					}
+					else
+					{
+						
+						entity1->OnColliderStay(entity2->GetCollider());
+						entity2->OnColliderStay(entity1->GetCollider());
+					}
+
+					currentCollisions.insert({ col1, col2 });
+
+					if (col1->GetCollisionType() == Collider::Kinematic &&
+						col2->GetCollisionType() == Collider::Static)
 					{
 						glm::vec3 newPos(entity1->getPos().x, entity1->getPos().y, entity1->getPos().z);
 
 						if (previousOverlapX > 0)
 						{
-							bool isTopSide = (col1.GetPreviousPos().y - col2.GetPreviousPos().y) > 0 ? true : false;
+							bool isTopSide = (col1->GetPreviousPos().y - col2->GetPreviousPos().y) > 0 ? true : false;
 
 							newPos.y = entity1->getPos().y + (overlapY * (isTopSide ? 1 : -1));
 						}
 						if (previousOverlapY > 0)
 						{
-							bool isLeftSide = (col1.GetPreviousPos().x - col2.GetPreviousPos().x) < 0 ? true : false;
+							bool isLeftSide = (col1->GetPreviousPos().x - col2->GetPreviousPos().x) < 0 ? true : false;
 							newPos.x = entity1->getPos().x + (overlapX * (isLeftSide ? -1 : 1));
 						}
 						entity1->SetPosition(newPos);
+					}
+				}
+				else if (overlapX <= 0 && overlapY <= 0)
+				{
+					if (previousCollisions.find({ col1, col2 }) != previousCollisions.end())
+					{
+						KK_TRACE("OnColliderExit");
+
+						entity1->OnColliderExit(entity2->GetCollider());
+						entity2->OnColliderExit(entity1->GetCollider());
 					}
 				}
 
@@ -716,6 +760,9 @@ void LevelShowcase::UpdateCollision()
 		}
 		entity1->GetCollider()->SetPreviousPos(entity1->getPos());
 	}
+
+	previousCollisions = currentCollisions;
+	currentCollisions.clear();
 }
 
 void LevelShowcase::UpdateProjectile()
@@ -804,18 +851,29 @@ void LevelShowcase::LevelDraw()
 	// Collider position update
 	for (int i = 0; i < objectsList.size(); i++)
 	{
-		EntityObject* object = dynamic_cast<EntityObject*>(objectsList[i]);
-		if (object != nullptr)
-		{
-			object->GetCollider()->Update(object->getSize(), object->getPos());
-		}
+		
 
 		PlayerObject* player = dynamic_cast<PlayerObject*>(objectsList[i]);
+		PlayerHitboxObject* hitbox = dynamic_cast<PlayerHitboxObject*>(objectsList[i]);
+		GizmosObject* gizmos = dynamic_cast<GizmosObject*>(objectsList[i]);
+
 		if (player != nullptr)
 		{
+			player->GetCollider()->Update(player->getSize(), player->getPos());
+
 			glm::vec3 attackSize = glm::vec3(player->getSize().x / 4, player->getSize().y / 4, 0);
-			glm::vec3 attackPos = glm::vec3(player->getPos().x + 64.f, player->getPos().y, 0);
+			glm::vec3 attackPos = glm::vec3(player->getPos().x + 256.f, player->getPos().y, 0);
+			player->GetAttackColliderObject()->SetSize(attackSize.x, attackSize.y);
+			player->GetAttackColliderObject()->SetPosition(attackPos);
 			player->GetAttackCollider()->Update(attackSize, attackPos);
+		}
+		else if (hitbox == nullptr)
+		{
+			EntityObject* object = dynamic_cast<EntityObject*>(objectsList[i]);
+			if (object != nullptr)
+			{
+				object->GetCollider()->Update(object->getSize(), object->getPos());
+			}
 		}
 	}
 

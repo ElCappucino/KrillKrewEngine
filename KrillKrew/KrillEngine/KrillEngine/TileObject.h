@@ -1,17 +1,18 @@
 #pragma once
 
-#include "DrawableObject.h"
 #include "gtc/matrix_transform.hpp"
 #include "gtc/type_ptr.hpp"
 #include <string>
 #include <array>
-#include "ImageObject.h"
+
 #include "SpriteRenderer.h"
 #include "Collider.h"
 #include "InfoStruct.h"
 #include "GameEngine.h"
 #include "SquareMeshVbo.h"
-#include "PlayerObject.h"
+#include "EntityObject.h"
+#include "PlayerHitboxObject.h"
+
 
 /// @brief The class for creating object that render using texture
 class TileObject : public EntityObject

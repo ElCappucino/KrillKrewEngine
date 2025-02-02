@@ -1,25 +1,25 @@
 #pragma once
 
-#include "DrawableObject.h"
 #include "gtc/matrix_transform.hpp"
 #include "gtc/type_ptr.hpp"
 #include <string>
 #include <array>
 #include <map>
-#include "EntityObject.h"
 #include <chrono>
 #include <vector>
-#include "ImageObject.h"
+
 #include "Collider.h"
 #include "GameEngine.h"
 #include "SquareMeshVbo.h"
 #include "UiObject.h"
-#include "TileObject.h"
+#include "EntityObject.h"
 
+class PlayerHitboxObject;
 class TileObject;
 
+
 /// @brief The class for creating object that render using texture
-class PlayerObject :public EntityObject
+class PlayerObject : public EntityObject
 {
 public:
 	virtual enum class AnimationState
@@ -73,7 +73,7 @@ private:
 
 	// UI
 	UiObject* playerUI;
-	Collider* attackCollider;
+	PlayerHitboxObject* attackCollider;
 	
 	std::vector<TileObject*> aimingTile;
 
@@ -109,6 +109,7 @@ public:
 
 	virtual Collider* GetCollider() const;
 	Collider* GetAttackCollider() const;
+	PlayerHitboxObject* GetAttackColliderObject() const;
 
 	virtual void OnColliderEnter(Collider* other);
 	virtual void OnColliderStay(Collider* other);

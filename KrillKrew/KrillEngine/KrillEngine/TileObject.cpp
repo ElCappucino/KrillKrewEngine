@@ -1,4 +1,5 @@
 #include "TileObject.h"
+#include "PlayerObject.h"
 
 TileObject::TileObject()
 {
@@ -103,7 +104,15 @@ ImageObject* TileObject::GetOverlaySprite()
 
 void TileObject::OnColliderEnter(Collider* other)
 {
+	// KK_TRACE("Trigger Tile");
+	PlayerHitboxObject* playerhitbox = dynamic_cast<PlayerHitboxObject*>(other->GetParent());
 
+	if (playerhitbox != nullptr)
+	{
+		KK_TRACE("Add Tile");
+		PlayerObject* player = dynamic_cast<PlayerObject*>(playerhitbox->GetCollider()->GetParent());
+		player->AddAimingTile(this);
+	}
 }
 void TileObject::OnColliderStay(Collider* other)
 {
@@ -115,14 +124,7 @@ void TileObject::OnColliderExit(Collider* other)
 }
 void TileObject::OnTriggerEnter(Collider* other)
 {
-	KK_TRACE("Trigger Tile");
-	PlayerObject* player = dynamic_cast<PlayerObject*>(other->GetParent());
-
-	if (player != nullptr)
-	{
-		KK_TRACE("Add Tile");
-		player->AddAimingTile(this);
-	}
+	
 }
 void TileObject::OnTriggerStay(Collider* other)
 {

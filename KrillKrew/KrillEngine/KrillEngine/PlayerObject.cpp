@@ -1,5 +1,11 @@
 
 #include "PlayerObject.h"
+#include "Collider.h"
+#include "GameEngine.h"
+#include "SquareMeshVbo.h"
+
+#include "PlayerHitboxObject.h"
+#include "TileObject.h"
 
 
 
@@ -28,11 +34,7 @@ PlayerObject::PlayerObject()
 
 	this->GetCollider()->SetCollisionType(Collider::Kinematic);
 
-	this->attackCollider = new Collider(Collider::Kinematic, this);
-	glm::vec3 attackSize = glm::vec3(this->size.x / 4, this->size.y / 4, 0);
-	glm::vec3 attackPos = glm::vec3(this->pos.x + 64.f, this->pos.y, 0);
-
-	this->attackCollider->Update(attackSize, attackPos);
+	this->attackCollider = new PlayerHitboxObject(this);
 }
 
 PlayerObject::~PlayerObject()
@@ -202,6 +204,10 @@ Collider* PlayerObject::GetCollider() const
 	return collider;
 }
 Collider* PlayerObject::GetAttackCollider() const
+{
+	return attackCollider->GetCollider();
+}
+PlayerHitboxObject* PlayerObject::GetAttackColliderObject() const
 {
 	return attackCollider;
 }
