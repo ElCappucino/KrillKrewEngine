@@ -13,6 +13,8 @@
 #include "EntityObject.h"
 #include "PlayerHitboxObject.h"
 
+#define MAP_WIDTH  21
+#define MAP_HEIGHT 16
 
 /// @brief The class for creating object that render using texture
 class TileObject : public EntityObject
@@ -20,11 +22,16 @@ class TileObject : public EntityObject
 private:
 
 	bool isBreakable;
+	bool isBroke;
 
 	int maxDurability;
 	int currentDurability;
 
+	/*int tilePositionX;
+	int tilePositionY;*/
+
 	ImageObject* crackOverlay;
+	
 
 protected:
 
@@ -36,13 +43,22 @@ public:
 	TileObject();
 	~TileObject();
 
+	// int(*groundTileInfo)[MAP_HEIGHT][MAP_WIDTH];
+
 	virtual void SetSpriteInfo(SpritesheetInfo info);
 	void SetTexture(std::string path);
 	void Render(glm::mat4 globalModelTransform);
 
 	virtual void SetSize(float sizeX, float sizeY);
 	virtual void SetPosition(glm::vec3 newPosition);
+	bool GetIsBreakable() const;
+	bool GetIsBroke() const;
+	void SetIsBroke(bool isBroke);
 	void SetIsBreakable(bool isBreakable);
+	/*void SetTilePosition(int x, int y);
+	glm::vec2 GetTilePosition() const;*/
+	void CheckIfBreak();
+	void GotHit();
 
 	virtual Collider* GetCollider();
 	ImageObject* GetOverlaySprite();

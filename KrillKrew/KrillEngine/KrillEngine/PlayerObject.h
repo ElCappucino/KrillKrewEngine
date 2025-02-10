@@ -129,5 +129,7 @@ public:
 	float GetDashDuration() const;
 	PlayerObject::Ability GetAbilityByButton(AbilityButton button) const;
 
+	void clearAimingTile(TileObject* tile);
 	void AddAimingTile(TileObject* tile);
+	void HitAimingTile();
 };

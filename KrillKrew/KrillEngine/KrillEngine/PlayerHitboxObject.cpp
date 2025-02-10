@@ -87,7 +87,7 @@ void PlayerHitboxObject::OnColliderEnter(Collider* other)
 	TileObject* tile = dynamic_cast<TileObject*>(other->GetParent());
 	if (tile != nullptr)
 	{
-		KK_TRACE("hit Tile");
+		// KK_TRACE("hit Tile");
 		this->parent->AddAimingTile(tile);
 	}
 }
@@ -100,7 +100,8 @@ void PlayerHitboxObject::OnColliderExit(Collider* other)
 	TileObject* tile = dynamic_cast<TileObject*>(other->GetParent());
 	if (tile != nullptr)
 	{
-		KK_TRACE("On ColliderExit");
+		// KK_TRACE("On ColliderExit PlayerHitboxObject");
+		this->parent->clearAimingTile(tile);
 	}
 }
 void PlayerHitboxObject::OnTriggerEnter(Collider* other)

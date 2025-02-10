@@ -69,136 +69,7 @@ void LevelShowcase::LevelInit()
 
 	timer = Timer::Instance();
 
-	std::map<int, std::pair<int, int>> blob_lookup_table = {
-
-	{666,	{1, 1}},
-	{777,	{2, 1}},
-	{888,	{3, 1}},
-	{999,	{4, 1}},
-
-	{16,	{1, 2}},
-	{17,	{2, 2}},
-	{1,		{3, 2}},
-	{0,		{4, 2}},
-
-	{20,	{1, 3}},
-	{21,	{2, 3}},
-	{5,		{3, 3}},
-	{4,		{4, 3}},
-
-	{84,	{1, 4}},
-	{85,	{2, 4}},
-	{69,	{3, 4}},
-	{68,	{4, 4}},
-
-	{80,	{1, 5}},
-	{81,	{2, 5}},
-	{65,	{3, 5}},
-	{64,	{4, 5}},
-
-	{213,	{1, 6}},
-	{29,	{2, 6}},
-	{23,	{3, 6}},
-	{117,	{4, 6}},
-
-	{92,	{1, 7}},
-	{127,	{2, 7}},
-	{223,	{3, 7}},
-	{71,	{4, 7}},
-
-	{116,	{1, 8}},
-	{253,	{2, 8}},
-	{247,	{3, 8}},
-	{197,	{4, 8}},
-
-	{87,	{1, 9}},
-	{113,	{2, 9}},
-	{209,	{3, 9}},
-	{93,	{4, 9}},
-
-	{28,	{1, 10}},
-	{31,	{2, 10}},
-	{95,	{3, 10}},
-	{7,		{4, 10}},
-
-	{125,	{1, 11}},
-	{119,	{2, 11}},
-	{255,	{3, 11}},
-	{199,	{4, 11}},
-
-	{124,	{1, 12}},
-	{256,	{2, 12}}, // blank
-	{221,	{3, 12}},
-	{215,	{4, 12}},
-
-	{112,	{1, 13}},
-	{245,	{2, 13}},
-	{241,	{3, 13}},
-	{193,	{4, 13}},
-	};
-
-	std::map<int, std::pair<int, int>> blob_lookup_table_underground = {
-	// 1
-	{16,	{2, 12}},
-	{17,	{2, 12}},
-	{1,		{4, 1}},
-	{0,		{4, 1}},
-	// 2
-	{20,	{2, 12}},
-	{21,	{2, 12}},
-	{5,		{3, 1}},
-	{4,		{3, 1}},
-	// 3
-	{84,	{2, 12} },
-	{ 85,	{2, 12} },
-	{ 69,	{2, 1} },
-	{68,	{2, 1}},
-	// 4
-	{80,	{2, 12}},
-	{81,	{2, 12}},
-	{65,	{1, 1}},
-	{64,	{1, 1}},
-	// 5
-	{213,	{2, 12}},
-	{29,	{2, 12}},
-	{23,	{2, 12}},
-	{117,	{2, 12}},
-	// 6
-	{92,	{2, 12}},
-	{127,	{2, 12}},
-	{223,	{2, 12}},
-	{71,	{2, 1}},
-	// 7
-	{116,	{2, 12}},
-	{253,	{2, 12}},
-	{247,	{2, 12}},
-	{197,	{2, 1}},
-	// 8
-	{87,	{2, 12}},
-	{113,	{2, 12}},
-	{209,	{2, 12}},
-	{93,	{2, 12}},
-
-	{28,	{2, 12}},
-	{31,	{2, 12}},
-	{95,	{2, 12}},
-	{7,		{3, 1}},
-
-	{125,	{2, 12}},
-	{119,	{2, 12}},
-	{255,	{2, 12}},
-	{199,	{2, 1}},
-
-	{124,	{2, 12}},
-	{256,	{2, 12}}, // blank
-	{221,	{2, 12}},
-	{215,	{2, 12}},
-
-	{112,	{2, 12}	},
-	{245,	{2, 12}	},
-	{241,	{2, 12}	},
-	{193,	{1, 1}	},
-	};
+	
 
 	TileImport(groundTile, "../Resource/Texture/Tilemap1.txt");
 
@@ -212,6 +83,8 @@ void LevelShowcase::LevelInit()
 		for (int j = 0; j < MAP_WIDTH; j++)
 		{
 			int flag = groundTile[i][j];
+
+			// currentGroundTile[i][j] = groundTile[i][j];
 
 			std::pair<int, int> pos;
 
@@ -311,12 +184,19 @@ void LevelShowcase::LevelInit()
 				if (flag == 0)
 				{
 					obj->SetIsBreakable(false);
+					obj->SetIsBroke(true);
 				}
 				else if (flag == 1)
 				{
 					obj->SetIsBreakable(true);
+					obj->SetIsBroke(false);
 				}
-				
+
+				tilesList[i][j] = obj;
+				/*obj->groundTileInfo = &currentGroundTile;
+
+				obj->SetTilePosition(i, j);*/
+
 				objectsList.push_back(obj);
 				objectsList.push_back(obj->GetCollider()->GetGizmos());
 				objectsList.push_back(obj->GetOverlaySprite());
@@ -327,6 +207,8 @@ void LevelShowcase::LevelInit()
 		}
 		// std::cout << std::endl;
 	}
+
+
 	// Create and Initialize 4 players object
 
 	// Example Code
@@ -501,6 +383,8 @@ void LevelShowcase::LevelUpdate()
 	//Ui Skills
 	UpdateUI();
 
+	GroundTileRefactor();
+
 }
 
 void LevelShowcase::UpdateInput()
@@ -644,6 +528,11 @@ void LevelShowcase::UpdateInput()
 				}
 			}
 
+			if (Joystick::GetButtonDown(i, Joystick::Button::Square))
+			{
+				players[playerNum]->HitAimingTile();
+			}
+
 			players[i + playerNum]->Translate(players[i + playerNum]->GetVelocity());
 
 			if (Joystick::GetButtonDown(i, Joystick::Button::P5Button))
@@ -711,15 +600,15 @@ void LevelShowcase::UpdateCollision()
 
 					if (previousCollisions.find({ col1, col2 }) == previousCollisions.end())
 					{
-						KK_TRACE("enter");
+						// KK_TRACE("enter");
 						entity1->OnColliderEnter(entity2->GetCollider());
-						entity2->OnColliderEnter(entity1->GetCollider());
+						// entity2->OnColliderEnter(entity1->GetCollider());
 					}
 					else
 					{
 						
 						entity1->OnColliderStay(entity2->GetCollider());
-						entity2->OnColliderStay(entity1->GetCollider());
+						// entity2->OnColliderStay(entity1->GetCollider());
 					}
 
 					currentCollisions.insert({ col1, col2 });
@@ -743,14 +632,14 @@ void LevelShowcase::UpdateCollision()
 						entity1->SetPosition(newPos);
 					}
 				}
-				else if (overlapX <= 0 && overlapY <= 0)
+				else if (overlapX <= 0 || overlapY <= 0)
 				{
 					if (previousCollisions.find({ col1, col2 }) != previousCollisions.end())
 					{
-						KK_TRACE("OnColliderExit");
+						// KK_TRACE("OnColliderExit");
 
 						entity1->OnColliderExit(entity2->GetCollider());
-						entity2->OnColliderExit(entity1->GetCollider());
+						// entity2->OnColliderExit(entity1->GetCollider());
 					}
 				}
 
@@ -763,6 +652,9 @@ void LevelShowcase::UpdateCollision()
 
 	previousCollisions = currentCollisions;
 	currentCollisions.clear();
+
+	/*KK_TRACE("preiousCollisions size = {0}", previousCollisions.size());
+	KK_TRACE("currentCollisions size = {0}", currentCollisions.size());*/
 }
 
 void LevelShowcase::UpdateProjectile()
@@ -953,6 +845,134 @@ void LevelShowcase::HandleMouse(int type, int x, int y)
 void LevelShowcase::Movement(float axisX, float axisY, bool isPositiveX, bool isPositiveY)
 {
 
+}
+
+void LevelShowcase::GroundTileRefactor()
+{
+	for (int i = 0; i < MAP_HEIGHT; i++)
+	{
+		for (int j = 0; j < MAP_WIDTH; j++)
+		{
+			if (i == 0 ||
+				i == MAP_HEIGHT - 1 ||
+				j == 0 ||
+				j == MAP_WIDTH - 1)
+			{
+				continue;
+			}
+
+			if (tilesList[i][j] == nullptr)
+			{
+				continue;
+			}
+
+			groundTile[i][j] = tilesList[i][j]->GetIsBroke() ? 0 : 1;
+
+
+			int flag = groundTile[i][j];
+
+
+			std::pair<int, int> pos;
+
+			if (i == 0 ||
+				i == MAP_HEIGHT - 1 ||
+				j == 0 ||
+				j == MAP_WIDTH - 1)
+			{
+				continue;
+			}
+			else if (flag == 0)
+			{
+				if (groundTile[i - 1][j] == 0)
+				{
+					// blank
+					pos = { 99, 99 };
+				}
+				else
+				{
+
+					int upperPos = i - 1;
+
+					std::bitset<8> surround;
+					surround[0] = groundTile[upperPos - 1][j];
+					surround[1] = groundTile[upperPos - 1][j + 1];
+					surround[2] = groundTile[upperPos][j + 1];
+					surround[3] = groundTile[upperPos + 1][j + 1];
+					surround[4] = groundTile[upperPos + 1][j];
+					surround[5] = groundTile[upperPos + 1][j - 1];
+					surround[6] = groundTile[upperPos][j - 1];
+					surround[7] = groundTile[upperPos - 1][j - 1];
+
+					if (!(surround[0] && surround[2])) { surround[1] = 0; }
+					if (!(surround[2] && surround[4])) { surround[3] = 0; }
+					if (!(surround[4] && surround[6])) { surround[5] = 0; }
+					if (!(surround[6] && surround[0])) { surround[7] = 0; }
+
+					auto it = blob_lookup_table_underground.find((int)(surround.to_ulong()));
+
+					// std::cout << "Bitset = " << (int)surround.to_ulong() << std::endl;
+
+					if (it != blob_lookup_table_underground.end())
+					{
+						pos = it->second;
+
+						// std::cout << "pair = " << it->second.first << " " << it->second.second << std::endl;
+					}
+					else
+					{
+						pos = { 99, 99 };
+						// std::cout << "blob_lookup_table.end()" << std::endl;
+					}
+				}
+
+			}
+			else
+			{
+				std::bitset<8> surround;
+				surround[0] = groundTile[i - 1][j];
+				surround[1] = groundTile[i - 1][j + 1];
+				surround[2] = groundTile[i][j + 1];
+				surround[3] = groundTile[i + 1][j + 1];
+				surround[4] = groundTile[i + 1][j];
+				surround[5] = groundTile[i + 1][j - 1];
+				surround[6] = groundTile[i][j - 1];
+				surround[7] = groundTile[i - 1][j - 1];
+
+				if (!(surround[0] && surround[2])) { surround[1] = 0; }
+				if (!(surround[2] && surround[4])) { surround[3] = 0; }
+				if (!(surround[4] && surround[6])) { surround[5] = 0; }
+				if (!(surround[6] && surround[0])) { surround[7] = 0; }
+
+				auto it = blob_lookup_table.find((int)(surround.to_ulong()));
+				// std::cout << "Bitset = " << (int)surround.to_ulong() << std::endl;
+				if (it != blob_lookup_table.end())
+				{
+					pos = it->second;
+
+					// std::cout << "pair = " << it->second.first << " " << it->second.second << std::endl;
+				}
+				else {
+					pos = { 99, 99 };
+					// std::cout << "blob_lookup_table.end()" << std::endl;
+				}
+			}
+
+			// std::cout << flag << ",";
+
+			if (pos.first != 99)
+			{
+				tilesList[i][j]->GetSpriteRenderer()->ShiftTo(pos.first - 1, pos.second - 1);
+			}
+			else
+			{
+				tilesList[i][j]->SetIsActive(false);
+			}
+
+
+			// std::cout << "posX = " << obj->getPos().x << " posY = " << obj->getPos().y << std::endl;
+		}
+		// std::cout << std::endl;
+	}
 }
 
 void LevelShowcase::TileImport(int TileBuffer[][MAP_WIDTH], std::string fileName) {

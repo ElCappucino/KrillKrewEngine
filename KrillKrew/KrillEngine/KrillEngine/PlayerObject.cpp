@@ -167,7 +167,7 @@ void PlayerObject::ReduceAbilityCooldown(AbilityButton button)
 void PlayerObject::ReduceSlowDuration()
 {
 	slowDuration -= 1;
-	KK_TRACE("Reduce slow duration: Player Number {0} Duration: {1}", GetPlayerNumber(), slowDuration);
+	// KK_TRACE("Reduce slow duration: Player Number {0} Duration: {1}", GetPlayerNumber(), slowDuration);
 }
 void PlayerObject::ReduceDashDuration() 
 {
@@ -296,5 +296,40 @@ PlayerObject::Ability PlayerObject::GetAbilityByButton(AbilityButton button) con
 void PlayerObject::AddAimingTile(TileObject* tile)
 {
 	aimingTile.push_back(tile);
+}
+void PlayerObject::clearAimingTile(TileObject* tile)
+{
+	auto clearTile = std::find(aimingTile.begin(), aimingTile.end(), tile);
+
+	// KK_INFO("clearTile");
+
+	if (clearTile != aimingTile.end())
+	{
+		// KK_INFO("completely clear tile");
+		aimingTile.erase(clearTile);
+		
+	}
+}
+
+void PlayerObject::HitAimingTile()
+{
+	// KK_INFO("aiming Tile Amount = {0}", aimingTile.size());
+	for (int i = 0; i < aimingTile.size(); i++)
+	{
+		if (aimingTile[i]->GetIsActive() == false)
+		{
+			auto clearTile = std::find(aimingTile.begin(), aimingTile.end(), aimingTile[i]);
+			aimingTile.erase(clearTile);
+		}
+		else
+		{
+			if (aimingTile[i]->GetIsBreakable())
+			{
+				aimingTile[i]->GotHit();
+			}
+			
+		}
+		
+	}
 }
 

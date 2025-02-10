@@ -4,18 +4,17 @@
 TileObject::TileObject()
 {
 	this->isBreakable = false;
+	this->isBroke = false;
 	this->collider = new Collider(Collider::Trigger, this);
 
 	this->maxDurability = 3;
-	this->currentDurability = 3;
+	this->currentDurability = 0;
 
 	SpritesheetInfo crackEffectSprite = SpritesheetInfo("CrackEffect", "../Resource/Texture/tileCrack.png", 128, 128, 512, 128);
 
 	this->crackOverlay = new ImageObject();
 	this->crackOverlay->SetSpriteInfo(crackEffectSprite);
 	this->crackOverlay->SetSize(128.f, -128.f);
-	this->crackOverlay->GetSpriteRenderer()->ShiftColumn();
-	this->crackOverlay->GetSpriteRenderer()->ShiftColumn();
 
 }
 TileObject::~TileObject()
@@ -41,7 +40,18 @@ void TileObject::SetIsBreakable(bool isBreakable)
 		this->crackOverlay->SetIsActive(false);
 	}
 }
-
+void TileObject::SetIsBroke(bool isBroke)
+{
+	this->isBroke = isBroke;
+}
+bool TileObject::GetIsBreakable() const
+{
+	return isBreakable;
+}
+bool TileObject::GetIsBroke() const
+{
+	return isBroke;
+}
 void TileObject::Render(glm::mat4 globalModelTransform)
 {
 	SquareMeshVbo* squareMesh = dynamic_cast<SquareMeshVbo*> (GameEngine::GetInstance()->GetRenderer()->GetMesh(SquareMeshVbo::MESH_NAME));
@@ -102,17 +112,27 @@ ImageObject* TileObject::GetOverlaySprite()
 	return this->crackOverlay;
 }
 
+
+void TileObject::CheckIfBreak()
+{
+	if (currentDurability >= maxDurability)
+	{
+		// create tile falling animation object
+		this->isBroke = true;
+		this->isBreakable = false;
+		this->crackOverlay->SetIsActive(false);
+	}
+}
+void TileObject::GotHit()
+{
+	currentDurability++;
+	this->crackOverlay->GetSpriteRenderer()->ShiftColumn();
+	CheckIfBreak();
+}
+
 void TileObject::OnColliderEnter(Collider* other)
 {
-	// KK_TRACE("Trigger Tile");
-	PlayerHitboxObject* playerhitbox = dynamic_cast<PlayerHitboxObject*>(other->GetParent());
 
-	if (playerhitbox != nullptr)
-	{
-		KK_TRACE("Add Tile");
-		PlayerObject* player = dynamic_cast<PlayerObject*>(playerhitbox->GetCollider()->GetParent());
-		player->AddAimingTile(this);
-	}
 }
 void TileObject::OnColliderStay(Collider* other)
 {
