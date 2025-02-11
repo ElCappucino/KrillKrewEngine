@@ -55,7 +55,7 @@ void LevelGameplay::LevelInit()
 	obj1->setNumber(0);
 	obj1->SetAnimationSprite(PlayerObject::AnimationState::Idle, spriteList.find("Shark_idle")->second);
 	obj1->SetAnimationSprite(PlayerObject::AnimationState::Running, spriteList.find("Shark_run")->second);
-	obj1->setAbility(0, 3);
+	obj1->setAbility(0, 4);
 	obj1->setAbility(1, 1);
 	obj1->setAbility(2, 2);
 	objectsList.push_back(obj1);
@@ -73,7 +73,7 @@ void LevelGameplay::LevelInit()
 	obj2->setNumber(1);
 	obj2->SetAnimationSprite(PlayerObject::AnimationState::Idle, spriteList.find("Shark_idle")->second);
 	obj2->SetAnimationSprite(PlayerObject::AnimationState::Running, spriteList.find("Shark_run")->second);
-	obj2->setAbility(0, 1);
+	obj2->setAbility(0, 4);
 	obj2->setAbility(1, 2);
 	obj2->setAbility(2, 3);
 	objectsList.push_back(obj2);
@@ -108,19 +108,19 @@ void LevelGameplay::LevelInit()
 	playerSize++;
 	players[3] = obj4;
 
-	TrapObject* trap1 = new TrapObject();
+	/*TrapObject* trap1 = new TrapObject();
 	trap1->GetCollider()->SetCollisionType(Collider::Trigger);
 	trap1->SetSpriteInfo(spriteList.find("Trap")->second);
 	trap1->SetTexture(spriteList.find("Trap")->second.texture);
 	trap1->SetSize(256.f, -256.f);
 	trap1->SetPosition(glm::vec3(500.f, 500.f, 0));
-	objectsList.push_back(trap1);
+	objectsList.push_back(trap1);*/
 
 	objectsList.push_back(players[0]->GetCollider()->GetGizmos());
 	objectsList.push_back(players[1]->GetCollider()->GetGizmos());
 	objectsList.push_back(players[2]->GetCollider()->GetGizmos());
 	objectsList.push_back(players[3]->GetCollider()->GetGizmos());
-	objectsList.push_back(trap1->GetCollider()->GetGizmos());
+	/*objectsList.push_back(trap1->GetCollider()->GetGizmos());*/
 
 	//create Ui by PlayerObject
 	int sizePlayer = objectsList.size();
@@ -733,6 +733,7 @@ void LevelGameplay::UpdateMovement()
 
 void LevelGameplay::UpdateKnockback(DrawableObject* obj1, DrawableObject* obj2) {
 	ProjectileObject* projectile = dynamic_cast<ProjectileObject*>(obj1);
+	TrapObject* trap = dynamic_cast<TrapObject*>(obj1);
 	PlayerObject* player = dynamic_cast<PlayerObject*>(obj2);
 	if (projectile->getNumOwner() != player->getNumber()) {
 		if (player != NULL && projectile != NULL) {
@@ -768,6 +769,9 @@ void LevelGameplay::UpdateKnockback(DrawableObject* obj1, DrawableObject* obj2) 
 			
 			player->setVelocity(knockbackDirectionX, knockbackDirectionY, knockbackDirectionXisPositive, knockbackDirectionYisPositive);
 			std::cout << knockbackDirectionY << std::endl;
+		}
+		if (player != NULL && trap != NULL) {
+
 		}
 	}
 	
@@ -945,7 +949,13 @@ void LevelGameplay::usingAbility(int numPlayer, int numberAbility) {
 			break;
 
 		case 4 :
-			TNT(numPlayer, numberAbility);
+			if (!players[numPlayer]->getIsTNT()) {
+				TNT(numPlayer, numberAbility);
+			}
+			else if (players[numPlayer]->getIsTNT()) {
+
+				players[numPlayer]->setCooldown(numberAbility, 3);
+			}
 			break;
 		}
 		
@@ -1000,7 +1010,7 @@ void LevelGameplay::dash(int num, int numAbility) {
 }
 
 void LevelGameplay::TNT(int num, int numAbility) {
-	players[num]->setCooldown(numAbility, 3);
+	
 	TrapObject* TNT = new TrapObject();
 	TNT->SetSpriteInfo(spriteList.find("TNT")->second);
 	TNT->SetTexture(spriteList.find("TNT")->second.texture);

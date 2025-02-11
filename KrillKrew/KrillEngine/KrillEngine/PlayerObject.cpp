@@ -323,3 +323,11 @@ bool PlayerObject::getIsKnockback() {
 float PlayerObject::getDurationKnockback(){
 	return durationKnockback;
 }
+
+void PlayerObject::setIsTNT(bool isTNT) {
+	this->isTNT = isTNT;
+}
+
+bool PlayerObject::getIsTNT() {
+	return isTNT;
+}

@@ -47,6 +47,7 @@ private:
 	float durationKnockback;
 	bool xIsPositive;
 	bool yIsPositive;
+	bool isTNT;
 
 public:
 	
@@ -72,6 +73,7 @@ public:
 	void setIsKnockback(bool isKnockback);
 	void setDurationKnockback(int time);
 	void reduceDurationKnockback();
+	void setIsTNT(bool isTNT);
 
 	virtual void SetAnimationSprite(AnimationState state, SpritesheetInfo spriteInfo);
 	virtual void ChangeAnimationState(AnimationState anim);
@@ -99,4 +101,5 @@ public:
 	int getIdAbility(int numberAbility);
 	bool getIsKnockback();
 	float getDurationKnockback();
+	bool getIsTNT();
 };
