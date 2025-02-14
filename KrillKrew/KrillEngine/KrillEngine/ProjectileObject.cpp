@@ -143,3 +143,19 @@ void ProjectileObject::setNumOwner(int num) {
 int ProjectileObject::getNumOwner() {
 	return playerNumOwner;
 }
+
+void ProjectileObject::setIsCanKnockback(bool isCanKnockback) {
+	this->isCanKnockback = isCanKnockback;
+}
+
+bool ProjectileObject::getIsCanKnockback() {
+	return isCanKnockback;
+}
+
+void ProjectileObject::setType(int Type) {
+	this->type = Type;
+}
+
+bool ProjectileObject::getType() {
+	return type;
+}

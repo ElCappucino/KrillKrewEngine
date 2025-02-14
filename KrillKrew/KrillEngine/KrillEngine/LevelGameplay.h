@@ -29,8 +29,8 @@ private:
 	Timer* timer;
 
 	int dt = 0;
-	float time1s[4] = {0};
-	float time05s[4] = { 0 };
+	float time1s = 0;
+	float time05s = 0;
 	float previousWidth = 0, previousHeight = 0;
 
 	// player
