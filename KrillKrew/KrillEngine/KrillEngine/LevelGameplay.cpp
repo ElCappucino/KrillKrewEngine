@@ -22,6 +22,7 @@ void LevelGameplay::LevelLoad()
 	
 	spriteList["Trap"] = SpritesheetInfo("Trap", "../Resource/Texture/Trap.png", 512, 512, 512, 512);
 	spriteList["TNT"] = SpritesheetInfo("TNT", "../Resource/Texture/TNT.png", 348, 348, 348, 348);
+	spriteList["Teleport"] = SpritesheetInfo("Teleport", "../Resource/Texture/EnderPearl.png", 512, 512, 512, 512);
 
 	spriteList["Xoey_UI"] = SpritesheetInfo("Xoey_UI", "../Resource/Texture/xoey.png", 430, 220, 430, 220);
 	spriteList["Byssa_UI"] = SpritesheetInfo("Byssa_UI", "../Resource/Texture/byssa.png", 430, 220, 430, 220);
@@ -55,7 +56,7 @@ void LevelGameplay::LevelInit()
 	obj1->setNumber(0);
 	obj1->SetAnimationSprite(PlayerObject::AnimationState::Idle, spriteList.find("Shark_idle")->second);
 	obj1->SetAnimationSprite(PlayerObject::AnimationState::Running, spriteList.find("Shark_run")->second);
-	obj1->setAbility(0, 4);
+	obj1->setAbility(0, 5);
 	obj1->setAbility(1, 1);
 	obj1->setAbility(2, 2);
 	objectsList.push_back(obj1);
@@ -73,7 +74,7 @@ void LevelGameplay::LevelInit()
 	obj2->setNumber(1);
 	obj2->SetAnimationSprite(PlayerObject::AnimationState::Idle, spriteList.find("Shark_idle")->second);
 	obj2->SetAnimationSprite(PlayerObject::AnimationState::Running, spriteList.find("Shark_run")->second);
-	obj2->setAbility(0, 4);
+	obj2->setAbility(0, 1);
 	obj2->setAbility(1, 2);
 	obj2->setAbility(2, 3);
 	objectsList.push_back(obj2);
@@ -334,21 +335,21 @@ void LevelGameplay::UpdateInput()
 				usingAbility(i + playerNum, 0);
 			}
 			//Shoot
-			if (Joystick::GetButtonUp(i, Joystick::Button::Square))
-			{
-				//std::cout << "Shoot " << i + playerNum << std::endl;
-				/*if (players[i + playerNum]->getIsShooting() == false) {
-					players[i + playerNum]->setIsShooting(true);
-					players[i + playerNum]->setIsAiming(false);
-					for (int j = 0; j < objectsList.size(); j++) {
-						ProjectileObject* projectile = dynamic_cast<ProjectileObject*>(objectsList[j]);
-						if (projectile != nullptr) {
-							projectile->setLifeTime(5);
-						}
-					}
-				}*/
-				usingAbility(i + playerNum, 0);
-			}
+			//if (Joystick::GetButtonUp(i, Joystick::Button::Square))
+			//{
+			//	//std::cout << "Shoot " << i + playerNum << std::endl;
+			//	/*if (players[i + playerNum]->getIsShooting() == false) {
+			//		players[i + playerNum]->setIsShooting(true);
+			//		players[i + playerNum]->setIsAiming(false);
+			//		for (int j = 0; j < objectsList.size(); j++) {
+			//			ProjectileObject* projectile = dynamic_cast<ProjectileObject*>(objectsList[j]);
+			//			if (projectile != nullptr) {
+			//				projectile->setLifeTime(5);
+			//			}
+			//		}
+			//	}*/
+			//	usingAbility(i + playerNum, 0);
+			//}
 
 			if (players[i + playerNum]->getIsAiming())
 			{
@@ -625,6 +626,9 @@ void LevelGameplay::UpdateCollision()
 
 					if (overlapX > 0 && overlapY > 0)
 					{
+						if (projectile->getType() == ProjectileObject::TypeProjectile::Teleport) {
+							players[projectile->getNumOwner()]->SetPosition(projectile->getPos());
+						}
 						players[projectile->getNumOwner()]->setIsShooting(false);
 						UpdateKnockback(projectile, player);
 						objectsList.erase(objectsList.begin() + i);
@@ -649,8 +653,12 @@ void LevelGameplay::UpdateProjectile()
 
 			if (projectile->getLifetime() <= 0)
 			{
+				if (projectile->getType() == ProjectileObject::TypeProjectile::Teleport) {
+					players[projectile->getNumOwner()]->SetPosition(projectile->getPos());
+				}
 				players[projectile->getNumOwner()]->setIsShooting(false);
 				objectsList.erase(objectsList.begin() + i);
+				
 			}
 
 			projectile->Translate(projectile->getVelocity());
@@ -706,7 +714,7 @@ void LevelGameplay::UpdateMovement()
 			/*players[i + playerNum]->reduceDurationKnockback();
 			std::cout << "DurationKnockback | " << players[i + playerNum]->getDurationKnockback() << std::endl;*/
 			glm::vec3 knockbackVelo = players[i + playerNum]->getVelocity();
-			float knockbackVeloX = abs(knockbackVelo.x) / 5;
+			float knockbackVeloX = abs(knockbackVelo.x) ;
 			float knockbackVeloY = abs(knockbackVelo.y) / 5;
 			/*std::cout << "knockbackVeloX | " << knockbackVeloX << std::endl;
 			std::cout << "knockbackVeloY | " << knockbackVeloY << std::endl;*/
@@ -977,19 +985,37 @@ void LevelGameplay::usingAbility(int numPlayer, int numberAbility) {
 				TNT(numPlayer, numberAbility);
 			}
 			else if (players[numPlayer]->getIsTNT()) {
-				TrapObject* realTnt;
 				for (int i = 0; i < objectsList.size(); i++) // find tnt
 				{
-					TrapObject* Tnt = dynamic_cast<TrapObject*>(objectsList[i]);
-					if (Tnt->getType() == TrapObject::TypeTrap::Tnt && Tnt->getNumOwner() == numPlayer) {
-						realTnt = Tnt;
+					TrapObject* realTnt = dynamic_cast<TrapObject*>(objectsList[i]);
+					if(realTnt != NULL){
+						if (realTnt->getType() == TrapObject::TypeTrap::Tnt && realTnt->getNumOwner() == numPlayer) {
+							realTnt->setIsCanKnockback(true);
+							players[numPlayer]->setCooldown(numberAbility, 3);
+							players[numPlayer]->setIsTNT(false);
+							objectsList.erase(objectsList.begin() + i);
+						}
 					}
+					
 				}
-				if (realTnt != NULL) {
-					realTnt->setIsCanKnockback(true);
-					players[numPlayer]->setCooldown(numberAbility, 3);
+			}
+		case 5 :
+			if (!players[numPlayer]->getIsShooting()) {
+				Teleport(numPlayer, numberAbility);
+			}
+			else if (players[numPlayer]->getIsShooting()){
+				for (int i = 0; i < objectsList.size(); i++) // find tnt
+				{
+					ProjectileObject* Teleport = dynamic_cast<ProjectileObject*>(objectsList[i]);
+					if (Teleport != NULL) {
+						if (Teleport->getType() == ProjectileObject::TypeProjectile::Teleport && Teleport->getNumOwner() == numPlayer) {
+							players[numPlayer]->SetPosition(Teleport->getPos());
+							players[numPlayer]->setIsShooting(false);
+							objectsList.erase(objectsList.begin() + i);
+						}
+					}
+
 				}
-				
 			}
 			break;
 		}
@@ -1048,7 +1074,7 @@ void LevelGameplay::dash(int num, int numAbility) {
 }
 
 void LevelGameplay::TNT(int num, int numAbility) {
-	
+	players[num]->setIsTNT(true);
 	TrapObject* TNT = new TrapObject();
 	TNT->SetSpriteInfo(spriteList.find("TNT")->second);
 	TNT->SetTexture(spriteList.find("TNT")->second.texture);
@@ -1059,3 +1085,21 @@ void LevelGameplay::TNT(int num, int numAbility) {
 	//std::cout << "Owner " << Trap->getNumOwner() << std::endl;
 	objectsList.push_back(TNT);
 }
+
+void LevelGameplay::Teleport(int num, int numAbility) {
+	players[num]->setIsShooting(true);
+	ProjectileObject* projectile = new ProjectileObject();
+	projectile->SetSpriteInfo(spriteList.find("Teleport")->second);
+	projectile->SetTexture(spriteList.find("Teleport")->second.texture);
+	projectile->SetPosition(players[num]->getPos());
+	projectile->SetSize(256.f, -256.f);
+	projectile->setLifeTime(9999);
+	projectile->setNumOwner(players[num]->getNumber());
+	projectile->setType(ProjectileObject::TypeProjectile::Teleport);
+	projectile->setIsCanKnockback(false);
+	projectile->setVelocity(abs(players[num]->getVelocity().x) / 5, abs(players[num]->getVelocity().y) / 5, players[num]->getXIsPositive(), players[num]->getYIsPositive());
+	std::cout << "Owner " << projectile->getNumOwner() << std::endl;
+	objectsList.push_back(projectile);
+
+}
+
