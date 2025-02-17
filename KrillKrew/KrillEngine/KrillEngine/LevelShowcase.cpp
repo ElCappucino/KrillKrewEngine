@@ -19,7 +19,7 @@ void HoldBomb(int playerNum,
 	projectile->SetPosition(playerObj->getPos());
 	projectile->SetSize(256.f, -256.f);
 	projectile->setLifeTime(9999);
-	projectile->setNumOwner(playerObj->GetPlayerNumber());
+	projectile->setOwner(playerObj);
 	// std::cout << "Owner " << projectile->getNumOwner() << std::endl;
 	objectList.push_back(projectile);
 	//objectsList.push_back(projectile->GetCollider()->GetGizmos());
@@ -462,9 +462,9 @@ void LevelShowcase::UpdateInput()
 					projectile->SetPosition(players[i + playerNum]->getPos());
 					projectile->SetSize(256.f, -256.f);
 					projectile->setLifeTime(9999);
-					projectile->setNumOwner(players[i + playerNum]->GetPlayerNumber());
 					projectile->setOwner(players[i + playerNum]);
-					std::cout << "Owner " << projectile->getNumOwner() << std::endl;
+					projectile->setOwner(players[i + playerNum]);
+					std::cout << "Owner " << projectile->GetOwner()->GetPlayerNumber() << std::endl;
 					objectsList.push_back(projectile);
 					//objectsList.push_back(projectile->GetCollider()->GetGizmos());
 
@@ -492,7 +492,7 @@ void LevelShowcase::UpdateInput()
 			{
 				for (int j = 0; j < objectsList.size(); j++) {
 					ProjectileObject* projectile = dynamic_cast<ProjectileObject*>(objectsList[j]);
-					if (projectile != nullptr && i + playerNum == projectile->getNumOwner()) {
+					if (projectile != nullptr && i + playerNum == projectile->GetOwner()->GetPlayerNumber()) {
 						if (abs(norAxisX) > 0 || norAxisY > 0) {
 							projectile->setVelocity(abs(norAxisX), abs(norAxisY), isPositiveX, isPositiveY);
 						}
@@ -505,7 +505,7 @@ void LevelShowcase::UpdateInput()
 			if (Joystick::GetButtonDown(i, Joystick::Button::Triangle))
 			{
 				if (players[i + playerNum]->GetCooldown(PlayerObject::AbilityButton::Triangle) <= 0) {
-					players[i + playerNum]->SetAbilityCooldown(1, 3);
+					players[i + playerNum]->SetAbilityCooldown(PlayerObject::AbilityButton::Triangle, 3);
 					TrapObject* Trap = new TrapObject();
 					Trap->SetSpriteInfo(spriteList.find("Trap")->second);
 					Trap->SetTexture(spriteList.find("Trap")->second.texture);
@@ -670,7 +670,7 @@ void LevelShowcase::UpdateProjectile()
 
 			if (projectile->getLifetime() <= 0)
 			{
-				players[projectile->getNumOwner()]->SetIsShooting(false);
+				players[projectile->GetOwner()->GetPlayerNumber()]->SetIsShooting(false);
 				objectsList.erase(objectsList.begin() + i);
 			}
 

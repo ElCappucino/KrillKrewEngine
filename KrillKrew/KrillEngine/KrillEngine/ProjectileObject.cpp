@@ -7,7 +7,7 @@ ProjectileObject::ProjectileObject()
 {
 	collider = new Collider(Collider::Trigger, this);
 	this->pos = glm::vec3(0, 0, 0);
-	this->owner = nullptr;
+	this->playerOwner = nullptr;
 }
 
 
@@ -82,7 +82,7 @@ void ProjectileObject::setLifeTime(int lifeTime)
 }
 void ProjectileObject::setOwner(PlayerObject* player)
 {
-	this->owner = player;
+	this->playerOwner = player;
 }
 void ProjectileObject::reduceLifeTime() 
 {
@@ -90,7 +90,7 @@ void ProjectileObject::reduceLifeTime()
 	if (lifeTime <= 0) 
 	{ 
 		
-		owner->SetIsShooting(false); 
+		playerOwner->SetIsShooting(false);
 	}
 }
 int ProjectileObject::getLifetime() 
@@ -111,15 +111,15 @@ void ProjectileObject::OnColliderEnter(Collider* other)
 	PlayerObject* player = dynamic_cast<PlayerObject*>(other->GetParent());
 	if (player != nullptr)
 	{
-		if (this->getNumOwner() != player->GetPlayerNumber())
+		if (this->playerOwner != player)
 		{
-			if (owner == nullptr)
+			if (playerOwner == nullptr)
 			{
 				KK_ERROR("Projectile has no owner");
 			}
 			else
 			{
-				owner->SetIsShooting(false);
+				playerOwner->SetIsShooting(false);
 				this->isActive = false;
 			}
 		}
@@ -161,12 +161,13 @@ void ProjectileObject::OnTriggerExit(Collider* other)
 
 	// Behavior
 }
-void ProjectileObject::setNumOwner(int num) {
-	playerNumOwner = num;
-}
+//int ProjectileObject::getNumOwner() {
+//	return playerNumOwner;
+//}
 
-int ProjectileObject::getNumOwner() {
-	return playerNumOwner;
+PlayerObject* ProjectileObject::GetOwner()
+{
+	return playerOwner;
 }
 
 void ProjectileObject::setIsCanKnockback(bool isCanKnockback) {

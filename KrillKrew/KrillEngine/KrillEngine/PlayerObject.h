@@ -35,7 +35,9 @@ public:
 	{
 		Fireball = 0,
 		Trap = 1,
-		Dash = 2
+		Dash = 2,
+		TNT = 3,
+		Teleport = 4
 	};
 
 	enum class AbilityButton
@@ -79,8 +81,6 @@ private:
 	float durationSlowness;
 	bool isSlowness;
 	bool isDash;
-	float dashSpeed = 5.f;
-	float durationDash;
 	bool isKnockback;
 	float durationKnockback;
 	bool xIsPositive;
@@ -100,35 +100,22 @@ public:
 	void SetIsShooting(bool isShooting);
 	void SetIsAiming(bool isAiming);
 	void SetPlayerNumber(int num);
-	void SetAbilityCooldown(int skill, int duration);
+	void SetAbilityCooldown(PlayerObject::AbilityButton button, int duration);
 	void SetSlowDuration(int time);
 	void SetIsSlow(bool isSlow);
 	void SetIsDashing(bool isDashing);
 	void SetDashDuration(int duration);
 	void SetAbility(AbilityButton numberAbility, Ability idAbility);
 	void SetPlayerUI(UiObject* ui);
-
-	void ReduceAbilityCooldown(AbilityButton button);
-	void ReduceSlowDuration();
-	void ReduceDashDuration();
-	void setVelocity(float axisX, float axisY, bool isPositiveX, bool isPositiveY);
-	void setIsShooting(bool isShoot);
-	void setIsAiming(bool isAim);
-	void setNumber(int num);
-	void setCooldown(int skill, int time);
-	void reduceCooldown(int skill);
-	void setDurationSlowness(int time);
-	void reduceDurationSlowness();
-	void setIsSlowness(bool isSlow);
-	void setIsDash(bool isDash);
-	void setDurationDash(int time);
-	void reduceDurationDash();
-	bool getIsShooting();
-	void setAbility(int numberAbility, int idAbility);
 	void setIsKnockback(bool isKnockback);
 	void setDurationKnockback(int time);
-	void reduceDurationKnockback();
 	void setIsTNT(bool isTNT);
+
+	void ReduceAbilityCooldown(int button);
+	void ReduceSlowDuration();
+	void ReduceDashDuration();
+	void reduceDurationKnockback();
+	
 
 	virtual void SetAnimationSprite(AnimationState state, SpritesheetInfo spriteInfo);
 	virtual void ChangeAnimationState(AnimationState anim);
@@ -152,7 +139,7 @@ public:
 	bool GetIsDashing() const;
 	bool GetIsShooting() const;
 	int GetPlayerNumber() const;
-	float GetCooldown(AbilityButton button) const;
+	float GetCooldown(PlayerObject::AbilityButton button) const;
 	float GetSlowDuration() const;
 	float GetDashDuration() const;
 	PlayerObject::Ability GetAbilityByButton(AbilityButton button) const;
@@ -160,17 +147,8 @@ public:
 	void clearAimingTile(TileObject* tile);
 	void AddAimingTile(TileObject* tile);
 	void HitAimingTile();
-	glm::vec3 getVelocity();
 	bool getXIsPositive();
 	bool getYIsPositive();
-	bool getIsAiming();
-	int getNumber();
-	float getCooldown(int skill);
-	float getDurationSlowness();
-	bool getIsSlowness();
-	bool getIsDash();
-	float getDurationDash();
-	int getIdAbility(int numberAbility);
 	bool getIsKnockback();
 	float getDurationKnockback();
 	bool getIsTNT();

@@ -131,10 +131,8 @@ bool PlayerObject::getYIsPositive()
 {
 	return yIsPositive;
 }
-
-void PlayerObject::setIsShooting(bool isShoot) 
+void PlayerObject::SetIsShooting(bool isShooting)
 {
-	KK_WARN("Set is shooting = {0}", isShooting);
 	this->isShooting = isShooting;
 }
 void PlayerObject::SetIsAiming(bool isAiming)
@@ -145,9 +143,9 @@ void PlayerObject::SetPlayerNumber(int num)
 {
 	this->playerNumber = num;
 }
-void PlayerObject::SetAbilityCooldown(int skill, int duration)
+void PlayerObject::SetAbilityCooldown(PlayerObject::AbilityButton button, int duration)
 {
-	abilityCooldown[skill] = duration;
+	abilityCooldown[static_cast<int>(button)] = duration;
 }
 void PlayerObject::SetSlowDuration(int duration)
 {
@@ -173,9 +171,9 @@ void PlayerObject::SetPlayerUI(UiObject* ui)
 {
 	this->playerUI = ui;
 }
-void PlayerObject::ReduceAbilityCooldown(AbilityButton button)
+void PlayerObject::ReduceAbilityCooldown(int button)
 {
-	abilityCooldown[static_cast<int>(button)] -= 1;
+	abilityCooldown[button] -= 1;
 	// KK_TRACE("Reduce Cooldown Skill: {0} Cooldown {1}", button, GetCooldown(button));
 }
 void PlayerObject::ReduceSlowDuration()
@@ -291,7 +289,7 @@ int PlayerObject::GetPlayerNumber() const
 {
 	return playerNumber;
 }
-float PlayerObject::GetCooldown(AbilityButton button) const
+float PlayerObject::GetCooldown(PlayerObject::AbilityButton button) const
 {
 	return abilityCooldown[static_cast<int>(button)];
 }
@@ -347,13 +345,9 @@ void PlayerObject::HitAimingTile()
 	}
 }
 
-void PlayerObject::setAbility(int numberAbility, int idAbility) {
-	abilities[numberAbility] = idAbility;
-}
-
-int PlayerObject::getIdAbility(int numberAbility) {
-	return abilities[numberAbility];
-}
+//int PlayerObject::getIdAbility(int numberAbility) {
+//	return abilities[numberAbility];
+//}
 
 void PlayerObject::setIsKnockback(bool isKnockback) {
 	this->isKnockback = isKnockback;
