@@ -21,9 +21,8 @@ public:
 		Teleport
 	};
 
-	unsigned int texture;
 	glm::vec3 velocity;
-	int lifeTime;
+	float lifeTime;
 	PlayerObject* playerOwner;
 	bool isCanKnockback;
 	int type;
@@ -35,7 +34,7 @@ public:
 	void Render(glm::mat4 globalModelTransform);
 
 	void setVelocity(float axisX, float axisY, bool isPositiveX, bool isPositiveY);
-	void setLifeTime(int lifeTime);
+	void setLifeTime(float lifeTime);
 	//void setNumOwner(int Num);
 	void setOwner(PlayerObject* player);
 

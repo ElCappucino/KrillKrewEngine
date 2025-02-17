@@ -188,5 +188,12 @@ public:
 	void GroundTileRefactor();
 	void TileImport(int TileBuffer[][MAP_WIDTH], std::string fileName);
 
+	void AimFireball(int numPlayer, PlayerObject::AbilityButton button);
+	void ShootFireball(int numPlayer, PlayerObject::AbilityButton button);
+	void SetTrap(int numPlayer, PlayerObject::AbilityButton button);
+	void Dash(int numPlayer, PlayerObject::AbilityButton button);
+	void TNT(int numPlayer, PlayerObject::AbilityButton button);
+	void Teleport(int numPlayer, PlayerObject::AbilityButton button);
+
 	// void CameraLerp();
 };

@@ -680,70 +680,70 @@ void LevelGameplay::UpdateProjectile()
 
 void LevelGameplay::UpdateCooldown()
 {
-	for (int i = 0; i < /*SDL_NumJoysticks() + playerNum*/ 4 ; i++)
-	{
-		for (int j = 0; j < 3; j++)
-		{
-			
-			if (time1s >= 1.0f && players[i + playerNum]->GetCooldown(static_cast<PlayerObject::AbilityButton>(j)) > 0)
-			{
-				//std::cout << j << std::endl;
-				players[i + playerNum]->ReduceAbilityCooldown(j);
-				
-			}
-		}
-		UpdateTime();
-	}
+	//for (int i = 0; i < /*SDL_NumJoysticks() + playerNum*/ 4 ; i++)
+	//{
+	//	for (int j = 0; j < 3; j++)
+	//	{
+	//		
+	//		if (time1s >= 1.0f && players[i + playerNum]->GetCooldown(static_cast<PlayerObject::AbilityButton>(j)) > 0)
+	//		{
+	//			//std::cout << j << std::endl;
+	//			players[i + playerNum]->ReduceAbilityCooldown(j);
+	//			
+	//		}
+	//	}
+	//	UpdateTime();
+	//}
 }
 
 void LevelGameplay::UpdateMovement()
 {
 	for (int i = 0; i < /*SDL_NumJoysticks() + playerNum*/ 4; i++)
 	{
-		if (time1s >= 1.0f && players[i + playerNum]->GetIsSlow() == true)
+		if (time1s >= 1.0f && players[i]->GetIsSlow() == true)
 		{
-			players[i + playerNum]->ReduceSlowDuration();
+			players[i]->ReduceSlowDuration();
 		}
 
-		if (players[i + playerNum]->GetSlowDuration() <= 0)
+		if (players[i]->GetSlowDuration() <= 0)
 		{
-			players[i + playerNum]->SetIsSlow(false);
+			players[i]->SetIsSlow(false);
 		}
 
-		if (time1s >= 1.0f && players[i + playerNum]->GetIsDashing() == true) {
+		if (time1s >= 1.0f && players[i]->GetIsDashing() == true) {
 			std::cout << "reduce dash time" << std::endl;
-			players[i + playerNum]->ReduceDashDuration();
+			players[i]->ReduceDashDuration();
 		}
 
-		if (players[i + playerNum]->GetDashDuration() <= 0)
+		if (players[i]->GetDashDuration() <= 0)
 		{
-			players[i + playerNum]->SetIsDashing(false);
+			players[i]->SetIsDashing(false);
 		}
 
-		if (time05s >= 0.1f && players[i + playerNum]->getIsKnockback() == true) {
+		if (time05s >= 0.1f && players[i]->getIsKnockback() == true) {
 			
 			/*players[i + playerNum]->reduceDurationKnockback();
 			std::cout << "DurationKnockback | " << players[i + playerNum]->getDurationKnockback() << std::endl;*/
-			glm::vec3 knockbackVelo = players[i + playerNum]->GetVelocity();
+			glm::vec3 knockbackVelo = players[i]->GetVelocity();
 			float knockbackVeloX = abs(knockbackVelo.x) ;
 			float knockbackVeloY = abs(knockbackVelo.y) / 5;
 			/*std::cout << "knockbackVeloX | " << knockbackVeloX << std::endl;
 			std::cout << "knockbackVeloY | " << knockbackVeloY << std::endl;*/
-			players[i + playerNum]->SetVelocity(knockbackVeloX / 1.1, knockbackVeloY / 1.1, players[i + playerNum]->getXIsPositive(), players[i + playerNum]->getYIsPositive());
+			players[i]->SetVelocity(knockbackVeloX / 1.1, knockbackVeloY / 1.1, players[i]->getXIsPositive(), players[i]->getYIsPositive());
 			//std::cout << "knockbackVeloY | " << knockbackVeloY / 1.1 << std::endl;
 		}
 
-		if (players[i + playerNum]->getDurationKnockback() <= 0)
+		if (players[i]->getDurationKnockback() <= 0)
 		{
-			players[i + playerNum]->setIsKnockback(false);
-			players[i + playerNum]->SetVelocity(0, 0, false, false);
+			players[i]->setIsKnockback(false);
+			players[i]->SetVelocity(0, 0, false, false);
 		}
 
 
-		if (players[i + playerNum]->getIsKnockback() == true && (abs(players[i + playerNum]->GetVelocity().x) / 5 < 0.05) && (abs(players[i + playerNum]->GetVelocity().y) / 5 < 0.05))
+		if (players[i]->getIsKnockback() == true && (abs(players[i]->GetVelocity().x) / 5 < 0.05) && (abs(players[i]->GetVelocity().y) / 5 < 0.05))
 		{
-			players[i + playerNum]->setIsKnockback(false);
-			players[i + playerNum]->SetVelocity(0, 0, false, false);
+			players[i]->setIsKnockback(false);
+			players[i]->SetVelocity(0, 0, false, false);
 		}
 		
 		UpdateTime();
@@ -1029,7 +1029,8 @@ void LevelGameplay::usingAbility(int numPlayer, PlayerObject::AbilityButton butt
 	}
 }
 
-void LevelGameplay::aimFireball(int numPlayer, PlayerObject::AbilityButton button) {
+void LevelGameplay::aimFireball(int numPlayer, PlayerObject::AbilityButton button) 
+{
 	players[numPlayer]->SetVelocity(0, 0, false, false);
 	players[numPlayer]->SetIsAiming(true);
 	ProjectileObject* projectile = new ProjectileObject();

@@ -76,7 +76,7 @@ glm::vec3 ProjectileObject::getVelocity()
 	return velocity;
 }
 
-void ProjectileObject::setLifeTime(int lifeTime) 
+void ProjectileObject::setLifeTime(float lifeTime) 
 {
 	this->lifeTime = lifeTime;
 }
