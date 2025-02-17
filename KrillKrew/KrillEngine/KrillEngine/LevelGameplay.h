@@ -17,7 +17,8 @@ private:
 	Timer* timer;
 
 	int dt = 0;
-	float time[4] = {0};
+	float time1s = 0;
+	float time05s = 0;
 	float previousWidth = 0, previousHeight = 0;
 
 	// player
@@ -45,14 +46,19 @@ public:
 	void UpdateCooldown();
 	void UpdateMovement();
 	void UpdateUI();
+	void UpdateKnockback(DrawableObject* obj1, DrawableObject* obj2);
+	void UpdateTime();
 	
 	// void CameraLerp();
 	
 
 	//ability function
-	void usingAbility(int num, PlayerObject::AbilityButton button);
-	void aimFireball(int num, PlayerObject::AbilityButton button);
-	void shootFireball(int num, PlayerObject::AbilityButton button);
-	void trap(int num, PlayerObject::AbilityButton button);
-	void dash(int num, PlayerObject::AbilityButton button);
+	void usingAbility(int numberPlayer, int numberAbility);
+	void aimFireball(int num, int numAbility);
+	void shootFireball(int num, int numAbility);
+	void trap(int num, int numAbility);
+	void dash(int num, int numAbility);
+	void TNT(int num, int numAbility);
+	void Teleport(int num, int numAbility);
+	
 };

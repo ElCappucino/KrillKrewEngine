@@ -110,5 +110,20 @@ void TrapObject::OnTriggerStay(Collider* other)
 }
 void TrapObject::OnTriggerExit(Collider* other)
 {
+}
 
+void TrapObject::setIsCanKnockback(bool isCanKnockback) {
+	this->isCanKnockback = isCanKnockback;
+}
+
+bool TrapObject::getIsCanKnockback() {
+	return isCanKnockback;
+}
+
+void TrapObject::setType(int type) {
+	this->type = type;
+}
+
+bool TrapObject::getType() {
+	return type;
 }

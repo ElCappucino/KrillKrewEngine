@@ -14,8 +14,19 @@
 /// @brief The class for creating object that render using texture
 class TrapObject :public EntityObject
 {
+
+public:
+	 enum TypeTrap
+	{
+		Trap,
+		Tnt
+	};
+
+private:
 	int lifeTime;
 	int playerNumOwner;
+	bool isCanKnockback;
+	int type;
 
 public:
 	TrapObject();
@@ -27,6 +38,10 @@ public:
 	void reduceLifeTime();
 	int getLifetime();
 	int getNumOwner();
+	void setIsCanKnockback(bool isCanKnockback);
+	bool getIsCanKnockback();
+	void setType(int type);
+	bool getType();
 
 	virtual void OnColliderEnter(Collider* other);
 	virtual void OnColliderStay(Collider* other);

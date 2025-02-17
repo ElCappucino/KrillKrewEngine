@@ -76,6 +76,16 @@ private:
 	PlayerHitboxObject* attackCollider;
 	
 	std::vector<TileObject*> aimingTile;
+	float durationSlowness;
+	bool isSlowness;
+	bool isDash;
+	float dashSpeed = 5.f;
+	float durationDash;
+	bool isKnockback;
+	float durationKnockback;
+	bool xIsPositive;
+	bool yIsPositive;
+	bool isTNT;
 
 public:
 	
@@ -101,6 +111,24 @@ public:
 	void ReduceAbilityCooldown(AbilityButton button);
 	void ReduceSlowDuration();
 	void ReduceDashDuration();
+	void setVelocity(float axisX, float axisY, bool isPositiveX, bool isPositiveY);
+	void setIsShooting(bool isShoot);
+	void setIsAiming(bool isAim);
+	void setNumber(int num);
+	void setCooldown(int skill, int time);
+	void reduceCooldown(int skill);
+	void setDurationSlowness(int time);
+	void reduceDurationSlowness();
+	void setIsSlowness(bool isSlow);
+	void setIsDash(bool isDash);
+	void setDurationDash(int time);
+	void reduceDurationDash();
+	bool getIsShooting();
+	void setAbility(int numberAbility, int idAbility);
+	void setIsKnockback(bool isKnockback);
+	void setDurationKnockback(int time);
+	void reduceDurationKnockback();
+	void setIsTNT(bool isTNT);
 
 	virtual void SetAnimationSprite(AnimationState state, SpritesheetInfo spriteInfo);
 	virtual void ChangeAnimationState(AnimationState anim);
@@ -132,4 +160,18 @@ public:
 	void clearAimingTile(TileObject* tile);
 	void AddAimingTile(TileObject* tile);
 	void HitAimingTile();
+	glm::vec3 getVelocity();
+	bool getXIsPositive();
+	bool getYIsPositive();
+	bool getIsAiming();
+	int getNumber();
+	float getCooldown(int skill);
+	float getDurationSlowness();
+	bool getIsSlowness();
+	bool getIsDash();
+	float getDurationDash();
+	int getIdAbility(int numberAbility);
+	bool getIsKnockback();
+	float getDurationKnockback();
+	bool getIsTNT();
 };

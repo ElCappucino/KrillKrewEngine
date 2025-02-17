@@ -95,6 +95,9 @@ void PlayerObject::UpdateFacingSide(bool isLeft)
 }
 void PlayerObject::SetVelocity(float axisX, float axisY, bool isPositiveX, bool isPositiveY)
 {
+	xIsPositive = isPositiveX;
+	yIsPositive = isPositiveY;
+
 	if (!isPositiveX) {
 		axisX = -axisX;
 	}
@@ -118,7 +121,18 @@ void PlayerObject::SetVelocity(float axisX, float axisY, bool isPositiveX, bool 
 	}
 
 }
-void PlayerObject::SetIsShooting(bool isShooting)
+
+bool PlayerObject::getXIsPositive() 
+{
+	return xIsPositive;
+}
+
+bool PlayerObject::getYIsPositive() 
+{
+	return yIsPositive;
+}
+
+void PlayerObject::setIsShooting(bool isShoot) 
 {
 	KK_WARN("Set is shooting = {0}", isShooting);
 	this->isShooting = isShooting;
@@ -333,3 +347,38 @@ void PlayerObject::HitAimingTile()
 	}
 }
 
+void PlayerObject::setAbility(int numberAbility, int idAbility) {
+	abilities[numberAbility] = idAbility;
+}
+
+int PlayerObject::getIdAbility(int numberAbility) {
+	return abilities[numberAbility];
+}
+
+void PlayerObject::setIsKnockback(bool isKnockback) {
+	this->isKnockback = isKnockback;
+}
+
+void PlayerObject::setDurationKnockback(int time){
+	durationKnockback = time;
+}
+
+void PlayerObject::reduceDurationKnockback(){
+	durationKnockback -= 1;
+}
+
+bool PlayerObject::getIsKnockback() {
+	return isKnockback;
+}
+
+float PlayerObject::getDurationKnockback(){
+	return durationKnockback;
+}
+
+void PlayerObject::setIsTNT(bool isTNT) {
+	this->isTNT = isTNT;
+}
+
+bool PlayerObject::getIsTNT() {
+	return isTNT;
+}

@@ -14,11 +14,19 @@
 /// @brief The class for creating object that render using texture
 class ProjectileObject : public EntityObject
 {
+public:
+	enum TypeProjectile
+	{
+		Fireball,
+		Teleport
+	};
+
 	unsigned int texture;
 	glm::vec3 velocity;
 	int lifeTime;
 	int playerNumOwner;
-	PlayerObject* owner;
+	bool isCanKnockback;
+	int type;
 
 public:
 	ProjectileObject();
@@ -32,6 +40,10 @@ public:
 	glm::vec3 getVelocity();
 	void reduceLifeTime();
 	int getLifetime();
+	void setIsCanKnockback(bool isCanKnockback);
+	bool getIsCanKnockback();
+	void setType(int Type);
+	bool getType();
 
 	virtual Collider* GetCollider();
 
