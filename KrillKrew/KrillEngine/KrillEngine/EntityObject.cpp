@@ -70,6 +70,11 @@ Collider* EntityObject::GetCollider()
 {
 	return collider;
 }
+
+void EntityObject::setColliderSize(glm::vec3 size) {
+	collider->setColliderSize(size);
+}
+
 void EntityObject::OnColliderEnter(Collider* other)
 {
 	// std::cout << "On Collider Enter" << std::endl;

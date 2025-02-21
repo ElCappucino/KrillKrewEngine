@@ -59,6 +59,7 @@ public:
 	void trap(int numPlayer, PlayerObject::AbilityButton button);
 	void dash(int numPlayer, PlayerObject::AbilityButton button);
 	void TNT(int numPlayer, PlayerObject::AbilityButton button);
-	void Teleport(int numPlayer, PlayerObject::AbilityButton button);
-	
+	void aimTeleport(int numPlayer, PlayerObject::AbilityButton button);
+	void shootTeleport(int numPlayer, PlayerObject::AbilityButton button);
+	void Bola(int numPlayer, PlayerObject::AbilityButton button);
 };

@@ -37,7 +37,8 @@ public:
 		Trap = 1,
 		Dash = 2,
 		TNT = 3,
-		Teleport = 4
+		Teleport = 4,
+		Bola = 5
 	};
 
 	enum class AbilityButton

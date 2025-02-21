@@ -18,7 +18,9 @@ public:
 	enum TypeProjectile
 	{
 		Fireball,
-		Teleport
+		Teleport,
+		Bola,
+		Cleave
 	};
 
 	glm::vec3 velocity;
@@ -26,6 +28,7 @@ public:
 	PlayerObject* playerOwner;
 	bool isCanKnockback;
 	int type;
+	bool is;
 
 public:
 	ProjectileObject();
@@ -45,7 +48,7 @@ public:
 	bool getIsCanKnockback();
 	PlayerObject* GetOwner();
 	void setType(int Type);
-	bool getType();
+	int getType();
 
 	virtual Collider* GetCollider();
 

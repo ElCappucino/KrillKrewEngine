@@ -182,6 +182,6 @@ void ProjectileObject::setType(int Type) {
 	this->type = Type;
 }
 
-bool ProjectileObject::getType() {
+int ProjectileObject::getType() {
 	return type;
 }
