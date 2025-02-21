@@ -1,11 +1,5 @@
 #include "Joystick.h"
 
-#include <algorithm>
-#include <iostream>
-
-#include "SDL_events.h"
-#include "SDL_gamecontroller.h"
-
 std::unordered_map<int, std::unique_ptr<Joystick::Controller>> Joystick::availableJoysticks;
 
 void Joystick::OnJoystickConnected(SDL_ControllerDeviceEvent& e) 
@@ -26,12 +20,13 @@ void Joystick::OnJoystickConnected(SDL_ControllerDeviceEvent& e)
 
 			int mapIndex = GetNextFreeIndex();
 
-			std::cout << "Joystick Connected: Mapindex: " << mapIndex << " DeviceIndex: " << deviceIndex << std::endl;
+			KK_INFO("Joystick Connected: Mapindex: {0} DeviceIndex: {1}", mapIndex, deviceIndex);
 
 			availableJoysticks[mapIndex] = std::move(c);
 		}
-		else {
-			std::cout << "Error: Unable to Connect joystick with the Device index : " << deviceIndex << std::endl;
+		else 
+		{
+			KK_ERROR("Error: Unable to Connect joystick with the Device index : {0}", deviceIndex);
 		}
 	}
 }
@@ -64,7 +59,7 @@ void Joystick::Update()
 	for (auto it = availableJoysticks.begin(); it != availableJoysticks.end(); it++)
 	{
 		Controller* c = it->second.get();
-		// std::cout << "SDL_JoystickGetType = " << SDL_JoystickGetType(it->second->gc) << std::endl;
+
 		if (c && c->gc) 
 		{
 			c->lastButtons = c->buttons;
@@ -92,7 +87,8 @@ bool Joystick::GetButton(int joystickId, Button button)
 	}
 
 	// joystick not available
-	// std::cout << "Joystick with id " << joystickId << " is not available" << std::endl;
+	KK_ERROR("Joystick with id {0} is not available", joystickId);
+
 	return false;
 }
 bool Joystick::GetButtonDown(int joystickId, Button button)
@@ -106,7 +102,8 @@ bool Joystick::GetButtonDown(int joystickId, Button button)
 	}
 
 	// joystick not available
-	// std::cout << "Joystick with id " << joystickId << " is not available" << std::endl;
+	KK_ERROR("Joystick with id {0} is not available", joystickId);
+
 	return false;
 }
 bool Joystick::GetButtonUp(int joystickId, Button button)
@@ -120,7 +117,8 @@ bool Joystick::GetButtonUp(int joystickId, Button button)
 	}
 
 	// joystick not available
-	// std::cout << "Joystick with id " << joystickId << " is not available" << std::endl;
+	KK_ERROR("Joystick with id {0} is not available", joystickId);
+
 	return false;
 }
 float Joystick::GetAxis(int joystickId, Axis axis)
@@ -133,6 +131,7 @@ float Joystick::GetAxis(int joystickId, Axis axis)
 	}
 
 	// joystick not available
+	KK_ERROR("Joystick with id {0} is not available", joystickId);
 
 	return 0.f;
 }

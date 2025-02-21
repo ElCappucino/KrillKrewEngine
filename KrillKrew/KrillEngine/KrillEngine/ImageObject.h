@@ -6,6 +6,9 @@
 #include <string>
 #include "InfoStruct.h"
 #include "SpriteRenderer.h"
+#include "GameEngine.h"
+#include "SquareMeshVbo.h"
+#include "Collider.h"
 
 /// @brief The class for creating object that render using texture
 class ImageObject :public DrawableObject
@@ -27,5 +30,12 @@ public:
 
 	void SetIsAnimated(bool value);
 	bool GetIsAnimated();
+
+	virtual void OnColliderEnter(Collider* other);
+	virtual void OnColliderStay(Collider* other);
+	virtual void OnColliderExit(Collider* other);
+	virtual void OnTriggerEnter(Collider* other);
+	virtual void OnTriggerStay(Collider* other);
+	virtual void OnTriggerExit(Collider* other);
 
 };

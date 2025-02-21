@@ -1,9 +1,24 @@
 #include "LevelShowcase.h"
 
-//float lerp(float a, float b, float t)
-//{
-//	return a + t * (b - a);
-//}
+void HoldBomb(int playerNum, 
+			  PlayerObject* playerObj, 
+			  std::vector<DrawableObject*>& objectList, 
+			  SpritesheetInfo sheetinfo)
+{
+	std::cout << "Hold" << std::endl;
+	playerObj->SetVelocity(0, 0, false, false);
+	playerObj->SetIsAiming(true);
+	ProjectileObject* projectile = new ProjectileObject();
+	projectile->SetSpriteInfo(sheetinfo);
+	projectile->SetTexture(sheetinfo.texture);
+	projectile->SetPosition(playerObj->getPos());
+	projectile->SetSize(256.f, -256.f);
+	projectile->setLifeTime(9999);
+	projectile->setOwner(playerObj);
+	// std::cout << "Owner " << projectile->getNumOwner() << std::endl;
+	objectList.push_back(projectile);
+	//objectsList.push_back(projectile->GetCollider()->GetGizmos());
+}
 
 void LevelShowcase::LevelLoad()
 {
@@ -16,19 +31,24 @@ void LevelShowcase::LevelLoad()
 	GameEngine::GetInstance()->AddMesh(LineMeshVbo::MESH_NAME, line);
 
 	spriteList["Prinny"] = SpritesheetInfo("Prinny", "../Resource/Texture/Prinny.png", 538, 538, 538, 538);
-	spriteList["Bomb"] = SpritesheetInfo("Bomb", "../Resource/Texture/Bomb_icon.png", 256, 256, 256, 256);
-
+	
 	spriteList["Shark_run"] = SpritesheetInfo("Shark_run", "../Resource/Texture/shark_run_test.png", 256, 256, 1024, 256);
 	spriteList["Shark_idle"] = SpritesheetInfo("Shart_idle", "../Resource/Texture/shark_Idle_test.png", 256, 256, 256, 256);
 	
-	spriteList["Trap"] = SpritesheetInfo("Bomb", "../Resource/Texture/Trap.png", 512, 512, 512, 512);
-
+	spriteList["Bomb"] = SpritesheetInfo("Bomb", "../Resource/Texture/Bomb_icon.png", 256, 256, 256, 256);
+	spriteList["Trap"] = SpritesheetInfo("Trap", "../Resource/Texture/Trap.png", 512, 512, 512, 512);
+	spriteList["TNT"] = SpritesheetInfo("TNT", "../Resource/Texture/TNT.png", 348, 348, 348, 348);
+	spriteList["Teleport"] = SpritesheetInfo("Teleport", "../Resource/Texture/EnderPearl.png", 512, 512, 512, 512);
+	
 	spriteList["Xoey_UI"] = SpritesheetInfo("Xoey_UI", "../Resource/Texture/xoey.png", 430, 220, 430, 220);
 	spriteList["Byssa_UI"] = SpritesheetInfo("Byssa_UI", "../Resource/Texture/byssa.png", 430, 220, 430, 220);
 	spriteList["Crunk_UI"] = SpritesheetInfo("Crunk_UI", "../Resource/Texture/crunk.png", 430, 220, 430, 220);
 	spriteList["Ham_UI"] = SpritesheetInfo("Ham_UI", "../Resource/Texture/Ham.png", 430, 220, 430, 220);
-	
+
 	spriteList["Blobtile"] = SpritesheetInfo("Blobtile", "../Resource/Texture/tileset_01.png", 128, 128, 1664, 512);
+
+	abilities.emplace(std::string("HoldBomb"), HoldBomb);
+
 	//cout << "Load Level" << endl;
 }
 
@@ -46,136 +66,7 @@ void LevelShowcase::LevelInit()
 
 	timer = Timer::Instance();
 
-	std::map<int, std::pair<int, int>> blob_lookup_table = {
-
-	{666,	{1, 1}},
-	{777,	{2, 1}},
-	{888,	{3, 1}},
-	{999,	{4, 1}},
-
-	{16,	{1, 2}},
-	{17,	{2, 2}},
-	{1,		{3, 2}},
-	{0,		{4, 2}},
-
-	{20,	{1, 3}},
-	{21,	{2, 3}},
-	{5,		{3, 3}},
-	{4,		{4, 3}},
-
-	{84,	{1, 4}},
-	{85,	{2, 4}},
-	{69,	{3, 4}},
-	{68,	{4, 4}},
-
-	{80,	{1, 5}},
-	{81,	{2, 5}},
-	{65,	{3, 5}},
-	{64,	{4, 5}},
-
-	{213,	{1, 6}},
-	{29,	{2, 6}},
-	{23,	{3, 6}},
-	{117,	{4, 6}},
-
-	{92,	{1, 7}},
-	{127,	{2, 7}},
-	{223,	{3, 7}},
-	{71,	{4, 7}},
-
-	{116,	{1, 8}},
-	{253,	{2, 8}},
-	{247,	{3, 8}},
-	{197,	{4, 8}},
-
-	{87,	{1, 9}},
-	{113,	{2, 9}},
-	{209,	{3, 9}},
-	{93,	{4, 9}},
-
-	{28,	{1, 10}},
-	{31,	{2, 10}},
-	{95,	{3, 10}},
-	{7,		{4, 10}},
-
-	{125,	{1, 11}},
-	{119,	{2, 11}},
-	{255,	{3, 11}},
-	{199,	{4, 11}},
-
-	{124,	{1, 12}},
-	{256,	{2, 12}}, // blank
-	{221,	{3, 12}},
-	{215,	{4, 12}},
-
-	{112,	{1, 13}},
-	{245,	{2, 13}},
-	{241,	{3, 13}},
-	{193,	{4, 13}},
-	};
-
-	std::map<int, std::pair<int, int>> blob_lookup_table_underground = {
-	// 1
-	{16,	{2, 12}},
-	{17,	{2, 12}},
-	{1,		{4, 1}},
-	{0,		{4, 1}},
-	// 2
-	{20,	{2, 12}},
-	{21,	{2, 12}},
-	{5,		{3, 1}},
-	{4,		{3, 1}},
-	// 3
-	{84,	{2, 12} },
-	{ 85,	{2, 12} },
-	{ 69,	{2, 1} },
-	{68,	{2, 1}},
-	// 4
-	{80,	{2, 12}},
-	{81,	{2, 12}},
-	{65,	{1, 1}},
-	{64,	{1, 1}},
-	// 5
-	{213,	{2, 12}},
-	{29,	{2, 12}},
-	{23,	{2, 12}},
-	{117,	{2, 12}},
-	// 6
-	{92,	{2, 12}},
-	{127,	{2, 12}},
-	{223,	{2, 12}},
-	{71,	{2, 1}},
-	// 7
-	{116,	{2, 12}},
-	{253,	{2, 12}},
-	{247,	{2, 12}},
-	{197,	{2, 1}},
-	// 8
-	{87,	{2, 12}},
-	{113,	{2, 12}},
-	{209,	{2, 12}},
-	{93,	{2, 12}},
-
-	{28,	{2, 12}},
-	{31,	{2, 12}},
-	{95,	{2, 12}},
-	{7,		{3, 1}},
-
-	{125,	{2, 12}},
-	{119,	{2, 12}},
-	{255,	{2, 12}},
-	{199,	{2, 1}},
-
-	{124,	{2, 12}},
-	{256,	{2, 12}}, // blank
-	{221,	{2, 12}},
-	{215,	{2, 12}},
-
-	{112,	{2, 12}	},
-	{245,	{2, 12}	},
-	{241,	{2, 12}	},
-	{193,	{1, 1}	},
-	};
+	
 
 	TileImport(groundTile, "../Resource/Texture/Tilemap1.txt");
 
@@ -190,6 +81,8 @@ void LevelShowcase::LevelInit()
 		{
 			int flag = groundTile[i][j];
 
+			// currentGroundTile[i][j] = groundTile[i][j];
+
 			std::pair<int, int> pos;
 
 			if (i == 0 ||
@@ -203,7 +96,8 @@ void LevelShowcase::LevelInit()
 			{
 				if (groundTile[i - 1][j] == 0)
 				{
-					pos = { 2, 12 };
+					// blank
+					pos = { 99, 99 };
 				}
 				else
 				{
@@ -227,18 +121,18 @@ void LevelShowcase::LevelInit()
 
 					auto it = blob_lookup_table_underground.find((int)(surround.to_ulong()));
 
-					std::cout << "Bitset = " << (int)surround.to_ulong() << std::endl;
+					// std::cout << "Bitset = " << (int)surround.to_ulong() << std::endl;
 
 					if (it != blob_lookup_table_underground.end())
 					{
 						pos = it->second;
 
-						std::cout << "pair = " << it->second.first << " " << it->second.second << std::endl;
+						// std::cout << "pair = " << it->second.first << " " << it->second.second << std::endl;
 					}
 					else 
 					{
-						pos = { 2, 12 };
-						std::cout << "blob_lookup_table.end()" << std::endl;
+						pos = { 99, 99 };
+						// std::cout << "blob_lookup_table.end()" << std::endl;
 					}
 				}
 				
@@ -261,149 +155,170 @@ void LevelShowcase::LevelInit()
 				if (!(surround[6] && surround[0])) { surround[7] = 0; }
 
 				auto it = blob_lookup_table.find((int)(surround.to_ulong()));
-				std::cout << "Bitset = " << (int)surround.to_ulong() << std::endl;
+				// std::cout << "Bitset = " << (int)surround.to_ulong() << std::endl;
 				if (it != blob_lookup_table.end())
 				{
 					pos = it->second;
 
-					std::cout << "pair = " << it->second.first << " " << it->second.second << std::endl;
+					// std::cout << "pair = " << it->second.first << " " << it->second.second << std::endl;
 				}
 				else {
-					std::cout << "blob_lookup_table.end()" << std::endl;
+					pos = { 99, 99 };
+					// std::cout << "blob_lookup_table.end()" << std::endl;
 				}
 			}
 
 			// std::cout << flag << ",";
-			ImageObject* obj = new ImageObject();
-			obj->SetSpriteInfo(spriteList.find("Blobtile")->second);
-			obj->GetSpriteRenderer()->ShiftTo(pos.first - 1, pos.second - 1);
-			obj->SetTexture(spriteList.find("Blobtile")->second.texture);
-			obj->SetSize(128.f, -128.f);
-			obj->SetPosition(glm::vec3(map_left + (j * 128.f), map_top - (i * 128.f), 0));
-			objectsList.push_back(obj);
+
+			if (pos.first != 99)
+			{
+				TileObject* obj = new TileObject();
+				obj->SetSpriteInfo(spriteList.find("Blobtile")->second);
+				obj->GetSpriteRenderer()->ShiftTo(pos.first - 1, pos.second - 1);
+				obj->SetTexture(spriteList.find("Blobtile")->second.texture);
+				obj->SetSize(128.f, -128.f);
+				obj->SetPosition(glm::vec3(map_left + (j * 126.f), map_top - (i * 126.f), 0));
+				if (flag == 0)
+				{
+					obj->SetIsBreakable(false);
+					obj->SetIsBroke(true);
+				}
+				else if (flag == 1)
+				{
+					obj->SetIsBreakable(true);
+					obj->SetIsBroke(false);
+				}
+
+				tilesList[i][j] = obj;
+				/*obj->groundTileInfo = &currentGroundTile;
+
+				obj->SetTilePosition(i, j);*/
+
+				objectsList.push_back(obj);
+				objectsList.push_back(obj->GetCollider()->GetGizmos());
+				objectsList.push_back(obj->GetOverlaySprite());
+			}
+			
 
 			// std::cout << "posX = " << obj->getPos().x << " posY = " << obj->getPos().y << std::endl;
 		}
-		std::cout << std::endl;
+		// std::cout << std::endl;
 	}
+
+
 	// Create and Initialize 4 players object
 
 	// Example Code
-	PlayerObject* obj1 = new PlayerObject();
-	obj1->GetCollider()->SetCollisionType(Collider::Kinematic);
-	obj1->SetSpriteInfo(spriteList.find("Shark_idle")->second);
-	obj1->SetTexture(spriteList.find("Shark_idle")->second.texture);
-	obj1->SetIsAnimated(true);
-	obj1->GetSpriteRenderer()->SetFrame(10);
-	obj1->SetSize(256.f, -256.f);
-	obj1->SetPosition(glm::vec3(-800.f, -700.f, 0));
-	obj1->setNumber(0);
-	obj1->SetAnimationSprite(PlayerObject::AnimationState::Idle, spriteList.find("Shark_idle")->second);
-	obj1->SetAnimationSprite(PlayerObject::AnimationState::Running, spriteList.find("Shark_run")->second);
-	objectsList.push_back(obj1);
-	playerSize++;
-	players[0] = obj1;
 
-	PlayerObject* obj2 = new PlayerObject();
-	obj2->GetCollider()->SetCollisionType(Collider::Static);
-	obj2->SetSpriteInfo(spriteList.find("Shark_idle")->second);
-	obj2->SetTexture(spriteList.find("Shark_idle")->second.texture);
-	obj2->SetIsAnimated(true);
-	obj2->GetSpriteRenderer()->SetFrame(15);
-	obj2->SetSize(256.f, -256.f);
-	obj2->SetPosition(glm::vec3(800.f, -700.f, 0));
-	obj2->setNumber(1);
-	obj2->SetAnimationSprite(PlayerObject::AnimationState::Idle, spriteList.find("Shark_idle")->second);
-	obj2->SetAnimationSprite(PlayerObject::AnimationState::Running, spriteList.find("Shark_run")->second);
-	objectsList.push_back(obj2);
+	PlayerObject* p1 = new PlayerObject();
+	// Assign all animation property
+	p1->SetAnimationSprite(PlayerObject::AnimationState::Idle, spriteList.find("Shark_idle")->second);
+	p1->SetAnimationSprite(PlayerObject::AnimationState::Running, spriteList.find("Shark_run")->second);
+	p1->GetSpriteRenderer()->SetFrame(10);
+	// Set Sprite
+	p1->SetSpriteInfo(spriteList.find("Shark_idle")->second);
+	// Set Start Position
+	p1->SetPosition(glm::vec3(-800.f, -700.f, 0));
+	// Set Player Number
+	p1->SetPlayerNumber(0);
+	// Store inside player array
+	objectsList.push_back(p1);
 	playerSize++;
-	players[1] = obj2;
+	players[0] = p1;
 
-	PlayerObject* obj3 = new PlayerObject();
-	obj3->SetSpriteInfo(spriteList.find("Shark_idle")->second);
-	obj3->SetTexture(spriteList.find("Shark_idle")->second.texture);
-	obj3->SetIsAnimated(true);
-	obj3->GetSpriteRenderer()->SetFrame(15);
-	obj3->SetSize(256.f, -256.f);
-	obj3->SetPosition(glm::vec3(-800.f, 700.f, 0));
-	obj3->setNumber(2);
-	obj3->SetAnimationSprite(PlayerObject::AnimationState::Idle, spriteList.find("Shark_idle")->second);
-	obj3->SetAnimationSprite(PlayerObject::AnimationState::Running, spriteList.find("Shark_run")->second);
-	objectsList.push_back(obj3);
+	PlayerObject* p2 = new PlayerObject();
+	p2->SetAnimationSprite(PlayerObject::AnimationState::Idle, spriteList.find("Shark_idle")->second);
+	p2->SetAnimationSprite(PlayerObject::AnimationState::Running, spriteList.find("Shark_run")->second);
+	p2->SetSpriteInfo(spriteList.find("Shark_idle")->second);
+	p2->SetPosition(glm::vec3(800.f, -700.f, 0));
+	p2->GetSpriteRenderer()->SetFrame(10);
+	p2->SetPlayerNumber(1);
+	objectsList.push_back(p2);
 	playerSize++;
-	players[2] = obj3;
+	players[1] = p2;
 
-	PlayerObject* obj4 = new PlayerObject();
-	obj4->SetSpriteInfo(spriteList.find("Shark_idle")->second);
-	obj4->SetTexture(spriteList.find("Shark_idle")->second.texture);
-	obj4->SetIsAnimated(true);
-	obj4->GetSpriteRenderer()->SetFrame(15);
-	obj4->SetSize(256.f, -256.f);
-	obj4->SetPosition(glm::vec3(800.f, 700.f, 0));
-	obj4->setNumber(3);
-	obj4->SetAnimationSprite(PlayerObject::AnimationState::Idle, spriteList.find("Shark_idle")->second);
-	obj4->SetAnimationSprite(PlayerObject::AnimationState::Running, spriteList.find("Shark_run")->second);
-	objectsList.push_back(obj4);
+	PlayerObject* p3 = new PlayerObject();
+	p3->SetAnimationSprite(PlayerObject::AnimationState::Idle, spriteList.find("Shark_idle")->second);
+	p3->SetAnimationSprite(PlayerObject::AnimationState::Running, spriteList.find("Shark_run")->second);
+	p3->SetSpriteInfo(spriteList.find("Shark_idle")->second);
+	p3->SetPosition(glm::vec3(800.f, 700.f, 0));
+	p3->GetSpriteRenderer()->SetFrame(10);
+	p3->SetPlayerNumber(2);
+	objectsList.push_back(p3);
 	playerSize++;
-	players[3] = obj4;
+	players[2] = p3;
+
+	PlayerObject* p4 = new PlayerObject();
+	p4->SetAnimationSprite(PlayerObject::AnimationState::Idle, spriteList.find("Shark_idle")->second);
+	p4->SetAnimationSprite(PlayerObject::AnimationState::Running, spriteList.find("Shark_run")->second);
+	p4->SetSpriteInfo(spriteList.find("Shark_idle")->second);
+	p4->SetPosition(glm::vec3(-800.f, 700.f, 0));
+	p4->GetSpriteRenderer()->SetFrame(10);
+	p4->SetPlayerNumber(3);
+	objectsList.push_back(p4);
+	playerSize++;
+	players[3] = p4;
+
+	objectsList.push_back(players[0]->GetAttackColliderObject());
+	objectsList.push_back(players[1]->GetAttackColliderObject());
+	objectsList.push_back(players[2]->GetAttackColliderObject());
+	objectsList.push_back(players[3]->GetAttackColliderObject());
+
+	objectsList.push_back(players[0]->GetAttackCollider()->GetGizmos());
+	objectsList.push_back(players[1]->GetAttackCollider()->GetGizmos());
+	objectsList.push_back(players[2]->GetAttackCollider()->GetGizmos());
+	objectsList.push_back(players[3]->GetAttackCollider()->GetGizmos());
 
 	objectsList.push_back(players[0]->GetCollider()->GetGizmos());
 	objectsList.push_back(players[1]->GetCollider()->GetGizmos());
 	objectsList.push_back(players[2]->GetCollider()->GetGizmos());
 	objectsList.push_back(players[3]->GetCollider()->GetGizmos());
 
-	//create Ui by PlayerObject
-	int sizePlayer = objectsList.size();
-	int count = 0;
-	for (int i = 0; i < sizePlayer; i++) {
+	
 
-		PlayerObject* player = dynamic_cast<PlayerObject*>(objectsList[i]);
-		if (player != nullptr)
-		{
-			if (count == 0) {
-				UiObject* uiSkills = new UiObject();
-				uiSkills->SetSpriteInfo(spriteList.find("Xoey_UI")->second);
-				uiSkills->SetTexture(spriteList.find("Xoey_UI")->second.texture);
-				uiSkills->SetPosition(glm::vec3(0, 0, 0));
-				uiSkills->SetSize(215.f, -100.f);
-				uiSkills->setNumOwner(0);
-				objectsList.push_back(uiSkills);
-				count++;
-				std::cout << "create Ui xoey" << std::endl;
-			}
-			else if (count == 1) {
-				UiObject* uiSkills1 = new UiObject();
-				uiSkills1->SetSpriteInfo(spriteList.find("Ham_UI")->second);
-				uiSkills1->SetTexture(spriteList.find("Ham_UI")->second.texture);
-				uiSkills1->SetPosition(glm::vec3(0, 0, 0));
-				uiSkills1->SetSize(215.f, -100.f);
-				uiSkills1->setNumOwner(1);
-				objectsList.push_back(uiSkills1);
-				count++;
-				std::cout << "create Ui Ham" << std::endl;
-			}
-			else if (count == 2) {
-				UiObject* uiSkills2 = new UiObject();
-				uiSkills2->SetSpriteInfo(spriteList.find("Byssa_UI")->second);
-				uiSkills2->SetTexture(spriteList.find("Byssa_UI")->second.texture);
-				uiSkills2->SetPosition(glm::vec3(0, 0, 0));
-				uiSkills2->SetSize(215.f, -100.f);
-				uiSkills2->setNumOwner(2);
-				objectsList.push_back(uiSkills2);
-				count++;
-				std::cout << "create Ui byssa" << std::endl;
-			}
-			else if (count == 3) {
-				UiObject* uiSkills3 = new UiObject();
-				uiSkills3->SetSpriteInfo(spriteList.find("Crunk_UI")->second);
-				uiSkills3->SetTexture(spriteList.find("Crunk_UI")->second.texture);
-				uiSkills3->SetPosition(glm::vec3(0, 0, 0));
-				uiSkills3->SetSize(215.f, -100.f);
-				uiSkills3->setNumOwner(3);
-				objectsList.push_back(uiSkills3);
-				count++;
-				std::cout << "create Ui crunk" << std::endl;
-			}
+
+	//create Ui by PlayerObject
+	int playerSize = 4;
+	int count = 0;
+
+	for (int i = 0; i < 4; i++) {
+
+		if (count == 0) {
+
+			UiObject* uiSkills = new UiObject();
+			uiSkills->SetSpriteInfo(spriteList.find("Xoey_UI")->second);
+			uiSkills->setNumOwner(0);
+			objectsList.push_back(uiSkills);
+			count++;
+
+			// std::cout << "create Ui xoey" << std::endl;
+		}
+		else if (count == 1) {
+
+			UiObject* uiSkills = new UiObject();
+			uiSkills->SetSpriteInfo(spriteList.find("Ham_UI")->second);
+			uiSkills->setNumOwner(1);
+			objectsList.push_back(uiSkills);
+			count++;
+			// std::cout << "create Ui Ham" << std::endl;
+		}
+		else if (count == 2) {
+
+			UiObject* uiSkills = new UiObject();
+			uiSkills->SetSpriteInfo(spriteList.find("Byssa_UI")->second);
+			uiSkills->setNumOwner(2);
+			objectsList.push_back(uiSkills);
+			count++;
+			// std::cout << "create Ui byssa" << std::endl;
+		}
+		else if (count == 3) {
+
+			UiObject* uiSkills = new UiObject();
+			uiSkills->SetSpriteInfo(spriteList.find("Crunk_UI")->second);
+			uiSkills->setNumOwner(3);
+			objectsList.push_back(uiSkills);
+			count++;
+			// std::cout << "create Ui crunk" << std::endl;
 		}
 	}
 
@@ -413,6 +328,15 @@ void LevelShowcase::LevelInit()
 void LevelShowcase::LevelUpdate()
 {
 	dt++;
+
+	// Clear inactive object
+	for (int i = 0; i < objectsList.size(); i++)
+	{
+		if (objectsList[i]->GetIsActive() == false)
+		{
+			objectsList.erase(objectsList.begin() + i);
+		}
+	}
 
 	// UpdateInput();
 	UpdateInput();
@@ -432,8 +356,7 @@ void LevelShowcase::LevelUpdate()
 		}
 		else
 		{
-			if (entity->GetIsAnimated() &&
-				dt % entity->GetSpriteRenderer()->GetFrame() == 0)
+			if (entity->GetIsAnimated() && dt % entity->GetSpriteRenderer()->GetFrame() == 0)
 			{
 				entity->GetSpriteRenderer()->ShiftColumn();
 				entity->UpdateCurrentAnimation();
@@ -442,7 +365,7 @@ void LevelShowcase::LevelUpdate()
 	}
 
 
-	// projectile collier player
+	// projectile collider player
 	UpdateCollision();
 
 	// delete projectile
@@ -456,6 +379,8 @@ void LevelShowcase::LevelUpdate()
 
 	//Ui Skills
 	UpdateUI();
+
+	GroundTileRefactor();
 
 }
 
@@ -512,63 +437,36 @@ void LevelShowcase::UpdateInput()
 				isPositiveY = true;
 			}
 
-			if (abs(axisX) > 0.2f) { players[i + playerNum]->UpdateFacingSide(!isPositiveX); }
-
-			if (players[i + playerNum]->getIsAiming() == false)
-			{
-				players[i + playerNum]->setVelocity(abs(norAxisX), abs(norAxisY), isPositiveX, isPositiveY);
-			}
+			// KK_TRACE("Controller player : {0} = {1}, {2}", i, norAxisX, norAxisY);
 			
 			// update facing
-			
+			if (abs(axisX) > 0.2f) 
+			{ 
+				players[i + playerNum]->UpdateFacingSide(isPositiveX); 
+			}
 
-			//Select ability
-			/*if (Joystick::GetButtonDown(i, Joystick::Button::L1)) {
-
-			}*/
-
+			if (players[i + playerNum]->GetIsAiming() == false)
+			{
+				players[i + playerNum]->SetVelocity(abs(norAxisX), abs(norAxisY), isPositiveX, isPositiveY);
+			}
 
 			//Aim
-			if (Joystick::GetButtonDown(i, Joystick::Button::L1))
+			if (Joystick::GetButtonDown(i, Joystick::Button::Triangle))
 			{
-
-				if (players[i + playerNum]->getIsShooting() == false && players[i + playerNum]->getIsAiming() == false) {
-					players[i + playerNum]->setVelocity(0, 0, isPositiveX, isPositiveY);
-					players[i + playerNum]->setIsAiming(true);
-					ProjectileObject* projectile = new ProjectileObject();
-					projectile->SetSpriteInfo(spriteList.find("Bomb")->second);
-					projectile->SetTexture(spriteList.find("Bomb")->second.texture);
-					projectile->SetPosition(players[i + playerNum]->getPos());
-					projectile->SetSize(256.f, -256.f);
-					projectile->setLifeTime(9999);
-					projectile->setNumOwner(players[i + playerNum]->getNumber());
-					std::cout << "Owner " << projectile->getNumOwner() << std::endl;
-					objectsList.push_back(projectile);
-					//objectsList.push_back(projectile->GetCollider()->GetGizmos());
-				}
+				Teleport(i, PlayerObject::AbilityButton::Triangle);
 			}
 
 			//Shoot
-			if (Joystick::GetButtonUp(i, Joystick::Button::L1))
+			if (Joystick::GetButtonUp(i, Joystick::Button::Triangle))
 			{
-				std::cout << "Shoot " << i + playerNum << std::endl;
-				if (players[i + playerNum]->getIsShooting() == false) {
-					players[i + playerNum]->setIsShooting(true);
-					players[i + playerNum]->setIsAiming(false);
-					for (int j = 0; j < objectsList.size(); j++) {
-						ProjectileObject* projectile = dynamic_cast<ProjectileObject*>(objectsList[j]);
-						if (projectile != nullptr) {
-							projectile->setLifeTime(5);
-						}
-					}
-				}
+				ShootFireball(i, PlayerObject::AbilityButton::Triangle);
 			}
 
-			if (players[i + playerNum]->getIsAiming())
+			if (players[i + playerNum]->GetIsAiming())
 			{
 				for (int j = 0; j < objectsList.size(); j++) {
 					ProjectileObject* projectile = dynamic_cast<ProjectileObject*>(objectsList[j]);
-					if (projectile != nullptr && i + playerNum == projectile->getNumOwner()) {
+					if (projectile != nullptr && i + playerNum == projectile->GetOwner()->GetPlayerNumber()) {
 						if (abs(norAxisX) > 0 || norAxisY > 0) {
 							projectile->setVelocity(abs(norAxisX), abs(norAxisY), isPositiveX, isPositiveY);
 						}
@@ -578,31 +476,39 @@ void LevelShowcase::UpdateInput()
 			}
 
 			//Place trap
-			if (Joystick::GetButtonDown(i, Joystick::Button::Triangle))
+			if (Joystick::GetButtonDown(i, Joystick::Button::Circle))
 			{
-				if (players[i + playerNum]->getCooldown(1) <= 0) {
-					players[i + playerNum]->setCooldown(1, 3);
-					TrapObject* Trap = new TrapObject();
-					Trap->SetSpriteInfo(spriteList.find("Trap")->second);
-					Trap->SetTexture(spriteList.find("Trap")->second.texture);
-					Trap->SetPosition(players[i + playerNum]->getPos());
-					Trap->SetSize(128.f, -128.f);
-					Trap->setNumOwner(players[i + playerNum]->getNumber());
-					//std::cout << "Owner " << Trap->getNumOwner() << std::endl;
-					objectsList.push_back(Trap);
+				if (players[i + playerNum]->GetCooldown(PlayerObject::AbilityButton::Circle) <= 0)
+				{
+					SetTrap(i, PlayerObject::AbilityButton::Circle);
+				}
+			}
+
+			if (Joystick::GetButtonDown(i, Joystick::Button::Cross))
+			{
+				if (players[i + playerNum]->GetCooldown(PlayerObject::AbilityButton::Cross) <= 0)
+				{
+					TNT(i, PlayerObject::AbilityButton::Cross);
 				}
 			}
 
 			// Debug other player
-			if (Joystick::GetButtonDown(i, Joystick::Button::L1))
+			if (Joystick::GetButtonDown(i, Joystick::Button::R1))
 			{
+				players[playerNum]->ChangeAnimationState(PlayerObject::AnimationState::Idle);
+				players[playerNum]->SetVelocity(0, 0, false, false);
 				playerNum += 1;
 				if (playerNum >= 4) {
 					playerNum = 0;
 				}
 			}
 
-			players[i + playerNum]->Translate(players[i + playerNum]->getVelocity());
+			if (Joystick::GetButtonDown(i, Joystick::Button::Square))
+			{
+				players[playerNum]->HitAimingTile();
+			}
+
+			players[i + playerNum]->Translate(players[i + playerNum]->GetVelocity());
 
 			if (Joystick::GetButtonDown(i, Joystick::Button::P5Button))
 			{
@@ -616,49 +522,15 @@ void LevelShowcase::UpdateInput()
 
 void LevelShowcase::UpdateCollision()
 {
-	// trap collider player
-	for (int i = 0; i < objectsList.size(); i++)
-	{
-		TrapObject* trap = dynamic_cast<TrapObject*>(objectsList[i]);
-		if (trap == nullptr)
-		{
-			continue;
-		}
-		for (int j = 0; j < objectsList.size(); j++)
-		{
-			if (i == j)
-			{
-				continue;
-			}
-			PlayerObject* player2 = dynamic_cast<PlayerObject*>(objectsList[j]);
-			if (player2 != nullptr)
-			{
-				if (trap->getNumOwner() != player2->getNumber()) {
-					Collider col1 = *trap->GetCollider();
-					Collider col2 = *player2->GetCollider();
-
-					glm::vec2 delta = glm::vec2(abs(trap->getPos().x - player2->getPos().x),
-						abs(trap->getPos().y - player2->getPos().y));
-
-					float overlapX = (abs(col1.GetHalfSize().x)) + (abs(col2.GetHalfSize().x)) - delta.x;
-					float overlapY = (abs(col1.GetHalfSize().y)) + (abs(col2.GetHalfSize().y)) - delta.y;
-
-					if (overlapX > 0 && overlapY > 0)
-					{
-						std::cout << "Trap :" << trap->getNumOwner() << " hit " << "Player" << player2->getNumber() << std::endl;
-						player2->setDurationSlowness(100);
-						player2->setIsSlowness(true);
-						objectsList.erase(objectsList.begin() + i);
-					}
-				}
-			}
-		}
-	}
-
 	// player collier player
+	
+
 	for (int i = 0; i < objectsList.size(); i++)
 	{
 		EntityObject* entity1 = dynamic_cast<EntityObject*>(objectsList[i]);
+
+		PlayerHitboxObject* hitbox = dynamic_cast<PlayerHitboxObject*>(objectsList[i]);
+		
 
 		if (entity1 == nullptr || entity1->GetCollider()->GetCollisionType() == Collider::Static)
 		{
@@ -675,44 +547,74 @@ void LevelShowcase::UpdateCollision()
 
 			if (entity2 != nullptr)
 			{
-				Collider col1 = *entity1->GetCollider();
-				Collider col2 = *entity2->GetCollider();
+				
+				Collider* col1 = entity1->GetCollider();
+				Collider* col2 = entity2->GetCollider();
 
 				glm::vec2 delta = glm::vec2(abs(entity1->getPos().x - entity2->getPos().x),
 					abs(entity1->getPos().y - entity2->getPos().y));
 
-				glm::vec2 previousDelta = glm::vec2(abs(col1.GetPreviousPos().x - col2.GetPreviousPos().x),
-					abs(col1.GetPreviousPos().y - col2.GetPreviousPos().y));
+				glm::vec2 previousDelta = glm::vec2(abs(col1->GetPreviousPos().x - col2->GetPreviousPos().x),
+					abs(col1->GetPreviousPos().y - col2->GetPreviousPos().y));
 
-				float overlapX = (abs(col1.GetHalfSize().x)) + (abs(col2.GetHalfSize().x)) - delta.x;
-				float overlapY = (abs(col1.GetHalfSize().y)) + (abs(col2.GetHalfSize().y)) - delta.y;
+				float overlapX = (abs(col1->GetHalfSize().x)) + (abs(col2->GetHalfSize().x)) - delta.x;
+				float overlapY = (abs(col1->GetHalfSize().y)) + (abs(col2->GetHalfSize().y)) - delta.y;
 
 				// for resolve collider
-				float previousOverlapX = (abs(col1.GetHalfSize().x)) + (abs(col2.GetHalfSize().x)) - previousDelta.x;
-				float previousOverlapY = (abs(col1.GetHalfSize().y)) + (abs(col2.GetHalfSize().y)) - previousDelta.y;
+				float previousOverlapX = (abs(col1->GetHalfSize().x)) + (abs(col2->GetHalfSize().x)) - previousDelta.x;
+				float previousOverlapY = (abs(col1->GetHalfSize().y)) + (abs(col2->GetHalfSize().y)) - previousDelta.y;
 
 				if (overlapX > 0 && overlapY > 0)
 				{
-					entity1->OnColliderEnter(entity2->GetCollider());
-					entity2->OnColliderEnter(entity1->GetCollider());
 
-					if (col1.GetCollisionType() == Collider::Kinematic &&
-						col2.GetCollisionType() == Collider::Static)
+					/*if (hitbox != nullptr)
+					{
+						KK_TRACE("Hitbox size = {0}, {1}", hitbox->GetCollider()->GetSize().x, hitbox->GetCollider()->GetSize().y);
+						KK_TRACE("Hitbox pos = {0}, {1}", hitbox->getPos().x, hitbox->getPos().y);
+					}*/
+
+					if (previousCollisions.find({ col1, col2 }) == previousCollisions.end())
+					{
+						// KK_TRACE("enter");
+						entity1->OnColliderEnter(entity2->GetCollider());
+						// entity2->OnColliderEnter(entity1->GetCollider());
+					}
+					else
+					{
+						
+						entity1->OnColliderStay(entity2->GetCollider());
+						// entity2->OnColliderStay(entity1->GetCollider());
+					}
+
+					currentCollisions.insert({ col1, col2 });
+
+					if (col1->GetCollisionType() == Collider::Kinematic &&
+						col2->GetCollisionType() == Collider::Static)
 					{
 						glm::vec3 newPos(entity1->getPos().x, entity1->getPos().y, entity1->getPos().z);
 
 						if (previousOverlapX > 0)
 						{
-							bool isTopSide = (col1.GetPreviousPos().y - col2.GetPreviousPos().y) > 0 ? true : false;
+							bool isTopSide = (col1->GetPreviousPos().y - col2->GetPreviousPos().y) > 0 ? true : false;
 
 							newPos.y = entity1->getPos().y + (overlapY * (isTopSide ? 1 : -1));
 						}
 						if (previousOverlapY > 0)
 						{
-							bool isLeftSide = (col1.GetPreviousPos().x - col2.GetPreviousPos().x) < 0 ? true : false;
+							bool isLeftSide = (col1->GetPreviousPos().x - col2->GetPreviousPos().x) < 0 ? true : false;
 							newPos.x = entity1->getPos().x + (overlapX * (isLeftSide ? -1 : 1));
 						}
 						entity1->SetPosition(newPos);
+					}
+				}
+				else if (overlapX <= 0 || overlapY <= 0)
+				{
+					if (previousCollisions.find({ col1, col2 }) != previousCollisions.end())
+					{
+						// KK_TRACE("OnColliderExit");
+
+						entity1->OnColliderExit(entity2->GetCollider());
+						// entity2->OnColliderExit(entity1->GetCollider());
 					}
 				}
 
@@ -723,47 +625,11 @@ void LevelShowcase::UpdateCollision()
 		entity1->GetCollider()->SetPreviousPos(entity1->getPos());
 	}
 
-	// projectile
-	for (int i = 0; i < objectsList.size(); i++)
-	{
-		ProjectileObject* projectile = dynamic_cast<ProjectileObject*>(objectsList[i]);
+	previousCollisions = currentCollisions;
+	currentCollisions.clear();
 
-		if (projectile == nullptr)
-		{
-			continue;
-		}
-
-		for (int j = 0; j < objectsList.size(); j++)
-		{
-			if (i == j)
-			{
-				continue;
-			}
-
-			PlayerObject* player = dynamic_cast<PlayerObject*>(objectsList[j]);
-
-			if (player != nullptr)
-			{
-				if (projectile->getNumOwner() != player->getNumber())
-				{
-					Collider col1 = *projectile->GetCollider();
-					Collider col2 = *player->GetCollider();
-
-					glm::vec2 delta = glm::vec2(abs(projectile->getPos().x - player->getPos().x),
-						abs(projectile->getPos().y - player->getPos().y));
-
-					float overlapX = (abs(col1.GetHalfSize().x)) + (abs(col2.GetHalfSize().x)) - delta.x;
-					float overlapY = (abs(col1.GetHalfSize().y)) + (abs(col2.GetHalfSize().y)) - delta.y;
-
-					if (overlapX > 0 && overlapY > 0)
-					{
-						players[projectile->getNumOwner()]->setIsShooting(false);
-						objectsList.erase(objectsList.begin() + i);
-					}
-				}
-			}
-		}
-	}
+	/*KK_TRACE("preiousCollisions size = {0}", previousCollisions.size());
+	KK_TRACE("currentCollisions size = {0}", currentCollisions.size());*/
 }
 
 void LevelShowcase::UpdateProjectile()
@@ -779,7 +645,7 @@ void LevelShowcase::UpdateProjectile()
 
 			if (projectile->getLifetime() <= 0)
 			{
-				players[projectile->getNumOwner()]->setIsShooting(false);
+				players[projectile->GetOwner()->GetPlayerNumber()]->SetIsShooting(false);
 				objectsList.erase(objectsList.begin() + i);
 			}
 
@@ -799,11 +665,11 @@ void LevelShowcase::UpdateCooldown()
 
 		for (int j = 0; j < 3; j++)
 		{
-			if (time[i + playerNum] >= 1.0f && players[i + playerNum]->getCooldown(j) > 0)
+			/*if (time[i + playerNum] >= 1.0f && players[i + playerNum]->GetCooldown(static_cast<PlayerObject::AbilityButton>(j)) > 0)
 			{
-				players[i + playerNum]->reduceCooldown(j);
+				players[i + playerNum]->ReduceAbilityCooldown(static_cast<PlayerObject::AbilityButton>(j));
 				time[i + playerNum] = 0.0f;
-			}
+			}*/
 		}
 	}
 }
@@ -812,47 +678,63 @@ void LevelShowcase::UpdateMovement()
 {
 	for (int i = 0; i < SDL_NumJoysticks() + playerNum; i++)
 	{
-		if (players[i]->getIsSlowness() == true)
+		
+		if (players[i]->GetIsSlow() == true)
 		{
-			players[i]->reduceDurationSlowness();
+			players[i]->ReduceSlowDuration();
 		}
 
-		if (players[i]->getDurationSlowness() <= 0)
+		if (players[i]->GetSlowDuration() <= 0)
 		{
-			players[i]->setIsSlowness(false);
+			players[i]->SetIsSlow(false);
 		}
 	}
 }
 
 void LevelShowcase::UpdateUI()
 {
+	int playerNumber = 4; // Change later
+	float uiWidth = 215.f;
+	float uiHeight = 100.f;
+	
+	float posX = camera.GetCenterX() - (uiWidth * camera.GetCameraWidth() / SCREEN_WIDTH / 2.f) * (playerNumber - 1);
+	float posY = GameEngine::GetInstance()->GetRenderer()->GetOrthovalue().bottom + ((uiHeight * camera.GetCameraHeight() / SCREEN_HEIGHT) / 2.f);
+	
 	for (int i = 0; i < objectsList.size(); i++)
 	{
 		UiObject* ui = dynamic_cast<UiObject*>(objectsList[i]);
-		if (ui != nullptr) {
-			//std::cout << "Ui id | " << ui->getNumOwner() << std::endl;
-			ui->SetPosition(glm::vec3(GameEngine::GetInstance()->GetRenderer()->GetOrthovalue().left + (((300 * (ui->getNumOwner() + 1)) - (85 * ui->getNumOwner())) * camera.GetCameraWidth() / 1246),
-				GameEngine::GetInstance()->GetRenderer()->GetOrthovalue().bottom + (50 * camera.GetCameraHeight() / 720), 0));
-			ui->SetSize(215.f * camera.GetCameraWidth() / 1246, -100.f * camera.GetCameraHeight() / 720);
+		if (ui != nullptr) 
+		{
+			ui->SetPosition(glm::vec3(posX, posY, 0));
+			ui->SetSize(uiWidth * camera.GetCameraWidth() / SCREEN_WIDTH, -uiHeight * camera.GetCameraHeight() / SCREEN_HEIGHT);
+			
+			posX += uiWidth * camera.GetCameraWidth() / SCREEN_WIDTH;
 		}
 	}
 }
 
 void LevelShowcase::LevelDraw()
 {
-	GameEngine::GetInstance()->Render(objectsList);
-
-
-	// Collider Gizmos update
+	// Collider position update
 	for (int i = 0; i < objectsList.size(); i++)
 	{
+		
+
 		PlayerObject* player = dynamic_cast<PlayerObject*>(objectsList[i]);
-		ProjectileObject* projectile = dynamic_cast<ProjectileObject*>(objectsList[i]);
+		PlayerHitboxObject* hitbox = dynamic_cast<PlayerHitboxObject*>(objectsList[i]);
+		GizmosObject* gizmos = dynamic_cast<GizmosObject*>(objectsList[i]);
+
 		if (player != nullptr)
 		{
 			player->GetCollider()->Update(player->getSize(), player->getPos());
+
+			glm::vec3 attackSize = glm::vec3(player->getSize().x / 4, player->getSize().y / 4, 0);
+			glm::vec3 attackPos = glm::vec3(player->getPos().x + 256.f, player->getPos().y, 0);
+			player->GetAttackColliderObject()->SetSize(attackSize.x, attackSize.y);
+			player->GetAttackColliderObject()->SetPosition(attackPos);
+			player->GetAttackCollider()->Update(attackSize, attackPos);
 		}
-		else
+		else if (hitbox == nullptr)
 		{
 			EntityObject* object = dynamic_cast<EntityObject*>(objectsList[i]);
 			if (object != nullptr)
@@ -860,9 +742,9 @@ void LevelShowcase::LevelDraw()
 				object->GetCollider()->Update(object->getSize(), object->getPos());
 			}
 		}
-
-
 	}
+
+	GameEngine::GetInstance()->Render(objectsList);
 
 	// cout << "Draw Level" << endl;
 }
@@ -922,10 +804,10 @@ void LevelShowcase::HandleKey(char key)
 
 	case 'y':
 		this->playerNum++;
+
 		if (this->playerNum >= 4) {
 			this->playerNum = 0;
 		}
-		std::cout << "Player " << this->playerNum << std::endl;
 		break;
 	}
 }
@@ -938,6 +820,134 @@ void LevelShowcase::HandleMouse(int type, int x, int y)
 void LevelShowcase::Movement(float axisX, float axisY, bool isPositiveX, bool isPositiveY)
 {
 
+}
+
+void LevelShowcase::GroundTileRefactor()
+{
+	for (int i = 0; i < MAP_HEIGHT; i++)
+	{
+		for (int j = 0; j < MAP_WIDTH; j++)
+		{
+			if (i == 0 ||
+				i == MAP_HEIGHT - 1 ||
+				j == 0 ||
+				j == MAP_WIDTH - 1)
+			{
+				continue;
+			}
+
+			if (tilesList[i][j] == nullptr)
+			{
+				continue;
+			}
+
+			groundTile[i][j] = tilesList[i][j]->GetIsBroke() ? 0 : 1;
+
+
+			int flag = groundTile[i][j];
+
+
+			std::pair<int, int> pos;
+
+			if (i == 0 ||
+				i == MAP_HEIGHT - 1 ||
+				j == 0 ||
+				j == MAP_WIDTH - 1)
+			{
+				continue;
+			}
+			else if (flag == 0)
+			{
+				if (groundTile[i - 1][j] == 0)
+				{
+					// blank
+					pos = { 99, 99 };
+				}
+				else
+				{
+
+					int upperPos = i - 1;
+
+					std::bitset<8> surround;
+					surround[0] = groundTile[upperPos - 1][j];
+					surround[1] = groundTile[upperPos - 1][j + 1];
+					surround[2] = groundTile[upperPos][j + 1];
+					surround[3] = groundTile[upperPos + 1][j + 1];
+					surround[4] = groundTile[upperPos + 1][j];
+					surround[5] = groundTile[upperPos + 1][j - 1];
+					surround[6] = groundTile[upperPos][j - 1];
+					surround[7] = groundTile[upperPos - 1][j - 1];
+
+					if (!(surround[0] && surround[2])) { surround[1] = 0; }
+					if (!(surround[2] && surround[4])) { surround[3] = 0; }
+					if (!(surround[4] && surround[6])) { surround[5] = 0; }
+					if (!(surround[6] && surround[0])) { surround[7] = 0; }
+
+					auto it = blob_lookup_table_underground.find((int)(surround.to_ulong()));
+
+					// std::cout << "Bitset = " << (int)surround.to_ulong() << std::endl;
+
+					if (it != blob_lookup_table_underground.end())
+					{
+						pos = it->second;
+
+						// std::cout << "pair = " << it->second.first << " " << it->second.second << std::endl;
+					}
+					else
+					{
+						pos = { 99, 99 };
+						// std::cout << "blob_lookup_table.end()" << std::endl;
+					}
+				}
+
+			}
+			else
+			{
+				std::bitset<8> surround;
+				surround[0] = groundTile[i - 1][j];
+				surround[1] = groundTile[i - 1][j + 1];
+				surround[2] = groundTile[i][j + 1];
+				surround[3] = groundTile[i + 1][j + 1];
+				surround[4] = groundTile[i + 1][j];
+				surround[5] = groundTile[i + 1][j - 1];
+				surround[6] = groundTile[i][j - 1];
+				surround[7] = groundTile[i - 1][j - 1];
+
+				if (!(surround[0] && surround[2])) { surround[1] = 0; }
+				if (!(surround[2] && surround[4])) { surround[3] = 0; }
+				if (!(surround[4] && surround[6])) { surround[5] = 0; }
+				if (!(surround[6] && surround[0])) { surround[7] = 0; }
+
+				auto it = blob_lookup_table.find((int)(surround.to_ulong()));
+				// std::cout << "Bitset = " << (int)surround.to_ulong() << std::endl;
+				if (it != blob_lookup_table.end())
+				{
+					pos = it->second;
+
+					// std::cout << "pair = " << it->second.first << " " << it->second.second << std::endl;
+				}
+				else {
+					pos = { 99, 99 };
+					// std::cout << "blob_lookup_table.end()" << std::endl;
+				}
+			}
+
+			// std::cout << flag << ",";
+
+			if (pos.first != 99)
+			{
+				tilesList[i][j]->GetSpriteRenderer()->ShiftTo(pos.first - 1, pos.second - 1);
+			}
+			else
+			{
+				tilesList[i][j]->SetIsActive(false);
+			}
+
+
+			// std::cout << "posX = " << obj->getPos().x << " posY = " << obj->getPos().y << std::endl;
+		}
+		// std::cout << std::endl;
+	}
 }
 
 void LevelShowcase::TileImport(int TileBuffer[][MAP_WIDTH], std::string fileName) {
@@ -963,4 +973,103 @@ void LevelShowcase::TileImport(int TileBuffer[][MAP_WIDTH], std::string fileName
 		mapfile.close();
 
 	}
+}
+
+void LevelShowcase::AimFireball(int numPlayer, PlayerObject::AbilityButton button)
+{
+	players[numPlayer]->SetVelocity(0, 0, false, false);
+	players[numPlayer]->SetIsAiming(true);
+
+	ProjectileObject* projectile = new ProjectileObject();
+	projectile->SetSpriteInfo(spriteList.find("TNT")->second);
+	projectile->SetPosition(players[numPlayer]->getPos());
+	projectile->SetSize(256.f, -256.f);
+	projectile->setLifeTime(9999.f);
+	projectile->setOwner(players[numPlayer]);
+	projectile->setType(ProjectileObject::TypeProjectile::Fireball);
+	projectile->setIsCanKnockback(true);
+	objectsList.push_back(projectile);
+
+	KK_TRACE("Create Fireball and Aim. Owner = {0}", projectile->GetOwner()->GetPlayerNumber());
+}
+
+void LevelShowcase::ShootFireball(int numPlayer, PlayerObject::AbilityButton button)
+{
+	if (players[numPlayer]->GetIsShooting() == false) 
+	{
+		players[numPlayer]->SetIsShooting(true);
+		players[numPlayer]->SetIsAiming(false);
+
+		for (int j = 0; j < objectsList.size(); j++) 
+		{
+			ProjectileObject* projectile = dynamic_cast<ProjectileObject*>(objectsList[j]);
+
+			if (projectile != nullptr) 
+			{
+				projectile->setLifeTime(5);
+
+				KK_TRACE("Player {0} is Shooting Fireball", numPlayer);
+			}
+		}
+	}
+}
+
+void LevelShowcase::SetTrap(int numPlayer, PlayerObject::AbilityButton button)
+{
+	players[numPlayer]->SetAbilityCooldown(button, 3);
+	TrapObject* Trap = new TrapObject();
+	Trap->SetSpriteInfo(spriteList.find("Trap")->second);
+	Trap->SetPosition(players[numPlayer]->getPos());
+	Trap->SetSize(128.f, -128.f);
+	Trap->setNumOwner(players[numPlayer]->GetPlayerNumber());
+	Trap->setType(TrapObject::TypeTrap::Trap);
+
+	objectsList.push_back(Trap);
+
+	KK_TRACE("Player {0} is set trap. trap type = {0}", static_cast<int>(TrapObject::TypeTrap::Trap));
+}
+
+void LevelShowcase::Dash(int numPlayer, PlayerObject::AbilityButton button)
+{
+	players[numPlayer]->SetAbilityCooldown(button, 3);
+	players[numPlayer]->SetIsDashing(true);
+	players[numPlayer]->SetDashDuration(2);
+
+	KK_TRACE("Player {0} is dashing", numPlayer);
+}
+
+void LevelShowcase::TNT(int numPlayer, PlayerObject::AbilityButton button)
+{
+	players[numPlayer]->setIsTNT(true);
+	TrapObject* TNT = new TrapObject();
+	TNT->SetSpriteInfo(spriteList.find("TNT")->second);
+	TNT->SetPosition(players[numPlayer]->getPos());
+	TNT->SetSize(128.f, -128.f);
+	TNT->setNumOwner(players[numPlayer]->GetPlayerNumber());
+	TNT->setType(TrapObject::TypeTrap::Tnt);
+	objectsList.push_back(TNT);
+
+	KK_TRACE("Create TNT. Owner = {0}", numPlayer);
+}
+
+void LevelShowcase::Teleport(int numPlayer, PlayerObject::AbilityButton button)
+{
+	players[numPlayer]->SetIsShooting(true);
+	ProjectileObject* projectile = new ProjectileObject();
+	projectile->SetSpriteInfo(spriteList.find("Teleport")->second);
+	projectile->SetPosition(players[numPlayer]->getPos());
+	projectile->SetSize(256.f, -256.f);
+	projectile->setLifeTime(3.f);
+	projectile->setOwner(players[numPlayer]);
+	projectile->setType(ProjectileObject::TypeProjectile::Teleport);
+	projectile->setIsCanKnockback(false);
+	projectile->setVelocity(
+		abs(players[numPlayer]->GetVelocity().x) / 5, 
+		abs(players[numPlayer]->GetVelocity().y) / 5, 
+		players[numPlayer]->getXIsPositive(), 
+		players[numPlayer]->getYIsPositive()
+	);
+	objectsList.push_back(projectile);
+
+	KK_TRACE("Create Teleport. Owner = {0}", projectile->GetOwner()->GetPlayerNumber());
 }

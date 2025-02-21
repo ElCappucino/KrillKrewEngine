@@ -7,7 +7,9 @@
 #include <array>
 #include "EntityObject.h"
 #include "Collider.h"
-#include "Ability.h"
+#include "PlayerObject.h"
+#include "GameEngine.h"
+#include "SquareMeshVbo.h"
 
 /// @brief The class for creating object that render using texture
 class ProjectileObject : public EntityObject
@@ -19,10 +21,9 @@ public:
 		Teleport
 	};
 
-	unsigned int texture;
 	glm::vec3 velocity;
-	int lifeTime;
-	int playerNumOwner;
+	float lifeTime;
+	PlayerObject* playerOwner;
 	bool isCanKnockback;
 	int type;
 
@@ -31,14 +32,18 @@ public:
 	~ProjectileObject();
 	void SetTexture(std::string path);
 	void Render(glm::mat4 globalModelTransform);
+
 	void setVelocity(float axisX, float axisY, bool isPositiveX, bool isPositiveY);
-	void setLifeTime(int lifeTime);
-	void setNumOwner(int Num);
+	void setLifeTime(float lifeTime);
+	//void setNumOwner(int Num);
+	void setOwner(PlayerObject* player);
+
 	glm::vec3 getVelocity();
 	void reduceLifeTime();
 	int getLifetime();
 	void setIsCanKnockback(bool isCanKnockback);
 	bool getIsCanKnockback();
+	PlayerObject* GetOwner();
 	void setType(int Type);
 	bool getType();
 
@@ -50,6 +55,5 @@ public:
 	virtual void OnTriggerEnter(Collider* other);
 	virtual void OnTriggerStay(Collider* other);
 	virtual void OnTriggerExit(Collider* other);
-	
-	int getNumOwner();
+
 };

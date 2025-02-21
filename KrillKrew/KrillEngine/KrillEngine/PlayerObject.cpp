@@ -1,37 +1,53 @@
 
 #include "PlayerObject.h"
+#include "Collider.h"
 #include "GameEngine.h"
 #include "SquareMeshVbo.h"
+
+#include "PlayerHitboxObject.h"
+#include "TileObject.h"
+
 
 
 PlayerObject::PlayerObject()
 {
+	this->isAnimated = true;
+
+	this->playerNumber = 0;
+
+	this->slowness = 2;
+	this->slowDuration = 0;
+	this->dashSpeed = 5;
+	this->dashDuration = 0;
+
+	this->isSlow = false;
 	this->isShooting = false;
 	this->isAiming = false;
-	this->isFacingLeft = true;
-	this->number = 0;
-	this->slowness = 2;
-	this->durationSlowness = 0;
-	this->isSlowness = false;
+	this->isFacingLeft = false;
+	this->isDashing = false;
+
 	this->pos = glm::vec3(0, 0, 0);
+	this->velocity = glm::vec3(0, 0, 0);
+	this->size = glm::vec3(256.f, -256.f, 0);
 
 	currAnimState = AnimationState::Idle;
 
-}
+	this->GetCollider()->SetCollisionType(Collider::Kinematic);
 
+	this->attackCollider = new PlayerHitboxObject(this);
+}
 
 PlayerObject::~PlayerObject()
 {
+
 }
 
 void PlayerObject::SetTexture(std::string path)
 {
 	texture = GameEngine::GetInstance()->GetRenderer()->LoadTexture(path);
 }
-
 void PlayerObject::Render(glm::mat4 globalModelTransform)
 {
-
 	SquareMeshVbo* squareMesh = dynamic_cast<SquareMeshVbo*> (GameEngine::GetInstance()->GetRenderer()->GetMesh(SquareMeshVbo::MESH_NAME));
 
 	GLuint modelMatixId = GameEngine::GetInstance()->GetRenderer()->GetModelMatrixAttrId();
@@ -46,7 +62,8 @@ void PlayerObject::Render(glm::mat4 globalModelTransform)
 		return;
 	}
 
-	squareMesh->ChangeTextureData(spriteRenderer->GetRow(),
+	squareMesh->ChangeTextureData(
+		spriteRenderer->GetRow(),
 		spriteRenderer->GetColumn(),
 		spriteRenderer->GetSpriteWidth(),
 		spriteRenderer->GetSpriteHeight(),
@@ -68,7 +85,15 @@ void PlayerObject::Render(glm::mat4 globalModelTransform)
 	}
 }
 
-void PlayerObject::setVelocity(float axisX, float axisY , bool isPositiveX, bool isPositiveY) 
+void PlayerObject::UpdateFacingSide(bool isLeft)
+{
+	if (isLeft && isFacingLeft == false || !isLeft && isFacingLeft == true)
+	{
+		this->size.x = this->size.x * -1;
+		isFacingLeft = isLeft;
+	}
+}
+void PlayerObject::SetVelocity(float axisX, float axisY, bool isPositiveX, bool isPositiveY)
 {
 	xIsPositive = isPositiveX;
 	yIsPositive = isPositiveY;
@@ -76,29 +101,25 @@ void PlayerObject::setVelocity(float axisX, float axisY , bool isPositiveX, bool
 	if (!isPositiveX) {
 		axisX = -axisX;
 	}
+
 	if (!isPositiveY) {
 		axisY = -axisY;
 	}
-	/*cout << " X | " << axisX << endl;
-	cout << " Y | " << axisY << endl;*/
-	if (isDash) {
+
+	if (isDashing) 
+	{
 		velocity = glm::vec3(axisX * 5.f, axisY * 5.f, 0) * dashSpeed;
 	}
-
-	else if (isSlowness) {
+	else if (isSlow) 
+	{
+		std::cout << "IsSlow" << std::endl;
 		velocity = glm::vec3(axisX * 5.f, axisY * 5.f, 0) / slowness;
 	}
-
-	else 
+	else
 	{
 		velocity = glm::vec3(axisX * 5.f, axisY * 5.f, 0);
 	}
-	
-}
 
-glm::vec3 PlayerObject::getVelocity()
-{
-	return velocity;
 }
 
 bool PlayerObject::getXIsPositive() 
@@ -110,31 +131,98 @@ bool PlayerObject::getYIsPositive()
 {
 	return yIsPositive;
 }
-
-void PlayerObject::setIsShooting(bool isShoot) 
+void PlayerObject::SetIsShooting(bool isShooting)
 {
-	isShooting = isShoot;
+	this->isShooting = isShooting;
 }
-bool PlayerObject::getIsShooting() 
+void PlayerObject::SetIsAiming(bool isAiming)
 {
-	return isShooting;
+	this->isAiming = isAiming;
 }
-
-void PlayerObject::setIsAiming(bool isAim) 
+void PlayerObject::SetPlayerNumber(int num) 
 {
-	isAiming = isAim;
+	this->playerNumber = num;
 }
-
-bool PlayerObject::getIsAiming() 
+void PlayerObject::SetAbilityCooldown(PlayerObject::AbilityButton button, int duration)
 {
-	return isAiming;
+	abilityCooldown[static_cast<int>(button)] = duration;
 }
-
-Collider* PlayerObject::GetCollider()
+void PlayerObject::SetSlowDuration(int duration)
+{
+	this->slowDuration = duration;
+}
+void PlayerObject::SetIsSlow(bool isSlow)
+{
+	this->isSlow = isSlow;
+}
+void PlayerObject::SetIsDashing(bool isDashing)
+{
+	this->isDashing = isDashing;
+}
+void PlayerObject::SetDashDuration(int duration) 
+{
+	this->dashDuration = duration;
+}
+void PlayerObject::SetAbility(AbilityButton button, Ability ability)
+{
+	abilities[static_cast<int>(button)] = ability;
+}
+void PlayerObject::SetPlayerUI(UiObject* ui)
+{
+	this->playerUI = ui;
+}
+void PlayerObject::ReduceAbilityCooldown(int button)
+{
+	abilityCooldown[button] -= 1;
+	// KK_TRACE("Reduce Cooldown Skill: {0} Cooldown {1}", button, GetCooldown(button));
+}
+void PlayerObject::ReduceSlowDuration()
+{
+	slowDuration -= 1;
+	// KK_TRACE("Reduce slow duration: Player Number {0} Duration: {1}", GetPlayerNumber(), slowDuration);
+}
+void PlayerObject::ReduceDashDuration() 
+{
+	dashDuration -= 1;
+}
+void PlayerObject::SetAnimationSprite(AnimationState state, SpritesheetInfo spriteInfo)
+{
+	animList.insert({ state, spriteInfo });
+}
+void PlayerObject::ChangeAnimationState(AnimationState anim)
+{
+	if (currAnimState != anim)
+	{
+		currAnimState = anim;
+		this->SetSpriteInfo(animList.find(anim)->second);
+		this->spriteRenderer->SetTexture(animList.find(anim)->second.texture);
+		this->SetTexture(animList.find(anim)->second.texture);
+		this->spriteRenderer->ShiftTo(0, 0);
+	}
+}
+void PlayerObject::UpdateCurrentAnimation()
+{
+	if (abs(this->velocity.x) > 0 || abs(this->velocity.y > 0) && currAnimState != AnimationState::Running)
+	{
+		ChangeAnimationState(AnimationState::Running);
+	}
+	else if (abs(this->velocity.x) <= 0 || abs(this->velocity.y <= 0) && currAnimState == AnimationState::Running)
+	{
+		ChangeAnimationState(AnimationState::Idle);
+	}
+}
+Collider* PlayerObject::GetCollider() const
 {
 	return collider;
 }
-
+Collider* PlayerObject::GetAttackCollider() const
+{
+	return attackCollider->GetCollider();
+}
+PlayerHitboxObject* PlayerObject::GetAttackColliderObject() const
+{
+	return attackCollider;
+}
 void PlayerObject::OnColliderEnter(Collider* other)
 {
 	// Base
@@ -177,132 +265,89 @@ void PlayerObject::OnTriggerExit(Collider* other)
 
 	// Behavior
 }
-
-void PlayerObject::setNumber(int num) 
+glm::vec3 PlayerObject::GetVelocity() const
 {
-	number = num;
+	return velocity;
+}
+bool PlayerObject::GetIsAiming() const
+{
+	return isAiming;
+}
+bool PlayerObject::GetIsSlow() const
+{
+	return isSlow;
+}
+bool PlayerObject::GetIsDashing() const
+{
+	return isDashing;
+}
+bool PlayerObject::GetIsShooting() const
+{
+	return isShooting;
+}
+int PlayerObject::GetPlayerNumber() const
+{
+	return playerNumber;
+}
+float PlayerObject::GetCooldown(PlayerObject::AbilityButton button) const
+{
+	return abilityCooldown[static_cast<int>(button)];
+}
+float PlayerObject::GetSlowDuration() const
+{
+	return slowDuration;
+}
+float PlayerObject::GetDashDuration() const
+{
+	return dashDuration;
+}
+PlayerObject::Ability PlayerObject::GetAbilityByButton(AbilityButton button) const
+{
+	return abilities[static_cast<int>(button)];
+}
+void PlayerObject::AddAimingTile(TileObject* tile)
+{
+	aimingTile.push_back(tile);
+}
+void PlayerObject::clearAimingTile(TileObject* tile)
+{
+	auto clearTile = std::find(aimingTile.begin(), aimingTile.end(), tile);
+
+	// KK_INFO("clearTile");
+
+	if (clearTile != aimingTile.end())
+	{
+		// KK_INFO("completely clear tile");
+		aimingTile.erase(clearTile);
+		
+	}
 }
 
-int PlayerObject::getNumber()
+void PlayerObject::HitAimingTile()
 {
-	return number;
-}
-
-void PlayerObject::setCooldown(int skill, int time) 
-{
-	cooldown[skill] = time;
-}
-void PlayerObject::reduceCooldown(int skill) 
-{
-	/*for (int i = 0; i < 3; i++) {
-		if (cooldown[skill] > 0) {
-			cooldown[skill] -= 1;
-			std::cout << "Skill" << i << " " << getCooldown(i) << std::endl;
+	// KK_INFO("aiming Tile Amount = {0}", aimingTile.size());
+	for (int i = 0; i < aimingTile.size(); i++)
+	{
+		if (aimingTile[i]->GetIsActive() == false)
+		{
+			auto clearTile = std::find(aimingTile.begin(), aimingTile.end(), aimingTile[i]);
+			aimingTile.erase(clearTile);
 		}
-	}*/
-
-	cooldown[skill] -= 1;
-	std::cout << "Skill" << skill << " " << getCooldown(skill) << std::endl;
-
-}
-float PlayerObject::getCooldown(int skill) 
-{
-	return cooldown[skill];
-}
-
-void PlayerObject::setDurationSlowness(int time) 
-{
-	durationSlowness = time;
-}
-void PlayerObject::reduceDurationSlowness()
-{
-	
-	durationSlowness -= 1;
-	std::cout << "durationSlowness player" << getNumber() << " " << durationSlowness << std::endl;
-	
-}
-
-void PlayerObject::setIsSlowness(bool isSlow)
-{
-	isSlowness = isSlow;
-}
-
-float PlayerObject::getDurationSlowness() 
-{
-	return durationSlowness;
-}
-
-bool PlayerObject::getIsSlowness()
-{
-	return isSlowness;
-}
-
-void PlayerObject::setIsDash(bool isDash) {
-	this->isDash = isDash;
-}
-
-bool PlayerObject::getIsDash() {
-	return isDash;
-}
-
-void PlayerObject::setDurationDash(int time) {
-	durationDash = time;
-}
-
-void PlayerObject::reduceDurationDash() {
-	durationDash -= 1;
-}
-
-float PlayerObject::getDurationDash() {
-	return durationDash;
-}
-
-void PlayerObject::UpdateFacingSide(bool isLeft)
-{
-	if (isLeft && isFacingLeft == false || !isLeft && isFacingLeft == true)
-	{
-		this->size.x = this->size.x * -1;
-		isFacingLeft = isLeft;
-	}
-}
-void PlayerObject::SetAnimationSprite(AnimationState state, SpritesheetInfo spriteInfo)
-{
-	animList.insert({ state, spriteInfo });
-}
-void PlayerObject::ChangeAnimationState(AnimationState anim)
-{
-	if (currAnimState != anim)
-	{
-		currAnimState = anim;
-		this->SetSpriteInfo(animList.find(anim)->second);
-		this->spriteRenderer->SetTexture(animList.find(anim)->second.texture);
-		this->SetTexture(animList.find(anim)->second.texture);
-		this->spriteRenderer->ShiftTo(0, 0);
-	}
-
-	/*std::cout << "Player " << number << " height width = " << std::endl;
-	std::cout << this->spriteRenderer->GetSheetHeight() << this->spriteRenderer->GetSheetWidth() << std::endl;
-	std::cout << this->spriteRenderer->GetSpriteHeight() << this->spriteRenderer->GetSpriteWidth() << std::endl;*/
-}
-void PlayerObject::UpdateCurrentAnimation()
-{
-	if (abs(this->velocity.x) > 0 || abs(this->velocity.y > 0) && currAnimState != AnimationState::Running)
-	{
-		ChangeAnimationState(AnimationState::Running);
-	}
-	else if (abs(this->velocity.x) <= 0 || abs(this->velocity.y <= 0) && currAnimState == AnimationState::Running)
-	{
-		ChangeAnimationState(AnimationState::Idle);
+		else
+		{
+			if (aimingTile[i]->GetIsBreakable())
+			{
+				aimingTile[i]->GotHit();
+			}
+			
+		}
+		
 	}
 }
 
-void PlayerObject::setAbility(int numberAbility, int idAbility) {
-	abilities[numberAbility] = idAbility;
-}
-
-int PlayerObject::getIdAbility(int numberAbility) {
-	return abilities[numberAbility];
-}
+//int PlayerObject::getIdAbility(int numberAbility) {
+//	return abilities[numberAbility];
+//}
 
 void PlayerObject::setIsKnockback(bool isKnockback) {
 	this->isKnockback = isKnockback;

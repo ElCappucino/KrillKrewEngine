@@ -1,7 +1,6 @@
 
 #include "EntityObject.h"
-#include "GameEngine.h"
-#include "SquareMeshVbo.h"
+
 
 
 EntityObject::EntityObject()
@@ -25,6 +24,7 @@ void EntityObject::SetTexture(std::string path)
 void EntityObject::SetSpriteInfo(SpritesheetInfo info)
 {
 	spriteRenderer->SetSpriteInfo(info.spritewidth, info.spriteheight, info.sheetwidth, info.sheetheight);
+	this->SetTexture(info.texture);
 }
 
 void EntityObject::Render(glm::mat4 globalModelTransform)
@@ -64,33 +64,35 @@ void EntityObject::Render(glm::mat4 globalModelTransform)
 
 	}
 }
+
+
 Collider* EntityObject::GetCollider()
 {
 	return collider;
 }
 void EntityObject::OnColliderEnter(Collider* other)
 {
-	//std::cout << "On Collider Enter" << std::endl;
+	// std::cout << "On Collider Enter" << std::endl;
 }
 void EntityObject::OnColliderStay(Collider* other)
 {
-	//std::cout << "On Collider Stay" << std::endl;
+	// std::cout << "On Collider Stay" << std::endl;
 }
 void EntityObject::OnColliderExit(Collider* other)
 {
-	//std::cout << "On Collider Exit" << std::endl;
+	// std::cout << "On Collider Exit" << std::endl;
 }
 void EntityObject::OnTriggerEnter(Collider* other)
 {
-	//std::cout << "On Trigger Enter" << std::endl;
+	// std::cout << "On Trigger Enter" << std::endl;
 }
 void EntityObject::OnTriggerStay(Collider* other)
 {
-	//std::cout << "On Trigger Enter" << std::endl;
+	// std::cout << "On Trigger Enter" << std::endl;
 }
 void EntityObject::OnTriggerExit(Collider* other)
 {
-	//std::cout << "On Trigger Enter" << std::endl;
+	// std::cout << "On Trigger Enter" << std::endl;
 }
 
 void EntityObject::SetAnimationSprite(AnimationState state, SpritesheetInfo spriteInfo)
@@ -108,5 +110,4 @@ void EntityObject::ChangeAnimationState(AnimationState anim)
 void EntityObject::UpdateCurrentAnimation()
 {
 	std::cout << "Update Animation Entity" << std::endl;
-	// ChangeAnimationState(AnimationState::Idle);
 }

@@ -35,8 +35,18 @@ void GameEngine::Init(int width, int height)
 	SetDrawArea(-3, 3, -3, 3);
 	SetBackgroundColor(1.0f, 1.0f, 200.0f / 255);
 
+	// Init Logger
+	Krill::Log::Init();
+
+	std::string f = "First";
+	std::string s = "Second";
+	KK_TRACE("Initialized Logger! {0}", f);
+	KK_INFO("Initialized Logger! {0} {1}", f, s);
+
 	stateController = new GameStateController();
-	stateController->Init(GameState::GS_LEVELSHOWCASE);
+	//stateController->loadingState = GameState::GS_LEVELGAMEPLAY;
+	stateController->loadingState = GameState::GS_LEVELSHOWCASE;
+	stateController->Init(GameState::GS_LEVELLOADING);
 }
 
 void GameEngine::Render(std::vector<DrawableObject*> renderObjects)

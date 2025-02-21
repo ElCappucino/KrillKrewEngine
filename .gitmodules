@@ -1,0 +1,3 @@
+[submodule "KrillKrew/KrillEngine/KrillEngine/Resource/spdlog"]
+	path = KrillKrew/KrillEngine/KrillEngine/Resource/spdlog
+	url = https://github.com/gabime/spdlog.git

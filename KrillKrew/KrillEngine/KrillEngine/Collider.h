@@ -3,7 +3,7 @@
 #include "SquareMeshVbo.h"
 #include "GizmosObject.h"
 
-class EntityObject;
+class ImageObject;
 
 class Collider {
 
@@ -19,7 +19,7 @@ public:
 private:
 
 	// use pos and scale from Object class
-	EntityObject* parent;
+	ImageObject* parent;
 	glm::vec3 previousPos;
 	CollisionType collisionType;
 	GizmosObject* gizmos;
@@ -33,11 +33,12 @@ private:
 public:
 
 
-	Collider(CollisionType type, EntityObject* parent);
+	Collider(CollisionType type, ImageObject* parent);
 	void Update(glm::vec3 size, glm::vec3 position);
 	GizmosObject* GetGizmos();
 	glm::vec3 GetSize();
 	glm::vec3 GetPreviousPos();
+	ImageObject* GetParent();
 	void SetPreviousPos(glm::vec3 pos);
 	glm::vec3 GetHalfSize();
 	void SetGismosColor(glm::vec3 color);

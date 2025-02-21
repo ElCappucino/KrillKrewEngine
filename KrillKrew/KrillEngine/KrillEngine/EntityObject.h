@@ -8,8 +8,9 @@
 #include "ImageObject.h"
 #include "SpriteRenderer.h"
 #include "Collider.h"
-#include "Ability.h"
 #include "InfoStruct.h"
+#include "GameEngine.h"
+#include "SquareMeshVbo.h"
 
 /// @brief The class for creating object that render using texture
 class EntityObject : public ImageObject
@@ -18,7 +19,9 @@ class EntityObject : public ImageObject
 	{
 		Idle
 	};
+
 protected:
+
 	
 	Collider* collider;
 	std::map<AnimationState, SpritesheetInfo> animList;
@@ -34,8 +37,9 @@ public:
 	// void SetSheetInfo(float row, float column, float spritewidth, float spriteheight, float sheetwidth, float sheetheight);
 	void Render(glm::mat4 globalModelTransform);
 
+	
 	virtual Collider* GetCollider();
-
+	
 	virtual void OnColliderEnter(Collider* other);
 	virtual void OnColliderStay(Collider* other);
 	virtual void OnColliderExit(Collider* other);

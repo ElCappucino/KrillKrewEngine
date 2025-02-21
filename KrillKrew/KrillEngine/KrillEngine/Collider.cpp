@@ -1,6 +1,7 @@
 #include "Collider.h"
+#include "ImageObject.h"
 
-Collider::Collider(CollisionType type, EntityObject* parent)
+Collider::Collider(CollisionType type, ImageObject* parent)
 {
 	collisionType = type;
 	this->parent = parent;
@@ -47,7 +48,10 @@ glm::vec3 Collider::GetPreviousPos()
 {
 	return previousPos;
 }
-
+ImageObject* Collider::GetParent()
+{
+	return parent;
+}
 void Collider::SetPreviousPos(glm::vec3 pos)
 {
 	previousPos = pos;

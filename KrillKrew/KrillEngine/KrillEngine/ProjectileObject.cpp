@@ -1,13 +1,13 @@
 
 #include "ProjectileObject.h"
-#include "GameEngine.h"
-#include "SquareMeshVbo.h"
+
 
 
 ProjectileObject::ProjectileObject()
 {
 	collider = new Collider(Collider::Trigger, this);
 	this->pos = glm::vec3(0, 0, 0);
+	this->playerOwner = nullptr;
 }
 
 
@@ -76,14 +76,22 @@ glm::vec3 ProjectileObject::getVelocity()
 	return velocity;
 }
 
-void ProjectileObject::setLifeTime(int lifeTime) 
+void ProjectileObject::setLifeTime(float lifeTime) 
 {
 	this->lifeTime = lifeTime;
 }
-
+void ProjectileObject::setOwner(PlayerObject* player)
+{
+	this->playerOwner = player;
+}
 void ProjectileObject::reduceLifeTime() 
 {
 	lifeTime -= 1;
+	if (lifeTime <= 0) 
+	{ 
+		
+		playerOwner->SetIsShooting(false);
+	}
 }
 int ProjectileObject::getLifetime() 
 {
@@ -100,6 +108,23 @@ void ProjectileObject::OnColliderEnter(Collider* other)
 	EntityObject::OnColliderEnter(other);
 
 	// Behavior
+	PlayerObject* player = dynamic_cast<PlayerObject*>(other->GetParent());
+	if (player != nullptr)
+	{
+		if (this->playerOwner != player)
+		{
+			if (playerOwner == nullptr)
+			{
+				KK_ERROR("Projectile has no owner");
+			}
+			else
+			{
+				playerOwner->SetIsShooting(false);
+				this->isActive = false;
+			}
+		}
+		
+	}
 }
 void ProjectileObject::OnColliderStay(Collider* other)
 {
@@ -136,12 +161,13 @@ void ProjectileObject::OnTriggerExit(Collider* other)
 
 	// Behavior
 }
-void ProjectileObject::setNumOwner(int num) {
-	playerNumOwner = num;
-}
+//int ProjectileObject::getNumOwner() {
+//	return playerNumOwner;
+//}
 
-int ProjectileObject::getNumOwner() {
-	return playerNumOwner;
+PlayerObject* ProjectileObject::GetOwner()
+{
+	return playerOwner;
 }
 
 void ProjectileObject::setIsCanKnockback(bool isCanKnockback) {

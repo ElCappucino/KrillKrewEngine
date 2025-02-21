@@ -1,7 +1,6 @@
 
 #include "ImageObject.h"
-#include "GameEngine.h"
-#include "SquareMeshVbo.h"
+
 
 
 ImageObject::ImageObject()
@@ -23,6 +22,7 @@ void ImageObject::SetTexture(std::string path)
 void ImageObject::SetSpriteInfo(SpritesheetInfo info)
 {
 	spriteRenderer->SetSpriteInfo(info.spritewidth, info.spriteheight, info.sheetwidth, info.sheetheight);
+	this->SetTexture(info.texture);
 }
 
 SpriteRenderer* ImageObject::GetSpriteRenderer()
@@ -75,5 +75,30 @@ void ImageObject::SetIsAnimated(bool value)
 bool ImageObject::GetIsAnimated()
 {
 	return isAnimated;
+}
+
+void ImageObject::OnColliderEnter(Collider* other)
+{
+
+}
+void ImageObject::OnColliderStay(Collider* other)
+{
+
+}
+void ImageObject::OnColliderExit(Collider* other)
+{
+
+}
+void ImageObject::OnTriggerEnter(Collider* other)
+{
+
+}
+void ImageObject::OnTriggerStay(Collider* other)
+{
+
+}
+void ImageObject::OnTriggerExit(Collider* other)
+{
+
 }
 

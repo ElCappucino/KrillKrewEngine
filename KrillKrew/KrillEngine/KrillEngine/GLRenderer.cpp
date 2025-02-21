@@ -1,11 +1,5 @@
 
 #include "GLRenderer.h"
-#include "gtc/matrix_transform.hpp"
-#include "gtc/type_ptr.hpp"
-#include "SDL_surface.h"
-#include "SDL_image.h"
-
-using namespace std;
 
 GLRenderer::GLRenderer(int w, int h)
 {
@@ -122,7 +116,7 @@ bool GLRenderer::Initialize(std::string vertexShaderFile, std::string fragmentSh
 
 }
 
-void GLRenderer::Render(vector <DrawableObject*> & objList)
+void GLRenderer::Render(std::vector <DrawableObject*> & objList)
 {
 	// Clear color buffer
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -262,7 +256,7 @@ GLuint GLRenderer::GetModeUniformId()
 	return this->renderModeUniformId;
 }
 
-GLuint GLRenderer::LoadTexture(string path)
+GLuint GLRenderer::LoadTexture(std::string path)
 {
 	glActiveTexture(GL_TEXTURE0);
 	SDL_Surface *image = IMG_Load(path.c_str());

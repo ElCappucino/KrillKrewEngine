@@ -5,6 +5,7 @@
 #include "DrawableObject.h"
 #include "GLRenderer.h"
 #include "GameStateController.h"
+#include "Log.h"
 
 
 /// @brief The class for creating game engine instance to control the renderer and game state.

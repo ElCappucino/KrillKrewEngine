@@ -1,19 +1,25 @@
 #pragma once
 
-#include "DrawableObject.h"
 #include "gtc/matrix_transform.hpp"
 #include "gtc/type_ptr.hpp"
 #include <string>
 #include <array>
 #include <map>
-#include "EntityObject.h"
 #include <chrono>
-#include "ImageObject.h"
+#include <vector>
+
 #include "Collider.h"
-#include "Ability.h"
+#include "GameEngine.h"
+#include "SquareMeshVbo.h"
+#include "UiObject.h"
+#include "EntityObject.h"
+
+class PlayerHitboxObject;
+class TileObject;
+
 
 /// @brief The class for creating object that render using texture
-class PlayerObject :public EntityObject
+class PlayerObject : public EntityObject
 {
 public:
 	virtual enum class AnimationState
@@ -25,24 +31,56 @@ public:
 		PlaceItem
 	};
 
+	enum class Ability
+	{
+		Fireball = 0,
+		Trap = 1,
+		Dash = 2,
+		TNT = 3,
+		Teleport = 4
+	};
+
+	enum class AbilityButton
+	{
+		Triangle = 0,
+		Circle = 1,
+		Cross = 2
+		// Square is melee
+	};
+
 private:
 
 	AnimationState currAnimState;
 	std::map<AnimationState, SpritesheetInfo> animList;
 	//std::array<Ability*, 3> abilities;
-	int abilities[3] = { 0 };
+	
 	glm::vec3 velocity;
+
 	bool isShooting;
 	bool isAiming;
 	bool isFacingLeft;
-	int number;
-	float cooldown[3] = {0};
+	bool isSlow;
+	bool isDashing;
+
+	int playerNumber;
+
+	std::array<Ability, 3> abilities;
+	float abilityCooldown[3] = {0};
+
 	float slowness = 2;
+	float slowDuration; // add value if slow and decrease over time
+	
+	float dashSpeed = 5;
+	float dashDuration; // add value if dashing and decrease over time
+
+	// UI
+	UiObject* playerUI;
+	PlayerHitboxObject* attackCollider;
+	
+	std::vector<TileObject*> aimingTile;
 	float durationSlowness;
 	bool isSlowness;
 	bool isDash;
-	float dashSpeed = 5.f;
-	float durationDash;
 	bool isKnockback;
 	float durationKnockback;
 	bool xIsPositive;
@@ -53,33 +91,40 @@ public:
 	
 	PlayerObject();
 	~PlayerObject();
-	void UpdateFacingSide(bool isLeft);
+	
 	void SetTexture(std::string path);
 	void Render(glm::mat4 globalModelTransform);
-	void setVelocity(float axisX, float axisY, bool isPositiveX, bool isPositiveY);
-	void setIsShooting(bool isShoot);
-	void setIsAiming(bool isAim);
-	void setNumber(int num);
-	void setCooldown(int skill, int time);
-	void reduceCooldown(int skill);
-	void setDurationSlowness(int time);
-	void reduceDurationSlowness();
-	void setIsSlowness(bool isSlow);
-	void setIsDash(bool isDash);
-	void setDurationDash(int time);
-	void reduceDurationDash();
-	bool getIsShooting();
-	void setAbility(int numberAbility, int idAbility);
+	void UpdateFacingSide(bool isLeft);
+
+	void SetVelocity(float axisX, float axisY, bool isPositiveX, bool isPositiveY);
+	void SetIsShooting(bool isShooting);
+	void SetIsAiming(bool isAiming);
+	void SetPlayerNumber(int num);
+	void SetAbilityCooldown(PlayerObject::AbilityButton button, int duration);
+	void SetSlowDuration(int time);
+	void SetIsSlow(bool isSlow);
+	void SetIsDashing(bool isDashing);
+	void SetDashDuration(int duration);
+	void SetAbility(AbilityButton numberAbility, Ability idAbility);
+	void SetPlayerUI(UiObject* ui);
 	void setIsKnockback(bool isKnockback);
 	void setDurationKnockback(int time);
-	void reduceDurationKnockback();
 	void setIsTNT(bool isTNT);
+
+	void ReduceAbilityCooldown(int button);
+	void ReduceSlowDuration();
+	void ReduceDashDuration();
+	void reduceDurationKnockback();
+	
 
 	virtual void SetAnimationSprite(AnimationState state, SpritesheetInfo spriteInfo);
 	virtual void ChangeAnimationState(AnimationState anim);
 	virtual void UpdateCurrentAnimation();
 
-	virtual Collider* GetCollider();
+
+	virtual Collider* GetCollider() const;
+	Collider* GetAttackCollider() const;
+	PlayerHitboxObject* GetAttackColliderObject() const;
 
 	virtual void OnColliderEnter(Collider* other);
 	virtual void OnColliderStay(Collider* other);
@@ -88,17 +133,22 @@ public:
 	virtual void OnTriggerStay(Collider* other);
 	virtual void OnTriggerExit(Collider* other);
 	
-	glm::vec3 getVelocity();
+	glm::vec3 GetVelocity() const;
+	bool GetIsAiming() const;
+	bool GetIsSlow() const;
+	bool GetIsDashing() const;
+	bool GetIsShooting() const;
+	int GetPlayerNumber() const;
+	float GetCooldown(PlayerObject::AbilityButton button) const;
+	float GetSlowDuration() const;
+	float GetDashDuration() const;
+	PlayerObject::Ability GetAbilityByButton(AbilityButton button) const;
+
+	void clearAimingTile(TileObject* tile);
+	void AddAimingTile(TileObject* tile);
+	void HitAimingTile();
 	bool getXIsPositive();
 	bool getYIsPositive();
-	bool getIsAiming();
-	int getNumber();
-	float getCooldown(int skill);
-	float getDurationSlowness();
-	bool getIsSlowness();
-	bool getIsDash();
-	float getDurationDash();
-	int getIdAbility(int numberAbility);
 	bool getIsKnockback();
 	float getDurationKnockback();
 	bool getIsTNT();

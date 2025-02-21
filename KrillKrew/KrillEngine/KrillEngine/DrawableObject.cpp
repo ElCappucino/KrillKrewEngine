@@ -1,8 +1,7 @@
 
 #include "DrawableObject.h"
 
-#include "gtc/matrix_transform.hpp"
-#include "gtc/type_ptr.hpp"
+
 
 
 
@@ -51,5 +50,12 @@ glm::vec3 DrawableObject::getSize() {
 	return size;
 
 }
-
+bool DrawableObject::GetIsActive()
+{
+	return isActive;
+}
+void DrawableObject::SetIsActive(bool isActive)
+{
+	this->isActive = isActive;
+}
 

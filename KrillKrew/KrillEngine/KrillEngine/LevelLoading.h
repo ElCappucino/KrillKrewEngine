@@ -1,10 +1,6 @@
 #pragma once
-#include "GameEngine.h"
-#include "SquareMeshVbo.h"
-#include "GameObject.h"
-#include "ImageObject.h"
-#include "Camera.h"
 #include "Level.h"
+#include "LevelUtilities.h"
 
 /// @brief The class for setup object in the level
 /// @brief It intent to inherit this class for creating any new unique scene.
