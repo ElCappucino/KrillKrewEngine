@@ -10,6 +10,7 @@ PlayerHitboxObject::PlayerHitboxObject(PlayerObject* parent)
 	glm::vec3 attackPos = glm::vec3(parent->getPos().x + 64.f, parent->getPos().y, 0);
 	this->size = attackSize;
 	this->pos = attackPos;
+
 	this->collider->Update(attackSize, attackPos);
 
 	SpritesheetInfo hitboxSprite = SpritesheetInfo("hitbox", "../Resource/Texture/marker01.png", 500, 500, 500, 500);

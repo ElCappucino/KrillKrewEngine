@@ -7,8 +7,6 @@
 #include "PlayerHitboxObject.h"
 #include "TileObject.h"
 
-
-
 PlayerObject::PlayerObject()
 {
 	this->isAnimated = true;
@@ -29,6 +27,7 @@ PlayerObject::PlayerObject()
 	this->pos = glm::vec3(0, 0, 0);
 	this->velocity = glm::vec3(0, 0, 0);
 	this->size = glm::vec3(256.f, -256.f, 0);
+	this->currDirection = glm::vec2(1.f, 0.f);
 
 	currAnimState = AnimationState::Idle;
 
@@ -171,6 +170,10 @@ void PlayerObject::SetPlayerUI(UiObject* ui)
 {
 	this->playerUI = ui;
 }
+void PlayerObject::SetCurrentDirection(glm::vec2 dir)
+{
+	this->currDirection = dir;
+}
 void PlayerObject::ReduceAbilityCooldown(int button)
 {
 	abilityCooldown[button] -= 1;
@@ -202,11 +205,41 @@ void PlayerObject::ChangeAnimationState(AnimationState anim)
 }
 void PlayerObject::UpdateCurrentAnimation()
 {
-	if (abs(this->velocity.x) > 0 || abs(this->velocity.y > 0) && currAnimState != AnimationState::Running)
+	/*if (currAnimState == AnimationState::Melee)
+	{
+		KK_INFO("Current Animation : Melee");
+	}
+	else if (currAnimState == AnimationState::Idle)
+	{
+		KK_INFO("Current Animation : Idle");
+	}
+	else if (currAnimState == AnimationState::Running)
+	{
+		KK_INFO("Current Animation : Running");
+	}*/
+
+	if (currAnimState == AnimationState::Melee)
+	{
+		if (this->spriteRenderer->GetColumn() == (this->spriteRenderer->GetSheetWidth() / this->spriteRenderer->GetSpriteWidth()) - 1)
+		{
+			ChangeAnimationState(AnimationState::Idle);
+		}
+	}
+	else if 
+	(
+		(abs(this->velocity.x) > 0 || abs(this->velocity.y > 0)) && 
+		currAnimState != AnimationState::Running &&
+		currAnimState != AnimationState::Melee
+	)
 	{
 		ChangeAnimationState(AnimationState::Running);
 	}
-	else if (abs(this->velocity.x) <= 0 || abs(this->velocity.y <= 0) && currAnimState == AnimationState::Running)
+	else if 
+	(
+		abs(this->velocity.x) <= 0 || abs(this->velocity.y <= 0) && 
+		currAnimState == AnimationState::Running &&
+		currAnimState != AnimationState::Melee
+	)
 	{
 		ChangeAnimationState(AnimationState::Idle);
 	}
@@ -300,6 +333,10 @@ float PlayerObject::GetSlowDuration() const
 float PlayerObject::GetDashDuration() const
 {
 	return dashDuration;
+}
+glm::vec2 PlayerObject::GetCurrentDirection() const
+{
+	return currDirection;
 }
 PlayerObject::Ability PlayerObject::GetAbilityByButton(AbilityButton button) const
 {

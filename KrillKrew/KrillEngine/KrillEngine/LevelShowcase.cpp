@@ -32,8 +32,9 @@ void LevelShowcase::LevelLoad()
 
 	spriteList["Prinny"] = SpritesheetInfo("Prinny", "../Resource/Texture/Prinny.png", 538, 538, 538, 538);
 	
-	spriteList["Shark_run"] = SpritesheetInfo("Shark_run", "../Resource/Texture/shark_run_test.png", 256, 256, 1024, 256);
-	spriteList["Shark_idle"] = SpritesheetInfo("Shart_idle", "../Resource/Texture/shark_Idle_test.png", 256, 256, 256, 256);
+	spriteList["Shark_hit"] = SpritesheetInfo("Shark_hit", "../Resource/Texture/Ham/P1-SmashDiagDown.png", 402, 402, 1608, 402);
+	spriteList["Shark_run"] = SpritesheetInfo("Shark_run", "../Resource/Texture/Ham/P1_MoveSide.png", 302, 302, 1208, 302);
+	spriteList["Shark_idle"] = SpritesheetInfo("Shart_idle", "../Resource/Texture/Ham/P1_Idle.png", 302, 302, 302, 302);
 	
 	spriteList["Bomb"] = SpritesheetInfo("Bomb", "../Resource/Texture/Bomb_icon.png", 256, 256, 256, 256);
 	spriteList["Trap"] = SpritesheetInfo("Trap", "../Resource/Texture/Trap.png", 512, 512, 512, 512);
@@ -214,6 +215,7 @@ void LevelShowcase::LevelInit()
 	// Assign all animation property
 	p1->SetAnimationSprite(PlayerObject::AnimationState::Idle, spriteList.find("Shark_idle")->second);
 	p1->SetAnimationSprite(PlayerObject::AnimationState::Running, spriteList.find("Shark_run")->second);
+	p1->SetAnimationSprite(PlayerObject::AnimationState::Melee, spriteList.find("Shark_hit")->second);
 	p1->GetSpriteRenderer()->SetFrame(10);
 	// Set Sprite
 	p1->SetSpriteInfo(spriteList.find("Shark_idle")->second);
@@ -229,6 +231,7 @@ void LevelShowcase::LevelInit()
 	PlayerObject* p2 = new PlayerObject();
 	p2->SetAnimationSprite(PlayerObject::AnimationState::Idle, spriteList.find("Shark_idle")->second);
 	p2->SetAnimationSprite(PlayerObject::AnimationState::Running, spriteList.find("Shark_run")->second);
+	p2->SetAnimationSprite(PlayerObject::AnimationState::Melee, spriteList.find("Shark_hit")->second);
 	p2->SetSpriteInfo(spriteList.find("Shark_idle")->second);
 	p2->SetPosition(glm::vec3(800.f, -700.f, 0));
 	p2->GetSpriteRenderer()->SetFrame(10);
@@ -240,6 +243,7 @@ void LevelShowcase::LevelInit()
 	PlayerObject* p3 = new PlayerObject();
 	p3->SetAnimationSprite(PlayerObject::AnimationState::Idle, spriteList.find("Shark_idle")->second);
 	p3->SetAnimationSprite(PlayerObject::AnimationState::Running, spriteList.find("Shark_run")->second);
+	p3->SetAnimationSprite(PlayerObject::AnimationState::Melee, spriteList.find("Shark_hit")->second);
 	p3->SetSpriteInfo(spriteList.find("Shark_idle")->second);
 	p3->SetPosition(glm::vec3(800.f, 700.f, 0));
 	p3->GetSpriteRenderer()->SetFrame(10);
@@ -251,6 +255,7 @@ void LevelShowcase::LevelInit()
 	PlayerObject* p4 = new PlayerObject();
 	p4->SetAnimationSprite(PlayerObject::AnimationState::Idle, spriteList.find("Shark_idle")->second);
 	p4->SetAnimationSprite(PlayerObject::AnimationState::Running, spriteList.find("Shark_run")->second);
+	p4->SetAnimationSprite(PlayerObject::AnimationState::Melee, spriteList.find("Shark_hit")->second);
 	p4->SetSpriteInfo(spriteList.find("Shark_idle")->second);
 	p4->SetPosition(glm::vec3(-800.f, 700.f, 0));
 	p4->GetSpriteRenderer()->SetFrame(10);
@@ -437,6 +442,11 @@ void LevelShowcase::UpdateInput()
 				isPositiveY = true;
 			}
 
+			if (norAxisX != 0 && norAxisY != 0)
+			{
+				players[i + playerNum]->SetCurrentDirection(glm::vec2(norAxisX, norAxisY));
+			}
+
 			// KK_TRACE("Controller player : {0} = {1}, {2}", i, norAxisX, norAxisY);
 			
 			// update facing
@@ -505,6 +515,7 @@ void LevelShowcase::UpdateInput()
 
 			if (Joystick::GetButtonDown(i, Joystick::Button::Square))
 			{
+				players[playerNum]->ChangeAnimationState(PlayerObject::AnimationState::Melee);
 				players[playerNum]->HitAimingTile();
 			}
 
@@ -729,10 +740,18 @@ void LevelShowcase::LevelDraw()
 			player->GetCollider()->Update(player->getSize(), player->getPos());
 
 			glm::vec3 attackSize = glm::vec3(player->getSize().x / 4, player->getSize().y / 4, 0);
-			glm::vec3 attackPos = glm::vec3(player->getPos().x + 256.f, player->getPos().y, 0);
+			glm::vec3 attackPos = glm::vec3(
+				player->getPos().x + (player->GetCurrentDirection().x * 128.f), 
+				player->getPos().y - (player->GetCurrentDirection().y * 128.f), 
+				0);
 			player->GetAttackColliderObject()->SetSize(attackSize.x, attackSize.y);
 			player->GetAttackColliderObject()->SetPosition(attackPos);
 			player->GetAttackCollider()->Update(attackSize, attackPos);
+
+			/*players[i + playerNum]->GetAttackColliderObject()->SetPosition(glm::vec3(
+				players[i + playerNum]->getPos().x + players[i + playerNum]->GetCurrentDirection().x,
+				players[i + playerNum]->getPos().y + players[i + playerNum]->GetCurrentDirection().y,
+				0));*/
 		}
 		else if (hitbox == nullptr)
 		{

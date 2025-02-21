@@ -55,6 +55,7 @@ private:
 	//std::array<Ability*, 3> abilities;
 	
 	glm::vec3 velocity;
+	glm::vec2 currDirection;
 
 	bool isShooting;
 	bool isAiming;
@@ -110,6 +111,7 @@ public:
 	void setIsKnockback(bool isKnockback);
 	void setDurationKnockback(int time);
 	void setIsTNT(bool isTNT);
+	void SetCurrentDirection(glm::vec2 dir);
 
 	void ReduceAbilityCooldown(int button);
 	void ReduceSlowDuration();
@@ -142,6 +144,7 @@ public:
 	float GetCooldown(PlayerObject::AbilityButton button) const;
 	float GetSlowDuration() const;
 	float GetDashDuration() const;
+	glm::vec2 GetCurrentDirection() const;
 	PlayerObject::Ability GetAbilityByButton(AbilityButton button) const;
 
 	void clearAimingTile(TileObject* tile);
