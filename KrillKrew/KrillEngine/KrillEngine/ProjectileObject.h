@@ -28,7 +28,7 @@ public:
 	PlayerObject* playerOwner;
 	bool isCanKnockback;
 	int type;
-	bool is;
+	bool isShooting;
 
 public:
 	ProjectileObject();
@@ -49,6 +49,8 @@ public:
 	PlayerObject* GetOwner();
 	void setType(int Type);
 	int getType();
+	void setIsShooting(bool isShooting);
+	bool getIsShooting();
 
 	virtual Collider* GetCollider();
 

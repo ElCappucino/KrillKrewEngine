@@ -185,3 +185,10 @@ void ProjectileObject::setType(int Type) {
 int ProjectileObject::getType() {
 	return type;
 }
+
+void ProjectileObject::setIsShooting(bool isShooting) {
+	this->isShooting = isShooting;
+}
+bool ProjectileObject::getIsShooting() {
+	return isShooting;
+}
