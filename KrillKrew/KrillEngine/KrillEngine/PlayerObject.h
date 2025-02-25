@@ -38,7 +38,8 @@ public:
 		Dash = 2,
 		TNT = 3,
 		Teleport = 4,
-		Bola = 5
+		Bola = 5,
+		Cleave = 6
 	};
 
 	enum class AbilityButton
@@ -89,6 +90,7 @@ private:
 	bool isTNT;
 	int holdingProjectile = 0;
 	bool isStun;
+	float durationStun;
 
 public:
 	
@@ -111,15 +113,17 @@ public:
 	void SetAbility(AbilityButton numberAbility, Ability idAbility);
 	void SetPlayerUI(UiObject* ui);
 	void SetIsKnockback(bool isKnockback);
-	void SetDurationKnockback(int time);
+	void SetKnockbackDuration(int time);
 	void SetIsTNT(bool isTNT);
 	void SetHoldingProjectile(int projectile);
 	void SetIsStun(bool isStun);
+	void SetStunDuraion(int time);
 
 	void ReduceAbilityCooldown(int button);
 	void ReduceSlowDuration();
 	void ReduceDashDuration();
-	void ReduceDurationKnockback();
+	void ReduceKnockbackDuration();
+	void ReduceStunDuration();
 	
 
 	virtual void SetAnimationSprite(AnimationState state, SpritesheetInfo spriteInfo);
@@ -147,6 +151,7 @@ public:
 	float GetCooldown(PlayerObject::AbilityButton button) const;
 	float GetSlowDuration() const;
 	float GetDashDuration() const;
+	float GetStunDuration() const;
 	PlayerObject::Ability GetAbilityByButton(AbilityButton button) const;
 
 	void ClearAimingTile(TileObject* tile);

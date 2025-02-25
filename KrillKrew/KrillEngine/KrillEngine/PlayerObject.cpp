@@ -353,11 +353,11 @@ void PlayerObject::SetIsKnockback(bool isKnockback) {
 	this->isKnockback = isKnockback;
 }
 
-void PlayerObject::SetDurationKnockback(int time){
+void PlayerObject::SetKnockbackDuration(int time){
 	durationKnockback = time;
 }
 
-void PlayerObject::ReduceDurationKnockback(){
+void PlayerObject::ReduceKnockbackDuration(){
 	durationKnockback -= 1;
 }
 
@@ -391,4 +391,16 @@ void PlayerObject::SetIsStun(bool isStun) {
 
 bool PlayerObject::GetIsStun() {
 	return isStun;
+}
+
+void PlayerObject::SetStunDuraion(int time) {
+	durationStun = time;
+}
+
+void PlayerObject::ReduceStunDuration() {
+	durationStun -= 1;
+}
+
+float PlayerObject::GetStunDuration() const{
+	return durationStun;
 }
