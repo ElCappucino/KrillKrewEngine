@@ -365,7 +365,7 @@ void LevelGameplay::UpdateInput()
 				// usingAbility(i + playerNum, 0);
 			}
 
-			if (players[i + playerNum]->GetIsAiming())
+			if (players[i + playerNum]->GetIsAiming() && players[i + playerNum]->GetHoldingProjectile() != 0)
 			{
 				for (int j = 0; j < objectsList.size(); j++) {
 					ProjectileObject* projectile = dynamic_cast<ProjectileObject*>(objectsList[j]);
@@ -667,6 +667,10 @@ void LevelGameplay::UpdateCollision()
 						}
 						players[projectile->GetOwner()->GetPlayerNumber()]->SetIsShooting(false);
 						UpdateKnockback(projectile, player);
+						if (players[projectile->GetOwner()->GetPlayerNumber()]->GetHoldingProjectile() == projectile->GetType()) {
+							players[projectile->GetOwner()->GetPlayerNumber()]->SetIsAiming(false);
+							players[projectile->GetOwner()->GetPlayerNumber()]->SetHoldingProjectile(0);
+						}
 						objectsList.erase(objectsList.begin() + i);
 					}
 				}
