@@ -122,12 +122,12 @@ void PlayerObject::SetVelocity(float axisX, float axisY, bool isPositiveX, bool 
 
 }
 
-bool PlayerObject::getXIsPositive() 
+bool PlayerObject::GetXIsPositive() 
 {
 	return xIsPositive;
 }
 
-bool PlayerObject::getYIsPositive() 
+bool PlayerObject::GetYIsPositive() 
 {
 	return yIsPositive;
 }
@@ -309,7 +309,7 @@ void PlayerObject::AddAimingTile(TileObject* tile)
 {
 	aimingTile.push_back(tile);
 }
-void PlayerObject::clearAimingTile(TileObject* tile)
+void PlayerObject::ClearAimingTile(TileObject* tile)
 {
 	auto clearTile = std::find(aimingTile.begin(), aimingTile.end(), tile);
 
@@ -349,30 +349,46 @@ void PlayerObject::HitAimingTile()
 //	return abilities[numberAbility];
 //}
 
-void PlayerObject::setIsKnockback(bool isKnockback) {
+void PlayerObject::SetIsKnockback(bool isKnockback) {
 	this->isKnockback = isKnockback;
 }
 
-void PlayerObject::setDurationKnockback(int time){
+void PlayerObject::SetDurationKnockback(int time){
 	durationKnockback = time;
 }
 
-void PlayerObject::reduceDurationKnockback(){
+void PlayerObject::ReduceDurationKnockback(){
 	durationKnockback -= 1;
 }
 
-bool PlayerObject::getIsKnockback() {
+bool PlayerObject::GetIsKnockback() {
 	return isKnockback;
 }
 
-float PlayerObject::getDurationKnockback(){
+float PlayerObject::GetDurationKnockback(){
 	return durationKnockback;
 }
 
-void PlayerObject::setIsTNT(bool isTNT) {
+void PlayerObject::SetIsTNT(bool isTNT) {
 	this->isTNT = isTNT;
 }
 
-bool PlayerObject::getIsTNT() {
+bool PlayerObject::GetIsTNT() {
 	return isTNT;
+}
+
+void PlayerObject::SetHoldingProjectile(int projectile) {
+	holdingProjectile = projectile;
+}
+
+int PlayerObject::GetHoldingProjectile() {
+	return holdingProjectile;
+}
+
+void PlayerObject::SetIsStun(bool isStun) {
+	this->isStun = isStun;
+}
+
+bool PlayerObject::GetIsStun() {
+	return isStun;
 }

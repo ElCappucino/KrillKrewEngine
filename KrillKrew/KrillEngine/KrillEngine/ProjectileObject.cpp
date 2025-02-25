@@ -59,7 +59,7 @@ void ProjectileObject::Render(glm::mat4 globalModelTransform)
 	}
 }
 
-void ProjectileObject::setVelocity(float axisX, float axisY, bool isPositiveX, bool isPositiveY) {
+void ProjectileObject::SetVelocity(float axisX, float axisY, bool isPositiveX, bool isPositiveY) {
 
 	if (!isPositiveX) {
 		axisX = -axisX;
@@ -71,20 +71,20 @@ void ProjectileObject::setVelocity(float axisX, float axisY, bool isPositiveX, b
 
 }
 
-glm::vec3 ProjectileObject::getVelocity() 
+glm::vec3 ProjectileObject::GetVelocity() 
 {
 	return velocity;
 }
 
-void ProjectileObject::setLifeTime(float lifeTime) 
+void ProjectileObject::SetLifeTime(float lifeTime) 
 {
 	this->lifeTime = lifeTime;
 }
-void ProjectileObject::setOwner(PlayerObject* player)
+void ProjectileObject::SetOwner(PlayerObject* player)
 {
 	this->playerOwner = player;
 }
-void ProjectileObject::reduceLifeTime() 
+void ProjectileObject::ReduceLifeTime() 
 {
 	lifeTime -= 1;
 	if (lifeTime <= 0) 
@@ -93,7 +93,7 @@ void ProjectileObject::reduceLifeTime()
 		playerOwner->SetIsShooting(false);
 	}
 }
-int ProjectileObject::getLifetime() 
+int ProjectileObject::GetLifetime() 
 {
 	return lifeTime;
 }
@@ -170,25 +170,33 @@ PlayerObject* ProjectileObject::GetOwner()
 	return playerOwner;
 }
 
-void ProjectileObject::setIsCanKnockback(bool isCanKnockback) {
+void ProjectileObject::SetIsCanKnockback(bool isCanKnockback) {
 	this->isCanKnockback = isCanKnockback;
 }
 
-bool ProjectileObject::getIsCanKnockback() {
+bool ProjectileObject::GetIsCanKnockback() {
 	return isCanKnockback;
 }
 
-void ProjectileObject::setType(int Type) {
+void ProjectileObject::SetType(int Type) {
 	this->type = Type;
 }
 
-int ProjectileObject::getType() {
+int ProjectileObject::GetType() {
 	return type;
 }
 
-void ProjectileObject::setIsShooting(bool isShooting) {
+void ProjectileObject::SetIsShooting(bool isShooting) {
 	this->isShooting = isShooting;
 }
-bool ProjectileObject::getIsShooting() {
+bool ProjectileObject::GetIsShooting() {
 	return isShooting;
+}
+
+void ProjectileObject::SetIsCanStun(bool isCanStun) {
+	this->isCanStun = isCanStun;
+}
+
+bool ProjectileObject::GetIsCanStun() {
+	return isCanStun;
 }

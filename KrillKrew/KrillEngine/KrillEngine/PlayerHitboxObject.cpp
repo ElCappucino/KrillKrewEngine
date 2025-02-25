@@ -101,7 +101,7 @@ void PlayerHitboxObject::OnColliderExit(Collider* other)
 	if (tile != nullptr)
 	{
 		// KK_TRACE("On ColliderExit PlayerHitboxObject");
-		this->parent->clearAimingTile(tile);
+		this->parent->ClearAimingTile(tile);
 	}
 }
 void PlayerHitboxObject::OnTriggerEnter(Collider* other)

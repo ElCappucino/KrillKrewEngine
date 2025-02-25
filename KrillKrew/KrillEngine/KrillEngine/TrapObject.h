@@ -33,15 +33,15 @@ public:
 	~TrapObject();
 	void Render(glm::mat4 globalModelTransform);
 	void SetTexture(std::string path);
-	void setLifeTime(int lifeTime);
-	void setNumOwner(int Num);
-	void reduceLifeTime();
-	int getLifetime();
-	int getNumOwner();
-	void setIsCanKnockback(bool isCanKnockback);
-	bool getIsCanKnockback();
-	void setType(int type);
-	bool getType();
+	void SetLifeTime(int lifeTime);
+	void SetNumOwner(int Num);
+	void ReduceLifeTime();
+	int GetLifetime();
+	int GetNumOwner();
+	void SetIsCanKnockback(bool isCanKnockback);
+	bool GetIsCanKnockback();
+	void SetType(int type);
+	bool GetType();
 
 	virtual void OnColliderEnter(Collider* other);
 	virtual void OnColliderStay(Collider* other);

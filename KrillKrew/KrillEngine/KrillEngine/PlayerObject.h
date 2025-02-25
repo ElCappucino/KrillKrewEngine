@@ -87,6 +87,8 @@ private:
 	bool xIsPositive;
 	bool yIsPositive;
 	bool isTNT;
+	int holdingProjectile = 0;
+	bool isStun;
 
 public:
 	
@@ -108,14 +110,16 @@ public:
 	void SetDashDuration(int duration);
 	void SetAbility(AbilityButton numberAbility, Ability idAbility);
 	void SetPlayerUI(UiObject* ui);
-	void setIsKnockback(bool isKnockback);
-	void setDurationKnockback(int time);
-	void setIsTNT(bool isTNT);
+	void SetIsKnockback(bool isKnockback);
+	void SetDurationKnockback(int time);
+	void SetIsTNT(bool isTNT);
+	void SetHoldingProjectile(int projectile);
+	void SetIsStun(bool isStun);
 
 	void ReduceAbilityCooldown(int button);
 	void ReduceSlowDuration();
 	void ReduceDashDuration();
-	void reduceDurationKnockback();
+	void ReduceDurationKnockback();
 	
 
 	virtual void SetAnimationSprite(AnimationState state, SpritesheetInfo spriteInfo);
@@ -145,12 +149,14 @@ public:
 	float GetDashDuration() const;
 	PlayerObject::Ability GetAbilityByButton(AbilityButton button) const;
 
-	void clearAimingTile(TileObject* tile);
+	void ClearAimingTile(TileObject* tile);
 	void AddAimingTile(TileObject* tile);
 	void HitAimingTile();
-	bool getXIsPositive();
-	bool getYIsPositive();
-	bool getIsKnockback();
-	float getDurationKnockback();
-	bool getIsTNT();
+	bool GetXIsPositive();
+	bool GetYIsPositive();
+	bool GetIsKnockback();
+	float GetDurationKnockback();
+	bool GetIsTNT();
+	int GetHoldingProjectile();
+	bool GetIsStun();
 };

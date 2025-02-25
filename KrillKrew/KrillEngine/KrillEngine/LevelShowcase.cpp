@@ -13,8 +13,8 @@ void HoldBomb(int playerNum,
 	projectile->SetTexture(sheetinfo.texture);
 	projectile->SetPosition(playerObj->getPos());
 	projectile->SetSize(256.f, -256.f);
-	projectile->setLifeTime(9999);
-	projectile->setOwner(playerObj);
+	projectile->SetLifeTime(9999);
+	projectile->SetOwner(playerObj);
 	// std::cout << "Owner " << projectile->getNumOwner() << std::endl;
 	objectList.push_back(projectile);
 	//objectsList.push_back(projectile->GetCollider()->GetGizmos());
@@ -468,9 +468,9 @@ void LevelShowcase::UpdateInput()
 					ProjectileObject* projectile = dynamic_cast<ProjectileObject*>(objectsList[j]);
 					if (projectile != nullptr && i + playerNum == projectile->GetOwner()->GetPlayerNumber()) {
 						if (abs(norAxisX) > 0 || norAxisY > 0) {
-							projectile->setVelocity(abs(norAxisX), abs(norAxisY), isPositiveX, isPositiveY);
+							projectile->SetVelocity(abs(norAxisX), abs(norAxisY), isPositiveX, isPositiveY);
 						}
-						projectile->SetPosition(players[i + playerNum]->getPos() + (projectile->getVelocity() * glm::vec3(15.f, 15.f, 0.f)));
+						projectile->SetPosition(players[i + playerNum]->getPos() + (projectile->GetVelocity() * glm::vec3(15.f, 15.f, 0.f)));
 					}
 				}
 			}
@@ -640,16 +640,16 @@ void LevelShowcase::UpdateProjectile()
 		if (projectile != nullptr) {
 
 			if ((dt % 50) == 0) {
-				projectile->reduceLifeTime();
+				projectile->ReduceLifeTime();
 			}
 
-			if (projectile->getLifetime() <= 0)
+			if (projectile->GetLifetime() <= 0)
 			{
 				players[projectile->GetOwner()->GetPlayerNumber()]->SetIsShooting(false);
 				objectsList.erase(objectsList.begin() + i);
 			}
 
-			projectile->Translate(projectile->getVelocity());
+			projectile->Translate(projectile->GetVelocity());
 		}
 
 	}
@@ -984,10 +984,10 @@ void LevelShowcase::AimFireball(int numPlayer, PlayerObject::AbilityButton butto
 	projectile->SetSpriteInfo(spriteList.find("TNT")->second);
 	projectile->SetPosition(players[numPlayer]->getPos());
 	projectile->SetSize(256.f, -256.f);
-	projectile->setLifeTime(9999.f);
-	projectile->setOwner(players[numPlayer]);
-	projectile->setType(ProjectileObject::TypeProjectile::Fireball);
-	projectile->setIsCanKnockback(true);
+	projectile->SetLifeTime(9999.f);
+	projectile->SetOwner(players[numPlayer]);
+	projectile->SetType(ProjectileObject::TypeProjectile::Fireball);
+	projectile->SetIsCanKnockback(true);
 	objectsList.push_back(projectile);
 
 	KK_TRACE("Create Fireball and Aim. Owner = {0}", projectile->GetOwner()->GetPlayerNumber());
@@ -1006,7 +1006,7 @@ void LevelShowcase::ShootFireball(int numPlayer, PlayerObject::AbilityButton but
 
 			if (projectile != nullptr) 
 			{
-				projectile->setLifeTime(5);
+				projectile->SetLifeTime(5);
 
 				KK_TRACE("Player {0} is Shooting Fireball", numPlayer);
 			}
@@ -1021,8 +1021,8 @@ void LevelShowcase::SetTrap(int numPlayer, PlayerObject::AbilityButton button)
 	Trap->SetSpriteInfo(spriteList.find("Trap")->second);
 	Trap->SetPosition(players[numPlayer]->getPos());
 	Trap->SetSize(128.f, -128.f);
-	Trap->setNumOwner(players[numPlayer]->GetPlayerNumber());
-	Trap->setType(TrapObject::TypeTrap::Trap);
+	Trap->SetNumOwner(players[numPlayer]->GetPlayerNumber());
+	Trap->SetType(TrapObject::TypeTrap::Trap);
 
 	objectsList.push_back(Trap);
 
@@ -1040,13 +1040,13 @@ void LevelShowcase::Dash(int numPlayer, PlayerObject::AbilityButton button)
 
 void LevelShowcase::TNT(int numPlayer, PlayerObject::AbilityButton button)
 {
-	players[numPlayer]->setIsTNT(true);
+	players[numPlayer]->SetIsTNT(true);
 	TrapObject* TNT = new TrapObject();
 	TNT->SetSpriteInfo(spriteList.find("TNT")->second);
 	TNT->SetPosition(players[numPlayer]->getPos());
 	TNT->SetSize(128.f, -128.f);
-	TNT->setNumOwner(players[numPlayer]->GetPlayerNumber());
-	TNT->setType(TrapObject::TypeTrap::Tnt);
+	TNT->SetNumOwner(players[numPlayer]->GetPlayerNumber());
+	TNT->SetType(TrapObject::TypeTrap::Tnt);
 	objectsList.push_back(TNT);
 
 	KK_TRACE("Create TNT. Owner = {0}", numPlayer);
@@ -1059,15 +1059,15 @@ void LevelShowcase::Teleport(int numPlayer, PlayerObject::AbilityButton button)
 	projectile->SetSpriteInfo(spriteList.find("Teleport")->second);
 	projectile->SetPosition(players[numPlayer]->getPos());
 	projectile->SetSize(256.f, -256.f);
-	projectile->setLifeTime(3.f);
-	projectile->setOwner(players[numPlayer]);
-	projectile->setType(ProjectileObject::TypeProjectile::Teleport);
-	projectile->setIsCanKnockback(false);
-	projectile->setVelocity(
+	projectile->SetLifeTime(3.f);
+	projectile->SetOwner(players[numPlayer]);
+	projectile->SetType(ProjectileObject::TypeProjectile::Teleport);
+	projectile->SetIsCanKnockback(false);
+	projectile->SetVelocity(
 		abs(players[numPlayer]->GetVelocity().x) / 5, 
 		abs(players[numPlayer]->GetVelocity().y) / 5, 
-		players[numPlayer]->getXIsPositive(), 
-		players[numPlayer]->getYIsPositive()
+		players[numPlayer]->GetXIsPositive(), 
+		players[numPlayer]->GetYIsPositive()
 	);
 	objectsList.push_back(projectile);
 
