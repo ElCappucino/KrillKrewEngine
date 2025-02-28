@@ -2,8 +2,8 @@
 #include "Level.h"
 #include "LevelUtilities.h"
 
-#define MAP_WIDTH  29
-#define MAP_HEIGHT 30
+#define MAP_WIDTH  20 // 29
+#define MAP_HEIGHT 16 // 30
 
 /// @brief The class for level inherit test from P'tiam
 class LevelShowcase : public Level
@@ -165,8 +165,18 @@ private:
 	Timer* timer;
 
 	int dt = 0;
+	float time1s = 0;
+	float time05s = 0;
 	float time[4] = { 0 };
 	float previousWidth = 0, previousHeight = 0;
+
+	// player
+	float axisXOld;
+	float axisYOld;
+	float norAxisXOld;
+	float norAxisYOld;
+	bool isPositiveXOld;
+	bool isPositiveYOld;
 
 public:
 	virtual void LevelLoad();
@@ -185,16 +195,22 @@ public:
 	void UpdateCooldown();
 	void UpdateMovement();
 	void UpdateUI();
+	void UpdateKnockback(DrawableObject* obj1, DrawableObject* obj2);
+	void UpdateTime();
 
 	void GroundTileRefactor();
 	void TileImport(int TileBuffer[][MAP_WIDTH], std::string fileName);
 
+	void UsingAbility(int numPlayer, PlayerObject::AbilityButton button);
 	void AimFireball(int numPlayer, PlayerObject::AbilityButton button);
 	void ShootFireball(int numPlayer, PlayerObject::AbilityButton button);
-	void SetTrap(int numPlayer, PlayerObject::AbilityButton button);
+	void Trap(int numPlayer, PlayerObject::AbilityButton button);
 	void Dash(int numPlayer, PlayerObject::AbilityButton button);
 	void TNT(int numPlayer, PlayerObject::AbilityButton button);
-	void Teleport(int numPlayer, PlayerObject::AbilityButton button);
-
-	// void CameraLerp();
+	void AimTeleport(int numPlayer, PlayerObject::AbilityButton button);
+	void ShootTeleport(int numPlayer, PlayerObject::AbilityButton button);
+	void AimBola(int numPlayer, PlayerObject::AbilityButton button);
+	void ShootBola(int numPlayer, PlayerObject::AbilityButton button);
+	void AimCleave(int numPlayer, PlayerObject::AbilityButton button);
+	void ShootCleave(int numPlayer, PlayerObject::AbilityButton button);
 };

@@ -40,6 +40,8 @@ void LevelShowcase::LevelLoad()
 	spriteList["Trap"] = SpritesheetInfo("Trap", "../Resource/Texture/Trap.png", 512, 512, 512, 512);
 	spriteList["TNT"] = SpritesheetInfo("TNT", "../Resource/Texture/TNT.png", 348, 348, 348, 348);
 	spriteList["Teleport"] = SpritesheetInfo("Teleport", "../Resource/Texture/EnderPearl.png", 512, 512, 512, 512);
+	spriteList["Bola"] = SpritesheetInfo("Bola", "../Resource/Texture/Bola.png", 317, 314, 317, 314);
+	spriteList["Cleave"] = SpritesheetInfo("Cleave", "../Resource/Texture/Cleave.png", 647, 386, 647, 386);
 	
 	spriteList["Xoey_UI"] = SpritesheetInfo("Xoey_UI", "../Resource/Texture/xoey.png", 430, 220, 430, 220);
 	spriteList["Byssa_UI"] = SpritesheetInfo("Byssa_UI", "../Resource/Texture/byssa.png", 430, 220, 430, 220);
@@ -67,7 +69,7 @@ void LevelShowcase::LevelInit()
 
 	timer = Timer::Instance();
 
-	TileImport(groundTile, "../Resource/Texture/Tilemap1.txt");
+	TileImport(groundTile, "../Resource/Texture/Tilemap0.txt");
 
 	// Create and Initialize 4 players object
 
@@ -216,7 +218,6 @@ void LevelShowcase::LevelInit()
 	//	{
 	//		int flag = groundTile[i][j];
 	//		std::pair<int, int> pos = {99, 99};
-
 	//		std::bitset<8> surround;
 	//		surround[0] = groundTile[i - 1][j];
 	//		surround[1] = groundTile[i - 1][j + 1];
@@ -226,7 +227,6 @@ void LevelShowcase::LevelInit()
 	//		surround[5] = groundTile[i + 1][j - 1];
 	//		surround[6] = groundTile[i][j - 1];
 	//		surround[7] = groundTile[i - 1][j - 1];
-
 	//		if (flag == 1)
 	//		{
 	//			auto it = blob_lookup_table.find((int)(surround.to_ulong()));
@@ -243,7 +243,6 @@ void LevelShowcase::LevelInit()
 	//				pos = it->second;
 	//			}
 	//		}
-
 	//		if (pos.first != 99)
 	//		{
 	//			TileObject* obj = new TileObject();
@@ -252,7 +251,6 @@ void LevelShowcase::LevelInit()
 	//			obj->SetTexture(spriteList.find("Blobtile")->second.texture);
 	//			obj->SetSize(128.f, -128.f);
 	//			obj->SetPosition(glm::vec3(map_left + (j * 126.f), map_top - (i * 126.f), 0));
-
 	//			if (flag == 0)
 	//			{
 	//				obj->SetIsBreakable(false);
@@ -263,39 +261,32 @@ void LevelShowcase::LevelInit()
 	//				obj->SetIsBreakable(true);
 	//				obj->SetIsBroke(false);
 	//			}
-
 	//			tilesList[i][j] = obj;
 	//			/*obj->groundTileInfo = &currentGroundTile;
-
 	//			obj->SetTilePosition(i, j);*/
-
 	//			objectsList.push_back(obj);
 	//			// objectsList.push_back(obj->GetCollider()->GetGizmos());
 	//			// objectsList.push_back(obj->GetOverlaySprite());
 	//		}
-
 	//		KK_TRACE("Load tile {0}, {1}", i, j);
 	//	}
 	//}
-
 
 	// Create and Initialize 4 players object
 
 	// Example Code
 
 	PlayerObject* p1 = new PlayerObject();
-	// Assign all animation property
 	p1->SetAnimationSprite(PlayerObject::AnimationState::Idle, spriteList.find("Shark_idle")->second);
 	p1->SetAnimationSprite(PlayerObject::AnimationState::Running, spriteList.find("Shark_run")->second);
 	p1->SetAnimationSprite(PlayerObject::AnimationState::Melee, spriteList.find("Shark_hit")->second);
-	p1->GetSpriteRenderer()->SetFrame(10);
-	// Set Sprite
 	p1->SetSpriteInfo(spriteList.find("Shark_idle")->second);
-	// Set Start Position
 	p1->SetPosition(glm::vec3(-800.f, -700.f, 0));
-	// Set Player Number
+	p1->GetSpriteRenderer()->SetFrame(10);
 	p1->SetPlayerNumber(0);
-	// Store inside player array
+	p1->SetAbility(PlayerObject::AbilityButton::Triangle, PlayerObject::Ability::Fireball);
+	p1->SetAbility(PlayerObject::AbilityButton::Circle, PlayerObject::Ability::Dash);
+	p1->SetAbility(PlayerObject::AbilityButton::Cross, PlayerObject::Ability::Teleport);
 	entityObjects.push_back(p1);
 	objectsList.push_back(p1);
 	playerSize++;
@@ -309,6 +300,9 @@ void LevelShowcase::LevelInit()
 	p2->SetPosition(glm::vec3(800.f, -700.f, 0));
 	p2->GetSpriteRenderer()->SetFrame(10);
 	p2->SetPlayerNumber(1);
+	p2->SetAbility(PlayerObject::AbilityButton::Triangle, PlayerObject::Ability::Fireball);
+	p2->SetAbility(PlayerObject::AbilityButton::Circle, PlayerObject::Ability::Trap);
+	p2->SetAbility(PlayerObject::AbilityButton::Cross, PlayerObject::Ability::Cleave);
 	entityObjects.push_back(p2);
 	objectsList.push_back(p2);
 	playerSize++;
@@ -322,6 +316,10 @@ void LevelShowcase::LevelInit()
 	p3->SetPosition(glm::vec3(800.f, 700.f, 0));
 	p3->GetSpriteRenderer()->SetFrame(10);
 	p3->SetPlayerNumber(2);
+	p3->SetAbility(PlayerObject::AbilityButton::Triangle, PlayerObject::Ability::Fireball);
+	p3->SetAbility(PlayerObject::AbilityButton::Circle, PlayerObject::Ability::Trap);
+	p3->SetAbility(PlayerObject::AbilityButton::Cross, PlayerObject::Ability::Cleave);
+	entityObjects.push_back(p2);
 	entityObjects.push_back(p3);
 	objectsList.push_back(p3);
 	playerSize++;
@@ -335,6 +333,9 @@ void LevelShowcase::LevelInit()
 	p4->SetPosition(glm::vec3(-800.f, 700.f, 0));
 	p4->GetSpriteRenderer()->SetFrame(10);
 	p4->SetPlayerNumber(3);
+	p4->SetAbility(PlayerObject::AbilityButton::Triangle, PlayerObject::Ability::Fireball);
+	p4->SetAbility(PlayerObject::AbilityButton::Circle, PlayerObject::Ability::Trap);
+	p4->SetAbility(PlayerObject::AbilityButton::Cross, PlayerObject::Ability::Cleave);
 	entityObjects.push_back(p4);
 	objectsList.push_back(p4);
 	playerSize++;
@@ -450,6 +451,7 @@ void LevelShowcase::LevelUpdate()
 		}
 	}
 
+	KK_TRACE("Player {0} dash duration = {1}", 0, players[0]->GetDashDuration());
 
 	// projectile collider player
 	UpdateCollision();
@@ -536,33 +538,56 @@ void LevelShowcase::UpdateInput()
 				players[i + playerNum]->UpdateFacingSide(isPositiveX); 
 			}
 
-			if (players[i + playerNum]->GetIsAiming() == false)
+			if (players[i + playerNum]->GetIsKnockback() == false) 
 			{
-				players[i + playerNum]->SetVelocity(abs(norAxisX), abs(norAxisY), isPositiveX, isPositiveY);
+				if (players[i + playerNum]->GetIsStun() == false) 
+				{
+					if (players[i + playerNum]->GetIsDashing() == false) 
+					{
+						if (players[i + playerNum]->GetIsAiming() == false)
+						{
+							players[i + playerNum]->SetVelocity(abs(norAxisX), abs(norAxisY), isPositiveX, isPositiveY);
+						}
+
+						norAxisXOld = norAxisX;
+						norAxisYOld = norAxisY;
+						isPositiveXOld = isPositiveX;
+						isPositiveYOld = isPositiveY;
+					}
+					else 
+					{
+						players[i + playerNum]->SetVelocity(abs(norAxisXOld), abs(norAxisYOld), isPositiveXOld, isPositiveYOld);
+					}
+				}
+				else
+				{
+					players[i + playerNum]->SetVelocity(0, 0, isPositiveXOld, isPositiveYOld);
+				}
+
+			}
+
+			if (players[i + playerNum]->GetIsAiming() && players[i + playerNum]->GetHoldingProjectile() != 0)
+			{
+				for (int j = 0; j < objectsList.size(); j++) {
+					ProjectileObject* projectile = dynamic_cast<ProjectileObject*>(objectsList[j]);
+					if ((projectile != nullptr) &&
+						(players[i + playerNum]->GetPlayerNumber() == projectile->GetOwner()->GetPlayerNumber()) &&
+						(projectile->GetIsShooting() == false)) {
+						if (abs(norAxisX) > 0 || norAxisY > 0) {
+							projectile->SetVelocity(abs(norAxisX), abs(norAxisY), isPositiveX, isPositiveY);
+						}
+						projectile->SetPosition(players[i + playerNum]->getPos() + (projectile->GetVelocity() * glm::vec3(15.f, 15.f, 0.f)));
+
+					}
+				}
 			}
 
 			//Aim
 			if (Joystick::GetButtonDown(i, Joystick::Button::Triangle))
 			{
-				Teleport(i, PlayerObject::AbilityButton::Triangle);
-			}
-
-			//Shoot
-			if (Joystick::GetButtonUp(i, Joystick::Button::Triangle))
-			{
-				ShootFireball(i, PlayerObject::AbilityButton::Triangle);
-			}
-
-			if (players[i + playerNum]->GetIsAiming())
-			{
-				for (int j = 0; j < objectsList.size(); j++) {
-					ProjectileObject* projectile = dynamic_cast<ProjectileObject*>(objectsList[j]);
-					if (projectile != nullptr && i + playerNum == projectile->GetOwner()->GetPlayerNumber()) {
-						if (abs(norAxisX) > 0 || norAxisY > 0) {
-							projectile->SetVelocity(abs(norAxisX), abs(norAxisY), isPositiveX, isPositiveY);
-						}
-						projectile->SetPosition(players[i + playerNum]->getPos() + (projectile->GetVelocity() * glm::vec3(15.f, 15.f, 0.f)));
-					}
+				if (players[i + playerNum]->GetCooldown(PlayerObject::AbilityButton::Triangle) <= 0)
+				{
+					UsingAbility(i + playerNum, PlayerObject::AbilityButton::Triangle);
 				}
 			}
 
@@ -571,7 +596,7 @@ void LevelShowcase::UpdateInput()
 			{
 				if (players[i + playerNum]->GetCooldown(PlayerObject::AbilityButton::Circle) <= 0)
 				{
-					SetTrap(i, PlayerObject::AbilityButton::Circle);
+					UsingAbility(i + playerNum, PlayerObject::AbilityButton::Circle);
 				}
 			}
 
@@ -579,9 +604,17 @@ void LevelShowcase::UpdateInput()
 			{
 				if (players[i + playerNum]->GetCooldown(PlayerObject::AbilityButton::Cross) <= 0)
 				{
-					TNT(i, PlayerObject::AbilityButton::Cross);
+					UsingAbility(i + playerNum, PlayerObject::AbilityButton::Cross);
 				}
 			}
+
+			if (Joystick::GetButtonDown(i, Joystick::Button::Square))
+			{
+				players[playerNum]->ChangeAnimationState(PlayerObject::AnimationState::Melee);
+				players[playerNum]->HitAimingTile();
+			}
+
+			// players[i + playerNum]->Translate(players[i + playerNum]->GetVelocity());
 
 			// Debug other player
 			if (Joystick::GetButtonDown(i, Joystick::Button::R1))
@@ -594,19 +627,18 @@ void LevelShowcase::UpdateInput()
 				}
 			}
 
-			if (Joystick::GetButtonDown(i, Joystick::Button::Square))
-			{
-				players[playerNum]->ChangeAnimationState(PlayerObject::AnimationState::Melee);
-				players[playerNum]->HitAimingTile();
-			}
-
-			players[i + playerNum]->Translate(players[i + playerNum]->GetVelocity());
-
 			if (Joystick::GetButtonDown(i, Joystick::Button::P5Button))
 			{
 				GameEngine::GetInstance()->GetStateController()->loadingState = GameState::GS_LEVELGAMEPLAY;
 				GameEngine::GetInstance()->GetStateController()->gameStateNext = GameState::GS_LEVELLOADING;
 			}
+
+			// players[i + playerNum % 4]->Translate(players[0]->GetVelocity());
+			players[0]->Translate(players[0]->GetVelocity());
+			players[1]->Translate(players[1]->GetVelocity());
+			players[2]->Translate(players[2]->GetVelocity());
+			players[3]->Translate(players[3]->GetVelocity());
+			//players[i + playerNum]->Translate(players[i + playerNum]->GetVelocity());
 		}
 
 	}
@@ -715,16 +747,52 @@ void LevelShowcase::UpdateCollision()
 	//	}
 	//	entity1->GetCollider()->SetPreviousPos(entity1->getPos());
 	//}
-
-	/*std::vector<EntityObject*> entityObjects;
-	for (auto* obj : objectsList)
-	{
-		if (EntityObject* entity = dynamic_cast<EntityObject*>(obj))
-		{
-			entityObjects.push_back(entity);
-		}
-	}*/
 	
+	// trap collider player
+	for (int i = 0; i < objectsList.size(); i++)
+	{
+		TrapObject* trap = dynamic_cast<TrapObject*>(objectsList[i]);
+		if (trap == nullptr)
+		{
+			continue;
+		}
+		for (int j = 0; j < objectsList.size(); j++)
+		{
+			if (i == j)
+			{
+				continue;
+			}
+			PlayerObject* player2 = dynamic_cast<PlayerObject*>(objectsList[j]);
+			if (player2 != nullptr)
+			{
+				if (trap->GetNumOwner() != player2->GetPlayerNumber()) {
+					Collider col1 = *trap->GetCollider();
+					Collider col2 = *player2->GetCollider();
+
+					glm::vec2 delta = glm::vec2(abs(trap->getPos().x - player2->getPos().x),
+						abs(trap->getPos().y - player2->getPos().y));
+
+					float overlapX = (abs(col1.GetHalfSize().x)) + (abs(col2.GetHalfSize().x)) - delta.x;
+					float overlapY = (abs(col1.GetHalfSize().y)) + (abs(col2.GetHalfSize().y)) - delta.y;
+
+					if (overlapX > 0 && overlapY > 0)
+					{
+						std::cout << "Trap :" << trap->GetNumOwner() << " hit " << "Player" << player2->GetPlayerNumber() << std::endl;
+						if (trap->GetIsCanKnockback()) {
+							UpdateKnockback(trap, player2);
+							objectsList.erase(objectsList.begin() + i);
+						}
+						else {
+							player2->SetSlowDuration(100);
+							player2->SetIsSlow(true);
+							objectsList.erase(objectsList.begin() + i);
+						}
+						
+					}
+				}
+			}
+		}
+	}
 	int entityCount = 0;
 	for (int i = 0; i < entityObjects.size(); i++)
 	{
@@ -826,6 +894,61 @@ void LevelShowcase::UpdateCollision()
 	// previousCollisions = currentCollisions;
 	std::swap(previousCollisions, currentCollisions);
 	currentCollisions.clear();
+
+	// projectile
+	for (int i = 0; i < objectsList.size(); i++)
+	{
+		ProjectileObject* projectile = dynamic_cast<ProjectileObject*>(objectsList[i]);
+
+		if (projectile == nullptr)
+		{
+			continue;
+		}
+
+		for (int j = 0; j < objectsList.size(); j++)
+		{
+			if (i == j)
+			{
+				continue;
+			}
+
+			PlayerObject* player = dynamic_cast<PlayerObject*>(objectsList[j]);
+
+			if (player != nullptr)
+			{
+				if (projectile->GetOwner()->GetPlayerNumber() != player->GetPlayerNumber())
+				{
+					Collider col1 = *projectile->GetCollider();
+					Collider col2 = *player->GetCollider();
+
+					glm::vec2 delta = glm::vec2(abs(projectile->getPos().x - player->getPos().x),
+						abs(projectile->getPos().y - player->getPos().y));
+
+					float overlapX = (abs(col1.GetHalfSize().x)) + (abs(col2.GetHalfSize().x)) - delta.x;
+					float overlapY = (abs(col1.GetHalfSize().y)) + (abs(col2.GetHalfSize().y)) - delta.y;
+
+					if (overlapX > 0 && overlapY > 0)
+					{
+						if (projectile->GetType() == ProjectileObject::TypeProjectile::Teleport) {
+							players[projectile->GetOwner()->GetPlayerNumber()]->SetPosition(projectile->getPos());
+						}
+						if (projectile->GetIsCanStun()) {
+							player->SetIsStun(true);
+							player->SetStunDuraion(5);
+						}
+						players[projectile->GetOwner()->GetPlayerNumber()]->SetIsShooting(false);
+						UpdateKnockback(projectile, player);
+						if (players[projectile->GetOwner()->GetPlayerNumber()]->GetHoldingProjectile() == projectile->GetType()) {
+							players[projectile->GetOwner()->GetPlayerNumber()]->SetIsAiming(false);
+							players[projectile->GetOwner()->GetPlayerNumber()]->SetHoldingProjectile(0);
+						}
+						objectsList.erase(objectsList.begin() + i);
+					}
+				}
+
+			}
+		}
+	}
 }
 
 void LevelShowcase::UpdateProjectile()
@@ -841,11 +964,23 @@ void LevelShowcase::UpdateProjectile()
 
 			if (projectile->GetLifetime() <= 0)
 			{
+				if (projectile->GetType() == ProjectileObject::TypeProjectile::Teleport) {
+					players[projectile->GetOwner()->GetPlayerNumber()]->SetPosition(projectile->getPos());
+				}
 				players[projectile->GetOwner()->GetPlayerNumber()]->SetIsShooting(false);
 				objectsList.erase(objectsList.begin() + i);
+
 			}
 
 			projectile->Translate(projectile->GetVelocity());
+		}
+
+		//delete trap after use
+		TrapObject* trap = dynamic_cast<TrapObject*>(objectsList[i]);
+		if (trap != nullptr) {
+			if (trap->GetIsCanKnockback()) {
+				objectsList.erase(objectsList.begin() + i);
+			}
 		}
 
 	}
@@ -853,29 +988,27 @@ void LevelShowcase::UpdateProjectile()
 
 void LevelShowcase::UpdateCooldown()
 {
-	for (int i = 0; i < playerNum; i++)
+	for (int i = 0; i < /*SDL_NumJoysticks() + playerNum*/ 4; i++)
 	{
-		timer->tick();
-		timer->reset();
-		time[i + playerNum] += timer->getDeltaTime();
-
 		for (int j = 0; j < 3; j++)
 		{
-			/*if (time[i + playerNum] >= 1.0f && players[i + playerNum]->GetCooldown(static_cast<PlayerObject::AbilityButton>(j)) > 0)
+
+			if (time1s >= 1.0f && players[i]->GetCooldown(static_cast<PlayerObject::AbilityButton>(j)) > 0)
 			{
-				players[i + playerNum]->ReduceAbilityCooldown(static_cast<PlayerObject::AbilityButton>(j));
-				time[i + playerNum] = 0.0f;
-			}*/
+				//std::cout << j << std::endl;
+				players[i + playerNum]->ReduceAbilityCooldown(j);
+
+			}
 		}
+		UpdateTime();
 	}
 }
 
 void LevelShowcase::UpdateMovement()
 {
-	for (int i = 0; i < SDL_NumJoysticks() + playerNum; i++)
+	for (int i = 0; i < 4; i++)
 	{
-		
-		if (players[i]->GetIsSlow() == true)
+		if (time1s >= 1.0f && players[i]->GetIsSlow() == true)
 		{
 			players[i]->ReduceSlowDuration();
 		}
@@ -884,7 +1017,176 @@ void LevelShowcase::UpdateMovement()
 		{
 			players[i]->SetIsSlow(false);
 		}
+
+		/*if (time1s >= 1.0f && players[i]->GetIsDashing() == true) 
+		{
+			players[i]->ReduceDashDuration();
+			KK_TRACE("Player {0} dash duration = {1}", i, players[i]->GetDashDuration());
+		}
+
+		if (players[i]->GetDashDuration() <= 0)
+		{
+			players[i]->SetIsDashing(false);
+		}*/
+
+		if (time05s >= 0.1f && players[i]->GetIsKnockback() == true) 
+		{
+			glm::vec3 knockbackVelo = players[i]->GetVelocity();
+
+			float knockbackVeloX = abs(knockbackVelo.x) / 5;
+			float knockbackVeloY = abs(knockbackVelo.y) / 5;
+
+			players[i]->SetVelocity(knockbackVeloX / 1.1, 
+									knockbackVeloY / 1.1, 
+									players[i]->GetXIsPositive(), 
+									players[i]->GetYIsPositive());
+		}
+
+		if (players[i]->GetDurationKnockback() <= 0 &&
+			players[i]->GetIsKnockback() &&
+			(abs(players[i]->GetVelocity().x) / 5 < 0.05) &&
+			(abs(players[i]->GetVelocity().y) / 5 < 0.05))
+		{
+			players[i]->SetIsKnockback(false);
+			players[i]->SetVelocity(0, 0, false, false);
+		}
+
+		if (time1s >= 1.0f && players[i]->GetIsStun() == true)
+		{
+			players[i]->ReduceStunDuration();
+		}
+
+		if (players[i]->GetStunDuration() <= 0)
+		{
+			players[i]->SetIsStun(false);
+		}
+
+		
+		/*if (players[i]->GetIsKnockback() == true && (abs(players[i]->GetVelocity().x) / 5 < 0.05) && (abs(players[i]->GetVelocity().y) / 5 < 0.05))
+		{
+			players[i]->SetIsKnockback(false);
+			players[i]->SetVelocity(0, 0, false, false);
+		}*/
+		UpdateTime();
 	}
+}
+
+void LevelShowcase::UpdateKnockback(DrawableObject* obj1, DrawableObject* obj2) 
+{
+	ProjectileObject* projectile = dynamic_cast<ProjectileObject*>(obj1);
+	TrapObject* trap = dynamic_cast<TrapObject*>(obj1);
+	PlayerObject* player = dynamic_cast<PlayerObject*>(obj2);
+
+	if (player != NULL && projectile != NULL && projectile->GetIsCanKnockback()) 
+	{
+		if (projectile->GetOwner()->GetPlayerNumber() != player->GetPlayerNumber()) 
+		{
+			player->SetIsKnockback(true);
+			player->SetKnockbackDuration(2);
+			glm::vec3 knockbackDirection = obj1->getPos() - player->getPos();
+
+			float knockbackDirectionX = knockbackDirection.x / 255;
+			float knockbackDirectionY = knockbackDirection.y / 255;
+			bool knockbackDirectionXisPositive = false;
+			bool knockbackDirectionYisPositive = false;
+			if (knockbackDirection.x < 0)
+			{
+				knockbackDirectionXisPositive = true;
+			}
+			else if (knockbackDirection.x > 0)
+			{
+				knockbackDirectionXisPositive = false;
+			}
+
+			if (knockbackDirection.y > 0)
+			{
+				knockbackDirectionYisPositive = false;
+			}
+			else if (knockbackDirection.y < 0)
+			{
+				knockbackDirectionYisPositive = true;
+			}
+
+			knockbackDirectionX = abs(knockbackDirectionX);
+			knockbackDirectionY = abs(knockbackDirectionY);
+
+
+			player->SetVelocity(knockbackDirectionX, knockbackDirectionY, knockbackDirectionXisPositive, knockbackDirectionYisPositive);
+			std::cout << knockbackDirectionY << std::endl;
+		}
+	}
+	if (player != NULL && trap != NULL && trap->GetIsCanKnockback()) 
+	{
+		if (trap->GetNumOwner() != player->GetPlayerNumber()) 
+		{
+			player->SetIsKnockback(true);
+			player->SetKnockbackDuration(2);
+			glm::vec3 knockbackDirection = obj1->getPos() - player->getPos();
+
+			float knockbackDirectionX = knockbackDirection.x / 255;
+			float knockbackDirectionY = knockbackDirection.y / 255;
+			bool knockbackDirectionXisPositive = false;
+			bool knockbackDirectionYisPositive = false;
+			if (knockbackDirection.x < 0)
+			{
+				knockbackDirectionXisPositive = true;
+			}
+			else if (knockbackDirection.x > 0)
+			{
+				knockbackDirectionXisPositive = false;
+			}
+
+			if (knockbackDirection.y > 0)
+			{
+				knockbackDirectionYisPositive = false;
+			}
+			else if (knockbackDirection.y < 0)
+			{
+				knockbackDirectionYisPositive = true;
+			}
+
+			knockbackDirectionX = abs(knockbackDirectionX);
+			knockbackDirectionY = abs(knockbackDirectionY);
+
+
+			player->SetVelocity(knockbackDirectionX, knockbackDirectionY, knockbackDirectionXisPositive, knockbackDirectionYisPositive);
+			std::cout << knockbackDirectionY << std::endl;
+		}
+	}
+
+}
+
+void LevelShowcase::UpdateTime() {
+
+	timer->tick();
+	timer->reset();
+	time1s += timer->getDeltaTime();
+	time05s += timer->getDeltaTime();
+
+	if (time1s >= 1.01f) 
+	{
+		time1s = 0.0f;
+	}
+
+	if (time05s >= 0.11f) 
+	{
+		time05s = 0.0f;
+
+		for (int i = 0; i < 4; i++)
+		{
+			if (players[i]->GetIsDashing() == true)
+			{
+				players[i]->ReduceDashDuration();
+				//KK_TRACE("Player {0} dash duration = {1}", i, players[i]->GetDashDuration());
+			}
+
+			if (players[i]->GetDashDuration() <= 0)
+			{
+				players[i]->SetIsDashing(false);
+			}
+		}
+	}
+
 }
 
 void LevelShowcase::UpdateUI()
@@ -914,8 +1216,6 @@ void LevelShowcase::LevelDraw()
 	// Collider position update
 	for (int i = 0; i < objectsList.size(); i++)
 	{
-		
-
 		PlayerObject* player = dynamic_cast<PlayerObject*>(objectsList[i]);
 		PlayerHitboxObject* hitbox = dynamic_cast<PlayerHitboxObject*>(objectsList[i]);
 		GizmosObject* gizmos = dynamic_cast<GizmosObject*>(objectsList[i]);
@@ -1179,101 +1479,286 @@ void LevelShowcase::TileImport(int TileBuffer[][MAP_WIDTH], std::string fileName
 	}
 }
 
+void LevelShowcase::UsingAbility(int numPlayer, PlayerObject::AbilityButton button) {
+
+	PlayerObject::Ability idAbility = players[numPlayer]->GetAbilityByButton(button);
+	// std::cout << "idAbility " << idAbility << std::endl;
+	if (players[numPlayer]->GetCooldown(button) <= 0) {
+		switch (idAbility) {
+
+		case PlayerObject::Ability::Fireball:
+			if (!players[numPlayer]->GetIsAiming()) {
+				AimFireball(numPlayer, button);
+				break;
+			}
+			else if (players[numPlayer]->GetIsAiming())
+			{
+				if (players[numPlayer]->GetHoldingProjectile() == ProjectileObject::TypeProjectile::Fireball) {
+					ShootFireball(numPlayer, button);
+					break;
+				}
+
+			}
+			break;
+
+		case PlayerObject::Ability::Trap:
+			Trap(numPlayer, button);
+			break;
+		case PlayerObject::Ability::Dash:
+			Dash(numPlayer, button);
+			break;
+
+		case PlayerObject::Ability::TNT:
+			if (!players[numPlayer]->GetIsTNT()) {
+				TNT(numPlayer, button);
+			}
+			else if (players[numPlayer]->GetIsTNT()) {
+				for (int i = 0; i < objectsList.size(); i++) // find tnt
+				{
+					TrapObject* realTnt = dynamic_cast<TrapObject*>(objectsList[i]);
+					if (realTnt != NULL) {
+						if (realTnt->GetType() == TrapObject::TypeTrap::Tnt && realTnt->GetNumOwner() == numPlayer) {
+							realTnt->SetIsCanKnockback(true);
+							realTnt->SetIsActive(true);
+							realTnt->GetCollider()->Update(glm::vec3(500, 500, 0), realTnt->getPos());
+							players[numPlayer]->SetAbilityCooldown(button, 3);
+							players[numPlayer]->SetIsTNT(false);
+
+						}
+					}
+
+				}
+			}
+			break;
+
+		case PlayerObject::Ability::Teleport:
+			if (!players[numPlayer]->GetIsAiming()) {
+				if (players[numPlayer]->GetIsShooting()) {
+					for (int i = 0; i < objectsList.size(); i++) // find teleport
+					{
+						ProjectileObject* Teleport = dynamic_cast<ProjectileObject*>(objectsList[i]);
+						if (Teleport != NULL) {
+							if (Teleport->GetType() == ProjectileObject::TypeProjectile::Teleport && Teleport->GetOwner()->GetPlayerNumber() == numPlayer) {
+								players[numPlayer]->SetPosition(Teleport->getPos());
+								players[numPlayer]->SetIsShooting(false);
+								objectsList.erase(objectsList.begin() + i);
+								players[numPlayer]->SetAbilityCooldown(button, 6);
+							}
+						}
+					}
+					break;
+				}
+				AimTeleport(numPlayer, button);
+				break;
+			}
+			else if (players[numPlayer]->GetIsAiming())
+			{
+				if (players[numPlayer]->GetHoldingProjectile() == ProjectileObject::TypeProjectile::Teleport) {
+					ShootTeleport(numPlayer, button);
+					break;
+				}
+
+			}
+			break;
+
+		case PlayerObject::Ability::Bola:
+			if (!players[numPlayer]->GetIsAiming()) {
+				AimBola(numPlayer, button);
+				break;
+			}
+			else if (players[numPlayer]->GetIsAiming())
+			{
+				if (players[numPlayer]->GetHoldingProjectile() == ProjectileObject::TypeProjectile::Bola) {
+					ShootBola(numPlayer, button);
+					break;
+				}
+
+			}
+			break;
+
+		case PlayerObject::Ability::Cleave:
+			if (!players[numPlayer]->GetIsAiming()) {
+				AimCleave(numPlayer, button);
+				break;
+			}
+			else if (players[numPlayer]->GetIsAiming())
+			{
+				if (players[numPlayer]->GetHoldingProjectile() == ProjectileObject::TypeProjectile::Cleave) {
+					ShootCleave(numPlayer, button);
+					break;
+				}
+
+			}
+			break;
+		}
+
+	}
+}
+
 void LevelShowcase::AimFireball(int numPlayer, PlayerObject::AbilityButton button)
 {
 	players[numPlayer]->SetVelocity(0, 0, false, false);
 	players[numPlayer]->SetIsAiming(true);
-
+	players[numPlayer]->SetHoldingProjectile(ProjectileObject::TypeProjectile::Fireball);
 	ProjectileObject* projectile = new ProjectileObject();
-	projectile->SetSpriteInfo(spriteList.find("TNT")->second);
+	projectile->SetSpriteInfo(spriteList.find("Bomb")->second);
+	projectile->SetTexture(spriteList.find("Bomb")->second.texture);
 	projectile->SetPosition(players[numPlayer]->getPos());
 	projectile->SetSize(256.f, -256.f);
-	projectile->SetLifeTime(9999.f);
+	projectile->SetLifeTime(9999);
 	projectile->SetOwner(players[numPlayer]);
 	projectile->SetType(ProjectileObject::TypeProjectile::Fireball);
 	projectile->SetIsCanKnockback(true);
+	projectile->SetIsCanStun(true);
+	projectile->SetIsShooting(false);
+	std::cout << "Owner " << projectile->GetOwner()->GetPlayerNumber() << std::endl;
 	objectsList.push_back(projectile);
-
-	KK_TRACE("Create Fireball and Aim. Owner = {0}", projectile->GetOwner()->GetPlayerNumber());
+	//objectsList.push_back(projectile->GetCollider()->GetGizmos());
 }
 
-void LevelShowcase::ShootFireball(int numPlayer, PlayerObject::AbilityButton button)
-{
-	if (players[numPlayer]->GetIsShooting() == false) 
-	{
+void LevelShowcase::ShootFireball(int numPlayer, PlayerObject::AbilityButton button) {
+	players[numPlayer]->SetIsAiming(false);
+	for (int j = 0; j < objectsList.size(); j++) {
+		ProjectileObject* projectile = dynamic_cast<ProjectileObject*>(objectsList[j]);
+		if (projectile != nullptr && projectile->GetOwner() == players[numPlayer] && projectile->GetType() == ProjectileObject::TypeProjectile::Fireball) {
+			projectile->SetLifeTime(2);
+			projectile->SetIsShooting(true);
+			players[numPlayer]->SetHoldingProjectile(0);
+		}
+	}
+	players[numPlayer]->SetAbilityCooldown(button, 6);
+}
+
+void LevelShowcase::Trap(int numPlayer, PlayerObject::AbilityButton button) {
+	players[numPlayer]->SetAbilityCooldown(button, 3);
+	TrapObject* Trap = new TrapObject();
+	Trap->SetSpriteInfo(spriteList.find("Trap")->second);
+	Trap->SetTexture(spriteList.find("Trap")->second.texture);
+	Trap->SetPosition(players[numPlayer]->getPos());
+	Trap->SetSize(128.f, -128.f);
+	Trap->SetNumOwner(players[numPlayer]->GetPlayerNumber());
+	Trap->SetType(TrapObject::TypeTrap::Trap);
+	Trap->SetIsActive(true);
+	//std::cout << "Owner " << Trap->getNumOwner() << std::endl;
+	objectsList.push_back(Trap);
+	//std::cout << "place trap" << std::endl;
+}
+
+void LevelShowcase::Dash(int num, PlayerObject::AbilityButton button) {
+	players[num]->SetAbilityCooldown(button, 3);
+	players[num]->SetIsDashing(true);
+	players[num]->SetDashDuration(0.4f);
+}
+
+void LevelShowcase::TNT(int numPlayer, PlayerObject::AbilityButton button) {
+	players[numPlayer]->SetIsTNT(true);
+	TrapObject* TNT = new TrapObject();
+	TNT->SetSpriteInfo(spriteList.find("TNT")->second);
+	TNT->SetTexture(spriteList.find("TNT")->second.texture);
+	TNT->SetPosition(players[numPlayer]->getPos());
+	TNT->SetSize(128.f, -128.f);
+	TNT->SetNumOwner(players[numPlayer]->GetPlayerNumber());
+	TNT->SetType(TrapObject::TypeTrap::Tnt);
+	//TNT->setIsCanKnockback(true);
+	//std::cout << "Owner " << Trap->getNumOwner() << std::endl;
+	objectsList.push_back(TNT);
+}
+
+void LevelShowcase::AimTeleport(int numPlayer, PlayerObject::AbilityButton button) {
+	players[numPlayer]->SetVelocity(0, 0, false, false);
+	players[numPlayer]->SetIsAiming(true);
+	players[numPlayer]->SetHoldingProjectile(ProjectileObject::TypeProjectile::Teleport);
+	ProjectileObject* projectile = new ProjectileObject();
+	projectile->SetSpriteInfo(spriteList.find("Teleport")->second);
+	projectile->SetTexture(spriteList.find("Teleport")->second.texture);
+	projectile->SetPosition(players[numPlayer]->getPos());
+	projectile->SetSize(256.f, -256.f);
+	projectile->SetLifeTime(9999);
+	projectile->SetOwner(players[numPlayer]);
+	projectile->SetType(ProjectileObject::TypeProjectile::Teleport);
+	projectile->SetIsCanKnockback(false);
+	projectile->SetIsCanStun(false);
+	projectile->SetIsShooting(false);
+	std::cout << "Owner " << projectile->GetOwner()->GetPlayerNumber() << std::endl;
+	objectsList.push_back(projectile);
+}
+
+void LevelShowcase::ShootTeleport(int numPlayer, PlayerObject::AbilityButton button) {
+	if (players[numPlayer]->GetIsShooting() == false) {
 		players[numPlayer]->SetIsShooting(true);
 		players[numPlayer]->SetIsAiming(false);
-
-		for (int j = 0; j < objectsList.size(); j++) 
-		{
+		for (int j = 0; j < objectsList.size(); j++) {
 			ProjectileObject* projectile = dynamic_cast<ProjectileObject*>(objectsList[j]);
-
-			if (projectile != nullptr) 
-			{
-				projectile->SetLifeTime(5);
-
-				KK_TRACE("Player {0} is Shooting Fireball", numPlayer);
+			if (projectile != nullptr && projectile->GetOwner() == players[numPlayer] && projectile->GetType() == ProjectileObject::TypeProjectile::Teleport) {
+				projectile->SetLifeTime(2);
+				projectile->SetIsShooting(true);
+				players[numPlayer]->SetHoldingProjectile(0);
 			}
 		}
 	}
 }
 
-void LevelShowcase::SetTrap(int numPlayer, PlayerObject::AbilityButton button)
-{
-	players[numPlayer]->SetAbilityCooldown(button, 3);
-	TrapObject* Trap = new TrapObject();
-	Trap->SetSpriteInfo(spriteList.find("Trap")->second);
-	Trap->SetPosition(players[numPlayer]->getPos());
-	Trap->SetSize(128.f, -128.f);
-	Trap->SetNumOwner(players[numPlayer]->GetPlayerNumber());
-	Trap->SetType(TrapObject::TypeTrap::Trap);
-
-	objectsList.push_back(Trap);
-
-	KK_TRACE("Player {0} is set trap. trap type = {0}", static_cast<int>(TrapObject::TypeTrap::Trap));
-}
-
-void LevelShowcase::Dash(int numPlayer, PlayerObject::AbilityButton button)
-{
-	players[numPlayer]->SetAbilityCooldown(button, 3);
-	players[numPlayer]->SetIsDashing(true);
-	players[numPlayer]->SetDashDuration(2);
-
-	KK_TRACE("Player {0} is dashing", numPlayer);
-}
-
-void LevelShowcase::TNT(int numPlayer, PlayerObject::AbilityButton button)
-{
-	players[numPlayer]->SetIsTNT(true);
-	TrapObject* TNT = new TrapObject();
-	TNT->SetSpriteInfo(spriteList.find("TNT")->second);
-	TNT->SetPosition(players[numPlayer]->getPos());
-	TNT->SetSize(128.f, -128.f);
-	TNT->SetNumOwner(players[numPlayer]->GetPlayerNumber());
-	TNT->SetType(TrapObject::TypeTrap::Tnt);
-	objectsList.push_back(TNT);
-
-	KK_TRACE("Create TNT. Owner = {0}", numPlayer);
-}
-
-void LevelShowcase::Teleport(int numPlayer, PlayerObject::AbilityButton button)
-{
-	players[numPlayer]->SetIsShooting(true);
+void LevelShowcase::AimBola(int numPlayer, PlayerObject::AbilityButton button) {
+	players[numPlayer]->SetVelocity(0, 0, false, false);
+	players[numPlayer]->SetIsAiming(true);
+	players[numPlayer]->SetHoldingProjectile(ProjectileObject::TypeProjectile::Bola);
 	ProjectileObject* projectile = new ProjectileObject();
-	projectile->SetSpriteInfo(spriteList.find("Teleport")->second);
+	projectile->SetSpriteInfo(spriteList.find("Bola")->second);
+	projectile->SetTexture(spriteList.find("Bola")->second.texture);
 	projectile->SetPosition(players[numPlayer]->getPos());
 	projectile->SetSize(256.f, -256.f);
-	projectile->SetLifeTime(3.f);
+	projectile->SetLifeTime(9999);
 	projectile->SetOwner(players[numPlayer]);
-	projectile->SetType(ProjectileObject::TypeProjectile::Teleport);
+	projectile->SetType(ProjectileObject::TypeProjectile::Bola);
 	projectile->SetIsCanKnockback(false);
-	projectile->SetVelocity(
-		abs(players[numPlayer]->GetVelocity().x) / 5, 
-		abs(players[numPlayer]->GetVelocity().y) / 5, 
-		players[numPlayer]->GetXIsPositive(), 
-		players[numPlayer]->GetYIsPositive()
-	);
+	projectile->SetIsCanStun(true);
+	projectile->SetIsShooting(false);
+	std::cout << "Owner " << projectile->GetOwner()->GetPlayerNumber() << std::endl;
 	objectsList.push_back(projectile);
+}
 
-	KK_TRACE("Create Teleport. Owner = {0}", projectile->GetOwner()->GetPlayerNumber());
+void LevelShowcase::ShootBola(int numPlayer, PlayerObject::AbilityButton button) {
+	players[numPlayer]->SetIsAiming(false);
+	for (int j = 0; j < objectsList.size(); j++) {
+		ProjectileObject* projectile = dynamic_cast<ProjectileObject*>(objectsList[j]);
+		if (projectile != nullptr && projectile->GetOwner() == players[numPlayer] && projectile->GetType() == ProjectileObject::TypeProjectile::Bola) {
+			projectile->SetLifeTime(2);
+			projectile->SetIsShooting(true);
+			players[numPlayer]->SetHoldingProjectile(0);
+		}
+	}
+	players[numPlayer]->SetAbilityCooldown(button, 6);
+}
+
+void LevelShowcase::AimCleave(int numPlayer, PlayerObject::AbilityButton button) {
+	players[numPlayer]->SetVelocity(0, 0, false, false);
+	players[numPlayer]->SetIsAiming(true);
+	players[numPlayer]->SetHoldingProjectile(ProjectileObject::TypeProjectile::Cleave);
+	ProjectileObject* projectile = new ProjectileObject();
+	projectile->SetSpriteInfo(spriteList.find("Cleave")->second);
+	projectile->SetTexture(spriteList.find("Cleave")->second.texture);
+	projectile->SetPosition(players[numPlayer]->getPos());
+	projectile->SetSize(256.f, -256.f);
+	projectile->SetLifeTime(9999);
+	projectile->SetOwner(players[numPlayer]);
+	projectile->SetType(ProjectileObject::TypeProjectile::Cleave);
+	projectile->SetIsCanKnockback(false);
+	projectile->SetIsCanStun(true);
+	projectile->SetIsShooting(false);
+	std::cout << "Owner " << projectile->GetOwner()->GetPlayerNumber() << std::endl;
+	objectsList.push_back(projectile);
+	players[numPlayer]->SetAbilityCooldown(button, 2);
+}
+
+void LevelShowcase::ShootCleave(int numPlayer, PlayerObject::AbilityButton button) {
+	players[numPlayer]->SetIsAiming(false);
+	for (int j = 0; j < objectsList.size(); j++) {
+		ProjectileObject* projectile = dynamic_cast<ProjectileObject*>(objectsList[j]);
+		if (projectile != nullptr && projectile->GetOwner() == players[numPlayer] && projectile->GetType() == ProjectileObject::TypeProjectile::Cleave) {
+			projectile->SetLifeTime(2);
+			projectile->SetIsShooting(true);
+			players[numPlayer]->SetHoldingProjectile(0);
+		}
+	}
+	players[numPlayer]->SetAbilityCooldown(button, 6);
 }

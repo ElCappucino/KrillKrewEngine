@@ -331,38 +331,12 @@ void LevelGameplay::UpdateInput()
 			//Aim
 			if (Joystick::GetButtonDown(i, Joystick::Button::Square))
 			{
-				//std::cout << "Shoot " << i + playerNum << std::endl;
-				//if (players[i + playerNum]->getIsShooting() == false && players[i + playerNum]->getIsAiming() == false) {
-				//	players[i + playerNum]->setVelocity(0, 0, isPositiveX, isPositiveY);
-				//	players[i + playerNum]->setIsAiming(true);
-				//	ProjectileObject* projectile = new ProjectileObject();
-				//	projectile->SetSpriteInfo(spriteList.find("Bomb")->second);
-				//	projectile->SetTexture(spriteList.find("Bomb")->second.texture);
-				//	projectile->SetPosition(players[i + playerNum]->getPos());
-				//	projectile->SetSize(256.f, -256.f);
-				//	projectile->setLifeTime(9999);
-				//	projectile->setNumOwner(players[i + playerNum]->getNumber());
-				//	std::cout << "Owner " << projectile->getNumOwner() << std::endl;
-				//	objectsList.push_back(projectile);
-				//	//objectsList.push_back(projectile->GetCollider()->GetGizmos());
-				//}
-				// usingAbility(i + playerNum, 0);
+
 			}
 			//Shoot
 			if (Joystick::GetButtonUp(i, Joystick::Button::Square))
 			{
-				//std::cout << "Shoot " << i + playerNum << std::endl;
-				/*if (players[i + playerNum]->getIsShooting() == false) {
-					players[i + playerNum]->setIsShooting(true);
-					players[i + playerNum]->setIsAiming(false);
-					for (int j = 0; j < objectsList.size(); j++) {
-						ProjectileObject* projectile = dynamic_cast<ProjectileObject*>(objectsList[j]);
-						if (projectile != nullptr) {
-							projectile->setLifeTime(5);
-						}
-					}
-				}*/
-				// usingAbility(i + playerNum, 0);
+
 			}
 
 			if (players[i + playerNum]->GetIsAiming() && players[i + playerNum]->GetHoldingProjectile() != 0)

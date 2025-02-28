@@ -158,7 +158,7 @@ void PlayerObject::SetIsDashing(bool isDashing)
 {
 	this->isDashing = isDashing;
 }
-void PlayerObject::SetDashDuration(int duration) 
+void PlayerObject::SetDashDuration(float duration) 
 {
 	this->dashDuration = duration;
 }
@@ -186,7 +186,11 @@ void PlayerObject::ReduceSlowDuration()
 }
 void PlayerObject::ReduceDashDuration() 
 {
-	dashDuration -= 1;
+	dashDuration -= 0.2f;
+	if (dashDuration <= 0)
+	{
+		dashDuration = 0;
+	}
 }
 void PlayerObject::SetAnimationSprite(AnimationState state, SpritesheetInfo spriteInfo)
 {
@@ -396,6 +400,10 @@ void PlayerObject::SetKnockbackDuration(int time){
 
 void PlayerObject::ReduceKnockbackDuration(){
 	durationKnockback -= 1;
+	if (durationKnockback <= 0)
+	{
+		durationKnockback = 0;
+	}
 }
 
 bool PlayerObject::GetIsKnockback() {
@@ -436,6 +444,10 @@ void PlayerObject::SetStunDuraion(int time) {
 
 void PlayerObject::ReduceStunDuration() {
 	durationStun -= 1;
+	if (durationStun <= 0)
+	{
+		durationStun = 0;
+	}
 }
 
 float PlayerObject::GetStunDuration() const{

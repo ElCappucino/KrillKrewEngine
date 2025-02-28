@@ -73,7 +73,7 @@ private:
 	float slowness = 2;
 	float slowDuration; // add value if slow and decrease over time
 	
-	float dashSpeed = 5;
+	float dashSpeed = 2;
 	float dashDuration; // add value if dashing and decrease over time
 
 	// UI
@@ -110,7 +110,7 @@ public:
 	void SetSlowDuration(int time);
 	void SetIsSlow(bool isSlow);
 	void SetIsDashing(bool isDashing);
-	void SetDashDuration(int duration);
+	void SetDashDuration(float duration);
 	void SetAbility(AbilityButton numberAbility, Ability idAbility);
 	void SetPlayerUI(UiObject* ui);
 	void SetCurrentDirection(glm::vec2 dir);
