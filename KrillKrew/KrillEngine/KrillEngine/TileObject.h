@@ -13,8 +13,8 @@
 #include "EntityObject.h"
 #include "PlayerHitboxObject.h"
 
-#define MAP_WIDTH  21
-#define MAP_HEIGHT 16
+//#define MAP_WIDTH  21
+//#define MAP_HEIGHT 16
 
 /// @brief The class for creating object that render using texture
 class TileObject : public EntityObject

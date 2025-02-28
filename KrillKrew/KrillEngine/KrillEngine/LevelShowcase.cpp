@@ -76,6 +76,8 @@ void LevelShowcase::LevelInit()
 	float map_left = -1280.f;
 	float map_top = 1080.f;
 
+	int tileCount = 0;
+	// Archive
 	for (int i = 0; i < MAP_HEIGHT; i++)
 	{
 		for (int j = 0; j < MAP_WIDTH; j++)
@@ -130,13 +132,13 @@ void LevelShowcase::LevelInit()
 
 						// std::cout << "pair = " << it->second.first << " " << it->second.second << std::endl;
 					}
-					else 
+					else
 					{
 						pos = { 99, 99 };
 						// std::cout << "blob_lookup_table.end()" << std::endl;
 					}
 				}
-				
+
 			}
 			else
 			{
@@ -195,16 +197,88 @@ void LevelShowcase::LevelInit()
 
 				obj->SetTilePosition(i, j);*/
 
+				entityObjects.push_back(obj);
+				tileCount++;
 				objectsList.push_back(obj);
 				objectsList.push_back(obj->GetCollider()->GetGizmos());
 				objectsList.push_back(obj->GetOverlaySprite());
 			}
-			
 
-			// std::cout << "posX = " << obj->getPos().x << " posY = " << obj->getPos().y << std::endl;
+
+			/*KK_TRACE("Load tile {0}, {1}", i, j);*/
 		}
 		// std::cout << std::endl;
 	}
+	KK_TRACE("tileCount = {0}", tileCount);
+	// int tempTileValue[MAP_HEIGHT][MAP_WIDTH] = { 0 };
+	
+	//for (int i = 1; i < MAP_HEIGHT - 1; i++)
+	//{
+	//	for (int j = 1; j < MAP_WIDTH - 1; j++)
+	//	{
+	//		int flag = groundTile[i][j];
+	//		std::pair<int, int> pos = {99, 99};
+
+	//		std::bitset<8> surround;
+	//		surround[0] = groundTile[i - 1][j];
+	//		surround[1] = groundTile[i - 1][j + 1];
+	//		surround[2] = groundTile[i][j + 1];
+	//		surround[3] = groundTile[i + 1][j + 1];
+	//		surround[4] = groundTile[i + 1][j];
+	//		surround[5] = groundTile[i + 1][j - 1];
+	//		surround[6] = groundTile[i][j - 1];
+	//		surround[7] = groundTile[i - 1][j - 1];
+
+	//		if (flag == 1)
+	//		{
+	//			auto it = blob_lookup_table.find((int)(surround.to_ulong()));
+	//			if (it != blob_lookup_table.end())
+	//			{
+	//				pos = it->second;
+	//			}
+	//		}
+	//		else if (flag == 0)
+	//		{
+	//			auto it = blob_lookup_table_underground.find((int)(surround.to_ulong()));
+	//			if (it != blob_lookup_table_underground.end())
+	//			{
+	//				pos = it->second;
+	//			}
+	//		}
+
+	//		if (pos.first != 99)
+	//		{
+	//			TileObject* obj = new TileObject();
+	//			obj->SetSpriteInfo(spriteList.find("Blobtile")->second);
+	//			obj->GetSpriteRenderer()->ShiftTo(pos.first - 1, pos.second - 1);
+	//			obj->SetTexture(spriteList.find("Blobtile")->second.texture);
+	//			obj->SetSize(128.f, -128.f);
+	//			obj->SetPosition(glm::vec3(map_left + (j * 126.f), map_top - (i * 126.f), 0));
+
+	//			if (flag == 0)
+	//			{
+	//				obj->SetIsBreakable(false);
+	//				obj->SetIsBroke(true);
+	//			}
+	//			else if (flag == 1)
+	//			{
+	//				obj->SetIsBreakable(true);
+	//				obj->SetIsBroke(false);
+	//			}
+
+	//			tilesList[i][j] = obj;
+	//			/*obj->groundTileInfo = &currentGroundTile;
+
+	//			obj->SetTilePosition(i, j);*/
+
+	//			objectsList.push_back(obj);
+	//			// objectsList.push_back(obj->GetCollider()->GetGizmos());
+	//			// objectsList.push_back(obj->GetOverlaySprite());
+	//		}
+
+	//		KK_TRACE("Load tile {0}, {1}", i, j);
+	//	}
+	//}
 
 
 	// Create and Initialize 4 players object
@@ -224,6 +298,7 @@ void LevelShowcase::LevelInit()
 	// Set Player Number
 	p1->SetPlayerNumber(0);
 	// Store inside player array
+	entityObjects.push_back(p1);
 	objectsList.push_back(p1);
 	playerSize++;
 	players[0] = p1;
@@ -236,6 +311,7 @@ void LevelShowcase::LevelInit()
 	p2->SetPosition(glm::vec3(800.f, -700.f, 0));
 	p2->GetSpriteRenderer()->SetFrame(10);
 	p2->SetPlayerNumber(1);
+	entityObjects.push_back(p2);
 	objectsList.push_back(p2);
 	playerSize++;
 	players[1] = p2;
@@ -248,6 +324,7 @@ void LevelShowcase::LevelInit()
 	p3->SetPosition(glm::vec3(800.f, 700.f, 0));
 	p3->GetSpriteRenderer()->SetFrame(10);
 	p3->SetPlayerNumber(2);
+	entityObjects.push_back(p3);
 	objectsList.push_back(p3);
 	playerSize++;
 	players[2] = p3;
@@ -260,9 +337,15 @@ void LevelShowcase::LevelInit()
 	p4->SetPosition(glm::vec3(-800.f, 700.f, 0));
 	p4->GetSpriteRenderer()->SetFrame(10);
 	p4->SetPlayerNumber(3);
+	entityObjects.push_back(p4);
 	objectsList.push_back(p4);
 	playerSize++;
 	players[3] = p4;
+
+	entityObjects.push_back(players[0]->GetAttackColliderObject());
+	entityObjects.push_back(players[1]->GetAttackColliderObject());
+	entityObjects.push_back(players[2]->GetAttackColliderObject());
+	entityObjects.push_back(players[3]->GetAttackColliderObject());
 
 	objectsList.push_back(players[0]->GetAttackColliderObject());
 	objectsList.push_back(players[1]->GetAttackColliderObject());
@@ -534,111 +617,236 @@ void LevelShowcase::UpdateInput()
 void LevelShowcase::UpdateCollision()
 {
 	// player collier player
-	
+	//for (int i = 0; i < objectsList.size(); i++)
+	//{
+	//	EntityObject* entity1 = dynamic_cast<EntityObject*>(objectsList[i]);
 
-	for (int i = 0; i < objectsList.size(); i++)
+	//	// PlayerHitboxObject* hitbox = dynamic_cast<PlayerHitboxObject*>(objectsList[i]);
+
+
+	//	if (entity1 == nullptr || entity1->GetCollider()->GetCollisionType() == Collider::Static)
+	//	{
+	//		continue;
+	//	}
+
+	//	for (int j = 0; j < objectsList.size(); j++)
+	//	{
+	//		if (i == j)
+	//		{
+	//			continue;
+	//		}
+
+	//		EntityObject* entity2 = dynamic_cast<EntityObject*>(objectsList[j]);
+
+	//		if (entity2 != nullptr)
+	//		{
+
+	//			Collider* col1 = entity1->GetCollider();
+	//			Collider* col2 = entity2->GetCollider();
+
+	//			glm::vec2 delta = glm::vec2(abs(entity1->getPos().x - entity2->getPos().x),
+	//				abs(entity1->getPos().y - entity2->getPos().y));
+
+	//			glm::vec2 previousDelta = glm::vec2(abs(col1->GetPreviousPos().x - col2->GetPreviousPos().x),
+	//				abs(col1->GetPreviousPos().y - col2->GetPreviousPos().y));
+
+	//			float overlapX = (abs(col1->GetHalfSize().x)) + (abs(col2->GetHalfSize().x)) - delta.x;
+	//			float overlapY = (abs(col1->GetHalfSize().y)) + (abs(col2->GetHalfSize().y)) - delta.y;
+
+	//			// for resolve collider
+	//			float previousOverlapX = (abs(col1->GetHalfSize().x)) + (abs(col2->GetHalfSize().x)) - previousDelta.x;
+	//			float previousOverlapY = (abs(col1->GetHalfSize().y)) + (abs(col2->GetHalfSize().y)) - previousDelta.y;
+
+	//			if (overlapX > 0 && overlapY > 0)
+	//			{
+
+	//				/*if (hitbox != nullptr)
+	//				{
+	//					KK_TRACE("Hitbox size = {0}, {1}", hitbox->GetCollider()->GetSize().x, hitbox->GetCollider()->GetSize().y);
+	//					KK_TRACE("Hitbox pos = {0}, {1}", hitbox->getPos().x, hitbox->getPos().y);
+	//				}*/
+
+	//				if (previousCollisions.find({ col1, col2 }) == previousCollisions.end())
+	//				{
+	//					// KK_TRACE("enter");
+	//					entity1->OnColliderEnter(entity2->GetCollider());
+	//					// entity2->OnColliderEnter(entity1->GetCollider());
+	//				}
+	//				else
+	//				{
+
+	//					entity1->OnColliderStay(entity2->GetCollider());
+	//					// entity2->OnColliderStay(entity1->GetCollider());
+	//				}
+
+	//				currentCollisions.insert({ col1, col2 });
+
+	//				if (col1->GetCollisionType() == Collider::Kinematic &&
+	//					col2->GetCollisionType() == Collider::Static)
+	//				{
+	//					glm::vec3 newPos(entity1->getPos().x, entity1->getPos().y, entity1->getPos().z);
+
+	//					if (previousOverlapX > 0)
+	//					{
+	//						bool isTopSide = (col1->GetPreviousPos().y - col2->GetPreviousPos().y) > 0 ? true : false;
+
+	//						newPos.y = entity1->getPos().y + (overlapY * (isTopSide ? 1 : -1));
+	//					}
+	//					if (previousOverlapY > 0)
+	//					{
+	//						bool isLeftSide = (col1->GetPreviousPos().x - col2->GetPreviousPos().x) < 0 ? true : false;
+	//						newPos.x = entity1->getPos().x + (overlapX * (isLeftSide ? -1 : 1));
+	//					}
+	//					entity1->SetPosition(newPos);
+	//				}
+	//			}
+	//			else if (overlapX <= 0 || overlapY <= 0)
+	//			{
+	//				if (previousCollisions.find({ col1, col2 }) != previousCollisions.end())
+	//				{
+	//					// KK_TRACE("OnColliderExit");
+
+	//					entity1->OnColliderExit(entity2->GetCollider());
+	//					// entity2->OnColliderExit(entity1->GetCollider());
+	//				}
+	//			}
+
+	//			entity2->GetCollider()->SetPreviousPos(entity2->getPos());
+
+	//		}
+	//	}
+	//	entity1->GetCollider()->SetPreviousPos(entity1->getPos());
+	//}
+
+	/*std::vector<EntityObject*> entityObjects;
+	for (auto* obj : objectsList)
 	{
-		EntityObject* entity1 = dynamic_cast<EntityObject*>(objectsList[i]);
+		if (EntityObject* entity = dynamic_cast<EntityObject*>(obj))
+		{
+			entityObjects.push_back(entity);
+		}
+	}*/
+	
+	int entityCount = 0;
+	for (int i = 0; i < entityObjects.size(); i++)
+	{
 
-		PlayerHitboxObject* hitbox = dynamic_cast<PlayerHitboxObject*>(objectsList[i]);
+		// PlayerHitboxObject* hitbox = dynamic_cast<PlayerHitboxObject*>(objectsList[i]);
 		
+		EntityObject* entity1 = entityObjects[i];
+		TileObject* tile = dynamic_cast<TileObject*>(entityObjects[i]);
 
-		if (entity1 == nullptr || entity1->GetCollider()->GetCollisionType() == Collider::Static)
+		if (entity1->GetCollider()->GetCollisionType() == Collider::Static ||
+			tile != nullptr)
 		{
 			continue;
 		}
-		for (int j = 0; j < objectsList.size(); j++)
+
+		for (int j = 0; j < entityObjects.size(); j++)
 		{
+			entityCount++;
+			
 			if (i == j)
 			{
 				continue;
 			}
 
-			EntityObject* entity2 = dynamic_cast<EntityObject*>(objectsList[j]);
+			EntityObject* entity2 = entityObjects[j];
 
-			if (entity2 != nullptr)
+			Collider* col1 = entity1->GetCollider();
+			Collider* col2 = entity2->GetCollider();
+
+			/*glm::vec2 delta = glm::vec2(abs(entity1->getPos().x - entity2->getPos().x),
+				abs(entity1->getPos().y - entity2->getPos().y));*/
+			float deltaX = entity1->getPos().x - entity2->getPos().x;
+			float deltaY = entity1->getPos().y - entity2->getPos().y;
+			glm::vec2 delta(abs(deltaX), abs(deltaY));
+
+			/*glm::vec2 previousDelta = glm::vec2(abs(col1->GetPreviousPos().x - col2->GetPreviousPos().x),
+				abs(col1->GetPreviousPos().y - col2->GetPreviousPos().y));*/
+			float previousDeltaX = col1->GetPreviousPos().x - col2->GetPreviousPos().x;
+			float previousDeltaY = col1->GetPreviousPos().y - col2->GetPreviousPos().y;
+			glm::vec2 previousDelta(abs(previousDeltaX), abs(previousDeltaY));
+
+			float halfSizeAbsX1 = abs(col1->GetHalfSize().x);
+			float halfSizeAbsX2 = abs(col2->GetHalfSize().x);
+
+			float halfSizeAbsY1 = abs(col1->GetHalfSize().y);
+			float halfSizeAbsY2 = abs(col2->GetHalfSize().y);
+
+			float overlapX = halfSizeAbsX1 + halfSizeAbsX2 - delta.x;
+
+			float overlapY = halfSizeAbsY1 + halfSizeAbsY2 - delta.y;
+
+
+			// for resolve collider
+			float previousOverlapX = (abs(col1->GetHalfSize().x)) + (abs(col2->GetHalfSize().x)) - previousDelta.x;
+			float previousOverlapY = (abs(col1->GetHalfSize().y)) + (abs(col2->GetHalfSize().y)) - previousDelta.y;
+
+			if (overlapX > 0 && overlapY > 0)
 			{
-				
-				Collider* col1 = entity1->GetCollider();
-				Collider* col2 = entity2->GetCollider();
 
-				glm::vec2 delta = glm::vec2(abs(entity1->getPos().x - entity2->getPos().x),
-					abs(entity1->getPos().y - entity2->getPos().y));
+				/*if (hitbox != nullptr)
+				{
+					KK_TRACE("Hitbox size = {0}, {1}", hitbox->GetCollider()->GetSize().x, hitbox->GetCollider()->GetSize().y);
+					KK_TRACE("Hitbox pos = {0}, {1}", hitbox->getPos().x, hitbox->getPos().y);
+				}*/
 
-				glm::vec2 previousDelta = glm::vec2(abs(col1->GetPreviousPos().x - col2->GetPreviousPos().x),
-					abs(col1->GetPreviousPos().y - col2->GetPreviousPos().y));
-
-				float overlapX = (abs(col1->GetHalfSize().x)) + (abs(col2->GetHalfSize().x)) - delta.x;
-				float overlapY = (abs(col1->GetHalfSize().y)) + (abs(col2->GetHalfSize().y)) - delta.y;
-
-				// for resolve collider
-				float previousOverlapX = (abs(col1->GetHalfSize().x)) + (abs(col2->GetHalfSize().x)) - previousDelta.x;
-				float previousOverlapY = (abs(col1->GetHalfSize().y)) + (abs(col2->GetHalfSize().y)) - previousDelta.y;
-
-				if (overlapX > 0 && overlapY > 0)
+				if (previousCollisions.find({ col1, col2 }) == previousCollisions.end())
+				{
+					// KK_TRACE("enter");
+					entity1->OnColliderEnter(entity2->GetCollider());
+					// entity2->OnColliderEnter(entity1->GetCollider());
+				}
+				else
 				{
 
-					/*if (hitbox != nullptr)
-					{
-						KK_TRACE("Hitbox size = {0}, {1}", hitbox->GetCollider()->GetSize().x, hitbox->GetCollider()->GetSize().y);
-						KK_TRACE("Hitbox pos = {0}, {1}", hitbox->getPos().x, hitbox->getPos().y);
-					}*/
-
-					if (previousCollisions.find({ col1, col2 }) == previousCollisions.end())
-					{
-						// KK_TRACE("enter");
-						entity1->OnColliderEnter(entity2->GetCollider());
-						// entity2->OnColliderEnter(entity1->GetCollider());
-					}
-					else
-					{
-						
-						entity1->OnColliderStay(entity2->GetCollider());
-						// entity2->OnColliderStay(entity1->GetCollider());
-					}
-
-					currentCollisions.insert({ col1, col2 });
-
-					if (col1->GetCollisionType() == Collider::Kinematic &&
-						col2->GetCollisionType() == Collider::Static)
-					{
-						glm::vec3 newPos(entity1->getPos().x, entity1->getPos().y, entity1->getPos().z);
-
-						if (previousOverlapX > 0)
-						{
-							bool isTopSide = (col1->GetPreviousPos().y - col2->GetPreviousPos().y) > 0 ? true : false;
-
-							newPos.y = entity1->getPos().y + (overlapY * (isTopSide ? 1 : -1));
-						}
-						if (previousOverlapY > 0)
-						{
-							bool isLeftSide = (col1->GetPreviousPos().x - col2->GetPreviousPos().x) < 0 ? true : false;
-							newPos.x = entity1->getPos().x + (overlapX * (isLeftSide ? -1 : 1));
-						}
-						entity1->SetPosition(newPos);
-					}
+					entity1->OnColliderStay(entity2->GetCollider());
+					// entity2->OnColliderStay(entity1->GetCollider());
 				}
-				else if (overlapX <= 0 || overlapY <= 0)
+
+				currentCollisions.insert({ col1, col2 });
+
+				if (col1->GetCollisionType() == Collider::Kinematic &&
+					col2->GetCollisionType() == Collider::Static)
 				{
-					if (previousCollisions.find({ col1, col2 }) != previousCollisions.end())
+					glm::vec3 newPos(entity1->getPos().x, entity1->getPos().y, entity1->getPos().z);
+
+					if (previousOverlapX > 0)
 					{
-						// KK_TRACE("OnColliderExit");
+						bool isTopSide = (col1->GetPreviousPos().y - col2->GetPreviousPos().y) > 0 ? true : false;
 
-						entity1->OnColliderExit(entity2->GetCollider());
-						// entity2->OnColliderExit(entity1->GetCollider());
+						newPos.y = entity1->getPos().y + (overlapY * (isTopSide ? 1 : -1));
 					}
+					if (previousOverlapY > 0)
+					{
+						bool isLeftSide = (col1->GetPreviousPos().x - col2->GetPreviousPos().x) < 0 ? true : false;
+						newPos.x = entity1->getPos().x + (overlapX * (isLeftSide ? -1 : 1));
+					}
+					entity1->SetPosition(newPos);
 				}
-
-				entity2->GetCollider()->SetPreviousPos(entity2->getPos());
-
 			}
+			else if (overlapX <= 0 || overlapY <= 0)
+			{
+				if (previousCollisions.find({ col1, col2 }) != previousCollisions.end())
+				{
+					// KK_TRACE("OnColliderExit");
+
+					entity1->OnColliderExit(entity2->GetCollider());
+					// entity2->OnColliderExit(entity1->GetCollider());
+				}
+			}
+
+			entity2->GetCollider()->SetPreviousPos(entity2->getPos());
 		}
 		entity1->GetCollider()->SetPreviousPos(entity1->getPos());
 	}
 
-	previousCollisions = currentCollisions;
+	// previousCollisions = currentCollisions;
+	std::swap(previousCollisions, currentCollisions);
 	currentCollisions.clear();
 
+	KK_WARN("entityCount = {0}", entityObjects.size());
 	/*KK_TRACE("preiousCollisions size = {0}", previousCollisions.size());
 	KK_TRACE("currentCollisions size = {0}", currentCollisions.size());*/
 }

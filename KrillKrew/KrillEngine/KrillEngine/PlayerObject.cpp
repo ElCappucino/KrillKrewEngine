@@ -227,7 +227,7 @@ void PlayerObject::UpdateCurrentAnimation()
 	}
 	else if 
 	(
-		(abs(this->velocity.x) > 0 || abs(this->velocity.y > 0)) && 
+		((abs(this->velocity.x) > 0.f || abs(this->velocity.y) > 0.f)) &&
 		currAnimState != AnimationState::Running &&
 		currAnimState != AnimationState::Melee
 	)
@@ -236,7 +236,7 @@ void PlayerObject::UpdateCurrentAnimation()
 	}
 	else if 
 	(
-		abs(this->velocity.x) <= 0 || abs(this->velocity.y <= 0) && 
+		abs(this->velocity.x) <= 0.f && abs(this->velocity.y) <= 0.f &&
 		currAnimState == AnimationState::Running &&
 		currAnimState != AnimationState::Melee
 	)

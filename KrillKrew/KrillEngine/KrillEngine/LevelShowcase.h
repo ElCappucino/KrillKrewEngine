@@ -2,14 +2,15 @@
 #include "Level.h"
 #include "LevelUtilities.h"
 
-#define MAP_WIDTH  21
-#define MAP_HEIGHT 16
+#define MAP_WIDTH  29
+#define MAP_HEIGHT 30
 
 /// @brief The class for level inherit test from P'tiam
 class LevelShowcase : public Level
 {
 private:
 	std::vector<DrawableObject*> objectsList;
+	std::vector<EntityObject*> entityObjects;
 	std::set<std::pair<Collider*, Collider*>> currentCollisions;
 	std::set<std::pair<Collider*, Collider*>> previousCollisions;
 	std::map<std::string, SpritesheetInfo> spriteList;
