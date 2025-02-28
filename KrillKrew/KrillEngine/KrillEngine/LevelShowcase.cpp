@@ -67,8 +67,6 @@ void LevelShowcase::LevelInit()
 
 	timer = Timer::Instance();
 
-	
-
 	TileImport(groundTile, "../Resource/Texture/Tilemap1.txt");
 
 	// Create and Initialize 4 players object
@@ -730,9 +728,6 @@ void LevelShowcase::UpdateCollision()
 	int entityCount = 0;
 	for (int i = 0; i < entityObjects.size(); i++)
 	{
-
-		// PlayerHitboxObject* hitbox = dynamic_cast<PlayerHitboxObject*>(objectsList[i]);
-		
 		EntityObject* entity1 = entityObjects[i];
 		TileObject* tile = dynamic_cast<TileObject*>(entityObjects[i]);
 
@@ -756,14 +751,10 @@ void LevelShowcase::UpdateCollision()
 			Collider* col1 = entity1->GetCollider();
 			Collider* col2 = entity2->GetCollider();
 
-			/*glm::vec2 delta = glm::vec2(abs(entity1->getPos().x - entity2->getPos().x),
-				abs(entity1->getPos().y - entity2->getPos().y));*/
 			float deltaX = entity1->getPos().x - entity2->getPos().x;
 			float deltaY = entity1->getPos().y - entity2->getPos().y;
 			glm::vec2 delta(abs(deltaX), abs(deltaY));
 
-			/*glm::vec2 previousDelta = glm::vec2(abs(col1->GetPreviousPos().x - col2->GetPreviousPos().x),
-				abs(col1->GetPreviousPos().y - col2->GetPreviousPos().y));*/
 			float previousDeltaX = col1->GetPreviousPos().x - col2->GetPreviousPos().x;
 			float previousDeltaY = col1->GetPreviousPos().y - col2->GetPreviousPos().y;
 			glm::vec2 previousDelta(abs(previousDeltaX), abs(previousDeltaY));
@@ -786,21 +777,13 @@ void LevelShowcase::UpdateCollision()
 			if (overlapX > 0 && overlapY > 0)
 			{
 
-				/*if (hitbox != nullptr)
-				{
-					KK_TRACE("Hitbox size = {0}, {1}", hitbox->GetCollider()->GetSize().x, hitbox->GetCollider()->GetSize().y);
-					KK_TRACE("Hitbox pos = {0}, {1}", hitbox->getPos().x, hitbox->getPos().y);
-				}*/
-
 				if (previousCollisions.find({ col1, col2 }) == previousCollisions.end())
 				{
-					// KK_TRACE("enter");
 					entity1->OnColliderEnter(entity2->GetCollider());
 					// entity2->OnColliderEnter(entity1->GetCollider());
 				}
 				else
 				{
-
 					entity1->OnColliderStay(entity2->GetCollider());
 					// entity2->OnColliderStay(entity1->GetCollider());
 				}
@@ -830,8 +813,6 @@ void LevelShowcase::UpdateCollision()
 			{
 				if (previousCollisions.find({ col1, col2 }) != previousCollisions.end())
 				{
-					// KK_TRACE("OnColliderExit");
-
 					entity1->OnColliderExit(entity2->GetCollider());
 					// entity2->OnColliderExit(entity1->GetCollider());
 				}
@@ -845,10 +826,6 @@ void LevelShowcase::UpdateCollision()
 	// previousCollisions = currentCollisions;
 	std::swap(previousCollisions, currentCollisions);
 	currentCollisions.clear();
-
-	KK_WARN("entityCount = {0}", entityObjects.size());
-	/*KK_TRACE("preiousCollisions size = {0}", previousCollisions.size());
-	KK_TRACE("currentCollisions size = {0}", currentCollisions.size());*/
 }
 
 void LevelShowcase::UpdateProjectile()
