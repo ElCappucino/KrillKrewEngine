@@ -78,3 +78,7 @@ void Collider::SetCollisionType(Collider::CollisionType type)
 		break;
 	}
 }
+
+void Collider::setColliderSize(glm::vec3 size) {
+	this->size = size;
+}

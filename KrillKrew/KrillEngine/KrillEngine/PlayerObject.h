@@ -37,7 +37,9 @@ public:
 		Trap = 1,
 		Dash = 2,
 		TNT = 3,
-		Teleport = 4
+		Teleport = 4,
+		Bola = 5,
+		Cleave = 6
 	};
 
 	enum class AbilityButton
@@ -87,6 +89,9 @@ private:
 	bool xIsPositive;
 	bool yIsPositive;
 	bool isTNT;
+	int holdingProjectile = 0;
+	bool isStun;
+	float durationStun;
 
 public:
 	
@@ -108,15 +113,20 @@ public:
 	void SetDashDuration(int duration);
 	void SetAbility(AbilityButton numberAbility, Ability idAbility);
 	void SetPlayerUI(UiObject* ui);
-	void setIsKnockback(bool isKnockback);
-	void setDurationKnockback(int time);
-	void setIsTNT(bool isTNT);
 	void SetCurrentDirection(glm::vec2 dir);
+
+	void SetIsKnockback(bool isKnockback);
+	void SetKnockbackDuration(int time);
+	void SetIsTNT(bool isTNT);
+	void SetHoldingProjectile(int projectile);
+	void SetIsStun(bool isStun);
+	void SetStunDuraion(int time);
 
 	void ReduceAbilityCooldown(int button);
 	void ReduceSlowDuration();
 	void ReduceDashDuration();
-	void reduceDurationKnockback();
+	void ReduceKnockbackDuration();
+	void ReduceStunDuration();
 	
 
 	virtual void SetAnimationSprite(AnimationState state, SpritesheetInfo spriteInfo);
@@ -145,14 +155,17 @@ public:
 	float GetSlowDuration() const;
 	float GetDashDuration() const;
 	glm::vec2 GetCurrentDirection() const;
+	float GetStunDuration() const;
 	PlayerObject::Ability GetAbilityByButton(AbilityButton button) const;
 
-	void clearAimingTile(TileObject* tile);
+	void ClearAimingTile(TileObject* tile);
 	void AddAimingTile(TileObject* tile);
 	void HitAimingTile();
-	bool getXIsPositive();
-	bool getYIsPositive();
-	bool getIsKnockback();
-	float getDurationKnockback();
-	bool getIsTNT();
+	bool GetXIsPositive();
+	bool GetYIsPositive();
+	bool GetIsKnockback();
+	float GetDurationKnockback();
+	bool GetIsTNT();
+	int GetHoldingProjectile();
+	bool GetIsStun();
 };

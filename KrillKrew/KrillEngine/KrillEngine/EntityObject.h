@@ -39,6 +39,7 @@ public:
 
 	
 	virtual Collider* GetCollider();
+	virtual void setColliderSize(glm::vec3 size);
 	
 	virtual void OnColliderEnter(Collider* other);
 	virtual void OnColliderStay(Collider* other);

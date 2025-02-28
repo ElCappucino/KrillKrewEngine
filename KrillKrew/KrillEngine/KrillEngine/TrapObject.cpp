@@ -57,22 +57,22 @@ void TrapObject::Render(glm::mat4 globalModelTransform)
 	}
 }
 
-void TrapObject::setLifeTime(int lifeTime) {
+void TrapObject::SetLifeTime(int lifeTime) {
 	this->lifeTime = lifeTime;
 }
 
-void TrapObject::reduceLifeTime() {
+void TrapObject::ReduceLifeTime() {
 	lifeTime -= 1;
 }
-int TrapObject::getLifetime() {
+int TrapObject::GetLifetime() {
 	return lifeTime;
 }
 
-void TrapObject::setNumOwner(int num) {
+void TrapObject::SetNumOwner(int num) {
 	playerNumOwner = num;
 }
 
-int TrapObject::getNumOwner() {
+int TrapObject::GetNumOwner() {
 	return playerNumOwner;
 }
 
@@ -82,9 +82,9 @@ void TrapObject::OnColliderEnter(Collider* other)
 	PlayerObject* player = dynamic_cast<PlayerObject*>(other->GetParent());
 	if (player != nullptr)
 	{
-		if (this->getNumOwner() != player->GetPlayerNumber()) 
+		if (this->GetNumOwner() != player->GetPlayerNumber())
 		{
-			KK_TRACE("Trap of player {0} hit player {1}", this->getNumOwner(), player->GetPlayerNumber());
+			KK_TRACE("Trap of player {0} hit player {1}", this->GetNumOwner(), player->GetPlayerNumber());
 			player->SetSlowDuration(100);
 			player->SetIsSlow(true);
 			this->isActive = false;
@@ -112,18 +112,18 @@ void TrapObject::OnTriggerExit(Collider* other)
 {
 }
 
-void TrapObject::setIsCanKnockback(bool isCanKnockback) {
+void TrapObject::SetIsCanKnockback(bool isCanKnockback) {
 	this->isCanKnockback = isCanKnockback;
 }
 
-bool TrapObject::getIsCanKnockback() {
+bool TrapObject::GetIsCanKnockback() {
 	return isCanKnockback;
 }
 
-void TrapObject::setType(int type) {
+void TrapObject::SetType(int type) {
 	this->type = type;
 }
 
-bool TrapObject::getType() {
+bool TrapObject::GetType() {
 	return type;
 }

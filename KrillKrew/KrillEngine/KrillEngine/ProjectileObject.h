@@ -17,8 +17,10 @@ class ProjectileObject : public EntityObject
 public:
 	enum TypeProjectile
 	{
-		Fireball,
-		Teleport
+		Fireball = 1,
+		Teleport,
+		Bola,
+		Cleave
 	};
 
 	glm::vec3 velocity;
@@ -26,6 +28,8 @@ public:
 	PlayerObject* playerOwner;
 	bool isCanKnockback;
 	int type;
+	bool isShooting;
+	bool isCanStun;
 
 public:
 	ProjectileObject();
@@ -33,19 +37,23 @@ public:
 	void SetTexture(std::string path);
 	void Render(glm::mat4 globalModelTransform);
 
-	void setVelocity(float axisX, float axisY, bool isPositiveX, bool isPositiveY);
-	void setLifeTime(float lifeTime);
+	void SetVelocity(float axisX, float axisY, bool isPositiveX, bool isPositiveY);
+	void SetLifeTime(float lifeTime);
 	//void setNumOwner(int Num);
-	void setOwner(PlayerObject* player);
+	void SetOwner(PlayerObject* player);
 
-	glm::vec3 getVelocity();
-	void reduceLifeTime();
-	int getLifetime();
-	void setIsCanKnockback(bool isCanKnockback);
-	bool getIsCanKnockback();
+	glm::vec3 GetVelocity();
+	void ReduceLifeTime();
+	int GetLifetime();
+	void SetIsCanKnockback(bool isCanKnockback);
+	bool GetIsCanKnockback();
 	PlayerObject* GetOwner();
-	void setType(int Type);
-	bool getType();
+	void SetType(int Type);
+	int GetType();
+	void SetIsShooting(bool isShooting);
+	bool GetIsShooting();
+	void SetIsCanStun(bool isCanStun);
+	bool GetIsCanStun();
 
 	virtual Collider* GetCollider();
 

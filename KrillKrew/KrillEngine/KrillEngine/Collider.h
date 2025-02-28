@@ -44,6 +44,6 @@ public:
 	void SetGismosColor(glm::vec3 color);
 	CollisionType GetCollisionType();
 	void SetCollisionType(CollisionType type);
-
+	void setColliderSize(glm::vec3 size);
 
 };
