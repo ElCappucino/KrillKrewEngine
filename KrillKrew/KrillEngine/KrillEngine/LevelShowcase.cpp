@@ -1,25 +1,5 @@
 #include "LevelShowcase.h"
 
-void HoldBomb(int playerNum, 
-			  PlayerObject* playerObj, 
-			  std::vector<DrawableObject*>& objectList, 
-			  SpritesheetInfo sheetinfo)
-{
-	std::cout << "Hold" << std::endl;
-	playerObj->SetVelocity(0, 0, false, false);
-	playerObj->SetIsAiming(true);
-	ProjectileObject* projectile = new ProjectileObject();
-	projectile->SetSpriteInfo(sheetinfo);
-	projectile->SetTexture(sheetinfo.texture);
-	projectile->SetPosition(playerObj->getPos());
-	projectile->SetSize(256.f, -256.f);
-	projectile->SetLifeTime(9999);
-	projectile->SetOwner(playerObj);
-	// std::cout << "Owner " << projectile->getNumOwner() << std::endl;
-	objectList.push_back(projectile);
-	//objectsList.push_back(projectile->GetCollider()->GetGizmos());
-}
-
 void LevelShowcase::LevelLoad()
 {
 	SquareMeshVbo* square = new SquareMeshVbo();
@@ -50,8 +30,6 @@ void LevelShowcase::LevelLoad()
 
 	spriteList["Blobtile"] = SpritesheetInfo("Blobtile", "../Resource/Texture/tileset_01.png", 128, 128, 1664, 512);
 
-	abilities.emplace(std::string("HoldBomb"), HoldBomb);
-
 	//cout << "Load Level" << endl;
 }
 
@@ -77,14 +55,12 @@ void LevelShowcase::LevelInit()
 	float map_top = 1080.f;
 
 	int tileCount = 0;
-	// Archive
+
 	for (int i = 0; i < MAP_HEIGHT; i++)
 	{
 		for (int j = 0; j < MAP_WIDTH; j++)
 		{
 			int flag = groundTile[i][j];
-
-			// currentGroundTile[i][j] = groundTile[i][j];
 
 			std::pair<int, int> pos;
 
@@ -95,83 +71,61 @@ void LevelShowcase::LevelInit()
 			{
 				continue;
 			}
-			else if (flag == 0)
-			{
-				if (groundTile[i - 1][j] == 0)
-				{
-					// blank
-					pos = { 99, 99 };
-				}
-				else
-				{
-
-					int upperPos = i - 1;
-
-					std::bitset<8> surround;
-					surround[0] = groundTile[upperPos - 1][j];
-					surround[1] = groundTile[upperPos - 1][j + 1];
-					surround[2] = groundTile[upperPos][j + 1];
-					surround[3] = groundTile[upperPos + 1][j + 1];
-					surround[4] = groundTile[upperPos + 1][j];
-					surround[5] = groundTile[upperPos + 1][j - 1];
-					surround[6] = groundTile[upperPos][j - 1];
-					surround[7] = groundTile[upperPos - 1][j - 1];
-
-					if (!(surround[0] && surround[2])) { surround[1] = 0; }
-					if (!(surround[2] && surround[4])) { surround[3] = 0; }
-					if (!(surround[4] && surround[6])) { surround[5] = 0; }
-					if (!(surround[6] && surround[0])) { surround[7] = 0; }
-
-					auto it = blob_lookup_table_underground.find((int)(surround.to_ulong()));
-
-					// std::cout << "Bitset = " << (int)surround.to_ulong() << std::endl;
-
-					if (it != blob_lookup_table_underground.end())
-					{
-						pos = it->second;
-
-						// std::cout << "pair = " << it->second.first << " " << it->second.second << std::endl;
-					}
-					else
-					{
-						pos = { 99, 99 };
-						// std::cout << "blob_lookup_table.end()" << std::endl;
-					}
-				}
-
-			}
 			else
 			{
+				int checkPosRow;
+
+				if (flag == 0)
+				{
+					checkPosRow = i;
+				}
+				else if (flag == 1)
+				{
+					checkPosRow = i - 1;
+				}
+
 				std::bitset<8> surround;
-				surround[0] = groundTile[i - 1][j];
-				surround[1] = groundTile[i - 1][j + 1];
-				surround[2] = groundTile[i][j + 1];
-				surround[3] = groundTile[i + 1][j + 1];
-				surround[4] = groundTile[i + 1][j];
-				surround[5] = groundTile[i + 1][j - 1];
-				surround[6] = groundTile[i][j - 1];
-				surround[7] = groundTile[i - 1][j - 1];
+				surround[0] = groundTile[checkPosRow - 1][j];
+				surround[1] = groundTile[checkPosRow - 1][j + 1];
+				surround[2] = groundTile[checkPosRow][j + 1];
+				surround[3] = groundTile[checkPosRow + 1][j + 1];
+				surround[4] = groundTile[checkPosRow + 1][j];
+				surround[5] = groundTile[checkPosRow + 1][j - 1];
+				surround[6] = groundTile[checkPosRow][j - 1];
+				surround[7] = groundTile[checkPosRow - 1][j - 1];
 
 				if (!(surround[0] && surround[2])) { surround[1] = 0; }
 				if (!(surround[2] && surround[4])) { surround[3] = 0; }
 				if (!(surround[4] && surround[6])) { surround[5] = 0; }
 				if (!(surround[6] && surround[0])) { surround[7] = 0; }
 
-				auto it = blob_lookup_table.find((int)(surround.to_ulong()));
-				// std::cout << "Bitset = " << (int)surround.to_ulong() << std::endl;
-				if (it != blob_lookup_table.end())
+				if (flag == 0)
 				{
-					pos = it->second;
+					auto lookup_sheet = blob_lookup_table_underground.find((int)(surround.to_ulong()));
 
-					// std::cout << "pair = " << it->second.first << " " << it->second.second << std::endl;
+					if (lookup_sheet != blob_lookup_table_underground.end())
+					{
+						pos = lookup_sheet->second;
+					}
+					else
+					{
+						pos = { 99, 99 };
+					}
 				}
-				else {
-					pos = { 99, 99 };
-					// std::cout << "blob_lookup_table.end()" << std::endl;
+				else if (flag == 1)
+				{
+					auto lookup_sheet = blob_lookup_table.find((int)(surround.to_ulong()));
+
+					if (lookup_sheet != blob_lookup_table_underground.end())
+					{
+						pos = lookup_sheet->second;
+					}
+					else
+					{
+						pos = { 99, 99 };
+					}
 				}
 			}
-
-			// std::cout << flag << ",";
 
 			if (pos.first != 99)
 			{
@@ -181,6 +135,7 @@ void LevelShowcase::LevelInit()
 				obj->SetTexture(spriteList.find("Blobtile")->second.texture);
 				obj->SetSize(128.f, -128.f);
 				obj->SetPosition(glm::vec3(map_left + (j * 126.f), map_top - (i * 126.f), 0));
+
 				if (flag == 0)
 				{
 					obj->SetIsBreakable(false);
@@ -193,9 +148,6 @@ void LevelShowcase::LevelInit()
 				}
 
 				tilesList[i][j] = obj;
-				/*obj->groundTileInfo = &currentGroundTile;
-
-				obj->SetTilePosition(i, j);*/
 
 				entityObjects.push_back(obj);
 				tileCount++;
@@ -203,76 +155,8 @@ void LevelShowcase::LevelInit()
 				objectsList.push_back(obj->GetCollider()->GetGizmos());
 				objectsList.push_back(obj->GetOverlaySprite());
 			}
-
-
-			/*KK_TRACE("Load tile {0}, {1}", i, j);*/
 		}
-		// std::cout << std::endl;
 	}
-	KK_TRACE("tileCount = {0}", tileCount);
-	// int tempTileValue[MAP_HEIGHT][MAP_WIDTH] = { 0 };
-	
-	//for (int i = 1; i < MAP_HEIGHT - 1; i++)
-	//{
-	//	for (int j = 1; j < MAP_WIDTH - 1; j++)
-	//	{
-	//		int flag = groundTile[i][j];
-	//		std::pair<int, int> pos = {99, 99};
-	//		std::bitset<8> surround;
-	//		surround[0] = groundTile[i - 1][j];
-	//		surround[1] = groundTile[i - 1][j + 1];
-	//		surround[2] = groundTile[i][j + 1];
-	//		surround[3] = groundTile[i + 1][j + 1];
-	//		surround[4] = groundTile[i + 1][j];
-	//		surround[5] = groundTile[i + 1][j - 1];
-	//		surround[6] = groundTile[i][j - 1];
-	//		surround[7] = groundTile[i - 1][j - 1];
-	//		if (flag == 1)
-	//		{
-	//			auto it = blob_lookup_table.find((int)(surround.to_ulong()));
-	//			if (it != blob_lookup_table.end())
-	//			{
-	//				pos = it->second;
-	//			}
-	//		}
-	//		else if (flag == 0)
-	//		{
-	//			auto it = blob_lookup_table_underground.find((int)(surround.to_ulong()));
-	//			if (it != blob_lookup_table_underground.end())
-	//			{
-	//				pos = it->second;
-	//			}
-	//		}
-	//		if (pos.first != 99)
-	//		{
-	//			TileObject* obj = new TileObject();
-	//			obj->SetSpriteInfo(spriteList.find("Blobtile")->second);
-	//			obj->GetSpriteRenderer()->ShiftTo(pos.first - 1, pos.second - 1);
-	//			obj->SetTexture(spriteList.find("Blobtile")->second.texture);
-	//			obj->SetSize(128.f, -128.f);
-	//			obj->SetPosition(glm::vec3(map_left + (j * 126.f), map_top - (i * 126.f), 0));
-	//			if (flag == 0)
-	//			{
-	//				obj->SetIsBreakable(false);
-	//				obj->SetIsBroke(true);
-	//			}
-	//			else if (flag == 1)
-	//			{
-	//				obj->SetIsBreakable(true);
-	//				obj->SetIsBroke(false);
-	//			}
-	//			tilesList[i][j] = obj;
-	//			/*obj->groundTileInfo = &currentGroundTile;
-	//			obj->SetTilePosition(i, j);*/
-	//			objectsList.push_back(obj);
-	//			// objectsList.push_back(obj->GetCollider()->GetGizmos());
-	//			// objectsList.push_back(obj->GetOverlaySprite());
-	//		}
-	//		KK_TRACE("Load tile {0}, {1}", i, j);
-	//	}
-	//}
-
-	// Create and Initialize 4 players object
 
 	// Example Code
 
@@ -280,13 +164,13 @@ void LevelShowcase::LevelInit()
 	p1->SetAnimationSprite(PlayerObject::AnimationState::Idle, spriteList.find("Shark_idle")->second);
 	p1->SetAnimationSprite(PlayerObject::AnimationState::Running, spriteList.find("Shark_run")->second);
 	p1->SetAnimationSprite(PlayerObject::AnimationState::Melee, spriteList.find("Shark_hit")->second);
+	p1->SetAbility(PlayerObject::AbilityButton::Triangle, PlayerObject::Ability::Fireball);
+	p1->SetAbility(PlayerObject::AbilityButton::Circle, PlayerObject::Ability::Dash);
+	p1->SetAbility(PlayerObject::AbilityButton::Cross, PlayerObject::Ability::Trap);
 	p1->SetSpriteInfo(spriteList.find("Shark_idle")->second);
 	p1->SetPosition(glm::vec3(-800.f, -700.f, 0));
 	p1->GetSpriteRenderer()->SetFrame(10);
 	p1->SetPlayerNumber(0);
-	p1->SetAbility(PlayerObject::AbilityButton::Triangle, PlayerObject::Ability::Fireball);
-	p1->SetAbility(PlayerObject::AbilityButton::Circle, PlayerObject::Ability::Dash);
-	p1->SetAbility(PlayerObject::AbilityButton::Cross, PlayerObject::Ability::Teleport);
 	entityObjects.push_back(p1);
 	objectsList.push_back(p1);
 	playerSize++;
@@ -296,13 +180,13 @@ void LevelShowcase::LevelInit()
 	p2->SetAnimationSprite(PlayerObject::AnimationState::Idle, spriteList.find("Shark_idle")->second);
 	p2->SetAnimationSprite(PlayerObject::AnimationState::Running, spriteList.find("Shark_run")->second);
 	p2->SetAnimationSprite(PlayerObject::AnimationState::Melee, spriteList.find("Shark_hit")->second);
+	p2->SetAbility(PlayerObject::AbilityButton::Triangle, PlayerObject::Ability::TNT);
+	p2->SetAbility(PlayerObject::AbilityButton::Circle, PlayerObject::Ability::Teleport);
+	p2->SetAbility(PlayerObject::AbilityButton::Cross, PlayerObject::Ability::Bola);
 	p2->SetSpriteInfo(spriteList.find("Shark_idle")->second);
 	p2->SetPosition(glm::vec3(800.f, -700.f, 0));
 	p2->GetSpriteRenderer()->SetFrame(10);
 	p2->SetPlayerNumber(1);
-	p2->SetAbility(PlayerObject::AbilityButton::Triangle, PlayerObject::Ability::Fireball);
-	p2->SetAbility(PlayerObject::AbilityButton::Circle, PlayerObject::Ability::Trap);
-	p2->SetAbility(PlayerObject::AbilityButton::Cross, PlayerObject::Ability::Cleave);
 	entityObjects.push_back(p2);
 	objectsList.push_back(p2);
 	playerSize++;
@@ -312,14 +196,13 @@ void LevelShowcase::LevelInit()
 	p3->SetAnimationSprite(PlayerObject::AnimationState::Idle, spriteList.find("Shark_idle")->second);
 	p3->SetAnimationSprite(PlayerObject::AnimationState::Running, spriteList.find("Shark_run")->second);
 	p3->SetAnimationSprite(PlayerObject::AnimationState::Melee, spriteList.find("Shark_hit")->second);
+	p3->SetAbility(PlayerObject::AbilityButton::Triangle, PlayerObject::Ability::Cleave);
+	p3->SetAbility(PlayerObject::AbilityButton::Circle, PlayerObject::Ability::Trap);
+	p3->SetAbility(PlayerObject::AbilityButton::Cross, PlayerObject::Ability::Cleave);
 	p3->SetSpriteInfo(spriteList.find("Shark_idle")->second);
 	p3->SetPosition(glm::vec3(800.f, 700.f, 0));
 	p3->GetSpriteRenderer()->SetFrame(10);
 	p3->SetPlayerNumber(2);
-	p3->SetAbility(PlayerObject::AbilityButton::Triangle, PlayerObject::Ability::Fireball);
-	p3->SetAbility(PlayerObject::AbilityButton::Circle, PlayerObject::Ability::Trap);
-	p3->SetAbility(PlayerObject::AbilityButton::Cross, PlayerObject::Ability::Cleave);
-	entityObjects.push_back(p2);
 	entityObjects.push_back(p3);
 	objectsList.push_back(p3);
 	playerSize++;
@@ -329,13 +212,13 @@ void LevelShowcase::LevelInit()
 	p4->SetAnimationSprite(PlayerObject::AnimationState::Idle, spriteList.find("Shark_idle")->second);
 	p4->SetAnimationSprite(PlayerObject::AnimationState::Running, spriteList.find("Shark_run")->second);
 	p4->SetAnimationSprite(PlayerObject::AnimationState::Melee, spriteList.find("Shark_hit")->second);
+	p4->SetAbility(PlayerObject::AbilityButton::Triangle, PlayerObject::Ability::Fireball);
+	p4->SetAbility(PlayerObject::AbilityButton::Circle, PlayerObject::Ability::Trap);
+	p4->SetAbility(PlayerObject::AbilityButton::Cross, PlayerObject::Ability::Cleave);
 	p4->SetSpriteInfo(spriteList.find("Shark_idle")->second);
 	p4->SetPosition(glm::vec3(-800.f, 700.f, 0));
 	p4->GetSpriteRenderer()->SetFrame(10);
 	p4->SetPlayerNumber(3);
-	p4->SetAbility(PlayerObject::AbilityButton::Triangle, PlayerObject::Ability::Fireball);
-	p4->SetAbility(PlayerObject::AbilityButton::Circle, PlayerObject::Ability::Trap);
-	p4->SetAbility(PlayerObject::AbilityButton::Cross, PlayerObject::Ability::Cleave);
 	entityObjects.push_back(p4);
 	objectsList.push_back(p4);
 	playerSize++;
@@ -360,9 +243,6 @@ void LevelShowcase::LevelInit()
 	objectsList.push_back(players[1]->GetCollider()->GetGizmos());
 	objectsList.push_back(players[2]->GetCollider()->GetGizmos());
 	objectsList.push_back(players[3]->GetCollider()->GetGizmos());
-
-	
-
 
 	//create Ui by PlayerObject
 	int playerSize = 4;
@@ -425,7 +305,6 @@ void LevelShowcase::LevelUpdate()
 		}
 	}
 
-	// UpdateInput();
 	UpdateInput();
 
 	for (int i = 0; i < playerSize; i++) {
@@ -450,8 +329,6 @@ void LevelShowcase::LevelUpdate()
 			}
 		}
 	}
-
-	KK_TRACE("Player {0} dash duration = {1}", 0, players[0]->GetDashDuration());
 
 	// projectile collider player
 	UpdateCollision();
@@ -530,43 +407,69 @@ void LevelShowcase::UpdateInput()
 				players[i + playerNum]->SetCurrentDirection(glm::vec2(norAxisX, norAxisY));
 			}
 
-			// KK_TRACE("Controller player : {0} = {1}, {2}", i, norAxisX, norAxisY);
-			
 			// update facing
 			if (abs(axisX) > 0.2f) 
 			{ 
 				players[i + playerNum]->UpdateFacingSide(isPositiveX); 
 			}
 
-			if (players[i + playerNum]->GetIsKnockback() == false) 
+			// movement control
+			if (players[i + playerNum]->GetIsKnockback() == false)
 			{
-				if (players[i + playerNum]->GetIsStun() == false) 
+				if (players[i + playerNum]->GetIsStun() == true)
 				{
-					if (players[i + playerNum]->GetIsDashing() == false) 
-					{
-						if (players[i + playerNum]->GetIsAiming() == false)
-						{
-							players[i + playerNum]->SetVelocity(abs(norAxisX), abs(norAxisY), isPositiveX, isPositiveY);
-						}
-
-						norAxisXOld = norAxisX;
-						norAxisYOld = norAxisY;
-						isPositiveXOld = isPositiveX;
-						isPositiveYOld = isPositiveY;
-					}
-					else 
-					{
-						players[i + playerNum]->SetVelocity(abs(norAxisXOld), abs(norAxisYOld), isPositiveXOld, isPositiveYOld);
-					}
-				}
-				else
-				{
+					// velo to zero if stun
 					players[i + playerNum]->SetVelocity(0, 0, isPositiveXOld, isPositiveYOld);
 				}
-
+				else if (players[i + playerNum]->GetIsDashing() == true)
+				{
+					// use old velo during dash to disable control
+					players[i + playerNum]->SetVelocity(
+						abs(norAxisXOld), 
+						abs(norAxisYOld), 
+						isPositiveXOld, 
+						isPositiveYOld
+					);
+				}
+				else if (players[i + playerNum]->GetIsAiming() == false)
+				{
+					// if not affect by anything, use normaml velocity
+					players[i + playerNum]->SetVelocity(
+						abs(norAxisX), 
+						abs(norAxisY), 
+						isPositiveX, 
+						isPositiveY
+					);
+				}
 			}
 
-			if (players[i + playerNum]->GetIsAiming() && players[i + playerNum]->GetHoldingProjectile() != 0)
+			// update old velocity in case dashing
+			norAxisXOld = norAxisX;
+			norAxisYOld = norAxisY;
+			isPositiveXOld = isPositiveX;
+			isPositiveYOld = isPositiveY;
+
+			// ************change it to attach to player
+			if (players[i + playerNum]->GetIsAiming())
+			{
+				for (int j = 0; j < objectsList.size(); j++) 
+				{
+					ProjectileObject* projectile = dynamic_cast<ProjectileObject*>(objectsList[j]);
+					if ((projectile != nullptr) &&
+						(players[i + playerNum]->GetPlayerNumber() == projectile->GetOwner()->GetPlayerNumber()) &&
+						(projectile->GetIsShooting() == false)) 
+					{
+						if (abs(norAxisX) > 0 || norAxisY > 0) 
+						{
+							projectile->SetVelocity(abs(norAxisX), abs(norAxisY), isPositiveX, isPositiveY);
+						}
+						projectile->SetPosition(players[i + playerNum]->getPos() + (projectile->GetVelocity() * glm::vec3(15.f, 15.f, 0.f)));
+
+					}
+				}
+			}
+
+			/*if (players[i + playerNum]->GetIsAiming() && players[i + playerNum]->GetHoldingProjectile() != 0)
 			{
 				for (int j = 0; j < objectsList.size(); j++) {
 					ProjectileObject* projectile = dynamic_cast<ProjectileObject*>(objectsList[j]);
@@ -580,7 +483,7 @@ void LevelShowcase::UpdateInput()
 
 					}
 				}
-			}
+			}*/
 
 			//Aim
 			if (Joystick::GetButtonDown(i, Joystick::Button::Triangle))
@@ -646,108 +549,6 @@ void LevelShowcase::UpdateInput()
 
 void LevelShowcase::UpdateCollision()
 {
-	// player collier player
-	//for (int i = 0; i < objectsList.size(); i++)
-	//{
-	//	EntityObject* entity1 = dynamic_cast<EntityObject*>(objectsList[i]);
-
-	//	// PlayerHitboxObject* hitbox = dynamic_cast<PlayerHitboxObject*>(objectsList[i]);
-
-
-	//	if (entity1 == nullptr || entity1->GetCollider()->GetCollisionType() == Collider::Static)
-	//	{
-	//		continue;
-	//	}
-
-	//	for (int j = 0; j < objectsList.size(); j++)
-	//	{
-	//		if (i == j)
-	//		{
-	//			continue;
-	//		}
-
-	//		EntityObject* entity2 = dynamic_cast<EntityObject*>(objectsList[j]);
-
-	//		if (entity2 != nullptr)
-	//		{
-
-	//			Collider* col1 = entity1->GetCollider();
-	//			Collider* col2 = entity2->GetCollider();
-
-	//			glm::vec2 delta = glm::vec2(abs(entity1->getPos().x - entity2->getPos().x),
-	//				abs(entity1->getPos().y - entity2->getPos().y));
-
-	//			glm::vec2 previousDelta = glm::vec2(abs(col1->GetPreviousPos().x - col2->GetPreviousPos().x),
-	//				abs(col1->GetPreviousPos().y - col2->GetPreviousPos().y));
-
-	//			float overlapX = (abs(col1->GetHalfSize().x)) + (abs(col2->GetHalfSize().x)) - delta.x;
-	//			float overlapY = (abs(col1->GetHalfSize().y)) + (abs(col2->GetHalfSize().y)) - delta.y;
-
-	//			// for resolve collider
-	//			float previousOverlapX = (abs(col1->GetHalfSize().x)) + (abs(col2->GetHalfSize().x)) - previousDelta.x;
-	//			float previousOverlapY = (abs(col1->GetHalfSize().y)) + (abs(col2->GetHalfSize().y)) - previousDelta.y;
-
-	//			if (overlapX > 0 && overlapY > 0)
-	//			{
-
-	//				/*if (hitbox != nullptr)
-	//				{
-	//					KK_TRACE("Hitbox size = {0}, {1}", hitbox->GetCollider()->GetSize().x, hitbox->GetCollider()->GetSize().y);
-	//					KK_TRACE("Hitbox pos = {0}, {1}", hitbox->getPos().x, hitbox->getPos().y);
-	//				}*/
-
-	//				if (previousCollisions.find({ col1, col2 }) == previousCollisions.end())
-	//				{
-	//					// KK_TRACE("enter");
-	//					entity1->OnColliderEnter(entity2->GetCollider());
-	//					// entity2->OnColliderEnter(entity1->GetCollider());
-	//				}
-	//				else
-	//				{
-
-	//					entity1->OnColliderStay(entity2->GetCollider());
-	//					// entity2->OnColliderStay(entity1->GetCollider());
-	//				}
-
-	//				currentCollisions.insert({ col1, col2 });
-
-	//				if (col1->GetCollisionType() == Collider::Kinematic &&
-	//					col2->GetCollisionType() == Collider::Static)
-	//				{
-	//					glm::vec3 newPos(entity1->getPos().x, entity1->getPos().y, entity1->getPos().z);
-
-	//					if (previousOverlapX > 0)
-	//					{
-	//						bool isTopSide = (col1->GetPreviousPos().y - col2->GetPreviousPos().y) > 0 ? true : false;
-
-	//						newPos.y = entity1->getPos().y + (overlapY * (isTopSide ? 1 : -1));
-	//					}
-	//					if (previousOverlapY > 0)
-	//					{
-	//						bool isLeftSide = (col1->GetPreviousPos().x - col2->GetPreviousPos().x) < 0 ? true : false;
-	//						newPos.x = entity1->getPos().x + (overlapX * (isLeftSide ? -1 : 1));
-	//					}
-	//					entity1->SetPosition(newPos);
-	//				}
-	//			}
-	//			else if (overlapX <= 0 || overlapY <= 0)
-	//			{
-	//				if (previousCollisions.find({ col1, col2 }) != previousCollisions.end())
-	//				{
-	//					// KK_TRACE("OnColliderExit");
-
-	//					entity1->OnColliderExit(entity2->GetCollider());
-	//					// entity2->OnColliderExit(entity1->GetCollider());
-	//				}
-	//			}
-
-	//			entity2->GetCollider()->SetPreviousPos(entity2->getPos());
-
-	//		}
-	//	}
-	//	entity1->GetCollider()->SetPreviousPos(entity1->getPos());
-	//}
-	
 	// trap collider player
 	for (int i = 0; i < objectsList.size(); i++)
 	{
@@ -1018,17 +819,6 @@ void LevelShowcase::UpdateMovement()
 			players[i]->SetIsSlow(false);
 		}
 
-		/*if (time1s >= 1.0f && players[i]->GetIsDashing() == true) 
-		{
-			players[i]->ReduceDashDuration();
-			KK_TRACE("Player {0} dash duration = {1}", i, players[i]->GetDashDuration());
-		}
-
-		if (players[i]->GetDashDuration() <= 0)
-		{
-			players[i]->SetIsDashing(false);
-		}*/
-
 		if (time05s >= 0.1f && players[i]->GetIsKnockback() == true) 
 		{
 			glm::vec3 knockbackVelo = players[i]->GetVelocity();
@@ -1051,6 +841,16 @@ void LevelShowcase::UpdateMovement()
 			players[i]->SetVelocity(0, 0, false, false);
 		}
 
+		if (time1s >= 1.0f && players[i]->GetIsKnockback() == true)
+		{
+			players[i]->ReduceKnockbackDuration();
+		}
+
+		if (players[i]->GetDurationKnockback() <= 0)
+		{
+			players[i]->SetIsKnockback(false);
+		}
+
 		if (time1s >= 1.0f && players[i]->GetIsStun() == true)
 		{
 			players[i]->ReduceStunDuration();
@@ -1061,12 +861,6 @@ void LevelShowcase::UpdateMovement()
 			players[i]->SetIsStun(false);
 		}
 
-		
-		/*if (players[i]->GetIsKnockback() == true && (abs(players[i]->GetVelocity().x) / 5 < 0.05) && (abs(players[i]->GetVelocity().y) / 5 < 0.05))
-		{
-			players[i]->SetIsKnockback(false);
-			players[i]->SetVelocity(0, 0, false, false);
-		}*/
 		UpdateTime();
 	}
 }
@@ -1177,7 +971,7 @@ void LevelShowcase::UpdateTime() {
 			if (players[i]->GetIsDashing() == true)
 			{
 				players[i]->ReduceDashDuration();
-				//KK_TRACE("Player {0} dash duration = {1}", i, players[i]->GetDashDuration());
+				
 			}
 
 			if (players[i]->GetDashDuration() <= 0)

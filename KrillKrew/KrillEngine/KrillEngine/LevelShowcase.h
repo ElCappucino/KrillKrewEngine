@@ -15,8 +15,8 @@ private:
 	std::set<std::pair<Collider*, Collider*>> previousCollisions;
 	std::map<std::string, SpritesheetInfo> spriteList;
 
-	typedef std::function<void(int, PlayerObject*, std::vector<DrawableObject*>&, SpritesheetInfo)> ability;
-	std::map<std::string, ability> abilities;
+	// typedef std::function<void(int, PlayerObject*, std::vector<DrawableObject*>&, SpritesheetInfo)> ability;
+	// std::map<std::string, ability> abilities;
 
 	std::array<PlayerObject*, 4> players; // add up to 4 players
 
