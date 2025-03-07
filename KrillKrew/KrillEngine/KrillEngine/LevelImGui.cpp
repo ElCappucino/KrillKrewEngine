@@ -20,15 +20,6 @@ void LevelImGui::LevelInit()
 		-(SCREEN_HEIGHT / 2),
 		(SCREEN_HEIGHT / 2));
 
-
-	// Example Code
-	/*ImageObject* obj1 = new ImageObject();
-	obj1->SetSpriteInfo(spriteList.find("LoadPage")->second);
-	obj1->SetTexture(spriteList.find("LoadPage")->second.texture);
-	obj1->SetSize(SCREEN_WIDTH, -SCREEN_HEIGHT);
-	obj1->SetPosition(glm::vec3(0.f, 0.f, 0));
-	objectsList.push_back(obj1);*/
-
 	// Setup Dear ImGui context
 	IMGUI_CHECKVERSION();
 	ImGui::CreateContext();
@@ -38,7 +29,6 @@ void LevelImGui::LevelInit()
 
 	//// Setup Dear ImGui style
 	ImGui::StyleColorsDark();
-	//ImGui::StyleColorsLight();
 	const char* glsl_version = "#version 330";
 	// Setup Platform/Renderer backends
 	ImGui_ImplSDL2_InitForOpenGL(GameEngine::GetInstance()->GetSDLWindow(), GameEngine::GetInstance()->GetglContext());
@@ -64,18 +54,17 @@ void LevelImGui::LevelDraw()
 
 	ImGuiIO& io = ImGui::GetIO(); (void)io;
 
-	/*glViewport(0, 0, (int)io.DisplaySize.x, (int)io.DisplaySize.y);
-	glClearColor(clear_color.x * clear_color.w, clear_color.y * clear_color.w, clear_color.z * clear_color.w, clear_color.w);*/
-	//glClear(GL_COLOR_BUFFER_BIT);
-
 	// Start the Dear ImGui frame
 	ImGui_ImplOpenGL3_NewFrame();
 	ImGui_ImplSDL2_NewFrame();
 	ImGui::NewFrame();
 
-	// 1. Show the big demo window (Most of the sample code is in ImGui::ShowDemoWindow()! You can browse its code to learn more about Dear ImGui!).
-	if (show_demo_window)
-		ImGui::ShowDemoWindow(&show_demo_window);
+	//// 1. Show the big demo window (Most of the sample code is in ImGui::ShowDemoWindow()! You can browse its code to learn more about Dear ImGui!).
+	//if (show_demo_window)
+	//	ImGui::ShowDemoWindow(&show_demo_window);
+
+	ImGui::Text("Mouse pos: (%g, %g)", io.MousePos.x, io.MousePos.y);
+
 
 	// Rendering
 	ImGui::Render();
@@ -99,6 +88,10 @@ void LevelImGui::LevelFree()
 void LevelImGui::LevelUnload()
 {
 	GameEngine::GetInstance()->ClearMesh();
+
+	ImGui_ImplOpenGL3_Shutdown();
+	ImGui_ImplSDL2_Shutdown();
+	ImGui::DestroyContext();
 
 	//cout << "Unload Level" << endl;
 }
