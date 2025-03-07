@@ -12,14 +12,14 @@
 #include "InfoStruct.h"
 #include "GameEngine.h"
 #include "SquareMeshVbo.h"
-//#include "PlayerObject.h"
+// #include "PlayerObject.h"
 #include "EntityObject.h"
 #include "TileObject.h"
 
 class PlayerObject;
 
 /// @brief The class for creating object that render using texture
-class PlayerHitboxObject : public EntityObject
+class PlayerGroundColliderObject : public EntityObject
 {
 private:
 
@@ -31,8 +31,8 @@ protected:
 
 public:
 
-	PlayerHitboxObject(PlayerObject* parent);
-	~PlayerHitboxObject();
+	PlayerGroundColliderObject(PlayerObject* parent);
+	~PlayerGroundColliderObject();
 
 	virtual void SetSpriteInfo(SpritesheetInfo info);
 	void SetTexture(std::string path);

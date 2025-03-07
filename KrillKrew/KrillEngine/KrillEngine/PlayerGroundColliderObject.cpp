@@ -1,14 +1,14 @@
-#include "PlayerHitboxObject.h"
+#include "PlayerGroundColliderObject.h"
 #include "PlayerObject.h"
 
-PlayerHitboxObject::PlayerHitboxObject(PlayerObject* parent)
+PlayerGroundColliderObject::PlayerGroundColliderObject(PlayerObject* parent)
 {
 	this->parent = parent;
 	this->collider = new Collider(Collider::Trigger, parent);
 	this->isAnimated = false;
 
-	glm::vec3 attackSize = glm::vec3(parent->getSize().x / 4, parent->getSize().y / 4, 0);
-	glm::vec3 attackPos = glm::vec3(parent->getPos().x + 64.f, parent->getPos().y, 0);
+	glm::vec3 attackSize = glm::vec3(parent->getSize().x / 2, parent->getSize().y / 4, 0);
+	glm::vec3 attackPos = glm::vec3(parent->getPos().x, parent->getPos().y - 128.f, 0);
 	this->size = attackSize;
 	this->pos = attackPos;
 
@@ -18,21 +18,21 @@ PlayerHitboxObject::PlayerHitboxObject(PlayerObject* parent)
 
 	this->SetSpriteInfo(hitboxSprite);
 }
-PlayerHitboxObject::~PlayerHitboxObject()
+PlayerGroundColliderObject::~PlayerGroundColliderObject()
 {
 
 }
 
-void PlayerHitboxObject::SetSpriteInfo(SpritesheetInfo info)
+void PlayerGroundColliderObject::SetSpriteInfo(SpritesheetInfo info)
 {
 	this->spriteRenderer->SetSpriteInfo(info.spritewidth, info.spriteheight, info.sheetwidth, info.sheetheight);
 	this->SetTexture(info.texture);
 }
-void PlayerHitboxObject::SetTexture(std::string path)
+void PlayerGroundColliderObject::SetTexture(std::string path)
 {
 	this->texture = GameEngine::GetInstance()->GetRenderer()->LoadTexture(path);
 }
-void PlayerHitboxObject::Render(glm::mat4 globalModelTransform)
+void PlayerGroundColliderObject::Render(glm::mat4 globalModelTransform)
 {
 	SquareMeshVbo* squareMesh = dynamic_cast<SquareMeshVbo*> (GameEngine::GetInstance()->GetRenderer()->GetMesh(SquareMeshVbo::MESH_NAME));
 
@@ -70,51 +70,46 @@ void PlayerHitboxObject::Render(glm::mat4 globalModelTransform)
 	}
 }
 
-void PlayerHitboxObject::SetSize(float sizeX, float sizeY)
+void PlayerGroundColliderObject::SetSize(float sizeX, float sizeY)
 {
 	this->size = glm::vec3(sizeX, sizeY, 0);
 }
-void PlayerHitboxObject::SetPosition(glm::vec3 newPosition)
+void PlayerGroundColliderObject::SetPosition(glm::vec3 newPosition)
 {
 	this->pos = newPosition;
 }
 
-Collider* PlayerHitboxObject::GetCollider()
+Collider* PlayerGroundColliderObject::GetCollider()
 {
 	return this->collider;
 }
 
-void PlayerHitboxObject::OnColliderEnter(Collider* other)
+void PlayerGroundColliderObject::OnColliderEnter(Collider* other)
+{
+	
+}
+void PlayerGroundColliderObject::OnColliderStay(Collider* other)
 {
 	TileObject* tile = dynamic_cast<TileObject*>(other->GetParent());
-	if (tile != nullptr)
+	if (tile != nullptr && tile->GetIsBroke() == false)
 	{
-		// KK_TRACE("hit Tile");
-		this->parent->AddAimingTile(tile);
+		KK_TRACE("On Ground");
+		this->parent->SetIsOnGround(true);
 	}
 }
-void PlayerHitboxObject::OnColliderStay(Collider* other)
+void PlayerGroundColliderObject::OnColliderExit(Collider* other)
+{
+	
+}
+void PlayerGroundColliderObject::OnTriggerEnter(Collider* other)
 {
 
 }
-void PlayerHitboxObject::OnColliderExit(Collider* other)
-{
-	TileObject* tile = dynamic_cast<TileObject*>(other->GetParent());
-	if (tile != nullptr)
-	{
-		// KK_TRACE("On ColliderExit PlayerHitboxObject");
-		this->parent->ClearAimingTile(tile);
-	}
-}
-void PlayerHitboxObject::OnTriggerEnter(Collider* other)
+void PlayerGroundColliderObject::OnTriggerStay(Collider* other)
 {
 
 }
-void PlayerHitboxObject::OnTriggerStay(Collider* other)
-{
-
-}
-void PlayerHitboxObject::OnTriggerExit(Collider* other)
+void PlayerGroundColliderObject::OnTriggerExit(Collider* other)
 {
 
 }

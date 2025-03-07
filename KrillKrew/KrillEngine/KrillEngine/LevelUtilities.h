@@ -27,6 +27,7 @@
 #include "UiObject.h"
 #include "TileObject.h"
 #include "PlayerHitboxObject.h"
+#include "PlayerGroundColliderObject.h"
 
 // Vbo
 

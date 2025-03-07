@@ -13,6 +13,7 @@
 #include "SquareMeshVbo.h"
 #include "UiObject.h"
 #include "EntityObject.h"
+#include "PlayerGroundColliderObject.h"
 
 class PlayerHitboxObject;
 class TileObject;
@@ -64,6 +65,8 @@ private:
 	bool isFacingLeft;
 	bool isSlow;
 	bool isDashing;
+	bool isOnGround;
+	bool isFell;
 
 	int playerNumber;
 
@@ -79,6 +82,7 @@ private:
 	// UI
 	UiObject* playerUI;
 	PlayerHitboxObject* attackCollider;
+	PlayerGroundColliderObject* groundCheckCollider;
 	
 	std::vector<TileObject*> aimingTile;
 	float durationSlowness;
@@ -121,6 +125,7 @@ public:
 	void SetHoldingProjectile(int projectile);
 	void SetIsStun(bool isStun);
 	void SetStunDuraion(int time);
+	void SetIsOnGround(bool isOnGround);
 
 	void ReduceAbilityCooldown(int button);
 	void ReduceSlowDuration();
@@ -137,6 +142,8 @@ public:
 	virtual Collider* GetCollider() const;
 	Collider* GetAttackCollider() const;
 	PlayerHitboxObject* GetAttackColliderObject() const;
+	Collider* GetGroundCollider() const;
+	PlayerGroundColliderObject* GetGroundColliderObject() const;
 
 	virtual void OnColliderEnter(Collider* other);
 	virtual void OnColliderStay(Collider* other);
@@ -156,6 +163,7 @@ public:
 	float GetDashDuration() const;
 	glm::vec2 GetCurrentDirection() const;
 	float GetStunDuration() const;
+	bool GetIsOnGround() const;
 	PlayerObject::Ability GetAbilityByButton(AbilityButton button) const;
 
 	void ClearAimingTile(TileObject* tile);
@@ -168,4 +176,6 @@ public:
 	bool GetIsTNT();
 	int GetHoldingProjectile();
 	bool GetIsStun();
+
+	void CheckIfOnGround();
 };

@@ -77,11 +77,11 @@ void LevelShowcase::LevelInit()
 
 				if (flag == 0)
 				{
-					checkPosRow = i;
+					checkPosRow = i - 1;
 				}
 				else if (flag == 1)
 				{
-					checkPosRow = i - 1;
+					checkPosRow = i;
 				}
 
 				std::bitset<8> surround;
@@ -103,13 +103,13 @@ void LevelShowcase::LevelInit()
 				{
 					auto lookup_sheet = blob_lookup_table_underground.find((int)(surround.to_ulong()));
 
-					if (lookup_sheet != blob_lookup_table_underground.end())
+					if (lookup_sheet != blob_lookup_table_underground.end() && groundTile[checkPosRow][j] != 0)
 					{
 						pos = lookup_sheet->second;
 					}
 					else
 					{
-						pos = { 99, 99 };
+						pos = { 2, 12 };
 					}
 				}
 				else if (flag == 1)
@@ -122,13 +122,18 @@ void LevelShowcase::LevelInit()
 					}
 					else
 					{
-						pos = { 99, 99 };
+						pos = { 2, 12 };
 					}
 				}
 			}
 
-			if (pos.first != 99)
+			if (pos.first == 2 && pos.second == 12)
 			{
+				KK_TRACE("Pos.first = 2, pos.second = 12");
+			}
+			else
+			{
+				KK_TRACE("Pos {0}, {1} pos.first = {2} pos.second = {3} ", i, j, pos.first, pos.second);
 				TileObject* obj = new TileObject();
 				obj->SetSpriteInfo(spriteList.find("Blobtile")->second);
 				obj->GetSpriteRenderer()->ShiftTo(pos.first - 1, pos.second - 1);
@@ -224,7 +229,7 @@ void LevelShowcase::LevelInit()
 	playerSize++;
 	players[3] = p4;
 
-	entityObjects.push_back(players[0]->GetAttackColliderObject());
+	/*entityObjects.push_back(players[0]->GetAttackColliderObject());
 	entityObjects.push_back(players[1]->GetAttackColliderObject());
 	entityObjects.push_back(players[2]->GetAttackColliderObject());
 	entityObjects.push_back(players[3]->GetAttackColliderObject());
@@ -242,51 +247,50 @@ void LevelShowcase::LevelInit()
 	objectsList.push_back(players[0]->GetCollider()->GetGizmos());
 	objectsList.push_back(players[1]->GetCollider()->GetGizmos());
 	objectsList.push_back(players[2]->GetCollider()->GetGizmos());
-	objectsList.push_back(players[3]->GetCollider()->GetGizmos());
+	objectsList.push_back(players[3]->GetCollider()->GetGizmos());*/
+
+	for (int i = 0; i < 4; i++)
+	{
+		entityObjects.push_back(players[i]->GetAttackColliderObject());
+		objectsList.push_back(players[i]->GetAttackColliderObject());
+		objectsList.push_back(players[i]->GetAttackCollider()->GetGizmos());
+		objectsList.push_back(players[i]->GetCollider()->GetGizmos());
+
+		entityObjects.push_back(players[i]->GetGroundColliderObject());
+		objectsList.push_back(players[i]->GetGroundCollider()->GetGizmos());
+	}
 
 	//create Ui by PlayerObject
 	int playerSize = 4;
 	int count = 0;
 
-	for (int i = 0; i < 4; i++) {
+	if (playerSize >= 0) {
 
-		if (count == 0) {
+		UiObject* uiSkills = new UiObject();
+		uiSkills->SetSpriteInfo(spriteList.find("Xoey_UI")->second);
+		uiSkills->setNumOwner(0);
+		objectsList.push_back(uiSkills);
+	}
+	if (playerSize >= 1) {
 
-			UiObject* uiSkills = new UiObject();
-			uiSkills->SetSpriteInfo(spriteList.find("Xoey_UI")->second);
-			uiSkills->setNumOwner(0);
-			objectsList.push_back(uiSkills);
-			count++;
+		UiObject* uiSkills = new UiObject();
+		uiSkills->SetSpriteInfo(spriteList.find("Ham_UI")->second);
+		uiSkills->setNumOwner(1);
+		objectsList.push_back(uiSkills);
+	}
+	if (playerSize >= 2) {
 
-			// std::cout << "create Ui xoey" << std::endl;
-		}
-		else if (count == 1) {
+		UiObject* uiSkills = new UiObject();
+		uiSkills->SetSpriteInfo(spriteList.find("Byssa_UI")->second);
+		uiSkills->setNumOwner(2);
+		objectsList.push_back(uiSkills);
+	}
+	if (playerSize >= 3) {
 
-			UiObject* uiSkills = new UiObject();
-			uiSkills->SetSpriteInfo(spriteList.find("Ham_UI")->second);
-			uiSkills->setNumOwner(1);
-			objectsList.push_back(uiSkills);
-			count++;
-			// std::cout << "create Ui Ham" << std::endl;
-		}
-		else if (count == 2) {
-
-			UiObject* uiSkills = new UiObject();
-			uiSkills->SetSpriteInfo(spriteList.find("Byssa_UI")->second);
-			uiSkills->setNumOwner(2);
-			objectsList.push_back(uiSkills);
-			count++;
-			// std::cout << "create Ui byssa" << std::endl;
-		}
-		else if (count == 3) {
-
-			UiObject* uiSkills = new UiObject();
-			uiSkills->SetSpriteInfo(spriteList.find("Crunk_UI")->second);
-			uiSkills->setNumOwner(3);
-			objectsList.push_back(uiSkills);
-			count++;
-			// std::cout << "create Ui crunk" << std::endl;
-		}
+		UiObject* uiSkills = new UiObject();
+		uiSkills->SetSpriteInfo(spriteList.find("Crunk_UI")->second);
+		uiSkills->setNumOwner(3);
+		objectsList.push_back(uiSkills);
 	}
 
 	// Setup Dear ImGui context
@@ -294,7 +298,7 @@ void LevelShowcase::LevelInit()
 	ImGui::CreateContext();
 	ImGuiIO& io = ImGui::GetIO(); (void)io;
 	io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;     // Enable Keyboard Controls
-	io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;      // Enable Gamepad Controls
+	// io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;      // Enable Gamepad Controls
 
 	//// Setup Dear ImGui style
 	ImGui::StyleColorsDark();
@@ -563,6 +567,11 @@ void LevelShowcase::UpdateInput()
 
 void LevelShowcase::UpdateCollision()
 {
+	for (int i = 0; i < 4; i++)
+	{
+		players[i]->SetIsOnGround(false);
+	}
+
 	// trap collider player
 	for (int i = 0; i < objectsList.size(); i++)
 	{
@@ -667,6 +676,7 @@ void LevelShowcase::UpdateCollision()
 				}
 				else
 				{
+					
 					entity1->OnColliderStay(entity2->GetCollider());
 					// entity2->OnColliderStay(entity1->GetCollider());
 				}
@@ -763,6 +773,11 @@ void LevelShowcase::UpdateCollision()
 
 			}
 		}
+	}
+
+	for (int i = 0; i < 4; i++)
+	{
+		players[i]->CheckIfOnGround();
 	}
 }
 
@@ -1041,6 +1056,25 @@ void LevelShowcase::LevelDraw()
 			player->GetAttackColliderObject()->SetPosition(attackPos);
 			player->GetAttackCollider()->Update(attackSize, attackPos);
 
+			KK_TRACE("{0} groundColX = {1}, groundColY = {2}", player->GetPlayerNumber(), groundColX[player->GetPlayerNumber()], groundColY[player->GetPlayerNumber()]);
+			glm::vec3 groundCheckSize = glm::vec3
+			(
+				groundColX[player->GetPlayerNumber()],
+				groundColY[player->GetPlayerNumber()],
+				0
+			);
+
+			glm::vec3 groundCheckPos = glm::vec3
+			(
+				player->getPos().x,
+				player->getPos().y - 128.f,
+				0
+			);
+
+			player->GetGroundColliderObject()->SetSize(groundCheckSize.x, groundCheckSize.y);
+			player->GetGroundColliderObject()->SetPosition(groundCheckPos);
+			player->GetGroundCollider()->Update(groundCheckSize, groundCheckPos);
+
 			/*players[i + playerNum]->GetAttackColliderObject()->SetPosition(glm::vec3(
 				players[i + playerNum]->getPos().x + players[i + playerNum]->GetCurrentDirection().x,
 				players[i + playerNum]->getPos().y + players[i + playerNum]->GetCurrentDirection().y,
@@ -1083,6 +1117,18 @@ void LevelShowcase::LevelDraw()
 		ImGui::Text("isDashing: %s", players[i]->GetIsDashing() ? "true" : "false");
 		ImGui::Text("isKnockback: %s", players[i]->GetIsKnockback() ? "true" : "false");
 		ImGui::Text("isStun: %s", players[i]->GetIsStun() ? "true" : "false");
+		ImGui::Text("isOnGround: %s", players[i]->GetIsOnGround() ? "true" : "false");
+
+		if (ImGui::Button(buttonName[i]))
+			clicked[i]++;
+		if (clicked[i] & 1)
+		{
+			ImGui::SameLine();
+			ImGui::Text("Thanks for clicking me!");
+		}
+
+		ImGui::InputFloat(groundColXName[i], &groundColX[i], 2.0f, 10.0f, "%.3f");
+		ImGui::InputFloat(groundColYName[i], &groundColY[i], 2.0f, 10.0f, "%.3f");
 	}
 	
 

@@ -158,6 +158,13 @@ private:
 		{193,	{1, 1}	},
 	};
 
+	int clicked[4] = {0, 0, 0, 0};
+	float groundColX[4] = {0, 0, 0, 0};
+	char groundColXName[4][20] = { "ColX Button 1", "ColX Button 2", "ColX Button 3", "ColX Button 4" };
+	char groundColYName[4][20] = { "ColY Button 1", "ColY Button 2", "ColY Button 3", "ColY Button 4" };
+	float groundColY[4] = {0, 0, 0, 0};
+	char buttonName[4][20] = {"Button 1", "Button 2", "Button 3", "Button 4"};
+
 	int playerSize = 0;
 	int playerNum = 0;
 	OrthographicValue targetSceneProjection; // use for lerping between the current projection and this (target projection).

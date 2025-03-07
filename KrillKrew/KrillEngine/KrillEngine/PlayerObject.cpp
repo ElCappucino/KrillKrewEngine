@@ -23,6 +23,8 @@ PlayerObject::PlayerObject()
 	this->isAiming = false;
 	this->isFacingLeft = false;
 	this->isDashing = false;
+	this->isOnGround = false;
+	this->isFell = false;
 
 	this->pos = glm::vec3(0, 0, 0);
 	this->velocity = glm::vec3(0, 0, 0);
@@ -34,6 +36,7 @@ PlayerObject::PlayerObject()
 	this->GetCollider()->SetCollisionType(Collider::Kinematic);
 
 	this->attackCollider = new PlayerHitboxObject(this);
+	this->groundCheckCollider = new PlayerGroundColliderObject(this);
 }
 
 PlayerObject::~PlayerObject()
@@ -256,10 +259,27 @@ Collider* PlayerObject::GetAttackCollider() const
 {
 	return attackCollider->GetCollider();
 }
+
+
 PlayerHitboxObject* PlayerObject::GetAttackColliderObject() const
 {
 	return attackCollider;
 }
+
+Collider* PlayerObject::GetGroundCollider() const
+{
+	return groundCheckCollider->GetCollider();
+}
+PlayerGroundColliderObject* PlayerObject::GetGroundColliderObject() const
+{
+	return groundCheckCollider;
+}
+
+bool PlayerObject::GetIsOnGround() const
+{
+	return isOnGround;
+}
+
 void PlayerObject::OnColliderEnter(Collider* other)
 {
 	// Base
@@ -398,6 +418,11 @@ void PlayerObject::SetKnockbackDuration(int time){
 	durationKnockback = time;
 }
 
+void PlayerObject::SetIsOnGround(bool isOnGround)
+{
+	this->isOnGround = isOnGround;
+}
+
 void PlayerObject::ReduceKnockbackDuration(){
 	durationKnockback -= 1;
 	if (durationKnockback <= 0)
@@ -452,4 +477,12 @@ void PlayerObject::ReduceStunDuration() {
 
 float PlayerObject::GetStunDuration() const{
 	return durationStun;
+}
+
+void PlayerObject::CheckIfOnGround()
+{
+	if (!isOnGround)
+	{
+		this->isFell = true;
+	}
 }

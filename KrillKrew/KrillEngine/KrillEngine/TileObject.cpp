@@ -121,6 +121,9 @@ void TileObject::CheckIfBreak()
 		this->isBroke = true;
 		this->isBreakable = false;
 		this->crackOverlay->SetIsActive(false);
+		this->GetCollider()->GetGizmos()->SetIsActive(false);
+		//this->SetIsActive(false);
+
 	}
 }
 void TileObject::GotHit()
