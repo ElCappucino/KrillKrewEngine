@@ -26,6 +26,25 @@ GameStateController* GameEngine::GetStateController()
 	return this->stateController;
 }
 
+SDL_Window* GameEngine::GetSDLWindow()
+{
+	return this->window;
+}
+SDL_GLContext GameEngine::GetglContext()
+{
+	return this->glContext;
+}
+
+void GameEngine::SetSDLWindow(SDL_Window* window)
+{
+	this->window = window;
+}
+
+void GameEngine::SetglContext(SDL_GLContext context)
+{
+	this->glContext = context;
+}
+
 void GameEngine::Init(int width, int height)
 {
 	winWidth = width;
@@ -45,7 +64,7 @@ void GameEngine::Init(int width, int height)
 
 	stateController = new GameStateController();
 	// stateController->loadingState = GameState::GS_LEVELGAMEPLAY;
-	stateController->loadingState = GameState::GS_LEVELSHOWCASE;
+	stateController->loadingState = GameState::GS_LEVELIMGUI;
 	stateController->Init(GameState::GS_LEVELLOADING);
 }
 

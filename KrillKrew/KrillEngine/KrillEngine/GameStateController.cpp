@@ -4,6 +4,7 @@
 #include "LevelMapTest.h"
 #include "LevelLoading.h"
 #include "LevelShowcase.h"
+#include "LevelImGui.h"
 
 GameStateController::GameStateController()
 {
@@ -42,6 +43,9 @@ void GameStateController::LoadLevel()
 			break;
 		case GameState::GS_LEVELSHOWCASE:
 			currentLevel = new LevelShowcase();
+			break;
+		case GameState::GS_LEVELIMGUI:
+			currentLevel = new LevelImGui();
 			break;
 		
 		default:

@@ -16,11 +16,18 @@ class GameEngine
 	
 	GLRenderer *renderer;
 	GameStateController* stateController;
+	SDL_Window* window;
+	SDL_GLContext glContext;
+
 	GameEngine();
 public:
 	static GameEngine* GetInstance();
 	GLRenderer * GetRenderer();
 	GameStateController* GetStateController();
+	SDL_Window* GetSDLWindow();
+	SDL_GLContext GetglContext();
+	void SetSDLWindow(SDL_Window* window);
+	void SetglContext(SDL_GLContext context);
 	void Init(int width, int height);
 	void SetDrawArea(float left, float right, float bottom, float top);
 	void SetBackgroundColor(float r, float g, float b);
