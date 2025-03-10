@@ -20,10 +20,13 @@ private:
 
 	std::array<PlayerObject*, 4> players; // add up to 4 players
 
-	// int currentGroundTile[MAP_HEIGHT][MAP_WIDTH] = { 0 };
-	int groundTile[MAP_HEIGHT][MAP_WIDTH] = { 0 };
+	std::array<std::array<int, MAP_WIDTH>, MAP_HEIGHT> currentGroundTile = { 0 };
+	std::array<std::array<int, MAP_WIDTH>, MAP_HEIGHT> groundTile = { 0 };
+	std::array<std::array<int, MAP_WIDTH>, MAP_HEIGHT> propsTile = { 0 };
+	std::array<std::array<int, MAP_WIDTH>, MAP_HEIGHT> colliderTile = { 0 };
+	/*int groundTile[MAP_HEIGHT][MAP_WIDTH] = { 0 };
 	int propsTile[MAP_HEIGHT][MAP_WIDTH] = { 0 };
-	int colliderTile[MAP_HEIGHT][MAP_WIDTH] = { 0 };
+	int colliderTile[MAP_HEIGHT][MAP_WIDTH] = { 0 };*/
 
 	std::array<std::array<TileObject*, MAP_WIDTH>, MAP_HEIGHT> tilesList;
 
@@ -206,7 +209,7 @@ public:
 	void UpdateTime();
 
 	void GroundTileRefactor();
-	void TileImport(int TileBuffer[][MAP_WIDTH], std::string fileName);
+	void TileImport(std::array<std::array<int, MAP_WIDTH>, MAP_HEIGHT> &TileBuffer, std::string fileName);
 
 	void UsingAbility(int numPlayer, PlayerObject::AbilityButton button);
 	void AimFireball(int numPlayer, PlayerObject::AbilityButton button);

@@ -93,7 +93,7 @@ void PlayerGroundColliderObject::OnColliderStay(Collider* other)
 	TileObject* tile = dynamic_cast<TileObject*>(other->GetParent());
 	if (tile != nullptr && tile->GetIsBroke() == false)
 	{
-		KK_TRACE("On Ground");
+		// KK_TRACE("On Ground");
 		this->parent->SetIsOnGround(true);
 	}
 }

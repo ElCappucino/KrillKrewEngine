@@ -48,8 +48,18 @@ void LevelShowcase::LevelInit()
 	timer = Timer::Instance();
 
 	TileImport(groundTile, "../Resource/Texture/Tilemap0.txt");
+	TileImport(currentGroundTile, "../Resource/Texture/Tilemap0.txt");
 
 	// Create and Initialize 4 players object
+
+	for (int i = 0; i < MAP_HEIGHT; i++)
+	{
+		for (int j = 0; j < MAP_WIDTH; j++)
+		{
+			std::cout << groundTile[i][j] << ", ";
+		}
+		std::cout << std::endl;
+	}
 
 	float map_left = -1280.f;
 	float map_top = 1080.f;
@@ -129,17 +139,19 @@ void LevelShowcase::LevelInit()
 
 			if (pos.first == 2 && pos.second == 12)
 			{
-				KK_TRACE("Pos.first = 2, pos.second = 12");
+				// KK_TRACE("Pos.first = 2, pos.second = 12");
 			}
 			else
 			{
-				KK_TRACE("Pos {0}, {1} pos.first = {2} pos.second = {3} ", i, j, pos.first, pos.second);
+				// KK_TRACE("Pos {0}, {1} pos.first = {2} pos.second = {3} ", i, j, pos.first, pos.second);
 				TileObject* obj = new TileObject();
 				obj->SetSpriteInfo(spriteList.find("Blobtile")->second);
 				obj->GetSpriteRenderer()->ShiftTo(pos.first - 1, pos.second - 1);
 				obj->SetTexture(spriteList.find("Blobtile")->second.texture);
 				obj->SetSize(128.f, -128.f);
 				obj->SetPosition(glm::vec3(map_left + (j * 126.f), map_top - (i * 126.f), 0));
+				obj->SetTilePosition(i, j);
+				obj->SetUpdateTileset(&currentGroundTile);
 
 				if (flag == 0)
 				{
@@ -1056,7 +1068,7 @@ void LevelShowcase::LevelDraw()
 			player->GetAttackColliderObject()->SetPosition(attackPos);
 			player->GetAttackCollider()->Update(attackSize, attackPos);
 
-			KK_TRACE("{0} groundColX = {1}, groundColY = {2}", player->GetPlayerNumber(), groundColX[player->GetPlayerNumber()], groundColY[player->GetPlayerNumber()]);
+			// KK_TRACE("{0} groundColX = {1}, groundColY = {2}", player->GetPlayerNumber(), groundColX[player->GetPlayerNumber()], groundColY[player->GetPlayerNumber()]);
 			glm::vec3 groundCheckSize = glm::vec3
 			(
 				groundColX[player->GetPlayerNumber()],
@@ -1348,7 +1360,7 @@ void LevelShowcase::GroundTileRefactor()
 	}
 }
 
-void LevelShowcase::TileImport(int TileBuffer[][MAP_WIDTH], std::string fileName) {
+void LevelShowcase::TileImport(std::array<std::array<int, MAP_WIDTH>, MAP_HEIGHT> &TileBuffer, std::string fileName) {
 	std::ifstream mapfile(fileName);
 	std::string line;
 	int row = 0;

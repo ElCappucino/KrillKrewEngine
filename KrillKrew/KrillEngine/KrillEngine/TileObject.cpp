@@ -3,6 +3,7 @@
 
 TileObject::TileObject()
 {
+	this->updateTile = nullptr;
 	this->isBreakable = false;
 	this->isBroke = false;
 	this->collider = new Collider(Collider::Trigger, this);
@@ -111,7 +112,20 @@ ImageObject* TileObject::GetOverlaySprite()
 {
 	return this->crackOverlay;
 }
+void TileObject::SetTilePosition(int x, int y)
+{
+	this->tilePos.x = x;
+	this->tilePos.y = y;
+}
 
+void TileObject::UpdateTileArray(int flag)
+{
+	(*updateTile)[tilePos.x][tilePos.y] = flag;
+}
+void TileObject::SetUpdateTileset(std::array<std::array<int, MAP_WIDTH>, MAP_HEIGHT>* tiles)
+{
+	this->updateTile = tiles;
+}
 
 void TileObject::CheckIfBreak()
 {
@@ -122,8 +136,19 @@ void TileObject::CheckIfBreak()
 		this->isBreakable = false;
 		this->crackOverlay->SetIsActive(false);
 		this->GetCollider()->GetGizmos()->SetIsActive(false);
-		//this->SetIsActive(false);
 
+		UpdateTileArray(0);
+
+		this->SetIsActive(false);
+
+		for (int i = 0; i < MAP_HEIGHT; i++)
+		{
+			for (int j = 0; j < MAP_WIDTH; j++)
+			{
+				std::cout << (*updateTile)[i][j] << ", ";
+			}
+			std::cout << std::endl;
+		}
 	}
 }
 void TileObject::GotHit()
