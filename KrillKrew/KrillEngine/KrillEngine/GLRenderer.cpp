@@ -1,11 +1,5 @@
 
 #include "GLRenderer.h"
-#include "gtc/matrix_transform.hpp"
-#include "gtc/type_ptr.hpp"
-#include "SDL_surface.h"
-#include "SDL_image.h"
-
-using namespace std;
 
 GLRenderer::GLRenderer(int w, int h)
 {
@@ -14,13 +8,13 @@ GLRenderer::GLRenderer(int w, int h)
 	SetOrthoProjection(-1.f, 1.f, -1.f, 1.f);
 	glViewport(0, 0, winWidth, winHeight);
 }
-bool GLRenderer::InitGL(string vertexShaderFile, string fragmentShaderFile)
+bool GLRenderer::InitGL(std::string vertexShaderFile, std::string fragmentShaderFile)
 {
 	// Initialize glew
 	GLenum glewError = glewInit();
 	if (glewError != GLEW_OK)
 	{
-		cout << "Error initializing GLEW! " << glewGetErrorString(glewError) << endl;
+		std::cout << "Error initializing GLEW! " << glewGetErrorString(glewError) << std::endl;
 		return false;
 	}
 
@@ -28,13 +22,13 @@ bool GLRenderer::InitGL(string vertexShaderFile, string fragmentShaderFile)
 	//Initialize OpenGL
 	if (!Initialize(vertexShaderFile, fragmentShaderFile))
 	{
-		cout << "Unable to initialize OpenGL! " << endl;
+		std::cout << "Unable to initialize OpenGL! " << std::endl;
 		return false;
 	}
 	return true;
 }
 
-bool GLRenderer::Initialize(string vertexShaderFile, string fragmentShaderFile)
+bool GLRenderer::Initialize(std::string vertexShaderFile, std::string fragmentShaderFile)
 {
 	//Success flag
 	bool success = true;
@@ -61,7 +55,7 @@ bool GLRenderer::Initialize(string vertexShaderFile, string fragmentShaderFile)
 	glGetProgramiv(gProgramId, GL_LINK_STATUS, &programSuccess);
 	if (programSuccess != GL_TRUE)
 	{
-		cout << "Error linking program " << gProgramId << endl;
+		std::cout << "Error linking program " << gProgramId << std::endl;
 		PrintProgramLog(gProgramId);
 		return false;
 	}
@@ -70,13 +64,13 @@ bool GLRenderer::Initialize(string vertexShaderFile, string fragmentShaderFile)
 	gPos2DLocation = glGetAttribLocation(gProgramId, "pos2D");
 	if (gPos2DLocation == -1)
 	{
-		cout << "pos2D is not a valid glsl program variable" << endl;
+		std::cout << "pos2D is not a valid glsl program variable" << std::endl;
 		return false;
 	}
 	gTex2DLocation = glGetAttribLocation(gProgramId, "inTexCoord");
 	if (gTex2DLocation == -1)
 	{
-		cout << "inTexCoord is not a valid glsl program variable" << endl;
+		std::cout << "inTexCoord is not a valid glsl program variable" << std::endl;
 		return false;
 	}
 
@@ -84,7 +78,7 @@ bool GLRenderer::Initialize(string vertexShaderFile, string fragmentShaderFile)
 	colorUniformId = glGetUniformLocation(gProgramId, "color");
 	if (colorUniformId == -1)
 	{
-		cout << "color is not a valid glsl uniform variable" << endl;
+		std::cout << "color is not a valid glsl uniform variable" << std::endl;
 		return false;
 	}
 
@@ -92,19 +86,19 @@ bool GLRenderer::Initialize(string vertexShaderFile, string fragmentShaderFile)
 	pMatrixId = glGetUniformLocation(gProgramId, "pMatrix");
 	if (pMatrixId == -1)
 	{
-		cout << "pMatrix is not a valid glsl uniform variable" << endl;
+		std::cout << "pMatrix is not a valid glsl uniform variable" << std::endl;
 		return false;
 	}
 	mMatrixId = glGetUniformLocation(gProgramId, "mMatrix");
 	if (mMatrixId == -1)
 	{
-		cout << "mMatrix is not a valid glsl uniform variable" << endl;
+		std::cout << "mMatrix is not a valid glsl uniform variable" << std::endl;
 		return false;
 	}
 	renderModeUniformId = glGetUniformLocation(gProgramId, "renderMode");
 	if (renderModeUniformId == -1)
 	{
-		cout << "renderMode is not a valid glsl uniform variable" << endl;
+		std::cout << "renderMode is not a valid glsl uniform variable" << std::endl;
 		return false;
 	}
 
@@ -122,7 +116,7 @@ bool GLRenderer::Initialize(string vertexShaderFile, string fragmentShaderFile)
 
 }
 
-void GLRenderer::Render(vector <DrawableObject*> & objList)
+void GLRenderer::Render(std::vector <DrawableObject*> & objList)
 {
 	// Clear color buffer
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -151,13 +145,13 @@ void GLRenderer::SetMeshAttribId(MeshVbo * shape)
 	shape->SetAttribId(gPos2DLocation, gTex2DLocation);
 }
 
-void GLRenderer::AddMesh(string name, MeshVbo * shape)
+void GLRenderer::AddMesh(std::string name, MeshVbo * shape)
 {
 	SetMeshAttribId(shape);
 	shapes[name] = shape;
 }
 
-MeshVbo * GLRenderer::GetMesh(string name)
+MeshVbo * GLRenderer::GetMesh(std::string name)
 {
 	if (shapes.find(name) == shapes.end()) {
 		return nullptr;
@@ -174,7 +168,7 @@ OrthographicValue GLRenderer::GetOrthovalue()
 
 void GLRenderer::ClearMesh()
 {
-	for (map<string, MeshVbo*>::iterator it = shapes.begin(); it != shapes.end(); it++)
+	for (std::map<std::string, MeshVbo*>::iterator it = shapes.begin(); it != shapes.end(); it++)
 	{
 		delete it->second;
 	}
@@ -202,7 +196,7 @@ void GLRenderer::PrintProgramLog(GLuint program)
 		if (infoLogLength > 0)
 		{
 			//Print Log
-			cout << infoLog << endl;
+			std::cout << infoLog << std::endl;
 
 		}
 
@@ -262,13 +256,13 @@ GLuint GLRenderer::GetModeUniformId()
 	return this->renderModeUniformId;
 }
 
-GLuint GLRenderer::LoadTexture(string path)
+GLuint GLRenderer::LoadTexture(std::string path)
 {
 	glActiveTexture(GL_TEXTURE0);
 	SDL_Surface *image = IMG_Load(path.c_str());
 	if (image == NULL)
 	{
-		cerr << "IMG_Load: " << SDL_GetError() << endl;
+		std::cerr << "IMG_Load: " << SDL_GetError() << std::endl;
 		return -1;
 	}
 	unsigned int texture;

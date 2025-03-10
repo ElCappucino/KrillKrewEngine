@@ -1,7 +1,10 @@
 #include "GameStateController.h"
 #include "Level.h"
-#include "LevelTest.h"
 #include "LevelGameplay.h"
+#include "LevelMapTest.h"
+#include "LevelLoading.h"
+#include "LevelShowcase.h"
+#include "LevelImGui.h"
 
 GameStateController::GameStateController()
 {
@@ -29,14 +32,24 @@ void GameStateController::LoadLevel()
 		case GameState::GS_LEVEL1:
 			currentLevel = new Level();
 			break;
-		case GameState::GS_LEVEL2:
-			currentLevel = new LevelTest();
+		case GameState::GS_LEVELMAPTEST:
+			currentLevel = new LevelMapTest();
 			break;
 		case GameState::GS_LEVELGAMEPLAY:
 			currentLevel = new LevelGameplay();
 			break;
+		case GameState::GS_LEVELLOADING:
+			currentLevel = new LevelLoading();
+			break;
+		case GameState::GS_LEVELSHOWCASE:
+			currentLevel = new LevelShowcase();
+			break;
+		case GameState::GS_LEVELIMGUI:
+			currentLevel = new LevelImGui();
+			break;
+		
 		default:
-			cout << "gGameStateCurr : invalid state!!" << endl;
+			std::cout << "gGameStateCurr : invalid state!!" << std::endl;
 			exit(1);
 	}
 
@@ -76,4 +89,8 @@ void GameStateController::HandleKeyLevel(char key)
 void GameStateController::HandleMouseLevel(int type, int x, int y)
 {
 	currentLevel->HandleMouse(type, x, y);
+}
+
+void GameStateController::MovementLevel(float axisX, float axisY, bool isPositiveX, bool isPositiveY) {
+	currentLevel->Movement(axisX, axisY, isPositiveX, isPositiveY);
 }

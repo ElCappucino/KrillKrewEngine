@@ -18,6 +18,94 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Camera.h" />
+    <ClInclude Include="Collider.h" />
+    <ClInclude Include="DrawableObject.h" />
+    <ClInclude Include="EntityObject.h" />
+    <ClInclude Include="GameEngine.h" />
+    <ClInclude Include="GameObject.h" />
+    <ClInclude Include="GameStateController.h" />
+    <ClInclude Include="GameStateList.h" />
+    <ClInclude Include="GizmosObject.h" />
+    <ClInclude Include="GLRenderer.h" />
+    <ClInclude Include="ImageObject.h" />
+    <ClInclude Include="InfoStruct.h" />
+    <ClInclude Include="Joystick.h" />
+    <ClInclude Include="Level.h" />
+    <ClInclude Include="LevelGameplay.h" />
+    <ClInclude Include="LevelImGui.h" />
+    <ClInclude Include="LevelLoading.h" />
+    <ClInclude Include="LevelMapTest.h" />
+    <ClInclude Include="LevelShowcase.h" />
+    <ClInclude Include="LevelUtilities.h" />
+    <ClInclude Include="LineMeshVbo.h" />
+    <ClInclude Include="Log.h" />
+    <ClInclude Include="MeshVbo.h" />
+    <ClInclude Include="pch.h" />
+    <ClInclude Include="PlayerGroundColliderObject.h" />
+    <ClInclude Include="PlayerHitboxObject.h" />
+    <ClInclude Include="PlayerObject.h" />
+    <ClInclude Include="ProjectileObject.h" />
+    <ClInclude Include="Resource\imgui-1.91.8\backends\imgui_impl_opengl3.h" />
+    <ClInclude Include="Resource\imgui-1.91.8\backends\imgui_impl_sdl2.h" />
+    <ClInclude Include="Resource\imgui-1.91.8\imgui.h" />
+    <ClInclude Include="Resource\imgui-1.91.8\imgui_internal.h" />
+    <ClInclude Include="Resource\imgui-1.91.8\imstb_rectpack.h" />
+    <ClInclude Include="Resource\imgui-1.91.8\imstb_textedit.h" />
+    <ClInclude Include="Resource\imgui-1.91.8\imstb_truetype.h" />
+    <ClInclude Include="Shader.h" />
+    <ClInclude Include="SpriteRenderer.h" />
+    <ClInclude Include="SquareMeshVbo.h" />
+    <ClInclude Include="TileObject.h" />
+    <ClInclude Include="Timer.h" />
+    <ClInclude Include="TrapObject.h" />
+    <ClInclude Include="TriangleMeshVbo.h" />
+    <ClInclude Include="UiObject.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="Collider.cpp" />
+    <ClCompile Include="DrawableObject.cpp" />
+    <ClCompile Include="EntityObject.cpp" />
+    <ClCompile Include="GameEngine.cpp" />
+    <ClCompile Include="GameObject.cpp" />
+    <ClCompile Include="GameStateController.cpp" />
+    <ClCompile Include="GizmosObject.cpp" />
+    <ClCompile Include="GLRenderer.cpp" />
+    <ClCompile Include="ImageObject.cpp" />
+    <ClCompile Include="Joystick.cpp" />
+    <ClCompile Include="Level.cpp" />
+    <ClCompile Include="LevelGameplay.cpp" />
+    <ClCompile Include="LevelImGui.cpp" />
+    <ClCompile Include="LevelLoading.cpp" />
+    <ClCompile Include="LevelMapTest.cpp" />
+    <ClCompile Include="LevelShowcase.cpp" />
+    <ClCompile Include="LineMeshVbo.cpp" />
+    <ClCompile Include="Log.cpp" />
+    <ClCompile Include="Main.cpp" />
+    <ClCompile Include="MeshVbo.cpp" />
+    <ClCompile Include="pch.cpp" />
+    <ClCompile Include="PlayerGroundColliderObject.cpp" />
+    <ClCompile Include="PlayerHitboxObject.cpp" />
+    <ClCompile Include="PlayerObject.cpp" />
+    <ClCompile Include="ProjectileObject.cpp" />
+    <ClCompile Include="Resource\imgui-1.91.8\backends\imgui_impl_opengl3.cpp" />
+    <ClCompile Include="Resource\imgui-1.91.8\backends\imgui_impl_sdl2.cpp" />
+    <ClCompile Include="Resource\imgui-1.91.8\imgui.cpp" />
+    <ClCompile Include="Resource\imgui-1.91.8\imgui_demo.cpp" />
+    <ClCompile Include="Resource\imgui-1.91.8\imgui_draw.cpp" />
+    <ClCompile Include="Resource\imgui-1.91.8\imgui_tables.cpp" />
+    <ClCompile Include="Resource\imgui-1.91.8\imgui_widgets.cpp" />
+    <ClCompile Include="Shader.cpp" />
+    <ClCompile Include="SpriteRenderer.cpp" />
+    <ClCompile Include="SquareMeshVbo.cpp" />
+    <ClCompile Include="TileObject.cpp" />
+    <ClCompile Include="Timer.cpp" />
+    <ClCompile Include="TrapObject.cpp" />
+    <ClCompile Include="TriangleMeshVbo.cpp" />
+    <ClCompile Include="UiObject.cpp" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
@@ -70,13 +158,20 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>../Resource/glew/include;../Resource/glm;../Resource/SDL2-2.0.5/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../Resource/glew/include;../Resource/glm;../Resource/SDL2-2.0.5/include;../Resource/spdlog/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -93,12 +188,16 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>../Resource/glew/include;../Resource/glm;../Resource/SDL2-2.0.5/include;../Resource;../Resource/spdlog/include;../Resource/imgui-1.91.8;../Resource/imgui-1.91.8/backends;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>..\Resource\glew\lib\Release\Win32;..\Resource\SDL2-2.0.5\lib\x86</AdditionalLibraryDirectories>
+      <AdditionalDependencies>SDL2main.lib;SDL2.lib;opengl32.lib;glew32.lib;glew32s.lib;SDL2_image.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -121,57 +220,16 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>../Resource/glew/include;../Resource/glm;../Resource/SDL2-2.0.5/include;../Resource;../Resource/spdlog/include;../Resource/imgui-1.91.8;../Resource/imgui-1.91.8/backends;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>..\Resource\glew\lib\Release\Win32;..\Resource\SDL2-2.0.5\lib\x86</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
-  <ItemGroup>
-    <ClInclude Include="Camera.h" />
-    <ClInclude Include="CombineObject.h" />
-    <ClInclude Include="DrawableObject.h" />
-    <ClInclude Include="GameEngine.h" />
-    <ClInclude Include="GameObject.h" />
-    <ClInclude Include="GameStateController.h" />
-    <ClInclude Include="GameStateList.h" />
-    <ClInclude Include="GLRenderer.h" />
-    <ClInclude Include="ImageObject.h" />
-    <ClInclude Include="InfoStruct.h" />
-    <ClInclude Include="Level.h" />
-    <ClInclude Include="LevelTest.h" />
-    <ClInclude Include="MeshVbo.h" />
-    <ClInclude Include="pch.h" />
-    <ClInclude Include="Shader.h" />
-    <ClInclude Include="SquareMeshVbo.h" />
-    <ClInclude Include="TriangleMeshVbo.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="Camera.cpp" />
-    <ClCompile Include="CombineObject.cpp" />
-    <ClCompile Include="DrawableObject.cpp" />
-    <ClCompile Include="GameEngine.cpp" />
-    <ClCompile Include="GameObject.cpp" />
-    <ClCompile Include="LevelGameplay.cpp" />
-    <ClCompile Include="LevelGameplay.h" />
-    <ClCompile Include="GameStateController.cpp" />
-    <ClCompile Include="GLRenderer.cpp" />
-    <ClCompile Include="ImageObject.cpp" />
-    <ClCompile Include="Level.cpp" />
-    <ClCompile Include="LevelTest.cpp" />
-    <ClCompile Include="Main.cpp" />
-    <ClCompile Include="MeshVbo.cpp" />
-    <ClCompile Include="pch.cpp" />
-    <ClCompile Include="Shader.cpp" />
-    <ClCompile Include="SquareMeshVbo.cpp" />
-    <ClCompile Include="TriangleMeshVbo.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="..\Resource\Shader\fragment.shd" />
-    <None Include="..\Resource\Shader\vertext.shd" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

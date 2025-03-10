@@ -1,0 +1,286 @@
+\doxysection{Player\+Object Class Reference}
+\hypertarget{class_player_object}{}\label{class_player_object}\index{PlayerObject@{PlayerObject}}
+
+
+The class for creating object that render using texture.  
+
+
+
+
+{\ttfamily \#include $<$Player\+Object.\+h$>$}
+
+
+
+Inheritance diagram for Player\+Object\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=166pt]{class_player_object__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for Player\+Object\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_player_object__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_player_object_a4191ff3d3abdc74a0d8e344c672724dc}\label{class_player_object_a4191ff3d3abdc74a0d8e344c672724dc} 
+enum class {\bfseries Animation\+State} \{ \newline
+{\bfseries Idle}
+, {\bfseries Running}
+, {\bfseries Melee}
+, {\bfseries Shooting}
+, \newline
+{\bfseries Place\+Item}
+ \}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_player_object_acc30f12008c08dda49cbcc97d199a46c}\label{class_player_object_acc30f12008c08dda49cbcc97d199a46c} 
+void {\bfseries Update\+Facing\+Side} (bool is\+Left)
+\item 
+\Hypertarget{class_player_object_a81069ce7ce698372b49dc847ab8d24ad}\label{class_player_object_a81069ce7ce698372b49dc847ab8d24ad} 
+void {\bfseries Set\+Texture} (std\+::string path)
+\item 
+void \mbox{\hyperlink{class_player_object_a6a2348aa6a95bab45d4976992334a959}{Render}} (glm\+::mat4 global\+Model\+Transform)
+\item 
+\Hypertarget{class_player_object_ac375c32f683d209dd5a2553ab95fad25}\label{class_player_object_ac375c32f683d209dd5a2553ab95fad25} 
+void {\bfseries set\+Velocity} (float axisX, float axisY, bool is\+PositiveX, bool is\+PositiveY)
+\item 
+\Hypertarget{class_player_object_a571743af621ae12a531b24686758dbf3}\label{class_player_object_a571743af621ae12a531b24686758dbf3} 
+void {\bfseries set\+Is\+Shooting} (bool is\+Shoot)
+\item 
+\Hypertarget{class_player_object_a435bad85eb8589e4e9047a252d5df7d7}\label{class_player_object_a435bad85eb8589e4e9047a252d5df7d7} 
+void {\bfseries set\+Is\+Aiming} (bool is\+Aim)
+\item 
+\Hypertarget{class_player_object_a25cc02c8ec6a3c591df076a45638a8c7}\label{class_player_object_a25cc02c8ec6a3c591df076a45638a8c7} 
+void {\bfseries set\+Number} (int num)
+\item 
+\Hypertarget{class_player_object_a87f429a1f670c6de004b75c902cb02d0}\label{class_player_object_a87f429a1f670c6de004b75c902cb02d0} 
+void {\bfseries set\+Cooldown} (int skill, int time)
+\item 
+\Hypertarget{class_player_object_af39aeb983eb9a29f504279a90610bc83}\label{class_player_object_af39aeb983eb9a29f504279a90610bc83} 
+void {\bfseries reduce\+Cooldown} ()
+\item 
+\Hypertarget{class_player_object_a6d9b121aa54d3aa00d1569607ada6665}\label{class_player_object_a6d9b121aa54d3aa00d1569607ada6665} 
+void {\bfseries set\+Duration\+Slowness} (int time)
+\item 
+\Hypertarget{class_player_object_aea1357a95b4045741e5e8161441464ab}\label{class_player_object_aea1357a95b4045741e5e8161441464ab} 
+void {\bfseries reduce\+Duration\+Slowness} ()
+\item 
+\Hypertarget{class_player_object_aa3a92db3391c807aacd434ea4b7a0552}\label{class_player_object_aa3a92db3391c807aacd434ea4b7a0552} 
+void {\bfseries set\+Is\+Slowness} (bool is\+Slow)
+\item 
+\Hypertarget{class_player_object_a9a28216d08fdecc8bed9e97aea8a6db5}\label{class_player_object_a9a28216d08fdecc8bed9e97aea8a6db5} 
+glm\+::vec3 {\bfseries get\+Velocity} ()
+\item 
+\Hypertarget{class_player_object_aec65ef434fef4335e3bd92ff7fd9d579}\label{class_player_object_aec65ef434fef4335e3bd92ff7fd9d579} 
+bool {\bfseries get\+Is\+Shooting} ()
+\item 
+\Hypertarget{class_player_object_a06044ad1763fde190fb4c297ce35d53f}\label{class_player_object_a06044ad1763fde190fb4c297ce35d53f} 
+virtual void {\bfseries Set\+Animation\+Sprite} (Animation\+State state, \mbox{\hyperlink{struct_spritesheet_info}{Spritesheet\+Info}} sprite\+Info)
+\item 
+\Hypertarget{class_player_object_a842788c3039dd93fe182f2ae933b691c}\label{class_player_object_a842788c3039dd93fe182f2ae933b691c} 
+virtual void {\bfseries Change\+Animation\+State} (Animation\+State anim)
+\item 
+virtual void \mbox{\hyperlink{class_player_object_aa2557c8c9343de4f63cd68d5a3c603c3}{Update\+Current\+Animation}} ()
+\item 
+virtual \mbox{\hyperlink{class_collider}{Collider}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{class_player_object_ac782e9c4916c03849b55f44ff13b1437}{Get\+Collider}} ()
+\item 
+virtual void \mbox{\hyperlink{class_player_object_a4703c7fc70a77bcdd59e708201d0ebc0}{On\+Collider\+Enter}} (\mbox{\hyperlink{class_collider}{Collider}} \texorpdfstring{$\ast$}{*}other)
+\item 
+virtual void \mbox{\hyperlink{class_player_object_a005265da71e25d07e817344b32e528be}{On\+Collider\+Stay}} (\mbox{\hyperlink{class_collider}{Collider}} \texorpdfstring{$\ast$}{*}other)
+\item 
+virtual void \mbox{\hyperlink{class_player_object_ab7dde08ddc4de05607e3eab013fffae9}{On\+Collider\+Exit}} (\mbox{\hyperlink{class_collider}{Collider}} \texorpdfstring{$\ast$}{*}other)
+\item 
+virtual void \mbox{\hyperlink{class_player_object_add62b3f441c16a7ac75cae4daf4e95f8}{On\+Trigger\+Enter}} (\mbox{\hyperlink{class_collider}{Collider}} \texorpdfstring{$\ast$}{*}other)
+\item 
+virtual void \mbox{\hyperlink{class_player_object_aa4f82f32bc0beb4ed45e19653b2c3ee7}{On\+Trigger\+Stay}} (\mbox{\hyperlink{class_collider}{Collider}} \texorpdfstring{$\ast$}{*}other)
+\item 
+virtual void \mbox{\hyperlink{class_player_object_a02fd301e8a5546f6b81e8ddec99b8daf}{On\+Trigger\+Exit}} (\mbox{\hyperlink{class_collider}{Collider}} \texorpdfstring{$\ast$}{*}other)
+\item 
+\Hypertarget{class_player_object_ad31940ff3c27dc0a1c6419ac3ed38f4e}\label{class_player_object_ad31940ff3c27dc0a1c6419ac3ed38f4e} 
+bool {\bfseries get\+Is\+Aiming} ()
+\item 
+\Hypertarget{class_player_object_a5825afbfd28de7b35833dbb02783a977}\label{class_player_object_a5825afbfd28de7b35833dbb02783a977} 
+int {\bfseries get\+Number} ()
+\item 
+\Hypertarget{class_player_object_a79823d15ac0301317a3d52baed1dcef9}\label{class_player_object_a79823d15ac0301317a3d52baed1dcef9} 
+float {\bfseries get\+Cooldown} (int skill)
+\item 
+\Hypertarget{class_player_object_ae03564f9de30a178126f8b72f1d99abd}\label{class_player_object_ae03564f9de30a178126f8b72f1d99abd} 
+float {\bfseries get\+Duration\+Slowness} ()
+\item 
+\Hypertarget{class_player_object_a7eed6b8f1542ff19206685620d4c84cb}\label{class_player_object_a7eed6b8f1542ff19206685620d4c84cb} 
+bool {\bfseries get\+Is\+Slowness} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{class_entity_object}{Entity\+Object}}}
+\begin{DoxyCompactItemize}
+\item 
+virtual void {\bfseries Set\+Sprite\+Info} (\mbox{\hyperlink{struct_spritesheet_info}{Spritesheet\+Info}} info)
+\item 
+void {\bfseries Set\+Texture} (std\+::string path)
+\item 
+virtual void {\bfseries Set\+Animation\+Sprite} (Animation\+State state, \mbox{\hyperlink{struct_spritesheet_info}{Spritesheet\+Info}} sprite\+Info)
+\item 
+virtual void {\bfseries Change\+Animation\+State} (Animation\+State anim)
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{class_image_object}{Image\+Object}}}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_sprite_renderer}{Sprite\+Renderer}} \texorpdfstring{$\ast$}{*} {\bfseries Get\+Sprite\+Renderer} ()
+\item 
+void {\bfseries Set\+Sprite\+Info} (\mbox{\hyperlink{struct_spritesheet_info}{Spritesheet\+Info}} info)
+\item 
+void {\bfseries Set\+Texture} (std\+::string path)
+\item 
+void {\bfseries Set\+Is\+Animated} (bool value)
+\item 
+bool {\bfseries Get\+Is\+Animated} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{class_drawable_object}{Drawable\+Object}}}
+\begin{DoxyCompactItemize}
+\item 
+glm\+::mat4 {\bfseries get\+Transform} ()
+\item 
+void {\bfseries Set\+Size} (float sizeX, float sizeY)
+\item 
+void {\bfseries Set\+Position} (glm\+::vec3 new\+Position)
+\item 
+void {\bfseries Translate} (glm\+::vec3 move\+Distance)
+\item 
+glm\+::vec3 {\bfseries get\+Pos} ()
+\item 
+glm\+::vec3 {\bfseries get\+Size} ()
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Additional Inherited Members}
+\doxysubsection*{Protected Attributes inherited from \mbox{\hyperlink{class_entity_object}{Entity\+Object}}}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_collider}{Collider}} \texorpdfstring{$\ast$}{*} {\bfseries collider}
+\item 
+std\+::map$<$ Animation\+State, \mbox{\hyperlink{struct_spritesheet_info}{Spritesheet\+Info}} $>$ {\bfseries anim\+List}
+\item 
+Animation\+State {\bfseries curr\+Anim\+State}
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Attributes inherited from \mbox{\hyperlink{class_image_object}{Image\+Object}}}
+\begin{DoxyCompactItemize}
+\item 
+unsigned int {\bfseries texture}
+\item 
+\mbox{\hyperlink{class_sprite_renderer}{Sprite\+Renderer}} \texorpdfstring{$\ast$}{*} {\bfseries sprite\+Renderer}
+\item 
+\mbox{\hyperlink{struct_spritesheet_info}{Spritesheet\+Info}} {\bfseries sheet\+Info}
+\item 
+bool {\bfseries is\+Animated}
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Attributes inherited from \mbox{\hyperlink{class_drawable_object}{Drawable\+Object}}}
+\begin{DoxyCompactItemize}
+\item 
+glm\+::vec3 {\bfseries pos}
+\item 
+glm\+::vec3 {\bfseries size}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+The class for creating object that render using texture. 
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_player_object_ac782e9c4916c03849b55f44ff13b1437}\index{PlayerObject@{PlayerObject}!GetCollider@{GetCollider}}
+\index{GetCollider@{GetCollider}!PlayerObject@{PlayerObject}}
+\doxysubsubsection{\texorpdfstring{GetCollider()}{GetCollider()}}
+{\footnotesize\ttfamily \label{class_player_object_ac782e9c4916c03849b55f44ff13b1437} 
+\mbox{\hyperlink{class_collider}{Collider}} \texorpdfstring{$\ast$}{*} Player\+Object\+::\+Get\+Collider (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_entity_object}{Entity\+Object}}.
+
+\Hypertarget{class_player_object_a4703c7fc70a77bcdd59e708201d0ebc0}\index{PlayerObject@{PlayerObject}!OnColliderEnter@{OnColliderEnter}}
+\index{OnColliderEnter@{OnColliderEnter}!PlayerObject@{PlayerObject}}
+\doxysubsubsection{\texorpdfstring{OnColliderEnter()}{OnColliderEnter()}}
+{\footnotesize\ttfamily \label{class_player_object_a4703c7fc70a77bcdd59e708201d0ebc0} 
+void Player\+Object\+::\+On\+Collider\+Enter (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_collider}{Collider}} \texorpdfstring{$\ast$}{*}}]{other}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_entity_object}{Entity\+Object}}.
+
+\Hypertarget{class_player_object_ab7dde08ddc4de05607e3eab013fffae9}\index{PlayerObject@{PlayerObject}!OnColliderExit@{OnColliderExit}}
+\index{OnColliderExit@{OnColliderExit}!PlayerObject@{PlayerObject}}
+\doxysubsubsection{\texorpdfstring{OnColliderExit()}{OnColliderExit()}}
+{\footnotesize\ttfamily \label{class_player_object_ab7dde08ddc4de05607e3eab013fffae9} 
+void Player\+Object\+::\+On\+Collider\+Exit (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_collider}{Collider}} \texorpdfstring{$\ast$}{*}}]{other}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_entity_object}{Entity\+Object}}.
+
+\Hypertarget{class_player_object_a005265da71e25d07e817344b32e528be}\index{PlayerObject@{PlayerObject}!OnColliderStay@{OnColliderStay}}
+\index{OnColliderStay@{OnColliderStay}!PlayerObject@{PlayerObject}}
+\doxysubsubsection{\texorpdfstring{OnColliderStay()}{OnColliderStay()}}
+{\footnotesize\ttfamily \label{class_player_object_a005265da71e25d07e817344b32e528be} 
+void Player\+Object\+::\+On\+Collider\+Stay (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_collider}{Collider}} \texorpdfstring{$\ast$}{*}}]{other}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_entity_object}{Entity\+Object}}.
+
+\Hypertarget{class_player_object_add62b3f441c16a7ac75cae4daf4e95f8}\index{PlayerObject@{PlayerObject}!OnTriggerEnter@{OnTriggerEnter}}
+\index{OnTriggerEnter@{OnTriggerEnter}!PlayerObject@{PlayerObject}}
+\doxysubsubsection{\texorpdfstring{OnTriggerEnter()}{OnTriggerEnter()}}
+{\footnotesize\ttfamily \label{class_player_object_add62b3f441c16a7ac75cae4daf4e95f8} 
+void Player\+Object\+::\+On\+Trigger\+Enter (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_collider}{Collider}} \texorpdfstring{$\ast$}{*}}]{other}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_entity_object}{Entity\+Object}}.
+
+\Hypertarget{class_player_object_a02fd301e8a5546f6b81e8ddec99b8daf}\index{PlayerObject@{PlayerObject}!OnTriggerExit@{OnTriggerExit}}
+\index{OnTriggerExit@{OnTriggerExit}!PlayerObject@{PlayerObject}}
+\doxysubsubsection{\texorpdfstring{OnTriggerExit()}{OnTriggerExit()}}
+{\footnotesize\ttfamily \label{class_player_object_a02fd301e8a5546f6b81e8ddec99b8daf} 
+void Player\+Object\+::\+On\+Trigger\+Exit (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_collider}{Collider}} \texorpdfstring{$\ast$}{*}}]{other}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_entity_object}{Entity\+Object}}.
+
+\Hypertarget{class_player_object_aa4f82f32bc0beb4ed45e19653b2c3ee7}\index{PlayerObject@{PlayerObject}!OnTriggerStay@{OnTriggerStay}}
+\index{OnTriggerStay@{OnTriggerStay}!PlayerObject@{PlayerObject}}
+\doxysubsubsection{\texorpdfstring{OnTriggerStay()}{OnTriggerStay()}}
+{\footnotesize\ttfamily \label{class_player_object_aa4f82f32bc0beb4ed45e19653b2c3ee7} 
+void Player\+Object\+::\+On\+Trigger\+Stay (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_collider}{Collider}} \texorpdfstring{$\ast$}{*}}]{other}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_entity_object}{Entity\+Object}}.
+
+\Hypertarget{class_player_object_a6a2348aa6a95bab45d4976992334a959}\index{PlayerObject@{PlayerObject}!Render@{Render}}
+\index{Render@{Render}!PlayerObject@{PlayerObject}}
+\doxysubsubsection{\texorpdfstring{Render()}{Render()}}
+{\footnotesize\ttfamily \label{class_player_object_a6a2348aa6a95bab45d4976992334a959} 
+void Player\+Object\+::\+Render (\begin{DoxyParamCaption}\item[{glm\+::mat4}]{global\+Model\+Transform}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_entity_object}{Entity\+Object}}.
+
+\Hypertarget{class_player_object_aa2557c8c9343de4f63cd68d5a3c603c3}\index{PlayerObject@{PlayerObject}!UpdateCurrentAnimation@{UpdateCurrentAnimation}}
+\index{UpdateCurrentAnimation@{UpdateCurrentAnimation}!PlayerObject@{PlayerObject}}
+\doxysubsubsection{\texorpdfstring{UpdateCurrentAnimation()}{UpdateCurrentAnimation()}}
+{\footnotesize\ttfamily \label{class_player_object_aa2557c8c9343de4f63cd68d5a3c603c3} 
+void Player\+Object\+::\+Update\+Current\+Animation (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_entity_object}{Entity\+Object}}.
+

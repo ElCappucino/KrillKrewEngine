@@ -1,12 +1,13 @@
 
 #include "ImageObject.h"
-#include "GameEngine.h"
-#include "SquareMeshVbo.h"
+
 
 
 ImageObject::ImageObject()
 {
-
+	this->isAnimated = false;
+	this->texture = 0;
+	spriteRenderer = new SpriteRenderer("");
 }
 
 
@@ -14,9 +15,19 @@ ImageObject::~ImageObject()
 {
 }
 
-void ImageObject::SetTexture(string path)
+void ImageObject::SetTexture(std::string path)
 {
 	texture = GameEngine::GetInstance()->GetRenderer()->LoadTexture(path);
+}
+void ImageObject::SetSpriteInfo(SpritesheetInfo info)
+{
+	spriteRenderer->SetSpriteInfo(info.spritewidth, info.spriteheight, info.sheetwidth, info.sheetheight);
+	this->SetTexture(info.texture);
+}
+
+SpriteRenderer* ImageObject::GetSpriteRenderer()
+{
+	return spriteRenderer;
 }
 
 void ImageObject::Render(glm::mat4 globalModelTransform)
@@ -27,15 +38,22 @@ void ImageObject::Render(glm::mat4 globalModelTransform)
 	GLuint renderModeId = GameEngine::GetInstance()->GetRenderer()->GetModeUniformId();
 
 	if (modelMatixId == -1) {
-		cout << "Error: Can't perform transformation " << endl;
+		std::cout << "Error: Can't perform transformation " << std::endl;
 		return;
 	}
 	if (renderModeId == -1) {
-		cout << "Error: Can't set renderMode in ImageObject " << endl;
+		std::cout << "Error: Can't set renderMode in ImageObject " << std::endl;
 		return;
 	}
 
-	vector <glm::mat4> matrixStack;
+	squareMesh->ChangeTextureData(spriteRenderer->GetRow(),
+		spriteRenderer->GetColumn(),
+		spriteRenderer->GetSpriteWidth(),
+		spriteRenderer->GetSpriteHeight(),
+		spriteRenderer->GetSheetWidth(),
+		spriteRenderer->GetSheetHeight());
+
+	std::vector <glm::mat4> matrixStack;
 
 	glm::mat4 currentMatrix = this->getTransform();
 
@@ -48,5 +66,39 @@ void ImageObject::Render(glm::mat4 globalModelTransform)
 		squareMesh->Render();
 
 	}
+}
+
+void ImageObject::SetIsAnimated(bool value)
+{
+	this->isAnimated = value;
+}
+bool ImageObject::GetIsAnimated()
+{
+	return isAnimated;
+}
+
+void ImageObject::OnColliderEnter(Collider* other)
+{
+
+}
+void ImageObject::OnColliderStay(Collider* other)
+{
+
+}
+void ImageObject::OnColliderExit(Collider* other)
+{
+
+}
+void ImageObject::OnTriggerEnter(Collider* other)
+{
+
+}
+void ImageObject::OnTriggerStay(Collider* other)
+{
+
+}
+void ImageObject::OnTriggerExit(Collider* other)
+{
+
 }
 

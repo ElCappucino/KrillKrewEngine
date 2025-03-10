@@ -1,0 +1,54 @@
+\doxysection{Collider.\+h}
+\hypertarget{_collider_8h_source}{}\label{_collider_8h_source}\index{KrillKrew/KrillEngine/KrillEngine/Collider.h@{KrillKrew/KrillEngine/KrillEngine/Collider.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#include\ "{}GameEngine.h"{}}}
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ "{}SquareMeshVbo.h"{}}}
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ "{}GizmosObject.h"{}}}
+\DoxyCodeLine{00005\ }
+\DoxyCodeLine{00006\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_entity_object}{EntityObject}};}
+\DoxyCodeLine{00007\ }
+\DoxyCodeLine{00008\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_collider}{Collider}}\ \{}
+\DoxyCodeLine{00009\ }
+\DoxyCodeLine{00010\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00011\ }
+\DoxyCodeLine{00012\ \ \ \ \ \textcolor{keyword}{enum}\ CollisionType}
+\DoxyCodeLine{00013\ \ \ \ \ \{}
+\DoxyCodeLine{00014\ \ \ \ \ \ \ \ \ Static,}
+\DoxyCodeLine{00015\ \ \ \ \ \ \ \ \ Kinematic,}
+\DoxyCodeLine{00016\ \ \ \ \ \ \ \ \ Trigger}
+\DoxyCodeLine{00017\ \ \ \ \ \};}
+\DoxyCodeLine{00018\ }
+\DoxyCodeLine{00019\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00020\ }
+\DoxyCodeLine{00021\ \ \ \ \ \textcolor{comment}{//\ use\ pos\ and\ scale\ from\ Object\ class}}
+\DoxyCodeLine{00022\ \ \ \ \ \mbox{\hyperlink{class_entity_object}{EntityObject}}*\ parent;}
+\DoxyCodeLine{00023\ \ \ \ \ glm::vec3\ previousPos;}
+\DoxyCodeLine{00024\ \ \ \ \ CollisionType\ collisionType;}
+\DoxyCodeLine{00025\ \ \ \ \ \mbox{\hyperlink{class_gizmos_object}{GizmosObject}}*\ gizmos;}
+\DoxyCodeLine{00026\ }
+\DoxyCodeLine{00027\ \ \ \ \ glm::vec3\ size;}
+\DoxyCodeLine{00028\ \ \ \ \ glm::vec3\ halfSize;}
+\DoxyCodeLine{00029\ }
+\DoxyCodeLine{00030\ \ \ \ \ \textcolor{keywordtype}{bool}\ isEnter\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00031\ \ \ \ \ \textcolor{keywordtype}{bool}\ isExit\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00032\ }
+\DoxyCodeLine{00033\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00034\ }
+\DoxyCodeLine{00035\ }
+\DoxyCodeLine{00036\ \ \ \ \ \mbox{\hyperlink{class_collider}{Collider}}(CollisionType\ type,\ \mbox{\hyperlink{class_entity_object}{EntityObject}}*\ parent);}
+\DoxyCodeLine{00037\ \ \ \ \ \textcolor{keywordtype}{void}\ Update(glm::vec3\ size,\ glm::vec3\ position);}
+\DoxyCodeLine{00038\ \ \ \ \ \mbox{\hyperlink{class_gizmos_object}{GizmosObject}}*\ GetGizmos();}
+\DoxyCodeLine{00039\ \ \ \ \ glm::vec3\ GetSize();}
+\DoxyCodeLine{00040\ \ \ \ \ glm::vec3\ GetPreviousPos();}
+\DoxyCodeLine{00041\ \ \ \ \ \textcolor{keywordtype}{void}\ SetPreviousPos(glm::vec3\ pos);}
+\DoxyCodeLine{00042\ \ \ \ \ glm::vec3\ GetHalfSize();}
+\DoxyCodeLine{00043\ \ \ \ \ \textcolor{keywordtype}{void}\ SetGismosColor(glm::vec3\ color);}
+\DoxyCodeLine{00044\ \ \ \ \ CollisionType\ GetCollisionType();}
+\DoxyCodeLine{00045\ \ \ \ \ \textcolor{keywordtype}{void}\ SetCollisionType(CollisionType\ type);}
+\DoxyCodeLine{00046\ }
+\DoxyCodeLine{00047\ }
+\DoxyCodeLine{00048\ \};}
+
+\end{DoxyCode}

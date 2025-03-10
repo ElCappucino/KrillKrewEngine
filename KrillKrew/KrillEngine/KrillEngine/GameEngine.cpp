@@ -26,6 +26,25 @@ GameStateController* GameEngine::GetStateController()
 	return this->stateController;
 }
 
+SDL_Window* GameEngine::GetSDLWindow()
+{
+	return this->window;
+}
+SDL_GLContext GameEngine::GetglContext()
+{
+	return this->glContext;
+}
+
+void GameEngine::SetSDLWindow(SDL_Window* window)
+{
+	this->window = window;
+}
+
+void GameEngine::SetglContext(SDL_GLContext context)
+{
+	this->glContext = context;
+}
+
 void GameEngine::Init(int width, int height)
 {
 	winWidth = width;
@@ -35,11 +54,21 @@ void GameEngine::Init(int width, int height)
 	SetDrawArea(-3, 3, -3, 3);
 	SetBackgroundColor(1.0f, 1.0f, 200.0f / 255);
 
+	// Init Logger
+	Krill::Log::Init();
+
+	std::string f = "First";
+	std::string s = "Second";
+	KK_TRACE("Initialized Logger! {0}", f);
+	KK_INFO("Initialized Logger! {0} {1}", f, s);
+
 	stateController = new GameStateController();
-	stateController->Init(GameState::GS_LEVELGAMEPLAY);
+	// stateController->loadingState = GameState::GS_LEVELGAMEPLAY;
+	stateController->loadingState = GameState::GS_LEVELSHOWCASE;
+	stateController->Init(GameState::GS_LEVELLOADING);
 }
 
-void GameEngine::Render(vector<DrawableObject*> renderObjects)
+void GameEngine::Render(std::vector<DrawableObject*> renderObjects)
 {
 	this->GetRenderer()->Render(renderObjects);
 }
@@ -56,7 +85,7 @@ void GameEngine::SetBackgroundColor(float r, float g, float b)
 	renderer->SetClearColor(1.0f, 1.0f, 200.0f / 255);
 }
 
-void GameEngine::AddMesh(string name, MeshVbo* mesh)
+void GameEngine::AddMesh(std::string name, MeshVbo* mesh)
 {
 	renderer->AddMesh(name, mesh);
 }

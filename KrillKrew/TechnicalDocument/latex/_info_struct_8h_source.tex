@@ -1,0 +1,50 @@
+\doxysection{Info\+Struct.\+h}
+\hypertarget{_info_struct_8h_source}{}\label{_info_struct_8h_source}\index{KrillKrew/KrillEngine/KrillEngine/InfoStruct.h@{KrillKrew/KrillEngine/KrillEngine/InfoStruct.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#include\ <string>}}
+\DoxyCodeLine{00003\ }
+\DoxyCodeLine{00004\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_orthographic_value}{OrthographicValue}}\ }
+\DoxyCodeLine{00005\ \{}
+\DoxyCodeLine{00006\ \ \ \ \ \textcolor{keywordtype}{float}\ left;}
+\DoxyCodeLine{00007\ \ \ \ \ \textcolor{keywordtype}{float}\ right;}
+\DoxyCodeLine{00008\ \ \ \ \ \textcolor{keywordtype}{float}\ bottom;}
+\DoxyCodeLine{00009\ \ \ \ \ \textcolor{keywordtype}{float}\ top;}
+\DoxyCodeLine{00010\ \};}
+\DoxyCodeLine{00011\ }
+\DoxyCodeLine{00012\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_spritesheet_info}{SpritesheetInfo}}\ }
+\DoxyCodeLine{00013\ \{}
+\DoxyCodeLine{00014\ \ \ \ \ std::string\ name;}
+\DoxyCodeLine{00015\ \ \ \ \ std::string\ texture;}
+\DoxyCodeLine{00016\ \ \ \ \ \textcolor{keywordtype}{float}\ spritewidth;\ }
+\DoxyCodeLine{00017\ \ \ \ \ \textcolor{keywordtype}{float}\ spriteheight;\ }
+\DoxyCodeLine{00018\ \ \ \ \ \textcolor{keywordtype}{float}\ sheetwidth;\ }
+\DoxyCodeLine{00019\ \ \ \ \ \textcolor{keywordtype}{float}\ sheetheight;}
+\DoxyCodeLine{00020\ }
+\DoxyCodeLine{00021\ \ \ \ \ \mbox{\hyperlink{struct_spritesheet_info}{SpritesheetInfo}}()}
+\DoxyCodeLine{00022\ \ \ \ \ \{}
+\DoxyCodeLine{00023\ \ \ \ \ \ \ \ \ this-\/>name\ =\ \textcolor{stringliteral}{"{}name"{}};}
+\DoxyCodeLine{00024\ \ \ \ \ \ \ \ \ this-\/>texture\ =\ \textcolor{stringliteral}{"{}texture"{}};}
+\DoxyCodeLine{00025\ \ \ \ \ \ \ \ \ this-\/>spritewidth\ =\ 0;}
+\DoxyCodeLine{00026\ \ \ \ \ \ \ \ \ this-\/>spriteheight\ =\ 0;}
+\DoxyCodeLine{00027\ \ \ \ \ \ \ \ \ this-\/>sheetwidth\ =\ 0;}
+\DoxyCodeLine{00028\ \ \ \ \ \ \ \ \ this-\/>sheetheight\ =\ 0;}
+\DoxyCodeLine{00029\ \ \ \ \ \}}
+\DoxyCodeLine{00030\ \ \ \ \ \mbox{\hyperlink{struct_spritesheet_info}{SpritesheetInfo}}(std::string\ name,}
+\DoxyCodeLine{00031\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::string\ texture,}
+\DoxyCodeLine{00032\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ spritewidth,\ }
+\DoxyCodeLine{00033\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ spriteheight,\ }
+\DoxyCodeLine{00034\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ sheetwidth,\ }
+\DoxyCodeLine{00035\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ sheetheight)}
+\DoxyCodeLine{00036\ \ \ \ \ \{}
+\DoxyCodeLine{00037\ \ \ \ \ \ \ \ \ this-\/>name\ =\ name;}
+\DoxyCodeLine{00038\ \ \ \ \ \ \ \ \ this-\/>texture\ =\ texture;}
+\DoxyCodeLine{00039\ \ \ \ \ \ \ \ \ this-\/>spritewidth\ =\ spritewidth;}
+\DoxyCodeLine{00040\ \ \ \ \ \ \ \ \ this-\/>spriteheight\ =\ spriteheight;}
+\DoxyCodeLine{00041\ \ \ \ \ \ \ \ \ this-\/>sheetwidth\ =\ sheetwidth;}
+\DoxyCodeLine{00042\ \ \ \ \ \ \ \ \ this-\/>sheetheight\ =\ sheetheight;}
+\DoxyCodeLine{00043\ \ \ \ \ \}}
+\DoxyCodeLine{00044\ \};}
+
+\end{DoxyCode}

@@ -118,21 +118,35 @@ $(function(){initNavTree('class_drawable_object.html',''); initResizable(true); 
 <div class="dynheader">
 Inheritance diagram for DrawableObject:</div>
 <div class="dyncontent">
- <div class="center">
-  <img src="class_drawable_object.png" usemap="#DrawableObject_map" alt=""/>
-  <map id="DrawableObject_map" name="DrawableObject_map">
-<area href="class_combine_object.html" title="The class for creating two shape combine to each other." alt="CombineObject" shape="rect" coords="0,56,103,80"/>
-<area href="class_game_object.html" title="The class for creating game object." alt="GameObject" shape="rect" coords="113,56,216,80"/>
-<area href="class_image_object.html" title="The class for creating object that render using texture." alt="ImageObject" shape="rect" coords="226,56,329,80"/>
-  </map>
-</div></div>
+<div class="center"><img src="class_drawable_object__inherit__graph.png" border="0" usemap="#a_drawable_object_inherit__map" alt="Inheritance graph"/></div>
+<map name="a_drawable_object_inherit__map" id="a_drawable_object_inherit__map">
+<area shape="rect" title="The class for creating drawable object." alt="" coords="119,5,234,32"/>
+<area shape="rect" href="class_game_object.html" title="The class for creating game object." alt="" coords="5,80,100,107"/>
+<area shape="poly" title=" " alt="" coords="144,42,76,82,73,77,141,38"/>
+<area shape="rect" href="class_gizmos_object.html" title="The class for creating game object." alt="" coords="124,80,229,107"/>
+<area shape="poly" title=" " alt="" coords="179,48,179,80,174,80,174,48"/>
+<area shape="rect" href="class_image_object.html" title="The class for creating object that render using texture." alt="" coords="253,80,348,107"/>
+<area shape="poly" title=" " alt="" coords="212,38,280,77,277,82,209,42"/>
+<area shape="rect" href="class_entity_object.html" title="The class for creating object that render using texture." alt="" coords="200,155,294,181"/>
+<area shape="poly" title=" " alt="" coords="284,121,258,156,254,153,280,118"/>
+<area shape="rect" href="class_ui_object.html" title="The class for creating object that render using texture." alt="" coords="318,155,390,181"/>
+<area shape="poly" title=" " alt="" coords="321,118,347,153,343,156,317,121"/>
+<area shape="rect" href="class_player_object.html" title="The class for creating object that render using texture." alt="" coords="70,229,166,256"/>
+<area shape="poly" title=" " alt="" coords="213,192,142,231,139,226,210,187"/>
+<area shape="rect" href="class_projectile_object.html" title="The class for creating object that render using texture." alt="" coords="190,229,304,256"/>
+<area shape="poly" title=" " alt="" coords="250,197,250,229,244,229,244,197"/>
+<area shape="rect" href="class_trap_object.html" title="The class for creating object that render using texture." alt="" coords="328,229,414,256"/>
+<area shape="poly" title=" " alt="" coords="283,187,351,226,348,231,280,192"/>
+</map>
+<center><span class="legend">[<a target="top" href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a86f155d814b5e9b34b7eb72ed4dd795d" id="r_a86f155d814b5e9b34b7eb72ed4dd795d"><td class="memItemLeft" align="right" valign="top"><a id="a86f155d814b5e9b34b7eb72ed4dd795d" name="a86f155d814b5e9b34b7eb72ed4dd795d"></a>
 glm::mat4&#160;</td><td class="memItemRight" valign="bottom"><b>getTransform</b> ()</td></tr>
 <tr class="separator:a86f155d814b5e9b34b7eb72ed4dd795d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0162efd85614cdf9aac0475aa738bc18" id="r_a0162efd85614cdf9aac0475aa738bc18"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a0162efd85614cdf9aac0475aa738bc18">Render</a> (glm::mat4 globalModelTransform)=0</td></tr>
+<tr class="memitem:a0162efd85614cdf9aac0475aa738bc18" id="r_a0162efd85614cdf9aac0475aa738bc18"><td class="memItemLeft" align="right" valign="top"><a id="a0162efd85614cdf9aac0475aa738bc18" name="a0162efd85614cdf9aac0475aa738bc18"></a>
+virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>Render</b> (glm::mat4 globalModelTransform)=0</td></tr>
 <tr class="separator:a0162efd85614cdf9aac0475aa738bc18"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a12876534224a9e42238ae726261b67ca" id="r_a12876534224a9e42238ae726261b67ca"><td class="memItemLeft" align="right" valign="top"><a id="a12876534224a9e42238ae726261b67ca" name="a12876534224a9e42238ae726261b67ca"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>SetSize</b> (float sizeX, float sizeY)</td></tr>
@@ -143,6 +157,12 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>SetPosition</b> (glm:
 <tr class="memitem:a526365f23ad585ededf384d7c3e870fd" id="r_a526365f23ad585ededf384d7c3e870fd"><td class="memItemLeft" align="right" valign="top"><a id="a526365f23ad585ededf384d7c3e870fd" name="a526365f23ad585ededf384d7c3e870fd"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>Translate</b> (glm::vec3 moveDistance)</td></tr>
 <tr class="separator:a526365f23ad585ededf384d7c3e870fd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaf0ad13274fdbf91e83d944eb456cfb9" id="r_aaf0ad13274fdbf91e83d944eb456cfb9"><td class="memItemLeft" align="right" valign="top"><a id="aaf0ad13274fdbf91e83d944eb456cfb9" name="aaf0ad13274fdbf91e83d944eb456cfb9"></a>
+glm::vec3&#160;</td><td class="memItemRight" valign="bottom"><b>getPos</b> ()</td></tr>
+<tr class="separator:aaf0ad13274fdbf91e83d944eb456cfb9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9e15c25583170c014d976d902ee8ddd7" id="r_a9e15c25583170c014d976d902ee8ddd7"><td class="memItemLeft" align="right" valign="top"><a id="a9e15c25583170c014d976d902ee8ddd7" name="a9e15c25583170c014d976d902ee8ddd7"></a>
+glm::vec3&#160;</td><td class="memItemRight" valign="bottom"><b>getSize</b> ()</td></tr>
+<tr class="separator:a9e15c25583170c014d976d902ee8ddd7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pro-attribs" name="pro-attribs"></a>
 Protected Attributes</h2></td></tr>
@@ -155,35 +175,7 @@ glm::vec3&#160;</td><td class="memItemRight" valign="bottom"><b>size</b></td></t
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>The class for creating drawable object. </p>
-</div><h2 class="groupheader">Member Function Documentation</h2>
-<a id="a0162efd85614cdf9aac0475aa738bc18" name="a0162efd85614cdf9aac0475aa738bc18"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0162efd85614cdf9aac0475aa738bc18">&#9670;&#160;</a></span>Render()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">virtual void DrawableObject::Render </td>
-          <td>(</td>
-          <td class="paramtype">glm::mat4</td>          <td class="paramname"><span class="paramname"><em>globalModelTransform</em></span></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Implemented in <a class="el" href="class_combine_object.html#af51c2202fd25b728df20c22c676d2ee0">CombineObject</a>.</p>
-
-</div>
-</div>
-</div><!-- contents -->
+</div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->

@@ -1,7 +1,6 @@
 
 #include "GameObject.h"
-#include "GameEngine.h"
-#include "SquareMeshVbo.h"
+
 
 
 GameObject::GameObject()
@@ -21,6 +20,7 @@ void GameObject::SetColor(float r, float g, float b)
 
 void GameObject::Render(glm::mat4 globalModelTransform)
 {
+	// std::cout << "Hello" << std::endl;
 	SquareMeshVbo *squareMesh = dynamic_cast<SquareMeshVbo *> (GameEngine::GetInstance()->GetRenderer()->GetMesh(SquareMeshVbo::MESH_NAME));
 
 	GLuint modelMatixId = GameEngine::GetInstance()->GetRenderer()->GetModelMatrixAttrId();
@@ -28,15 +28,15 @@ void GameObject::Render(glm::mat4 globalModelTransform)
 	GLuint renderModeId = GameEngine::GetInstance()->GetRenderer()->GetModeUniformId();
 
 	if (modelMatixId == -1) {
-		cout << "Error: Can't perform transformation " << endl;
+		std::cout << "Error: Can't perform transformation " << std::endl;
 		return;
 	}
 	if (colorId == -1) {
-		cout << "Error: Can't set color " << endl;
+		std::cout << "Error: Can't set color " << std::endl;
 		return;
 	}
 	if (renderModeId == -1) {
-		cout << "Error: Can't set renderMode in ImageObject " << endl;
+		std::cout << "Error: Can't set renderMode in ImageObject " << std::endl;
 		return;
 	}
 	//vector <glm::mat4> matrixStack;

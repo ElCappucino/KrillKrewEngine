@@ -19,10 +19,10 @@ void Level::LevelInit()
 
 	player = obj;
 
-	GameEngine::GetInstance()->GetRenderer()->SetOrthoProjection(-SCREEN_RATIO_X * 2, 
-																 SCREEN_RATIO_X * 2, 
-														         -SCREEN_RATIO_Y * 2, 
-																 SCREEN_RATIO_Y * 2);
+	GameEngine::GetInstance()->GetRenderer()->SetOrthoProjection(-SCREEN_WIDTH * 2, 
+																 SCREEN_WIDTH * 2, 
+														         -SCREEN_HEIGHT * 2, 
+																 SCREEN_HEIGHT * 2);
 	//cout << "Init Level" << endl;
 }
 
@@ -71,44 +71,46 @@ void Level::HandleKey(char key)
 		// This part needs to move to GameplayScene class later
 		case 'i': 
 			
-			GameEngine::GetInstance()->SetDrawArea(GameEngine::GetInstance()->GetRenderer()->GetOrthovalue().left + SCREEN_RATIO_X * ZOOM_VELOCITY,
-												   GameEngine::GetInstance()->GetRenderer()->GetOrthovalue().right - SCREEN_RATIO_X * ZOOM_VELOCITY,
-												   GameEngine::GetInstance()->GetRenderer()->GetOrthovalue().bottom + SCREEN_RATIO_Y * ZOOM_VELOCITY,
-												   GameEngine::GetInstance()->GetRenderer()->GetOrthovalue().top - SCREEN_RATIO_Y * ZOOM_VELOCITY);
+			GameEngine::GetInstance()->SetDrawArea(GameEngine::GetInstance()->GetRenderer()->GetOrthovalue().left + SCREEN_WIDTH * ZOOM_VELOCITY,
+												   GameEngine::GetInstance()->GetRenderer()->GetOrthovalue().right - SCREEN_WIDTH * ZOOM_VELOCITY,
+												   GameEngine::GetInstance()->GetRenderer()->GetOrthovalue().bottom + SCREEN_HEIGHT * ZOOM_VELOCITY,
+												   GameEngine::GetInstance()->GetRenderer()->GetOrthovalue().top - SCREEN_HEIGHT * ZOOM_VELOCITY);
 			break;
 
 		case 'o': 
 
-			GameEngine::GetInstance()->SetDrawArea(GameEngine::GetInstance()->GetRenderer()->GetOrthovalue().left - SCREEN_RATIO_X * ZOOM_VELOCITY,
-												   GameEngine::GetInstance()->GetRenderer()->GetOrthovalue().right + SCREEN_RATIO_X * ZOOM_VELOCITY,
-												   GameEngine::GetInstance()->GetRenderer()->GetOrthovalue().bottom - SCREEN_RATIO_Y * ZOOM_VELOCITY,
-												   GameEngine::GetInstance()->GetRenderer()->GetOrthovalue().top + SCREEN_RATIO_Y * ZOOM_VELOCITY);
+			GameEngine::GetInstance()->SetDrawArea(GameEngine::GetInstance()->GetRenderer()->GetOrthovalue().left - SCREEN_WIDTH * ZOOM_VELOCITY,
+												   GameEngine::GetInstance()->GetRenderer()->GetOrthovalue().right + SCREEN_WIDTH * ZOOM_VELOCITY,
+												   GameEngine::GetInstance()->GetRenderer()->GetOrthovalue().bottom - SCREEN_HEIGHT * ZOOM_VELOCITY,
+												   GameEngine::GetInstance()->GetRenderer()->GetOrthovalue().top + SCREEN_HEIGHT * ZOOM_VELOCITY);
 			break;
 	}
 }
 
 void Level::HandleMouse(int type, int x, int y)
 {
-	float realX, realY;
+	//float realX, realY;
 
-	// Calculate Real X Y 
-	realX = x;
-	realY = y;
+	//// Calculate Real X Y 
+	//realX = x;
+	//realY = y;
 
-	GameEngine::GetInstance()->GetWindowWidth();
-	GameEngine::GetInstance()->GetWindowHeight();
+	//GameEngine::GetInstance()->GetWindowWidth();
+	//GameEngine::GetInstance()->GetWindowHeight();
 
-	cout << "X : " << realX << " Y : " << realY << endl;
+	//std::cout << "X : " << realX << " Y : " << realY << std::endl;
 
-	float cameraWidth = GameEngine::GetInstance()->GetRenderer()->GetOrthovalue().right - GameEngine::GetInstance()->GetRenderer()->GetOrthovalue().left;
-	float cameraHeight = GameEngine::GetInstance()->GetRenderer()->GetOrthovalue().top - GameEngine::GetInstance()->GetRenderer()->GetOrthovalue().bottom;
+	//float cameraWidth = GameEngine::GetInstance()->GetRenderer()->GetOrthovalue().right - GameEngine::GetInstance()->GetRenderer()->GetOrthovalue().left;
+	//float cameraHeight = GameEngine::GetInstance()->GetRenderer()->GetOrthovalue().top - GameEngine::GetInstance()->GetRenderer()->GetOrthovalue().bottom;
 
-	cout << "cameraWidth : " << cameraWidth << " cameraHeight : " << cameraHeight << endl;
+	//std::cout << "cameraWidth : " << cameraWidth << " cameraHeight : " << cameraHeight << std::endl;
 
-	player->SetPosition(glm::vec3(((cameraWidth / (float)GameEngine::GetInstance()->GetWindowWidth()) * realX) - (cameraWidth / 2.f), -(((cameraHeight / (float)GameEngine::GetInstance()->GetWindowHeight()) * realY) - (cameraHeight / 2.f)), 0));
+	//player->SetPosition(glm::vec3(((cameraWidth / (float)GameEngine::GetInstance()->GetWindowWidth()) * realX) - (cameraWidth / 2.f), -(((cameraHeight / (float)GameEngine::GetInstance()->GetWindowHeight()) * realY) - (cameraHeight / 2.f)), 0));
 
-	cout << "Player position x : " << cameraWidth / (float)GameEngine::GetInstance()->GetWindowWidth() * realX <<
-		"Player position y : " << cameraHeight / (float)GameEngine::GetInstance()->GetWindowHeight() * realY << endl;
+	//std::cout << "Player position x : " << cameraWidth / (float)GameEngine::GetInstance()->GetWindowWidth() * realX <<
+	//	"Player position y : " << cameraHeight / (float)GameEngine::GetInstance()->GetWindowHeight() * realY << std::endl;
 }
 
+void Level::Movement(float axisX, float axisY, bool isPositiveX, bool isPositiveY) {
 
+}

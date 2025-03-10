@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['meshvbo_0',['MeshVbo',['../class_mesh_vbo.html',1,'']]]
+  ['imageobject_0',['ImageObject',['../class_image_object.html',1,'']]]
 ];

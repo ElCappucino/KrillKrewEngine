@@ -105,6 +105,7 @@ $(function(){initNavTree('class_image_object.html',''); initResizable(true); });
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pro-attribs">Protected Attributes</a> &#124;
 <a href="class_image_object-members.html">List of all members</a>  </div>
   <div class="headertitle"><div class="title">ImageObject Class Reference</div></div>
 </div><!--header-->
@@ -117,20 +118,57 @@ $(function(){initNavTree('class_image_object.html',''); initResizable(true); });
 <div class="dynheader">
 Inheritance diagram for ImageObject:</div>
 <div class="dyncontent">
- <div class="center">
-  <img src="class_image_object.png" usemap="#ImageObject_map" alt=""/>
-  <map id="ImageObject_map" name="ImageObject_map">
-<area href="class_drawable_object.html" title="The class for creating drawable object." alt="DrawableObject" shape="rect" coords="0,0,103,24"/>
-  </map>
-</div></div>
+<div class="center"><img src="class_image_object__inherit__graph.png" border="0" usemap="#a_image_object_inherit__map" alt="Inheritance graph"/></div>
+<map name="a_image_object_inherit__map" id="a_image_object_inherit__map">
+<area shape="rect" title="The class for creating object that render using texture." alt="" coords="188,80,284,107"/>
+<area shape="rect" href="class_entity_object.html" title="The class for creating object that render using texture." alt="" coords="136,155,230,181"/>
+<area shape="poly" title=" " alt="" coords="220,121,194,156,190,153,216,118"/>
+<area shape="rect" href="class_ui_object.html" title="The class for creating object that render using texture." alt="" coords="253,155,326,181"/>
+<area shape="poly" title=" " alt="" coords="257,118,282,153,278,156,252,121"/>
+<area shape="rect" href="class_drawable_object.html" title="The class for creating drawable object." alt="" coords="179,5,293,32"/>
+<area shape="poly" title=" " alt="" coords="239,48,239,80,234,80,234,48"/>
+<area shape="rect" href="class_player_object.html" title="The class for creating object that render using texture." alt="" coords="5,229,102,256"/>
+<area shape="poly" title=" " alt="" coords="148,192,78,231,75,226,146,187"/>
+<area shape="rect" href="class_projectile_object.html" title="The class for creating object that render using texture." alt="" coords="126,229,240,256"/>
+<area shape="poly" title=" " alt="" coords="186,197,186,229,180,229,180,197"/>
+<area shape="rect" href="class_trap_object.html" title="The class for creating object that render using texture." alt="" coords="264,229,350,256"/>
+<area shape="poly" title=" " alt="" coords="218,187,286,226,284,231,216,192"/>
+</map>
+<center><span class="legend">[<a target="top" href="graph_legend.html">legend</a>]</span></center></div>
+<div class="dynheader">
+Collaboration diagram for ImageObject:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_image_object__coll__graph.png" border="0" usemap="#a_image_object_coll__map" alt="Collaboration graph"/></div>
+<map name="a_image_object_coll__map" id="a_image_object_coll__map">
+<area shape="rect" title="The class for creating object that render using texture." alt="" coords="151,96,246,123"/>
+<area shape="rect" href="class_drawable_object.html" title="The class for creating drawable object." alt="" coords="5,5,120,32"/>
+<area shape="poly" title=" " alt="" coords="96,39,180,93,178,98,93,43"/>
+<area shape="rect" href="class_sprite_renderer.html" title=" " alt="" coords="144,5,253,32"/>
+<area shape="poly" title=" " alt="" coords="201,48,201,95,196,95,196,48"/>
+<area shape="rect" href="struct_spritesheet_info.html" title=" " alt="" coords="277,5,386,32"/>
+<area shape="poly" title=" " alt="" coords="319,47,295,74,272,88,247,98,245,93,269,83,291,70,315,43"/>
+</map>
+<center><span class="legend">[<a target="top" href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:af6068f8a9b06233a8df8cded2e651c2f" id="r_af6068f8a9b06233a8df8cded2e651c2f"><td class="memItemLeft" align="right" valign="top"><a id="af6068f8a9b06233a8df8cded2e651c2f" name="af6068f8a9b06233a8df8cded2e651c2f"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>SetTexture</b> (string path)</td></tr>
-<tr class="separator:af6068f8a9b06233a8df8cded2e651c2f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a73ba3fab25806f5b14e790c7e7ddfb4d" id="r_a73ba3fab25806f5b14e790c7e7ddfb4d"><td class="memItemLeft" align="right" valign="top"><a id="a73ba3fab25806f5b14e790c7e7ddfb4d" name="a73ba3fab25806f5b14e790c7e7ddfb4d"></a>
+<a class="el" href="class_sprite_renderer.html">SpriteRenderer</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>GetSpriteRenderer</b> ()</td></tr>
+<tr class="separator:a73ba3fab25806f5b14e790c7e7ddfb4d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acc59541e2398cb6fa246543567aa85fa" id="r_acc59541e2398cb6fa246543567aa85fa"><td class="memItemLeft" align="right" valign="top"><a id="acc59541e2398cb6fa246543567aa85fa" name="acc59541e2398cb6fa246543567aa85fa"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>SetSpriteInfo</b> (<a class="el" href="struct_spritesheet_info.html">SpritesheetInfo</a> info)</td></tr>
+<tr class="separator:acc59541e2398cb6fa246543567aa85fa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aef7797a66d0807f55a83c690f4a8b4f0" id="r_aef7797a66d0807f55a83c690f4a8b4f0"><td class="memItemLeft" align="right" valign="top"><a id="aef7797a66d0807f55a83c690f4a8b4f0" name="aef7797a66d0807f55a83c690f4a8b4f0"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>SetTexture</b> (std::string path)</td></tr>
+<tr class="separator:aef7797a66d0807f55a83c690f4a8b4f0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4e1a150373ad2197c807538975c5c9ee" id="r_a4e1a150373ad2197c807538975c5c9ee"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a4e1a150373ad2197c807538975c5c9ee">Render</a> (glm::mat4 globalModelTransform)</td></tr>
 <tr class="separator:a4e1a150373ad2197c807538975c5c9ee"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad13bc942843b39c1ef2f911dd01e3501" id="r_ad13bc942843b39c1ef2f911dd01e3501"><td class="memItemLeft" align="right" valign="top"><a id="ad13bc942843b39c1ef2f911dd01e3501" name="ad13bc942843b39c1ef2f911dd01e3501"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>SetIsAnimated</b> (bool value)</td></tr>
+<tr class="separator:ad13bc942843b39c1ef2f911dd01e3501"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6fe709ab9aa5a5e1192fc19e5e89e220" id="r_a6fe709ab9aa5a5e1192fc19e5e89e220"><td class="memItemLeft" align="right" valign="top"><a id="a6fe709ab9aa5a5e1192fc19e5e89e220" name="a6fe709ab9aa5a5e1192fc19e5e89e220"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>GetIsAnimated</b> ()</td></tr>
+<tr class="separator:a6fe709ab9aa5a5e1192fc19e5e89e220"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_class_drawable_object"><td colspan="2" onclick="javascript:dynsection.toggleInherit('pub_methods_class_drawable_object')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="class_drawable_object.html">DrawableObject</a></td></tr>
 <tr class="memitem:a86f155d814b5e9b34b7eb72ed4dd795d inherit pub_methods_class_drawable_object" id="r_a86f155d814b5e9b34b7eb72ed4dd795d"><td class="memItemLeft" align="right" valign="top">
 glm::mat4&#160;</td><td class="memItemRight" valign="bottom"><b>getTransform</b> ()</td></tr>
@@ -144,9 +182,27 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>SetPosition</b> (glm:
 <tr class="memitem:a526365f23ad585ededf384d7c3e870fd inherit pub_methods_class_drawable_object" id="r_a526365f23ad585ededf384d7c3e870fd"><td class="memItemLeft" align="right" valign="top">
 void&#160;</td><td class="memItemRight" valign="bottom"><b>Translate</b> (glm::vec3 moveDistance)</td></tr>
 <tr class="separator:a526365f23ad585ededf384d7c3e870fd inherit pub_methods_class_drawable_object"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaf0ad13274fdbf91e83d944eb456cfb9 inherit pub_methods_class_drawable_object" id="r_aaf0ad13274fdbf91e83d944eb456cfb9"><td class="memItemLeft" align="right" valign="top">
+glm::vec3&#160;</td><td class="memItemRight" valign="bottom"><b>getPos</b> ()</td></tr>
+<tr class="separator:aaf0ad13274fdbf91e83d944eb456cfb9 inherit pub_methods_class_drawable_object"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9e15c25583170c014d976d902ee8ddd7 inherit pub_methods_class_drawable_object" id="r_a9e15c25583170c014d976d902ee8ddd7"><td class="memItemLeft" align="right" valign="top">
+glm::vec3&#160;</td><td class="memItemRight" valign="bottom"><b>getSize</b> ()</td></tr>
+<tr class="separator:a9e15c25583170c014d976d902ee8ddd7 inherit pub_methods_class_drawable_object"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="inherited" name="inherited"></a>
-Additional Inherited Members</h2></td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pro-attribs" name="pro-attribs"></a>
+Protected Attributes</h2></td></tr>
+<tr class="memitem:a7c7a40c5558d9bf0eb87d525f62f5eb5" id="r_a7c7a40c5558d9bf0eb87d525f62f5eb5"><td class="memItemLeft" align="right" valign="top"><a id="a7c7a40c5558d9bf0eb87d525f62f5eb5" name="a7c7a40c5558d9bf0eb87d525f62f5eb5"></a>
+unsigned int&#160;</td><td class="memItemRight" valign="bottom"><b>texture</b></td></tr>
+<tr class="separator:a7c7a40c5558d9bf0eb87d525f62f5eb5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a648dde9400921f17ba27a85b7b2e80c3" id="r_a648dde9400921f17ba27a85b7b2e80c3"><td class="memItemLeft" align="right" valign="top"><a id="a648dde9400921f17ba27a85b7b2e80c3" name="a648dde9400921f17ba27a85b7b2e80c3"></a>
+<a class="el" href="class_sprite_renderer.html">SpriteRenderer</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>spriteRenderer</b></td></tr>
+<tr class="separator:a648dde9400921f17ba27a85b7b2e80c3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a313cccc4f6afd5b78beff27e72999233" id="r_a313cccc4f6afd5b78beff27e72999233"><td class="memItemLeft" align="right" valign="top"><a id="a313cccc4f6afd5b78beff27e72999233" name="a313cccc4f6afd5b78beff27e72999233"></a>
+<a class="el" href="struct_spritesheet_info.html">SpritesheetInfo</a>&#160;</td><td class="memItemRight" valign="bottom"><b>sheetInfo</b></td></tr>
+<tr class="separator:a313cccc4f6afd5b78beff27e72999233"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaded1222a9051ce2a5e765a0784a2b9a" id="r_aaded1222a9051ce2a5e765a0784a2b9a"><td class="memItemLeft" align="right" valign="top"><a id="aaded1222a9051ce2a5e765a0784a2b9a" name="aaded1222a9051ce2a5e765a0784a2b9a"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>isAnimated</b></td></tr>
+<tr class="separator:aaded1222a9051ce2a5e765a0784a2b9a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pro_attribs_class_drawable_object"><td colspan="2" onclick="javascript:dynsection.toggleInherit('pro_attribs_class_drawable_object')"><img src="closed.png" alt="-"/>&#160;Protected Attributes inherited from <a class="el" href="class_drawable_object.html">DrawableObject</a></td></tr>
 <tr class="memitem:a6aa0e674b5a140de7fd5afb95d7a680e inherit pro_attribs_class_drawable_object" id="r_a6aa0e674b5a140de7fd5afb95d7a680e"><td class="memItemLeft" align="right" valign="top">
 glm::vec3&#160;</td><td class="memItemRight" valign="bottom"><b>pos</b></td></tr>

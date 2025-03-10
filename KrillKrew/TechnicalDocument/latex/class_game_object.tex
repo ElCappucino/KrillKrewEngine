@@ -9,10 +9,22 @@ The class for creating game object.
 
 {\ttfamily \#include $<$Game\+Object.\+h$>$}
 
-Inheritance diagram for Game\+Object\+:\begin{figure}[H]
+
+
+Inheritance diagram for Game\+Object\+:\nopagebreak
+\begin{figure}[H]
 \begin{center}
 \leavevmode
-\includegraphics[height=2.000000cm]{class_game_object}
+\includegraphics[width=166pt]{class_game_object__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for Game\+Object\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=166pt]{class_game_object__coll__graph}
 \end{center}
 \end{figure}
 \doxysubsubsection*{Public Member Functions}
@@ -33,6 +45,10 @@ void {\bfseries Set\+Size} (float sizeX, float sizeY)
 void {\bfseries Set\+Position} (glm\+::vec3 new\+Position)
 \item 
 void {\bfseries Translate} (glm\+::vec3 move\+Distance)
+\item 
+glm\+::vec3 {\bfseries get\+Pos} ()
+\item 
+glm\+::vec3 {\bfseries get\+Size} ()
 \end{DoxyCompactItemize}
 \doxysubsubsection*{Additional Inherited Members}
 \doxysubsection*{Protected Attributes inherited from \mbox{\hyperlink{class_drawable_object}{Drawable\+Object}}}

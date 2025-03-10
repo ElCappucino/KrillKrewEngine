@@ -10,17 +10,15 @@
 #include "glm.hpp"
 #include "DrawableObject.h"
 #include "InfoStruct.h"
-
-
-using namespace std;
-
+#include "gtc/matrix_transform.hpp"
+#include "gtc/type_ptr.hpp"
+#include "SDL_surface.h"
+#include "SDL_image.h"
 
 /// @brief This class is for rendering any drawable object
 /// @see DrawableObject
 class GLRenderer
 {
-	
-
 protected:
 	int winWidth;
 	int winHeight;
@@ -37,16 +35,16 @@ protected:
 	int gPos2DLocation;
 	int gTex2DLocation;
 	void PrintProgramLog(GLuint program);
-	bool Initialize(string vertexShaderFile, string fragmentShaderFile);
+	bool Initialize(std::string vertexShaderFile, std::string fragmentShaderFile);
 	Shader *vertexShader;
 	Shader *fragmentShader;
-	map <string, MeshVbo*> shapes;
+	std::map <std::string, MeshVbo*> shapes;
 	void SetMeshAttribId(MeshVbo * shape);
 
 public:
 	/// @brief The function for rendering all drawable object in object list.
 	/// @param objList describes the vector list of DrawableObject.
-	void Render(vector <DrawableObject*> & objList);
+	void Render(std::vector <DrawableObject*> & objList);
 	/// @brief The constructor. Using for setup the camera projection value.
 	/// @param w describes the width of window
 	/// @param h descrives the height of window
@@ -55,15 +53,15 @@ public:
 	/// @param vertexShaderFile describes the name of vertex shader file.
 	/// @param fragmentShaderFile describes the name of fragment shader file.
 	/// @return It will return false if it can't initialize GLEW or OpenGL. return true if it's work normally.
-	bool InitGL(string vertexShaderFile, string fragmentShaderFile);
+	bool InitGL(std::string vertexShaderFile, std::string fragmentShaderFile);
 	/// @brief The function for adding the mesh information.
 	/// @param name describes the mesh name/key for STL map list.
 	/// @param shape describes the Vbo information of the mesh.
-	void AddMesh(string name, MeshVbo* shape);
+	void AddMesh(std::string name, MeshVbo* shape);
 	/// @brief The getter function for the saved mesh Vbo.
 	/// @param name describes the name of mesh you want to get.
 	/// @return It will return the pointer to the mesh Vbo information.
-	MeshVbo * GetMesh(string name);
+	MeshVbo * GetMesh(std::string name);
 	/// @brief The getter function for the orthographic value.
 	/// @return It will return the value as left, right, bottom, top, as a struct.
 	OrthographicValue GetOrthovalue();
@@ -109,5 +107,5 @@ public:
 	/// @brief The function for loading texture data
 	/// @param path describes the file path of the texture file.
 	/// @return It will return the array of integer that store texture name;
-	GLuint LoadTexture(string path);
+	GLuint LoadTexture(std::string path);
 };

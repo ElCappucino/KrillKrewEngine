@@ -7,25 +7,24 @@
 \DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ <GL\(\backslash\)glew.h>}}
 \DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ <string>}}
 \DoxyCodeLine{00005\ }
-\DoxyCodeLine{00006\ \textcolor{keyword}{using\ namespace\ }std;}
-\DoxyCodeLine{00007\ }
-\DoxyCodeLine{00009\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_mesh_vbo}{MeshVbo}}\ \{}
-\DoxyCodeLine{00010\ \textcolor{keyword}{protected}:}
-\DoxyCodeLine{00011\ \ \ \ \ GLuint\ posVboId\ =\ -\/1;}
-\DoxyCodeLine{00012\ \ \ \ \ GLuint\ texVboId\ =\ -\/1;}
-\DoxyCodeLine{00013\ \ \ \ \ GLuint\ posAttribId\ =\ -\/1;}
-\DoxyCodeLine{00014\ \ \ \ \ GLuint\ texAttribId\ =\ -\/1;}
-\DoxyCodeLine{00015\ }
-\DoxyCodeLine{00016\ \textcolor{keyword}{public}:}
-\DoxyCodeLine{00017\ }
-\DoxyCodeLine{00018\ \ \ \ \ \mbox{\hyperlink{class_mesh_vbo}{MeshVbo}}();}
-\DoxyCodeLine{00019\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ LoadData()\ =\ 0;}
-\DoxyCodeLine{00020\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{string}\ GetMeshName()\ =\ 0;}
-\DoxyCodeLine{00021\ \ \ \ \ GLuint\ GetPosId();}
-\DoxyCodeLine{00022\ \ \ \ \ GLuint\ GetTexId();}
-\DoxyCodeLine{00023\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ Render()\ =\ 0;}
-\DoxyCodeLine{00024\ \ \ \ \ \textcolor{keywordtype}{void}\ SetAttribId(GLuint\ posId,\ GLuint\ texId);}
-\DoxyCodeLine{00025\ }
-\DoxyCodeLine{00026\ \};}
+\DoxyCodeLine{00006\ }
+\DoxyCodeLine{00008\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_mesh_vbo}{MeshVbo}}\ \{}
+\DoxyCodeLine{00009\ \textcolor{keyword}{protected}:}
+\DoxyCodeLine{00010\ \ \ \ \ GLuint\ posVboId\ =\ -\/1;}
+\DoxyCodeLine{00011\ \ \ \ \ GLuint\ texVboId\ =\ -\/1;}
+\DoxyCodeLine{00012\ \ \ \ \ GLuint\ posAttribId\ =\ -\/1;}
+\DoxyCodeLine{00013\ \ \ \ \ GLuint\ texAttribId\ =\ -\/1;}
+\DoxyCodeLine{00014\ }
+\DoxyCodeLine{00015\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00016\ }
+\DoxyCodeLine{00017\ \ \ \ \ \mbox{\hyperlink{class_mesh_vbo}{MeshVbo}}();}
+\DoxyCodeLine{00018\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ LoadData()\ =\ 0;}
+\DoxyCodeLine{00019\ \ \ \ \ \textcolor{keyword}{virtual}\ std::string\ GetMeshName()\ =\ 0;}
+\DoxyCodeLine{00020\ \ \ \ \ GLuint\ GetPosId();}
+\DoxyCodeLine{00021\ \ \ \ \ GLuint\ GetTexId();}
+\DoxyCodeLine{00022\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ Render()\ =\ 0;}
+\DoxyCodeLine{00023\ \ \ \ \ \textcolor{keywordtype}{void}\ SetAttribId(GLuint\ posId,\ GLuint\ texId);}
+\DoxyCodeLine{00024\ }
+\DoxyCodeLine{00025\ \};}
 
 \end{DoxyCode}

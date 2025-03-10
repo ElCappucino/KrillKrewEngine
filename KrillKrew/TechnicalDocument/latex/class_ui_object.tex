@@ -1,0 +1,109 @@
+\doxysection{Ui\+Object Class Reference}
+\hypertarget{class_ui_object}{}\label{class_ui_object}\index{UiObject@{UiObject}}
+
+
+The class for creating object that render using texture.  
+
+
+
+
+{\ttfamily \#include $<$Ui\+Object.\+h$>$}
+
+
+
+Inheritance diagram for Ui\+Object\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=166pt]{class_ui_object__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for Ui\+Object\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_ui_object__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_ui_object_a11df6a77a1cc3a4bcf09fa25bcefac7d}\label{class_ui_object_a11df6a77a1cc3a4bcf09fa25bcefac7d} 
+void {\bfseries Set\+Texture} (std\+::string path)
+\item 
+\Hypertarget{class_ui_object_a497a80a5b50a05d43ae0e9c0fc24ca65}\label{class_ui_object_a497a80a5b50a05d43ae0e9c0fc24ca65} 
+void {\bfseries Set\+Sheet\+Info} (float row, float column, float spritewidth, float spriteheight, float sheetwidth, float sheetheight)
+\item 
+void \mbox{\hyperlink{class_ui_object_a9606ed4cb7f6dce56e2333d88da275b8}{Render}} (glm\+::mat4 global\+Model\+Transform)
+\item 
+\Hypertarget{class_ui_object_a89ddb3d4b1eaa9b96beff107d3876809}\label{class_ui_object_a89ddb3d4b1eaa9b96beff107d3876809} 
+void {\bfseries set\+Num\+Owner} (int Num)
+\item 
+\Hypertarget{class_ui_object_aed6a1446f7ee2e3e3785417fdcbddf88}\label{class_ui_object_aed6a1446f7ee2e3e3785417fdcbddf88} 
+int {\bfseries get\+Num\+Owner} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{class_image_object}{Image\+Object}}}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_sprite_renderer}{Sprite\+Renderer}} \texorpdfstring{$\ast$}{*} {\bfseries Get\+Sprite\+Renderer} ()
+\item 
+void {\bfseries Set\+Sprite\+Info} (\mbox{\hyperlink{struct_spritesheet_info}{Spritesheet\+Info}} info)
+\item 
+void {\bfseries Set\+Texture} (std\+::string path)
+\item 
+void {\bfseries Set\+Is\+Animated} (bool value)
+\item 
+bool {\bfseries Get\+Is\+Animated} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{class_drawable_object}{Drawable\+Object}}}
+\begin{DoxyCompactItemize}
+\item 
+glm\+::mat4 {\bfseries get\+Transform} ()
+\item 
+void {\bfseries Set\+Size} (float sizeX, float sizeY)
+\item 
+void {\bfseries Set\+Position} (glm\+::vec3 new\+Position)
+\item 
+void {\bfseries Translate} (glm\+::vec3 move\+Distance)
+\item 
+glm\+::vec3 {\bfseries get\+Pos} ()
+\item 
+glm\+::vec3 {\bfseries get\+Size} ()
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Additional Inherited Members}
+\doxysubsection*{Protected Attributes inherited from \mbox{\hyperlink{class_image_object}{Image\+Object}}}
+\begin{DoxyCompactItemize}
+\item 
+unsigned int {\bfseries texture}
+\item 
+\mbox{\hyperlink{class_sprite_renderer}{Sprite\+Renderer}} \texorpdfstring{$\ast$}{*} {\bfseries sprite\+Renderer}
+\item 
+\mbox{\hyperlink{struct_spritesheet_info}{Spritesheet\+Info}} {\bfseries sheet\+Info}
+\item 
+bool {\bfseries is\+Animated}
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Attributes inherited from \mbox{\hyperlink{class_drawable_object}{Drawable\+Object}}}
+\begin{DoxyCompactItemize}
+\item 
+glm\+::vec3 {\bfseries pos}
+\item 
+glm\+::vec3 {\bfseries size}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+The class for creating object that render using texture. 
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_ui_object_a9606ed4cb7f6dce56e2333d88da275b8}\index{UiObject@{UiObject}!Render@{Render}}
+\index{Render@{Render}!UiObject@{UiObject}}
+\doxysubsubsection{\texorpdfstring{Render()}{Render()}}
+{\footnotesize\ttfamily \label{class_ui_object_a9606ed4cb7f6dce56e2333d88da275b8} 
+void Ui\+Object\+::\+Render (\begin{DoxyParamCaption}\item[{glm\+::mat4}]{global\+Model\+Transform}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_image_object}{Image\+Object}}.
+

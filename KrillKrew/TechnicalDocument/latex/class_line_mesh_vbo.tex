@@ -1,0 +1,101 @@
+\doxysection{Line\+Mesh\+Vbo Class Reference}
+\hypertarget{class_line_mesh_vbo}{}\label{class_line_mesh_vbo}\index{LineMeshVbo@{LineMeshVbo}}
+
+
+The class for store the Vbo data of square mesh.  
+
+
+
+
+{\ttfamily \#include $<$Line\+Mesh\+Vbo.\+h$>$}
+
+
+
+Inheritance diagram for Line\+Mesh\+Vbo\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=155pt]{class_line_mesh_vbo__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for Line\+Mesh\+Vbo\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=155pt]{class_line_mesh_vbo__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+virtual std\+::string \mbox{\hyperlink{class_line_mesh_vbo_ad302ce03d3b0da5a9aa8d3530fd2e9e5}{Get\+Mesh\+Name}} ()
+\item 
+virtual void \mbox{\hyperlink{class_line_mesh_vbo_a4c5652a98db7670ec628d5528af8f594}{Render}} ()
+\item 
+virtual void \mbox{\hyperlink{class_line_mesh_vbo_a8bb70ac98d49f86f1c3397e3e04d725e}{Load\+Data}} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{class_mesh_vbo}{Mesh\+Vbo}}}
+\begin{DoxyCompactItemize}
+\item 
+GLuint {\bfseries Get\+Pos\+Id} ()
+\item 
+GLuint {\bfseries Get\+Tex\+Id} ()
+\item 
+void {\bfseries Set\+Attrib\+Id} (GLuint pos\+Id, GLuint tex\+Id)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Static Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_line_mesh_vbo_a253f67a39cb16db553d1c684486bd94a}\label{class_line_mesh_vbo_a253f67a39cb16db553d1c684486bd94a} 
+static std\+::string const {\bfseries MESH\+\_\+\+NAME} = "{}line"{}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Additional Inherited Members}
+\doxysubsection*{Protected Attributes inherited from \mbox{\hyperlink{class_mesh_vbo}{Mesh\+Vbo}}}
+\begin{DoxyCompactItemize}
+\item 
+GLuint {\bfseries pos\+Vbo\+Id} = -\/1
+\item 
+GLuint {\bfseries tex\+Vbo\+Id} = -\/1
+\item 
+GLuint {\bfseries pos\+Attrib\+Id} = -\/1
+\item 
+GLuint {\bfseries tex\+Attrib\+Id} = -\/1
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+The class for store the Vbo data of square mesh. 
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_line_mesh_vbo_ad302ce03d3b0da5a9aa8d3530fd2e9e5}\index{LineMeshVbo@{LineMeshVbo}!GetMeshName@{GetMeshName}}
+\index{GetMeshName@{GetMeshName}!LineMeshVbo@{LineMeshVbo}}
+\doxysubsubsection{\texorpdfstring{GetMeshName()}{GetMeshName()}}
+{\footnotesize\ttfamily \label{class_line_mesh_vbo_ad302ce03d3b0da5a9aa8d3530fd2e9e5} 
+std\+::string Line\+Mesh\+Vbo\+::\+Get\+Mesh\+Name (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_mesh_vbo}{Mesh\+Vbo}}.
+
+\Hypertarget{class_line_mesh_vbo_a8bb70ac98d49f86f1c3397e3e04d725e}\index{LineMeshVbo@{LineMeshVbo}!LoadData@{LoadData}}
+\index{LoadData@{LoadData}!LineMeshVbo@{LineMeshVbo}}
+\doxysubsubsection{\texorpdfstring{LoadData()}{LoadData()}}
+{\footnotesize\ttfamily \label{class_line_mesh_vbo_a8bb70ac98d49f86f1c3397e3e04d725e} 
+void Line\+Mesh\+Vbo\+::\+Load\+Data (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_mesh_vbo}{Mesh\+Vbo}}.
+
+\Hypertarget{class_line_mesh_vbo_a4c5652a98db7670ec628d5528af8f594}\index{LineMeshVbo@{LineMeshVbo}!Render@{Render}}
+\index{Render@{Render}!LineMeshVbo@{LineMeshVbo}}
+\doxysubsubsection{\texorpdfstring{Render()}{Render()}}
+{\footnotesize\ttfamily \label{class_line_mesh_vbo_a4c5652a98db7670ec628d5528af8f594} 
+void Line\+Mesh\+Vbo\+::\+Render (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_mesh_vbo}{Mesh\+Vbo}}.
+

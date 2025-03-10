@@ -9,19 +9,43 @@ The class for creating object that render using texture.
 
 {\ttfamily \#include $<$Image\+Object.\+h$>$}
 
-Inheritance diagram for Image\+Object\+:\begin{figure}[H]
+
+
+Inheritance diagram for Image\+Object\+:\nopagebreak
+\begin{figure}[H]
 \begin{center}
 \leavevmode
-\includegraphics[height=2.000000cm]{class_image_object}
+\includegraphics[width=338pt]{class_image_object__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for Image\+Object\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_image_object__coll__graph}
 \end{center}
 \end{figure}
 \doxysubsubsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-\Hypertarget{class_image_object_af6068f8a9b06233a8df8cded2e651c2f}\label{class_image_object_af6068f8a9b06233a8df8cded2e651c2f} 
-void {\bfseries Set\+Texture} (string path)
+\Hypertarget{class_image_object_a73ba3fab25806f5b14e790c7e7ddfb4d}\label{class_image_object_a73ba3fab25806f5b14e790c7e7ddfb4d} 
+\mbox{\hyperlink{class_sprite_renderer}{Sprite\+Renderer}} \texorpdfstring{$\ast$}{*} {\bfseries Get\+Sprite\+Renderer} ()
+\item 
+\Hypertarget{class_image_object_acc59541e2398cb6fa246543567aa85fa}\label{class_image_object_acc59541e2398cb6fa246543567aa85fa} 
+void {\bfseries Set\+Sprite\+Info} (\mbox{\hyperlink{struct_spritesheet_info}{Spritesheet\+Info}} info)
+\item 
+\Hypertarget{class_image_object_aef7797a66d0807f55a83c690f4a8b4f0}\label{class_image_object_aef7797a66d0807f55a83c690f4a8b4f0} 
+void {\bfseries Set\+Texture} (std\+::string path)
 \item 
 void \mbox{\hyperlink{class_image_object_a4e1a150373ad2197c807538975c5c9ee}{Render}} (glm\+::mat4 global\+Model\+Transform)
+\item 
+\Hypertarget{class_image_object_ad13bc942843b39c1ef2f911dd01e3501}\label{class_image_object_ad13bc942843b39c1ef2f911dd01e3501} 
+void {\bfseries Set\+Is\+Animated} (bool value)
+\item 
+\Hypertarget{class_image_object_a6fe709ab9aa5a5e1192fc19e5e89e220}\label{class_image_object_a6fe709ab9aa5a5e1192fc19e5e89e220} 
+bool {\bfseries Get\+Is\+Animated} ()
 \end{DoxyCompactItemize}
 \doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{class_drawable_object}{Drawable\+Object}}}
 \begin{DoxyCompactItemize}
@@ -33,8 +57,26 @@ void {\bfseries Set\+Size} (float sizeX, float sizeY)
 void {\bfseries Set\+Position} (glm\+::vec3 new\+Position)
 \item 
 void {\bfseries Translate} (glm\+::vec3 move\+Distance)
+\item 
+glm\+::vec3 {\bfseries get\+Pos} ()
+\item 
+glm\+::vec3 {\bfseries get\+Size} ()
 \end{DoxyCompactItemize}
-\doxysubsubsection*{Additional Inherited Members}
+\doxysubsubsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_image_object_a7c7a40c5558d9bf0eb87d525f62f5eb5}\label{class_image_object_a7c7a40c5558d9bf0eb87d525f62f5eb5} 
+unsigned int {\bfseries texture}
+\item 
+\Hypertarget{class_image_object_a648dde9400921f17ba27a85b7b2e80c3}\label{class_image_object_a648dde9400921f17ba27a85b7b2e80c3} 
+\mbox{\hyperlink{class_sprite_renderer}{Sprite\+Renderer}} \texorpdfstring{$\ast$}{*} {\bfseries sprite\+Renderer}
+\item 
+\Hypertarget{class_image_object_a313cccc4f6afd5b78beff27e72999233}\label{class_image_object_a313cccc4f6afd5b78beff27e72999233} 
+\mbox{\hyperlink{struct_spritesheet_info}{Spritesheet\+Info}} {\bfseries sheet\+Info}
+\item 
+\Hypertarget{class_image_object_aaded1222a9051ce2a5e765a0784a2b9a}\label{class_image_object_aaded1222a9051ce2a5e765a0784a2b9a} 
+bool {\bfseries is\+Animated}
+\end{DoxyCompactItemize}
 \doxysubsection*{Protected Attributes inherited from \mbox{\hyperlink{class_drawable_object}{Drawable\+Object}}}
 \begin{DoxyCompactItemize}
 \item 

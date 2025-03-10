@@ -8,16 +8,29 @@
 \DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ "{}gtc/matrix\_transform.hpp"{}}}
 \DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ "{}gtc/type\_ptr.hpp"{}}}
 \DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ <string>}}
-\DoxyCodeLine{00007\ }
-\DoxyCodeLine{00009\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_image_object}{ImageObject}}\ :\textcolor{keyword}{public}\ \mbox{\hyperlink{class_drawable_object}{DrawableObject}}}
-\DoxyCodeLine{00010\ \{}
-\DoxyCodeLine{00011\ \ \ \ \ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ texture;}
-\DoxyCodeLine{00012\ }
-\DoxyCodeLine{00013\ \textcolor{keyword}{public}:}
-\DoxyCodeLine{00014\ \ \ \ \ \mbox{\hyperlink{class_image_object}{ImageObject}}();}
-\DoxyCodeLine{00015\ \ \ \ \ \mbox{\hyperlink{class_image_object}{\string~ImageObject}}();}
-\DoxyCodeLine{00016\ \ \ \ \ \textcolor{keywordtype}{void}\ SetTexture(\textcolor{keywordtype}{string}\ path);}
-\DoxyCodeLine{00017\ \ \ \ \ \textcolor{keywordtype}{void}\ Render(glm::mat4\ globalModelTransform);}
-\DoxyCodeLine{00018\ \};}
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ "{}InfoStruct.h"{}}}
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#include\ "{}SpriteRenderer.h"{}}}
+\DoxyCodeLine{00009\ }
+\DoxyCodeLine{00011\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_image_object}{ImageObject}}\ :\textcolor{keyword}{public}\ \mbox{\hyperlink{class_drawable_object}{DrawableObject}}}
+\DoxyCodeLine{00012\ \{}
+\DoxyCodeLine{00013\ }
+\DoxyCodeLine{00014\ \textcolor{keyword}{protected}:}
+\DoxyCodeLine{00015\ \ \ \ \ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ texture;}
+\DoxyCodeLine{00016\ \ \ \ \ \mbox{\hyperlink{class_sprite_renderer}{SpriteRenderer}}*\ spriteRenderer;}
+\DoxyCodeLine{00017\ \ \ \ \ \mbox{\hyperlink{struct_spritesheet_info}{SpritesheetInfo}}\ sheetInfo;}
+\DoxyCodeLine{00018\ \ \ \ \ \textcolor{keywordtype}{bool}\ isAnimated;}
+\DoxyCodeLine{00019\ }
+\DoxyCodeLine{00020\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00021\ \ \ \ \ \mbox{\hyperlink{class_image_object}{ImageObject}}();}
+\DoxyCodeLine{00022\ \ \ \ \ \mbox{\hyperlink{class_image_object}{\string~ImageObject}}();}
+\DoxyCodeLine{00023\ \ \ \ \ \mbox{\hyperlink{class_sprite_renderer}{SpriteRenderer}}*\ GetSpriteRenderer();}
+\DoxyCodeLine{00024\ \ \ \ \ \textcolor{keywordtype}{void}\ SetSpriteInfo(\mbox{\hyperlink{struct_spritesheet_info}{SpritesheetInfo}}\ info);}
+\DoxyCodeLine{00025\ \ \ \ \ \textcolor{keywordtype}{void}\ SetTexture(std::string\ path);}
+\DoxyCodeLine{00026\ \ \ \ \ \textcolor{keywordtype}{void}\ Render(glm::mat4\ globalModelTransform);}
+\DoxyCodeLine{00027\ }
+\DoxyCodeLine{00028\ \ \ \ \ \textcolor{keywordtype}{void}\ SetIsAnimated(\textcolor{keywordtype}{bool}\ value);}
+\DoxyCodeLine{00029\ \ \ \ \ \textcolor{keywordtype}{bool}\ GetIsAnimated();}
+\DoxyCodeLine{00030\ }
+\DoxyCodeLine{00031\ \};}
 
 \end{DoxyCode}

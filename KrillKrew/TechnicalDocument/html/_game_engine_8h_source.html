@@ -109,40 +109,39 @@ $(function(){initNavTree('_game_engine_8h_source.html',''); initResizable(true);
 <div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="preprocessor">#pragma once</span></div>
 <div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span> </div>
 <div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span><span class="preprocessor">#include &lt;vector&gt;</span></div>
-<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="preprocessor">#include &quot;DrawableObject.h&quot;</span></div>
-<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="preprocessor">#include &quot;GLRenderer.h&quot;</span></div>
-<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="preprocessor">#include &quot;GameStateController.h&quot;</span></div>
-<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span> </div>
+<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="preprocessor">#include &lt;cmath&gt;</span></div>
+<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="preprocessor">#include &quot;DrawableObject.h&quot;</span></div>
+<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="preprocessor">#include &quot;GLRenderer.h&quot;</span></div>
+<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span><span class="preprocessor">#include &quot;GameStateController.h&quot;</span></div>
 <div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span> </div>
-<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span><span class="keyword">using namespace </span>std;</div>
-<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span> </div>
-<div class="foldopen" id="foldopen00012" data-start="{" data-end="};">
-<div class="line"><a id="l00012" name="l00012"></a><span class="lineno"><a class="line" href="class_game_engine.html">   12</a></span><span class="keyword">class </span><a class="code hl_class" href="class_game_engine.html">GameEngine</a></div>
-<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span>{</div>
-<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span>    <span class="keyword">static</span> <a class="code hl_class" href="class_game_engine.html">GameEngine</a>* instance;</div>
-<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span>    <span class="keywordtype">int</span> winWidth, winHeight;</div>
-<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span>    </div>
-<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span>    <a class="code hl_class" href="class_g_l_renderer.html">GLRenderer</a> *renderer;</div>
-<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span>    <a class="code hl_class" href="class_game_state_controller.html">GameStateController</a>* stateController;</div>
-<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span>    <a class="code hl_class" href="class_game_engine.html">GameEngine</a>();</div>
-<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span><span class="keyword">public</span>:</div>
-<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span>    <span class="keyword">static</span> <a class="code hl_class" href="class_game_engine.html">GameEngine</a>* GetInstance();</div>
-<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span>    <a class="code hl_class" href="class_g_l_renderer.html">GLRenderer</a> * GetRenderer();</div>
-<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span>    <a class="code hl_class" href="class_game_state_controller.html">GameStateController</a>* GetStateController();</div>
-<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span>    <span class="keywordtype">void</span> Init(<span class="keywordtype">int</span> width, <span class="keywordtype">int</span> height);</div>
-<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span>    <span class="keywordtype">void</span> SetDrawArea(<span class="keywordtype">float</span> left, <span class="keywordtype">float</span> right, <span class="keywordtype">float</span> bottom, <span class="keywordtype">float</span> top);</div>
-<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span>    <span class="keywordtype">void</span> SetBackgroundColor(<span class="keywordtype">float</span> r, <span class="keywordtype">float</span> g, <span class="keywordtype">float</span> b);</div>
-<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span>    <span class="keywordtype">void</span> AddMesh(<span class="keywordtype">string</span> name, <a class="code hl_class" href="class_mesh_vbo.html">MeshVbo</a>* mesh);</div>
-<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>    <span class="keywordtype">void</span> ClearMesh();</div>
-<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span>    <span class="keywordtype">void</span> Render(vector&lt;DrawableObject*&gt; renderObjects);</div>
-<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span>    <span class="keywordtype">int</span> GetWindowWidth();</div>
-<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span>    <span class="keywordtype">int</span> GetWindowHeight();</div>
-<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span>};</div>
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span> </div>
+<div class="foldopen" id="foldopen00011" data-start="{" data-end="};">
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno"><a class="line" href="class_game_engine.html">   11</a></span><span class="keyword">class </span><a class="code hl_class" href="class_game_engine.html">GameEngine</a></div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span>{</div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span>    <span class="keyword">static</span> <a class="code hl_class" href="class_game_engine.html">GameEngine</a>* instance;</div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span>    <span class="keywordtype">int</span> winWidth, winHeight;</div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span>    </div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span>    <a class="code hl_class" href="class_g_l_renderer.html">GLRenderer</a> *renderer;</div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span>    <a class="code hl_class" href="class_game_state_controller.html">GameStateController</a>* stateController;</div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span>    <a class="code hl_class" href="class_game_engine.html">GameEngine</a>();</div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span><span class="keyword">public</span>:</div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span>    <span class="keyword">static</span> <a class="code hl_class" href="class_game_engine.html">GameEngine</a>* GetInstance();</div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span>    <a class="code hl_class" href="class_g_l_renderer.html">GLRenderer</a> * GetRenderer();</div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span>    <a class="code hl_class" href="class_game_state_controller.html">GameStateController</a>* GetStateController();</div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span>    <span class="keywordtype">void</span> Init(<span class="keywordtype">int</span> width, <span class="keywordtype">int</span> height);</div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span>    <span class="keywordtype">void</span> SetDrawArea(<span class="keywordtype">float</span> left, <span class="keywordtype">float</span> right, <span class="keywordtype">float</span> bottom, <span class="keywordtype">float</span> top);</div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span>    <span class="keywordtype">void</span> SetBackgroundColor(<span class="keywordtype">float</span> r, <span class="keywordtype">float</span> g, <span class="keywordtype">float</span> b);</div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span>    <span class="keywordtype">void</span> AddMesh(std::string name, <a class="code hl_class" href="class_mesh_vbo.html">MeshVbo</a>* mesh);</div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span>    <span class="keywordtype">void</span> ClearMesh();</div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>    <span class="keywordtype">void</span> Render(std::vector&lt;DrawableObject*&gt; renderObjects);</div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span>    <span class="keywordtype">int</span> GetWindowWidth();</div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span>    <span class="keywordtype">int</span> GetWindowHeight();</div>
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span>};</div>
 </div>
-<div class="ttc" id="aclass_g_l_renderer_html"><div class="ttname"><a href="class_g_l_renderer.html">GLRenderer</a></div><div class="ttdoc">This class is for rendering any drawable object.</div><div class="ttdef"><b>Definition</b> GLRenderer.h:20</div></div>
-<div class="ttc" id="aclass_game_engine_html"><div class="ttname"><a href="class_game_engine.html">GameEngine</a></div><div class="ttdoc">The class for creating game engine instance to control the renderer and game state.</div><div class="ttdef"><b>Definition</b> GameEngine.h:13</div></div>
+<div class="ttc" id="aclass_g_l_renderer_html"><div class="ttname"><a href="class_g_l_renderer.html">GLRenderer</a></div><div class="ttdoc">This class is for rendering any drawable object.</div><div class="ttdef"><b>Definition</b> GLRenderer.h:17</div></div>
+<div class="ttc" id="aclass_game_engine_html"><div class="ttname"><a href="class_game_engine.html">GameEngine</a></div><div class="ttdoc">The class for creating game engine instance to control the renderer and game state.</div><div class="ttdef"><b>Definition</b> GameEngine.h:12</div></div>
 <div class="ttc" id="aclass_game_state_controller_html"><div class="ttname"><a href="class_game_state_controller.html">GameStateController</a></div><div class="ttdoc">The class for setup the game state and control during scene.</div><div class="ttdef"><b>Definition</b> GameStateController.h:9</div></div>
-<div class="ttc" id="aclass_mesh_vbo_html"><div class="ttname"><a href="class_mesh_vbo.html">MeshVbo</a></div><div class="ttdoc">The class for store the Vbo data.</div><div class="ttdef"><b>Definition</b> MeshVbo.h:9</div></div>
+<div class="ttc" id="aclass_mesh_vbo_html"><div class="ttname"><a href="class_mesh_vbo.html">MeshVbo</a></div><div class="ttdoc">The class for store the Vbo data.</div><div class="ttdef"><b>Definition</b> MeshVbo.h:8</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
