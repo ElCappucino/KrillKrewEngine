@@ -1268,8 +1268,9 @@ void LevelShowcase::GroundTileRefactor()
 			}
 			else if (flag == 0)
 			{
-				tilesList[i][j]->GetCollider()->GetGizmos()->SetIsActive(false);
+				// tilesList[i][j]->GetCollider()->GetGizmos()->SetIsActive(false);
 				tilesList[i][j]->DisableOverlaySprite();
+
 				if (currentGroundTile[i - 1][j] == 0)
 				{
 					// blank

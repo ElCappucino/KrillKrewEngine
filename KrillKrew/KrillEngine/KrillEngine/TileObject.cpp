@@ -224,7 +224,10 @@ void TileObject::SetUpdateTileset(std::array<std::array<int, MAP_WIDTH>, MAP_HEI
 
 void TileObject::DisableOverlaySprite()
 {
+	this->isBroke = true;
+	this->isBreakable = false;
 	this->crackOverlay->SetIsActive(false);
+	this->GetCollider()->GetGizmos()->SetIsActive(false);
 }
 void TileObject::CheckIfBreak()
 {
