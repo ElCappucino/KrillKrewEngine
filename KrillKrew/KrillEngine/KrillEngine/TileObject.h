@@ -4,6 +4,7 @@
 #include "gtc/type_ptr.hpp"
 #include <string>
 #include <array>
+#include <queue>
 
 #include "SpriteRenderer.h"
 #include "Collider.h"
@@ -31,7 +32,7 @@ private:
 	std::array<std::array<int, MAP_WIDTH>, MAP_HEIGHT> *updateTile;
 
 	ImageObject* crackOverlay;
-	
+	Level* currentLevel;
 
 protected:
 
@@ -60,6 +61,7 @@ public:
 	void UpdateTileArray(int flag);
 	void CheckIfBreak();
 	void GotHit();
+	void DisableOverlaySprite();
 
 	virtual Collider* GetCollider();
 	ImageObject* GetOverlaySprite();

@@ -1251,10 +1251,10 @@ void LevelShowcase::GroundTileRefactor()
 				continue;
 			}
 
-			groundTile[i][j] = tilesList[i][j]->GetIsBroke() ? 0 : 1;
+			// currentGroundTile[i][j] = tilesList[i][j]->GetIsBroke() ? 0 : 1;
 
 
-			int flag = groundTile[i][j];
+			int flag = currentGroundTile[i][j];
 
 
 			std::pair<int, int> pos;
@@ -1268,25 +1268,27 @@ void LevelShowcase::GroundTileRefactor()
 			}
 			else if (flag == 0)
 			{
-				if (groundTile[i - 1][j] == 0)
+				tilesList[i][j]->GetCollider()->GetGizmos()->SetIsActive(false);
+				tilesList[i][j]->DisableOverlaySprite();
+				if (currentGroundTile[i - 1][j] == 0)
 				{
 					// blank
 					pos = { 99, 99 };
 				}
 				else
 				{
-
+					
 					int upperPos = i - 1;
 
 					std::bitset<8> surround;
-					surround[0] = groundTile[upperPos - 1][j];
-					surround[1] = groundTile[upperPos - 1][j + 1];
-					surround[2] = groundTile[upperPos][j + 1];
-					surround[3] = groundTile[upperPos + 1][j + 1];
-					surround[4] = groundTile[upperPos + 1][j];
-					surround[5] = groundTile[upperPos + 1][j - 1];
-					surround[6] = groundTile[upperPos][j - 1];
-					surround[7] = groundTile[upperPos - 1][j - 1];
+					surround[0] = currentGroundTile[upperPos - 1][j];
+					surround[1] = currentGroundTile[upperPos - 1][j + 1];
+					surround[2] = currentGroundTile[upperPos][j + 1];
+					surround[3] = currentGroundTile[upperPos + 1][j + 1];
+					surround[4] = currentGroundTile[upperPos + 1][j];
+					surround[5] = currentGroundTile[upperPos + 1][j - 1];
+					surround[6] = currentGroundTile[upperPos][j - 1];
+					surround[7] = currentGroundTile[upperPos - 1][j - 1];
 
 					if (!(surround[0] && surround[2])) { surround[1] = 0; }
 					if (!(surround[2] && surround[4])) { surround[3] = 0; }
@@ -1314,14 +1316,14 @@ void LevelShowcase::GroundTileRefactor()
 			else
 			{
 				std::bitset<8> surround;
-				surround[0] = groundTile[i - 1][j];
-				surround[1] = groundTile[i - 1][j + 1];
-				surround[2] = groundTile[i][j + 1];
-				surround[3] = groundTile[i + 1][j + 1];
-				surround[4] = groundTile[i + 1][j];
-				surround[5] = groundTile[i + 1][j - 1];
-				surround[6] = groundTile[i][j - 1];
-				surround[7] = groundTile[i - 1][j - 1];
+				surround[0] = currentGroundTile[i - 1][j];
+				surround[1] = currentGroundTile[i - 1][j + 1];
+				surround[2] = currentGroundTile[i][j + 1];
+				surround[3] = currentGroundTile[i + 1][j + 1];
+				surround[4] = currentGroundTile[i + 1][j];
+				surround[5] = currentGroundTile[i + 1][j - 1];
+				surround[6] = currentGroundTile[i][j - 1];
+				surround[7] = currentGroundTile[i - 1][j - 1];
 
 				if (!(surround[0] && surround[2])) { surround[1] = 0; }
 				if (!(surround[2] && surround[4])) { surround[3] = 0; }
