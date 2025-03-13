@@ -47,6 +47,9 @@ void GameStateController::LoadLevel()
 		case GameState::GS_LEVELIMGUI:
 			currentLevel = new LevelImGui();
 			break;
+		case GameState::GS_LEVELSELECTABILITY:
+			currentLevel = new LevelSelectAbility();
+			break;
 		
 		default:
 			std::cout << "gGameStateCurr : invalid state!!" << std::endl;

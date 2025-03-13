@@ -37,6 +37,7 @@
     <ClInclude Include="LevelImGui.h" />
     <ClInclude Include="LevelLoading.h" />
     <ClInclude Include="LevelMapTest.h" />
+    <ClInclude Include="LevelSelectAbility.h" />
     <ClInclude Include="LevelShowcase.h" />
     <ClInclude Include="LevelUtilities.h" />
     <ClInclude Include="LineMeshVbo.h" />
@@ -80,6 +81,7 @@
     <ClCompile Include="LevelImGui.cpp" />
     <ClCompile Include="LevelLoading.cpp" />
     <ClCompile Include="LevelMapTest.cpp" />
+    <ClCompile Include="LevelSelectAbility.cpp" />
     <ClCompile Include="LevelShowcase.cpp" />
     <ClCompile Include="LineMeshVbo.cpp" />
     <ClCompile Include="Log.cpp" />
