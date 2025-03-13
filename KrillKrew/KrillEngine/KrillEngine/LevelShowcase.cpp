@@ -182,8 +182,8 @@ void LevelShowcase::LevelInit()
 	p1->SetAnimationSprite(PlayerObject::AnimationState::Running, spriteList.find("Shark_run")->second);
 	p1->SetAnimationSprite(PlayerObject::AnimationState::Melee, spriteList.find("Shark_hit")->second);
 	p1->SetAbility(PlayerObject::AbilityButton::Triangle, PlayerObject::Ability::Fireball);
-	p1->SetAbility(PlayerObject::AbilityButton::Circle, PlayerObject::Ability::Dash);
-	p1->SetAbility(PlayerObject::AbilityButton::Cross, PlayerObject::Ability::Trap);
+	p1->SetAbility(PlayerObject::AbilityButton::Circle, PlayerObject::Ability::Teleport);
+	p1->SetAbility(PlayerObject::AbilityButton::Cross, PlayerObject::Ability::Bola);
 	p1->SetSpriteInfo(spriteList.find("Shark_idle")->second);
 	p1->SetPosition(glm::vec3(-800.f, -700.f, 0));
 	p1->GetSpriteRenderer()->SetFrame(10);
@@ -515,29 +515,52 @@ void LevelShowcase::UpdateInput()
 				}
 			}*/
 
-			//Aim
+			//Ability Triangle
 			if (Joystick::GetButtonDown(i, Joystick::Button::Triangle))
 			{
 				if (players[i + playerNum]->GetCooldown(PlayerObject::AbilityButton::Triangle) <= 0)
 				{
-					UsingAbility(i + playerNum, PlayerObject::AbilityButton::Triangle);
+					UsingAbilityKeyDown(i + playerNum, PlayerObject::AbilityButton::Triangle);
 				}
 			}
 
-			//Place trap
+			if (Joystick::GetButtonUp(i, Joystick::Button::Triangle)) {
+				if (players[i + playerNum]->GetCooldown(PlayerObject::AbilityButton::Triangle) <= 0)
+				{
+					UsingAbilityKeyUp(i + playerNum, PlayerObject::AbilityButton::Triangle);
+				}
+			}
+
+			//Ability Circle
 			if (Joystick::GetButtonDown(i, Joystick::Button::Circle))
 			{
 				if (players[i + playerNum]->GetCooldown(PlayerObject::AbilityButton::Circle) <= 0)
 				{
-					UsingAbility(i + playerNum, PlayerObject::AbilityButton::Circle);
+					UsingAbilityKeyDown(i + playerNum, PlayerObject::AbilityButton::Circle);
 				}
 			}
 
+			if (Joystick::GetButtonUp(i, Joystick::Button::Circle)) {
+				if (players[i + playerNum]->GetCooldown(PlayerObject::AbilityButton::Circle) <= 0)
+				{
+					UsingAbilityKeyUp(i + playerNum, PlayerObject::AbilityButton::Circle);
+				}
+			}
+
+			//Ability Cross
 			if (Joystick::GetButtonDown(i, Joystick::Button::Cross))
 			{
 				if (players[i + playerNum]->GetCooldown(PlayerObject::AbilityButton::Cross) <= 0)
 				{
-					UsingAbility(i + playerNum, PlayerObject::AbilityButton::Cross);
+					UsingAbilityKeyDown(i + playerNum, PlayerObject::AbilityButton::Cross);
+				}
+			}
+
+			if (Joystick::GetButtonUp(i, Joystick::Button::Cross))
+			{
+				if (players[i + playerNum]->GetCooldown(PlayerObject::AbilityButton::Cross) <= 0)
+				{
+					UsingAbilityKeyUp(i + playerNum, PlayerObject::AbilityButton::Cross);
 				}
 			}
 
@@ -1385,7 +1408,7 @@ void LevelShowcase::TileImport(std::array<std::array<int, MAP_WIDTH>, MAP_HEIGHT
 	}
 }
 
-void LevelShowcase::UsingAbility(int numPlayer, PlayerObject::AbilityButton button) {
+void LevelShowcase::UsingAbilityKeyDown(int numPlayer, PlayerObject::AbilityButton button) {
 
 	PlayerObject::Ability idAbility = players[numPlayer]->GetAbilityByButton(button);
 	// std::cout << "idAbility " << idAbility << std::endl;
@@ -1396,14 +1419,6 @@ void LevelShowcase::UsingAbility(int numPlayer, PlayerObject::AbilityButton butt
 			if (!players[numPlayer]->GetIsAiming()) {
 				AimFireball(numPlayer, button);
 				break;
-			}
-			else if (players[numPlayer]->GetIsAiming())
-			{
-				if (players[numPlayer]->GetHoldingProjectile() == ProjectileObject::TypeProjectile::Fireball) {
-					ShootFireball(numPlayer, button);
-					break;
-				}
-
 			}
 			break;
 
@@ -1457,7 +1472,46 @@ void LevelShowcase::UsingAbility(int numPlayer, PlayerObject::AbilityButton butt
 				AimTeleport(numPlayer, button);
 				break;
 			}
-			else if (players[numPlayer]->GetIsAiming())
+			break;
+
+		case PlayerObject::Ability::Bola:
+			if (!players[numPlayer]->GetIsAiming()) {
+				AimBola(numPlayer, button);
+				break;
+			}
+			
+			break;
+
+		case PlayerObject::Ability::Cleave:
+			if (!players[numPlayer]->GetIsAiming()) {
+				AimCleave(numPlayer, button);
+				break;
+			}
+			break;
+		}
+
+	}
+}
+
+void LevelShowcase::UsingAbilityKeyUp(int numPlayer, PlayerObject::AbilityButton button) {
+	PlayerObject::Ability idAbility = players[numPlayer]->GetAbilityByButton(button);
+	// std::cout << "idAbility " << idAbility << std::endl;
+	if (players[numPlayer]->GetCooldown(button) <= 0) {
+		switch (idAbility) {
+
+		case PlayerObject::Ability::Fireball:
+			if (players[numPlayer]->GetIsAiming())
+			{
+				if (players[numPlayer]->GetHoldingProjectile() == ProjectileObject::TypeProjectile::Fireball) {
+					ShootFireball(numPlayer, button);
+					break;
+				}
+
+			}
+			break;
+
+		case PlayerObject::Ability::Teleport:
+			if (players[numPlayer]->GetIsAiming())
 			{
 				if (players[numPlayer]->GetHoldingProjectile() == ProjectileObject::TypeProjectile::Teleport) {
 					ShootTeleport(numPlayer, button);
@@ -1468,11 +1522,7 @@ void LevelShowcase::UsingAbility(int numPlayer, PlayerObject::AbilityButton butt
 			break;
 
 		case PlayerObject::Ability::Bola:
-			if (!players[numPlayer]->GetIsAiming()) {
-				AimBola(numPlayer, button);
-				break;
-			}
-			else if (players[numPlayer]->GetIsAiming())
+			if (players[numPlayer]->GetIsAiming())
 			{
 				if (players[numPlayer]->GetHoldingProjectile() == ProjectileObject::TypeProjectile::Bola) {
 					ShootBola(numPlayer, button);
@@ -1483,11 +1533,7 @@ void LevelShowcase::UsingAbility(int numPlayer, PlayerObject::AbilityButton butt
 			break;
 
 		case PlayerObject::Ability::Cleave:
-			if (!players[numPlayer]->GetIsAiming()) {
-				AimCleave(numPlayer, button);
-				break;
-			}
-			else if (players[numPlayer]->GetIsAiming())
+			if (players[numPlayer]->GetIsAiming())
 			{
 				if (players[numPlayer]->GetHoldingProjectile() == ProjectileObject::TypeProjectile::Cleave) {
 					ShootCleave(numPlayer, button);
