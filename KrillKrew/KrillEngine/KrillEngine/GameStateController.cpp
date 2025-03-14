@@ -5,6 +5,7 @@
 #include "LevelLoading.h"
 #include "LevelShowcase.h"
 #include "LevelImGui.h"
+#include "LevelSelectAbility.h"
 
 GameStateController::GameStateController()
 {

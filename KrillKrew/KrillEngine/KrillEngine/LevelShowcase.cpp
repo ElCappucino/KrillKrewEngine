@@ -181,7 +181,7 @@ void LevelShowcase::LevelInit()
 	p1->SetAnimationSprite(PlayerObject::AnimationState::Idle, spriteList.find("Shark_idle")->second);
 	p1->SetAnimationSprite(PlayerObject::AnimationState::Running, spriteList.find("Shark_run")->second);
 	p1->SetAnimationSprite(PlayerObject::AnimationState::Melee, spriteList.find("Shark_hit")->second);
-	p1->SetAbility(PlayerObject::AbilityButton::Triangle, PlayerObject::Ability::Fireball);
+	p1->SetAbility(PlayerObject::AbilityButton::Triangle, PlayerObject::Ability::Cleave);
 	p1->SetAbility(PlayerObject::AbilityButton::Circle, PlayerObject::Ability::Teleport);
 	p1->SetAbility(PlayerObject::AbilityButton::Cross, PlayerObject::Ability::Bola);
 	p1->SetSpriteInfo(spriteList.find("Shark_idle")->second);
@@ -494,6 +494,12 @@ void LevelShowcase::UpdateInput()
 							projectile->SetVelocity(abs(norAxisX), abs(norAxisY), isPositiveX, isPositiveY);
 						}
 						projectile->SetPosition(players[i + playerNum]->getPos() + (projectile->GetVelocity() * glm::vec3(15.f, 15.f, 0.f)));
+						if (projectile->type == ProjectileObject::Cleave && projectile->GetLifetime() <= 9997) {
+							players[i + playerNum]->SetIsAiming(false);
+							projectile->SetLifeTime(2);
+							projectile->SetIsShooting(true);
+							players[i + playerNum]->SetHoldingProjectile(0);
+						}
 
 					}
 				}
@@ -1531,17 +1537,6 @@ void LevelShowcase::UsingAbilityKeyUp(int numPlayer, PlayerObject::AbilityButton
 
 			}
 			break;
-
-		case PlayerObject::Ability::Cleave:
-			if (players[numPlayer]->GetIsAiming())
-			{
-				if (players[numPlayer]->GetHoldingProjectile() == ProjectileObject::TypeProjectile::Cleave) {
-					ShootCleave(numPlayer, button);
-					break;
-				}
-
-			}
-			break;
 		}
 
 	}
@@ -1699,7 +1694,7 @@ void LevelShowcase::AimCleave(int numPlayer, PlayerObject::AbilityButton button)
 	projectile->SetIsShooting(false);
 	std::cout << "Owner " << projectile->GetOwner()->GetPlayerNumber() << std::endl;
 	objectsList.push_back(projectile);
-	players[numPlayer]->SetAbilityCooldown(button, 2);
+	players[numPlayer]->SetAbilityCooldown(button, 6);
 }
 
 void LevelShowcase::ShootCleave(int numPlayer, PlayerObject::AbilityButton button) {

@@ -1,10 +1,5 @@
 #include "LevelSelectAbility.h"
 
-float lerp(float a, float b, float t)
-{
-	return a + t * (b - a);
-}
-
 void LevelSelectAbility::LevelLoad()
 {
 	SquareMeshVbo* square = new SquareMeshVbo();
