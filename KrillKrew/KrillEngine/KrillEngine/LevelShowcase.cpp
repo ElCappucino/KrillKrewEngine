@@ -181,8 +181,8 @@ void LevelShowcase::LevelInit()
 	p1->SetAnimationSprite(PlayerObject::AnimationState::Idle, spriteList.find("Shark_idle")->second);
 	p1->SetAnimationSprite(PlayerObject::AnimationState::Running, spriteList.find("Shark_run")->second);
 	p1->SetAnimationSprite(PlayerObject::AnimationState::Melee, spriteList.find("Shark_hit")->second);
-	p1->SetAbility(PlayerObject::AbilityButton::Triangle, PlayerObject::Ability::Cleave);
-	p1->SetAbility(PlayerObject::AbilityButton::Circle, PlayerObject::Ability::Teleport);
+	p1->SetAbility(PlayerObject::AbilityButton::Triangle, PlayerObject::Ability::Fireball);
+	p1->SetAbility(PlayerObject::AbilityButton::Circle, PlayerObject::Ability::TNT);
 	p1->SetAbility(PlayerObject::AbilityButton::Cross, PlayerObject::Ability::Bola);
 	p1->SetSpriteInfo(spriteList.find("Shark_idle")->second);
 	p1->SetPosition(glm::vec3(-800.f, -700.f, 0));
@@ -500,10 +500,30 @@ void LevelShowcase::UpdateInput()
 							projectile->SetIsShooting(true);
 							players[i + playerNum]->SetHoldingProjectile(0);
 						}
+					}
 
+					// cancel aim
+					if (players[i + playerNum]->GetIsKnockback() == true || players[i + playerNum]->GetIsStun() == true) {
+						players[i + playerNum]->SetHoldingProjectile(0);
+						projectile->SetLifeTime(0);
+						players[i + playerNum]->SetIsAiming(false);
+						if (Joystick::GetButton(i, Joystick::Button::Circle))
+						{
+							players[i + playerNum]->SetAbilityCooldown(PlayerObject::AbilityButton::Circle, 6);
+						}
+						if (Joystick::GetButton(i, Joystick::Button::Cross))
+						{
+							players[i + playerNum]->SetAbilityCooldown(PlayerObject::AbilityButton::Cross, 6);
+						}
+						if (Joystick::GetButton(i, Joystick::Button::Triangle))
+						{
+							players[i + playerNum]->SetAbilityCooldown(PlayerObject::AbilityButton::Triangle, 6);
+						}
 					}
 				}
 			}
+
+			
 
 			/*if (players[i + playerNum]->GetIsAiming() && players[i + playerNum]->GetHoldingProjectile() != 0)
 			{
@@ -643,11 +663,11 @@ void LevelShowcase::UpdateCollision()
 					if (overlapX > 0 && overlapY > 0)
 					{
 						std::cout << "Trap :" << trap->GetNumOwner() << " hit " << "Player" << player2->GetPlayerNumber() << std::endl;
-						if (trap->GetIsCanKnockback()) {
+						if (trap->GetIsCanKnockback() && trap->GetType() == TrapObject::TypeTrap::Tnt) {
 							UpdateKnockback(trap, player2);
 							objectsList.erase(objectsList.begin() + i);
 						}
-						else {
+						else if(trap->GetType() == TrapObject::TypeTrap::Trap){
 							player2->SetSlowDuration(100);
 							player2->SetIsSlow(true);
 							objectsList.erase(objectsList.begin() + i);
@@ -782,7 +802,8 @@ void LevelShowcase::UpdateCollision()
 
 			if (player != nullptr)
 			{
-				if (projectile->GetOwner()->GetPlayerNumber() != player->GetPlayerNumber())
+				if (projectile->GetOwner()->GetPlayerNumber() != player->GetPlayerNumber() 
+					&& projectile->GetOwner()->GetHoldingProjectile() != projectile->GetType())
 				{
 					Collider col1 = *projectile->GetCollider();
 					Collider col2 = *player->GetCollider();
@@ -793,7 +814,7 @@ void LevelShowcase::UpdateCollision()
 					float overlapX = (abs(col1.GetHalfSize().x)) + (abs(col2.GetHalfSize().x)) - delta.x;
 					float overlapY = (abs(col1.GetHalfSize().y)) + (abs(col2.GetHalfSize().y)) - delta.y;
 
-					if (overlapX > 0 && overlapY > 0)
+					if (overlapX > 0 && overlapY > 0 && projectile->GetIsActive())
 					{
 						if (projectile->GetType() == ProjectileObject::TypeProjectile::Teleport) {
 							players[projectile->GetOwner()->GetPlayerNumber()]->SetPosition(projectile->getPos());
@@ -904,9 +925,10 @@ void LevelShowcase::UpdateMovement()
 
 		if (players[i]->GetDurationKnockback() <= 0 &&
 			players[i]->GetIsKnockback() &&
-			(abs(players[i]->GetVelocity().x) / 5 < 0.05) &&
-			(abs(players[i]->GetVelocity().y) / 5 < 0.05))
+			(abs(players[i]->GetVelocity().x) / 5 < 0.1) &&
+			(abs(players[i]->GetVelocity().y) / 5 < 0.1))
 		{
+
 			players[i]->SetIsKnockback(false);
 			players[i]->SetVelocity(0, 0, false, false);
 		}
@@ -1083,6 +1105,7 @@ void LevelShowcase::LevelDraw()
 		PlayerObject* player = dynamic_cast<PlayerObject*>(objectsList[i]);
 		PlayerHitboxObject* hitbox = dynamic_cast<PlayerHitboxObject*>(objectsList[i]);
 		GizmosObject* gizmos = dynamic_cast<GizmosObject*>(objectsList[i]);
+		TrapObject* trap = dynamic_cast<TrapObject*>(objectsList[i]);
 
 		if (player != nullptr)
 		{
@@ -1128,6 +1151,11 @@ void LevelShowcase::LevelDraw()
 			{
 				object->GetCollider()->Update(object->getSize(), object->getPos());
 			}
+		}
+
+		if (trap != nullptr) {
+			objectsList.push_back(trap->GetCollider()->GetGizmos());
+			trap->GetCollider()->Update(trap->getSize(), trap->getPos());
 		}
 	}
 
@@ -1446,7 +1474,7 @@ void LevelShowcase::UsingAbilityKeyDown(int numPlayer, PlayerObject::AbilityButt
 					if (realTnt != NULL) {
 						if (realTnt->GetType() == TrapObject::TypeTrap::Tnt && realTnt->GetNumOwner() == numPlayer) {
 							realTnt->SetIsCanKnockback(true);
-							realTnt->SetIsActive(true);
+							//realTnt->SetIsActive(true);
 							realTnt->GetCollider()->Update(glm::vec3(500, 500, 0), realTnt->getPos());
 							players[numPlayer]->SetAbilityCooldown(button, 3);
 							players[numPlayer]->SetIsTNT(false);
@@ -1558,6 +1586,7 @@ void LevelShowcase::AimFireball(int numPlayer, PlayerObject::AbilityButton butto
 	projectile->SetIsCanKnockback(true);
 	projectile->SetIsCanStun(true);
 	projectile->SetIsShooting(false);
+	//projectile->SetIsActive(false);
 	std::cout << "Owner " << projectile->GetOwner()->GetPlayerNumber() << std::endl;
 	objectsList.push_back(projectile);
 	//objectsList.push_back(projectile->GetCollider()->GetGizmos());
@@ -1570,6 +1599,7 @@ void LevelShowcase::ShootFireball(int numPlayer, PlayerObject::AbilityButton but
 		if (projectile != nullptr && projectile->GetOwner() == players[numPlayer] && projectile->GetType() == ProjectileObject::TypeProjectile::Fireball) {
 			projectile->SetLifeTime(2);
 			projectile->SetIsShooting(true);
+			//projectile->SetIsActive(true);
 			players[numPlayer]->SetHoldingProjectile(0);
 		}
 	}
@@ -1606,6 +1636,7 @@ void LevelShowcase::TNT(int numPlayer, PlayerObject::AbilityButton button) {
 	TNT->SetSize(128.f, -128.f);
 	TNT->SetNumOwner(players[numPlayer]->GetPlayerNumber());
 	TNT->SetType(TrapObject::TypeTrap::Tnt);
+	TNT->GetCollider()->Update(glm::vec3(0, 0, 0), TNT->getPos());
 	//TNT->setIsCanKnockback(true);
 	//std::cout << "Owner " << Trap->getNumOwner() << std::endl;
 	objectsList.push_back(TNT);
@@ -1626,6 +1657,7 @@ void LevelShowcase::AimTeleport(int numPlayer, PlayerObject::AbilityButton butto
 	projectile->SetIsCanKnockback(false);
 	projectile->SetIsCanStun(false);
 	projectile->SetIsShooting(false);
+	//projectile->SetIsActive(false);
 	std::cout << "Owner " << projectile->GetOwner()->GetPlayerNumber() << std::endl;
 	objectsList.push_back(projectile);
 }
@@ -1639,6 +1671,7 @@ void LevelShowcase::ShootTeleport(int numPlayer, PlayerObject::AbilityButton but
 			if (projectile != nullptr && projectile->GetOwner() == players[numPlayer] && projectile->GetType() == ProjectileObject::TypeProjectile::Teleport) {
 				projectile->SetLifeTime(2);
 				projectile->SetIsShooting(true);
+				//projectile->SetIsActive(true);
 				players[numPlayer]->SetHoldingProjectile(0);
 			}
 		}
@@ -1660,6 +1693,7 @@ void LevelShowcase::AimBola(int numPlayer, PlayerObject::AbilityButton button) {
 	projectile->SetIsCanKnockback(false);
 	projectile->SetIsCanStun(true);
 	projectile->SetIsShooting(false);
+	//projectile->SetIsActive(false);
 	std::cout << "Owner " << projectile->GetOwner()->GetPlayerNumber() << std::endl;
 	objectsList.push_back(projectile);
 }
@@ -1671,6 +1705,7 @@ void LevelShowcase::ShootBola(int numPlayer, PlayerObject::AbilityButton button)
 		if (projectile != nullptr && projectile->GetOwner() == players[numPlayer] && projectile->GetType() == ProjectileObject::TypeProjectile::Bola) {
 			projectile->SetLifeTime(2);
 			projectile->SetIsShooting(true);
+			//projectile->SetIsActive(true);
 			players[numPlayer]->SetHoldingProjectile(0);
 		}
 	}
@@ -1692,6 +1727,7 @@ void LevelShowcase::AimCleave(int numPlayer, PlayerObject::AbilityButton button)
 	projectile->SetIsCanKnockback(false);
 	projectile->SetIsCanStun(true);
 	projectile->SetIsShooting(false);
+	//projectile->SetIsActive(false);
 	std::cout << "Owner " << projectile->GetOwner()->GetPlayerNumber() << std::endl;
 	objectsList.push_back(projectile);
 	players[numPlayer]->SetAbilityCooldown(button, 6);
@@ -1704,6 +1740,7 @@ void LevelShowcase::ShootCleave(int numPlayer, PlayerObject::AbilityButton butto
 		if (projectile != nullptr && projectile->GetOwner() == players[numPlayer] && projectile->GetType() == ProjectileObject::TypeProjectile::Cleave) {
 			projectile->SetLifeTime(2);
 			projectile->SetIsShooting(true);
+			//projectile->SetIsActive(true);
 			players[numPlayer]->SetHoldingProjectile(0);
 		}
 	}
