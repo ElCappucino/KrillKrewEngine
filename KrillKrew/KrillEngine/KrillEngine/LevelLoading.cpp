@@ -46,7 +46,7 @@ void LevelLoading::LevelDraw()
 {
 	GameEngine::GetInstance()->Render(objectsList);
 
-	//GameEngine::GetInstance()->GetStateController()->gameStateNext = GameEngine::GetInstance()->GetStateController()->loadingState;
+	GameEngine::GetInstance()->GetStateController()->gameStateNext = GameEngine::GetInstance()->GetStateController()->loadingState;
 	// cout << "Draw Level" << endl;
 }
 

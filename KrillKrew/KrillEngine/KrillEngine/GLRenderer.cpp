@@ -132,7 +132,7 @@ void GLRenderer::Render(std::vector <DrawableObject*> & objList)
 
 	glm::mat4 camera = glm::mat4(1.0);
 
-	std::cout << "Draw" << std::endl;
+	//std::cout << "Draw" << std::endl;
 	for (DrawableObject *obj : objList) {
 		obj->Render(camera);
 	}
