@@ -14,6 +14,9 @@ void LevelLoading::LevelLoad()
 
 void LevelLoading::LevelInit()
 {
+	std::cout << "Level Loading Init" << std::endl;
+
+	glClearColor(0.f, 180.f / 255.f, 171.f / 255.f, 1.f);
 
 	GameEngine::GetInstance()->GetRenderer()->SetOrthoProjection(-(SCREEN_WIDTH / 2),
 		(SCREEN_WIDTH / 2),
@@ -43,7 +46,7 @@ void LevelLoading::LevelDraw()
 {
 	GameEngine::GetInstance()->Render(objectsList);
 
-	GameEngine::GetInstance()->GetStateController()->gameStateNext = GameEngine::GetInstance()->GetStateController()->loadingState;
+	//GameEngine::GetInstance()->GetStateController()->gameStateNext = GameEngine::GetInstance()->GetStateController()->loadingState;
 	// cout << "Draw Level" << endl;
 }
 

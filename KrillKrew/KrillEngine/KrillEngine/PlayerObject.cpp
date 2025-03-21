@@ -179,9 +179,10 @@ void PlayerObject::SetCurrentDirection(glm::vec2 dir)
 {
 	this->currDirection = dir;
 }
-void PlayerObject::ReduceAbilityCooldown(int button)
+void PlayerObject::ReduceAbilityCooldown(int button, float dt)
 {
-	abilityCooldown[button] -= 1;
+	abilityCooldown[button] -= dt;
+	if (abilityCooldown[button] <= 0) { abilityCooldown[button] = 0; }
 	// KK_TRACE("Reduce Cooldown Skill: {0} Cooldown {1}", button, GetCooldown(button));
 }
 void PlayerObject::ReduceSlowDuration()

@@ -127,7 +127,7 @@ public:
 	void SetStunDuraion(int time);
 	void SetIsOnGround(bool isOnGround);
 
-	void ReduceAbilityCooldown(int button);
+	void ReduceAbilityCooldown(int button, float dt);
 	void ReduceSlowDuration();
 	void ReduceDashDuration();
 	void ReduceKnockbackDuration();

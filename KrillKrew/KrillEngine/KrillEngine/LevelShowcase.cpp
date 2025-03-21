@@ -845,10 +845,10 @@ void LevelShowcase::UpdateCooldown()
 		for (int j = 0; j < 3; j++)
 		{
 
-			if (time1s >= 1.0f && players[i]->GetCooldown(static_cast<PlayerObject::AbilityButton>(j)) > 0)
+			if (time1s >= 0.1f && players[i]->GetCooldown(static_cast<PlayerObject::AbilityButton>(j)) > 0)
 			{
 				//std::cout << j << std::endl;
-				players[i + playerNum]->ReduceAbilityCooldown(j);
+				players[i + playerNum]->ReduceAbilityCooldown(j, 0.1f);
 
 			}
 		}
@@ -1129,32 +1129,101 @@ void LevelShowcase::LevelDraw()
 	//if (show_demo_window)
 	//	ImGui::ShowDemoWindow(&show_demo_window);
 
-	for (int i = 0; i < 4; i++)
+	if (ImGui::Button("Reset Scene", ImVec2(100, 50)))
+		isResetScene++;
+		
+	if (isResetScene & 1)
 	{
-		ImGui::SeparatorText("");
-		ImGui::Text("Player %d", i);
-		ImGui::Text("Position: %f, %f, %f", players[i]->getPos().x, players[i]->getPos().y, players[i]->getPos().z);
-		ImGui::Text("isShooting: %s", players[i]->GetIsShooting() ? "true" : "false");
-		ImGui::Text("isAiming: %s", players[i]->GetIsAiming() ? "true" : "false");
-		ImGui::Text("isSlow: %s", players[i]->GetIsSlow() ? "true" : "false");
-		ImGui::Text("isDashing: %s", players[i]->GetIsDashing() ? "true" : "false");
-		ImGui::Text("isKnockback: %s", players[i]->GetIsKnockback() ? "true" : "false");
-		ImGui::Text("isStun: %s", players[i]->GetIsStun() ? "true" : "false");
-		ImGui::Text("isOnGround: %s", players[i]->GetIsOnGround() ? "true" : "false");
-
-		if (ImGui::Button(buttonName[i]))
-			clicked[i]++;
-		if (clicked[i] & 1)
+		GameEngine::GetInstance()->GetStateController()->loadingState = GameState::GS_LEVELSHOWCASE;
+		GameEngine::GetInstance()->GetStateController()->gameStateNext = GameState::GS_LEVELLOADING;
+	}
+	ImGuiTabBarFlags tab_bar_flags = ImGuiTabBarFlags_None;
+	if (ImGui::BeginTabBar("MyTabBar", tab_bar_flags))
+	{
+		for (int i = 0; i < 4; i++)
 		{
-			ImGui::SameLine();
-			ImGui::Text("Thanks for clicking me!");
-		}
+			std::string tabname = "player " + std::to_string(i);
+			ImGui::PushID(i);
 
-		ImGui::InputFloat(groundColXName[i], &groundColX[i], 2.0f, 10.0f, "%.3f");
-		ImGui::InputFloat(groundColYName[i], &groundColY[i], 2.0f, 10.0f, "%.3f");
+			if (ImGui::BeginTabItem(tabname.c_str()))
+			{
+				ImGui::Text("Player %d", i);
+				ImGui::SameLine();
+				ImGui::SeparatorText("");
+				ImGui::Text("Position: %f, %f, %f", players[i]->getPos().x, players[i]->getPos().y, players[i]->getPos().z);
+				
+				ImGui::Text("isShooting: %s", players[i]->GetIsShooting() ? "true" : "false");
+				ImGui::Text("isAiming: %s", players[i]->GetIsAiming() ? "true" : "false");
+				ImGui::Text("isSlow: %s", players[i]->GetIsSlow() ? "true" : "false");
+				ImGui::Text("isDashing: %s", players[i]->GetIsDashing() ? "true" : "false");
+				ImGui::Text("isKnockback: %s", players[i]->GetIsKnockback() ? "true" : "false");
+				ImGui::Text("isStun: %s", players[i]->GetIsStun() ? "true" : "false");
+				ImGui::Text("isOnGround: %s", players[i]->GetIsOnGround() ? "true" : "false");
+
+				if (ImGui::Button("Test Button"))
+					clicked[i]++;
+
+				if (clicked[i] & 1)
+				{
+					ImGui::SameLine();
+					ImGui::Text("Thanks for clicking me!");
+				}
+
+				ImGui::DragFloat("ColX Button", &groundColX[i], 2.0f, 0.0f, 1024.f, "%.3f");
+				ImGui::DragFloat("ColY Button", &groundColY[i], 2.0f, 0.0f, 1024.f, "%.3f");
+
+				/*Fireball = 0,
+					Trap = 1,
+					Dash = 2,
+					TNT = 3,
+					Teleport = 4,
+					Bola = 5,
+					Cleave = 6*/
+
+				for (int j = 0; j < 3; j++)
+				{
+					ImGui::PushID(j);
+
+
+					ImGui::Text("skill %d", j);
+					ImGui::Text("ability %d cooldown: %.2f", i ,players[i]->GetCooldown(static_cast<PlayerObject::AbilityButton>(j)));
+					ImGui::RadioButton("Fireball", &playersSkill[i][j], 0);
+					ImGui::SameLine();
+					ImGui::RadioButton("Trap", &playersSkill[i][j], 1);
+					ImGui::SameLine();
+					ImGui::RadioButton("Dash", &playersSkill[i][j], 2);
+					//ImGui::SameLine();
+					ImGui::RadioButton("TNT", &playersSkill[i][j], 3);
+					ImGui::SameLine();
+					ImGui::RadioButton("Teleport", &playersSkill[i][j], 4);
+					ImGui::SameLine();
+					ImGui::RadioButton("Bola", &playersSkill[i][j], 5);
+					ImGui::SameLine();
+					ImGui::RadioButton("Cleave", &playersSkill[i][j], 6);
+					ImGui::SeparatorText("");
+
+					ImGui::PopID();
+				}
+				ImGui::EndTabItem();
+			}
+			
+			ImGui::PopID();
+		}
+		
+		ImGui::EndTabBar();
 	}
 	
-
+	for (int i = 0; i < 4; i++)
+	{
+		for (int j = 0; j < 3; j++)
+		{
+			players[i]->SetAbility
+			(
+				static_cast<PlayerObject::AbilityButton>(j), 
+				static_cast<PlayerObject::Ability>(playersSkill[i][j])
+			);
+		}
+	}
 
 	// Rendering
 	ImGui::Render();

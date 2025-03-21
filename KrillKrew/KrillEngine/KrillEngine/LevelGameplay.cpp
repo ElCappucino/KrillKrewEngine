@@ -700,7 +700,7 @@ void LevelGameplay::UpdateCooldown()
 			if (time1s >= 1.0f && players[i]->GetCooldown(static_cast<PlayerObject::AbilityButton>(j)) > 0)
 			{
 				//std::cout << j << std::endl;
-				players[i + playerNum]->ReduceAbilityCooldown(j);
+				players[i + playerNum]->ReduceAbilityCooldown(j, time1s);
 				
 			}
 		}
