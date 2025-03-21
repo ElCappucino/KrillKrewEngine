@@ -8,6 +8,8 @@ ProjectileObject::ProjectileObject()
 	collider = new Collider(Collider::Trigger, this);
 	this->pos = glm::vec3(0, 0, 0);
 	this->playerOwner = nullptr;
+
+	this->orderingLayer = 3;
 }
 
 

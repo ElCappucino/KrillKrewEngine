@@ -7,6 +7,8 @@ TrapObject::TrapObject()
 {
 	collider = new Collider(Collider::Trigger, this);
 	this->pos = glm::vec3(0, 0, 0);
+
+	this->orderingLayer = 1;
 }
 
 

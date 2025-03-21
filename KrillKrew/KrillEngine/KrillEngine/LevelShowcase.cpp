@@ -1,5 +1,10 @@
 #include "LevelShowcase.h"
 
+bool compareLayer(const DrawableObject* a, const DrawableObject* b)
+{
+	return a->getOrderingLayer() < b->getOrderingLayer();
+}
+
 void LevelShowcase::LevelLoad()
 {
 	SquareMeshVbo* square = new SquareMeshVbo();
@@ -185,7 +190,7 @@ void LevelShowcase::LevelInit()
 	p1->SetAbility(PlayerObject::AbilityButton::Circle, PlayerObject::Ability::Dash);
 	p1->SetAbility(PlayerObject::AbilityButton::Cross, PlayerObject::Ability::Trap);
 	p1->SetSpriteInfo(spriteList.find("Shark_idle")->second);
-	p1->SetPosition(glm::vec3(-800.f, -700.f, 0));
+	p1->SetPosition(glm::vec3(-800.f, -700.f, 10.f));
 	p1->GetSpriteRenderer()->SetFrame(10);
 	p1->SetPlayerNumber(0);
 	entityObjects.push_back(p1);
@@ -305,6 +310,9 @@ void LevelShowcase::LevelInit()
 		objectsList.push_back(uiSkills);
 	}
 
+	// sort with ordering layer
+	std::sort(objectsList.begin(), objectsList.end(), compareLayer);
+
 	// Setup Dear ImGui context
 	IMGUI_CHECKVERSION();
 	ImGui::CreateContext();
@@ -377,6 +385,8 @@ void LevelShowcase::LevelUpdate()
 	UpdateUI();
 
 	GroundTileRefactor();
+
+	std::sort(objectsList.begin(), objectsList.end(), compareLayer);
 }
 
 void LevelShowcase::UpdateInput()
@@ -432,7 +442,7 @@ void LevelShowcase::UpdateInput()
 				isPositiveY = true;
 			}
 
-			if (norAxisX != 0 && norAxisY != 0)
+			if (norAxisX != 0 || norAxisY != 0)
 			{
 				players[i + playerNum]->SetCurrentDirection(glm::vec2(norAxisX, norAxisY));
 			}
@@ -1038,10 +1048,10 @@ void LevelShowcase::UpdateUI()
 		UiObject* ui = dynamic_cast<UiObject*>(objectsList[i]);
 		if (ui != nullptr) 
 		{
-			ui->SetPosition(glm::vec3(posX, posY, 0));
+			ui->SetPosition(glm::vec3(posX + (ui->getNumOwner() * uiWidth * camera.GetCameraWidth() / SCREEN_WIDTH), posY, 0));
 			ui->SetSize(uiWidth * camera.GetCameraWidth() / SCREEN_WIDTH, -uiHeight * camera.GetCameraHeight() / SCREEN_HEIGHT);
 			
-			posX += uiWidth * camera.GetCameraWidth() / SCREEN_WIDTH;
+			//posX += uiWidth * camera.GetCameraWidth() / SCREEN_WIDTH;
 		}
 	}
 }
@@ -1123,6 +1133,7 @@ void LevelShowcase::LevelDraw()
 	{
 		ImGui::SeparatorText("");
 		ImGui::Text("Player %d", i);
+		ImGui::Text("Position: %f, %f, %f", players[i]->getPos().x, players[i]->getPos().y, players[i]->getPos().z);
 		ImGui::Text("isShooting: %s", players[i]->GetIsShooting() ? "true" : "false");
 		ImGui::Text("isAiming: %s", players[i]->GetIsAiming() ? "true" : "false");
 		ImGui::Text("isSlow: %s", players[i]->GetIsSlow() ? "true" : "false");

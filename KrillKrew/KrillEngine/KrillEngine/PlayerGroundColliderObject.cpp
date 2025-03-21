@@ -17,6 +17,8 @@ PlayerGroundColliderObject::PlayerGroundColliderObject(PlayerObject* parent)
 	SpritesheetInfo hitboxSprite = SpritesheetInfo("hitbox", "../Resource/Texture/marker01.png", 500, 500, 500, 500);
 
 	this->SetSpriteInfo(hitboxSprite);
+
+	this->orderingLayer = 2;
 }
 PlayerGroundColliderObject::~PlayerGroundColliderObject()
 {

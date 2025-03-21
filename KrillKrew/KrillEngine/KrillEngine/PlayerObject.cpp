@@ -37,6 +37,8 @@ PlayerObject::PlayerObject()
 
 	this->attackCollider = new PlayerHitboxObject(this);
 	this->groundCheckCollider = new PlayerGroundColliderObject(this);
+
+	this->orderingLayer = 1;
 }
 
 PlayerObject::~PlayerObject()

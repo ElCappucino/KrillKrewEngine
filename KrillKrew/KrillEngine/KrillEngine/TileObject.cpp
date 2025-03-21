@@ -112,6 +112,8 @@ TileObject::TileObject()
 	this->crackOverlay->SetSpriteInfo(crackEffectSprite);
 	this->crackOverlay->SetSize(128.f, -128.f);
 
+	this->orderingLayer = 0;
+
 }
 TileObject::~TileObject()
 {
