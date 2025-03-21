@@ -20,6 +20,8 @@ private:
 	float time1s = 0;
 	float time05s = 0;
 	float previousWidth = 0, previousHeight = 0;
+	int clicked[4] = { 0, 0, 0, 0 };
+	std::ofstream abilityFile;
 
 	// player
 	float axisXOld;
@@ -41,4 +43,5 @@ public:
 	virtual void HandleMouse(int type, int x, int y);
 
 	void UpdateInput();
+	void abilityToFile(const std::string& fileName, PlayerObject::Ability abilityId, int who);
 };

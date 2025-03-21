@@ -176,14 +176,35 @@ void LevelShowcase::LevelInit()
 	}
 
 	// Example Code
+	int count = 0;
+	std::string data[3];
+	std::string line;
+	int abilityId[3];
 
 	PlayerObject* p1 = new PlayerObject();
 	p1->SetAnimationSprite(PlayerObject::AnimationState::Idle, spriteList.find("Shark_idle")->second);
 	p1->SetAnimationSprite(PlayerObject::AnimationState::Running, spriteList.find("Shark_run")->second);
 	p1->SetAnimationSprite(PlayerObject::AnimationState::Melee, spriteList.find("Shark_hit")->second);
-	p1->SetAbility(PlayerObject::AbilityButton::Triangle, PlayerObject::Ability::Fireball);
-	p1->SetAbility(PlayerObject::AbilityButton::Circle, PlayerObject::Ability::TNT);
-	p1->SetAbility(PlayerObject::AbilityButton::Cross, PlayerObject::Ability::Bola);
+	std::ifstream readFile("Ability0.txt");
+	while (std::getline(readFile, line)) {
+		data[count] = line;
+		abilityId[count] = stoi(data[count]);
+		count++;
+	}
+	if (count < 3) {
+		abilityId[0] = 0;
+		abilityId[1] = 1;
+		abilityId[2] = 2;
+		count = 0;
+	}
+	else {
+		count = 0;
+	}
+	readFile.close();
+
+	p1->SetAbility(PlayerObject::AbilityButton::Triangle, static_cast<PlayerObject::Ability>(abilityId[0]));
+	p1->SetAbility(PlayerObject::AbilityButton::Circle, static_cast<PlayerObject::Ability>(abilityId[1]));
+	p1->SetAbility(PlayerObject::AbilityButton::Cross, static_cast<PlayerObject::Ability>(abilityId[2]));
 	p1->SetSpriteInfo(spriteList.find("Shark_idle")->second);
 	p1->SetPosition(glm::vec3(-800.f, -700.f, 0));
 	p1->GetSpriteRenderer()->SetFrame(10);
@@ -197,9 +218,25 @@ void LevelShowcase::LevelInit()
 	p2->SetAnimationSprite(PlayerObject::AnimationState::Idle, spriteList.find("Shark_idle")->second);
 	p2->SetAnimationSprite(PlayerObject::AnimationState::Running, spriteList.find("Shark_run")->second);
 	p2->SetAnimationSprite(PlayerObject::AnimationState::Melee, spriteList.find("Shark_hit")->second);
-	p2->SetAbility(PlayerObject::AbilityButton::Triangle, PlayerObject::Ability::TNT);
-	p2->SetAbility(PlayerObject::AbilityButton::Circle, PlayerObject::Ability::Teleport);
-	p2->SetAbility(PlayerObject::AbilityButton::Cross, PlayerObject::Ability::Bola);
+	std::ifstream read2File("Ability1.txt");
+	while (std::getline(read2File, line)) {
+		data[count] = line;
+		abilityId[count] = stoi(data[count]);
+		count++;
+	}
+	if (count < 3) {
+		abilityId[0] = 0;
+		abilityId[1] = 1;
+		abilityId[2] = 2;
+		count = 0;
+	}
+	else {
+		count = 0;
+	}
+	read2File.close();
+	p2->SetAbility(PlayerObject::AbilityButton::Triangle, static_cast<PlayerObject::Ability>(abilityId[0]));
+	p2->SetAbility(PlayerObject::AbilityButton::Circle, static_cast<PlayerObject::Ability>(abilityId[1]));
+	p2->SetAbility(PlayerObject::AbilityButton::Cross, static_cast<PlayerObject::Ability>(abilityId[2]));
 	p2->SetSpriteInfo(spriteList.find("Shark_idle")->second);
 	p2->SetPosition(glm::vec3(800.f, -700.f, 0));
 	p2->GetSpriteRenderer()->SetFrame(10);
@@ -213,9 +250,25 @@ void LevelShowcase::LevelInit()
 	p3->SetAnimationSprite(PlayerObject::AnimationState::Idle, spriteList.find("Shark_idle")->second);
 	p3->SetAnimationSprite(PlayerObject::AnimationState::Running, spriteList.find("Shark_run")->second);
 	p3->SetAnimationSprite(PlayerObject::AnimationState::Melee, spriteList.find("Shark_hit")->second);
-	p3->SetAbility(PlayerObject::AbilityButton::Triangle, PlayerObject::Ability::Cleave);
-	p3->SetAbility(PlayerObject::AbilityButton::Circle, PlayerObject::Ability::Trap);
-	p3->SetAbility(PlayerObject::AbilityButton::Cross, PlayerObject::Ability::Cleave);
+	std::ifstream read3File("Ability2.txt");
+	while (std::getline(read3File, line)) {
+		data[count] = line;
+		abilityId[count] = stoi(data[count]);
+		count++;
+	}
+	if (count < 3) {
+		abilityId[0] = 0;
+		abilityId[1] = 1;
+		abilityId[2] = 2;
+		count = 0;
+	}
+	else {
+		count = 0;
+	}
+	read3File.close();
+	p3->SetAbility(PlayerObject::AbilityButton::Triangle, static_cast<PlayerObject::Ability>(abilityId[0]));
+	p3->SetAbility(PlayerObject::AbilityButton::Circle, static_cast<PlayerObject::Ability>(abilityId[1]));
+	p3->SetAbility(PlayerObject::AbilityButton::Cross, static_cast<PlayerObject::Ability>(abilityId[2]));
 	p3->SetSpriteInfo(spriteList.find("Shark_idle")->second);
 	p3->SetPosition(glm::vec3(800.f, 700.f, 0));
 	p3->GetSpriteRenderer()->SetFrame(10);
@@ -229,9 +282,25 @@ void LevelShowcase::LevelInit()
 	p4->SetAnimationSprite(PlayerObject::AnimationState::Idle, spriteList.find("Shark_idle")->second);
 	p4->SetAnimationSprite(PlayerObject::AnimationState::Running, spriteList.find("Shark_run")->second);
 	p4->SetAnimationSprite(PlayerObject::AnimationState::Melee, spriteList.find("Shark_hit")->second);
-	p4->SetAbility(PlayerObject::AbilityButton::Triangle, PlayerObject::Ability::Fireball);
-	p4->SetAbility(PlayerObject::AbilityButton::Circle, PlayerObject::Ability::Trap);
-	p4->SetAbility(PlayerObject::AbilityButton::Cross, PlayerObject::Ability::Cleave);
+	std::ifstream read4File("Ability3.txt");
+	while (std::getline(read4File, line)) {
+		data[count] = line;
+		abilityId[count] = stoi(data[count]);
+		count++;
+	}
+	if (count < 3) {
+		abilityId[0] = 0;
+		abilityId[1] = 1;
+		abilityId[2] = 2;
+		count = 0;
+	}
+	else {
+		count = 0;
+	}
+	read4File.close();
+	p4->SetAbility(PlayerObject::AbilityButton::Triangle, static_cast<PlayerObject::Ability>(abilityId[0]));
+	p4->SetAbility(PlayerObject::AbilityButton::Circle, static_cast<PlayerObject::Ability>(abilityId[1]));
+	p4->SetAbility(PlayerObject::AbilityButton::Cross, static_cast<PlayerObject::Ability>(abilityId[2]));
 	p4->SetSpriteInfo(spriteList.find("Shark_idle")->second);
 	p4->SetPosition(glm::vec3(-800.f, 700.f, 0));
 	p4->GetSpriteRenderer()->SetFrame(10);
@@ -274,7 +343,7 @@ void LevelShowcase::LevelInit()
 
 	//create Ui by PlayerObject
 	int playerSize = 4;
-	int count = 0;
+	count = 0;
 
 	if (playerSize >= 0) {
 
