@@ -569,26 +569,29 @@ void LevelShowcase::UpdateInput()
 							projectile->SetIsShooting(true);
 							players[i + playerNum]->SetHoldingProjectile(0);
 						}
+
+						// cancel aim
+						if (players[i + playerNum]->GetIsKnockback() == true || players[i + playerNum]->GetIsStun() == true) {
+							players[i + playerNum]->SetHoldingProjectile(0);
+							//players[i + playerNum]->SetIsShooting(false);
+							projectile->SetLifeTime(0);
+							players[i + playerNum]->SetIsAiming(false);
+							if (Joystick::GetButton(i, Joystick::Button::Circle))
+							{
+								players[i + playerNum]->SetAbilityCooldown(PlayerObject::AbilityButton::Circle, 6);
+							}
+							if (Joystick::GetButton(i, Joystick::Button::Cross))
+							{
+								players[i + playerNum]->SetAbilityCooldown(PlayerObject::AbilityButton::Cross, 6);
+							}
+							if (Joystick::GetButton(i, Joystick::Button::Triangle))
+							{
+								players[i + playerNum]->SetAbilityCooldown(PlayerObject::AbilityButton::Triangle, 6);
+							}
+						}
 					}
 
-					// cancel aim
-					if (players[i + playerNum]->GetIsKnockback() == true || players[i + playerNum]->GetIsStun() == true) {
-						players[i + playerNum]->SetHoldingProjectile(0);
-						projectile->SetLifeTime(0);
-						players[i + playerNum]->SetIsAiming(false);
-						if (Joystick::GetButton(i, Joystick::Button::Circle))
-						{
-							players[i + playerNum]->SetAbilityCooldown(PlayerObject::AbilityButton::Circle, 6);
-						}
-						if (Joystick::GetButton(i, Joystick::Button::Cross))
-						{
-							players[i + playerNum]->SetAbilityCooldown(PlayerObject::AbilityButton::Cross, 6);
-						}
-						if (Joystick::GetButton(i, Joystick::Button::Triangle))
-						{
-							players[i + playerNum]->SetAbilityCooldown(PlayerObject::AbilityButton::Triangle, 6);
-						}
-					}
+					
 				}
 			}
 
@@ -929,7 +932,8 @@ void LevelShowcase::UpdateProjectile()
 					players[projectile->GetOwner()->GetPlayerNumber()]->SetPosition(projectile->getPos());
 				}
 				players[projectile->GetOwner()->GetPlayerNumber()]->SetIsShooting(false);
-				objectsList.erase(objectsList.begin() + i);
+				projectile->SetIsActive(false);
+				//objectsList.erase(objectsList.begin() + i);
 
 			}
 
