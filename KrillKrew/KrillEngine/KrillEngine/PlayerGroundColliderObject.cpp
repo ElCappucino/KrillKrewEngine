@@ -14,6 +14,8 @@ PlayerGroundColliderObject::PlayerGroundColliderObject(PlayerObject* parent)
 
 	this->collider->Update(attackSize, attackPos);
 
+	this->colliderOffset = glm::vec2(0, -96.f);
+
 	SpritesheetInfo hitboxSprite = SpritesheetInfo("hitbox", "../Resource/Texture/marker01.png", 500, 500, 500, 500);
 
 	this->SetSpriteInfo(hitboxSprite);
@@ -80,12 +82,18 @@ void PlayerGroundColliderObject::SetPosition(glm::vec3 newPosition)
 {
 	this->pos = newPosition;
 }
-
+void PlayerGroundColliderObject::SetCollisionOffset(glm::vec2 newOffset)
+{
+	this->colliderOffset = newOffset;
+}
 Collider* PlayerGroundColliderObject::GetCollider()
 {
 	return this->collider;
 }
-
+glm::vec2 PlayerGroundColliderObject::GetColliderOffset() const
+{
+	return this->colliderOffset;
+}
 void PlayerGroundColliderObject::OnColliderEnter(Collider* other)
 {
 	

@@ -29,7 +29,8 @@ public:
 		Running,
 		Melee,
 		Shooting,
-		PlaceItem
+		PlaceItem,
+		FellDown
 	};
 
 	enum class Ability
@@ -164,6 +165,7 @@ public:
 	glm::vec2 GetCurrentDirection() const;
 	float GetStunDuration() const;
 	bool GetIsOnGround() const;
+	bool GetIsFell() const;
 	PlayerObject::Ability GetAbilityByButton(AbilityButton button) const;
 
 	void ClearAimingTile(TileObject* tile);

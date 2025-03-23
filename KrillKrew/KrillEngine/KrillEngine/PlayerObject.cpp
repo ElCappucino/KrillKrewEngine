@@ -23,7 +23,7 @@ PlayerObject::PlayerObject()
 	this->isAiming = false;
 	this->isFacingLeft = false;
 	this->isDashing = false;
-	this->isOnGround = false;
+	this->isOnGround = true;
 	this->isFell = false;
 
 	this->pos = glm::vec3(0, 0, 0);
@@ -482,10 +482,17 @@ float PlayerObject::GetStunDuration() const{
 	return durationStun;
 }
 
+bool PlayerObject::GetIsFell() const
+{
+	return this->isFell;
+}
+
 void PlayerObject::CheckIfOnGround()
 {
 	if (!isOnGround)
 	{
+		this->SetVelocity(0, 0, false, false);
 		this->isFell = true;
+		this->ChangeAnimationState(AnimationState::FellDown);
 	}
 }

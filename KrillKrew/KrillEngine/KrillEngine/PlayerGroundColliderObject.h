@@ -24,6 +24,7 @@ class PlayerGroundColliderObject : public EntityObject
 private:
 
 	PlayerObject* parent;
+	glm::vec2 colliderOffset;
 
 protected:
 
@@ -40,8 +41,10 @@ public:
 
 	virtual void SetSize(float sizeX, float sizeY);
 	virtual void SetPosition(glm::vec3 newPosition);
+	void SetCollisionOffset(glm::vec2 newOffset);
 
 	virtual Collider* GetCollider();
+	glm::vec2 GetColliderOffset() const;
 
 	virtual void OnColliderEnter(Collider* other);
 	virtual void OnColliderStay(Collider* other);
