@@ -190,6 +190,8 @@ private:
 	bool isPositiveXOld;
 	bool isPositiveYOld;
 
+	KrillSoundManager::SoundManager* soundManager;
+
 public:
 	virtual void LevelLoad();
 	virtual void LevelInit();

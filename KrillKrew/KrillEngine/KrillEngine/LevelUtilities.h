@@ -45,6 +45,7 @@
 #include "Shader.h"
 #include "Timer.h"
 #include "InfoStruct.h"
+#include "SoundManager.h"
 
 // Library
 #include <string>

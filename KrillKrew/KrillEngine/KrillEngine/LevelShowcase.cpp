@@ -36,6 +36,12 @@ void LevelShowcase::LevelLoad()
 
 	spriteList["Blobtile"] = SpritesheetInfo("Blobtile", "../Resource/Texture/tileset_01.png", 128, 128, 1664, 512);
 
+	soundManager = KrillSoundManager::SoundManager::GetInstance();
+
+	soundManager->LoadMusic("bgm_test", "../Resource/Audio/bgm_test.mp3");
+	soundManager->LoadSFX("hit_test", "../Resource/Audio/cute-pop-sfx.mp3");
+
+	soundManager->PlayMusic("bgm_test", true);
 	//cout << "Load Level" << endl;
 }
 
@@ -548,6 +554,7 @@ void LevelShowcase::UpdateInput()
 			{
 				players[playerNum]->ChangeAnimationState(PlayerObject::AnimationState::Melee);
 				players[playerNum]->HitAimingTile();
+				soundManager->PlaySFX("hit_test", false);
 			}
 
 			// players[i + playerNum]->Translate(players[i + playerNum]->GetVelocity());
