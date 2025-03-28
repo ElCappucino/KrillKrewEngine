@@ -11,6 +11,13 @@ private:
 	PlayerObject* players[4]; // add up to 4 players
 	int playerSize = 0;
 	int playerNum = 0;
+	int playerAbility[4][3] = {{-1, -1, -1}, {-1, -1, -1}, {-1, -1, -1}, {-1, -1, -1}};
+
+	int playerNumber = 4; // Change later
+	float uiWidth = 215.f;
+	float uiHeight = 100.f;
+	float posX = camera.GetCenterX() - (uiWidth * camera.GetCameraWidth() / SCREEN_WIDTH / 2.f) * (playerNumber - 1);
+	float posY = camera.GetCenterY() + ((uiHeight * camera.GetCameraHeight() / SCREEN_HEIGHT) / 2.f) * (playerNumber - 1);
 
 	OrthographicValue targetSceneProjection; // use for lerping between the current projection and this (target projection).
 	Camera camera;
@@ -43,5 +50,6 @@ public:
 	virtual void HandleMouse(int type, int x, int y);
 
 	void UpdateInput();
+	void UpdateUi();
 	void abilityToFile(const std::string& fileName, PlayerObject::Ability abilityId, int who);
 };

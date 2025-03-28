@@ -63,8 +63,8 @@ void GameEngine::Init(int width, int height)
 	KK_INFO("Initialized Logger! {0} {1}", f, s);
 
 	stateController = new GameStateController();
-	stateController->loadingState = GameState::GS_LEVELSHOWCASE;
-	//stateController->loadingState = GameState::GS_LEVELSELECTABILITY;
+	//stateController->loadingState = GameState::GS_LEVELSHOWCASE;
+	stateController->loadingState = GameState::GS_LEVELSELECTABILITY;
 	stateController->Init(GameState::GS_LEVELLOADING);
 }
 
