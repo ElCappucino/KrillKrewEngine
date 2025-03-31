@@ -26,10 +26,10 @@ public:
 	glm::vec3 velocity;
 	float lifeTime;
 	PlayerObject* playerOwner;
-	bool isCanKnockback;
+	bool CanKnockback;
 	TypeProjectile type;
 	bool isShooting;
-	bool isCanStun;
+	bool CanStun;
 
 	std::vector<TileObject*> TileInRange;
 
@@ -38,17 +38,16 @@ public:
 	~ProjectileObject();
 	void SetTexture(std::string path);
 	void Render(glm::mat4 globalModelTransform);
-
+	virtual void SetSize(float sizeX, float sizeY);
 	void SetVelocity(float axisX, float axisY, bool isPositiveX, bool isPositiveY);
 	void SetLifeTime(float lifeTime);
-	//void setNumOwner(int Num);
 	void SetOwner(PlayerObject* player);
 
 	glm::vec3 GetVelocity();
 	void ReduceLifeTime();
 	int GetLifetime();
-	void SetIsCanKnockback(bool isCanKnockback);
-	bool GetIsCanKnockback();
+	void SetCanKnockback(bool isCanKnockback);
+	bool GetCanKnockback();
 	PlayerObject* GetOwner();
 	void SetType(TypeProjectile Type);
 	TypeProjectile GetType();

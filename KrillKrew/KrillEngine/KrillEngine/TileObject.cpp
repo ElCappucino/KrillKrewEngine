@@ -191,6 +191,7 @@ void TileObject::Render(glm::mat4 globalModelTransform)
 void TileObject::SetSize(float sizeX, float sizeY)
 {
 	size = glm::vec3(sizeX, sizeY, 1);
+	this->collider->setColliderSize(size);
 	crackOverlay->SetSize(sizeX, sizeY);
 
 }

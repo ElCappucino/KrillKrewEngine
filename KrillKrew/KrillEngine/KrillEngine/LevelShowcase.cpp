@@ -606,7 +606,7 @@ void LevelShowcase::UpdateCollision()
 	}
 
 	// trap collider player
-	for (int i = 0; i < objectsList.size(); i++)
+	/*for (int i = 0; i < objectsList.size(); i++)
 	{
 		TrapObject* trap = dynamic_cast<TrapObject*>(objectsList[i]);
 		if (trap == nullptr)
@@ -622,7 +622,7 @@ void LevelShowcase::UpdateCollision()
 			PlayerObject* player2 = dynamic_cast<PlayerObject*>(objectsList[j]);
 			if (player2 != nullptr)
 			{
-				if (trap->GetNumOwner() != player2->GetPlayerNumber()) {
+				if (trap->GetPlayerNumber() != player2->GetPlayerNumber()) {
 					Collider col1 = *trap->GetCollider();
 					Collider col2 = *player2->GetCollider();
 
@@ -634,8 +634,8 @@ void LevelShowcase::UpdateCollision()
 
 					if (overlapX > 0 && overlapY > 0)
 					{
-						std::cout << "Trap :" << trap->GetNumOwner() << " hit " << "Player" << player2->GetPlayerNumber() << std::endl;
-						if (trap->GetIsCanKnockback()) {
+						std::cout << "Trap :" << trap->GetPlayerNumber() << " hit " << "Player" << player2->GetPlayerNumber() << std::endl;
+						if (trap->GetCanKnockback()) {
 							UpdateKnockback(trap, player2);
 							objectsList.erase(objectsList.begin() + i);
 						}
@@ -649,7 +649,7 @@ void LevelShowcase::UpdateCollision()
 				}
 			}
 		}
-	}
+	}*/
 	int entityCount = 0;
 	for (int i = 0; i < entityObjects.size(); i++)
 	{
@@ -749,123 +749,11 @@ void LevelShowcase::UpdateCollision()
 		entity1->GetCollider()->SetPreviousPos(entity1->getPos());
 	}
 
-	for (PlayerObject* player : players)
-	{
-		PlayerGroundColliderObject* groundCol = player->GetGroundColliderObject();
-
-		for (int j = 0; j < entityObjects.size(); j++)
-		{
-			TileObject* tile = dynamic_cast<TileObject*>(entityObjects[j]);
-
-			if (tile == nullptr)
-			{
-				continue;
-			}
-
-			Collider* col1 = groundCol->GetCollider();
-			Collider* col2 = tile->GetCollider();
-
-			float deltaX = groundCol->getPos().x - tile->getPos().x;
-			float deltaY = groundCol->getPos().y - tile->getPos().y;
-			glm::vec2 delta(abs(deltaX), abs(deltaY));
-
-			float halfSizeAbsX1 = abs(col1->GetHalfSize().x);
-			float halfSizeAbsX2 = abs(col2->GetHalfSize().x);
-
-			float halfSizeAbsY1 = abs(col1->GetHalfSize().y);
-			float halfSizeAbsY2 = abs(col2->GetHalfSize().y);
-
-			float overlapX = halfSizeAbsX1 + halfSizeAbsX2 - delta.x;
-
-			float overlapY = halfSizeAbsY1 + halfSizeAbsY2 - delta.y;
-
-			if (overlapX > 0 && overlapY > 0)
-			{
-
-				if (previousCollisions.find({ col1, col2 }) == previousCollisions.end())
-				{
-					groundCol->OnColliderEnter(tile->GetCollider());
-					// entity2->OnColliderEnter(entity1->GetCollider());
-				}
-				else
-				{
-
-					groundCol->OnColliderStay(tile->GetCollider());
-					// entity2->OnColliderStay(entity1->GetCollider());
-				}
-			}
-			else if (overlapX <= 0 || overlapY <= 0)
-			{
-				if (previousCollisions.find({ col1, col2 }) != previousCollisions.end())
-				{
-					groundCol->OnColliderExit(tile->GetCollider());
-					// entity2->OnColliderExit(entity1->GetCollider());
-				}
-			}
-
-			tile->GetCollider()->SetPreviousPos(tile->getPos());
-		}
-		groundCol->GetCollider()->SetPreviousPos(groundCol->getPos());
-	}
-
 	// previousCollisions = currentCollisions;
 	std::swap(previousCollisions, currentCollisions);
 	currentCollisions.clear();
 
-	//// projectile
-	//for (int i = 0; i < objectsList.size(); i++)
-	//{
-	//	ProjectileObject* projectile = dynamic_cast<ProjectileObject*>(objectsList[i]);
 
-	//	if (projectile == nullptr)
-	//	{
-	//		continue;
-	//	}
-
-	//	for (int j = 0; j < objectsList.size(); j++)
-	//	{
-	//		if (i == j)
-	//		{
-	//			continue;
-	//		}
-
-	//		PlayerObject* player = dynamic_cast<PlayerObject*>(objectsList[j]);
-
-	//		if (player != nullptr)
-	//		{
-	//			if (projectile->GetOwner()->GetPlayerNumber() != player->GetPlayerNumber())
-	//			{
-	//				Collider col1 = *projectile->GetCollider();
-	//				Collider col2 = *player->GetCollider();
-
-	//				glm::vec2 delta = glm::vec2(abs(projectile->getPos().x - player->getPos().x),
-	//					abs(projectile->getPos().y - player->getPos().y));
-
-	//				float overlapX = (abs(col1.GetHalfSize().x)) + (abs(col2.GetHalfSize().x)) - delta.x;
-	//				float overlapY = (abs(col1.GetHalfSize().y)) + (abs(col2.GetHalfSize().y)) - delta.y;
-
-	//				if (overlapX > 0 && overlapY > 0)
-	//				{
-	//					if (projectile->GetType() == ProjectileObject::TypeProjectile::Teleport) {
-	//						players[projectile->GetOwner()->GetPlayerNumber()]->SetPosition(projectile->getPos());
-	//					}
-	//					if (projectile->GetIsCanStun()) {
-	//						player->SetIsStun(true);
-	//						player->SetStunDuraion(5);
-	//					}
-	//					players[projectile->GetOwner()->GetPlayerNumber()]->SetIsShooting(false);
-	//					UpdateKnockback(projectile, player);
-	//					if (players[projectile->GetOwner()->GetPlayerNumber()]->GetHoldingProjectile() == projectile->GetType()) {
-	//						players[projectile->GetOwner()->GetPlayerNumber()]->SetIsAiming(false);
-	//						players[projectile->GetOwner()->GetPlayerNumber()]->SetHoldingProjectile(0);
-	//					}
-	//					objectsList.erase(objectsList.begin() + i);
-	//				}
-	//			}
-
-	//		}
-	//	}
-	//}
 	if (dt > 10)
 	{
 		for (int i = 0; i < 4; i++)
@@ -903,7 +791,7 @@ void LevelShowcase::UpdateProjectile()
 		//delete trap after use
 		TrapObject* trap = dynamic_cast<TrapObject*>(objectsList[i]);
 		if (trap != nullptr) {
-			if (trap->GetIsCanKnockback()) {
+			if (trap->GetCanKnockback()) {
 				objectsList.erase(objectsList.begin() + i);
 			}
 		}
@@ -998,90 +886,90 @@ void LevelShowcase::UpdateMovement()
 	}
 }
 
-void LevelShowcase::UpdateKnockback(DrawableObject* obj1, DrawableObject* obj2) 
-{
-	ProjectileObject* projectile = dynamic_cast<ProjectileObject*>(obj1);
-	TrapObject* trap = dynamic_cast<TrapObject*>(obj1);
-	PlayerObject* player = dynamic_cast<PlayerObject*>(obj2);
-
-	if (player != NULL && projectile != NULL && projectile->GetIsCanKnockback()) 
-	{
-		if (projectile->GetOwner()->GetPlayerNumber() != player->GetPlayerNumber()) 
-		{
-			player->SetIsKnockback(true);
-			player->SetKnockbackDuration(2);
-			glm::vec3 knockbackDirection = obj1->getPos() - player->getPos();
-
-			float knockbackDirectionX = knockbackDirection.x / 255;
-			float knockbackDirectionY = knockbackDirection.y / 255;
-			bool knockbackDirectionXisPositive = false;
-			bool knockbackDirectionYisPositive = false;
-			if (knockbackDirection.x < 0)
-			{
-				knockbackDirectionXisPositive = true;
-			}
-			else if (knockbackDirection.x > 0)
-			{
-				knockbackDirectionXisPositive = false;
-			}
-
-			if (knockbackDirection.y > 0)
-			{
-				knockbackDirectionYisPositive = false;
-			}
-			else if (knockbackDirection.y < 0)
-			{
-				knockbackDirectionYisPositive = true;
-			}
-
-			knockbackDirectionX = abs(knockbackDirectionX);
-			knockbackDirectionY = abs(knockbackDirectionY);
-
-
-			player->SetVelocity(knockbackDirectionX, knockbackDirectionY, knockbackDirectionXisPositive, knockbackDirectionYisPositive);
-			std::cout << knockbackDirectionY << std::endl;
-		}
-	}
-	if (player != NULL && trap != NULL && trap->GetIsCanKnockback()) 
-	{
-		if (trap->GetNumOwner() != player->GetPlayerNumber()) 
-		{
-			player->SetIsKnockback(true);
-			player->SetKnockbackDuration(2);
-			glm::vec3 knockbackDirection = obj1->getPos() - player->getPos();
-
-			float knockbackDirectionX = knockbackDirection.x / 255;
-			float knockbackDirectionY = knockbackDirection.y / 255;
-			bool knockbackDirectionXisPositive = false;
-			bool knockbackDirectionYisPositive = false;
-			if (knockbackDirection.x < 0)
-			{
-				knockbackDirectionXisPositive = true;
-			}
-			else if (knockbackDirection.x > 0)
-			{
-				knockbackDirectionXisPositive = false;
-			}
-
-			if (knockbackDirection.y > 0)
-			{
-				knockbackDirectionYisPositive = false;
-			}
-			else if (knockbackDirection.y < 0)
-			{
-				knockbackDirectionYisPositive = true;
-			}
-
-			knockbackDirectionX = abs(knockbackDirectionX);
-			knockbackDirectionY = abs(knockbackDirectionY);
-
-
-			player->SetVelocity(knockbackDirectionX, knockbackDirectionY, knockbackDirectionXisPositive, knockbackDirectionYisPositive);
-			std::cout << knockbackDirectionY << std::endl;
-		}
-	}
-
-}
+//void LevelShowcase::UpdateKnockback(DrawableObject* obj1, DrawableObject* obj2) 
+//{
+//	ProjectileObject* projectile = dynamic_cast<ProjectileObject*>(obj1);
+//	TrapObject* trap = dynamic_cast<TrapObject*>(obj1);
+//	PlayerObject* player = dynamic_cast<PlayerObject*>(obj2);
+//
+//	if (player != NULL && projectile != NULL && projectile->GetCanKnockback()) 
+//	{
+//		if (projectile->GetOwner()->GetPlayerNumber() != player->GetPlayerNumber()) 
+//		{
+//			player->SetIsKnockback(true);
+//			player->SetKnockbackDuration(2);
+//			glm::vec3 knockbackDirection = obj1->getPos() - player->getPos();
+//
+//			float knockbackDirectionX = knockbackDirection.x / 255;
+//			float knockbackDirectionY = knockbackDirection.y / 255;
+//			bool knockbackDirectionXisPositive = false;
+//			bool knockbackDirectionYisPositive = false;
+//			if (knockbackDirection.x < 0)
+//			{
+//				knockbackDirectionXisPositive = true;
+//			}
+//			else if (knockbackDirection.x > 0)
+//			{
+//				knockbackDirectionXisPositive = false;
+//			}
+//
+//			if (knockbackDirection.y > 0)
+//			{
+//				knockbackDirectionYisPositive = false;
+//			}
+//			else if (knockbackDirection.y < 0)
+//			{
+//				knockbackDirectionYisPositive = true;
+//			}
+//
+//			knockbackDirectionX = abs(knockbackDirectionX);
+//			knockbackDirectionY = abs(knockbackDirectionY);
+//
+//
+//			player->SetVelocity(knockbackDirectionX, knockbackDirectionY, knockbackDirectionXisPositive, knockbackDirectionYisPositive);
+//			std::cout << knockbackDirectionY << std::endl;
+//		}
+//	}
+//	if (player != NULL && trap != NULL && trap->GetCanKnockback()) 
+//	{
+//		if (trap->GetPlayerNumber() != player->GetPlayerNumber()) 
+//		{
+//			player->SetIsKnockback(true);
+//			player->SetKnockbackDuration(2);
+//			glm::vec3 knockbackDirection = obj1->getPos() - player->getPos();
+//
+//			float knockbackDirectionX = knockbackDirection.x / 255;
+//			float knockbackDirectionY = knockbackDirection.y / 255;
+//			bool knockbackDirectionXisPositive = false;
+//			bool knockbackDirectionYisPositive = false;
+//			if (knockbackDirection.x < 0)
+//			{
+//				knockbackDirectionXisPositive = true;
+//			}
+//			else if (knockbackDirection.x > 0)
+//			{
+//				knockbackDirectionXisPositive = false;
+//			}
+//
+//			if (knockbackDirection.y > 0)
+//			{
+//				knockbackDirectionYisPositive = false;
+//			}
+//			else if (knockbackDirection.y < 0)
+//			{
+//				knockbackDirectionYisPositive = true;
+//			}
+//
+//			knockbackDirectionX = abs(knockbackDirectionX);
+//			knockbackDirectionY = abs(knockbackDirectionY);
+//
+//
+//			player->SetVelocity(knockbackDirectionX, knockbackDirectionY, knockbackDirectionXisPositive, knockbackDirectionYisPositive);
+//			std::cout << knockbackDirectionY << std::endl;
+//		}
+//	}
+//
+//}
 
 void LevelShowcase::UpdateTime() {
 
@@ -1189,7 +1077,7 @@ void LevelShowcase::LevelDraw()
 			EntityObject* object = dynamic_cast<EntityObject*>(objectsList[i]);
 			if (object != nullptr)
 			{
-				object->GetCollider()->Update(object->getSize(), object->getPos());
+				object->GetCollider()->Update(object->GetCollider()->GetSize(), object->getPos());
 			}
 		}
 	}
@@ -1587,14 +1475,15 @@ void LevelShowcase::UsingAbility(int numPlayer, PlayerObject::AbilityButton butt
 				TNT(numPlayer, button);
 			}
 			else if (players[numPlayer]->GetIsTNT()) {
-				for (int i = 0; i < objectsList.size(); i++) // find tnt
+				for (int i = 0; i < entityObjects.size(); i++) // find tnt
 				{
-					TrapObject* realTnt = dynamic_cast<TrapObject*>(objectsList[i]);
+					TrapObject* realTnt = dynamic_cast<TrapObject*>(entityObjects[i]);
 					if (realTnt != NULL) {
-						if (realTnt->GetType() == TrapObject::TypeTrap::Tnt && realTnt->GetNumOwner() == numPlayer) {
-							realTnt->SetIsCanKnockback(true);
-							realTnt->SetIsActive(true);
-							realTnt->GetCollider()->Update(glm::vec3(500, 500, 0), realTnt->getPos());
+						if (realTnt->GetType() == TrapObject::TypeTrap::Tnt && realTnt->GetPlayerNumber() == numPlayer) {
+
+							realTnt->ExplodeTileInRange();
+							KK_TRACE("Press Again");
+							realTnt->isActivate = true;
 							players[numPlayer]->SetAbilityCooldown(button, 3);
 							players[numPlayer]->SetIsTNT(false);
 
@@ -1682,7 +1571,7 @@ void LevelShowcase::AimFireball(int numPlayer, PlayerObject::AbilityButton butto
 	projectile->SetLifeTime(9999);
 	projectile->SetOwner(players[numPlayer]);
 	projectile->SetType(ProjectileObject::TypeProjectile::Fireball);
-	projectile->SetIsCanKnockback(true);
+	projectile->SetCanKnockback(true);
 	projectile->SetIsCanStun(true);
 	projectile->SetIsShooting(false);
 	std::cout << "Owner " << projectile->GetOwner()->GetPlayerNumber() << std::endl;
@@ -1711,11 +1600,12 @@ void LevelShowcase::Trap(int numPlayer, PlayerObject::AbilityButton button) {
 	Trap->SetTexture(spriteList.find("Trap")->second.texture);
 	Trap->SetPosition(players[numPlayer]->getPos());
 	Trap->SetSize(128.f, -128.f);
-	Trap->SetNumOwner(players[numPlayer]->GetPlayerNumber());
+	Trap->SetPlayerNumber(players[numPlayer]->GetPlayerNumber());
 	Trap->SetType(TrapObject::TypeTrap::Trap);
 	Trap->SetIsActive(true);
 	//std::cout << "Owner " << Trap->getNumOwner() << std::endl;
 	objectsList.push_back(Trap);
+	entityObjects.push_back(Trap);
 	//std::cout << "place trap" << std::endl;
 }
 
@@ -1732,11 +1622,13 @@ void LevelShowcase::TNT(int numPlayer, PlayerObject::AbilityButton button) {
 	TNT->SetTexture(spriteList.find("TNT")->second.texture);
 	TNT->SetPosition(players[numPlayer]->getPos());
 	TNT->SetSize(128.f, -128.f);
-	TNT->SetNumOwner(players[numPlayer]->GetPlayerNumber());
+	TNT->GetCollider()->setColliderSize(glm::vec3(500.f, 500.f, 0));
+	TNT->SetPlayerNumber(players[numPlayer]->GetPlayerNumber());
 	TNT->SetType(TrapObject::TypeTrap::Tnt);
 	//TNT->setIsCanKnockback(true);
 	//std::cout << "Owner " << Trap->getNumOwner() << std::endl;
 	objectsList.push_back(TNT);
+	entityObjects.push_back(TNT);
 }
 
 void LevelShowcase::AimTeleport(int numPlayer, PlayerObject::AbilityButton button) {
@@ -1751,11 +1643,12 @@ void LevelShowcase::AimTeleport(int numPlayer, PlayerObject::AbilityButton butto
 	projectile->SetLifeTime(9999);
 	projectile->SetOwner(players[numPlayer]);
 	projectile->SetType(ProjectileObject::TypeProjectile::Teleport);
-	projectile->SetIsCanKnockback(false);
+	projectile->SetCanKnockback(false);
 	projectile->SetIsCanStun(false);
 	projectile->SetIsShooting(false);
 	std::cout << "Owner " << projectile->GetOwner()->GetPlayerNumber() << std::endl;
 	objectsList.push_back(projectile);
+	entityObjects.push_back(projectile);
 }
 
 void LevelShowcase::ShootTeleport(int numPlayer, PlayerObject::AbilityButton button) {
@@ -1785,11 +1678,12 @@ void LevelShowcase::AimBola(int numPlayer, PlayerObject::AbilityButton button) {
 	projectile->SetLifeTime(9999);
 	projectile->SetOwner(players[numPlayer]);
 	projectile->SetType(ProjectileObject::TypeProjectile::Bola);
-	projectile->SetIsCanKnockback(false);
+	projectile->SetCanKnockback(false);
 	projectile->SetIsCanStun(true);
 	projectile->SetIsShooting(false);
 	std::cout << "Owner " << projectile->GetOwner()->GetPlayerNumber() << std::endl;
 	objectsList.push_back(projectile);
+	entityObjects.push_back(projectile);
 }
 
 void LevelShowcase::ShootBola(int numPlayer, PlayerObject::AbilityButton button) {
@@ -1817,11 +1711,12 @@ void LevelShowcase::AimCleave(int numPlayer, PlayerObject::AbilityButton button)
 	projectile->SetLifeTime(9999);
 	projectile->SetOwner(players[numPlayer]);
 	projectile->SetType(ProjectileObject::TypeProjectile::Cleave);
-	projectile->SetIsCanKnockback(false);
+	projectile->SetCanKnockback(false);
 	projectile->SetIsCanStun(true);
 	projectile->SetIsShooting(false);
 	std::cout << "Owner " << projectile->GetOwner()->GetPlayerNumber() << std::endl;
 	objectsList.push_back(projectile);
+	entityObjects.push_back(projectile);
 	players[numPlayer]->SetAbilityCooldown(button, 2);
 }
 

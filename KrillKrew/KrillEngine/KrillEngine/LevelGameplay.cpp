@@ -499,7 +499,7 @@ void LevelGameplay::UpdateCollision()
 			PlayerObject* player2 = dynamic_cast<PlayerObject*>(objectsList[j]);
 			if (player2 != nullptr)
 			{
-				if (trap->GetNumOwner() != player2->GetPlayerNumber()) {
+				if (trap->GetPlayerNumber() != player2->GetPlayerNumber()) {
 					Collider col1 = *trap->GetCollider();
 					Collider col2 = *player2->GetCollider();
 
@@ -511,8 +511,8 @@ void LevelGameplay::UpdateCollision()
 
 					if (overlapX > 0 && overlapY > 0)
 					{
-						std::cout << "Trap :" << trap->GetNumOwner() << " hit " << "Player" << player2->GetPlayerNumber() << std::endl;
-						if (trap->GetIsCanKnockback()) {
+						std::cout << "Trap :" << trap->GetPlayerNumber() << " hit " << "Player" << player2->GetPlayerNumber() << std::endl;
+						if (trap->GetCanKnockback()) {
 							UpdateKnockback(trap, player2);
 							objectsList.erase(objectsList.begin() + i);
 						}
@@ -681,7 +681,7 @@ void LevelGameplay::UpdateProjectile()
 		//delete trap after use
 		TrapObject* trap = dynamic_cast<TrapObject*>(objectsList[i]);
 		if (trap != nullptr) {
-			if (trap->GetIsCanKnockback()) {
+			if (trap->GetCanKnockback()) {
 				objectsList.erase(objectsList.begin() + i);
 			}
 		}
@@ -775,7 +775,7 @@ void LevelGameplay::UpdateKnockback(DrawableObject* obj1, DrawableObject* obj2) 
 	TrapObject* trap = dynamic_cast<TrapObject*>(obj1);
 	PlayerObject* player = dynamic_cast<PlayerObject*>(obj2);
 	
-	if (player != NULL && projectile != NULL && projectile->GetIsCanKnockback()) {
+	if (player != NULL && projectile != NULL && projectile->GetCanKnockback()) {
 		if (projectile->GetOwner()->GetPlayerNumber() != player->GetPlayerNumber()) {
 			player->SetIsKnockback(true);
 			player->SetKnockbackDuration(2);
@@ -811,8 +811,8 @@ void LevelGameplay::UpdateKnockback(DrawableObject* obj1, DrawableObject* obj2) 
 			std::cout << knockbackDirectionY << std::endl;
 		}
 	}
-	if (player != NULL && trap != NULL && trap->GetIsCanKnockback()) {
-		if (trap->GetNumOwner() != player->GetPlayerNumber()) {
+	if (player != NULL && trap != NULL && trap->GetCanKnockback()) {
+		if (trap->GetPlayerNumber() != player->GetPlayerNumber()) {
 			player->SetIsKnockback(true);
 			player->SetKnockbackDuration(2);
 			glm::vec3 knockbackDirection = obj1->getPos() - player->getPos();
@@ -1028,10 +1028,11 @@ void LevelGameplay::UsingAbility(int numPlayer, PlayerObject::AbilityButton butt
 				{
 					TrapObject* realTnt = dynamic_cast<TrapObject*>(objectsList[i]);
 					if(realTnt != NULL){
-						if (realTnt->GetType() == TrapObject::TypeTrap::Tnt && realTnt->GetNumOwner() == numPlayer) {
-							realTnt->SetIsCanKnockback(true);
+						if (realTnt->GetType() == TrapObject::TypeTrap::Tnt && realTnt->GetPlayerNumber() == numPlayer) {
+							realTnt->SetCanKnockback(true);
 							realTnt->SetIsActive(true);
 							realTnt->GetCollider()->Update(glm::vec3(500, 500, 0), realTnt->getPos());
+							realTnt->ExplodeTileInRange();
 							players[numPlayer]->SetAbilityCooldown(button, 3);
 							players[numPlayer]->SetIsTNT(false);
 							
@@ -1119,7 +1120,7 @@ void LevelGameplay::AimFireball(int numPlayer, PlayerObject::AbilityButton butto
 	projectile->SetLifeTime(9999);
 	projectile->SetOwner(players[numPlayer]);
 	projectile->SetType(ProjectileObject::TypeProjectile::Fireball);
-	projectile->SetIsCanKnockback(true);
+	projectile->SetCanKnockback(true);
 	projectile->SetIsCanStun(true);
 	projectile->SetIsShooting(false);
 	std::cout << "Owner " << projectile->GetOwner()->GetPlayerNumber() << std::endl;
@@ -1147,7 +1148,7 @@ void LevelGameplay::Trap(int numPlayer, PlayerObject::AbilityButton button) {
 	Trap->SetTexture(spriteList.find("Trap")->second.texture);
 	Trap->SetPosition(players[numPlayer]->getPos());
 	Trap->SetSize(128.f, -128.f);
-	Trap->SetNumOwner(players[numPlayer]->GetPlayerNumber());
+	Trap->SetPlayerNumber(players[numPlayer]->GetPlayerNumber());
 	Trap->SetType(TrapObject::TypeTrap::Trap);
 	Trap->SetIsActive(true);
 	//std::cout << "Owner " << Trap->getNumOwner() << std::endl;
@@ -1168,7 +1169,7 @@ void LevelGameplay::TNT(int numPlayer, PlayerObject::AbilityButton button) {
 	TNT->SetTexture(spriteList.find("TNT")->second.texture);
 	TNT->SetPosition(players[numPlayer]->getPos());
 	TNT->SetSize(128.f, -128.f);
-	TNT->SetNumOwner(players[numPlayer]->GetPlayerNumber());
+	TNT->SetPlayerNumber(players[numPlayer]->GetPlayerNumber());
 	TNT->SetType(TrapObject::TypeTrap::Tnt);
 	//TNT->setIsCanKnockback(true);
 	//std::cout << "Owner " << Trap->getNumOwner() << std::endl;
@@ -1187,7 +1188,7 @@ void LevelGameplay::AimTeleport(int numPlayer, PlayerObject::AbilityButton butto
 	projectile->SetLifeTime(9999);
 	projectile->SetOwner(players[numPlayer]);
 	projectile->SetType(ProjectileObject::TypeProjectile::Teleport);
-	projectile->SetIsCanKnockback(false);
+	projectile->SetCanKnockback(false);
 	projectile->SetIsCanStun(false);
 	projectile->SetIsShooting(false);
 	std::cout << "Owner " << projectile->GetOwner()->GetPlayerNumber() << std::endl;
@@ -1221,7 +1222,7 @@ void LevelGameplay::AimBola(int numPlayer, PlayerObject::AbilityButton button) {
 	projectile->SetLifeTime(9999);
 	projectile->SetOwner(players[numPlayer]);
 	projectile->SetType(ProjectileObject::TypeProjectile::Bola);
-	projectile->SetIsCanKnockback(false);
+	projectile->SetCanKnockback(false);
 	projectile->SetIsCanStun(true);
 	projectile->SetIsShooting(false);
 	std::cout << "Owner " << projectile->GetOwner()->GetPlayerNumber() << std::endl;
@@ -1253,7 +1254,7 @@ void LevelGameplay::AimCleave(int numPlayer, PlayerObject::AbilityButton button)
 	projectile->SetLifeTime(9999);
 	projectile->SetOwner(players[numPlayer]);
 	projectile->SetType(ProjectileObject::TypeProjectile::Cleave);
-	projectile->SetIsCanKnockback(false);
+	projectile->SetCanKnockback(false);
 	projectile->SetIsCanStun(true);
 	projectile->SetIsShooting(false);
 	std::cout << "Owner " << projectile->GetOwner()->GetPlayerNumber() << std::endl;

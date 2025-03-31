@@ -7,6 +7,7 @@ EntityObject::EntityObject()
 {
 	isAnimated = false;
 	collider = new Collider(Collider::Trigger, this);
+	collider->setColliderSize(this->size);
 	spriteRenderer = new SpriteRenderer("");
 	this->pos = glm::vec3(0, 0, 0);
 
@@ -67,7 +68,11 @@ void EntityObject::Render(glm::mat4 globalModelTransform)
 	}
 }
 
-
+void EntityObject::SetSize(float sizeX, float sizeY)
+{
+	size = glm::vec3(sizeX, sizeY, 1);
+	this->collider->setColliderSize(size);
+}
 Collider* EntityObject::GetCollider()
 {
 	return collider;

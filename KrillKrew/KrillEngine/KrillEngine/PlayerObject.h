@@ -14,6 +14,8 @@
 #include "UiObject.h"
 #include "EntityObject.h"
 #include "PlayerGroundColliderObject.h"
+#include "ProjectileObject.h"
+#include "TrapObject.h"
 
 class PlayerHitboxObject;
 class TileObject;
@@ -180,4 +182,6 @@ public:
 	bool GetIsStun();
 
 	void CheckIfOnGround();
+
+	void ApplyKnockback(EntityObject* obj);
 };

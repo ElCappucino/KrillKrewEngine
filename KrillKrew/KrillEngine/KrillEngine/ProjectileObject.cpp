@@ -8,7 +8,7 @@ ProjectileObject::ProjectileObject()
 	collider = new Collider(Collider::Trigger, this);
 	this->pos = glm::vec3(0, 0, 0);
 	this->playerOwner = nullptr;
-
+	
 	this->orderingLayer = 3;
 }
 
@@ -72,7 +72,11 @@ void ProjectileObject::SetVelocity(float axisX, float axisY, bool isPositiveX, b
 	velocity = glm::vec3(axisX * 5.f, axisY * 5.f, 0);
 
 }
-
+void ProjectileObject::SetSize(float sizeX, float sizeY)
+{
+	size = glm::vec3(sizeX, sizeY, 1);
+	this->collider->setColliderSize(size);
+}
 glm::vec3 ProjectileObject::GetVelocity() 
 {
 	return velocity;
@@ -114,8 +118,6 @@ void ProjectileObject::AddTileInRange(TileObject* tile)
 }
 void ProjectileObject::DeleteTileInRange(TileObject* tile)
 {
-	
-
 	auto clearTile = std::find(TileInRange.begin(), TileInRange.end(), tile);
 
 	// KK_INFO("clearTile");
@@ -186,7 +188,7 @@ void ProjectileObject::OnColliderEnter(Collider* other)
 				{
 					KK_ERROR("This is not fireball");
 				}
-
+				player->ApplyKnockback(this);
 				this->isActive = false;
 
 				
@@ -245,12 +247,12 @@ PlayerObject* ProjectileObject::GetOwner()
 	return playerOwner;
 }
 
-void ProjectileObject::SetIsCanKnockback(bool isCanKnockback) {
-	this->isCanKnockback = isCanKnockback;
+void ProjectileObject::SetCanKnockback(bool isCanKnockback) {
+	this->CanKnockback = isCanKnockback;
 }
 
-bool ProjectileObject::GetIsCanKnockback() {
-	return isCanKnockback;
+bool ProjectileObject::GetCanKnockback() {
+	return CanKnockback;
 }
 
 void ProjectileObject::SetType(TypeProjectile Type) {
@@ -269,9 +271,9 @@ bool ProjectileObject::GetIsShooting() {
 }
 
 void ProjectileObject::SetIsCanStun(bool isCanStun) {
-	this->isCanStun = isCanStun;
+	this->CanStun = isCanStun;
 }
 
 bool ProjectileObject::GetIsCanStun() {
-	return isCanStun;
+	return CanStun;
 }
