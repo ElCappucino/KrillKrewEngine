@@ -27,9 +27,11 @@ public:
 	float lifeTime;
 	PlayerObject* playerOwner;
 	bool isCanKnockback;
-	int type;
+	TypeProjectile type;
 	bool isShooting;
 	bool isCanStun;
+
+	std::vector<TileObject*> TileInRange;
 
 public:
 	ProjectileObject();
@@ -48,12 +50,16 @@ public:
 	void SetIsCanKnockback(bool isCanKnockback);
 	bool GetIsCanKnockback();
 	PlayerObject* GetOwner();
-	void SetType(int Type);
-	int GetType();
+	void SetType(TypeProjectile Type);
+	TypeProjectile GetType();
 	void SetIsShooting(bool isShooting);
 	bool GetIsShooting();
 	void SetIsCanStun(bool isCanStun);
 	bool GetIsCanStun();
+
+	void AddTileInRange(TileObject* tile);
+	void DeleteTileInRange(TileObject* tile);
+	void ExplodeTileInRange();
 
 	virtual Collider* GetCollider();
 

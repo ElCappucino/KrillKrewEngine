@@ -96,14 +96,19 @@ glm::vec2 PlayerGroundColliderObject::GetColliderOffset() const
 }
 void PlayerGroundColliderObject::OnColliderEnter(Collider* other)
 {
-	
+	TileObject* tile = dynamic_cast<TileObject*>(other->GetParent());
+	if (tile != nullptr && tile->GetIsBroke() == false)
+	{
+		// KK_TRACE("Player {0} is On Ground", this->parent->GetPlayerNumber());
+		this->parent->SetIsOnGround(true);
+	}
 }
 void PlayerGroundColliderObject::OnColliderStay(Collider* other)
 {
 	TileObject* tile = dynamic_cast<TileObject*>(other->GetParent());
 	if (tile != nullptr && tile->GetIsBroke() == false)
 	{
-		// KK_TRACE("On Ground");
+		// KK_TRACE("Player {0} is On Ground", this->parent->GetPlayerNumber());
 		this->parent->SetIsOnGround(true);
 	}
 }

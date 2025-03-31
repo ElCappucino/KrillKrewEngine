@@ -355,6 +355,14 @@ void LevelShowcase::LevelUpdate()
 		}
 	}
 
+	for (int i = 0; i < entityObjects.size(); i++)
+	{
+		if (entityObjects[i]->GetIsActive() == false)
+		{
+			entityObjects.erase(entityObjects.begin() + i);
+		}
+	}
+
 	UpdateInput();
 
 	for (int i = 0; i < playerSize; i++) {
@@ -380,6 +388,9 @@ void LevelShowcase::LevelUpdate()
 		}
 	}
 
+	// slowness
+	UpdateMovement();
+
 	// projectile collider player
 	UpdateCollision();
 
@@ -389,8 +400,7 @@ void LevelShowcase::LevelUpdate()
 	// reduce cooldown skill
 	UpdateCooldown();
 
-	// slowness
-	UpdateMovement();
+	
 
 	//Ui Skills
 	UpdateUI();
@@ -739,64 +749,123 @@ void LevelShowcase::UpdateCollision()
 		entity1->GetCollider()->SetPreviousPos(entity1->getPos());
 	}
 
-	// previousCollisions = currentCollisions;
-	std::swap(previousCollisions, currentCollisions);
-	currentCollisions.clear();
-
-	// projectile
-	for (int i = 0; i < objectsList.size(); i++)
+	for (PlayerObject* player : players)
 	{
-		ProjectileObject* projectile = dynamic_cast<ProjectileObject*>(objectsList[i]);
+		PlayerGroundColliderObject* groundCol = player->GetGroundColliderObject();
 
-		if (projectile == nullptr)
+		for (int j = 0; j < entityObjects.size(); j++)
 		{
-			continue;
-		}
+			TileObject* tile = dynamic_cast<TileObject*>(entityObjects[j]);
 
-		for (int j = 0; j < objectsList.size(); j++)
-		{
-			if (i == j)
+			if (tile == nullptr)
 			{
 				continue;
 			}
 
-			PlayerObject* player = dynamic_cast<PlayerObject*>(objectsList[j]);
+			Collider* col1 = groundCol->GetCollider();
+			Collider* col2 = tile->GetCollider();
 
-			if (player != nullptr)
+			float deltaX = groundCol->getPos().x - tile->getPos().x;
+			float deltaY = groundCol->getPos().y - tile->getPos().y;
+			glm::vec2 delta(abs(deltaX), abs(deltaY));
+
+			float halfSizeAbsX1 = abs(col1->GetHalfSize().x);
+			float halfSizeAbsX2 = abs(col2->GetHalfSize().x);
+
+			float halfSizeAbsY1 = abs(col1->GetHalfSize().y);
+			float halfSizeAbsY2 = abs(col2->GetHalfSize().y);
+
+			float overlapX = halfSizeAbsX1 + halfSizeAbsX2 - delta.x;
+
+			float overlapY = halfSizeAbsY1 + halfSizeAbsY2 - delta.y;
+
+			if (overlapX > 0 && overlapY > 0)
 			{
-				if (projectile->GetOwner()->GetPlayerNumber() != player->GetPlayerNumber())
+
+				if (previousCollisions.find({ col1, col2 }) == previousCollisions.end())
 				{
-					Collider col1 = *projectile->GetCollider();
-					Collider col2 = *player->GetCollider();
-
-					glm::vec2 delta = glm::vec2(abs(projectile->getPos().x - player->getPos().x),
-						abs(projectile->getPos().y - player->getPos().y));
-
-					float overlapX = (abs(col1.GetHalfSize().x)) + (abs(col2.GetHalfSize().x)) - delta.x;
-					float overlapY = (abs(col1.GetHalfSize().y)) + (abs(col2.GetHalfSize().y)) - delta.y;
-
-					if (overlapX > 0 && overlapY > 0)
-					{
-						if (projectile->GetType() == ProjectileObject::TypeProjectile::Teleport) {
-							players[projectile->GetOwner()->GetPlayerNumber()]->SetPosition(projectile->getPos());
-						}
-						if (projectile->GetIsCanStun()) {
-							player->SetIsStun(true);
-							player->SetStunDuraion(5);
-						}
-						players[projectile->GetOwner()->GetPlayerNumber()]->SetIsShooting(false);
-						UpdateKnockback(projectile, player);
-						if (players[projectile->GetOwner()->GetPlayerNumber()]->GetHoldingProjectile() == projectile->GetType()) {
-							players[projectile->GetOwner()->GetPlayerNumber()]->SetIsAiming(false);
-							players[projectile->GetOwner()->GetPlayerNumber()]->SetHoldingProjectile(0);
-						}
-						objectsList.erase(objectsList.begin() + i);
-					}
+					groundCol->OnColliderEnter(tile->GetCollider());
+					// entity2->OnColliderEnter(entity1->GetCollider());
 				}
+				else
+				{
 
+					groundCol->OnColliderStay(tile->GetCollider());
+					// entity2->OnColliderStay(entity1->GetCollider());
+				}
 			}
+			else if (overlapX <= 0 || overlapY <= 0)
+			{
+				if (previousCollisions.find({ col1, col2 }) != previousCollisions.end())
+				{
+					groundCol->OnColliderExit(tile->GetCollider());
+					// entity2->OnColliderExit(entity1->GetCollider());
+				}
+			}
+
+			tile->GetCollider()->SetPreviousPos(tile->getPos());
 		}
+		groundCol->GetCollider()->SetPreviousPos(groundCol->getPos());
 	}
+
+	// previousCollisions = currentCollisions;
+	std::swap(previousCollisions, currentCollisions);
+	currentCollisions.clear();
+
+	//// projectile
+	//for (int i = 0; i < objectsList.size(); i++)
+	//{
+	//	ProjectileObject* projectile = dynamic_cast<ProjectileObject*>(objectsList[i]);
+
+	//	if (projectile == nullptr)
+	//	{
+	//		continue;
+	//	}
+
+	//	for (int j = 0; j < objectsList.size(); j++)
+	//	{
+	//		if (i == j)
+	//		{
+	//			continue;
+	//		}
+
+	//		PlayerObject* player = dynamic_cast<PlayerObject*>(objectsList[j]);
+
+	//		if (player != nullptr)
+	//		{
+	//			if (projectile->GetOwner()->GetPlayerNumber() != player->GetPlayerNumber())
+	//			{
+	//				Collider col1 = *projectile->GetCollider();
+	//				Collider col2 = *player->GetCollider();
+
+	//				glm::vec2 delta = glm::vec2(abs(projectile->getPos().x - player->getPos().x),
+	//					abs(projectile->getPos().y - player->getPos().y));
+
+	//				float overlapX = (abs(col1.GetHalfSize().x)) + (abs(col2.GetHalfSize().x)) - delta.x;
+	//				float overlapY = (abs(col1.GetHalfSize().y)) + (abs(col2.GetHalfSize().y)) - delta.y;
+
+	//				if (overlapX > 0 && overlapY > 0)
+	//				{
+	//					if (projectile->GetType() == ProjectileObject::TypeProjectile::Teleport) {
+	//						players[projectile->GetOwner()->GetPlayerNumber()]->SetPosition(projectile->getPos());
+	//					}
+	//					if (projectile->GetIsCanStun()) {
+	//						player->SetIsStun(true);
+	//						player->SetStunDuraion(5);
+	//					}
+	//					players[projectile->GetOwner()->GetPlayerNumber()]->SetIsShooting(false);
+	//					UpdateKnockback(projectile, player);
+	//					if (players[projectile->GetOwner()->GetPlayerNumber()]->GetHoldingProjectile() == projectile->GetType()) {
+	//						players[projectile->GetOwner()->GetPlayerNumber()]->SetIsAiming(false);
+	//						players[projectile->GetOwner()->GetPlayerNumber()]->SetHoldingProjectile(0);
+	//					}
+	//					objectsList.erase(objectsList.begin() + i);
+	//				}
+	//			}
+
+	//		}
+	//	}
+	//}
 	if (dt > 10)
 	{
 		for (int i = 0; i < 4; i++)
@@ -1617,6 +1686,7 @@ void LevelShowcase::AimFireball(int numPlayer, PlayerObject::AbilityButton butto
 	projectile->SetIsCanStun(true);
 	projectile->SetIsShooting(false);
 	std::cout << "Owner " << projectile->GetOwner()->GetPlayerNumber() << std::endl;
+	entityObjects.push_back(projectile);
 	objectsList.push_back(projectile);
 	//objectsList.push_back(projectile->GetCollider()->GetGizmos());
 }

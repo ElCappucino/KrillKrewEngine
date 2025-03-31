@@ -491,6 +491,10 @@ void PlayerObject::CheckIfOnGround()
 {
 	if (!isOnGround)
 	{
+		std::cout << "Player is not on ground. groundCheckCollider Pos = " << this->GetGroundColliderObject()->getPos().x << ", " 
+																			<< this->GetGroundColliderObject()->getPos().y << ", " 
+																			<< this->GetGroundColliderObject()->getPos().z << std::endl;
+		//KK_TRACE("Player is not on ground. groundCheckCollider Pos = {0}", this->GetGroundColliderObject()->getPos());
 		this->SetVelocity(0, 0, false, false);
 		this->isFell = true;
 		this->ChangeAnimationState(AnimationState::FellDown);
