@@ -215,7 +215,8 @@ public:
 	void GroundTileRefactor();
 	void TileImport(std::array<std::array<int, MAP_WIDTH>, MAP_HEIGHT> &TileBuffer, std::string fileName);
 
-	void UsingAbility(int numPlayer, PlayerObject::AbilityButton button);
+	void UsingAbilityKeyDown(int numPlayer, PlayerObject::AbilityButton button);
+	void UsingAbilityKeyUp(int numPlayer, PlayerObject::AbilityButton button);
 	void AimFireball(int numPlayer, PlayerObject::AbilityButton button);
 	void ShootFireball(int numPlayer, PlayerObject::AbilityButton button);
 	void Trap(int numPlayer, PlayerObject::AbilityButton button);
