@@ -7,6 +7,10 @@ class LevelSelectAbility : public Level
 {
 private:
 	std::vector<DrawableObject*> objectsList;
+	std::vector<DrawableObject*> playerHoverList;
+	std::vector<DrawableObject*> SkillBoxList;
+	std::vector<UiObject*> playerIconList;
+	std::map<int, std::vector<UiObject*>> playerIconSkillList;
 	std::map<std::string, SpritesheetInfo> spriteList;
 	PlayerObject* players[4]; // add up to 4 players
 	int playerSize = 0;
@@ -18,6 +22,11 @@ private:
 	float uiHeight = 100.f;
 	float posX = camera.GetCenterX() - (uiWidth * camera.GetCameraWidth() / SCREEN_WIDTH / 2.f) * (playerNumber - 1);
 	float posY = camera.GetCenterY() + ((uiHeight * camera.GetCameraHeight() / SCREEN_HEIGHT) / 2.f) * (playerNumber - 1);
+	bool playerMove[4] = { false };
+	int playerWhere[4] = { 0 };
+	int playerHoverPosX = 60;
+	int playerHoverPosY = 35;
+	int ready[4] = { 0 };
 
 	OrthographicValue targetSceneProjection; // use for lerping between the current projection and this (target projection).
 	Camera camera;
