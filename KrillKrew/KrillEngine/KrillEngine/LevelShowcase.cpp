@@ -264,6 +264,11 @@ void LevelShowcase::LevelInit()
 	p2->SetAbility(PlayerObject::AbilityButton::Triangle, static_cast<PlayerObject::Ability>(abilityId[0]));
 	p2->SetAbility(PlayerObject::AbilityButton::Circle, static_cast<PlayerObject::Ability>(abilityId[1]));
 	p2->SetAbility(PlayerObject::AbilityButton::Cross, static_cast<PlayerObject::Ability>(abilityId[2]));
+
+	/*KK_TRACE("Ability 1 : {0}", static_cast<int>(p2->GetAbilityByButton(PlayerObject::AbilityButton::Triangle)));
+	KK_TRACE("Ability 2 : {0}", static_cast<int>(p2->GetAbilityByButton(PlayerObject::AbilityButton::Circle)));
+	KK_TRACE("Ability 3 : {0}", static_cast<int>(p2->GetAbilityByButton(PlayerObject::AbilityButton::Cross)));*/
+
 	p2->SetSpriteInfo(spriteList.find("Squid_idle")->second);
 	p2->SetPosition(glm::vec3(400.f, 400.f, 0));
 	p2->GetSpriteRenderer()->SetFrame(10);
@@ -487,6 +492,14 @@ void LevelShowcase::LevelUpdate()
 	UpdateUI();
 
 	GroundTileRefactor();
+
+	/*KK_TRACE("player 1 Ability 1 : {0}", static_cast<int>(players[0]->GetAbilityByButton(PlayerObject::AbilityButton::Triangle)));
+	KK_TRACE("player 1 Ability 2 : {0}", static_cast<int>(players[0]->GetAbilityByButton(PlayerObject::AbilityButton::Circle)));
+	KK_TRACE("player 1 Ability 3 : {0}", static_cast<int>(players[0]->GetAbilityByButton(PlayerObject::AbilityButton::Cross)));
+
+	KK_TRACE("player 2 Ability 1 : {0}", static_cast<int>(players[1]->GetAbilityByButton(PlayerObject::AbilityButton::Triangle)));
+	KK_TRACE("player 2 Ability 2 : {0}", static_cast<int>(players[1]->GetAbilityByButton(PlayerObject::AbilityButton::Circle)));
+	KK_TRACE("player 2 Ability 3 : {0}", static_cast<int>(players[1]->GetAbilityByButton(PlayerObject::AbilityButton::Cross)));*/
 
 	std::sort(objectsList.begin(), objectsList.end(), compareLayer);
 }
@@ -1158,30 +1171,30 @@ void LevelShowcase::LevelDraw()
 					Bola = 5,
 					Cleave = 6*/
 
-				for (int j = 0; j < 3; j++)
-				{
-					ImGui::PushID(j);
+				//for (int j = 0; j < 3; j++)
+				//{
+				//	ImGui::PushID(j);
 
 
-					ImGui::Text("skill %d", j);
-					ImGui::Text("ability %d cooldown: %.2f", i ,players[i]->GetCooldown(static_cast<PlayerObject::AbilityButton>(j)));
-					ImGui::RadioButton("Fireball", &playersSkill[i][j], 0);
-					ImGui::SameLine();
-					ImGui::RadioButton("Trap", &playersSkill[i][j], 1);
-					ImGui::SameLine();
-					ImGui::RadioButton("Dash", &playersSkill[i][j], 2);
-					//ImGui::SameLine();
-					ImGui::RadioButton("TNT", &playersSkill[i][j], 3);
-					ImGui::SameLine();
-					ImGui::RadioButton("Teleport", &playersSkill[i][j], 4);
-					ImGui::SameLine();
-					ImGui::RadioButton("Bola", &playersSkill[i][j], 5);
-					ImGui::SameLine();
-					ImGui::RadioButton("Cleave", &playersSkill[i][j], 6);
-					ImGui::SeparatorText("");
+				//	ImGui::Text("skill %d", j);
+				//	ImGui::Text("ability %d cooldown: %.2f", i ,players[i]->GetCooldown(static_cast<PlayerObject::AbilityButton>(j)));
+				//	ImGui::RadioButton("Fireball", &playersSkill[i][j], 0);
+				//	ImGui::SameLine();
+				//	ImGui::RadioButton("Trap", &playersSkill[i][j], 1);
+				//	ImGui::SameLine();
+				//	ImGui::RadioButton("Dash", &playersSkill[i][j], 2);
+				//	//ImGui::SameLine();
+				//	ImGui::RadioButton("TNT", &playersSkill[i][j], 3);
+				//	ImGui::SameLine();
+				//	ImGui::RadioButton("Teleport", &playersSkill[i][j], 4);
+				//	ImGui::SameLine();
+				//	ImGui::RadioButton("Bola", &playersSkill[i][j], 5);
+				//	ImGui::SameLine();
+				//	ImGui::RadioButton("Cleave", &playersSkill[i][j], 6);
+				//	ImGui::SeparatorText("");
 
-					ImGui::PopID();
-				}
+				//	ImGui::PopID();
+				//}
 				ImGui::EndTabItem();
 			}
 			
@@ -1191,7 +1204,7 @@ void LevelShowcase::LevelDraw()
 		ImGui::EndTabBar();
 	}
 	
-	for (int i = 0; i < playerSize; i++)
+	/*for (int i = 0; i < playerSize; i++)
 	{
 		for (int j = 0; j < 3; j++)
 		{
@@ -1201,7 +1214,7 @@ void LevelShowcase::LevelDraw()
 				static_cast<PlayerObject::Ability>(playersSkill[i][j])
 			);
 		}
-	}
+	}*/
 
 	// Rendering
 	ImGui::Render();
