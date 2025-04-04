@@ -23,7 +23,7 @@ PlayerObject::PlayerObject()
 	this->isAiming = false;
 	this->isFacingLeft = false;
 	this->isDashing = false;
-	this->isOnGround = false;
+	this->isOnGround = true;
 	this->isFell = false;
 
 	this->pos = glm::vec3(0, 0, 0);
@@ -37,6 +37,8 @@ PlayerObject::PlayerObject()
 
 	this->attackCollider = new PlayerHitboxObject(this);
 	this->groundCheckCollider = new PlayerGroundColliderObject(this);
+
+	this->orderingLayer = 1;
 }
 
 PlayerObject::~PlayerObject()
@@ -177,9 +179,10 @@ void PlayerObject::SetCurrentDirection(glm::vec2 dir)
 {
 	this->currDirection = dir;
 }
-void PlayerObject::ReduceAbilityCooldown(int button)
+void PlayerObject::ReduceAbilityCooldown(int button, float dt)
 {
-	abilityCooldown[button] -= 1;
+	abilityCooldown[button] -= dt;
+	if (abilityCooldown[button] <= 0) { abilityCooldown[button] = 0; }
 	// KK_TRACE("Reduce Cooldown Skill: {0} Cooldown {1}", button, GetCooldown(button));
 }
 void PlayerObject::ReduceSlowDuration()
@@ -414,7 +417,7 @@ void PlayerObject::SetIsKnockback(bool isKnockback) {
 	this->isKnockback = isKnockback;
 }
 
-void PlayerObject::SetKnockbackDuration(int time){
+void PlayerObject::SetKnockbackDuration(int time) {
 	durationKnockback = time;
 }
 
@@ -423,7 +426,7 @@ void PlayerObject::SetIsOnGround(bool isOnGround)
 	this->isOnGround = isOnGround;
 }
 
-void PlayerObject::ReduceKnockbackDuration(){
+void PlayerObject::ReduceKnockbackDuration() {
 	durationKnockback -= 1;
 	if (durationKnockback <= 0)
 	{
@@ -435,7 +438,7 @@ bool PlayerObject::GetIsKnockback() {
 	return isKnockback;
 }
 
-float PlayerObject::GetDurationKnockback(){
+float PlayerObject::GetDurationKnockback() {
 	return durationKnockback;
 }
 
@@ -475,14 +478,71 @@ void PlayerObject::ReduceStunDuration() {
 	}
 }
 
-float PlayerObject::GetStunDuration() const{
+float PlayerObject::GetStunDuration() const {
 	return durationStun;
+}
+
+bool PlayerObject::GetIsFell() const
+{
+	return this->isFell;
 }
 
 void PlayerObject::CheckIfOnGround()
 {
 	if (!isOnGround)
 	{
+		std::cout << "Player is not on ground. groundCheckCollider Pos = " << this->GetGroundColliderObject()->getPos().x << ", "
+			<< this->GetGroundColliderObject()->getPos().y << ", "
+			<< this->GetGroundColliderObject()->getPos().z << std::endl;
+		//KK_TRACE("Player is not on ground. groundCheckCollider Pos = {0}", this->GetGroundColliderObject()->getPos());
+		this->SetVelocity(0, 0, false, false);
 		this->isFell = true;
+		this->ChangeAnimationState(AnimationState::FellDown);
 	}
+}
+
+void PlayerObject::ApplyKnockback(EntityObject* obj)
+{
+	ProjectileObject* projectile = dynamic_cast<ProjectileObject*>(obj);
+	TrapObject* trap = dynamic_cast<TrapObject*>(obj);
+
+	if ((projectile != nullptr	&& projectile->GetCanKnockback()	&& projectile->GetOwner()->GetPlayerNumber() != playerNumber) || 
+		(trap != nullptr		&& trap->GetCanKnockback()			&& trap->GetPlayerNumber() != playerNumber)) // check if it is projectile or trap
+	{
+		this->SetIsKnockback(true);
+		this->SetKnockbackDuration(2);
+		glm::vec3 knockbackDirection = obj->getPos() - this->getPos();
+
+		float knockbackDirectionX = knockbackDirection.x / 255;
+		float knockbackDirectionY = knockbackDirection.y / 255;
+
+		bool knockbackDirectionXisPositive = false;
+		bool knockbackDirectionYisPositive = false;
+
+		if (knockbackDirection.x < 0)
+		{
+			knockbackDirectionXisPositive = true;
+		}
+		else if (knockbackDirection.x > 0)
+		{
+			knockbackDirectionXisPositive = false;
+		}
+
+		if (knockbackDirection.y > 0)
+		{
+			knockbackDirectionYisPositive = false;
+		}
+		else if (knockbackDirection.y < 0)
+		{
+			knockbackDirectionYisPositive = true;
+		}
+
+		knockbackDirectionX = abs(knockbackDirectionX);
+		knockbackDirectionY = abs(knockbackDirectionY);
+
+
+		this->SetVelocity(knockbackDirectionX, knockbackDirectionY, knockbackDirectionXisPositive, knockbackDirectionYisPositive);
+		std::cout << knockbackDirectionY << std::endl;
+	}
+	
 }

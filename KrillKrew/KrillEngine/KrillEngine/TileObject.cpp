@@ -1,6 +1,101 @@
 #include "TileObject.h"
 #include "PlayerObject.h"
 
+int BFSTile
+(
+	std::array<std::array<int, MAP_WIDTH>, MAP_HEIGHT>& currentTile,
+	int startX,
+	int startY,
+	int newFlag)
+{
+	int tileAmount = 0;
+	std::queue<glm::vec2> checkQueue;
+	checkQueue.emplace(glm::vec2(startX, startY));
+	while (!checkQueue.empty())
+	{
+		glm::vec2 current = checkQueue.front();
+		checkQueue.pop();
+		if (current.x < 1 || current.x >= MAP_HEIGHT || current.y < 1 || current.y >= MAP_WIDTH)
+			continue;
+		if (currentTile[current.x][current.y] == 1)
+		{
+			tileAmount++;
+			currentTile[current.x][current.y] = newFlag;
+			checkQueue.push(glm::vec2(current.x - 1, current.y));
+			checkQueue.push(glm::vec2(current.x + 1, current.y));
+			checkQueue.push(glm::vec2(current.x, current.y - 1));
+			checkQueue.push(glm::vec2(current.x, current.y + 1));
+		}
+	}
+
+	return tileAmount;
+}
+
+void TileCollapseCheck(std::array<std::array<int, MAP_WIDTH>, MAP_HEIGHT>& currentTile)
+{
+	// create buffer copy from currentTile
+	std::array<std::array<int, MAP_WIDTH>, MAP_HEIGHT> bufferTile = currentTile;
+
+	// give replace value = 2
+	int replaceVal = 2;
+
+	// map int int store the amount of eachreplace tile
+	std::map<int, int> adjacentSize;
+
+	for (int i = 1; i < MAP_HEIGHT - 1; i++)
+	{
+		for (int j = 1; j < MAP_WIDTH - 1; j++)
+		{
+			// check tile
+			if (bufferTile[i][j] != 1)// if not 1 skip
+			{
+				continue;
+			}
+			else
+			{
+				// if 1 bfs and replace it with replace value. updaate map[replace value] then replace value++
+				int size = BFSTile(bufferTile, i, j, replaceVal);
+				adjacentSize.emplace(replaceVal, size);
+				replaceVal++;
+				
+			}
+
+		}
+	}
+	// if (repalce value = 2, break the function
+	if (replaceVal <= 3)
+	{
+		return;
+	}
+
+	int min = INT_MAX;
+	int minFlag = -1;
+	// loop through the map and check if which part has most adjacent tile
+	for (auto it : adjacentSize)
+	{
+		if (min > it.second)
+		{
+			min = it.second;
+			minFlag = it.first;
+		}
+	}
+
+	// set the reference tile info to zero. change it to fall animation later.
+	for (int i = 1; i < MAP_HEIGHT - 1; i++)
+	{
+		for (int j = 1; j < MAP_WIDTH - 1; j++)
+		{
+			// check tile
+			if (bufferTile[i][j] == minFlag)// if not 1 skip
+			{
+				currentTile[i][j] = 0;
+			}
+
+		}
+	}
+	
+}
+
 TileObject::TileObject()
 {
 	this->updateTile = nullptr;
@@ -16,6 +111,8 @@ TileObject::TileObject()
 	this->crackOverlay = new ImageObject();
 	this->crackOverlay->SetSpriteInfo(crackEffectSprite);
 	this->crackOverlay->SetSize(128.f, -128.f);
+
+	this->orderingLayer = 0;
 
 }
 TileObject::~TileObject()
@@ -94,6 +191,7 @@ void TileObject::Render(glm::mat4 globalModelTransform)
 void TileObject::SetSize(float sizeX, float sizeY)
 {
 	size = glm::vec3(sizeX, sizeY, 1);
+	this->collider->setColliderSize(size);
 	crackOverlay->SetSize(sizeX, sizeY);
 
 }
@@ -127,6 +225,13 @@ void TileObject::SetUpdateTileset(std::array<std::array<int, MAP_WIDTH>, MAP_HEI
 	this->updateTile = tiles;
 }
 
+void TileObject::DisableOverlaySprite()
+{
+	this->isBroke = true;
+	this->isBreakable = false;
+	this->crackOverlay->SetIsActive(false);
+	this->GetCollider()->GetGizmos()->SetIsActive(false);
+}
 void TileObject::CheckIfBreak()
 {
 	if (currentDurability >= maxDurability)
@@ -139,7 +244,9 @@ void TileObject::CheckIfBreak()
 
 		UpdateTileArray(0);
 
-		this->SetIsActive(false);
+		// this->SetIsActive(false);
+
+		/*std::cout << "Check Before Collapse -----------------------------" << std::endl;
 
 		for (int i = 0; i < MAP_HEIGHT; i++)
 		{
@@ -148,7 +255,20 @@ void TileObject::CheckIfBreak()
 				std::cout << (*updateTile)[i][j] << ", ";
 			}
 			std::cout << std::endl;
-		}
+		}*/
+
+		TileCollapseCheck(*updateTile);
+
+		/*std::cout << "Check After Collapse -----------------------------" << std::endl;
+
+		for (int i = 0; i < MAP_HEIGHT; i++)
+		{
+			for (int j = 0; j < MAP_WIDTH; j++)
+			{
+				std::cout << (*updateTile)[i][j] << ", ";
+			}
+			std::cout << std::endl;
+		}*/
 	}
 }
 void TileObject::GotHit()

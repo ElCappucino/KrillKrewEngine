@@ -37,7 +37,7 @@ public:
 	// void SetSheetInfo(float row, float column, float spritewidth, float spriteheight, float sheetwidth, float sheetheight);
 	void Render(glm::mat4 globalModelTransform);
 
-	
+	virtual void SetSize(float sizeX, float sizeY);
 	virtual Collider* GetCollider();
 	virtual void setColliderSize(glm::vec3 size);
 	

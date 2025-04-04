@@ -14,6 +14,8 @@
 #include "UiObject.h"
 #include "EntityObject.h"
 #include "PlayerGroundColliderObject.h"
+#include "ProjectileObject.h"
+#include "TrapObject.h"
 
 class PlayerHitboxObject;
 class TileObject;
@@ -29,7 +31,8 @@ public:
 		Running,
 		Melee,
 		Shooting,
-		PlaceItem
+		PlaceItem,
+		FellDown
 	};
 
 	enum class Ability
@@ -127,7 +130,7 @@ public:
 	void SetStunDuraion(int time);
 	void SetIsOnGround(bool isOnGround);
 
-	void ReduceAbilityCooldown(int button);
+	void ReduceAbilityCooldown(int button, float dt);
 	void ReduceSlowDuration();
 	void ReduceDashDuration();
 	void ReduceKnockbackDuration();
@@ -164,6 +167,7 @@ public:
 	glm::vec2 GetCurrentDirection() const;
 	float GetStunDuration() const;
 	bool GetIsOnGround() const;
+	bool GetIsFell() const;
 	PlayerObject::Ability GetAbilityByButton(AbilityButton button) const;
 
 	void ClearAimingTile(TileObject* tile);
@@ -178,4 +182,6 @@ public:
 	bool GetIsStun();
 
 	void CheckIfOnGround();
+
+	void ApplyKnockback(EntityObject* obj);
 };

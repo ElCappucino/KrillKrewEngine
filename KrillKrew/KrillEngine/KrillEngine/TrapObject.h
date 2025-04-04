@@ -25,23 +25,29 @@ public:
 private:
 	int lifeTime;
 	int playerNumOwner;
-	bool isCanKnockback;
+	bool CanKnockback;
 	int type;
-
+	
+	std::vector<TileObject*> TileInRange;
 public:
+	bool isActivate = false;
 	TrapObject();
 	~TrapObject();
 	void Render(glm::mat4 globalModelTransform);
 	void SetTexture(std::string path);
 	void SetLifeTime(int lifeTime);
-	void SetNumOwner(int Num);
+	void SetPlayerNumber(int Num);
 	void ReduceLifeTime();
 	int GetLifetime();
-	int GetNumOwner();
-	void SetIsCanKnockback(bool isCanKnockback);
-	bool GetIsCanKnockback();
+	int GetPlayerNumber();
+	void SetCanKnockback(bool isCanKnockback);
+	bool GetCanKnockback();
 	void SetType(int type);
 	bool GetType();
+
+	void AddTileInRange(TileObject* tile);
+	void DeleteTileInRange(TileObject* tile);
+	void ExplodeTileInRange();
 
 	virtual void OnColliderEnter(Collider* other);
 	virtual void OnColliderStay(Collider* other);

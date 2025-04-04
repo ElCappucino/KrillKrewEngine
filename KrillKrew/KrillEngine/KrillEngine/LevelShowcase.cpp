@@ -1,5 +1,10 @@
 #include "LevelShowcase.h"
 
+bool compareLayer(const DrawableObject* a, const DrawableObject* b)
+{
+	return a->getOrderingLayer() < b->getOrderingLayer();
+}
+
 void LevelShowcase::LevelLoad()
 {
 	SquareMeshVbo* square = new SquareMeshVbo();
@@ -15,7 +20,8 @@ void LevelShowcase::LevelLoad()
 	spriteList["Shark_hit"] = SpritesheetInfo("Shark_hit", "../Resource/Texture/Ham/P1-SmashDiagDown.png", 402, 402, 1608, 402);
 	spriteList["Shark_run"] = SpritesheetInfo("Shark_run", "../Resource/Texture/Ham/P1_MoveSide.png", 302, 302, 1208, 302);
 	spriteList["Shark_idle"] = SpritesheetInfo("Shart_idle", "../Resource/Texture/Ham/P1_Idle.png", 302, 302, 302, 302);
-	
+	spriteList["Shark_fell"] = SpritesheetInfo("Shark_fell", "../Resource/Texture/Ham/P1_Dead.png", 302, 302, 302, 302);
+
 	spriteList["Bomb"] = SpritesheetInfo("Bomb", "../Resource/Texture/Bomb_icon.png", 256, 256, 256, 256);
 	spriteList["Trap"] = SpritesheetInfo("Trap", "../Resource/Texture/Trap.png", 512, 512, 512, 512);
 	spriteList["TNT"] = SpritesheetInfo("TNT", "../Resource/Texture/TNT.png", 348, 348, 348, 348);
@@ -30,6 +36,12 @@ void LevelShowcase::LevelLoad()
 
 	spriteList["Blobtile"] = SpritesheetInfo("Blobtile", "../Resource/Texture/tileset_01.png", 128, 128, 1664, 512);
 
+	soundManager = KrillSoundManager::SoundManager::GetInstance();
+
+	soundManager->LoadMusic("bgm_test", "../Resource/Audio/bgm_test.mp3");
+	soundManager->LoadSFX("hit_test", "../Resource/Audio/cute-pop-sfx.mp3");
+
+	soundManager->PlayMusic("bgm_test", true);
 	//cout << "Load Level" << endl;
 }
 
@@ -181,11 +193,12 @@ void LevelShowcase::LevelInit()
 	p1->SetAnimationSprite(PlayerObject::AnimationState::Idle, spriteList.find("Shark_idle")->second);
 	p1->SetAnimationSprite(PlayerObject::AnimationState::Running, spriteList.find("Shark_run")->second);
 	p1->SetAnimationSprite(PlayerObject::AnimationState::Melee, spriteList.find("Shark_hit")->second);
+	p1->SetAnimationSprite(PlayerObject::AnimationState::FellDown, spriteList.find("Shark_fell")->second);
 	p1->SetAbility(PlayerObject::AbilityButton::Triangle, PlayerObject::Ability::Fireball);
 	p1->SetAbility(PlayerObject::AbilityButton::Circle, PlayerObject::Ability::Dash);
 	p1->SetAbility(PlayerObject::AbilityButton::Cross, PlayerObject::Ability::Trap);
 	p1->SetSpriteInfo(spriteList.find("Shark_idle")->second);
-	p1->SetPosition(glm::vec3(-800.f, -700.f, 0));
+	p1->SetPosition(glm::vec3(-400.f, -400.f, 0.f));
 	p1->GetSpriteRenderer()->SetFrame(10);
 	p1->SetPlayerNumber(0);
 	entityObjects.push_back(p1);
@@ -197,11 +210,12 @@ void LevelShowcase::LevelInit()
 	p2->SetAnimationSprite(PlayerObject::AnimationState::Idle, spriteList.find("Shark_idle")->second);
 	p2->SetAnimationSprite(PlayerObject::AnimationState::Running, spriteList.find("Shark_run")->second);
 	p2->SetAnimationSprite(PlayerObject::AnimationState::Melee, spriteList.find("Shark_hit")->second);
+	p2->SetAnimationSprite(PlayerObject::AnimationState::FellDown, spriteList.find("Shark_fell")->second);
 	p2->SetAbility(PlayerObject::AbilityButton::Triangle, PlayerObject::Ability::TNT);
 	p2->SetAbility(PlayerObject::AbilityButton::Circle, PlayerObject::Ability::Teleport);
 	p2->SetAbility(PlayerObject::AbilityButton::Cross, PlayerObject::Ability::Bola);
 	p2->SetSpriteInfo(spriteList.find("Shark_idle")->second);
-	p2->SetPosition(glm::vec3(800.f, -700.f, 0));
+	p2->SetPosition(glm::vec3(400.f, -400.f, 0));
 	p2->GetSpriteRenderer()->SetFrame(10);
 	p2->SetPlayerNumber(1);
 	entityObjects.push_back(p2);
@@ -213,11 +227,12 @@ void LevelShowcase::LevelInit()
 	p3->SetAnimationSprite(PlayerObject::AnimationState::Idle, spriteList.find("Shark_idle")->second);
 	p3->SetAnimationSprite(PlayerObject::AnimationState::Running, spriteList.find("Shark_run")->second);
 	p3->SetAnimationSprite(PlayerObject::AnimationState::Melee, spriteList.find("Shark_hit")->second);
+	p3->SetAnimationSprite(PlayerObject::AnimationState::FellDown, spriteList.find("Shark_fell")->second);
 	p3->SetAbility(PlayerObject::AbilityButton::Triangle, PlayerObject::Ability::Cleave);
 	p3->SetAbility(PlayerObject::AbilityButton::Circle, PlayerObject::Ability::Trap);
 	p3->SetAbility(PlayerObject::AbilityButton::Cross, PlayerObject::Ability::Cleave);
 	p3->SetSpriteInfo(spriteList.find("Shark_idle")->second);
-	p3->SetPosition(glm::vec3(800.f, 700.f, 0));
+	p3->SetPosition(glm::vec3(400.f, 400.f, 0));
 	p3->GetSpriteRenderer()->SetFrame(10);
 	p3->SetPlayerNumber(2);
 	entityObjects.push_back(p3);
@@ -229,11 +244,12 @@ void LevelShowcase::LevelInit()
 	p4->SetAnimationSprite(PlayerObject::AnimationState::Idle, spriteList.find("Shark_idle")->second);
 	p4->SetAnimationSprite(PlayerObject::AnimationState::Running, spriteList.find("Shark_run")->second);
 	p4->SetAnimationSprite(PlayerObject::AnimationState::Melee, spriteList.find("Shark_hit")->second);
+	p4->SetAnimationSprite(PlayerObject::AnimationState::FellDown, spriteList.find("Shark_fell")->second);
 	p4->SetAbility(PlayerObject::AbilityButton::Triangle, PlayerObject::Ability::Fireball);
 	p4->SetAbility(PlayerObject::AbilityButton::Circle, PlayerObject::Ability::Trap);
 	p4->SetAbility(PlayerObject::AbilityButton::Cross, PlayerObject::Ability::Cleave);
 	p4->SetSpriteInfo(spriteList.find("Shark_idle")->second);
-	p4->SetPosition(glm::vec3(-800.f, 700.f, 0));
+	p4->SetPosition(glm::vec3(-400.f, 400.f, 0));
 	p4->GetSpriteRenderer()->SetFrame(10);
 	p4->SetPlayerNumber(3);
 	entityObjects.push_back(p4);
@@ -305,6 +321,9 @@ void LevelShowcase::LevelInit()
 		objectsList.push_back(uiSkills);
 	}
 
+	// sort with ordering layer
+	std::sort(objectsList.begin(), objectsList.end(), compareLayer);
+
 	// Setup Dear ImGui context
 	IMGUI_CHECKVERSION();
 	ImGui::CreateContext();
@@ -336,6 +355,14 @@ void LevelShowcase::LevelUpdate()
 		}
 	}
 
+	for (int i = 0; i < entityObjects.size(); i++)
+	{
+		if (entityObjects[i]->GetIsActive() == false)
+		{
+			entityObjects.erase(entityObjects.begin() + i);
+		}
+	}
+
 	UpdateInput();
 
 	for (int i = 0; i < playerSize; i++) {
@@ -361,6 +388,9 @@ void LevelShowcase::LevelUpdate()
 		}
 	}
 
+	// slowness
+	UpdateMovement();
+
 	// projectile collider player
 	UpdateCollision();
 
@@ -370,13 +400,14 @@ void LevelShowcase::LevelUpdate()
 	// reduce cooldown skill
 	UpdateCooldown();
 
-	// slowness
-	UpdateMovement();
+	
 
 	//Ui Skills
 	UpdateUI();
 
 	GroundTileRefactor();
+
+	std::sort(objectsList.begin(), objectsList.end(), compareLayer);
 }
 
 void LevelShowcase::UpdateInput()
@@ -386,6 +417,7 @@ void LevelShowcase::UpdateInput()
 		Joystick::Update();
 		for (int i = 0; i < SDL_NumJoysticks(); i++)
 		{
+			
 			float axisX = Joystick::GetAxis(i, Joystick::Axis::LeftStickHorizontal) / 32768.0f;
 			float axisY = Joystick::GetAxis(i, Joystick::Axis::LeftStickVertical) / 32768.0f;
 			float norAxisX = 0;
@@ -431,89 +463,76 @@ void LevelShowcase::UpdateInput()
 			{
 				isPositiveY = true;
 			}
-
-			if (norAxisX != 0 && norAxisY != 0)
+			if (norAxisX != 0 || norAxisY != 0)
 			{
 				players[i + playerNum]->SetCurrentDirection(glm::vec2(norAxisX, norAxisY));
 			}
 
-			// update facing
-			if (abs(axisX) > 0.2f) 
-			{ 
-				players[i + playerNum]->UpdateFacingSide(isPositiveX); 
-			}
-
-			// movement control
-			if (players[i + playerNum]->GetIsKnockback() == false)
+			if (players[i + playerNum]->GetIsFell() == false)
 			{
-				if (players[i + playerNum]->GetIsStun() == true)
+				// update facing
+				if (abs(axisX) > 0.2f)
 				{
-					// velo to zero if stun
-					players[i + playerNum]->SetVelocity(0, 0, isPositiveXOld, isPositiveYOld);
+					players[i + playerNum]->UpdateFacingSide(isPositiveX);
 				}
-				else if (players[i + playerNum]->GetIsDashing() == true)
-				{
-					// use old velo during dash to disable control
-					players[i + playerNum]->SetVelocity(
-						abs(norAxisXOld), 
-						abs(norAxisYOld), 
-						isPositiveXOld, 
-						isPositiveYOld
-					);
-				}
-				else if (players[i + playerNum]->GetIsAiming() == false)
-				{
-					// if not affect by anything, use normaml velocity
-					players[i + playerNum]->SetVelocity(
-						abs(norAxisX), 
-						abs(norAxisY), 
-						isPositiveX, 
-						isPositiveY
-					);
-				}
-			}
 
-			// update old velocity in case dashing
-			norAxisXOld = norAxisX;
-			norAxisYOld = norAxisY;
-			isPositiveXOld = isPositiveX;
-			isPositiveYOld = isPositiveY;
-
-			// ************change it to attach to player
-			if (players[i + playerNum]->GetIsAiming())
-			{
-				for (int j = 0; j < objectsList.size(); j++) 
+				// movement control
+				if (players[i + playerNum]->GetIsKnockback() == false)
 				{
-					ProjectileObject* projectile = dynamic_cast<ProjectileObject*>(objectsList[j]);
-					if ((projectile != nullptr) &&
-						(players[i + playerNum]->GetPlayerNumber() == projectile->GetOwner()->GetPlayerNumber()) &&
-						(projectile->GetIsShooting() == false)) 
+					if (players[i + playerNum]->GetIsStun() == true)
 					{
-						if (abs(norAxisX) > 0 || norAxisY > 0) 
+						// velo to zero if stun
+						players[i + playerNum]->SetVelocity(0, 0, isPositiveXOld, isPositiveYOld);
+					}
+					else if (players[i + playerNum]->GetIsDashing() == true)
+					{
+						// use old velo during dash to disable control
+						players[i + playerNum]->SetVelocity(
+							abs(norAxisXOld),
+							abs(norAxisYOld),
+							isPositiveXOld,
+							isPositiveYOld
+						);
+					}
+					else if (players[i + playerNum]->GetIsAiming() == false)
+					{
+						// if not affect by anything, use normaml velocity
+						players[i + playerNum]->SetVelocity(
+							abs(norAxisX),
+							abs(norAxisY),
+							isPositiveX,
+							isPositiveY
+						);
+					}
+				}
+
+				// update old velocity in case dashing
+				norAxisXOld = norAxisX;
+				norAxisYOld = norAxisY;
+				isPositiveXOld = isPositiveX;
+				isPositiveYOld = isPositiveY;
+
+				// ************change it to attach to player
+				if (players[i + playerNum]->GetIsAiming())
+				{
+					for (int j = 0; j < objectsList.size(); j++)
+					{
+						ProjectileObject* projectile = dynamic_cast<ProjectileObject*>(objectsList[j]);
+						if ((projectile != nullptr) &&
+							(players[i + playerNum]->GetPlayerNumber() == projectile->GetOwner()->GetPlayerNumber()) &&
+							(projectile->GetIsShooting() == false))
 						{
-							projectile->SetVelocity(abs(norAxisX), abs(norAxisY), isPositiveX, isPositiveY);
-						}
-						projectile->SetPosition(players[i + playerNum]->getPos() + (projectile->GetVelocity() * glm::vec3(15.f, 15.f, 0.f)));
+							if (abs(norAxisX) > 0 || norAxisY > 0)
+							{
+								projectile->SetVelocity(abs(norAxisX), abs(norAxisY), isPositiveX, isPositiveY);
+							}
+							projectile->SetPosition(players[i + playerNum]->getPos() + (projectile->GetVelocity() * glm::vec3(15.f, 15.f, 0.f)));
 
+						}
 					}
 				}
-			}
 
-			/*if (players[i + playerNum]->GetIsAiming() && players[i + playerNum]->GetHoldingProjectile() != 0)
-			{
-				for (int j = 0; j < objectsList.size(); j++) {
-					ProjectileObject* projectile = dynamic_cast<ProjectileObject*>(objectsList[j]);
-					if ((projectile != nullptr) &&
-						(players[i + playerNum]->GetPlayerNumber() == projectile->GetOwner()->GetPlayerNumber()) &&
-						(projectile->GetIsShooting() == false)) {
-						if (abs(norAxisX) > 0 || norAxisY > 0) {
-							projectile->SetVelocity(abs(norAxisX), abs(norAxisY), isPositiveX, isPositiveY);
-						}
-						projectile->SetPosition(players[i + playerNum]->getPos() + (projectile->GetVelocity() * glm::vec3(15.f, 15.f, 0.f)));
-
-					}
-				}
-			}*/
+			}	
 
 			//Aim
 			if (Joystick::GetButtonDown(i, Joystick::Button::Triangle))
@@ -545,6 +564,7 @@ void LevelShowcase::UpdateInput()
 			{
 				players[playerNum]->ChangeAnimationState(PlayerObject::AnimationState::Melee);
 				players[playerNum]->HitAimingTile();
+				soundManager->PlaySFX("hit_test", false);
 			}
 
 			// players[i + playerNum]->Translate(players[i + playerNum]->GetVelocity());
@@ -582,10 +602,11 @@ void LevelShowcase::UpdateCollision()
 	for (int i = 0; i < 4; i++)
 	{
 		players[i]->SetIsOnGround(false);
+		
 	}
 
 	// trap collider player
-	for (int i = 0; i < objectsList.size(); i++)
+	/*for (int i = 0; i < objectsList.size(); i++)
 	{
 		TrapObject* trap = dynamic_cast<TrapObject*>(objectsList[i]);
 		if (trap == nullptr)
@@ -601,7 +622,7 @@ void LevelShowcase::UpdateCollision()
 			PlayerObject* player2 = dynamic_cast<PlayerObject*>(objectsList[j]);
 			if (player2 != nullptr)
 			{
-				if (trap->GetNumOwner() != player2->GetPlayerNumber()) {
+				if (trap->GetPlayerNumber() != player2->GetPlayerNumber()) {
 					Collider col1 = *trap->GetCollider();
 					Collider col2 = *player2->GetCollider();
 
@@ -613,8 +634,8 @@ void LevelShowcase::UpdateCollision()
 
 					if (overlapX > 0 && overlapY > 0)
 					{
-						std::cout << "Trap :" << trap->GetNumOwner() << " hit " << "Player" << player2->GetPlayerNumber() << std::endl;
-						if (trap->GetIsCanKnockback()) {
+						std::cout << "Trap :" << trap->GetPlayerNumber() << " hit " << "Player" << player2->GetPlayerNumber() << std::endl;
+						if (trap->GetCanKnockback()) {
 							UpdateKnockback(trap, player2);
 							objectsList.erase(objectsList.begin() + i);
 						}
@@ -628,7 +649,7 @@ void LevelShowcase::UpdateCollision()
 				}
 			}
 		}
-	}
+	}*/
 	int entityCount = 0;
 	for (int i = 0; i < entityObjects.size(); i++)
 	{
@@ -732,65 +753,15 @@ void LevelShowcase::UpdateCollision()
 	std::swap(previousCollisions, currentCollisions);
 	currentCollisions.clear();
 
-	// projectile
-	for (int i = 0; i < objectsList.size(); i++)
+
+	if (dt > 10)
 	{
-		ProjectileObject* projectile = dynamic_cast<ProjectileObject*>(objectsList[i]);
-
-		if (projectile == nullptr)
+		for (int i = 0; i < 4; i++)
 		{
-			continue;
-		}
-
-		for (int j = 0; j < objectsList.size(); j++)
-		{
-			if (i == j)
-			{
-				continue;
-			}
-
-			PlayerObject* player = dynamic_cast<PlayerObject*>(objectsList[j]);
-
-			if (player != nullptr)
-			{
-				if (projectile->GetOwner()->GetPlayerNumber() != player->GetPlayerNumber())
-				{
-					Collider col1 = *projectile->GetCollider();
-					Collider col2 = *player->GetCollider();
-
-					glm::vec2 delta = glm::vec2(abs(projectile->getPos().x - player->getPos().x),
-						abs(projectile->getPos().y - player->getPos().y));
-
-					float overlapX = (abs(col1.GetHalfSize().x)) + (abs(col2.GetHalfSize().x)) - delta.x;
-					float overlapY = (abs(col1.GetHalfSize().y)) + (abs(col2.GetHalfSize().y)) - delta.y;
-
-					if (overlapX > 0 && overlapY > 0)
-					{
-						if (projectile->GetType() == ProjectileObject::TypeProjectile::Teleport) {
-							players[projectile->GetOwner()->GetPlayerNumber()]->SetPosition(projectile->getPos());
-						}
-						if (projectile->GetIsCanStun()) {
-							player->SetIsStun(true);
-							player->SetStunDuraion(5);
-						}
-						players[projectile->GetOwner()->GetPlayerNumber()]->SetIsShooting(false);
-						UpdateKnockback(projectile, player);
-						if (players[projectile->GetOwner()->GetPlayerNumber()]->GetHoldingProjectile() == projectile->GetType()) {
-							players[projectile->GetOwner()->GetPlayerNumber()]->SetIsAiming(false);
-							players[projectile->GetOwner()->GetPlayerNumber()]->SetHoldingProjectile(0);
-						}
-						objectsList.erase(objectsList.begin() + i);
-					}
-				}
-
-			}
+			players[i]->CheckIfOnGround();
 		}
 	}
-
-	for (int i = 0; i < 4; i++)
-	{
-		players[i]->CheckIfOnGround();
-	}
+	
 }
 
 void LevelShowcase::UpdateProjectile()
@@ -820,7 +791,7 @@ void LevelShowcase::UpdateProjectile()
 		//delete trap after use
 		TrapObject* trap = dynamic_cast<TrapObject*>(objectsList[i]);
 		if (trap != nullptr) {
-			if (trap->GetIsCanKnockback()) {
+			if (trap->GetCanKnockback()) {
 				objectsList.erase(objectsList.begin() + i);
 			}
 		}
@@ -830,15 +801,20 @@ void LevelShowcase::UpdateProjectile()
 
 void LevelShowcase::UpdateCooldown()
 {
+
 	for (int i = 0; i < /*SDL_NumJoysticks() + playerNum*/ 4; i++)
 	{
+		if (players[i]->GetIsOnGround() == false)
+		{
+			continue;
+		}
 		for (int j = 0; j < 3; j++)
 		{
 
-			if (time1s >= 1.0f && players[i]->GetCooldown(static_cast<PlayerObject::AbilityButton>(j)) > 0)
+			if (time1s >= 0.1f && players[i]->GetCooldown(static_cast<PlayerObject::AbilityButton>(j)) > 0)
 			{
 				//std::cout << j << std::endl;
-				players[i + playerNum]->ReduceAbilityCooldown(j);
+				players[i + playerNum]->ReduceAbilityCooldown(j, 0.1f);
 
 			}
 		}
@@ -850,6 +826,10 @@ void LevelShowcase::UpdateMovement()
 {
 	for (int i = 0; i < 4; i++)
 	{
+		if (players[i]->GetIsOnGround() == false)
+		{
+			continue;
+		}
 		if (time1s >= 1.0f && players[i]->GetIsSlow() == true)
 		{
 			players[i]->ReduceSlowDuration();
@@ -906,90 +886,90 @@ void LevelShowcase::UpdateMovement()
 	}
 }
 
-void LevelShowcase::UpdateKnockback(DrawableObject* obj1, DrawableObject* obj2) 
-{
-	ProjectileObject* projectile = dynamic_cast<ProjectileObject*>(obj1);
-	TrapObject* trap = dynamic_cast<TrapObject*>(obj1);
-	PlayerObject* player = dynamic_cast<PlayerObject*>(obj2);
-
-	if (player != NULL && projectile != NULL && projectile->GetIsCanKnockback()) 
-	{
-		if (projectile->GetOwner()->GetPlayerNumber() != player->GetPlayerNumber()) 
-		{
-			player->SetIsKnockback(true);
-			player->SetKnockbackDuration(2);
-			glm::vec3 knockbackDirection = obj1->getPos() - player->getPos();
-
-			float knockbackDirectionX = knockbackDirection.x / 255;
-			float knockbackDirectionY = knockbackDirection.y / 255;
-			bool knockbackDirectionXisPositive = false;
-			bool knockbackDirectionYisPositive = false;
-			if (knockbackDirection.x < 0)
-			{
-				knockbackDirectionXisPositive = true;
-			}
-			else if (knockbackDirection.x > 0)
-			{
-				knockbackDirectionXisPositive = false;
-			}
-
-			if (knockbackDirection.y > 0)
-			{
-				knockbackDirectionYisPositive = false;
-			}
-			else if (knockbackDirection.y < 0)
-			{
-				knockbackDirectionYisPositive = true;
-			}
-
-			knockbackDirectionX = abs(knockbackDirectionX);
-			knockbackDirectionY = abs(knockbackDirectionY);
-
-
-			player->SetVelocity(knockbackDirectionX, knockbackDirectionY, knockbackDirectionXisPositive, knockbackDirectionYisPositive);
-			std::cout << knockbackDirectionY << std::endl;
-		}
-	}
-	if (player != NULL && trap != NULL && trap->GetIsCanKnockback()) 
-	{
-		if (trap->GetNumOwner() != player->GetPlayerNumber()) 
-		{
-			player->SetIsKnockback(true);
-			player->SetKnockbackDuration(2);
-			glm::vec3 knockbackDirection = obj1->getPos() - player->getPos();
-
-			float knockbackDirectionX = knockbackDirection.x / 255;
-			float knockbackDirectionY = knockbackDirection.y / 255;
-			bool knockbackDirectionXisPositive = false;
-			bool knockbackDirectionYisPositive = false;
-			if (knockbackDirection.x < 0)
-			{
-				knockbackDirectionXisPositive = true;
-			}
-			else if (knockbackDirection.x > 0)
-			{
-				knockbackDirectionXisPositive = false;
-			}
-
-			if (knockbackDirection.y > 0)
-			{
-				knockbackDirectionYisPositive = false;
-			}
-			else if (knockbackDirection.y < 0)
-			{
-				knockbackDirectionYisPositive = true;
-			}
-
-			knockbackDirectionX = abs(knockbackDirectionX);
-			knockbackDirectionY = abs(knockbackDirectionY);
-
-
-			player->SetVelocity(knockbackDirectionX, knockbackDirectionY, knockbackDirectionXisPositive, knockbackDirectionYisPositive);
-			std::cout << knockbackDirectionY << std::endl;
-		}
-	}
-
-}
+//void LevelShowcase::UpdateKnockback(DrawableObject* obj1, DrawableObject* obj2) 
+//{
+//	ProjectileObject* projectile = dynamic_cast<ProjectileObject*>(obj1);
+//	TrapObject* trap = dynamic_cast<TrapObject*>(obj1);
+//	PlayerObject* player = dynamic_cast<PlayerObject*>(obj2);
+//
+//	if (player != NULL && projectile != NULL && projectile->GetCanKnockback()) 
+//	{
+//		if (projectile->GetOwner()->GetPlayerNumber() != player->GetPlayerNumber()) 
+//		{
+//			player->SetIsKnockback(true);
+//			player->SetKnockbackDuration(2);
+//			glm::vec3 knockbackDirection = obj1->getPos() - player->getPos();
+//
+//			float knockbackDirectionX = knockbackDirection.x / 255;
+//			float knockbackDirectionY = knockbackDirection.y / 255;
+//			bool knockbackDirectionXisPositive = false;
+//			bool knockbackDirectionYisPositive = false;
+//			if (knockbackDirection.x < 0)
+//			{
+//				knockbackDirectionXisPositive = true;
+//			}
+//			else if (knockbackDirection.x > 0)
+//			{
+//				knockbackDirectionXisPositive = false;
+//			}
+//
+//			if (knockbackDirection.y > 0)
+//			{
+//				knockbackDirectionYisPositive = false;
+//			}
+//			else if (knockbackDirection.y < 0)
+//			{
+//				knockbackDirectionYisPositive = true;
+//			}
+//
+//			knockbackDirectionX = abs(knockbackDirectionX);
+//			knockbackDirectionY = abs(knockbackDirectionY);
+//
+//
+//			player->SetVelocity(knockbackDirectionX, knockbackDirectionY, knockbackDirectionXisPositive, knockbackDirectionYisPositive);
+//			std::cout << knockbackDirectionY << std::endl;
+//		}
+//	}
+//	if (player != NULL && trap != NULL && trap->GetCanKnockback()) 
+//	{
+//		if (trap->GetPlayerNumber() != player->GetPlayerNumber()) 
+//		{
+//			player->SetIsKnockback(true);
+//			player->SetKnockbackDuration(2);
+//			glm::vec3 knockbackDirection = obj1->getPos() - player->getPos();
+//
+//			float knockbackDirectionX = knockbackDirection.x / 255;
+//			float knockbackDirectionY = knockbackDirection.y / 255;
+//			bool knockbackDirectionXisPositive = false;
+//			bool knockbackDirectionYisPositive = false;
+//			if (knockbackDirection.x < 0)
+//			{
+//				knockbackDirectionXisPositive = true;
+//			}
+//			else if (knockbackDirection.x > 0)
+//			{
+//				knockbackDirectionXisPositive = false;
+//			}
+//
+//			if (knockbackDirection.y > 0)
+//			{
+//				knockbackDirectionYisPositive = false;
+//			}
+//			else if (knockbackDirection.y < 0)
+//			{
+//				knockbackDirectionYisPositive = true;
+//			}
+//
+//			knockbackDirectionX = abs(knockbackDirectionX);
+//			knockbackDirectionY = abs(knockbackDirectionY);
+//
+//
+//			player->SetVelocity(knockbackDirectionX, knockbackDirectionY, knockbackDirectionXisPositive, knockbackDirectionYisPositive);
+//			std::cout << knockbackDirectionY << std::endl;
+//		}
+//	}
+//
+//}
 
 void LevelShowcase::UpdateTime() {
 
@@ -1038,10 +1018,10 @@ void LevelShowcase::UpdateUI()
 		UiObject* ui = dynamic_cast<UiObject*>(objectsList[i]);
 		if (ui != nullptr) 
 		{
-			ui->SetPosition(glm::vec3(posX, posY, 0));
+			ui->SetPosition(glm::vec3(posX + (ui->getNumOwner() * uiWidth * camera.GetCameraWidth() / SCREEN_WIDTH), posY, 0));
 			ui->SetSize(uiWidth * camera.GetCameraWidth() / SCREEN_WIDTH, -uiHeight * camera.GetCameraHeight() / SCREEN_HEIGHT);
 			
-			posX += uiWidth * camera.GetCameraWidth() / SCREEN_WIDTH;
+			//posX += uiWidth * camera.GetCameraWidth() / SCREEN_WIDTH;
 		}
 	}
 }
@@ -1078,8 +1058,8 @@ void LevelShowcase::LevelDraw()
 
 			glm::vec3 groundCheckPos = glm::vec3
 			(
-				player->getPos().x,
-				player->getPos().y - 128.f,
+				player->getPos().x + player->GetGroundColliderObject()->GetColliderOffset().x,
+				player->getPos().y + player->GetGroundColliderObject()->GetColliderOffset().y,
 				0
 			);
 
@@ -1097,7 +1077,7 @@ void LevelShowcase::LevelDraw()
 			EntityObject* object = dynamic_cast<EntityObject*>(objectsList[i]);
 			if (object != nullptr)
 			{
-				object->GetCollider()->Update(object->getSize(), object->getPos());
+				object->GetCollider()->Update(object->GetCollider()->GetSize(), object->getPos());
 			}
 		}
 	}
@@ -1119,31 +1099,104 @@ void LevelShowcase::LevelDraw()
 	//if (show_demo_window)
 	//	ImGui::ShowDemoWindow(&show_demo_window);
 
-	for (int i = 0; i < 4; i++)
+	if (ImGui::Button("Reset Scene", ImVec2(100, 50)))
+		isResetScene++;
+		
+	if (isResetScene & 1)
 	{
-		ImGui::SeparatorText("");
-		ImGui::Text("Player %d", i);
-		ImGui::Text("isShooting: %s", players[i]->GetIsShooting() ? "true" : "false");
-		ImGui::Text("isAiming: %s", players[i]->GetIsAiming() ? "true" : "false");
-		ImGui::Text("isSlow: %s", players[i]->GetIsSlow() ? "true" : "false");
-		ImGui::Text("isDashing: %s", players[i]->GetIsDashing() ? "true" : "false");
-		ImGui::Text("isKnockback: %s", players[i]->GetIsKnockback() ? "true" : "false");
-		ImGui::Text("isStun: %s", players[i]->GetIsStun() ? "true" : "false");
-		ImGui::Text("isOnGround: %s", players[i]->GetIsOnGround() ? "true" : "false");
-
-		if (ImGui::Button(buttonName[i]))
-			clicked[i]++;
-		if (clicked[i] & 1)
+		GameEngine::GetInstance()->GetStateController()->loadingState = GameState::GS_LEVELSHOWCASE;
+		GameEngine::GetInstance()->GetStateController()->gameStateNext = GameState::GS_LEVELLOADING;
+	}
+	ImGuiTabBarFlags tab_bar_flags = ImGuiTabBarFlags_None;
+	if (ImGui::BeginTabBar("MyTabBar", tab_bar_flags))
+	{
+		for (int i = 0; i < 4; i++)
 		{
-			ImGui::SameLine();
-			ImGui::Text("Thanks for clicking me!");
-		}
+			std::string tabname = "player " + std::to_string(i);
+			ImGui::PushID(i);
 
-		ImGui::InputFloat(groundColXName[i], &groundColX[i], 2.0f, 10.0f, "%.3f");
-		ImGui::InputFloat(groundColYName[i], &groundColY[i], 2.0f, 10.0f, "%.3f");
+			if (ImGui::BeginTabItem(tabname.c_str()))
+			{
+				ImGui::Text("Player %d", i);
+				ImGui::SameLine();
+				ImGui::SeparatorText("");
+				ImGui::Text("Position: %f, %f, %f", players[i]->getPos().x, players[i]->getPos().y, players[i]->getPos().z);
+				
+				ImGui::Text("isShooting: %s", players[i]->GetIsShooting() ? "true" : "false");
+				ImGui::Text("isAiming: %s", players[i]->GetIsAiming() ? "true" : "false");
+				ImGui::Text("isSlow: %s", players[i]->GetIsSlow() ? "true" : "false");
+				ImGui::Text("isDashing: %s", players[i]->GetIsDashing() ? "true" : "false");
+				ImGui::Text("isKnockback: %s", players[i]->GetIsKnockback() ? "true" : "false");
+				ImGui::Text("isStun: %s", players[i]->GetIsStun() ? "true" : "false");
+				ImGui::Text("isOnGround: %s", players[i]->GetIsOnGround() ? "true" : "false");
+
+				if (ImGui::Button("Test Button"))
+					clicked[i]++;
+
+				if (clicked[i] & 1)
+				{
+					ImGui::SameLine();
+					ImGui::Text("Thanks for clicking me!");
+				}
+
+				ImGui::DragFloat("ColX Button", &groundColX[i], 2.0f, 0.0f, 1024.f, "%.3f");
+				ImGui::DragFloat("ColY Button", &groundColY[i], 2.0f, 0.0f, 1024.f, "%.3f");
+				ImGui::DragFloat("Col offset X", &groundColOffsetX[i], 2.0f, -1024.f, 1024.f, "%.3f");
+				ImGui::DragFloat("Col offset Y", &groundColOffsetY[i], 2.0f, -1024.f, 1024.f, "%.3f");
+
+				players[i]->GetGroundColliderObject()->SetCollisionOffset(glm::vec2(groundColOffsetX[i], groundColOffsetY[i]));
+				/*Fireball = 0,
+					Trap = 1,
+					Dash = 2,
+					TNT = 3,
+					Teleport = 4,
+					Bola = 5,
+					Cleave = 6*/
+
+				for (int j = 0; j < 3; j++)
+				{
+					ImGui::PushID(j);
+
+
+					ImGui::Text("skill %d", j);
+					ImGui::Text("ability %d cooldown: %.2f", i ,players[i]->GetCooldown(static_cast<PlayerObject::AbilityButton>(j)));
+					ImGui::RadioButton("Fireball", &playersSkill[i][j], 0);
+					ImGui::SameLine();
+					ImGui::RadioButton("Trap", &playersSkill[i][j], 1);
+					ImGui::SameLine();
+					ImGui::RadioButton("Dash", &playersSkill[i][j], 2);
+					//ImGui::SameLine();
+					ImGui::RadioButton("TNT", &playersSkill[i][j], 3);
+					ImGui::SameLine();
+					ImGui::RadioButton("Teleport", &playersSkill[i][j], 4);
+					ImGui::SameLine();
+					ImGui::RadioButton("Bola", &playersSkill[i][j], 5);
+					ImGui::SameLine();
+					ImGui::RadioButton("Cleave", &playersSkill[i][j], 6);
+					ImGui::SeparatorText("");
+
+					ImGui::PopID();
+				}
+				ImGui::EndTabItem();
+			}
+			
+			ImGui::PopID();
+		}
+		
+		ImGui::EndTabBar();
 	}
 	
-
+	for (int i = 0; i < 4; i++)
+	{
+		for (int j = 0; j < 3; j++)
+		{
+			players[i]->SetAbility
+			(
+				static_cast<PlayerObject::AbilityButton>(j), 
+				static_cast<PlayerObject::Ability>(playersSkill[i][j])
+			);
+		}
+	}
 
 	// Rendering
 	ImGui::Render();
@@ -1251,10 +1304,10 @@ void LevelShowcase::GroundTileRefactor()
 				continue;
 			}
 
-			groundTile[i][j] = tilesList[i][j]->GetIsBroke() ? 0 : 1;
+			// currentGroundTile[i][j] = tilesList[i][j]->GetIsBroke() ? 0 : 1;
 
 
-			int flag = groundTile[i][j];
+			int flag = currentGroundTile[i][j];
 
 
 			std::pair<int, int> pos;
@@ -1268,25 +1321,28 @@ void LevelShowcase::GroundTileRefactor()
 			}
 			else if (flag == 0)
 			{
-				if (groundTile[i - 1][j] == 0)
+				// tilesList[i][j]->GetCollider()->GetGizmos()->SetIsActive(false);
+				tilesList[i][j]->DisableOverlaySprite();
+
+				if (currentGroundTile[i - 1][j] == 0)
 				{
 					// blank
 					pos = { 99, 99 };
 				}
 				else
 				{
-
+					
 					int upperPos = i - 1;
 
 					std::bitset<8> surround;
-					surround[0] = groundTile[upperPos - 1][j];
-					surround[1] = groundTile[upperPos - 1][j + 1];
-					surround[2] = groundTile[upperPos][j + 1];
-					surround[3] = groundTile[upperPos + 1][j + 1];
-					surround[4] = groundTile[upperPos + 1][j];
-					surround[5] = groundTile[upperPos + 1][j - 1];
-					surround[6] = groundTile[upperPos][j - 1];
-					surround[7] = groundTile[upperPos - 1][j - 1];
+					surround[0] = currentGroundTile[upperPos - 1][j];
+					surround[1] = currentGroundTile[upperPos - 1][j + 1];
+					surround[2] = currentGroundTile[upperPos][j + 1];
+					surround[3] = currentGroundTile[upperPos + 1][j + 1];
+					surround[4] = currentGroundTile[upperPos + 1][j];
+					surround[5] = currentGroundTile[upperPos + 1][j - 1];
+					surround[6] = currentGroundTile[upperPos][j - 1];
+					surround[7] = currentGroundTile[upperPos - 1][j - 1];
 
 					if (!(surround[0] && surround[2])) { surround[1] = 0; }
 					if (!(surround[2] && surround[4])) { surround[3] = 0; }
@@ -1314,14 +1370,14 @@ void LevelShowcase::GroundTileRefactor()
 			else
 			{
 				std::bitset<8> surround;
-				surround[0] = groundTile[i - 1][j];
-				surround[1] = groundTile[i - 1][j + 1];
-				surround[2] = groundTile[i][j + 1];
-				surround[3] = groundTile[i + 1][j + 1];
-				surround[4] = groundTile[i + 1][j];
-				surround[5] = groundTile[i + 1][j - 1];
-				surround[6] = groundTile[i][j - 1];
-				surround[7] = groundTile[i - 1][j - 1];
+				surround[0] = currentGroundTile[i - 1][j];
+				surround[1] = currentGroundTile[i - 1][j + 1];
+				surround[2] = currentGroundTile[i][j + 1];
+				surround[3] = currentGroundTile[i + 1][j + 1];
+				surround[4] = currentGroundTile[i + 1][j];
+				surround[5] = currentGroundTile[i + 1][j - 1];
+				surround[6] = currentGroundTile[i][j - 1];
+				surround[7] = currentGroundTile[i - 1][j - 1];
 
 				if (!(surround[0] && surround[2])) { surround[1] = 0; }
 				if (!(surround[2] && surround[4])) { surround[3] = 0; }
@@ -1419,14 +1475,15 @@ void LevelShowcase::UsingAbility(int numPlayer, PlayerObject::AbilityButton butt
 				TNT(numPlayer, button);
 			}
 			else if (players[numPlayer]->GetIsTNT()) {
-				for (int i = 0; i < objectsList.size(); i++) // find tnt
+				for (int i = 0; i < entityObjects.size(); i++) // find tnt
 				{
-					TrapObject* realTnt = dynamic_cast<TrapObject*>(objectsList[i]);
+					TrapObject* realTnt = dynamic_cast<TrapObject*>(entityObjects[i]);
 					if (realTnt != NULL) {
-						if (realTnt->GetType() == TrapObject::TypeTrap::Tnt && realTnt->GetNumOwner() == numPlayer) {
-							realTnt->SetIsCanKnockback(true);
-							realTnt->SetIsActive(true);
-							realTnt->GetCollider()->Update(glm::vec3(500, 500, 0), realTnt->getPos());
+						if (realTnt->GetType() == TrapObject::TypeTrap::Tnt && realTnt->GetPlayerNumber() == numPlayer) {
+
+							realTnt->ExplodeTileInRange();
+							KK_TRACE("Press Again");
+							realTnt->isActivate = true;
 							players[numPlayer]->SetAbilityCooldown(button, 3);
 							players[numPlayer]->SetIsTNT(false);
 
@@ -1514,10 +1571,11 @@ void LevelShowcase::AimFireball(int numPlayer, PlayerObject::AbilityButton butto
 	projectile->SetLifeTime(9999);
 	projectile->SetOwner(players[numPlayer]);
 	projectile->SetType(ProjectileObject::TypeProjectile::Fireball);
-	projectile->SetIsCanKnockback(true);
+	projectile->SetCanKnockback(true);
 	projectile->SetIsCanStun(true);
 	projectile->SetIsShooting(false);
 	std::cout << "Owner " << projectile->GetOwner()->GetPlayerNumber() << std::endl;
+	entityObjects.push_back(projectile);
 	objectsList.push_back(projectile);
 	//objectsList.push_back(projectile->GetCollider()->GetGizmos());
 }
@@ -1542,11 +1600,12 @@ void LevelShowcase::Trap(int numPlayer, PlayerObject::AbilityButton button) {
 	Trap->SetTexture(spriteList.find("Trap")->second.texture);
 	Trap->SetPosition(players[numPlayer]->getPos());
 	Trap->SetSize(128.f, -128.f);
-	Trap->SetNumOwner(players[numPlayer]->GetPlayerNumber());
+	Trap->SetPlayerNumber(players[numPlayer]->GetPlayerNumber());
 	Trap->SetType(TrapObject::TypeTrap::Trap);
 	Trap->SetIsActive(true);
 	//std::cout << "Owner " << Trap->getNumOwner() << std::endl;
 	objectsList.push_back(Trap);
+	entityObjects.push_back(Trap);
 	//std::cout << "place trap" << std::endl;
 }
 
@@ -1563,11 +1622,13 @@ void LevelShowcase::TNT(int numPlayer, PlayerObject::AbilityButton button) {
 	TNT->SetTexture(spriteList.find("TNT")->second.texture);
 	TNT->SetPosition(players[numPlayer]->getPos());
 	TNT->SetSize(128.f, -128.f);
-	TNT->SetNumOwner(players[numPlayer]->GetPlayerNumber());
+	TNT->GetCollider()->setColliderSize(glm::vec3(500.f, 500.f, 0));
+	TNT->SetPlayerNumber(players[numPlayer]->GetPlayerNumber());
 	TNT->SetType(TrapObject::TypeTrap::Tnt);
 	//TNT->setIsCanKnockback(true);
 	//std::cout << "Owner " << Trap->getNumOwner() << std::endl;
 	objectsList.push_back(TNT);
+	entityObjects.push_back(TNT);
 }
 
 void LevelShowcase::AimTeleport(int numPlayer, PlayerObject::AbilityButton button) {
@@ -1582,11 +1643,12 @@ void LevelShowcase::AimTeleport(int numPlayer, PlayerObject::AbilityButton butto
 	projectile->SetLifeTime(9999);
 	projectile->SetOwner(players[numPlayer]);
 	projectile->SetType(ProjectileObject::TypeProjectile::Teleport);
-	projectile->SetIsCanKnockback(false);
+	projectile->SetCanKnockback(false);
 	projectile->SetIsCanStun(false);
 	projectile->SetIsShooting(false);
 	std::cout << "Owner " << projectile->GetOwner()->GetPlayerNumber() << std::endl;
 	objectsList.push_back(projectile);
+	entityObjects.push_back(projectile);
 }
 
 void LevelShowcase::ShootTeleport(int numPlayer, PlayerObject::AbilityButton button) {
@@ -1616,11 +1678,12 @@ void LevelShowcase::AimBola(int numPlayer, PlayerObject::AbilityButton button) {
 	projectile->SetLifeTime(9999);
 	projectile->SetOwner(players[numPlayer]);
 	projectile->SetType(ProjectileObject::TypeProjectile::Bola);
-	projectile->SetIsCanKnockback(false);
+	projectile->SetCanKnockback(false);
 	projectile->SetIsCanStun(true);
 	projectile->SetIsShooting(false);
 	std::cout << "Owner " << projectile->GetOwner()->GetPlayerNumber() << std::endl;
 	objectsList.push_back(projectile);
+	entityObjects.push_back(projectile);
 }
 
 void LevelShowcase::ShootBola(int numPlayer, PlayerObject::AbilityButton button) {
@@ -1648,11 +1711,12 @@ void LevelShowcase::AimCleave(int numPlayer, PlayerObject::AbilityButton button)
 	projectile->SetLifeTime(9999);
 	projectile->SetOwner(players[numPlayer]);
 	projectile->SetType(ProjectileObject::TypeProjectile::Cleave);
-	projectile->SetIsCanKnockback(false);
+	projectile->SetCanKnockback(false);
 	projectile->SetIsCanStun(true);
 	projectile->SetIsShooting(false);
 	std::cout << "Owner " << projectile->GetOwner()->GetPlayerNumber() << std::endl;
 	objectsList.push_back(projectile);
+	entityObjects.push_back(projectile);
 	players[numPlayer]->SetAbilityCooldown(button, 2);
 }
 

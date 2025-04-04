@@ -14,12 +14,28 @@ void LevelLoading::LevelLoad()
 
 void LevelLoading::LevelInit()
 {
+	std::cout << "Level Loading Init" << std::endl;
+
+	glClearColor(0.f, 180.f / 255.f, 171.f / 255.f, 1.f);
 
 	GameEngine::GetInstance()->GetRenderer()->SetOrthoProjection(-(SCREEN_WIDTH / 2),
 		(SCREEN_WIDTH / 2),
 		-(SCREEN_HEIGHT / 2),
 		(SCREEN_HEIGHT / 2));
 
+	// Setup Dear ImGui context
+	IMGUI_CHECKVERSION();
+	ImGui::CreateContext();
+	ImGuiIO& io = ImGui::GetIO(); (void)io;
+	io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;     // Enable Keyboard Controls
+	io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;      // Enable Gamepad Controls
+
+	//// Setup Dear ImGui style
+	ImGui::StyleColorsDark();
+	const char* glsl_version = "#version 330";
+	// Setup Platform/Renderer backends
+	ImGui_ImplSDL2_InitForOpenGL(GameEngine::GetInstance()->GetSDLWindow(), GameEngine::GetInstance()->GetglContext());
+	ImGui_ImplOpenGL3_Init(glsl_version);
 
 	// Example Code
 	ImageObject* obj1 = new ImageObject();
@@ -43,6 +59,31 @@ void LevelLoading::LevelDraw()
 {
 	GameEngine::GetInstance()->Render(objectsList);
 
+	bool show_demo_window = true;
+	bool show_another_window = false;
+	ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
+
+	ImGuiIO& io = ImGui::GetIO(); (void)io;
+
+	// Start the Dear ImGui frame
+	ImGui_ImplOpenGL3_NewFrame();
+	ImGui_ImplSDL2_NewFrame();
+	ImGui::NewFrame();
+
+	//// 1. Show the big demo window (Most of the sample code is in ImGui::ShowDemoWindow()! You can browse its code to learn more about Dear ImGui!).
+	//if (show_demo_window)
+	//	ImGui::ShowDemoWindow(&show_demo_window);
+
+	ImGui::Text("Mouse pos: (%g, %g)", io.MousePos.x, io.MousePos.y);
+
+
+	// Rendering
+	ImGui::Render();
+
+	ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+	SDL_GL_SwapWindow(GameEngine::GetInstance()->GetSDLWindow());
+
+
 	GameEngine::GetInstance()->GetStateController()->gameStateNext = GameEngine::GetInstance()->GetStateController()->loadingState;
 	// cout << "Draw Level" << endl;
 }
@@ -60,6 +101,10 @@ void LevelLoading::LevelFree()
 void LevelLoading::LevelUnload()
 {
 	GameEngine::GetInstance()->ClearMesh();
+
+	ImGui_ImplOpenGL3_Shutdown();
+	ImGui_ImplSDL2_Shutdown();
+	ImGui::DestroyContext();
 
 	//cout << "Unload Level" << endl;
 }

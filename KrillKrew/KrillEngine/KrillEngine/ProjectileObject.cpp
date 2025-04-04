@@ -8,6 +8,8 @@ ProjectileObject::ProjectileObject()
 	collider = new Collider(Collider::Trigger, this);
 	this->pos = glm::vec3(0, 0, 0);
 	this->playerOwner = nullptr;
+	
+	this->orderingLayer = 3;
 }
 
 
@@ -70,7 +72,11 @@ void ProjectileObject::SetVelocity(float axisX, float axisY, bool isPositiveX, b
 	velocity = glm::vec3(axisX * 5.f, axisY * 5.f, 0);
 
 }
-
+void ProjectileObject::SetSize(float sizeX, float sizeY)
+{
+	size = glm::vec3(sizeX, sizeY, 1);
+	this->collider->setColliderSize(size);
+}
 glm::vec3 ProjectileObject::GetVelocity() 
 {
 	return velocity;
@@ -91,8 +97,49 @@ void ProjectileObject::ReduceLifeTime()
 	{ 
 		
 		playerOwner->SetIsShooting(false);
+		if (this->type == TypeProjectile::Fireball)
+		{
+			ExplodeTileInRange();
+		}
+		else if (this->type == ProjectileObject::TypeProjectile::Teleport) {
+			playerOwner->SetPosition(this->getPos());
+		}
+		else
+		{
+			KK_ERROR("This is not fireball");
+		}
 	}
 }
+
+void ProjectileObject::AddTileInRange(TileObject* tile)
+{
+	KK_TRACE("AddTileInRange");
+	TileInRange.push_back(tile);
+}
+void ProjectileObject::DeleteTileInRange(TileObject* tile)
+{
+	auto clearTile = std::find(TileInRange.begin(), TileInRange.end(), tile);
+
+	// KK_INFO("clearTile");
+
+	if (clearTile != TileInRange.end())
+	{
+		// KK_INFO("completely clear tile");
+		KK_TRACE("DeleteTileInRange");
+		TileInRange.erase(clearTile);
+
+	}
+}
+void ProjectileObject::ExplodeTileInRange()
+{
+	KK_TRACE("Tile in range = {0}", TileInRange.size());
+	for (TileObject* tile : TileInRange)
+	{
+		tile->GotHit();
+	}
+	this->isActive = false;
+}
+
 int ProjectileObject::GetLifetime() 
 {
 	return lifeTime;
@@ -107,6 +154,12 @@ void ProjectileObject::OnColliderEnter(Collider* other)
 	// Base
 	EntityObject::OnColliderEnter(other);
 
+	TileObject* tile = dynamic_cast<TileObject*>(other->GetParent());
+
+	if (tile != nullptr)
+	{
+		AddTileInRange(tile);
+	}
 	// Behavior
 	PlayerObject* player = dynamic_cast<PlayerObject*>(other->GetParent());
 	if (player != nullptr)
@@ -119,8 +172,26 @@ void ProjectileObject::OnColliderEnter(Collider* other)
 			}
 			else
 			{
+				KK_INFO("Projectile Hit Player");
 				playerOwner->SetIsShooting(false);
+
+				if (this->type == TypeProjectile::Fireball)
+				{
+					ExplodeTileInRange();
+				}
+				else if (this->type == ProjectileObject::TypeProjectile::Teleport) {
+					playerOwner->SetPosition(this->getPos());
+					playerOwner->GetGroundColliderObject()->SetPosition(this->getPos());
+					playerOwner->SetPosition(this->getPos());
+				}
+				else
+				{
+					KK_ERROR("This is not fireball");
+				}
+				player->ApplyKnockback(this);
 				this->isActive = false;
+
+				
 			}
 		}
 		
@@ -138,6 +209,12 @@ void ProjectileObject::OnColliderExit(Collider* other)
 	// Base
 	EntityObject::OnColliderExit(other);
 
+	TileObject* tile = dynamic_cast<TileObject*>(other->GetParent());
+
+	if (tile != nullptr)
+	{
+		DeleteTileInRange(tile);
+	}
 	// Behavior
 }
 void ProjectileObject::OnTriggerEnter(Collider* other)
@@ -170,19 +247,19 @@ PlayerObject* ProjectileObject::GetOwner()
 	return playerOwner;
 }
 
-void ProjectileObject::SetIsCanKnockback(bool isCanKnockback) {
-	this->isCanKnockback = isCanKnockback;
+void ProjectileObject::SetCanKnockback(bool isCanKnockback) {
+	this->CanKnockback = isCanKnockback;
 }
 
-bool ProjectileObject::GetIsCanKnockback() {
-	return isCanKnockback;
+bool ProjectileObject::GetCanKnockback() {
+	return CanKnockback;
 }
 
-void ProjectileObject::SetType(int Type) {
+void ProjectileObject::SetType(TypeProjectile Type) {
 	this->type = Type;
 }
 
-int ProjectileObject::GetType() {
+ProjectileObject::TypeProjectile ProjectileObject::GetType() {
 	return type;
 }
 
@@ -194,9 +271,9 @@ bool ProjectileObject::GetIsShooting() {
 }
 
 void ProjectileObject::SetIsCanStun(bool isCanStun) {
-	this->isCanStun = isCanStun;
+	this->CanStun = isCanStun;
 }
 
 bool ProjectileObject::GetIsCanStun() {
-	return isCanStun;
+	return CanStun;
 }

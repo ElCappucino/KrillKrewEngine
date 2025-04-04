@@ -8,6 +8,8 @@ UiObject::UiObject()
 	this->pos = glm::vec3(0, 0, 0);
 	this->size = glm::vec3(215.f, -100.f, 0);
 	this->playerNumOwner = 0;
+
+	this->orderingLayer = 4;
 }
 
 

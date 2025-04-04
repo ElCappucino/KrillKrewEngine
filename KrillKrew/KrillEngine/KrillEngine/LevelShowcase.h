@@ -161,12 +161,14 @@ private:
 		{193,	{1, 1}	},
 	};
 
+	// ImGUI
 	int clicked[4] = {0, 0, 0, 0};
-	float groundColX[4] = {0, 0, 0, 0};
-	char groundColXName[4][20] = { "ColX Button 1", "ColX Button 2", "ColX Button 3", "ColX Button 4" };
-	char groundColYName[4][20] = { "ColY Button 1", "ColY Button 2", "ColY Button 3", "ColY Button 4" };
-	float groundColY[4] = {0, 0, 0, 0};
-	char buttonName[4][20] = {"Button 1", "Button 2", "Button 3", "Button 4"};
+	float groundColX[4] = { 64.f, 64.f, 64.f, 64.f };
+	float groundColY[4] = { 64.f, 64.f, 64.f, 64.f };
+	float groundColOffsetX[4] = { 0.f, 0.f, 0.f, 0.f };
+	float groundColOffsetY[4] = { -96.f, -96.f, -96.f, -96.f };
+	int playersSkill[4][3];
+	int isResetScene;
 
 	int playerSize = 0;
 	int playerNum = 0;
@@ -188,6 +190,8 @@ private:
 	bool isPositiveXOld;
 	bool isPositiveYOld;
 
+	KrillSoundManager::SoundManager* soundManager;
+
 public:
 	virtual void LevelLoad();
 	virtual void LevelInit();
@@ -205,7 +209,7 @@ public:
 	void UpdateCooldown();
 	void UpdateMovement();
 	void UpdateUI();
-	void UpdateKnockback(DrawableObject* obj1, DrawableObject* obj2);
+	// void UpdateKnockback(DrawableObject* obj1, DrawableObject* obj2);
 	void UpdateTime();
 
 	void GroundTileRefactor();
