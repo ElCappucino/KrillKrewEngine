@@ -11,11 +11,12 @@ The class for creating object that render using texture.
 
 
 
-Inheritance diagram for Entity\+Object\+:\nopagebreak
+Inheritance diagram for Entity\+Object\+:
+\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
-\includegraphics[width=338pt]{class_entity_object__inherit__graph}
+\includegraphics[width=350pt]{class_entity_object__inherit__graph}
 \end{center}
 \end{figure}
 
@@ -38,26 +39,25 @@ void {\bfseries Set\+Texture} (std\+::string path)
 \item 
 void \mbox{\hyperlink{class_entity_object_a8cca95a93e92daa5029a240a697a6606}{Render}} (glm\+::mat4 global\+Model\+Transform)
 \item 
+virtual void \mbox{\hyperlink{class_entity_object_a4cf2e4dec6ba56b63af9e08681687292}{Set\+Size}} (float sizeX, float sizeY)
+\item 
 \Hypertarget{class_entity_object_aeb63a97b686b575ffdf223bdf3e7f284}\label{class_entity_object_aeb63a97b686b575ffdf223bdf3e7f284} 
 virtual \mbox{\hyperlink{class_collider}{Collider}} \texorpdfstring{$\ast$}{*} {\bfseries Get\+Collider} ()
 \item 
-\Hypertarget{class_entity_object_aa22f5c7cf6b57a10bf8b8a130ecd4420}\label{class_entity_object_aa22f5c7cf6b57a10bf8b8a130ecd4420} 
-virtual void {\bfseries On\+Collider\+Enter} (\mbox{\hyperlink{class_collider}{Collider}} \texorpdfstring{$\ast$}{*}other)
+\Hypertarget{class_entity_object_a17b673281fd0f64ac837c2b39788638d}\label{class_entity_object_a17b673281fd0f64ac837c2b39788638d} 
+virtual void {\bfseries set\+Collider\+Size} (glm\+::vec3 size)
 \item 
-\Hypertarget{class_entity_object_a549fe3e3c51f46a20ccd8e5788d91463}\label{class_entity_object_a549fe3e3c51f46a20ccd8e5788d91463} 
-virtual void {\bfseries On\+Collider\+Stay} (\mbox{\hyperlink{class_collider}{Collider}} \texorpdfstring{$\ast$}{*}other)
+virtual void \mbox{\hyperlink{class_entity_object_aa22f5c7cf6b57a10bf8b8a130ecd4420}{On\+Collider\+Enter}} (\mbox{\hyperlink{class_collider}{Collider}} \texorpdfstring{$\ast$}{*}other)
 \item 
-\Hypertarget{class_entity_object_a08e5743d8b4ce96cf48e19379607f509}\label{class_entity_object_a08e5743d8b4ce96cf48e19379607f509} 
-virtual void {\bfseries On\+Collider\+Exit} (\mbox{\hyperlink{class_collider}{Collider}} \texorpdfstring{$\ast$}{*}other)
+virtual void \mbox{\hyperlink{class_entity_object_a549fe3e3c51f46a20ccd8e5788d91463}{On\+Collider\+Stay}} (\mbox{\hyperlink{class_collider}{Collider}} \texorpdfstring{$\ast$}{*}other)
 \item 
-\Hypertarget{class_entity_object_a890c3b26118aa792ef0c6ff79ba75244}\label{class_entity_object_a890c3b26118aa792ef0c6ff79ba75244} 
-virtual void {\bfseries On\+Trigger\+Enter} (\mbox{\hyperlink{class_collider}{Collider}} \texorpdfstring{$\ast$}{*}other)
+virtual void \mbox{\hyperlink{class_entity_object_a08e5743d8b4ce96cf48e19379607f509}{On\+Collider\+Exit}} (\mbox{\hyperlink{class_collider}{Collider}} \texorpdfstring{$\ast$}{*}other)
 \item 
-\Hypertarget{class_entity_object_aa6a265f8d886c6d3d81d5afa0e4b2896}\label{class_entity_object_aa6a265f8d886c6d3d81d5afa0e4b2896} 
-virtual void {\bfseries On\+Trigger\+Stay} (\mbox{\hyperlink{class_collider}{Collider}} \texorpdfstring{$\ast$}{*}other)
+virtual void \mbox{\hyperlink{class_entity_object_a890c3b26118aa792ef0c6ff79ba75244}{On\+Trigger\+Enter}} (\mbox{\hyperlink{class_collider}{Collider}} \texorpdfstring{$\ast$}{*}other)
 \item 
-\Hypertarget{class_entity_object_af6b5f5045489c8c0dc2e45c28a19713f}\label{class_entity_object_af6b5f5045489c8c0dc2e45c28a19713f} 
-virtual void {\bfseries On\+Trigger\+Exit} (\mbox{\hyperlink{class_collider}{Collider}} \texorpdfstring{$\ast$}{*}other)
+virtual void \mbox{\hyperlink{class_entity_object_aa6a265f8d886c6d3d81d5afa0e4b2896}{On\+Trigger\+Stay}} (\mbox{\hyperlink{class_collider}{Collider}} \texorpdfstring{$\ast$}{*}other)
+\item 
+virtual void \mbox{\hyperlink{class_entity_object_af6b5f5045489c8c0dc2e45c28a19713f}{On\+Trigger\+Exit}} (\mbox{\hyperlink{class_collider}{Collider}} \texorpdfstring{$\ast$}{*}other)
 \item 
 \Hypertarget{class_entity_object_a7d672b8f229bab61574f05324e98facb}\label{class_entity_object_a7d672b8f229bab61574f05324e98facb} 
 virtual void {\bfseries Set\+Animation\+Sprite} (Animation\+State state, \mbox{\hyperlink{struct_spritesheet_info}{Spritesheet\+Info}} sprite\+Info)
@@ -88,15 +88,21 @@ bool {\bfseries Get\+Is\+Animated} ()
 \item 
 glm\+::mat4 {\bfseries get\+Transform} ()
 \item 
-void {\bfseries Set\+Size} (float sizeX, float sizeY)
+bool {\bfseries Get\+Is\+Active} ()
 \item 
-void {\bfseries Set\+Position} (glm\+::vec3 new\+Position)
+void {\bfseries Set\+Is\+Active} (bool is\+Active)
+\item 
+virtual void {\bfseries Set\+Position} (glm\+::vec3 new\+Position)
+\item 
+void {\bfseries Set\+Ordering\+Layer} (int layer)
 \item 
 void {\bfseries Translate} (glm\+::vec3 move\+Distance)
 \item 
 glm\+::vec3 {\bfseries get\+Pos} ()
 \item 
 glm\+::vec3 {\bfseries get\+Size} ()
+\item 
+int {\bfseries get\+Ordering\+Layer} () const
 \end{DoxyCompactItemize}
 \doxysubsubsection*{Protected Attributes}
 \begin{DoxyCompactItemize}
@@ -127,6 +133,10 @@ bool {\bfseries is\+Animated}
 glm\+::vec3 {\bfseries pos}
 \item 
 glm\+::vec3 {\bfseries size}
+\item 
+int {\bfseries ordering\+Layer}
+\item 
+bool {\bfseries is\+Active} = true
 \end{DoxyCompactItemize}
 
 
@@ -134,6 +144,66 @@ glm\+::vec3 {\bfseries size}
 The class for creating object that render using texture. 
 
 \doxysubsection{Member Function Documentation}
+\Hypertarget{class_entity_object_aa22f5c7cf6b57a10bf8b8a130ecd4420}\index{EntityObject@{EntityObject}!OnColliderEnter@{OnColliderEnter}}
+\index{OnColliderEnter@{OnColliderEnter}!EntityObject@{EntityObject}}
+\doxysubsubsection{\texorpdfstring{OnColliderEnter()}{OnColliderEnter()}}
+{\footnotesize\ttfamily \label{class_entity_object_aa22f5c7cf6b57a10bf8b8a130ecd4420} 
+void Entity\+Object\+::\+On\+Collider\+Enter (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_collider}{Collider}} \texorpdfstring{$\ast$}{*}}]{other}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_image_object}{Image\+Object}}.
+
+\Hypertarget{class_entity_object_a08e5743d8b4ce96cf48e19379607f509}\index{EntityObject@{EntityObject}!OnColliderExit@{OnColliderExit}}
+\index{OnColliderExit@{OnColliderExit}!EntityObject@{EntityObject}}
+\doxysubsubsection{\texorpdfstring{OnColliderExit()}{OnColliderExit()}}
+{\footnotesize\ttfamily \label{class_entity_object_a08e5743d8b4ce96cf48e19379607f509} 
+void Entity\+Object\+::\+On\+Collider\+Exit (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_collider}{Collider}} \texorpdfstring{$\ast$}{*}}]{other}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_image_object}{Image\+Object}}.
+
+\Hypertarget{class_entity_object_a549fe3e3c51f46a20ccd8e5788d91463}\index{EntityObject@{EntityObject}!OnColliderStay@{OnColliderStay}}
+\index{OnColliderStay@{OnColliderStay}!EntityObject@{EntityObject}}
+\doxysubsubsection{\texorpdfstring{OnColliderStay()}{OnColliderStay()}}
+{\footnotesize\ttfamily \label{class_entity_object_a549fe3e3c51f46a20ccd8e5788d91463} 
+void Entity\+Object\+::\+On\+Collider\+Stay (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_collider}{Collider}} \texorpdfstring{$\ast$}{*}}]{other}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_image_object}{Image\+Object}}.
+
+\Hypertarget{class_entity_object_a890c3b26118aa792ef0c6ff79ba75244}\index{EntityObject@{EntityObject}!OnTriggerEnter@{OnTriggerEnter}}
+\index{OnTriggerEnter@{OnTriggerEnter}!EntityObject@{EntityObject}}
+\doxysubsubsection{\texorpdfstring{OnTriggerEnter()}{OnTriggerEnter()}}
+{\footnotesize\ttfamily \label{class_entity_object_a890c3b26118aa792ef0c6ff79ba75244} 
+void Entity\+Object\+::\+On\+Trigger\+Enter (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_collider}{Collider}} \texorpdfstring{$\ast$}{*}}]{other}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_image_object}{Image\+Object}}.
+
+\Hypertarget{class_entity_object_af6b5f5045489c8c0dc2e45c28a19713f}\index{EntityObject@{EntityObject}!OnTriggerExit@{OnTriggerExit}}
+\index{OnTriggerExit@{OnTriggerExit}!EntityObject@{EntityObject}}
+\doxysubsubsection{\texorpdfstring{OnTriggerExit()}{OnTriggerExit()}}
+{\footnotesize\ttfamily \label{class_entity_object_af6b5f5045489c8c0dc2e45c28a19713f} 
+void Entity\+Object\+::\+On\+Trigger\+Exit (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_collider}{Collider}} \texorpdfstring{$\ast$}{*}}]{other}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_image_object}{Image\+Object}}.
+
+\Hypertarget{class_entity_object_aa6a265f8d886c6d3d81d5afa0e4b2896}\index{EntityObject@{EntityObject}!OnTriggerStay@{OnTriggerStay}}
+\index{OnTriggerStay@{OnTriggerStay}!EntityObject@{EntityObject}}
+\doxysubsubsection{\texorpdfstring{OnTriggerStay()}{OnTriggerStay()}}
+{\footnotesize\ttfamily \label{class_entity_object_aa6a265f8d886c6d3d81d5afa0e4b2896} 
+void Entity\+Object\+::\+On\+Trigger\+Stay (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_collider}{Collider}} \texorpdfstring{$\ast$}{*}}]{other}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_image_object}{Image\+Object}}.
+
 \Hypertarget{class_entity_object_a8cca95a93e92daa5029a240a697a6606}\index{EntityObject@{EntityObject}!Render@{Render}}
 \index{Render@{Render}!EntityObject@{EntityObject}}
 \doxysubsubsection{\texorpdfstring{Render()}{Render()}}
@@ -143,4 +213,14 @@ void Entity\+Object\+::\+Render (\begin{DoxyParamCaption}\item[{glm\+::mat4}]{gl
 
 
 Implements \mbox{\hyperlink{class_drawable_object}{Drawable\+Object}}.
+
+\Hypertarget{class_entity_object_a4cf2e4dec6ba56b63af9e08681687292}\index{EntityObject@{EntityObject}!SetSize@{SetSize}}
+\index{SetSize@{SetSize}!EntityObject@{EntityObject}}
+\doxysubsubsection{\texorpdfstring{SetSize()}{SetSize()}}
+{\footnotesize\ttfamily \label{class_entity_object_a4cf2e4dec6ba56b63af9e08681687292} 
+void Entity\+Object\+::\+Set\+Size (\begin{DoxyParamCaption}\item[{float}]{sizeX}{, }\item[{float}]{sizeY}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_drawable_object}{Drawable\+Object}}.
 

@@ -1,0 +1,266 @@
+\doxysection{Player\+Ground\+Collider\+Object Class Reference}
+\hypertarget{class_player_ground_collider_object}{}\label{class_player_ground_collider_object}\index{PlayerGroundColliderObject@{PlayerGroundColliderObject}}
+
+
+The class for creating object that render using texture.  
+
+
+
+
+{\ttfamily \#include $<$Player\+Ground\+Collider\+Object.\+h$>$}
+
+
+
+Inheritance diagram for Player\+Ground\+Collider\+Object\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=217pt]{class_player_ground_collider_object__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for Player\+Ground\+Collider\+Object\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_player_ground_collider_object__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_player_ground_collider_object_abadc4d589750f864a8cc3811ec25d15c}\label{class_player_ground_collider_object_abadc4d589750f864a8cc3811ec25d15c} 
+{\bfseries Player\+Ground\+Collider\+Object} (\mbox{\hyperlink{class_player_object}{Player\+Object}} \texorpdfstring{$\ast$}{*}parent)
+\item 
+virtual void \mbox{\hyperlink{class_player_ground_collider_object_a020efe4806a8ad1b12283f3b59a5653c}{Set\+Sprite\+Info}} (\mbox{\hyperlink{struct_spritesheet_info}{Spritesheet\+Info}} info)
+\item 
+\Hypertarget{class_player_ground_collider_object_afba149c6fe8b7645d7e228b0be536817}\label{class_player_ground_collider_object_afba149c6fe8b7645d7e228b0be536817} 
+void {\bfseries Set\+Texture} (std\+::string path)
+\item 
+void \mbox{\hyperlink{class_player_ground_collider_object_a8416e09a915858992cb10e3dc43a8193}{Render}} (glm\+::mat4 global\+Model\+Transform)
+\item 
+virtual void \mbox{\hyperlink{class_player_ground_collider_object_aa5a5b0d47fd106b7aa1e37d2a4866b9a}{Set\+Size}} (float sizeX, float sizeY)
+\item 
+virtual void \mbox{\hyperlink{class_player_ground_collider_object_ab13bff8597942d21a677f37c02dcbad0}{Set\+Position}} (glm\+::vec3 new\+Position)
+\item 
+\Hypertarget{class_player_ground_collider_object_a02b578829276aa6dd52f7a442a3acd30}\label{class_player_ground_collider_object_a02b578829276aa6dd52f7a442a3acd30} 
+void {\bfseries Set\+Collision\+Offset} (glm\+::vec2 new\+Offset)
+\item 
+virtual \mbox{\hyperlink{class_collider}{Collider}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{class_player_ground_collider_object_ac98248830c583a2bf6458401857cdd58}{Get\+Collider}} ()
+\item 
+\Hypertarget{class_player_ground_collider_object_a9df9029b9978eadcf1780ce019190987}\label{class_player_ground_collider_object_a9df9029b9978eadcf1780ce019190987} 
+glm\+::vec2 {\bfseries Get\+Collider\+Offset} () const
+\item 
+virtual void \mbox{\hyperlink{class_player_ground_collider_object_a4a9a5ea49e4879051b15db3054e412aa}{On\+Collider\+Enter}} (\mbox{\hyperlink{class_collider}{Collider}} \texorpdfstring{$\ast$}{*}other)
+\item 
+virtual void \mbox{\hyperlink{class_player_ground_collider_object_ad945c0533aafe5354ebf66e8605465d9}{On\+Collider\+Stay}} (\mbox{\hyperlink{class_collider}{Collider}} \texorpdfstring{$\ast$}{*}other)
+\item 
+virtual void \mbox{\hyperlink{class_player_ground_collider_object_a3c9477417a1f82e6c8a111038d49232e}{On\+Collider\+Exit}} (\mbox{\hyperlink{class_collider}{Collider}} \texorpdfstring{$\ast$}{*}other)
+\item 
+virtual void \mbox{\hyperlink{class_player_ground_collider_object_a0ccbd75163c34bb755d4215b38e5e02e}{On\+Trigger\+Enter}} (\mbox{\hyperlink{class_collider}{Collider}} \texorpdfstring{$\ast$}{*}other)
+\item 
+virtual void \mbox{\hyperlink{class_player_ground_collider_object_a76aab3cabbe8cfa23acd7e5084526825}{On\+Trigger\+Stay}} (\mbox{\hyperlink{class_collider}{Collider}} \texorpdfstring{$\ast$}{*}other)
+\item 
+virtual void \mbox{\hyperlink{class_player_ground_collider_object_a4a200623ff4ef8dfd396ae3a67d76906}{On\+Trigger\+Exit}} (\mbox{\hyperlink{class_collider}{Collider}} \texorpdfstring{$\ast$}{*}other)
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{class_entity_object}{Entity\+Object}}}
+\begin{DoxyCompactItemize}
+\item 
+void {\bfseries Set\+Texture} (std\+::string path)
+\item 
+virtual void {\bfseries set\+Collider\+Size} (glm\+::vec3 size)
+\item 
+virtual void {\bfseries Set\+Animation\+Sprite} (Animation\+State state, \mbox{\hyperlink{struct_spritesheet_info}{Spritesheet\+Info}} sprite\+Info)
+\item 
+virtual void {\bfseries Change\+Animation\+State} (Animation\+State anim)
+\item 
+virtual void {\bfseries Update\+Current\+Animation} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{class_image_object}{Image\+Object}}}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_sprite_renderer}{Sprite\+Renderer}} \texorpdfstring{$\ast$}{*} {\bfseries Get\+Sprite\+Renderer} ()
+\item 
+void {\bfseries Set\+Sprite\+Info} (\mbox{\hyperlink{struct_spritesheet_info}{Spritesheet\+Info}} info)
+\item 
+void {\bfseries Set\+Texture} (std\+::string path)
+\item 
+void {\bfseries Set\+Is\+Animated} (bool value)
+\item 
+bool {\bfseries Get\+Is\+Animated} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{class_drawable_object}{Drawable\+Object}}}
+\begin{DoxyCompactItemize}
+\item 
+glm\+::mat4 {\bfseries get\+Transform} ()
+\item 
+bool {\bfseries Get\+Is\+Active} ()
+\item 
+void {\bfseries Set\+Is\+Active} (bool is\+Active)
+\item 
+void {\bfseries Set\+Ordering\+Layer} (int layer)
+\item 
+void {\bfseries Translate} (glm\+::vec3 move\+Distance)
+\item 
+glm\+::vec3 {\bfseries get\+Pos} ()
+\item 
+glm\+::vec3 {\bfseries get\+Size} ()
+\item 
+int {\bfseries get\+Ordering\+Layer} () const
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_player_ground_collider_object_ac21c8a624d9d7f681a6b18dc9ab398cb}\label{class_player_ground_collider_object_ac21c8a624d9d7f681a6b18dc9ab398cb} 
+\mbox{\hyperlink{class_collider}{Collider}} \texorpdfstring{$\ast$}{*} {\bfseries collider}
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Attributes inherited from \mbox{\hyperlink{class_entity_object}{Entity\+Object}}}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_collider}{Collider}} \texorpdfstring{$\ast$}{*} {\bfseries collider}
+\item 
+std\+::map$<$ Animation\+State, \mbox{\hyperlink{struct_spritesheet_info}{Spritesheet\+Info}} $>$ {\bfseries anim\+List}
+\item 
+Animation\+State {\bfseries curr\+Anim\+State}
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Attributes inherited from \mbox{\hyperlink{class_image_object}{Image\+Object}}}
+\begin{DoxyCompactItemize}
+\item 
+unsigned int {\bfseries texture}
+\item 
+\mbox{\hyperlink{class_sprite_renderer}{Sprite\+Renderer}} \texorpdfstring{$\ast$}{*} {\bfseries sprite\+Renderer}
+\item 
+\mbox{\hyperlink{struct_spritesheet_info}{Spritesheet\+Info}} {\bfseries sheet\+Info}
+\item 
+bool {\bfseries is\+Animated}
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Attributes inherited from \mbox{\hyperlink{class_drawable_object}{Drawable\+Object}}}
+\begin{DoxyCompactItemize}
+\item 
+glm\+::vec3 {\bfseries pos}
+\item 
+glm\+::vec3 {\bfseries size}
+\item 
+int {\bfseries ordering\+Layer}
+\item 
+bool {\bfseries is\+Active} = true
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+The class for creating object that render using texture. 
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_player_ground_collider_object_ac98248830c583a2bf6458401857cdd58}\index{PlayerGroundColliderObject@{PlayerGroundColliderObject}!GetCollider@{GetCollider}}
+\index{GetCollider@{GetCollider}!PlayerGroundColliderObject@{PlayerGroundColliderObject}}
+\doxysubsubsection{\texorpdfstring{GetCollider()}{GetCollider()}}
+{\footnotesize\ttfamily \label{class_player_ground_collider_object_ac98248830c583a2bf6458401857cdd58} 
+\mbox{\hyperlink{class_collider}{Collider}} \texorpdfstring{$\ast$}{*} Player\+Ground\+Collider\+Object\+::\+Get\+Collider (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_entity_object}{Entity\+Object}}.
+
+\Hypertarget{class_player_ground_collider_object_a4a9a5ea49e4879051b15db3054e412aa}\index{PlayerGroundColliderObject@{PlayerGroundColliderObject}!OnColliderEnter@{OnColliderEnter}}
+\index{OnColliderEnter@{OnColliderEnter}!PlayerGroundColliderObject@{PlayerGroundColliderObject}}
+\doxysubsubsection{\texorpdfstring{OnColliderEnter()}{OnColliderEnter()}}
+{\footnotesize\ttfamily \label{class_player_ground_collider_object_a4a9a5ea49e4879051b15db3054e412aa} 
+void Player\+Ground\+Collider\+Object\+::\+On\+Collider\+Enter (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_collider}{Collider}} \texorpdfstring{$\ast$}{*}}]{other}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_entity_object}{Entity\+Object}}.
+
+\Hypertarget{class_player_ground_collider_object_a3c9477417a1f82e6c8a111038d49232e}\index{PlayerGroundColliderObject@{PlayerGroundColliderObject}!OnColliderExit@{OnColliderExit}}
+\index{OnColliderExit@{OnColliderExit}!PlayerGroundColliderObject@{PlayerGroundColliderObject}}
+\doxysubsubsection{\texorpdfstring{OnColliderExit()}{OnColliderExit()}}
+{\footnotesize\ttfamily \label{class_player_ground_collider_object_a3c9477417a1f82e6c8a111038d49232e} 
+void Player\+Ground\+Collider\+Object\+::\+On\+Collider\+Exit (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_collider}{Collider}} \texorpdfstring{$\ast$}{*}}]{other}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_entity_object}{Entity\+Object}}.
+
+\Hypertarget{class_player_ground_collider_object_ad945c0533aafe5354ebf66e8605465d9}\index{PlayerGroundColliderObject@{PlayerGroundColliderObject}!OnColliderStay@{OnColliderStay}}
+\index{OnColliderStay@{OnColliderStay}!PlayerGroundColliderObject@{PlayerGroundColliderObject}}
+\doxysubsubsection{\texorpdfstring{OnColliderStay()}{OnColliderStay()}}
+{\footnotesize\ttfamily \label{class_player_ground_collider_object_ad945c0533aafe5354ebf66e8605465d9} 
+void Player\+Ground\+Collider\+Object\+::\+On\+Collider\+Stay (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_collider}{Collider}} \texorpdfstring{$\ast$}{*}}]{other}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_entity_object}{Entity\+Object}}.
+
+\Hypertarget{class_player_ground_collider_object_a0ccbd75163c34bb755d4215b38e5e02e}\index{PlayerGroundColliderObject@{PlayerGroundColliderObject}!OnTriggerEnter@{OnTriggerEnter}}
+\index{OnTriggerEnter@{OnTriggerEnter}!PlayerGroundColliderObject@{PlayerGroundColliderObject}}
+\doxysubsubsection{\texorpdfstring{OnTriggerEnter()}{OnTriggerEnter()}}
+{\footnotesize\ttfamily \label{class_player_ground_collider_object_a0ccbd75163c34bb755d4215b38e5e02e} 
+void Player\+Ground\+Collider\+Object\+::\+On\+Trigger\+Enter (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_collider}{Collider}} \texorpdfstring{$\ast$}{*}}]{other}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_entity_object}{Entity\+Object}}.
+
+\Hypertarget{class_player_ground_collider_object_a4a200623ff4ef8dfd396ae3a67d76906}\index{PlayerGroundColliderObject@{PlayerGroundColliderObject}!OnTriggerExit@{OnTriggerExit}}
+\index{OnTriggerExit@{OnTriggerExit}!PlayerGroundColliderObject@{PlayerGroundColliderObject}}
+\doxysubsubsection{\texorpdfstring{OnTriggerExit()}{OnTriggerExit()}}
+{\footnotesize\ttfamily \label{class_player_ground_collider_object_a4a200623ff4ef8dfd396ae3a67d76906} 
+void Player\+Ground\+Collider\+Object\+::\+On\+Trigger\+Exit (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_collider}{Collider}} \texorpdfstring{$\ast$}{*}}]{other}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_entity_object}{Entity\+Object}}.
+
+\Hypertarget{class_player_ground_collider_object_a76aab3cabbe8cfa23acd7e5084526825}\index{PlayerGroundColliderObject@{PlayerGroundColliderObject}!OnTriggerStay@{OnTriggerStay}}
+\index{OnTriggerStay@{OnTriggerStay}!PlayerGroundColliderObject@{PlayerGroundColliderObject}}
+\doxysubsubsection{\texorpdfstring{OnTriggerStay()}{OnTriggerStay()}}
+{\footnotesize\ttfamily \label{class_player_ground_collider_object_a76aab3cabbe8cfa23acd7e5084526825} 
+void Player\+Ground\+Collider\+Object\+::\+On\+Trigger\+Stay (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_collider}{Collider}} \texorpdfstring{$\ast$}{*}}]{other}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_entity_object}{Entity\+Object}}.
+
+\Hypertarget{class_player_ground_collider_object_a8416e09a915858992cb10e3dc43a8193}\index{PlayerGroundColliderObject@{PlayerGroundColliderObject}!Render@{Render}}
+\index{Render@{Render}!PlayerGroundColliderObject@{PlayerGroundColliderObject}}
+\doxysubsubsection{\texorpdfstring{Render()}{Render()}}
+{\footnotesize\ttfamily \label{class_player_ground_collider_object_a8416e09a915858992cb10e3dc43a8193} 
+void Player\+Ground\+Collider\+Object\+::\+Render (\begin{DoxyParamCaption}\item[{glm\+::mat4}]{global\+Model\+Transform}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_entity_object}{Entity\+Object}}.
+
+\Hypertarget{class_player_ground_collider_object_ab13bff8597942d21a677f37c02dcbad0}\index{PlayerGroundColliderObject@{PlayerGroundColliderObject}!SetPosition@{SetPosition}}
+\index{SetPosition@{SetPosition}!PlayerGroundColliderObject@{PlayerGroundColliderObject}}
+\doxysubsubsection{\texorpdfstring{SetPosition()}{SetPosition()}}
+{\footnotesize\ttfamily \label{class_player_ground_collider_object_ab13bff8597942d21a677f37c02dcbad0} 
+void Player\+Ground\+Collider\+Object\+::\+Set\+Position (\begin{DoxyParamCaption}\item[{glm\+::vec3}]{new\+Position}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_drawable_object}{Drawable\+Object}}.
+
+\Hypertarget{class_player_ground_collider_object_aa5a5b0d47fd106b7aa1e37d2a4866b9a}\index{PlayerGroundColliderObject@{PlayerGroundColliderObject}!SetSize@{SetSize}}
+\index{SetSize@{SetSize}!PlayerGroundColliderObject@{PlayerGroundColliderObject}}
+\doxysubsubsection{\texorpdfstring{SetSize()}{SetSize()}}
+{\footnotesize\ttfamily \label{class_player_ground_collider_object_aa5a5b0d47fd106b7aa1e37d2a4866b9a} 
+void Player\+Ground\+Collider\+Object\+::\+Set\+Size (\begin{DoxyParamCaption}\item[{float}]{sizeX}{, }\item[{float}]{sizeY}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_entity_object}{Entity\+Object}}.
+
+\Hypertarget{class_player_ground_collider_object_a020efe4806a8ad1b12283f3b59a5653c}\index{PlayerGroundColliderObject@{PlayerGroundColliderObject}!SetSpriteInfo@{SetSpriteInfo}}
+\index{SetSpriteInfo@{SetSpriteInfo}!PlayerGroundColliderObject@{PlayerGroundColliderObject}}
+\doxysubsubsection{\texorpdfstring{SetSpriteInfo()}{SetSpriteInfo()}}
+{\footnotesize\ttfamily \label{class_player_ground_collider_object_a020efe4806a8ad1b12283f3b59a5653c} 
+void Player\+Ground\+Collider\+Object\+::\+Set\+Sprite\+Info (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_spritesheet_info}{Spritesheet\+Info}}}]{info}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_entity_object}{Entity\+Object}}.
+

@@ -11,11 +11,12 @@ The class for creating object that render using texture.
 
 
 
-Inheritance diagram for Image\+Object\+:\nopagebreak
+Inheritance diagram for Image\+Object\+:
+\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
-\includegraphics[width=338pt]{class_image_object__inherit__graph}
+\includegraphics[width=350pt]{class_image_object__inherit__graph}
 \end{center}
 \end{figure}
 
@@ -46,21 +47,47 @@ void {\bfseries Set\+Is\+Animated} (bool value)
 \item 
 \Hypertarget{class_image_object_a6fe709ab9aa5a5e1192fc19e5e89e220}\label{class_image_object_a6fe709ab9aa5a5e1192fc19e5e89e220} 
 bool {\bfseries Get\+Is\+Animated} ()
+\item 
+\Hypertarget{class_image_object_ade9307c7c40b761498248fd2062b56b0}\label{class_image_object_ade9307c7c40b761498248fd2062b56b0} 
+virtual void {\bfseries On\+Collider\+Enter} (\mbox{\hyperlink{class_collider}{Collider}} \texorpdfstring{$\ast$}{*}other)
+\item 
+\Hypertarget{class_image_object_a2bedb7205a550e14bb31e5e74eebf361}\label{class_image_object_a2bedb7205a550e14bb31e5e74eebf361} 
+virtual void {\bfseries On\+Collider\+Stay} (\mbox{\hyperlink{class_collider}{Collider}} \texorpdfstring{$\ast$}{*}other)
+\item 
+\Hypertarget{class_image_object_ae96598d68447504622df8fb116e1ef11}\label{class_image_object_ae96598d68447504622df8fb116e1ef11} 
+virtual void {\bfseries On\+Collider\+Exit} (\mbox{\hyperlink{class_collider}{Collider}} \texorpdfstring{$\ast$}{*}other)
+\item 
+\Hypertarget{class_image_object_aa7b7ce35cec75e713c666fee93de6075}\label{class_image_object_aa7b7ce35cec75e713c666fee93de6075} 
+virtual void {\bfseries On\+Trigger\+Enter} (\mbox{\hyperlink{class_collider}{Collider}} \texorpdfstring{$\ast$}{*}other)
+\item 
+\Hypertarget{class_image_object_a04236422d7fc230d70b6de017431ab24}\label{class_image_object_a04236422d7fc230d70b6de017431ab24} 
+virtual void {\bfseries On\+Trigger\+Stay} (\mbox{\hyperlink{class_collider}{Collider}} \texorpdfstring{$\ast$}{*}other)
+\item 
+\Hypertarget{class_image_object_ae90f0bf8f8e5abd92ee677fa5e5ef3ea}\label{class_image_object_ae90f0bf8f8e5abd92ee677fa5e5ef3ea} 
+virtual void {\bfseries On\+Trigger\+Exit} (\mbox{\hyperlink{class_collider}{Collider}} \texorpdfstring{$\ast$}{*}other)
 \end{DoxyCompactItemize}
 \doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{class_drawable_object}{Drawable\+Object}}}
 \begin{DoxyCompactItemize}
 \item 
 glm\+::mat4 {\bfseries get\+Transform} ()
 \item 
-void {\bfseries Set\+Size} (float sizeX, float sizeY)
+bool {\bfseries Get\+Is\+Active} ()
 \item 
-void {\bfseries Set\+Position} (glm\+::vec3 new\+Position)
+void {\bfseries Set\+Is\+Active} (bool is\+Active)
+\item 
+virtual void {\bfseries Set\+Size} (float sizeX, float sizeY)
+\item 
+virtual void {\bfseries Set\+Position} (glm\+::vec3 new\+Position)
+\item 
+void {\bfseries Set\+Ordering\+Layer} (int layer)
 \item 
 void {\bfseries Translate} (glm\+::vec3 move\+Distance)
 \item 
 glm\+::vec3 {\bfseries get\+Pos} ()
 \item 
 glm\+::vec3 {\bfseries get\+Size} ()
+\item 
+int {\bfseries get\+Ordering\+Layer} () const
 \end{DoxyCompactItemize}
 \doxysubsubsection*{Protected Attributes}
 \begin{DoxyCompactItemize}
@@ -83,6 +110,10 @@ bool {\bfseries is\+Animated}
 glm\+::vec3 {\bfseries pos}
 \item 
 glm\+::vec3 {\bfseries size}
+\item 
+int {\bfseries ordering\+Layer}
+\item 
+bool {\bfseries is\+Active} = true
 \end{DoxyCompactItemize}
 
 

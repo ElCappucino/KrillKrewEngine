@@ -1,13 +1,19 @@
 <map id="EntityObject" name="EntityObject">
-<area shape="rect" id="Node000001" title="The class for creating object that render using texture." alt="" coords="136,155,230,181"/>
-<area shape="rect" id="Node000004" href="$class_player_object.html" title="The class for creating object that render using texture." alt="" coords="5,229,102,256"/>
-<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="148,192,78,231,75,226,146,187"/>
-<area shape="rect" id="Node000005" href="$class_projectile_object.html" title="The class for creating object that render using texture." alt="" coords="126,229,240,256"/>
-<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="186,197,186,229,180,229,180,197"/>
-<area shape="rect" id="Node000006" href="$class_trap_object.html" title="The class for creating object that render using texture." alt="" coords="264,229,350,256"/>
-<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="218,187,286,226,284,231,216,192"/>
-<area shape="rect" id="Node000002" href="$class_image_object.html" title="The class for creating object that render using texture." alt="" coords="135,80,230,107"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="186,122,186,154,180,154,180,122"/>
-<area shape="rect" id="Node000003" href="$class_drawable_object.html" title="The class for creating drawable object." alt="" coords="126,5,240,32"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="186,48,186,80,180,80,180,48"/>
+<area shape="rect" id="Node000001" title="The class for creating object that render using texture." alt="" coords="311,132,404,159"/>
+<area shape="rect" id="Node000004" href="$class_player_ground_collider_object.html" title="The class for creating object that render using texture." alt="" coords="452,5,635,32"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="374,118,407,78,428,59,451,42,475,30,478,35,454,46,431,63,411,82,379,121"/>
+<area shape="rect" id="Node000005" href="$class_player_hitbox_object.html" title="The class for creating object that render using texture." alt="" coords="476,56,611,83"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="393,121,451,92,485,81,486,86,453,97,395,126"/>
+<area shape="rect" id="Node000006" href="$class_player_object.html" title="The class for creating object that render using texture." alt="" coords="495,107,592,133"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="420,134,495,124,495,129,420,140"/>
+<area shape="rect" id="Node000007" href="$class_projectile_object.html" title="The class for creating object that render using texture." alt="" coords="487,157,600,184"/>
+<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="420,151,487,160,486,166,419,156"/>
+<area shape="rect" id="Node000008" href="$class_tile_object.html" title="The class for creating object that render using texture." alt="" coords="503,208,584,235"/>
+<area shape="poly" id="edge7_Node000001_Node000008" title=" " alt="" coords="395,164,453,194,504,210,502,215,451,198,393,169"/>
+<area shape="rect" id="Node000009" href="$class_trap_object.html" title="The class for creating object that render using texture." alt="" coords="501,259,586,285"/>
+<area shape="poly" id="edge8_Node000001_Node000009" title=" " alt="" coords="379,170,411,209,431,228,454,244,477,255,501,263,500,268,475,260,451,249,428,232,407,212,374,173"/>
+<area shape="rect" id="Node000002" href="$class_image_object.html" title="The class for creating object that render using texture." alt="" coords="168,132,263,159"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="279,143,311,143,311,148,279,148"/>
+<area shape="rect" id="Node000003" href="$class_drawable_object.html" title="The class for creating drawable object." alt="" coords="5,132,120,159"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="135,143,167,143,167,148,135,148"/>
 </map>

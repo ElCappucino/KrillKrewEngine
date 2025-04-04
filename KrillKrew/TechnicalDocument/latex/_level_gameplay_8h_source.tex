@@ -4,55 +4,70 @@
 \begin{DoxyCode}{0}
 \DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
 \DoxyCodeLine{00002\ \textcolor{preprocessor}{\#include\ "{}Level.h"{}}}
-\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ "{}InfoStruct.h"{}}}
-\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ "{}EntityObject.h"{}}}
-\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ "{}PlayerObject.h"{}}}
-\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ "{}ProjectileObject.h"{}}}
-\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ "{}TrapObject.h"{}}}
-\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#include\ "{}GizmosObject.h"{}}}
-\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#include\ "{}TrapObject.h"{}}}
-\DoxyCodeLine{00010\ \textcolor{preprocessor}{\#include\ <map>}}
-\DoxyCodeLine{00011\ \textcolor{preprocessor}{\#include\ "{}Timer.h"{}}}
-\DoxyCodeLine{00012\ \textcolor{preprocessor}{\#include\ "{}UiObject.h"{}}}
-\DoxyCodeLine{00013\ }
-\DoxyCodeLine{00014\ }
-\DoxyCodeLine{00015\ }
-\DoxyCodeLine{00017\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_level_gameplay}{LevelGameplay}}\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{class_level}{Level}}}
-\DoxyCodeLine{00018\ \{}
-\DoxyCodeLine{00019\ \textcolor{keyword}{private}:}
-\DoxyCodeLine{00020\ \ \ \ \ std::vector<DrawableObject*>\ objectsList;}
-\DoxyCodeLine{00021\ \ \ \ \ std::map<std::string,\ SpritesheetInfo>\ spriteList;}
-\DoxyCodeLine{00022\ \ \ \ \ \mbox{\hyperlink{class_player_object}{PlayerObject}}*\ players[4];\ \textcolor{comment}{//\ add\ up\ to\ 4\ players}}
-\DoxyCodeLine{00023\ \ \ \ \ \textcolor{keywordtype}{int}\ playerSize\ =\ 0;}
-\DoxyCodeLine{00024\ \ \ \ \ \textcolor{keywordtype}{int}\ playerNum\ =\ 0;}
-\DoxyCodeLine{00025\ \ \ \ \ }
-\DoxyCodeLine{00026\ \ \ \ \ \mbox{\hyperlink{struct_orthographic_value}{OrthographicValue}}\ targetSceneProjection;\ \textcolor{comment}{//\ use\ for\ lerping\ between\ the\ current\ projection\ and\ this\ (target\ projection).}}
-\DoxyCodeLine{00027\ \ \ \ \ \mbox{\hyperlink{class_camera}{Camera}}\ camera;}
-\DoxyCodeLine{00028\ \ \ \ \ \mbox{\hyperlink{class_timer}{Timer}}*\ timer;}
-\DoxyCodeLine{00029\ }
-\DoxyCodeLine{00030\ \ \ \ \ \textcolor{keywordtype}{int}\ dt\ =\ 0;}
-\DoxyCodeLine{00031\ \ \ \ \ \textcolor{keywordtype}{float}\ time[4]\ =\ \{0\};}
-\DoxyCodeLine{00032\ \ \ \ \ \textcolor{keywordtype}{float}\ previousWidth\ =\ 0,\ previousHeight\ =\ 0;}
-\DoxyCodeLine{00033\ }
-\DoxyCodeLine{00034\ \textcolor{keyword}{public}:}
-\DoxyCodeLine{00035\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ LevelLoad();}
-\DoxyCodeLine{00036\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ LevelInit();}
-\DoxyCodeLine{00037\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ LevelUpdate();}
-\DoxyCodeLine{00038\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ LevelDraw();}
-\DoxyCodeLine{00039\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ LevelFree();}
-\DoxyCodeLine{00040\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ LevelUnload();}
-\DoxyCodeLine{00041\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ Movement(\textcolor{keywordtype}{float}\ axisX,\ \textcolor{keywordtype}{float}\ axisY,\ \textcolor{keywordtype}{bool}\ isPositiveX,\ \textcolor{keywordtype}{bool}\ isPositiveY);}
-\DoxyCodeLine{00042\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ HandleKey(\textcolor{keywordtype}{char}\ key);}
-\DoxyCodeLine{00043\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ HandleMouse(\textcolor{keywordtype}{int}\ type,\ \textcolor{keywordtype}{int}\ x,\ \textcolor{keywordtype}{int}\ y);}
-\DoxyCodeLine{00044\ }
-\DoxyCodeLine{00045\ \ \ \ \ \textcolor{keywordtype}{void}\ UpdateInput();}
-\DoxyCodeLine{00046\ \ \ \ \ \textcolor{keywordtype}{void}\ UpdateCollision();}
-\DoxyCodeLine{00047\ \ \ \ \ \textcolor{keywordtype}{void}\ UpdateProjectile();}
-\DoxyCodeLine{00048\ \ \ \ \ \textcolor{keywordtype}{void}\ UpdateCooldown();}
-\DoxyCodeLine{00049\ \ \ \ \ \textcolor{keywordtype}{void}\ UpdateMovement();}
-\DoxyCodeLine{00050\ \ \ \ \ \textcolor{keywordtype}{void}\ UpdateUI();}
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ "{}LevelUtilities.h"{}}}
+\DoxyCodeLine{00004\ }
+\DoxyCodeLine{00006\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_level_gameplay}{LevelGameplay}}\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{class_level}{Level}}}
+\DoxyCodeLine{00007\ \{}
+\DoxyCodeLine{00008\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00009\ \ \ \ \ std::vector<DrawableObject*>\ objectsList;}
+\DoxyCodeLine{00010\ \ \ \ \ std::map<std::string,\ SpritesheetInfo>\ spriteList;}
+\DoxyCodeLine{00011\ \ \ \ \ \mbox{\hyperlink{class_player_object}{PlayerObject}}*\ players[4];\ \textcolor{comment}{//\ add\ up\ to\ 4\ players}}
+\DoxyCodeLine{00012\ \ \ \ \ \textcolor{keywordtype}{int}\ playerSize\ =\ 0;}
+\DoxyCodeLine{00013\ \ \ \ \ \textcolor{keywordtype}{int}\ playerNum\ =\ 0;}
+\DoxyCodeLine{00014\ \ \ \ \ }
+\DoxyCodeLine{00015\ \ \ \ \ \mbox{\hyperlink{struct_orthographic_value}{OrthographicValue}}\ targetSceneProjection;\ \textcolor{comment}{//\ use\ for\ lerping\ between\ the\ current\ projection\ and\ this\ (target\ projection).}}
+\DoxyCodeLine{00016\ \ \ \ \ \mbox{\hyperlink{class_camera}{Camera}}\ camera;}
+\DoxyCodeLine{00017\ \ \ \ \ \mbox{\hyperlink{class_timer}{Timer}}*\ timer;}
+\DoxyCodeLine{00018\ }
+\DoxyCodeLine{00019\ \ \ \ \ \textcolor{keywordtype}{int}\ dt\ =\ 0;}
+\DoxyCodeLine{00020\ \ \ \ \ \textcolor{keywordtype}{float}\ time1s\ =\ 0;}
+\DoxyCodeLine{00021\ \ \ \ \ \textcolor{keywordtype}{float}\ time05s\ =\ 0;}
+\DoxyCodeLine{00022\ \ \ \ \ \textcolor{keywordtype}{float}\ previousWidth\ =\ 0,\ previousHeight\ =\ 0;}
+\DoxyCodeLine{00023\ }
+\DoxyCodeLine{00024\ \ \ \ \ \textcolor{comment}{//\ player}}
+\DoxyCodeLine{00025\ \ \ \ \ \textcolor{keywordtype}{float}\ axisXOld;}
+\DoxyCodeLine{00026\ \ \ \ \ \textcolor{keywordtype}{float}\ axisYOld;}
+\DoxyCodeLine{00027\ \ \ \ \ \textcolor{keywordtype}{float}\ norAxisXOld;}
+\DoxyCodeLine{00028\ \ \ \ \ \textcolor{keywordtype}{float}\ norAxisYOld;}
+\DoxyCodeLine{00029\ \ \ \ \ \textcolor{keywordtype}{bool}\ isPositiveXOld;}
+\DoxyCodeLine{00030\ \ \ \ \ \textcolor{keywordtype}{bool}\ isPositiveYOld;}
+\DoxyCodeLine{00031\ }
+\DoxyCodeLine{00032\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00033\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ LevelLoad();}
+\DoxyCodeLine{00034\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ LevelInit();}
+\DoxyCodeLine{00035\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ LevelUpdate();}
+\DoxyCodeLine{00036\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ LevelDraw();}
+\DoxyCodeLine{00037\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ LevelFree();}
+\DoxyCodeLine{00038\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ LevelUnload();}
+\DoxyCodeLine{00039\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ Movement(\textcolor{keywordtype}{float}\ axisX,\ \textcolor{keywordtype}{float}\ axisY,\ \textcolor{keywordtype}{bool}\ isPositiveX,\ \textcolor{keywordtype}{bool}\ isPositiveY);}
+\DoxyCodeLine{00040\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ HandleKey(\textcolor{keywordtype}{char}\ key);}
+\DoxyCodeLine{00041\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ HandleMouse(\textcolor{keywordtype}{int}\ type,\ \textcolor{keywordtype}{int}\ x,\ \textcolor{keywordtype}{int}\ y);}
+\DoxyCodeLine{00042\ }
+\DoxyCodeLine{00043\ \ \ \ \ \textcolor{keywordtype}{void}\ UpdateInput();}
+\DoxyCodeLine{00044\ \ \ \ \ \textcolor{keywordtype}{void}\ UpdateCollision();}
+\DoxyCodeLine{00045\ \ \ \ \ \textcolor{keywordtype}{void}\ UpdateProjectile();}
+\DoxyCodeLine{00046\ \ \ \ \ \textcolor{keywordtype}{void}\ UpdateCooldown();}
+\DoxyCodeLine{00047\ \ \ \ \ \textcolor{keywordtype}{void}\ UpdateMovement();}
+\DoxyCodeLine{00048\ \ \ \ \ \textcolor{keywordtype}{void}\ UpdateUI();}
+\DoxyCodeLine{00049\ \ \ \ \ \textcolor{keywordtype}{void}\ UpdateKnockback(\mbox{\hyperlink{class_drawable_object}{DrawableObject}}*\ obj1,\ \mbox{\hyperlink{class_drawable_object}{DrawableObject}}*\ obj2);}
+\DoxyCodeLine{00050\ \ \ \ \ \textcolor{keywordtype}{void}\ UpdateTime();}
 \DoxyCodeLine{00051\ \ \ \ \ }
 \DoxyCodeLine{00052\ \ \ \ \ \textcolor{comment}{//\ void\ CameraLerp();}}
-\DoxyCodeLine{00053\ \};}
+\DoxyCodeLine{00053\ \ \ \ \ }
+\DoxyCodeLine{00054\ }
+\DoxyCodeLine{00055\ \ \ \ \ \textcolor{comment}{//ability\ function}}
+\DoxyCodeLine{00056\ \ \ \ \ \textcolor{keywordtype}{void}\ UsingAbility(\textcolor{keywordtype}{int}\ numPlayer,\ PlayerObject::AbilityButton\ button);}
+\DoxyCodeLine{00057\ \ \ \ \ \textcolor{keywordtype}{void}\ AimFireball(\textcolor{keywordtype}{int}\ numPlayer,\ PlayerObject::AbilityButton\ button);}
+\DoxyCodeLine{00058\ \ \ \ \ \textcolor{keywordtype}{void}\ ShootFireball(\textcolor{keywordtype}{int}\ numPlayer,\ PlayerObject::AbilityButton\ button);}
+\DoxyCodeLine{00059\ \ \ \ \ \textcolor{keywordtype}{void}\ Trap(\textcolor{keywordtype}{int}\ numPlayer,\ PlayerObject::AbilityButton\ button);}
+\DoxyCodeLine{00060\ \ \ \ \ \textcolor{keywordtype}{void}\ Dash(\textcolor{keywordtype}{int}\ numPlayer,\ PlayerObject::AbilityButton\ button);}
+\DoxyCodeLine{00061\ \ \ \ \ \textcolor{keywordtype}{void}\ TNT(\textcolor{keywordtype}{int}\ numPlayer,\ PlayerObject::AbilityButton\ button);}
+\DoxyCodeLine{00062\ \ \ \ \ \textcolor{keywordtype}{void}\ AimTeleport(\textcolor{keywordtype}{int}\ numPlayer,\ PlayerObject::AbilityButton\ button);}
+\DoxyCodeLine{00063\ \ \ \ \ \textcolor{keywordtype}{void}\ ShootTeleport(\textcolor{keywordtype}{int}\ numPlayer,\ PlayerObject::AbilityButton\ button);}
+\DoxyCodeLine{00064\ \ \ \ \ \textcolor{keywordtype}{void}\ AimBola(\textcolor{keywordtype}{int}\ numPlayer,\ PlayerObject::AbilityButton\ button);}
+\DoxyCodeLine{00065\ \ \ \ \ \textcolor{keywordtype}{void}\ ShootBola(\textcolor{keywordtype}{int}\ numPlayer,\ PlayerObject::AbilityButton\ button);}
+\DoxyCodeLine{00066\ \ \ \ \ \textcolor{keywordtype}{void}\ AimCleave(\textcolor{keywordtype}{int}\ numPlayer,\ PlayerObject::AbilityButton\ button);}
+\DoxyCodeLine{00067\ \ \ \ \ \textcolor{keywordtype}{void}\ ShootCleave(\textcolor{keywordtype}{int}\ numPlayer,\ PlayerObject::AbilityButton\ button);}
+\DoxyCodeLine{00068\ \};}
 
 \end{DoxyCode}

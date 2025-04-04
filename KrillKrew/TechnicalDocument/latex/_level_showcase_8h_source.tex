@@ -4,69 +4,235 @@
 \begin{DoxyCode}{0}
 \DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
 \DoxyCodeLine{00002\ \textcolor{preprocessor}{\#include\ "{}Level.h"{}}}
-\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ "{}InfoStruct.h"{}}}
-\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ "{}EntityObject.h"{}}}
-\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ "{}PlayerObject.h"{}}}
-\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ "{}ProjectileObject.h"{}}}
-\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ "{}TrapObject.h"{}}}
-\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#include\ "{}GizmosObject.h"{}}}
-\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#include\ "{}TrapObject.h"{}}}
-\DoxyCodeLine{00010\ \textcolor{preprocessor}{\#include\ "{}Timer.h"{}}}
-\DoxyCodeLine{00011\ \textcolor{preprocessor}{\#include\ "{}UiObject.h"{}}}
-\DoxyCodeLine{00012\ }
-\DoxyCodeLine{00013\ \textcolor{preprocessor}{\#include\ <string>}}
-\DoxyCodeLine{00014\ \textcolor{preprocessor}{\#include\ <fstream>}}
-\DoxyCodeLine{00015\ \textcolor{preprocessor}{\#include\ <sstream>}}
-\DoxyCodeLine{00016\ \textcolor{preprocessor}{\#include\ <iostream>}}
-\DoxyCodeLine{00017\ \textcolor{preprocessor}{\#include\ <map>}}
-\DoxyCodeLine{00018\ \textcolor{preprocessor}{\#include\ <bitset>}}
-\DoxyCodeLine{00019\ }
-\DoxyCodeLine{00020\ \textcolor{preprocessor}{\#define\ MAP\_WIDTH\ \ 21}}
-\DoxyCodeLine{00021\ \textcolor{preprocessor}{\#define\ MAP\_HEIGHT\ 16}}
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ "{}LevelUtilities.h"{}}}
+\DoxyCodeLine{00004\ }
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#define\ MAP\_WIDTH\ \ 20\ }\textcolor{comment}{//\ 29}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#define\ MAP\_HEIGHT\ 16\ }\textcolor{comment}{//\ 30}}
+\DoxyCodeLine{00007\ }
+\DoxyCodeLine{00009\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_level_showcase}{LevelShowcase}}\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{class_level}{Level}}}
+\DoxyCodeLine{00010\ \{}
+\DoxyCodeLine{00011\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00012\ \ \ \ \ std::vector<DrawableObject*>\ objectsList;}
+\DoxyCodeLine{00013\ \ \ \ \ std::vector<EntityObject*>\ entityObjects;}
+\DoxyCodeLine{00014\ \ \ \ \ std::set<std::pair<Collider*,\ Collider*>>\ currentCollisions;}
+\DoxyCodeLine{00015\ \ \ \ \ std::set<std::pair<Collider*,\ Collider*>>\ previousCollisions;}
+\DoxyCodeLine{00016\ \ \ \ \ std::map<std::string,\ SpritesheetInfo>\ spriteList;}
+\DoxyCodeLine{00017\ }
+\DoxyCodeLine{00018\ \ \ \ \ \textcolor{comment}{//\ typedef\ std::function<void(int,\ PlayerObject*,\ std::vector<DrawableObject*>\&,\ SpritesheetInfo)>\ ability;}}
+\DoxyCodeLine{00019\ \ \ \ \ \textcolor{comment}{//\ std::map<std::string,\ ability>\ abilities;}}
+\DoxyCodeLine{00020\ }
+\DoxyCodeLine{00021\ \ \ \ \ std::array<PlayerObject*,\ 4>\ players;\ \textcolor{comment}{//\ add\ up\ to\ 4\ players}}
 \DoxyCodeLine{00022\ }
-\DoxyCodeLine{00024\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_level_showcase}{LevelShowcase}}\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{class_level}{Level}}}
-\DoxyCodeLine{00025\ \{}
-\DoxyCodeLine{00026\ \textcolor{keyword}{private}:}
-\DoxyCodeLine{00027\ \ \ \ \ std::vector<DrawableObject*>\ objectsList;}
-\DoxyCodeLine{00028\ \ \ \ \ std::map<std::string,\ SpritesheetInfo>\ spriteList;}
-\DoxyCodeLine{00029\ }
-\DoxyCodeLine{00030\ \ \ \ \ \mbox{\hyperlink{class_player_object}{PlayerObject}}*\ players[4];\ \textcolor{comment}{//\ add\ up\ to\ 4\ players}}
-\DoxyCodeLine{00031\ }
-\DoxyCodeLine{00032\ \ \ \ \ \textcolor{keywordtype}{int}\ groundTile[MAP\_HEIGHT][MAP\_WIDTH]\ =\ \{\ 0\ \};}
-\DoxyCodeLine{00033\ \ \ \ \ \textcolor{keywordtype}{int}\ propsTile[MAP\_HEIGHT][MAP\_WIDTH]\ =\ \{\ 0\ \};}
-\DoxyCodeLine{00034\ \ \ \ \ \textcolor{keywordtype}{int}\ colliderTile[MAP\_HEIGHT][MAP\_WIDTH]\ =\ \{\ 0\ \};}
-\DoxyCodeLine{00035\ }
-\DoxyCodeLine{00036\ \ \ \ \ \textcolor{keywordtype}{int}\ playerSize\ =\ 0;}
-\DoxyCodeLine{00037\ \ \ \ \ \textcolor{keywordtype}{int}\ playerNum\ =\ 0;}
-\DoxyCodeLine{00038\ \ \ \ \ \mbox{\hyperlink{struct_orthographic_value}{OrthographicValue}}\ targetSceneProjection;\ \textcolor{comment}{//\ use\ for\ lerping\ between\ the\ current\ projection\ and\ this\ (target\ projection).}}
-\DoxyCodeLine{00039\ \ \ \ \ \mbox{\hyperlink{class_camera}{Camera}}\ camera;}
-\DoxyCodeLine{00040\ \ \ \ \ \mbox{\hyperlink{class_timer}{Timer}}*\ timer;}
-\DoxyCodeLine{00041\ }
-\DoxyCodeLine{00042\ \ \ \ \ \textcolor{keywordtype}{int}\ dt\ =\ 0;}
-\DoxyCodeLine{00043\ \ \ \ \ \textcolor{keywordtype}{float}\ time[4]\ =\ \{\ 0\ \};}
-\DoxyCodeLine{00044\ \ \ \ \ \textcolor{keywordtype}{float}\ previousWidth\ =\ 0,\ previousHeight\ =\ 0;}
-\DoxyCodeLine{00045\ }
-\DoxyCodeLine{00046\ \textcolor{keyword}{public}:}
-\DoxyCodeLine{00047\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ LevelLoad();}
-\DoxyCodeLine{00048\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ LevelInit();}
-\DoxyCodeLine{00049\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ LevelUpdate();}
-\DoxyCodeLine{00050\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ LevelDraw();}
-\DoxyCodeLine{00051\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ LevelFree();}
-\DoxyCodeLine{00052\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ LevelUnload();}
-\DoxyCodeLine{00053\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ Movement(\textcolor{keywordtype}{float}\ axisX,\ \textcolor{keywordtype}{float}\ axisY,\ \textcolor{keywordtype}{bool}\ isPositiveX,\ \textcolor{keywordtype}{bool}\ isPositiveY);}
-\DoxyCodeLine{00054\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ HandleKey(\textcolor{keywordtype}{char}\ key);}
-\DoxyCodeLine{00055\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ HandleMouse(\textcolor{keywordtype}{int}\ type,\ \textcolor{keywordtype}{int}\ x,\ \textcolor{keywordtype}{int}\ y);}
-\DoxyCodeLine{00056\ }
-\DoxyCodeLine{00057\ \ \ \ \ \textcolor{keywordtype}{void}\ UpdateInput();}
-\DoxyCodeLine{00058\ \ \ \ \ \textcolor{keywordtype}{void}\ UpdateCollision();}
-\DoxyCodeLine{00059\ \ \ \ \ \textcolor{keywordtype}{void}\ UpdateProjectile();}
-\DoxyCodeLine{00060\ \ \ \ \ \textcolor{keywordtype}{void}\ UpdateCooldown();}
-\DoxyCodeLine{00061\ \ \ \ \ \textcolor{keywordtype}{void}\ UpdateMovement();}
-\DoxyCodeLine{00062\ \ \ \ \ \textcolor{keywordtype}{void}\ UpdateUI();}
-\DoxyCodeLine{00063\ }
-\DoxyCodeLine{00064\ \ \ \ \ \textcolor{keywordtype}{void}\ TileImport(\textcolor{keywordtype}{int}\ TileBuffer[][MAP\_WIDTH],\ std::string\ fileName);}
-\DoxyCodeLine{00065\ }
-\DoxyCodeLine{00066\ \ \ \ \ \textcolor{comment}{//\ void\ CameraLerp();}}
-\DoxyCodeLine{00067\ \};}
+\DoxyCodeLine{00023\ \ \ \ \ std::array<std::array<int,\ MAP\_WIDTH>,\ MAP\_HEIGHT>\ currentGroundTile\ =\ \{\ 0\ \};}
+\DoxyCodeLine{00024\ \ \ \ \ std::array<std::array<int,\ MAP\_WIDTH>,\ MAP\_HEIGHT>\ groundTile\ =\ \{\ 0\ \};}
+\DoxyCodeLine{00025\ \ \ \ \ std::array<std::array<int,\ MAP\_WIDTH>,\ MAP\_HEIGHT>\ propsTile\ =\ \{\ 0\ \};}
+\DoxyCodeLine{00026\ \ \ \ \ std::array<std::array<int,\ MAP\_WIDTH>,\ MAP\_HEIGHT>\ colliderTile\ =\ \{\ 0\ \};}
+\DoxyCodeLine{00027\ \ \ \ \ \textcolor{comment}{/*int\ groundTile[MAP\_HEIGHT][MAP\_WIDTH]\ =\ \{\ 0\ \};}}
+\DoxyCodeLine{00028\ \textcolor{comment}{\ \ \ \ int\ propsTile[MAP\_HEIGHT][MAP\_WIDTH]\ =\ \{\ 0\ \};}}
+\DoxyCodeLine{00029\ \textcolor{comment}{\ \ \ \ int\ colliderTile[MAP\_HEIGHT][MAP\_WIDTH]\ =\ \{\ 0\ \};*/}}
+\DoxyCodeLine{00030\ }
+\DoxyCodeLine{00031\ \ \ \ \ std::array<std::array<TileObject*,\ MAP\_WIDTH>,\ MAP\_HEIGHT>\ tilesList;}
+\DoxyCodeLine{00032\ }
+\DoxyCodeLine{00033\ \ \ \ \ std::map<int,\ std::pair<int,\ int>>\ blob\_lookup\_table\ =\ \{}
+\DoxyCodeLine{00034\ }
+\DoxyCodeLine{00035\ \ \ \ \ \{666,\ \ \ \{1,\ 1\}\},}
+\DoxyCodeLine{00036\ \ \ \ \ \{777,\ \ \ \{2,\ 1\}\},}
+\DoxyCodeLine{00037\ \ \ \ \ \{888,\ \ \ \{3,\ 1\}\},}
+\DoxyCodeLine{00038\ \ \ \ \ \{999,\ \ \ \{4,\ 1\}\},}
+\DoxyCodeLine{00039\ }
+\DoxyCodeLine{00040\ \ \ \ \ \{16,\ \ \ \ \{1,\ 2\}\},}
+\DoxyCodeLine{00041\ \ \ \ \ \{17,\ \ \ \ \{2,\ 2\}\},}
+\DoxyCodeLine{00042\ \ \ \ \ \{1,\ \ \ \ \ \{3,\ 2\}\},}
+\DoxyCodeLine{00043\ \ \ \ \ \{0,\ \ \ \ \ \{4,\ 2\}\},}
+\DoxyCodeLine{00044\ }
+\DoxyCodeLine{00045\ \ \ \ \ \{20,\ \ \ \ \{1,\ 3\}\},}
+\DoxyCodeLine{00046\ \ \ \ \ \{21,\ \ \ \ \{2,\ 3\}\},}
+\DoxyCodeLine{00047\ \ \ \ \ \{5,\ \ \ \ \ \{3,\ 3\}\},}
+\DoxyCodeLine{00048\ \ \ \ \ \{4,\ \ \ \ \ \{4,\ 3\}\},}
+\DoxyCodeLine{00049\ }
+\DoxyCodeLine{00050\ \ \ \ \ \{84,\ \ \ \ \{1,\ 4\}\},}
+\DoxyCodeLine{00051\ \ \ \ \ \{85,\ \ \ \ \{2,\ 4\}\},}
+\DoxyCodeLine{00052\ \ \ \ \ \{69,\ \ \ \ \{3,\ 4\}\},}
+\DoxyCodeLine{00053\ \ \ \ \ \{68,\ \ \ \ \{4,\ 4\}\},}
+\DoxyCodeLine{00054\ }
+\DoxyCodeLine{00055\ \ \ \ \ \{80,\ \ \ \ \{1,\ 5\}\},}
+\DoxyCodeLine{00056\ \ \ \ \ \{81,\ \ \ \ \{2,\ 5\}\},}
+\DoxyCodeLine{00057\ \ \ \ \ \{65,\ \ \ \ \{3,\ 5\}\},}
+\DoxyCodeLine{00058\ \ \ \ \ \{64,\ \ \ \ \{4,\ 5\}\},}
+\DoxyCodeLine{00059\ }
+\DoxyCodeLine{00060\ \ \ \ \ \{213,\ \ \ \{1,\ 6\}\},}
+\DoxyCodeLine{00061\ \ \ \ \ \{29,\ \ \ \ \{2,\ 6\}\},}
+\DoxyCodeLine{00062\ \ \ \ \ \{23,\ \ \ \ \{3,\ 6\}\},}
+\DoxyCodeLine{00063\ \ \ \ \ \{117,\ \ \ \{4,\ 6\}\},}
+\DoxyCodeLine{00064\ }
+\DoxyCodeLine{00065\ \ \ \ \ \{92,\ \ \ \ \{1,\ 7\}\},}
+\DoxyCodeLine{00066\ \ \ \ \ \{127,\ \ \ \{2,\ 7\}\},}
+\DoxyCodeLine{00067\ \ \ \ \ \{223,\ \ \ \{3,\ 7\}\},}
+\DoxyCodeLine{00068\ \ \ \ \ \{71,\ \ \ \ \{4,\ 7\}\},}
+\DoxyCodeLine{00069\ }
+\DoxyCodeLine{00070\ \ \ \ \ \{116,\ \ \ \{1,\ 8\}\},}
+\DoxyCodeLine{00071\ \ \ \ \ \{253,\ \ \ \{2,\ 8\}\},}
+\DoxyCodeLine{00072\ \ \ \ \ \{247,\ \ \ \{3,\ 8\}\},}
+\DoxyCodeLine{00073\ \ \ \ \ \{197,\ \ \ \{4,\ 8\}\},}
+\DoxyCodeLine{00074\ }
+\DoxyCodeLine{00075\ \ \ \ \ \{87,\ \ \ \ \{1,\ 9\}\},}
+\DoxyCodeLine{00076\ \ \ \ \ \{113,\ \ \ \{2,\ 9\}\},}
+\DoxyCodeLine{00077\ \ \ \ \ \{209,\ \ \ \{3,\ 9\}\},}
+\DoxyCodeLine{00078\ \ \ \ \ \{93,\ \ \ \ \{4,\ 9\}\},}
+\DoxyCodeLine{00079\ }
+\DoxyCodeLine{00080\ \ \ \ \ \{28,\ \ \ \ \{1,\ 10\}\},}
+\DoxyCodeLine{00081\ \ \ \ \ \{31,\ \ \ \ \{2,\ 10\}\},}
+\DoxyCodeLine{00082\ \ \ \ \ \{95,\ \ \ \ \{3,\ 10\}\},}
+\DoxyCodeLine{00083\ \ \ \ \ \{7,\ \ \ \ \ \{4,\ 10\}\},}
+\DoxyCodeLine{00084\ }
+\DoxyCodeLine{00085\ \ \ \ \ \{125,\ \ \ \{1,\ 11\}\},}
+\DoxyCodeLine{00086\ \ \ \ \ \{119,\ \ \ \{2,\ 11\}\},}
+\DoxyCodeLine{00087\ \ \ \ \ \{255,\ \ \ \{3,\ 11\}\},}
+\DoxyCodeLine{00088\ \ \ \ \ \{199,\ \ \ \{4,\ 11\}\},}
+\DoxyCodeLine{00089\ }
+\DoxyCodeLine{00090\ \ \ \ \ \{124,\ \ \ \{1,\ 12\}\},}
+\DoxyCodeLine{00091\ \ \ \ \ \{256,\ \ \ \{2,\ 12\}\},\ \textcolor{comment}{//\ blank}}
+\DoxyCodeLine{00092\ \ \ \ \ \{221,\ \ \ \{3,\ 12\}\},}
+\DoxyCodeLine{00093\ \ \ \ \ \{215,\ \ \ \{4,\ 12\}\},}
+\DoxyCodeLine{00094\ }
+\DoxyCodeLine{00095\ \ \ \ \ \{112,\ \ \ \{1,\ 13\}\},}
+\DoxyCodeLine{00096\ \ \ \ \ \{245,\ \ \ \{2,\ 13\}\},}
+\DoxyCodeLine{00097\ \ \ \ \ \{241,\ \ \ \{3,\ 13\}\},}
+\DoxyCodeLine{00098\ \ \ \ \ \{193,\ \ \ \{4,\ 13\}\},}
+\DoxyCodeLine{00099\ \ \ \ \ \};}
+\DoxyCodeLine{00100\ }
+\DoxyCodeLine{00101\ \ \ \ \ std::map<int,\ std::pair<int,\ int>>\ blob\_lookup\_table\_underground\ =\ \{}
+\DoxyCodeLine{00102\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 1}}
+\DoxyCodeLine{00103\ \ \ \ \ \ \ \ \ \{16,\ \ \ \ \{2,\ 12\}\},}
+\DoxyCodeLine{00104\ \ \ \ \ \ \ \ \ \{17,\ \ \ \ \{2,\ 12\}\},}
+\DoxyCodeLine{00105\ \ \ \ \ \ \ \ \ \{1,\ \ \ \ \ \{4,\ 1\}\},}
+\DoxyCodeLine{00106\ \ \ \ \ \ \ \ \ \{0,\ \ \ \ \ \{4,\ 1\}\},}
+\DoxyCodeLine{00107\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 2}}
+\DoxyCodeLine{00108\ \ \ \ \ \ \ \ \ \{20,\ \ \ \ \{2,\ 12\}\},}
+\DoxyCodeLine{00109\ \ \ \ \ \ \ \ \ \{21,\ \ \ \ \{2,\ 12\}\},}
+\DoxyCodeLine{00110\ \ \ \ \ \ \ \ \ \{5,\ \ \ \ \ \{3,\ 1\}\},}
+\DoxyCodeLine{00111\ \ \ \ \ \ \ \ \ \{4,\ \ \ \ \ \{3,\ 1\}\},}
+\DoxyCodeLine{00112\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 3}}
+\DoxyCodeLine{00113\ \ \ \ \ \ \ \ \ \{84,\ \ \ \ \{2,\ 12\}\ \},}
+\DoxyCodeLine{00114\ \ \ \ \ \ \ \ \ \{\ 85,\ \ \ \{2,\ 12\}\ \},}
+\DoxyCodeLine{00115\ \ \ \ \ \ \ \ \ \{\ 69,\ \ \ \{2,\ 1\}\ \},}
+\DoxyCodeLine{00116\ \ \ \ \ \ \ \ \ \{68,\ \ \ \ \{2,\ 1\}\},}
+\DoxyCodeLine{00117\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 4}}
+\DoxyCodeLine{00118\ \ \ \ \ \ \ \ \ \{80,\ \ \ \ \{2,\ 12\}\},}
+\DoxyCodeLine{00119\ \ \ \ \ \ \ \ \ \{81,\ \ \ \ \{2,\ 12\}\},}
+\DoxyCodeLine{00120\ \ \ \ \ \ \ \ \ \{65,\ \ \ \ \{1,\ 1\}\},}
+\DoxyCodeLine{00121\ \ \ \ \ \ \ \ \ \{64,\ \ \ \ \{1,\ 1\}\},}
+\DoxyCodeLine{00122\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 5}}
+\DoxyCodeLine{00123\ \ \ \ \ \ \ \ \ \{213,\ \ \ \{2,\ 12\}\},}
+\DoxyCodeLine{00124\ \ \ \ \ \ \ \ \ \{29,\ \ \ \ \{2,\ 12\}\},}
+\DoxyCodeLine{00125\ \ \ \ \ \ \ \ \ \{23,\ \ \ \ \{2,\ 12\}\},}
+\DoxyCodeLine{00126\ \ \ \ \ \ \ \ \ \{117,\ \ \ \{2,\ 12\}\},}
+\DoxyCodeLine{00127\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 6}}
+\DoxyCodeLine{00128\ \ \ \ \ \ \ \ \ \{92,\ \ \ \ \{2,\ 12\}\},}
+\DoxyCodeLine{00129\ \ \ \ \ \ \ \ \ \{127,\ \ \ \{2,\ 12\}\},}
+\DoxyCodeLine{00130\ \ \ \ \ \ \ \ \ \{223,\ \ \ \{2,\ 12\}\},}
+\DoxyCodeLine{00131\ \ \ \ \ \ \ \ \ \{71,\ \ \ \ \{2,\ 1\}\},}
+\DoxyCodeLine{00132\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 7}}
+\DoxyCodeLine{00133\ \ \ \ \ \ \ \ \ \{116,\ \ \ \{2,\ 12\}\},}
+\DoxyCodeLine{00134\ \ \ \ \ \ \ \ \ \{253,\ \ \ \{2,\ 12\}\},}
+\DoxyCodeLine{00135\ \ \ \ \ \ \ \ \ \{247,\ \ \ \{2,\ 12\}\},}
+\DoxyCodeLine{00136\ \ \ \ \ \ \ \ \ \{197,\ \ \ \{2,\ 1\}\},}
+\DoxyCodeLine{00137\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 8}}
+\DoxyCodeLine{00138\ \ \ \ \ \ \ \ \ \{87,\ \ \ \ \{2,\ 12\}\},}
+\DoxyCodeLine{00139\ \ \ \ \ \ \ \ \ \{113,\ \ \ \{2,\ 12\}\},}
+\DoxyCodeLine{00140\ \ \ \ \ \ \ \ \ \{209,\ \ \ \{2,\ 12\}\},}
+\DoxyCodeLine{00141\ \ \ \ \ \ \ \ \ \{93,\ \ \ \ \{2,\ 12\}\},}
+\DoxyCodeLine{00142\ }
+\DoxyCodeLine{00143\ \ \ \ \ \ \ \ \ \{28,\ \ \ \ \{2,\ 12\}\},}
+\DoxyCodeLine{00144\ \ \ \ \ \ \ \ \ \{31,\ \ \ \ \{2,\ 12\}\},}
+\DoxyCodeLine{00145\ \ \ \ \ \ \ \ \ \{95,\ \ \ \ \{2,\ 12\}\},}
+\DoxyCodeLine{00146\ \ \ \ \ \ \ \ \ \{7,\ \ \ \ \ \{3,\ 1\}\},}
+\DoxyCodeLine{00147\ }
+\DoxyCodeLine{00148\ \ \ \ \ \ \ \ \ \{125,\ \ \ \{2,\ 12\}\},}
+\DoxyCodeLine{00149\ \ \ \ \ \ \ \ \ \{119,\ \ \ \{2,\ 12\}\},}
+\DoxyCodeLine{00150\ \ \ \ \ \ \ \ \ \{255,\ \ \ \{2,\ 12\}\},}
+\DoxyCodeLine{00151\ \ \ \ \ \ \ \ \ \{199,\ \ \ \{2,\ 1\}\},}
+\DoxyCodeLine{00152\ }
+\DoxyCodeLine{00153\ \ \ \ \ \ \ \ \ \{124,\ \ \ \{2,\ 12\}\},}
+\DoxyCodeLine{00154\ \ \ \ \ \ \ \ \ \{256,\ \ \ \{2,\ 12\}\},\ \textcolor{comment}{//\ blank}}
+\DoxyCodeLine{00155\ \ \ \ \ \ \ \ \ \{221,\ \ \ \{2,\ 12\}\},}
+\DoxyCodeLine{00156\ \ \ \ \ \ \ \ \ \{215,\ \ \ \{2,\ 12\}\},}
+\DoxyCodeLine{00157\ }
+\DoxyCodeLine{00158\ \ \ \ \ \ \ \ \ \{112,\ \ \ \{2,\ 12\}\ \},}
+\DoxyCodeLine{00159\ \ \ \ \ \ \ \ \ \{245,\ \ \ \{2,\ 12\}\ \},}
+\DoxyCodeLine{00160\ \ \ \ \ \ \ \ \ \{241,\ \ \ \{2,\ 12\}\ \},}
+\DoxyCodeLine{00161\ \ \ \ \ \ \ \ \ \{193,\ \ \ \{1,\ 1\}\ \ \},}
+\DoxyCodeLine{00162\ \ \ \ \ \};}
+\DoxyCodeLine{00163\ }
+\DoxyCodeLine{00164\ \ \ \ \ \textcolor{comment}{//\ ImGUI}}
+\DoxyCodeLine{00165\ \ \ \ \ \textcolor{keywordtype}{int}\ clicked[4]\ =\ \{0,\ 0,\ 0,\ 0\};}
+\DoxyCodeLine{00166\ \ \ \ \ \textcolor{keywordtype}{float}\ groundColX[4]\ =\ \{\ 64.f,\ 64.f,\ 64.f,\ 64.f\ \};}
+\DoxyCodeLine{00167\ \ \ \ \ \textcolor{keywordtype}{float}\ groundColY[4]\ =\ \{\ 64.f,\ 64.f,\ 64.f,\ 64.f\ \};}
+\DoxyCodeLine{00168\ \ \ \ \ \textcolor{keywordtype}{float}\ groundColOffsetX[4]\ =\ \{\ 0.f,\ 0.f,\ 0.f,\ 0.f\ \};}
+\DoxyCodeLine{00169\ \ \ \ \ \textcolor{keywordtype}{float}\ groundColOffsetY[4]\ =\ \{\ -\/96.f,\ -\/96.f,\ -\/96.f,\ -\/96.f\ \};}
+\DoxyCodeLine{00170\ \ \ \ \ \textcolor{keywordtype}{int}\ playersSkill[4][3];}
+\DoxyCodeLine{00171\ \ \ \ \ \textcolor{keywordtype}{int}\ isResetScene;}
+\DoxyCodeLine{00172\ }
+\DoxyCodeLine{00173\ \ \ \ \ \textcolor{keywordtype}{int}\ playerSize\ =\ 0;}
+\DoxyCodeLine{00174\ \ \ \ \ \textcolor{keywordtype}{int}\ playerNum\ =\ 0;}
+\DoxyCodeLine{00175\ \ \ \ \ \mbox{\hyperlink{struct_orthographic_value}{OrthographicValue}}\ targetSceneProjection;\ \textcolor{comment}{//\ use\ for\ lerping\ between\ the\ current\ projection\ and\ this\ (target\ projection).}}
+\DoxyCodeLine{00176\ \ \ \ \ \mbox{\hyperlink{class_camera}{Camera}}\ camera;}
+\DoxyCodeLine{00177\ \ \ \ \ \mbox{\hyperlink{class_timer}{Timer}}*\ timer;}
+\DoxyCodeLine{00178\ }
+\DoxyCodeLine{00179\ \ \ \ \ \textcolor{keywordtype}{int}\ dt\ =\ 0;}
+\DoxyCodeLine{00180\ \ \ \ \ \textcolor{keywordtype}{float}\ time1s\ =\ 0;}
+\DoxyCodeLine{00181\ \ \ \ \ \textcolor{keywordtype}{float}\ time05s\ =\ 0;}
+\DoxyCodeLine{00182\ \ \ \ \ \textcolor{keywordtype}{float}\ time[4]\ =\ \{\ 0\ \};}
+\DoxyCodeLine{00183\ \ \ \ \ \textcolor{keywordtype}{float}\ previousWidth\ =\ 0,\ previousHeight\ =\ 0;}
+\DoxyCodeLine{00184\ }
+\DoxyCodeLine{00185\ \ \ \ \ \textcolor{comment}{//\ player}}
+\DoxyCodeLine{00186\ \ \ \ \ \textcolor{keywordtype}{float}\ axisXOld;}
+\DoxyCodeLine{00187\ \ \ \ \ \textcolor{keywordtype}{float}\ axisYOld;}
+\DoxyCodeLine{00188\ \ \ \ \ \textcolor{keywordtype}{float}\ norAxisXOld;}
+\DoxyCodeLine{00189\ \ \ \ \ \textcolor{keywordtype}{float}\ norAxisYOld;}
+\DoxyCodeLine{00190\ \ \ \ \ \textcolor{keywordtype}{bool}\ isPositiveXOld;}
+\DoxyCodeLine{00191\ \ \ \ \ \textcolor{keywordtype}{bool}\ isPositiveYOld;}
+\DoxyCodeLine{00192\ }
+\DoxyCodeLine{00193\ \ \ \ \ \mbox{\hyperlink{class_krill_sound_manager_1_1_sound_manager}{KrillSoundManager::SoundManager}}*\ soundManager;}
+\DoxyCodeLine{00194\ }
+\DoxyCodeLine{00195\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00196\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ LevelLoad();}
+\DoxyCodeLine{00197\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ LevelInit();}
+\DoxyCodeLine{00198\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ LevelUpdate();}
+\DoxyCodeLine{00199\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ LevelDraw();}
+\DoxyCodeLine{00200\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ LevelFree();}
+\DoxyCodeLine{00201\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ LevelUnload();}
+\DoxyCodeLine{00202\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ Movement(\textcolor{keywordtype}{float}\ axisX,\ \textcolor{keywordtype}{float}\ axisY,\ \textcolor{keywordtype}{bool}\ isPositiveX,\ \textcolor{keywordtype}{bool}\ isPositiveY);}
+\DoxyCodeLine{00203\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ HandleKey(\textcolor{keywordtype}{char}\ key);}
+\DoxyCodeLine{00204\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ HandleMouse(\textcolor{keywordtype}{int}\ type,\ \textcolor{keywordtype}{int}\ x,\ \textcolor{keywordtype}{int}\ y);}
+\DoxyCodeLine{00205\ }
+\DoxyCodeLine{00206\ \ \ \ \ \textcolor{keywordtype}{void}\ InitTile();}
+\DoxyCodeLine{00207\ }
+\DoxyCodeLine{00208\ \ \ \ \ \textcolor{keywordtype}{void}\ UpdateInput();}
+\DoxyCodeLine{00209\ \ \ \ \ \textcolor{keywordtype}{void}\ UpdateCollision();}
+\DoxyCodeLine{00210\ \ \ \ \ \textcolor{keywordtype}{void}\ UpdateProjectile();}
+\DoxyCodeLine{00211\ \ \ \ \ \textcolor{keywordtype}{void}\ UpdateCooldown();}
+\DoxyCodeLine{00212\ \ \ \ \ \textcolor{keywordtype}{void}\ UpdateMovement();}
+\DoxyCodeLine{00213\ \ \ \ \ \textcolor{keywordtype}{void}\ UpdateUI();}
+\DoxyCodeLine{00214\ \ \ \ \ \textcolor{comment}{//\ void\ UpdateKnockback(DrawableObject*\ obj1,\ DrawableObject*\ obj2);}}
+\DoxyCodeLine{00215\ \ \ \ \ \textcolor{keywordtype}{void}\ UpdateTime();}
+\DoxyCodeLine{00216\ }
+\DoxyCodeLine{00217\ \ \ \ \ \textcolor{keywordtype}{void}\ GroundTileRefactor();}
+\DoxyCodeLine{00218\ \ \ \ \ \textcolor{keywordtype}{void}\ TileImport(std::array<std::array<int,\ MAP\_WIDTH>,\ MAP\_HEIGHT>\ \&TileBuffer,\ std::string\ fileName);}
+\DoxyCodeLine{00219\ }
+\DoxyCodeLine{00220\ \ \ \ \ \textcolor{keywordtype}{void}\ UsingAbilityKeyDown(\textcolor{keywordtype}{int}\ numPlayer,\ PlayerObject::AbilityButton\ button);}
+\DoxyCodeLine{00221\ \ \ \ \ \textcolor{keywordtype}{void}\ UsingAbilityKeyUp(\textcolor{keywordtype}{int}\ numPlayer,\ PlayerObject::AbilityButton\ button);}
+\DoxyCodeLine{00222\ \ \ \ \ \textcolor{keywordtype}{void}\ AimFireball(\textcolor{keywordtype}{int}\ numPlayer,\ PlayerObject::AbilityButton\ button);}
+\DoxyCodeLine{00223\ \ \ \ \ \textcolor{keywordtype}{void}\ ShootFireball(\textcolor{keywordtype}{int}\ numPlayer,\ PlayerObject::AbilityButton\ button);}
+\DoxyCodeLine{00224\ \ \ \ \ \textcolor{keywordtype}{void}\ Trap(\textcolor{keywordtype}{int}\ numPlayer,\ PlayerObject::AbilityButton\ button);}
+\DoxyCodeLine{00225\ \ \ \ \ \textcolor{keywordtype}{void}\ Dash(\textcolor{keywordtype}{int}\ numPlayer,\ PlayerObject::AbilityButton\ button);}
+\DoxyCodeLine{00226\ \ \ \ \ \textcolor{keywordtype}{void}\ TNT(\textcolor{keywordtype}{int}\ numPlayer,\ PlayerObject::AbilityButton\ button);}
+\DoxyCodeLine{00227\ \ \ \ \ \textcolor{keywordtype}{void}\ AimTeleport(\textcolor{keywordtype}{int}\ numPlayer,\ PlayerObject::AbilityButton\ button);}
+\DoxyCodeLine{00228\ \ \ \ \ \textcolor{keywordtype}{void}\ ShootTeleport(\textcolor{keywordtype}{int}\ numPlayer,\ PlayerObject::AbilityButton\ button);}
+\DoxyCodeLine{00229\ \ \ \ \ \textcolor{keywordtype}{void}\ AimBola(\textcolor{keywordtype}{int}\ numPlayer,\ PlayerObject::AbilityButton\ button);}
+\DoxyCodeLine{00230\ \ \ \ \ \textcolor{keywordtype}{void}\ ShootBola(\textcolor{keywordtype}{int}\ numPlayer,\ PlayerObject::AbilityButton\ button);}
+\DoxyCodeLine{00231\ \ \ \ \ \textcolor{keywordtype}{void}\ AimCleave(\textcolor{keywordtype}{int}\ numPlayer,\ PlayerObject::AbilityButton\ button);}
+\DoxyCodeLine{00232\ \ \ \ \ \textcolor{keywordtype}{void}\ ShootCleave(\textcolor{keywordtype}{int}\ numPlayer,\ PlayerObject::AbilityButton\ button);}
+\DoxyCodeLine{00233\ \};}
 
 \end{DoxyCode}

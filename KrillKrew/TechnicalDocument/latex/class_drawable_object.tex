@@ -11,7 +11,8 @@ The class for creating drawable object.
 
 
 
-Inheritance diagram for Drawable\+Object\+:\nopagebreak
+Inheritance diagram for Drawable\+Object\+:
+\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -24,14 +25,23 @@ Inheritance diagram for Drawable\+Object\+:\nopagebreak
 \Hypertarget{class_drawable_object_a86f155d814b5e9b34b7eb72ed4dd795d}\label{class_drawable_object_a86f155d814b5e9b34b7eb72ed4dd795d} 
 glm\+::mat4 {\bfseries get\+Transform} ()
 \item 
+\Hypertarget{class_drawable_object_a122ba0ef171014d1cde924275277d28e}\label{class_drawable_object_a122ba0ef171014d1cde924275277d28e} 
+bool {\bfseries Get\+Is\+Active} ()
+\item 
+\Hypertarget{class_drawable_object_ad15212e4987bd2c5ab4d64097ea51437}\label{class_drawable_object_ad15212e4987bd2c5ab4d64097ea51437} 
+void {\bfseries Set\+Is\+Active} (bool is\+Active)
+\item 
 \Hypertarget{class_drawable_object_a0162efd85614cdf9aac0475aa738bc18}\label{class_drawable_object_a0162efd85614cdf9aac0475aa738bc18} 
 virtual void {\bfseries Render} (glm\+::mat4 global\+Model\+Transform)=0
 \item 
 \Hypertarget{class_drawable_object_a12876534224a9e42238ae726261b67ca}\label{class_drawable_object_a12876534224a9e42238ae726261b67ca} 
-void {\bfseries Set\+Size} (float sizeX, float sizeY)
+virtual void {\bfseries Set\+Size} (float sizeX, float sizeY)
 \item 
 \Hypertarget{class_drawable_object_adc269b02edf37e2423a425bba0b107af}\label{class_drawable_object_adc269b02edf37e2423a425bba0b107af} 
-void {\bfseries Set\+Position} (glm\+::vec3 new\+Position)
+virtual void {\bfseries Set\+Position} (glm\+::vec3 new\+Position)
+\item 
+\Hypertarget{class_drawable_object_aa8e45b8fbdbd7c9f0d860a519df48370}\label{class_drawable_object_aa8e45b8fbdbd7c9f0d860a519df48370} 
+void {\bfseries Set\+Ordering\+Layer} (int layer)
 \item 
 \Hypertarget{class_drawable_object_a526365f23ad585ededf384d7c3e870fd}\label{class_drawable_object_a526365f23ad585ededf384d7c3e870fd} 
 void {\bfseries Translate} (glm\+::vec3 move\+Distance)
@@ -41,6 +51,9 @@ glm\+::vec3 {\bfseries get\+Pos} ()
 \item 
 \Hypertarget{class_drawable_object_a9e15c25583170c014d976d902ee8ddd7}\label{class_drawable_object_a9e15c25583170c014d976d902ee8ddd7} 
 glm\+::vec3 {\bfseries get\+Size} ()
+\item 
+\Hypertarget{class_drawable_object_a6ec47d65c17e652285cd1c5f9ce49606}\label{class_drawable_object_a6ec47d65c17e652285cd1c5f9ce49606} 
+int {\bfseries get\+Ordering\+Layer} () const
 \end{DoxyCompactItemize}
 \doxysubsubsection*{Protected Attributes}
 \begin{DoxyCompactItemize}
@@ -50,6 +63,12 @@ glm\+::vec3 {\bfseries pos}
 \item 
 \Hypertarget{class_drawable_object_a1dba675b2b1fe6c160da82f79ea58027}\label{class_drawable_object_a1dba675b2b1fe6c160da82f79ea58027} 
 glm\+::vec3 {\bfseries size}
+\item 
+\Hypertarget{class_drawable_object_a49f87109b33eeee64a36af4a4ae3e4b2}\label{class_drawable_object_a49f87109b33eeee64a36af4a4ae3e4b2} 
+int {\bfseries ordering\+Layer}
+\item 
+\Hypertarget{class_drawable_object_afcf3afff7117d18ffa65e64a0c207fbf}\label{class_drawable_object_afcf3afff7117d18ffa65e64a0c207fbf} 
+bool {\bfseries is\+Active} = true
 \end{DoxyCompactItemize}
 
 

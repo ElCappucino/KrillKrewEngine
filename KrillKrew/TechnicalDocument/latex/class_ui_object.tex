@@ -33,9 +33,6 @@ Collaboration diagram for Ui\+Object\+:\nopagebreak
 \Hypertarget{class_ui_object_a11df6a77a1cc3a4bcf09fa25bcefac7d}\label{class_ui_object_a11df6a77a1cc3a4bcf09fa25bcefac7d} 
 void {\bfseries Set\+Texture} (std\+::string path)
 \item 
-\Hypertarget{class_ui_object_a497a80a5b50a05d43ae0e9c0fc24ca65}\label{class_ui_object_a497a80a5b50a05d43ae0e9c0fc24ca65} 
-void {\bfseries Set\+Sheet\+Info} (float row, float column, float spritewidth, float spriteheight, float sheetwidth, float sheetheight)
-\item 
 void \mbox{\hyperlink{class_ui_object_a9606ed4cb7f6dce56e2333d88da275b8}{Render}} (glm\+::mat4 global\+Model\+Transform)
 \item 
 \Hypertarget{class_ui_object_a89ddb3d4b1eaa9b96beff107d3876809}\label{class_ui_object_a89ddb3d4b1eaa9b96beff107d3876809} 
@@ -43,6 +40,18 @@ void {\bfseries set\+Num\+Owner} (int Num)
 \item 
 \Hypertarget{class_ui_object_aed6a1446f7ee2e3e3785417fdcbddf88}\label{class_ui_object_aed6a1446f7ee2e3e3785417fdcbddf88} 
 int {\bfseries get\+Num\+Owner} ()
+\item 
+virtual void \mbox{\hyperlink{class_ui_object_a52e20945f6e86677de7b79ab94cad851}{On\+Collider\+Enter}} (\mbox{\hyperlink{class_collider}{Collider}} \texorpdfstring{$\ast$}{*}other)
+\item 
+virtual void \mbox{\hyperlink{class_ui_object_ae70b8b22d170645a284abde354ae33a0}{On\+Collider\+Stay}} (\mbox{\hyperlink{class_collider}{Collider}} \texorpdfstring{$\ast$}{*}other)
+\item 
+virtual void \mbox{\hyperlink{class_ui_object_a1cc7fdb480ff1a96cbb4b7b210b13222}{On\+Collider\+Exit}} (\mbox{\hyperlink{class_collider}{Collider}} \texorpdfstring{$\ast$}{*}other)
+\item 
+virtual void \mbox{\hyperlink{class_ui_object_a03512216f98ed46e08986f42d57702d1}{On\+Trigger\+Enter}} (\mbox{\hyperlink{class_collider}{Collider}} \texorpdfstring{$\ast$}{*}other)
+\item 
+virtual void \mbox{\hyperlink{class_ui_object_af4a4dfa338e05b5c82e804c06b2dd4f1}{On\+Trigger\+Stay}} (\mbox{\hyperlink{class_collider}{Collider}} \texorpdfstring{$\ast$}{*}other)
+\item 
+virtual void \mbox{\hyperlink{class_ui_object_a85e7c260c1a38de82109067f30d517ea}{On\+Trigger\+Exit}} (\mbox{\hyperlink{class_collider}{Collider}} \texorpdfstring{$\ast$}{*}other)
 \end{DoxyCompactItemize}
 \doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{class_image_object}{Image\+Object}}}
 \begin{DoxyCompactItemize}
@@ -62,15 +71,23 @@ bool {\bfseries Get\+Is\+Animated} ()
 \item 
 glm\+::mat4 {\bfseries get\+Transform} ()
 \item 
-void {\bfseries Set\+Size} (float sizeX, float sizeY)
+bool {\bfseries Get\+Is\+Active} ()
 \item 
-void {\bfseries Set\+Position} (glm\+::vec3 new\+Position)
+void {\bfseries Set\+Is\+Active} (bool is\+Active)
+\item 
+virtual void {\bfseries Set\+Size} (float sizeX, float sizeY)
+\item 
+virtual void {\bfseries Set\+Position} (glm\+::vec3 new\+Position)
+\item 
+void {\bfseries Set\+Ordering\+Layer} (int layer)
 \item 
 void {\bfseries Translate} (glm\+::vec3 move\+Distance)
 \item 
 glm\+::vec3 {\bfseries get\+Pos} ()
 \item 
 glm\+::vec3 {\bfseries get\+Size} ()
+\item 
+int {\bfseries get\+Ordering\+Layer} () const
 \end{DoxyCompactItemize}
 \doxysubsubsection*{Additional Inherited Members}
 \doxysubsection*{Protected Attributes inherited from \mbox{\hyperlink{class_image_object}{Image\+Object}}}
@@ -90,6 +107,10 @@ bool {\bfseries is\+Animated}
 glm\+::vec3 {\bfseries pos}
 \item 
 glm\+::vec3 {\bfseries size}
+\item 
+int {\bfseries ordering\+Layer}
+\item 
+bool {\bfseries is\+Active} = true
 \end{DoxyCompactItemize}
 
 
@@ -97,6 +118,66 @@ glm\+::vec3 {\bfseries size}
 The class for creating object that render using texture. 
 
 \doxysubsection{Member Function Documentation}
+\Hypertarget{class_ui_object_a52e20945f6e86677de7b79ab94cad851}\index{UiObject@{UiObject}!OnColliderEnter@{OnColliderEnter}}
+\index{OnColliderEnter@{OnColliderEnter}!UiObject@{UiObject}}
+\doxysubsubsection{\texorpdfstring{OnColliderEnter()}{OnColliderEnter()}}
+{\footnotesize\ttfamily \label{class_ui_object_a52e20945f6e86677de7b79ab94cad851} 
+void Ui\+Object\+::\+On\+Collider\+Enter (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_collider}{Collider}} \texorpdfstring{$\ast$}{*}}]{other}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_image_object}{Image\+Object}}.
+
+\Hypertarget{class_ui_object_a1cc7fdb480ff1a96cbb4b7b210b13222}\index{UiObject@{UiObject}!OnColliderExit@{OnColliderExit}}
+\index{OnColliderExit@{OnColliderExit}!UiObject@{UiObject}}
+\doxysubsubsection{\texorpdfstring{OnColliderExit()}{OnColliderExit()}}
+{\footnotesize\ttfamily \label{class_ui_object_a1cc7fdb480ff1a96cbb4b7b210b13222} 
+void Ui\+Object\+::\+On\+Collider\+Exit (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_collider}{Collider}} \texorpdfstring{$\ast$}{*}}]{other}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_image_object}{Image\+Object}}.
+
+\Hypertarget{class_ui_object_ae70b8b22d170645a284abde354ae33a0}\index{UiObject@{UiObject}!OnColliderStay@{OnColliderStay}}
+\index{OnColliderStay@{OnColliderStay}!UiObject@{UiObject}}
+\doxysubsubsection{\texorpdfstring{OnColliderStay()}{OnColliderStay()}}
+{\footnotesize\ttfamily \label{class_ui_object_ae70b8b22d170645a284abde354ae33a0} 
+void Ui\+Object\+::\+On\+Collider\+Stay (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_collider}{Collider}} \texorpdfstring{$\ast$}{*}}]{other}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_image_object}{Image\+Object}}.
+
+\Hypertarget{class_ui_object_a03512216f98ed46e08986f42d57702d1}\index{UiObject@{UiObject}!OnTriggerEnter@{OnTriggerEnter}}
+\index{OnTriggerEnter@{OnTriggerEnter}!UiObject@{UiObject}}
+\doxysubsubsection{\texorpdfstring{OnTriggerEnter()}{OnTriggerEnter()}}
+{\footnotesize\ttfamily \label{class_ui_object_a03512216f98ed46e08986f42d57702d1} 
+void Ui\+Object\+::\+On\+Trigger\+Enter (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_collider}{Collider}} \texorpdfstring{$\ast$}{*}}]{other}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_image_object}{Image\+Object}}.
+
+\Hypertarget{class_ui_object_a85e7c260c1a38de82109067f30d517ea}\index{UiObject@{UiObject}!OnTriggerExit@{OnTriggerExit}}
+\index{OnTriggerExit@{OnTriggerExit}!UiObject@{UiObject}}
+\doxysubsubsection{\texorpdfstring{OnTriggerExit()}{OnTriggerExit()}}
+{\footnotesize\ttfamily \label{class_ui_object_a85e7c260c1a38de82109067f30d517ea} 
+void Ui\+Object\+::\+On\+Trigger\+Exit (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_collider}{Collider}} \texorpdfstring{$\ast$}{*}}]{other}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_image_object}{Image\+Object}}.
+
+\Hypertarget{class_ui_object_af4a4dfa338e05b5c82e804c06b2dd4f1}\index{UiObject@{UiObject}!OnTriggerStay@{OnTriggerStay}}
+\index{OnTriggerStay@{OnTriggerStay}!UiObject@{UiObject}}
+\doxysubsubsection{\texorpdfstring{OnTriggerStay()}{OnTriggerStay()}}
+{\footnotesize\ttfamily \label{class_ui_object_af4a4dfa338e05b5c82e804c06b2dd4f1} 
+void Ui\+Object\+::\+On\+Trigger\+Stay (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_collider}{Collider}} \texorpdfstring{$\ast$}{*}}]{other}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_image_object}{Image\+Object}}.
+
 \Hypertarget{class_ui_object_a9606ed4cb7f6dce56e2333d88da275b8}\index{UiObject@{UiObject}!Render@{Render}}
 \index{Render@{Render}!UiObject@{UiObject}}
 \doxysubsubsection{\texorpdfstring{Render()}{Render()}}

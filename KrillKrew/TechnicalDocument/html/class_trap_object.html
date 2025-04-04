@@ -104,7 +104,9 @@ $(function(){initNavTree('class_trap_object.html',''); initResizable(true); });
 
 <div class="header">
   <div class="summary">
+<a href="#pub-types">Public Types</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pub-attribs">Public Attributes</a> &#124;
 <a href="class_trap_object-members.html">List of all members</a>  </div>
   <div class="headertitle"><div class="title">TrapObject Class Reference</div></div>
 </div><!--header-->
@@ -149,6 +151,13 @@ Collaboration diagram for TrapObject:</div>
 </map>
 <center><span class="legend">[<a target="top" href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-types" name="pub-types"></a>
+Public Types</h2></td></tr>
+<tr class="memitem:af3d30b8254197e12003ffa36f100b3a6" id="r_af3d30b8254197e12003ffa36f100b3a6"><td class="memItemLeft" align="right" valign="top"><a id="af3d30b8254197e12003ffa36f100b3a6" name="af3d30b8254197e12003ffa36f100b3a6"></a>enum &#160;</td><td class="memItemRight" valign="bottom"><b>TypeTrap</b> { <b>Trap</b>
+, <b>Tnt</b>
+ }</td></tr>
+<tr class="separator:af3d30b8254197e12003ffa36f100b3a6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a41723ab5271dba36b8b0f48eb884f8a6" id="r_a41723ab5271dba36b8b0f48eb884f8a6"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a41723ab5271dba36b8b0f48eb884f8a6">Render</a> (glm::mat4 globalModelTransform)</td></tr>
@@ -156,21 +165,54 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:ad1404ed880afd81db54696d37b4aebc5" id="r_ad1404ed880afd81db54696d37b4aebc5"><td class="memItemLeft" align="right" valign="top"><a id="ad1404ed880afd81db54696d37b4aebc5" name="ad1404ed880afd81db54696d37b4aebc5"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>SetTexture</b> (std::string path)</td></tr>
 <tr class="separator:ad1404ed880afd81db54696d37b4aebc5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3797b20affb51a6898c1249388c012b7" id="r_a3797b20affb51a6898c1249388c012b7"><td class="memItemLeft" align="right" valign="top"><a id="a3797b20affb51a6898c1249388c012b7" name="a3797b20affb51a6898c1249388c012b7"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>setLifeTime</b> (int lifeTime)</td></tr>
-<tr class="separator:a3797b20affb51a6898c1249388c012b7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae4b3c1e725fa9b6dd00838d7d98a1bd5" id="r_ae4b3c1e725fa9b6dd00838d7d98a1bd5"><td class="memItemLeft" align="right" valign="top"><a id="ae4b3c1e725fa9b6dd00838d7d98a1bd5" name="ae4b3c1e725fa9b6dd00838d7d98a1bd5"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>setNumOwner</b> (int Num)</td></tr>
-<tr class="separator:ae4b3c1e725fa9b6dd00838d7d98a1bd5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acbda999ebf8664ed9f9716a8b7cc15bb" id="r_acbda999ebf8664ed9f9716a8b7cc15bb"><td class="memItemLeft" align="right" valign="top"><a id="acbda999ebf8664ed9f9716a8b7cc15bb" name="acbda999ebf8664ed9f9716a8b7cc15bb"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>reduceLifeTime</b> ()</td></tr>
-<tr class="separator:acbda999ebf8664ed9f9716a8b7cc15bb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2b1a9e2cfea79fa4dcf66b0b3e3ad3c5" id="r_a2b1a9e2cfea79fa4dcf66b0b3e3ad3c5"><td class="memItemLeft" align="right" valign="top"><a id="a2b1a9e2cfea79fa4dcf66b0b3e3ad3c5" name="a2b1a9e2cfea79fa4dcf66b0b3e3ad3c5"></a>
-int&#160;</td><td class="memItemRight" valign="bottom"><b>getLifetime</b> ()</td></tr>
-<tr class="separator:a2b1a9e2cfea79fa4dcf66b0b3e3ad3c5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1da6563b414e816df10cd87b0edd144e" id="r_a1da6563b414e816df10cd87b0edd144e"><td class="memItemLeft" align="right" valign="top"><a id="a1da6563b414e816df10cd87b0edd144e" name="a1da6563b414e816df10cd87b0edd144e"></a>
-int&#160;</td><td class="memItemRight" valign="bottom"><b>getNumOwner</b> ()</td></tr>
-<tr class="separator:a1da6563b414e816df10cd87b0edd144e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af062ee7361616df2d75dd1e1c1862ff8" id="r_af062ee7361616df2d75dd1e1c1862ff8"><td class="memItemLeft" align="right" valign="top"><a id="af062ee7361616df2d75dd1e1c1862ff8" name="af062ee7361616df2d75dd1e1c1862ff8"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>SetLifeTime</b> (int lifeTime)</td></tr>
+<tr class="separator:af062ee7361616df2d75dd1e1c1862ff8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad96a47b72e10a7b9cb042227b28057cd" id="r_ad96a47b72e10a7b9cb042227b28057cd"><td class="memItemLeft" align="right" valign="top"><a id="ad96a47b72e10a7b9cb042227b28057cd" name="ad96a47b72e10a7b9cb042227b28057cd"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>SetPlayerNumber</b> (int Num)</td></tr>
+<tr class="separator:ad96a47b72e10a7b9cb042227b28057cd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae141e654b458f5b13f3a13e1f746703c" id="r_ae141e654b458f5b13f3a13e1f746703c"><td class="memItemLeft" align="right" valign="top"><a id="ae141e654b458f5b13f3a13e1f746703c" name="ae141e654b458f5b13f3a13e1f746703c"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>ReduceLifeTime</b> ()</td></tr>
+<tr class="separator:ae141e654b458f5b13f3a13e1f746703c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8c6f3c884027d0fe5b9500cbb7dc15cb" id="r_a8c6f3c884027d0fe5b9500cbb7dc15cb"><td class="memItemLeft" align="right" valign="top"><a id="a8c6f3c884027d0fe5b9500cbb7dc15cb" name="a8c6f3c884027d0fe5b9500cbb7dc15cb"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>GetLifetime</b> ()</td></tr>
+<tr class="separator:a8c6f3c884027d0fe5b9500cbb7dc15cb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afdbb8b40bfcdc2cdcf1d15bba45108dd" id="r_afdbb8b40bfcdc2cdcf1d15bba45108dd"><td class="memItemLeft" align="right" valign="top"><a id="afdbb8b40bfcdc2cdcf1d15bba45108dd" name="afdbb8b40bfcdc2cdcf1d15bba45108dd"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>GetPlayerNumber</b> ()</td></tr>
+<tr class="separator:afdbb8b40bfcdc2cdcf1d15bba45108dd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab36701603ec75fc39ccae948c3b50283" id="r_ab36701603ec75fc39ccae948c3b50283"><td class="memItemLeft" align="right" valign="top"><a id="ab36701603ec75fc39ccae948c3b50283" name="ab36701603ec75fc39ccae948c3b50283"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>SetCanKnockback</b> (bool isCanKnockback)</td></tr>
+<tr class="separator:ab36701603ec75fc39ccae948c3b50283"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a30b72c9f1367b82d0053ce2a6dbea9c1" id="r_a30b72c9f1367b82d0053ce2a6dbea9c1"><td class="memItemLeft" align="right" valign="top"><a id="a30b72c9f1367b82d0053ce2a6dbea9c1" name="a30b72c9f1367b82d0053ce2a6dbea9c1"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>GetCanKnockback</b> ()</td></tr>
+<tr class="separator:a30b72c9f1367b82d0053ce2a6dbea9c1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a29272a4a7033f8efe3c07a1f6c1bd475" id="r_a29272a4a7033f8efe3c07a1f6c1bd475"><td class="memItemLeft" align="right" valign="top"><a id="a29272a4a7033f8efe3c07a1f6c1bd475" name="a29272a4a7033f8efe3c07a1f6c1bd475"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>SetType</b> (int type)</td></tr>
+<tr class="separator:a29272a4a7033f8efe3c07a1f6c1bd475"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac171eb4d17613cada8c40b1e6f2c234e" id="r_ac171eb4d17613cada8c40b1e6f2c234e"><td class="memItemLeft" align="right" valign="top"><a id="ac171eb4d17613cada8c40b1e6f2c234e" name="ac171eb4d17613cada8c40b1e6f2c234e"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>GetType</b> ()</td></tr>
+<tr class="separator:ac171eb4d17613cada8c40b1e6f2c234e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7f65a2b945753023a25f7d3442f7da10" id="r_a7f65a2b945753023a25f7d3442f7da10"><td class="memItemLeft" align="right" valign="top"><a id="a7f65a2b945753023a25f7d3442f7da10" name="a7f65a2b945753023a25f7d3442f7da10"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>AddTileInRange</b> (<a class="el" href="class_tile_object.html">TileObject</a> *tile)</td></tr>
+<tr class="separator:a7f65a2b945753023a25f7d3442f7da10"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab88a8bf1b9bf211fb97780445ef0f1c8" id="r_ab88a8bf1b9bf211fb97780445ef0f1c8"><td class="memItemLeft" align="right" valign="top"><a id="ab88a8bf1b9bf211fb97780445ef0f1c8" name="ab88a8bf1b9bf211fb97780445ef0f1c8"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>DeleteTileInRange</b> (<a class="el" href="class_tile_object.html">TileObject</a> *tile)</td></tr>
+<tr class="separator:ab88a8bf1b9bf211fb97780445ef0f1c8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a518f1b6be901d7fb0f82953e17a67088" id="r_a518f1b6be901d7fb0f82953e17a67088"><td class="memItemLeft" align="right" valign="top"><a id="a518f1b6be901d7fb0f82953e17a67088" name="a518f1b6be901d7fb0f82953e17a67088"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>ExplodeTileInRange</b> ()</td></tr>
+<tr class="separator:a518f1b6be901d7fb0f82953e17a67088"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1a1c426c3aee394bc97dd74c33b5bc6b" id="r_a1a1c426c3aee394bc97dd74c33b5bc6b"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a1a1c426c3aee394bc97dd74c33b5bc6b">OnColliderEnter</a> (<a class="el" href="class_collider.html">Collider</a> *other)</td></tr>
+<tr class="separator:a1a1c426c3aee394bc97dd74c33b5bc6b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a27ac33833e384b3dffc17f420fc964c2" id="r_a27ac33833e384b3dffc17f420fc964c2"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a27ac33833e384b3dffc17f420fc964c2">OnColliderStay</a> (<a class="el" href="class_collider.html">Collider</a> *other)</td></tr>
+<tr class="separator:a27ac33833e384b3dffc17f420fc964c2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aef11cc75f11b7a396d2427cb3dadd677" id="r_aef11cc75f11b7a396d2427cb3dadd677"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aef11cc75f11b7a396d2427cb3dadd677">OnColliderExit</a> (<a class="el" href="class_collider.html">Collider</a> *other)</td></tr>
+<tr class="separator:aef11cc75f11b7a396d2427cb3dadd677"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8f700737a1b97a764c6c613c30807a94" id="r_a8f700737a1b97a764c6c613c30807a94"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a8f700737a1b97a764c6c613c30807a94">OnTriggerEnter</a> (<a class="el" href="class_collider.html">Collider</a> *other)</td></tr>
+<tr class="separator:a8f700737a1b97a764c6c613c30807a94"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac7d70c93db11a143760c681d1254bdf7" id="r_ac7d70c93db11a143760c681d1254bdf7"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ac7d70c93db11a143760c681d1254bdf7">OnTriggerStay</a> (<a class="el" href="class_collider.html">Collider</a> *other)</td></tr>
+<tr class="separator:ac7d70c93db11a143760c681d1254bdf7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6ff63d0f9b15357649d1b1dd81292a7f" id="r_a6ff63d0f9b15357649d1b1dd81292a7f"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a6ff63d0f9b15357649d1b1dd81292a7f">OnTriggerExit</a> (<a class="el" href="class_collider.html">Collider</a> *other)</td></tr>
+<tr class="separator:a6ff63d0f9b15357649d1b1dd81292a7f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_class_entity_object"><td colspan="2" onclick="javascript:dynsection.toggleInherit('pub_methods_class_entity_object')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="class_entity_object.html">EntityObject</a></td></tr>
 <tr class="memitem:a0fe0118839f34ed3701a0c9bb7206bc9 inherit pub_methods_class_entity_object" id="r_a0fe0118839f34ed3701a0c9bb7206bc9"><td class="memItemLeft" align="right" valign="top">
 virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>SetSpriteInfo</b> (<a class="el" href="struct_spritesheet_info.html">SpritesheetInfo</a> info)</td></tr>
@@ -178,27 +220,14 @@ virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>SetSpriteInfo
 <tr class="memitem:a9e2a2ae40ac1653a5630a89cde41dae6 inherit pub_methods_class_entity_object" id="r_a9e2a2ae40ac1653a5630a89cde41dae6"><td class="memItemLeft" align="right" valign="top">
 void&#160;</td><td class="memItemRight" valign="bottom"><b>SetTexture</b> (std::string path)</td></tr>
 <tr class="separator:a9e2a2ae40ac1653a5630a89cde41dae6 inherit pub_methods_class_entity_object"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4cf2e4dec6ba56b63af9e08681687292 inherit pub_methods_class_entity_object" id="r_a4cf2e4dec6ba56b63af9e08681687292"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_entity_object.html#a4cf2e4dec6ba56b63af9e08681687292">SetSize</a> (float sizeX, float sizeY)</td></tr>
+<tr class="separator:a4cf2e4dec6ba56b63af9e08681687292 inherit pub_methods_class_entity_object"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aeb63a97b686b575ffdf223bdf3e7f284 inherit pub_methods_class_entity_object" id="r_aeb63a97b686b575ffdf223bdf3e7f284"><td class="memItemLeft" align="right" valign="top">
 virtual <a class="el" href="class_collider.html">Collider</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>GetCollider</b> ()</td></tr>
 <tr class="separator:aeb63a97b686b575ffdf223bdf3e7f284 inherit pub_methods_class_entity_object"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa22f5c7cf6b57a10bf8b8a130ecd4420 inherit pub_methods_class_entity_object" id="r_aa22f5c7cf6b57a10bf8b8a130ecd4420"><td class="memItemLeft" align="right" valign="top">
-virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>OnColliderEnter</b> (<a class="el" href="class_collider.html">Collider</a> *other)</td></tr>
-<tr class="separator:aa22f5c7cf6b57a10bf8b8a130ecd4420 inherit pub_methods_class_entity_object"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a549fe3e3c51f46a20ccd8e5788d91463 inherit pub_methods_class_entity_object" id="r_a549fe3e3c51f46a20ccd8e5788d91463"><td class="memItemLeft" align="right" valign="top">
-virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>OnColliderStay</b> (<a class="el" href="class_collider.html">Collider</a> *other)</td></tr>
-<tr class="separator:a549fe3e3c51f46a20ccd8e5788d91463 inherit pub_methods_class_entity_object"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a08e5743d8b4ce96cf48e19379607f509 inherit pub_methods_class_entity_object" id="r_a08e5743d8b4ce96cf48e19379607f509"><td class="memItemLeft" align="right" valign="top">
-virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>OnColliderExit</b> (<a class="el" href="class_collider.html">Collider</a> *other)</td></tr>
-<tr class="separator:a08e5743d8b4ce96cf48e19379607f509 inherit pub_methods_class_entity_object"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a890c3b26118aa792ef0c6ff79ba75244 inherit pub_methods_class_entity_object" id="r_a890c3b26118aa792ef0c6ff79ba75244"><td class="memItemLeft" align="right" valign="top">
-virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>OnTriggerEnter</b> (<a class="el" href="class_collider.html">Collider</a> *other)</td></tr>
-<tr class="separator:a890c3b26118aa792ef0c6ff79ba75244 inherit pub_methods_class_entity_object"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa6a265f8d886c6d3d81d5afa0e4b2896 inherit pub_methods_class_entity_object" id="r_aa6a265f8d886c6d3d81d5afa0e4b2896"><td class="memItemLeft" align="right" valign="top">
-virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>OnTriggerStay</b> (<a class="el" href="class_collider.html">Collider</a> *other)</td></tr>
-<tr class="separator:aa6a265f8d886c6d3d81d5afa0e4b2896 inherit pub_methods_class_entity_object"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af6b5f5045489c8c0dc2e45c28a19713f inherit pub_methods_class_entity_object" id="r_af6b5f5045489c8c0dc2e45c28a19713f"><td class="memItemLeft" align="right" valign="top">
-virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>OnTriggerExit</b> (<a class="el" href="class_collider.html">Collider</a> *other)</td></tr>
-<tr class="separator:af6b5f5045489c8c0dc2e45c28a19713f inherit pub_methods_class_entity_object"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a17b673281fd0f64ac837c2b39788638d inherit pub_methods_class_entity_object" id="r_a17b673281fd0f64ac837c2b39788638d"><td class="memItemLeft" align="right" valign="top">
+virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>setColliderSize</b> (glm::vec3 size)</td></tr>
+<tr class="separator:a17b673281fd0f64ac837c2b39788638d inherit pub_methods_class_entity_object"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7d672b8f229bab61574f05324e98facb inherit pub_methods_class_entity_object" id="r_a7d672b8f229bab61574f05324e98facb"><td class="memItemLeft" align="right" valign="top">
 virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>SetAnimationSprite</b> (AnimationState state, <a class="el" href="struct_spritesheet_info.html">SpritesheetInfo</a> spriteInfo)</td></tr>
 <tr class="separator:a7d672b8f229bab61574f05324e98facb inherit pub_methods_class_entity_object"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -228,12 +257,18 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>GetIsAnimated</b> ()<
 <tr class="memitem:a86f155d814b5e9b34b7eb72ed4dd795d inherit pub_methods_class_drawable_object" id="r_a86f155d814b5e9b34b7eb72ed4dd795d"><td class="memItemLeft" align="right" valign="top">
 glm::mat4&#160;</td><td class="memItemRight" valign="bottom"><b>getTransform</b> ()</td></tr>
 <tr class="separator:a86f155d814b5e9b34b7eb72ed4dd795d inherit pub_methods_class_drawable_object"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a12876534224a9e42238ae726261b67ca inherit pub_methods_class_drawable_object" id="r_a12876534224a9e42238ae726261b67ca"><td class="memItemLeft" align="right" valign="top">
-void&#160;</td><td class="memItemRight" valign="bottom"><b>SetSize</b> (float sizeX, float sizeY)</td></tr>
-<tr class="separator:a12876534224a9e42238ae726261b67ca inherit pub_methods_class_drawable_object"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a122ba0ef171014d1cde924275277d28e inherit pub_methods_class_drawable_object" id="r_a122ba0ef171014d1cde924275277d28e"><td class="memItemLeft" align="right" valign="top">
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>GetIsActive</b> ()</td></tr>
+<tr class="separator:a122ba0ef171014d1cde924275277d28e inherit pub_methods_class_drawable_object"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad15212e4987bd2c5ab4d64097ea51437 inherit pub_methods_class_drawable_object" id="r_ad15212e4987bd2c5ab4d64097ea51437"><td class="memItemLeft" align="right" valign="top">
+void&#160;</td><td class="memItemRight" valign="bottom"><b>SetIsActive</b> (bool isActive)</td></tr>
+<tr class="separator:ad15212e4987bd2c5ab4d64097ea51437 inherit pub_methods_class_drawable_object"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:adc269b02edf37e2423a425bba0b107af inherit pub_methods_class_drawable_object" id="r_adc269b02edf37e2423a425bba0b107af"><td class="memItemLeft" align="right" valign="top">
-void&#160;</td><td class="memItemRight" valign="bottom"><b>SetPosition</b> (glm::vec3 newPosition)</td></tr>
+virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>SetPosition</b> (glm::vec3 newPosition)</td></tr>
 <tr class="separator:adc269b02edf37e2423a425bba0b107af inherit pub_methods_class_drawable_object"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa8e45b8fbdbd7c9f0d860a519df48370 inherit pub_methods_class_drawable_object" id="r_aa8e45b8fbdbd7c9f0d860a519df48370"><td class="memItemLeft" align="right" valign="top">
+void&#160;</td><td class="memItemRight" valign="bottom"><b>SetOrderingLayer</b> (int layer)</td></tr>
+<tr class="separator:aa8e45b8fbdbd7c9f0d860a519df48370 inherit pub_methods_class_drawable_object"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a526365f23ad585ededf384d7c3e870fd inherit pub_methods_class_drawable_object" id="r_a526365f23ad585ededf384d7c3e870fd"><td class="memItemLeft" align="right" valign="top">
 void&#160;</td><td class="memItemRight" valign="bottom"><b>Translate</b> (glm::vec3 moveDistance)</td></tr>
 <tr class="separator:a526365f23ad585ededf384d7c3e870fd inherit pub_methods_class_drawable_object"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -243,6 +278,15 @@ glm::vec3&#160;</td><td class="memItemRight" valign="bottom"><b>getPos</b> ()</t
 <tr class="memitem:a9e15c25583170c014d976d902ee8ddd7 inherit pub_methods_class_drawable_object" id="r_a9e15c25583170c014d976d902ee8ddd7"><td class="memItemLeft" align="right" valign="top">
 glm::vec3&#160;</td><td class="memItemRight" valign="bottom"><b>getSize</b> ()</td></tr>
 <tr class="separator:a9e15c25583170c014d976d902ee8ddd7 inherit pub_methods_class_drawable_object"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6ec47d65c17e652285cd1c5f9ce49606 inherit pub_methods_class_drawable_object" id="r_a6ec47d65c17e652285cd1c5f9ce49606"><td class="memItemLeft" align="right" valign="top">
+int&#160;</td><td class="memItemRight" valign="bottom"><b>getOrderingLayer</b> () const</td></tr>
+<tr class="separator:a6ec47d65c17e652285cd1c5f9ce49606 inherit pub_methods_class_drawable_object"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
+Public Attributes</h2></td></tr>
+<tr class="memitem:a9f43bf5f0718cec7a1dccf2dfd7332a6" id="r_a9f43bf5f0718cec7a1dccf2dfd7332a6"><td class="memItemLeft" align="right" valign="top"><a id="a9f43bf5f0718cec7a1dccf2dfd7332a6" name="a9f43bf5f0718cec7a1dccf2dfd7332a6"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>isActivate</b> = false</td></tr>
+<tr class="separator:a9f43bf5f0718cec7a1dccf2dfd7332a6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="inherited" name="inherited"></a>
 Additional Inherited Members</h2></td></tr>
@@ -276,10 +320,178 @@ glm::vec3&#160;</td><td class="memItemRight" valign="bottom"><b>pos</b></td></tr
 <tr class="memitem:a1dba675b2b1fe6c160da82f79ea58027 inherit pro_attribs_class_drawable_object" id="r_a1dba675b2b1fe6c160da82f79ea58027"><td class="memItemLeft" align="right" valign="top">
 glm::vec3&#160;</td><td class="memItemRight" valign="bottom"><b>size</b></td></tr>
 <tr class="separator:a1dba675b2b1fe6c160da82f79ea58027 inherit pro_attribs_class_drawable_object"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a49f87109b33eeee64a36af4a4ae3e4b2 inherit pro_attribs_class_drawable_object" id="r_a49f87109b33eeee64a36af4a4ae3e4b2"><td class="memItemLeft" align="right" valign="top">
+int&#160;</td><td class="memItemRight" valign="bottom"><b>orderingLayer</b></td></tr>
+<tr class="separator:a49f87109b33eeee64a36af4a4ae3e4b2 inherit pro_attribs_class_drawable_object"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afcf3afff7117d18ffa65e64a0c207fbf inherit pro_attribs_class_drawable_object" id="r_afcf3afff7117d18ffa65e64a0c207fbf"><td class="memItemLeft" align="right" valign="top">
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>isActive</b> = true</td></tr>
+<tr class="separator:afcf3afff7117d18ffa65e64a0c207fbf inherit pro_attribs_class_drawable_object"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>The class for creating object that render using texture. </p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
+<a id="a1a1c426c3aee394bc97dd74c33b5bc6b" name="a1a1c426c3aee394bc97dd74c33b5bc6b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1a1c426c3aee394bc97dd74c33b5bc6b">&#9670;&#160;</a></span>OnColliderEnter()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void TrapObject::OnColliderEnter </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_collider.html">Collider</a> *</td>          <td class="paramname"><span class="paramname"><em>other</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Reimplemented from <a class="el" href="class_entity_object.html">EntityObject</a>.</p>
+
+</div>
+</div>
+<a id="aef11cc75f11b7a396d2427cb3dadd677" name="aef11cc75f11b7a396d2427cb3dadd677"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aef11cc75f11b7a396d2427cb3dadd677">&#9670;&#160;</a></span>OnColliderExit()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void TrapObject::OnColliderExit </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_collider.html">Collider</a> *</td>          <td class="paramname"><span class="paramname"><em>other</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Reimplemented from <a class="el" href="class_entity_object.html">EntityObject</a>.</p>
+
+</div>
+</div>
+<a id="a27ac33833e384b3dffc17f420fc964c2" name="a27ac33833e384b3dffc17f420fc964c2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a27ac33833e384b3dffc17f420fc964c2">&#9670;&#160;</a></span>OnColliderStay()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void TrapObject::OnColliderStay </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_collider.html">Collider</a> *</td>          <td class="paramname"><span class="paramname"><em>other</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Reimplemented from <a class="el" href="class_entity_object.html">EntityObject</a>.</p>
+
+</div>
+</div>
+<a id="a8f700737a1b97a764c6c613c30807a94" name="a8f700737a1b97a764c6c613c30807a94"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8f700737a1b97a764c6c613c30807a94">&#9670;&#160;</a></span>OnTriggerEnter()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void TrapObject::OnTriggerEnter </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_collider.html">Collider</a> *</td>          <td class="paramname"><span class="paramname"><em>other</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Reimplemented from <a class="el" href="class_entity_object.html">EntityObject</a>.</p>
+
+</div>
+</div>
+<a id="a6ff63d0f9b15357649d1b1dd81292a7f" name="a6ff63d0f9b15357649d1b1dd81292a7f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6ff63d0f9b15357649d1b1dd81292a7f">&#9670;&#160;</a></span>OnTriggerExit()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void TrapObject::OnTriggerExit </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_collider.html">Collider</a> *</td>          <td class="paramname"><span class="paramname"><em>other</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Reimplemented from <a class="el" href="class_entity_object.html">EntityObject</a>.</p>
+
+</div>
+</div>
+<a id="ac7d70c93db11a143760c681d1254bdf7" name="ac7d70c93db11a143760c681d1254bdf7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac7d70c93db11a143760c681d1254bdf7">&#9670;&#160;</a></span>OnTriggerStay()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void TrapObject::OnTriggerStay </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_collider.html">Collider</a> *</td>          <td class="paramname"><span class="paramname"><em>other</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Reimplemented from <a class="el" href="class_entity_object.html">EntityObject</a>.</p>
+
+</div>
+</div>
 <a id="a41723ab5271dba36b8b0f48eb884f8a6" name="a41723ab5271dba36b8b0f48eb884f8a6"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a41723ab5271dba36b8b0f48eb884f8a6">&#9670;&#160;</a></span>Render()</h2>
 

@@ -1,5 +1,11 @@
 var annotated_dup =
 [
+    [ "Krill", null, [
+      [ "Log", "class_krill_1_1_log.html", null ]
+    ] ],
+    [ "KrillSoundManager", null, [
+      [ "SoundManager", "class_krill_sound_manager_1_1_sound_manager.html", null ]
+    ] ],
     [ "Ability", "class_ability.html", null ],
     [ "Camera", "class_camera.html", null ],
     [ "Collider", "class_collider.html", null ],
@@ -14,18 +20,25 @@ var annotated_dup =
     [ "Joystick", "class_joystick.html", null ],
     [ "Level", "class_level.html", null ],
     [ "LevelGameplay", "class_level_gameplay.html", null ],
+    [ "LevelImGui", "class_level_im_gui.html", null ],
     [ "LevelLoading", "class_level_loading.html", null ],
     [ "LevelMapTest", "class_level_map_test.html", null ],
+    [ "LevelSelectAbility", "class_level_select_ability.html", null ],
     [ "LevelShowcase", "class_level_showcase.html", null ],
     [ "LineMeshVbo", "class_line_mesh_vbo.html", null ],
     [ "MeshVbo", "class_mesh_vbo.html", null ],
+    [ "Music", "class_music.html", null ],
     [ "OrthographicValue", "struct_orthographic_value.html", null ],
+    [ "PlayerGroundColliderObject", "class_player_ground_collider_object.html", null ],
+    [ "PlayerHitboxObject", "class_player_hitbox_object.html", null ],
     [ "PlayerObject", "class_player_object.html", null ],
     [ "ProjectileObject", "class_projectile_object.html", null ],
+    [ "SFX", "class_s_f_x.html", null ],
     [ "Shader", "class_shader.html", "class_shader" ],
     [ "SpriteRenderer", "class_sprite_renderer.html", null ],
     [ "SpritesheetInfo", "struct_spritesheet_info.html", null ],
     [ "SquareMeshVbo", "class_square_mesh_vbo.html", null ],
+    [ "TileObject", "class_tile_object.html", null ],
     [ "Timer", "class_timer.html", null ],
     [ "TrapObject", "class_trap_object.html", null ],
     [ "TriangleMeshVbo", "class_triangle_mesh_vbo.html", null ],

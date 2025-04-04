@@ -20,13 +20,24 @@ Inheritance diagram for Projectile\+Object\+:\nopagebreak
 \end{figure}
 
 
-Collaboration diagram for Projectile\+Object\+:\nopagebreak
+Collaboration diagram for Projectile\+Object\+:
+\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
 \includegraphics[width=350pt]{class_projectile_object__coll__graph}
 \end{center}
 \end{figure}
+\doxysubsubsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_projectile_object_a3d7fd72bde3c55909d6745e6383c40f9}\label{class_projectile_object_a3d7fd72bde3c55909d6745e6383c40f9} 
+enum {\bfseries Type\+Projectile} \{ {\bfseries Fireball} = 1
+, {\bfseries Teleport}
+, {\bfseries Bola}
+, {\bfseries Cleave}
+ \}
+\end{DoxyCompactItemize}
 \doxysubsubsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
@@ -35,23 +46,61 @@ void {\bfseries Set\+Texture} (std\+::string path)
 \item 
 void \mbox{\hyperlink{class_projectile_object_a85a2b8227dcb4e76f1f844128285143e}{Render}} (glm\+::mat4 global\+Model\+Transform)
 \item 
-\Hypertarget{class_projectile_object_a0a186d3db0482239b3a3dfc9bfaabc1b}\label{class_projectile_object_a0a186d3db0482239b3a3dfc9bfaabc1b} 
-void {\bfseries set\+Velocity} (float axisX, float axisY, bool is\+PositiveX, bool is\+PositiveY)
+virtual void \mbox{\hyperlink{class_projectile_object_a366c6062e8de4087589b04173903677a}{Set\+Size}} (float sizeX, float sizeY)
 \item 
-\Hypertarget{class_projectile_object_aca10153dfbb4221852f24a6871d8f54c}\label{class_projectile_object_aca10153dfbb4221852f24a6871d8f54c} 
-void {\bfseries set\+Life\+Time} (int life\+Time)
+\Hypertarget{class_projectile_object_ac530e66368dacc23c1a6cb22181e6771}\label{class_projectile_object_ac530e66368dacc23c1a6cb22181e6771} 
+void {\bfseries Set\+Velocity} (float axisX, float axisY, bool is\+PositiveX, bool is\+PositiveY)
 \item 
-\Hypertarget{class_projectile_object_a4daab6a569e17c69ca8c3aa1170cd52e}\label{class_projectile_object_a4daab6a569e17c69ca8c3aa1170cd52e} 
-void {\bfseries set\+Num\+Owner} (int Num)
+\Hypertarget{class_projectile_object_a767f6f218bd90f5145374c78e9149a01}\label{class_projectile_object_a767f6f218bd90f5145374c78e9149a01} 
+void {\bfseries Set\+Life\+Time} (float life\+Time)
 \item 
-\Hypertarget{class_projectile_object_a4605c91cefcab09f2adfeb4474aa95aa}\label{class_projectile_object_a4605c91cefcab09f2adfeb4474aa95aa} 
-glm\+::vec3 {\bfseries get\+Velocity} ()
+\Hypertarget{class_projectile_object_a0f6926e8c5a7dc7977dbce7823f6846b}\label{class_projectile_object_a0f6926e8c5a7dc7977dbce7823f6846b} 
+void {\bfseries Set\+Owner} (\mbox{\hyperlink{class_player_object}{Player\+Object}} \texorpdfstring{$\ast$}{*}player)
 \item 
-\Hypertarget{class_projectile_object_a20b4e3e6bdccd80f74d288da6236ae7e}\label{class_projectile_object_a20b4e3e6bdccd80f74d288da6236ae7e} 
-void {\bfseries reduce\+Life\+Time} ()
+\Hypertarget{class_projectile_object_a56847ce64a3f9093f4b3ad7ac6dc91f0}\label{class_projectile_object_a56847ce64a3f9093f4b3ad7ac6dc91f0} 
+glm\+::vec3 {\bfseries Get\+Velocity} ()
 \item 
-\Hypertarget{class_projectile_object_ad0f36cfc3005f052b909e753f3cf5f21}\label{class_projectile_object_ad0f36cfc3005f052b909e753f3cf5f21} 
-int {\bfseries get\+Lifetime} ()
+\Hypertarget{class_projectile_object_aa61b28a58bee0c239aa6ad1a29ab86fb}\label{class_projectile_object_aa61b28a58bee0c239aa6ad1a29ab86fb} 
+void {\bfseries Reduce\+Life\+Time} ()
+\item 
+\Hypertarget{class_projectile_object_a12be48b9b503baff8e1f83240f620cf0}\label{class_projectile_object_a12be48b9b503baff8e1f83240f620cf0} 
+int {\bfseries Get\+Lifetime} ()
+\item 
+\Hypertarget{class_projectile_object_a7dcdf19fe703f1cf71335b0188cf3b4a}\label{class_projectile_object_a7dcdf19fe703f1cf71335b0188cf3b4a} 
+void {\bfseries Set\+Can\+Knockback} (bool is\+Can\+Knockback)
+\item 
+\Hypertarget{class_projectile_object_aeef4f19e759cb64265e9b14a1ad7fc77}\label{class_projectile_object_aeef4f19e759cb64265e9b14a1ad7fc77} 
+bool {\bfseries Get\+Can\+Knockback} ()
+\item 
+\Hypertarget{class_projectile_object_aa8c03841e9990ebf20491b962669d410}\label{class_projectile_object_aa8c03841e9990ebf20491b962669d410} 
+\mbox{\hyperlink{class_player_object}{Player\+Object}} \texorpdfstring{$\ast$}{*} {\bfseries Get\+Owner} ()
+\item 
+\Hypertarget{class_projectile_object_a52957e1d9be5a1be949bf77d04ba4e04}\label{class_projectile_object_a52957e1d9be5a1be949bf77d04ba4e04} 
+void {\bfseries Set\+Type} (Type\+Projectile Type)
+\item 
+\Hypertarget{class_projectile_object_a94dde313870e949a0f43cd75c2ce2448}\label{class_projectile_object_a94dde313870e949a0f43cd75c2ce2448} 
+Type\+Projectile {\bfseries Get\+Type} ()
+\item 
+\Hypertarget{class_projectile_object_a079cb6225eca07c02ad7cb7d4a62bf23}\label{class_projectile_object_a079cb6225eca07c02ad7cb7d4a62bf23} 
+void {\bfseries Set\+Is\+Shooting} (bool is\+Shooting)
+\item 
+\Hypertarget{class_projectile_object_a685ddf1c1e8128bd1c0343e37f00f493}\label{class_projectile_object_a685ddf1c1e8128bd1c0343e37f00f493} 
+bool {\bfseries Get\+Is\+Shooting} ()
+\item 
+\Hypertarget{class_projectile_object_a87b868110f738b7efba42559b317303a}\label{class_projectile_object_a87b868110f738b7efba42559b317303a} 
+void {\bfseries Set\+Is\+Can\+Stun} (bool is\+Can\+Stun)
+\item 
+\Hypertarget{class_projectile_object_afa16470c0611d0fa88a9a37fcc271780}\label{class_projectile_object_afa16470c0611d0fa88a9a37fcc271780} 
+bool {\bfseries Get\+Is\+Can\+Stun} ()
+\item 
+\Hypertarget{class_projectile_object_a7aa45a64e534a38d09c72c22b237345d}\label{class_projectile_object_a7aa45a64e534a38d09c72c22b237345d} 
+void {\bfseries Add\+Tile\+In\+Range} (\mbox{\hyperlink{class_tile_object}{Tile\+Object}} \texorpdfstring{$\ast$}{*}tile)
+\item 
+\Hypertarget{class_projectile_object_a67d007b57722868b02f35d6599a7b72b}\label{class_projectile_object_a67d007b57722868b02f35d6599a7b72b} 
+void {\bfseries Delete\+Tile\+In\+Range} (\mbox{\hyperlink{class_tile_object}{Tile\+Object}} \texorpdfstring{$\ast$}{*}tile)
+\item 
+\Hypertarget{class_projectile_object_ae2435a9262e6360e3bfd2148b16c9154}\label{class_projectile_object_ae2435a9262e6360e3bfd2148b16c9154} 
+void {\bfseries Explode\+Tile\+In\+Range} ()
 \item 
 virtual \mbox{\hyperlink{class_collider}{Collider}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{class_projectile_object_a06e7d1f7250888f09517769cc08c35c4}{Get\+Collider}} ()
 \item 
@@ -66,9 +115,6 @@ virtual void \mbox{\hyperlink{class_projectile_object_ae7a62a4d442de80a7b333b286
 virtual void \mbox{\hyperlink{class_projectile_object_a94be3cf2cdf40f45c89d6617c9380b87}{On\+Trigger\+Stay}} (\mbox{\hyperlink{class_collider}{Collider}} \texorpdfstring{$\ast$}{*}other)
 \item 
 virtual void \mbox{\hyperlink{class_projectile_object_ae01cbde216614f618b602273b6ed44db}{On\+Trigger\+Exit}} (\mbox{\hyperlink{class_collider}{Collider}} \texorpdfstring{$\ast$}{*}other)
-\item 
-\Hypertarget{class_projectile_object_a613171fe99ae6339a74379c4fe921e4b}\label{class_projectile_object_a613171fe99ae6339a74379c4fe921e4b} 
-int {\bfseries get\+Num\+Owner} ()
 \end{DoxyCompactItemize}
 \doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{class_entity_object}{Entity\+Object}}}
 \begin{DoxyCompactItemize}
@@ -76,6 +122,8 @@ int {\bfseries get\+Num\+Owner} ()
 virtual void {\bfseries Set\+Sprite\+Info} (\mbox{\hyperlink{struct_spritesheet_info}{Spritesheet\+Info}} info)
 \item 
 void {\bfseries Set\+Texture} (std\+::string path)
+\item 
+virtual void {\bfseries set\+Collider\+Size} (glm\+::vec3 size)
 \item 
 virtual void {\bfseries Set\+Animation\+Sprite} (Animation\+State state, \mbox{\hyperlink{struct_spritesheet_info}{Spritesheet\+Info}} sprite\+Info)
 \item 
@@ -101,15 +149,48 @@ bool {\bfseries Get\+Is\+Animated} ()
 \item 
 glm\+::mat4 {\bfseries get\+Transform} ()
 \item 
-void {\bfseries Set\+Size} (float sizeX, float sizeY)
+bool {\bfseries Get\+Is\+Active} ()
 \item 
-void {\bfseries Set\+Position} (glm\+::vec3 new\+Position)
+void {\bfseries Set\+Is\+Active} (bool is\+Active)
+\item 
+virtual void {\bfseries Set\+Position} (glm\+::vec3 new\+Position)
+\item 
+void {\bfseries Set\+Ordering\+Layer} (int layer)
 \item 
 void {\bfseries Translate} (glm\+::vec3 move\+Distance)
 \item 
 glm\+::vec3 {\bfseries get\+Pos} ()
 \item 
 glm\+::vec3 {\bfseries get\+Size} ()
+\item 
+int {\bfseries get\+Ordering\+Layer} () const
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_projectile_object_a8d548535829c3ca30bd5a5688a4c6079}\label{class_projectile_object_a8d548535829c3ca30bd5a5688a4c6079} 
+glm\+::vec3 {\bfseries velocity}
+\item 
+\Hypertarget{class_projectile_object_afc5a87b8d851b1cdcdc0b72435f9a952}\label{class_projectile_object_afc5a87b8d851b1cdcdc0b72435f9a952} 
+float {\bfseries life\+Time}
+\item 
+\Hypertarget{class_projectile_object_a0405ae6112869b9ee05330c43019d9fd}\label{class_projectile_object_a0405ae6112869b9ee05330c43019d9fd} 
+\mbox{\hyperlink{class_player_object}{Player\+Object}} \texorpdfstring{$\ast$}{*} {\bfseries player\+Owner}
+\item 
+\Hypertarget{class_projectile_object_a36addbb09f66407f1acb1044a095402b}\label{class_projectile_object_a36addbb09f66407f1acb1044a095402b} 
+bool {\bfseries Can\+Knockback}
+\item 
+\Hypertarget{class_projectile_object_a3015e6f71cecccf84ff48a19ee774afa}\label{class_projectile_object_a3015e6f71cecccf84ff48a19ee774afa} 
+Type\+Projectile {\bfseries type}
+\item 
+\Hypertarget{class_projectile_object_a7784f31a91ae813ea4da1bb7579a6874}\label{class_projectile_object_a7784f31a91ae813ea4da1bb7579a6874} 
+bool {\bfseries is\+Shooting}
+\item 
+\Hypertarget{class_projectile_object_ac10ed71689924c3e0a4ee288f2be78b1}\label{class_projectile_object_ac10ed71689924c3e0a4ee288f2be78b1} 
+bool {\bfseries Can\+Stun}
+\item 
+\Hypertarget{class_projectile_object_ad8ff067307c73e669c22f0be1d9089cb}\label{class_projectile_object_ad8ff067307c73e669c22f0be1d9089cb} 
+std\+::vector$<$ \mbox{\hyperlink{class_tile_object}{Tile\+Object}} \texorpdfstring{$\ast$}{*} $>$ {\bfseries Tile\+In\+Range}
 \end{DoxyCompactItemize}
 \doxysubsubsection*{Additional Inherited Members}
 \doxysubsection*{Protected Attributes inherited from \mbox{\hyperlink{class_entity_object}{Entity\+Object}}}
@@ -138,6 +219,10 @@ bool {\bfseries is\+Animated}
 glm\+::vec3 {\bfseries pos}
 \item 
 glm\+::vec3 {\bfseries size}
+\item 
+int {\bfseries ordering\+Layer}
+\item 
+bool {\bfseries is\+Active} = true
 \end{DoxyCompactItemize}
 
 
@@ -220,6 +305,16 @@ Reimplemented from \mbox{\hyperlink{class_entity_object}{Entity\+Object}}.
 \doxysubsubsection{\texorpdfstring{Render()}{Render()}}
 {\footnotesize\ttfamily \label{class_projectile_object_a85a2b8227dcb4e76f1f844128285143e} 
 void Projectile\+Object\+::\+Render (\begin{DoxyParamCaption}\item[{glm\+::mat4}]{global\+Model\+Transform}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_entity_object}{Entity\+Object}}.
+
+\Hypertarget{class_projectile_object_a366c6062e8de4087589b04173903677a}\index{ProjectileObject@{ProjectileObject}!SetSize@{SetSize}}
+\index{SetSize@{SetSize}!ProjectileObject@{ProjectileObject}}
+\doxysubsubsection{\texorpdfstring{SetSize()}{SetSize()}}
+{\footnotesize\ttfamily \label{class_projectile_object_a366c6062e8de4087589b04173903677a} 
+void Projectile\+Object\+::\+Set\+Size (\begin{DoxyParamCaption}\item[{float}]{sizeX}{, }\item[{float}]{sizeY}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
 
 
 
