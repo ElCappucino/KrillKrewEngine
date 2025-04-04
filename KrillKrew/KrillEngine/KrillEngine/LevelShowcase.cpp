@@ -17,10 +17,15 @@ void LevelShowcase::LevelLoad()
 
 	spriteList["Prinny"] = SpritesheetInfo("Prinny", "../Resource/Texture/Prinny.png", 538, 538, 538, 538);
 	
-	spriteList["Shark_hit"] = SpritesheetInfo("Shark_hit", "../Resource/Texture/Ham/P1-SmashDiagDown.png", 402, 402, 1608, 402);
+	spriteList["Shark_hit"] = SpritesheetInfo("Shark_hit", "../Resource/Texture/Ham/P1_SmashDiagDown.png", 402, 402, 1608, 402);
 	spriteList["Shark_run"] = SpritesheetInfo("Shark_run", "../Resource/Texture/Ham/P1_MoveSide.png", 302, 302, 1208, 302);
 	spriteList["Shark_idle"] = SpritesheetInfo("Shart_idle", "../Resource/Texture/Ham/P1_Idle.png", 302, 302, 302, 302);
 	spriteList["Shark_fell"] = SpritesheetInfo("Shark_fell", "../Resource/Texture/Ham/P1_Dead.png", 302, 302, 302, 302);
+
+	spriteList["Squid_hit"] = SpritesheetInfo("Squid_hit", "../Resource/Texture/Byssa/P2_SmashDiagDown.png", 402, 402, 1608, 402);
+	spriteList["Squid_run"] = SpritesheetInfo("Squid_run", "../Resource/Texture/Byssa/P2_MoveSide.png", 302, 302, 1208, 302);
+	spriteList["Squid_idle"] = SpritesheetInfo("Squid_idle", "../Resource/Texture/Byssa/P2_Idle.png", 302, 302, 302, 302);
+	spriteList["Squid_fell"] = SpritesheetInfo("Squid_fell", "../Resource/Texture/Byssa/P2_Dead.png", 302, 302, 302, 302);
 
 	spriteList["Bomb"] = SpritesheetInfo("Bomb", "../Resource/Texture/Bomb_icon.png", 256, 256, 256, 256);
 	spriteList["Trap"] = SpritesheetInfo("Trap", "../Resource/Texture/Trap.png", 512, 512, 512, 512);
@@ -235,10 +240,10 @@ void LevelShowcase::LevelInit()
 	players[0] = p1;
 
 	PlayerObject* p2 = new PlayerObject();
-	p2->SetAnimationSprite(PlayerObject::AnimationState::Idle, spriteList.find("Shark_idle")->second);
-	p2->SetAnimationSprite(PlayerObject::AnimationState::Running, spriteList.find("Shark_run")->second);
-	p2->SetAnimationSprite(PlayerObject::AnimationState::Melee, spriteList.find("Shark_hit")->second);
-	p2->SetAnimationSprite(PlayerObject::AnimationState::FellDown, spriteList.find("Shark_fell")->second);
+	p2->SetAnimationSprite(PlayerObject::AnimationState::Idle, spriteList.find("Squid_idle")->second);
+	p2->SetAnimationSprite(PlayerObject::AnimationState::Running, spriteList.find("Squid_run")->second);
+	p2->SetAnimationSprite(PlayerObject::AnimationState::Melee, spriteList.find("Squid_hit")->second);
+	p2->SetAnimationSprite(PlayerObject::AnimationState::FellDown, spriteList.find("Squid_fell")->second);
 
 	std::ifstream read2File("Ability1.txt");
 	while (std::getline(read2File, line)) {
@@ -259,7 +264,7 @@ void LevelShowcase::LevelInit()
 	p2->SetAbility(PlayerObject::AbilityButton::Triangle, static_cast<PlayerObject::Ability>(abilityId[0]));
 	p2->SetAbility(PlayerObject::AbilityButton::Circle, static_cast<PlayerObject::Ability>(abilityId[1]));
 	p2->SetAbility(PlayerObject::AbilityButton::Cross, static_cast<PlayerObject::Ability>(abilityId[2]));
-	p2->SetSpriteInfo(spriteList.find("Shark_idle")->second);
+	p2->SetSpriteInfo(spriteList.find("Squid_idle")->second);
 	p2->SetPosition(glm::vec3(400.f, 400.f, 0));
 	p2->GetSpriteRenderer()->SetFrame(10);
 	p2->SetPlayerNumber(1);
