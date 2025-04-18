@@ -189,7 +189,10 @@ void LevelShowcase::LevelInit()
 	while (std::getline(readFile, line)) {
 		data[count] = line;
 		abilityId[count] = stoi(data[count]);
-		count++;
+		if (abilityId[count] > -1) {
+			count++;
+		}
+		
 	}
 	if (count < 3) {
 		abilityId[0] = 0;
@@ -222,7 +225,9 @@ void LevelShowcase::LevelInit()
 	while (std::getline(read2File, line)) {
 		data[count] = line;
 		abilityId[count] = stoi(data[count]);
-		count++;
+		if (abilityId[count] > -1) {
+			count++;
+		}
 	}
 	if (count < 3) {
 		abilityId[0] = 0;
@@ -254,7 +259,9 @@ void LevelShowcase::LevelInit()
 	while (std::getline(read3File, line)) {
 		data[count] = line;
 		abilityId[count] = stoi(data[count]);
-		count++;
+		if (abilityId[count] > -1) {
+			count++;
+		}
 	}
 	if (count < 3) {
 		abilityId[0] = 0;
@@ -286,7 +293,9 @@ void LevelShowcase::LevelInit()
 	while (std::getline(read4File, line)) {
 		data[count] = line;
 		abilityId[count] = stoi(data[count]);
-		count++;
+		if (abilityId[count] > -1) {
+			count++;
+		}
 	}
 	if (count < 3) {
 		abilityId[0] = 0;

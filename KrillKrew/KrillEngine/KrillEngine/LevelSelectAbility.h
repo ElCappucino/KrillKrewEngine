@@ -14,7 +14,6 @@ private:
 	std::map<std::string, SpritesheetInfo> spriteList;
 	PlayerObject* players[4]; // add up to 4 players
 	int playerSize = 0;
-	int playerNum = 0;
 	int playerAbility[4][3] = {{-1, -1, -1}, {-1, -1, -1}, {-1, -1, -1}, {-1, -1, -1}};
 
 	int playerNumber = 4; // Change later
@@ -60,5 +59,5 @@ public:
 
 	void UpdateInput();
 	void UpdateUi();
-	void abilityToFile(const std::string& fileName, PlayerObject::Ability abilityId, int who);
+	void abilityToFile(const std::string& fileName, int who);
 };
