@@ -22,7 +22,7 @@ protected:
 
 public:
 	ImageObject();
-	~ImageObject();
+	virtual ~ImageObject();
 	SpriteRenderer* GetSpriteRenderer();
 	void SetSpriteInfo(SpritesheetInfo info);
 	void SetTexture(std::string path);

@@ -30,7 +30,7 @@ protected:
 public:
 
 	EntityObject();
-	~EntityObject();
+	virtual ~EntityObject();
 
 	virtual void SetSpriteInfo(SpritesheetInfo info);
 	void SetTexture(std::string path);

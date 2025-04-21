@@ -13,6 +13,8 @@ ImageObject::ImageObject()
 
 ImageObject::~ImageObject()
 {
+	delete spriteRenderer;
+	spriteRenderer = nullptr;
 }
 
 void ImageObject::SetTexture(std::string path)

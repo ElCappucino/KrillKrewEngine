@@ -15,6 +15,8 @@ ProjectileObject::ProjectileObject()
 
 ProjectileObject::~ProjectileObject()
 {
+	TileInRange.clear();
+	playerOwner = nullptr;
 }
 
 void ProjectileObject::SetTexture(std::string path)

@@ -14,6 +14,8 @@ TrapObject::TrapObject()
 
 TrapObject::~TrapObject()
 {
+	TileInRange.clear();
+	
 }
 
 void TrapObject::SetTexture(std::string path)

@@ -117,7 +117,10 @@ TileObject::TileObject()
 }
 TileObject::~TileObject()
 {
-
+	//delete collider;
+	crackOverlay = nullptr;
+	currentLevel = nullptr;
+	updateTile = nullptr;
 }
 
 void TileObject::SetSpriteInfo(SpritesheetInfo info)

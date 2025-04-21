@@ -43,7 +43,10 @@ PlayerObject::PlayerObject()
 
 PlayerObject::~PlayerObject()
 {
-
+	animList.clear();
+	// attack collider
+	// ground check collider
+	aimingTile.clear();
 }
 
 void PlayerObject::SetTexture(std::string path)
@@ -513,8 +516,8 @@ void PlayerObject::ApplyKnockback(EntityObject* obj)
 		this->SetKnockbackDuration(2);
 		glm::vec3 knockbackDirection = obj->getPos() - this->getPos();
 
-		float knockbackDirectionX = knockbackDirection.x / 255;
-		float knockbackDirectionY = knockbackDirection.y / 255;
+		float knockbackDirectionX = knockbackDirection.x / 255.f / 5.f;
+		float knockbackDirectionY = knockbackDirection.y / 255.f / 5.f;
 
 		bool knockbackDirectionXisPositive = false;
 		bool knockbackDirectionYisPositive = false;

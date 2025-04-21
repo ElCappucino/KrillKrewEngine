@@ -37,12 +37,12 @@ private:
 protected:
 
 
-	Collider* collider;
+	//Collider* collider;
 
 public:
 
 	TileObject();
-	~TileObject();
+	virtual ~TileObject();
 
 	// int(*groundTileInfo)[MAP_HEIGHT][MAP_WIDTH];
 

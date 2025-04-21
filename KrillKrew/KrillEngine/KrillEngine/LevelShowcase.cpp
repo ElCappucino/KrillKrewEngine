@@ -67,6 +67,7 @@ void LevelShowcase::InitTile()
 
 	int tileCount = 0;
 
+	KK_TRACE("Generate Map-----------");
 	for (int i = 0; i < MAP_HEIGHT; i++)
 	{
 		for (int j = 0; j < MAP_WIDTH; j++)
@@ -204,6 +205,7 @@ void LevelShowcase::LevelInit()
 	std::string line;
 	int abilityId[3];
 
+	KK_TRACE("Init Player-----------");
 	PlayerObject* p1 = new PlayerObject();
 	p1->SetAnimationSprite(PlayerObject::AnimationState::Idle, spriteList.find("Shark_idle")->second);
 	p1->SetAnimationSprite(PlayerObject::AnimationState::Running, spriteList.find("Shark_run")->second);
@@ -270,7 +272,7 @@ void LevelShowcase::LevelInit()
 	KK_TRACE("Ability 3 : {0}", static_cast<int>(p2->GetAbilityByButton(PlayerObject::AbilityButton::Cross)));*/
 
 	p2->SetSpriteInfo(spriteList.find("Squid_idle")->second);
-	p2->SetPosition(glm::vec3(400.f, 400.f, 0));
+	p2->SetPosition(glm::vec3(400.f, -400.f, 0));
 	p2->GetSpriteRenderer()->SetFrame(10);
 	p2->SetPlayerNumber(1);
 	entityObjects.push_back(p2);
@@ -278,7 +280,7 @@ void LevelShowcase::LevelInit()
 	playerSize++;
 	players[1] = p2;
 
-	/*PlayerObject* p3 = new PlayerObject();
+	PlayerObject* p3 = new PlayerObject();
 	p3->SetAnimationSprite(PlayerObject::AnimationState::Idle, spriteList.find("Shark_idle")->second);
 	p3->SetAnimationSprite(PlayerObject::AnimationState::Running, spriteList.find("Shark_run")->second);
 	p3->SetAnimationSprite(PlayerObject::AnimationState::Melee, spriteList.find("Shark_hit")->second);
@@ -343,7 +345,7 @@ void LevelShowcase::LevelInit()
 	entityObjects.push_back(p4);
 	objectsList.push_back(p4);
 	playerSize++;
-	players[3] = p4;*/
+	players[3] = p4;
 
 	/*entityObjects.push_back(players[0]->GetAttackColliderObject());
 	entityObjects.push_back(players[1]->GetAttackColliderObject());
@@ -378,6 +380,7 @@ void LevelShowcase::LevelInit()
 
 	//create Ui by PlayerObject
 	//int playerSize = playerSize;
+	KK_TRACE("Init UI-----------");
 	count = 0;
 
 	if (playerSize >= 0) {
@@ -582,8 +585,8 @@ void LevelShowcase::UpdateInput()
 					{
 						// use old velo during dash to disable control
 						players[i]->SetVelocity(
-							abs(norAxisXOld),
-							abs(norAxisYOld),
+							abs(norAxisXOld / 5.f),
+							abs(norAxisYOld / 5.f),
 							isPositiveXOld,
 							isPositiveYOld
 						);
@@ -592,8 +595,8 @@ void LevelShowcase::UpdateInput()
 					{
 						// if not affecit by anything, use normaml velocity
 						players[i]->SetVelocity(
-							abs(norAxisX),
-							abs(norAxisY),
+							abs(norAxisX) / 5.f,
+							abs(norAxisY) / 5.f,
 							isPositiveX,
 							isPositiveY
 						);
@@ -601,10 +604,15 @@ void LevelShowcase::UpdateInput()
 				}
 
 				// update old velocity in case dashing
-				norAxisXOld = norAxisX;
-				norAxisYOld = norAxisY;
-				isPositiveXOld = isPositiveX;
-				isPositiveYOld = isPositiveY;
+
+				if (players[i]->GetIsDashing())
+				{
+					norAxisXOld = norAxisX;
+					norAxisYOld = norAxisY;
+					isPositiveXOld = isPositiveX;
+					isPositiveYOld = isPositiveY;
+				}
+				
 
 				// ************change it to attach to player
 				if (players[i]->GetIsAiming())
@@ -616,8 +624,15 @@ void LevelShowcase::UpdateInput()
 							(players[i]->GetPlayerNumber() == projectile->GetOwner()->GetPlayerNumber()) &&
 							(projectile->GetIsShooting() == false))
 						{
+							PlayerObject* player = projectile->GetOwner();
+							float veloX = player->GetCurrentDirection().x;
+							float veloY = player->GetCurrentDirection().y;
+							bool PositiveX = veloX > 0.f ? true : false;
+							bool PositiveY = veloY < 0.f ? true : false;
+
+
 							projectile->SetPosition(players[i]->getPos() + (projectile->GetVelocity() * glm::vec3(15.f, 15.f, 0.f)));
-							projectile->SetVelocity(abs(norAxisX), abs(norAxisY), isPositiveX, isPositiveY);
+							projectile->SetVelocity(abs(veloX), abs(veloY), PositiveX, PositiveY);
 
 							if (projectile->type == ProjectileObject::Cleave && projectile->GetLifetime() <= 9997) {
 								players[i]->SetIsAiming(false);
@@ -628,7 +643,7 @@ void LevelShowcase::UpdateInput()
 						}
 
 						// cancel aim
-						if (players[i]->GetIsKnockback() == true || players[i]->GetIsStun() == true) {
+						if ((projectile != nullptr) && (players[i]->GetIsKnockback() == true || players[i]->GetIsStun() == true)) {
 							players[i]->SetHoldingProjectile(0);
 							//players[i + playerNum]->SetIsShooting(false);
 							projectile->SetLifeTime(0);
@@ -731,8 +746,8 @@ void LevelShowcase::UpdateInput()
 			// players[i + playerNum % 4]->Translate(players[0]->GetVelocity());
 			players[0]->Translate(players[0]->GetVelocity());
 			players[1]->Translate(players[1]->GetVelocity());
-			/*players[2]->Translate(players[2]->GetVelocity());
-			players[3]->Translate(players[3]->GetVelocity());*/
+			players[2]->Translate(players[2]->GetVelocity());
+			players[3]->Translate(players[3]->GetVelocity());
 			//players[i + playerNum]->Translate(players[i + playerNum]->GetVelocity());
 		}
 
@@ -1147,6 +1162,7 @@ void LevelShowcase::LevelDraw()
 				ImGui::Text("isKnockback: %s", players[i]->GetIsKnockback() ? "true" : "false");
 				ImGui::Text("isStun: %s", players[i]->GetIsStun() ? "true" : "false");
 				ImGui::Text("isOnGround: %s", players[i]->GetIsOnGround() ? "true" : "false");
+				ImGui::Text("Current Velocity: %f, %f", players[i]->GetVelocity().x, players[i]->GetVelocity().y);
 
 				if (ImGui::Button("Test Button"))
 					clicked[i]++;
@@ -1228,11 +1244,41 @@ void LevelShowcase::LevelDraw()
 
 void LevelShowcase::LevelFree()
 {
-	for (DrawableObject* obj : objectsList) {
+	// Clean up DrawableObjects
+	for (auto obj : objectsList) {
 		delete obj;
 	}
 	objectsList.clear();
+	entityObjects.clear();
+	currentCollisions.clear();
+	previousCollisions.clear();
+	spriteList.clear();
+	/*std::fill(players.begin(), players.end(), nullptr);
+	std::fill(currentGroundTile.begin(), currentGroundTile.end(), 0);
+	std::fill(groundTile.begin(), groundTile.end(), 0);
+	std::fill(propsTile.begin(), propsTile.end(), 0);
+	std::fill(colliderTile.begin(), colliderTile.end(), 0);
+	std::fill(tilesList.begin(), tilesList.end(), nullptr);*/
 
+	
+	//// Clean up EntityObjects
+	//for (auto entity : entityObjects) {
+	//	delete entity;
+	//}
+	//entityObjects.clear();
+
+	// Clean up TileObjects in tilesList
+	/*for (int y = 0; y < MAP_HEIGHT; ++y) {
+		for (int x = 0; x < MAP_WIDTH; ++x) {
+			delete tilesList[y][x];
+			tilesList[y][x] = nullptr;
+		}
+	}*/
+
+	/*for (DrawableObject* obj : entityObjects) {
+		delete obj;
+	}
+	entityObjects.clear();*/
 	//cout << "Free Level" << endl;
 }
 

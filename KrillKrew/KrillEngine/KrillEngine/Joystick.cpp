@@ -102,7 +102,7 @@ bool Joystick::GetButtonDown(int joystickId, Button button)
 	}
 
 	// joystick not available
-	KK_ERROR("Joystick with id {0} is not available", joystickId);
+	//KK_ERROR("Joystick with id {0} is not available", joystickId);
 
 	return false;
 }
@@ -117,7 +117,7 @@ bool Joystick::GetButtonUp(int joystickId, Button button)
 	}
 
 	// joystick not available
-	KK_ERROR("Joystick with id {0} is not available", joystickId);
+	//KK_ERROR("Joystick with id {0} is not available", joystickId);
 
 	return false;
 }
@@ -131,7 +131,7 @@ float Joystick::GetAxis(int joystickId, Axis axis)
 	}
 
 	// joystick not available
-	KK_ERROR("Joystick with id {0} is not available", joystickId);
+	//KK_ERROR("Joystick with id {0} is not available", joystickId);
 
 	return 0.f;
 }

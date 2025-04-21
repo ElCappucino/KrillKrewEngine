@@ -103,7 +103,7 @@ private:
 public:
 	
 	PlayerObject();
-	~PlayerObject();
+	virtual ~PlayerObject();
 	
 	void SetTexture(std::string path);
 	void Render(glm::mat4 globalModelTransform);

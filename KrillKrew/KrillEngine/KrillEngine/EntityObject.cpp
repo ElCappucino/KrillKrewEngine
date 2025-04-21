@@ -17,6 +17,9 @@ EntityObject::EntityObject()
 
 EntityObject::~EntityObject()
 {
+	delete collider;
+	collider = nullptr;
+	animList.clear();
 }
 
 void EntityObject::SetTexture(std::string path)

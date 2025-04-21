@@ -17,7 +17,7 @@ class UiObject : public ImageObject
 
 public:
 	UiObject();
-	~UiObject();
+	virtual ~UiObject();
 	void SetTexture(std::string path);
 	void Render(glm::mat4 globalModelTransform);
 	void setNumOwner(int Num);

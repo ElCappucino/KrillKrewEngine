@@ -17,7 +17,7 @@ public:
 	bool GetIsActive();
 	void SetIsActive(bool isActive);
 	DrawableObject();
-	~DrawableObject();
+	virtual ~DrawableObject();
 	virtual void Render(glm::mat4 globalModelTransform) = 0;
 	virtual void SetSize(float sizeX, float sizeY);
 	virtual void SetPosition(glm::vec3 newPosition);

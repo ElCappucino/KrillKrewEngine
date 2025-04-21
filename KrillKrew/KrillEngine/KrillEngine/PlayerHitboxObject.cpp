@@ -22,7 +22,7 @@ PlayerHitboxObject::PlayerHitboxObject(PlayerObject* parent)
 }
 PlayerHitboxObject::~PlayerHitboxObject()
 {
-
+	parent = nullptr;
 }
 
 void PlayerHitboxObject::SetSpriteInfo(SpritesheetInfo info)

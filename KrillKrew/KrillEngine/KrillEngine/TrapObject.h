@@ -32,7 +32,7 @@ private:
 public:
 	bool isActivate = false;
 	TrapObject();
-	~TrapObject();
+	virtual ~TrapObject();
 	void Render(glm::mat4 globalModelTransform);
 	void SetTexture(std::string path);
 	void SetLifeTime(int lifeTime);
