@@ -217,6 +217,57 @@ void PlayerObject::ChangeAnimationState(AnimationState anim)
 		this->spriteRenderer->isLoop = animList.find(anim)->second.isLoop;
 	}
 }
+
+void PlayerObject::ChangeMeleeAnimation()
+{
+	// enumerated counterclockwise, starting from east = 0:
+	enum compassDir {
+		E = 0, NE = 1,
+		N = 2, NW = 3,
+		W = 4, SW = 5,
+		S = 6, SE = 7
+	};
+
+	// for string conversion, if you can't just do e.g. dir.toString():
+	std::string headings[8] = { "E", "NE", "N", "NW", "W", "SW", "S", "SE" };
+
+	// actual conversion code:
+	float angle = atan2(-currDirection.y, currDirection.x);
+	int roundUp = (std::round(8.f * angle / (2.f * 3.1415f) + 8.f));
+	int octant = roundUp % 8;
+
+	compassDir dir = (compassDir)octant;  // typecast to enum: 0 -> E etc.
+	std::string dirStr = headings[octant];
+
+	switch (octant)
+	{
+	case 0: // E
+		ChangeAnimationState(PlayerObject::AnimationState::Smash_Side);
+		break;
+	case 1: // NE
+		ChangeAnimationState(PlayerObject::AnimationState::Smash_DiagUp);
+		break;
+	case 2: // N
+		ChangeAnimationState(PlayerObject::AnimationState::Smash_Up);
+		break;
+	case 3: // NW
+		ChangeAnimationState(PlayerObject::AnimationState::Smash_DiagUp);
+		break;
+	case 4: // W
+		ChangeAnimationState(PlayerObject::AnimationState::Smash_Side);
+		break;
+	case 5: // SW
+		ChangeAnimationState(PlayerObject::AnimationState::Smash_DiagDown);
+		break;
+	case 6: // S
+		ChangeAnimationState(PlayerObject::AnimationState::Smash_Down);
+		break;
+	case 7: // SE
+		ChangeAnimationState(PlayerObject::AnimationState::Smash_DiagDown);
+		break;
+	}
+}
+
 void PlayerObject::UpdateCurrentAnimation()
 {
 	if (isFell)
@@ -259,7 +310,35 @@ void PlayerObject::UpdateCurrentAnimation()
 	{
 		if (this->spriteRenderer->GetColumn() == (this->spriteRenderer->GetSheetWidth() / this->spriteRenderer->GetSpriteWidth()) - 1)
 		{
-			ChangeAnimationState(AnimationState::Idle);
+			if ((abs(this->velocity.x) > 0.f || abs(this->velocity.y) > 0.f))
+			{
+				bool isHorizontalish = abs(currDirection.x) > abs(currDirection.y) ? true : false;
+				if (currDirection.y > 0.f)
+				{
+					if (isHorizontalish) {
+						ChangeAnimationState(AnimationState::Move_Side);
+					}
+					else
+					{
+						ChangeAnimationState(AnimationState::Move_Front);
+					}
+				}
+				else
+				{
+					if (isHorizontalish) {
+						ChangeAnimationState(AnimationState::Move_Side);
+					}
+					else
+					{
+						ChangeAnimationState(AnimationState::Move_Back);
+					}
+				}
+			}
+			else
+			{
+				ChangeAnimationState(AnimationState::Idle);
+			}
+			
 		}
 	}
 	else if 

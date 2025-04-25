@@ -43,11 +43,11 @@ public:
 		Move_Front, // Done
 		Move_Side, // Done
 		
-		Smash_DiagDown,
-		Smash_DiagUp,
-		Smash_Down,
-		Smash_Side,
-		Smash_Up,
+		Smash_DiagDown, // Done
+		Smash_DiagUp, // Done
+		Smash_Down, // Done
+		Smash_Side, // Done
+		Smash_Up, // Done
 		
 		Dash_Back,
 		Dash_Front,
@@ -145,6 +145,7 @@ public:
 	void SetPlayerUI(UiObject* ui);
 	void SetCurrentDirection(glm::vec2 dir);
 
+
 	void SetIsKnockback(bool isKnockback);
 	void SetKnockbackDuration(int time);
 	void SetIsTNT(bool isTNT);
@@ -163,7 +164,7 @@ public:
 	virtual void SetAnimationSprite(AnimationState state, SpritesheetInfo spriteInfo);
 	virtual void ChangeAnimationState(AnimationState anim);
 	virtual void UpdateCurrentAnimation();
-
+	void ChangeMeleeAnimation();
 
 	virtual Collider* GetCollider() const;
 	Collider* GetAttackCollider() const;

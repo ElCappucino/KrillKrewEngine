@@ -382,6 +382,13 @@ void LevelShowcase::LevelInit()
 	p1->SetAnimationSprite(PlayerObject::AnimationState::Move_Front, spriteList.find("P1_Move_Front")->second);
 	p1->SetAnimationSprite(PlayerObject::AnimationState::Cast, spriteList.find("P1_Cast")->second);
 	p1->SetAnimationSprite(PlayerObject::AnimationState::PlaceItem, spriteList.find("P1_Place")->second);
+
+	p1->SetAnimationSprite(PlayerObject::AnimationState::Smash_DiagDown, spriteList.find("P1_Smash_DiagDown")->second);
+	p1->SetAnimationSprite(PlayerObject::AnimationState::Smash_DiagUp, spriteList.find("P1_Smash_DiagUp")->second);
+	p1->SetAnimationSprite(PlayerObject::AnimationState::Smash_Down, spriteList.find("P1_Smash_Down")->second);
+	p1->SetAnimationSprite(PlayerObject::AnimationState::Smash_Side, spriteList.find("P1_Smash_Side")->second);
+	p1->SetAnimationSprite(PlayerObject::AnimationState::Smash_Up, spriteList.find("P1_Smash_Up")->second);
+
 	std::ifstream readFile("Ability0.txt");
 	while (std::getline(readFile, line)) {
 		data[count] = line;
@@ -423,6 +430,12 @@ void LevelShowcase::LevelInit()
 	p2->SetAnimationSprite(PlayerObject::AnimationState::Move_Front, spriteList.find("P2_Move_Front")->second);
 	p2->SetAnimationSprite(PlayerObject::AnimationState::Cast, spriteList.find("P2_Cast")->second);
 	p2->SetAnimationSprite(PlayerObject::AnimationState::PlaceItem, spriteList.find("P2_Place")->second);
+
+	p2->SetAnimationSprite(PlayerObject::AnimationState::Smash_DiagDown, spriteList.find("P2_Smash_DiagDown")->second);
+	p2->SetAnimationSprite(PlayerObject::AnimationState::Smash_DiagUp, spriteList.find("P2_Smash_DiagUp")->second);
+	p2->SetAnimationSprite(PlayerObject::AnimationState::Smash_Down, spriteList.find("P2_Smash_Down")->second);
+	p2->SetAnimationSprite(PlayerObject::AnimationState::Smash_Side, spriteList.find("P2_Smash_Side")->second);
+	p2->SetAnimationSprite(PlayerObject::AnimationState::Smash_Up, spriteList.find("P2_Smash_Up")->second);
 	std::ifstream read2File("Ability1.txt");
 	while (std::getline(read2File, line)) {
 		data[count] = line;
@@ -467,6 +480,12 @@ void LevelShowcase::LevelInit()
 	p3->SetAnimationSprite(PlayerObject::AnimationState::Cast, spriteList.find("P3_Cast")->second);
 	p3->SetAnimationSprite(PlayerObject::AnimationState::PlaceItem, spriteList.find("P3_Place")->second);
 
+	p3->SetAnimationSprite(PlayerObject::AnimationState::Smash_DiagDown, spriteList.find("P3_Smash_DiagDown")->second);
+	p3->SetAnimationSprite(PlayerObject::AnimationState::Smash_DiagUp, spriteList.find("P3_Smash_DiagUp")->second);
+	p3->SetAnimationSprite(PlayerObject::AnimationState::Smash_Down, spriteList.find("P3_Smash_Down")->second);
+	p3->SetAnimationSprite(PlayerObject::AnimationState::Smash_Side, spriteList.find("P3_Smash_Side")->second);
+	p3->SetAnimationSprite(PlayerObject::AnimationState::Smash_Up, spriteList.find("P3_Smash_Up")->second);
+
 	std::ifstream read3File("Ability2.txt");
 	while (std::getline(read3File, line)) {
 		data[count] = line;
@@ -508,6 +527,12 @@ void LevelShowcase::LevelInit()
 	p4->SetAnimationSprite(PlayerObject::AnimationState::Move_Front, spriteList.find("P4_Move_Front")->second);
 	p4->SetAnimationSprite(PlayerObject::AnimationState::Cast, spriteList.find("P4_Cast")->second);
 	p4->SetAnimationSprite(PlayerObject::AnimationState::PlaceItem, spriteList.find("P4_Place")->second);
+
+	p4->SetAnimationSprite(PlayerObject::AnimationState::Smash_DiagDown, spriteList.find("P4_Smash_DiagDown")->second);
+	p4->SetAnimationSprite(PlayerObject::AnimationState::Smash_DiagUp, spriteList.find("P4_Smash_DiagUp")->second);
+	p4->SetAnimationSprite(PlayerObject::AnimationState::Smash_Down, spriteList.find("P4_Smash_Down")->second);
+	p4->SetAnimationSprite(PlayerObject::AnimationState::Smash_Side, spriteList.find("P4_Smash_Side")->second);
+	p4->SetAnimationSprite(PlayerObject::AnimationState::Smash_Up, spriteList.find("P4_Smash_Up")->second);
 
 	std::ifstream read4File("Ability3.txt");
 	while (std::getline(read4File, line)) {
@@ -910,6 +935,7 @@ void LevelShowcase::UpdateInput()
 			if (Joystick::GetButtonDown(i, Joystick::Button::Square))
 			{
 				//players[i]->ChangeAnimationState(PlayerObject::AnimationState::Melee);
+				players[i]->ChangeMeleeAnimation();
 				players[i]->HitAimingTile();
 				soundManager->PlaySFX("hit_test", false);
 			}
