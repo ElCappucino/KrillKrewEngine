@@ -214,10 +214,16 @@ void PlayerObject::ChangeAnimationState(AnimationState anim)
 		this->spriteRenderer->SetTexture(animList.find(anim)->second.texture);
 		this->SetTexture(animList.find(anim)->second.texture);
 		this->spriteRenderer->ShiftTo(0, 0);
+		this->spriteRenderer->isLoop = animList.find(anim)->second.isLoop;
 	}
 }
 void PlayerObject::UpdateCurrentAnimation()
 {
+	if (isFell)
+	{
+		return;
+	}
+	//KK_INFO("Velo");
 	/*if (currAnimState == AnimationState::Melee)
 	{
 		KK_INFO("Current Animation : Melee");
@@ -231,7 +237,25 @@ void PlayerObject::UpdateCurrentAnimation()
 		KK_INFO("Current Animation : Running");
 	}*/
 
-	if (currAnimState == AnimationState::Melee)
+	if (isKnockback)
+	{
+		ChangeAnimationState(AnimationState::GetHit);
+	}
+	else if (isAiming)
+	{
+		ChangeAnimationState(AnimationState::Cast);
+	}
+	else if (isStun)
+	{
+		ChangeAnimationState(AnimationState::Stun);
+	}
+	// End Animation After Finish
+	else if (currAnimState == AnimationState::Smash_DiagDown || 
+		currAnimState == AnimationState::Smash_DiagUp||
+		currAnimState == AnimationState::Smash_Side ||
+		currAnimState == AnimationState::Smash_Up ||
+		currAnimState == AnimationState::Smash_Down || 
+		currAnimState == AnimationState::PlaceItem)
 	{
 		if (this->spriteRenderer->GetColumn() == (this->spriteRenderer->GetSheetWidth() / this->spriteRenderer->GetSpriteWidth()) - 1)
 		{
@@ -241,17 +265,49 @@ void PlayerObject::UpdateCurrentAnimation()
 	else if 
 	(
 		((abs(this->velocity.x) > 0.f || abs(this->velocity.y) > 0.f)) &&
-		currAnimState != AnimationState::Running &&
-		currAnimState != AnimationState::Melee
+		((currAnimState != AnimationState::Move_Side) || 
+		(currAnimState != AnimationState::Move_Back) || 
+		(currAnimState != AnimationState::Move_Front))
 	)
 	{
-		ChangeAnimationState(AnimationState::Running);
+		/*float degree = atan2(currDirection.y, currDirection.x) * 180.f / 3.1415f;
+		bool isDown = degree > 180.f && degree < 360.f ? true : false;
+		bool */
+		/*bool isHorizontalish = abs(currDirection.x) > abs(currDirection.y) ? true : false;
+		bool isHeadingUp = currDirection.y > 0.f ? true : false;
+		if (isHorizontalish)
+		{
+			if (isHeadingUp)
+			{
+				ChangeAnimationState(AnimationState::Move_Side);
+			}
+		}*/
+		bool isHorizontalish = abs(currDirection.x) > abs(currDirection.y) ? true : false;
+		if (currDirection.y > 0.f)
+		{
+			if (isHorizontalish) {
+				ChangeAnimationState(AnimationState::Move_Side);
+			}
+			else
+			{
+				ChangeAnimationState(AnimationState::Move_Front);
+			}
+		}
+		else
+		{
+			if (isHorizontalish) {
+				ChangeAnimationState(AnimationState::Move_Side);
+			}
+			else
+			{
+				ChangeAnimationState(AnimationState::Move_Back);
+			}
+		}
+		//ChangeAnimationState(AnimationState::Running);
 	}
 	else if 
 	(
-		abs(this->velocity.x) <= 0.f && abs(this->velocity.y) <= 0.f &&
-		currAnimState == AnimationState::Running &&
-		currAnimState != AnimationState::Melee
+		abs(this->velocity.x) <= 0.1f && abs(this->velocity.y) <= 0.1f
 	)
 	{
 		ChangeAnimationState(AnimationState::Idle);
@@ -494,9 +550,9 @@ void PlayerObject::CheckIfOnGround()
 {
 	if (!isOnGround)
 	{
-		std::cout << "Player is not on ground. groundCheckCollider Pos = " << this->GetGroundColliderObject()->getPos().x << ", "
+		/*std::cout << "Player is not on ground. groundCheckCollider Pos = " << this->GetGroundColliderObject()->getPos().x << ", "
 			<< this->GetGroundColliderObject()->getPos().y << ", "
-			<< this->GetGroundColliderObject()->getPos().z << std::endl;
+			<< this->GetGroundColliderObject()->getPos().z << std::endl;*/
 		//KK_TRACE("Player is not on ground. groundCheckCollider Pos = {0}", this->GetGroundColliderObject()->getPos());
 		this->SetVelocity(0, 0, false, false);
 		this->isFell = true;
@@ -545,7 +601,7 @@ void PlayerObject::ApplyKnockback(EntityObject* obj)
 
 
 		this->SetVelocity(knockbackDirectionX, knockbackDirectionY, knockbackDirectionXisPositive, knockbackDirectionYisPositive);
-		std::cout << knockbackDirectionY << std::endl;
+		//std::cout << knockbackDirectionY << std::endl;
 	}
 	
 }

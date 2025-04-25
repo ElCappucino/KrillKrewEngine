@@ -180,6 +180,12 @@ void ProjectileObject::OnColliderEnter(Collider* other)
 				if (this->type == TypeProjectile::Fireball)
 				{
 					ExplodeTileInRange();
+					player->ApplyKnockback(this);
+				}
+				else if (this->type == TypeProjectile::Bola)
+				{
+					player->SetIsStun(true);
+					player->SetStunDuraion(10);
 				}
 				else if (this->type == ProjectileObject::TypeProjectile::Teleport) {
 					playerOwner->SetPosition(this->getPos());
@@ -190,7 +196,7 @@ void ProjectileObject::OnColliderEnter(Collider* other)
 				{
 					KK_ERROR("This is not fireball");
 				}
-				player->ApplyKnockback(this);
+				
 				this->isActive = false;
 
 				

@@ -17,6 +17,7 @@ struct SpritesheetInfo
 	float spriteheight; 
 	float sheetwidth; 
 	float sheetheight;
+	bool isLoop;
 
 	SpritesheetInfo()
 	{
@@ -26,13 +27,15 @@ struct SpritesheetInfo
 		this->spriteheight = 0;
 		this->sheetwidth = 0;
 		this->sheetheight = 0;
+		this->isLoop = false;
 	}
 	SpritesheetInfo(std::string name,
 					std::string texture,
 					float spritewidth, 
 					float spriteheight, 
 					float sheetwidth, 
-					float sheetheight)
+					float sheetheight,
+					bool isLoop = true)
 	{
 		this->name = name;
 		this->texture = texture;
@@ -40,5 +43,6 @@ struct SpritesheetInfo
 		this->spriteheight = spriteheight;
 		this->sheetwidth = sheetwidth;
 		this->sheetheight = sheetheight;
+		this->isLoop = isLoop;
 	}
 };

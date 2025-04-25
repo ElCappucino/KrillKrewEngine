@@ -19,7 +19,10 @@ void SpriteRenderer::ShiftColumn()
 {
 	if (column == (sheetwidth / spritewidth) - 1)
 	{
-		column = 0;
+		if (isLoop)
+		{
+			column = 0;
+		}
 	}
 	else 
 	{
@@ -52,6 +55,8 @@ SpriteRenderer::SpriteRenderer(std::string texture)
 	this->spriteheight = 0;
 	this->sheetwidth = 0;
 	this->sheetheight = 0;
+
+	this->isLoop = true;
 }
 
 float SpriteRenderer::GetRow()

@@ -20,19 +20,19 @@ void LevelShowcase::LevelLoad()
 	// Shark ----------------------------------------------------------------------------------------------------------------------------
 	//  ---------------------------------------------------------------------------------------------------------------------------------
 	// Cast
-	spriteList["P1_Cast"] = SpritesheetInfo("P1_Cast",						"../Resource/Texture/Ham/P1_Cast.png", 302, 302, 1208, 302);
+	spriteList["P1_Cast"] = SpritesheetInfo("P1_Cast",						"../Resource/Texture/Ham/P1_Cast.png", 302, 302, 1208, 302, false);
 	// Cleave
-	spriteList["P1_Cleave_Down"] = SpritesheetInfo("P1_Cleave_Down",		"../Resource/Texture/Ham/P1_CleaveDown.png", 402, 402, 1608, 402);
-	spriteList["P1_Cleave_Side"] = SpritesheetInfo("P1_Cleave_Side",		"../Resource/Texture/Ham/P1_CleaveSide.png", 402, 402, 1608, 402);
-	spriteList["P1_Cleave_Up"] = SpritesheetInfo("P1_Cleave_Up",			"../Resource/Texture/Ham/P1_CleaveUp.png", 402, 402, 1608, 402);
+	spriteList["P1_Cleave_Down"] = SpritesheetInfo("P1_Cleave_Down",		"../Resource/Texture/Ham/P1_CleaveDown.png", 402, 402, 1608, 402, false);
+	spriteList["P1_Cleave_Side"] = SpritesheetInfo("P1_Cleave_Side",		"../Resource/Texture/Ham/P1_CleaveSide.png", 402, 402, 1608, 402, false);
+	spriteList["P1_Cleave_Up"] = SpritesheetInfo("P1_Cleave_Up",			"../Resource/Texture/Ham/P1_CleaveUp.png", 402, 402, 1608, 402, false);
 	// Dash
-	spriteList["P1_Dash_Back"] = SpritesheetInfo("P1_Dash_Back",			"../Resource/Texture/Ham/P1_DashBack.png", 302, 302, 906, 302);
-	spriteList["P1_Dash_Front"] = SpritesheetInfo("P1_Dash_Front",			"../Resource/Texture/Ham/P1_DashFront.png", 302, 302, 906, 302);
-	spriteList["P1_Dash_Side"] = SpritesheetInfo("P1_Dash_Side",			"../Resource/Texture/Ham/P1_DashSide.png", 302, 302, 906, 302);
+	spriteList["P1_Dash_Back"] = SpritesheetInfo("P1_Dash_Back",			"../Resource/Texture/Ham/P1_DashBack.png", 302, 302, 906, 302, false);
+	spriteList["P1_Dash_Front"] = SpritesheetInfo("P1_Dash_Front",			"../Resource/Texture/Ham/P1_DashFront.png", 302, 302, 906, 302, false);
+	spriteList["P1_Dash_Side"] = SpritesheetInfo("P1_Dash_Side",			"../Resource/Texture/Ham/P1_DashSide.png", 302, 302, 906, 302, false);
 	// Dead (Temp)
-	spriteList["P1_Dead"] = SpritesheetInfo("P1_Dead",						"../Resource/Texture/Ham/P1_Dead.png", 302, 302, 302, 302);
+	spriteList["P1_Dead"] = SpritesheetInfo("P1_Dead",						"../Resource/Texture/Ham/P1_Dead.png", 302, 302, 302, 302, false);
 	// Hit
-	spriteList["P1_Hit"] = SpritesheetInfo("P1_Hit",						"../Resource/Texture/Ham/P1_Hit.png", 302, 302, 906, 302);
+	spriteList["P1_Hit"] = SpritesheetInfo("P1_Hit",						"../Resource/Texture/Ham/P1_Hit.png", 302, 302, 906, 302, false);
 	// Idle
 	spriteList["P1_Idle"] = SpritesheetInfo("P1_Idle",						"../Resource/Texture/Ham/P1_Idle.png", 302, 302, 1812, 302);
 	// Move
@@ -40,32 +40,32 @@ void LevelShowcase::LevelLoad()
 	spriteList["P1_Move_Front"] = SpritesheetInfo("P1_Move_Front",			"../Resource/Texture/Ham/P1_MoveFront.png", 302, 302, 1208, 302);
 	spriteList["P1_Move_Side"] = SpritesheetInfo("P1_Move_Side",			"../Resource/Texture/Ham/P1_MoveSide.png", 302, 302, 1208, 302);
 	// Place Trap
-	spriteList["P1_Place"] = SpritesheetInfo("P1_Place",					"../Resource/Texture/Ham/P1_Place.png", 302, 302, 1208, 302);
+	spriteList["P1_Place"] = SpritesheetInfo("P1_Place",					"../Resource/Texture/Ham/P1_Place.png", 302, 302, 1208, 302, false);
 	// Smash
-	spriteList["P1_Smash_DiagDown"] = SpritesheetInfo("P1_Smash_DiagDown",	"../Resource/Texture/Ham/P1_SmashDiagDown.png", 302, 302, 1208, 302);
-	spriteList["P1_Smash_DiagUp"] = SpritesheetInfo("P1_Smash_DiagUp",		"../Resource/Texture/Ham/P1_SmashDiagUp.png", 302, 302, 1208, 302);
-	spriteList["P1_Smash_Down"] = SpritesheetInfo("P1_SmashDown",			"../Resource/Texture/Ham/P1_SmashDown.png", 302, 302, 1208, 302);
-	spriteList["P1_Smash_Side"] = SpritesheetInfo("P1_Smash_Side",			"../Resource/Texture/Ham/P1_SmashSide.png", 302, 302, 1208, 302);
-	spriteList["P1_Smash_Up"] = SpritesheetInfo("P1_Smash_Up",				"../Resource/Texture/Ham/P1_SmashUp.png", 302, 302, 1208, 302);
+	spriteList["P1_Smash_DiagDown"] = SpritesheetInfo("P1_Smash_DiagDown",	"../Resource/Texture/Ham/P1_SmashDiagDown.png", 302, 302, 1208, 302, false);
+	spriteList["P1_Smash_DiagUp"] = SpritesheetInfo("P1_Smash_DiagUp",		"../Resource/Texture/Ham/P1_SmashDiagUp.png", 302, 302, 1208, 302, false);
+	spriteList["P1_Smash_Down"] = SpritesheetInfo("P1_SmashDown",			"../Resource/Texture/Ham/P1_SmashDown.png", 302, 302, 1208, 302, false);
+	spriteList["P1_Smash_Side"] = SpritesheetInfo("P1_Smash_Side",			"../Resource/Texture/Ham/P1_SmashSide.png", 302, 302, 1208, 302, false);
+	spriteList["P1_Smash_Up"] = SpritesheetInfo("P1_Smash_Up",				"../Resource/Texture/Ham/P1_SmashUp.png", 302, 302, 1208, 302, false);
 	// Stun
-	spriteList["P1_Stun"] = SpritesheetInfo("P1_Stun",						"../Resource/Texture/Ham/P1_Stun.png", 350, 350, 700, 350);
+	spriteList["P1_Stun"] = SpritesheetInfo("P1_Stun",						"../Resource/Texture/Ham/P1_Stun.png", 350, 350, 700, 350, false);
 
 	// Squid ----------------------------------------------------------------------------------------------------------------------------
 	//  ---------------------------------------------------------------------------------------------------------------------------------
 	// Cast
-	spriteList["P2_Cast"] = SpritesheetInfo("P2_Cast",						"../Resource/Texture/Byssa/P1_Cast.png", 302, 302, 1208, 302);
+	spriteList["P2_Cast"] = SpritesheetInfo("P2_Cast",						"../Resource/Texture/Byssa/P1_Cast.png", 302, 302, 1208, 302, false);
 	// Cleave
-	spriteList["P2_Cleave_Down"] = SpritesheetInfo("P2_Cleave_Down",		"../Resource/Texture/Byssa/P2_CleaveDown.png", 402, 402, 1608, 402);
-	spriteList["P2_Cleave_Side"] = SpritesheetInfo("P2_Cleave_Side",		"../Resource/Texture/Byssa/P2_CleaveSide.png", 402, 402, 1608, 402);
-	spriteList["P2_Cleave_Up"] = SpritesheetInfo("P2_Cleave_Up",			"../Resource/Texture/Byssa/P2_CleaveUp.png", 402, 402, 1608, 402);
+	spriteList["P2_Cleave_Down"] = SpritesheetInfo("P2_Cleave_Down",		"../Resource/Texture/Byssa/P2_CleaveDown.png", 402, 402, 1608, 402, false);
+	spriteList["P2_Cleave_Side"] = SpritesheetInfo("P2_Cleave_Side",		"../Resource/Texture/Byssa/P2_CleaveSide.png", 402, 402, 1608, 402, false);
+	spriteList["P2_Cleave_Up"] = SpritesheetInfo("P2_Cleave_Up",			"../Resource/Texture/Byssa/P2_CleaveUp.png", 402, 402, 1608, 402, false);
 	// Dash
-	spriteList["P2_Dash_Back"] = SpritesheetInfo("P2_Dash_Back",			"../Resource/Texture/Byssa/P2_DashBack.png", 302, 302, 906, 302);
-	spriteList["P2_Dash_Front"] = SpritesheetInfo("P2_Dash_Front",			"../Resource/Texture/Byssa/P2_DashFront.png", 302, 302, 906, 302);
-	spriteList["P2_Dash_Side"] = SpritesheetInfo("P2_Dash_Side",			"../Resource/Texture/Byssa/P2_DashSide.png", 302, 302, 906, 302);
+	spriteList["P2_Dash_Back"] = SpritesheetInfo("P2_Dash_Back",			"../Resource/Texture/Byssa/P2_DashBack.png", 302, 302, 906, 302, false);
+	spriteList["P2_Dash_Front"] = SpritesheetInfo("P2_Dash_Front",			"../Resource/Texture/Byssa/P2_DashFront.png", 302, 302, 906, 302, false);
+	spriteList["P2_Dash_Side"] = SpritesheetInfo("P2_Dash_Side",			"../Resource/Texture/Byssa/P2_DashSide.png", 302, 302, 906, 302, false);
 	// Dead (Temp)
-	spriteList["P2_Dead"] = SpritesheetInfo("P2_Dead",						"../Resource/Texture/Byssa/P2_Dead.png", 302, 302, 302, 302);
+	spriteList["P2_Dead"] = SpritesheetInfo("P2_Dead",						"../Resource/Texture/Byssa/P2_Dead.png", 302, 302, 302, 302, false);
 	// Hit
-	spriteList["P2_Hit"] = SpritesheetInfo("P2_Hit",						"../Resource/Texture/Byssa/P2_Hit.png", 302, 302, 906, 302);
+	spriteList["P2_Hit"] = SpritesheetInfo("P2_Hit",						"../Resource/Texture/Byssa/P2_Hit.png", 302, 302, 906, 302, false);
 	// Idle
 	spriteList["P2_Idle"] = SpritesheetInfo("P2_Idle",						"../Resource/Texture/Byssa/P2_Idle.png", 302, 302, 1812, 302);
 	// Move
@@ -73,32 +73,32 @@ void LevelShowcase::LevelLoad()
 	spriteList["P2_Move_Front"] = SpritesheetInfo("P2_Move_Front",			"../Resource/Texture/Byssa/P2_MoveFront.png", 302, 302, 1208, 302);
 	spriteList["P2_Move_Side"] = SpritesheetInfo("P2_Move_Side",			"../Resource/Texture/Byssa/P2_MoveSide.png", 302, 302, 1208, 302);
 	// Place Trap
-	spriteList["P2_Place"] = SpritesheetInfo("P2_Place",					"../Resource/Texture/Byssa/P2_Place.png", 302, 302, 1208, 302);
+	spriteList["P2_Place"] = SpritesheetInfo("P2_Place",					"../Resource/Texture/Byssa/P2_Place.png", 302, 302, 1208, 302, false);
 	// Smash
-	spriteList["P2_Smash_DiagDown"] = SpritesheetInfo("P2_Smash_DiagDown",	"../Resource/Texture/Byssa/P2_SmashDiagDown.png", 302, 302, 1208, 302);
-	spriteList["P2_Smash_DiagUp"] = SpritesheetInfo("P2_Smash_DiagUp",		"../Resource/Texture/Byssa/P2_SmashDiagUp.png", 302, 302, 1208, 302);
-	spriteList["P2_Smash_Down"] = SpritesheetInfo("P2_SmashDown",			"../Resource/Texture/Byssa/P2_SmashDown.png", 302, 302, 1208, 302);
-	spriteList["P2_Smash_Side"] = SpritesheetInfo("P2_Smash_Side",			"../Resource/Texture/Byssa/P2_SmashSide.png", 302, 302, 1208, 302);
-	spriteList["P2_Smash_Up"] = SpritesheetInfo("P2_Smash_Up",				"../Resource/Texture/Byssa/P2_SmashUp.png", 302, 302, 1208, 302);
+	spriteList["P2_Smash_DiagDown"] = SpritesheetInfo("P2_Smash_DiagDown",	"../Resource/Texture/Byssa/P2_SmashDiagDown.png", 302, 302, 1208, 302, false);
+	spriteList["P2_Smash_DiagUp"] = SpritesheetInfo("P2_Smash_DiagUp",		"../Resource/Texture/Byssa/P2_SmashDiagUp.png", 302, 302, 1208, 302, false);
+	spriteList["P2_Smash_Down"] = SpritesheetInfo("P2_SmashDown",			"../Resource/Texture/Byssa/P2_SmashDown.png", 302, 302, 1208, 302, false);
+	spriteList["P2_Smash_Side"] = SpritesheetInfo("P2_Smash_Side",			"../Resource/Texture/Byssa/P2_SmashSide.png", 302, 302, 1208, 302, false);
+	spriteList["P2_Smash_Up"] = SpritesheetInfo("P2_Smash_Up",				"../Resource/Texture/Byssa/P2_SmashUp.png", 302, 302, 1208, 302, false);
 	// Stun
-	spriteList["P2_Stun"] = SpritesheetInfo("P2_Stun",						"../Resource/Texture/Byssa/P2_Stun.png", 350, 350, 700, 350);
+	spriteList["P2_Stun"] = SpritesheetInfo("P2_Stun",						"../Resource/Texture/Byssa/P2_Stun.png", 350, 350, 700, 350, false);
 
 	// Squid ----------------------------------------------------------------------------------------------------------------------------
 	//  ---------------------------------------------------------------------------------------------------------------------------------
 	// Cast
-	spriteList["P2_Cast"] =	SpritesheetInfo("P2_Cast",						"../Resource/Texture/Byssa/P2_Cast.png", 302, 302, 1208, 302);
+	spriteList["P2_Cast"] =	SpritesheetInfo("P2_Cast",						"../Resource/Texture/Byssa/P2_Cast.png", 302, 302, 1208, 302, false);
 	// Cleave
-	spriteList["P2_Cleave_Down"] = SpritesheetInfo("P2_Cleave_Down",		"../Resource/Texture/Byssa/P2_CleaveDown.png", 402, 402, 1608, 402);
-	spriteList["P2_Cleave_Side"] = SpritesheetInfo("P2_Cleave_Side",		"../Resource/Texture/Byssa/P2_CleaveSide.png", 402, 402, 1608, 402);
-	spriteList["P2_Cleave_Up"] = SpritesheetInfo("P2_Cleave_Up",			"../Resource/Texture/Byssa/P2_CleaveUp.png", 402, 402, 1608, 402);
+	spriteList["P2_Cleave_Down"] = SpritesheetInfo("P2_Cleave_Down",		"../Resource/Texture/Byssa/P2_CleaveDown.png", 402, 402, 1608, 402, false);
+	spriteList["P2_Cleave_Side"] = SpritesheetInfo("P2_Cleave_Side",		"../Resource/Texture/Byssa/P2_CleaveSide.png", 402, 402, 1608, 402, false);
+	spriteList["P2_Cleave_Up"] = SpritesheetInfo("P2_Cleave_Up",			"../Resource/Texture/Byssa/P2_CleaveUp.png", 402, 402, 1608, 402, false);
 	// Dash
-	spriteList["P2_Dash_Back"] = SpritesheetInfo("P2_Dash_Back",			"../Resource/Texture/Byssa/P2_DashBack.png", 302, 302, 906, 302);
-	spriteList["P2_Dash_Front"] = SpritesheetInfo("P2_Dash_Front",			"../Resource/Texture/Byssa/P2_DashFront.png", 302, 302, 906, 302);
-	spriteList["P2_Dash_Side"] = SpritesheetInfo("P2_Dash_Side",			"../Resource/Texture/Byssa/P2_DashSide.png", 302, 302, 906, 302);
+	spriteList["P2_Dash_Back"] = SpritesheetInfo("P2_Dash_Back",			"../Resource/Texture/Byssa/P2_DashBack.png", 302, 302, 906, 302, false);
+	spriteList["P2_Dash_Front"] = SpritesheetInfo("P2_Dash_Front",			"../Resource/Texture/Byssa/P2_DashFront.png", 302, 302, 906, 302, false);
+	spriteList["P2_Dash_Side"] = SpritesheetInfo("P2_Dash_Side",			"../Resource/Texture/Byssa/P2_DashSide.png", 302, 302, 906, 302, false);
 	// Dead (Temp)
-	spriteList["P2_Dead"] = SpritesheetInfo("P2_Dead",						"../Resource/Texture/Byssa/P2_Dead.png", 302, 302, 302, 302);
+	spriteList["P2_Dead"] = SpritesheetInfo("P2_Dead",						"../Resource/Texture/Byssa/P2_Dead.png", 302, 302, 302, 302, false);
 	// Hit
-	spriteList["P2_Hit"] = SpritesheetInfo("P2_Hit",						"../Resource/Texture/Byssa/P2_Hit.png", 302, 302, 906, 302);
+	spriteList["P2_Hit"] = SpritesheetInfo("P2_Hit",						"../Resource/Texture/Byssa/P2_Hit.png", 302, 302, 906, 302, false);
 	// Idle
 	spriteList["P2_Idle"] = SpritesheetInfo("P2_Idle",						"../Resource/Texture/Byssa/P2_Idle.png", 302, 302, 1812, 302);
 	// Move
@@ -106,32 +106,32 @@ void LevelShowcase::LevelLoad()
 	spriteList["P2_Move_Front"] = SpritesheetInfo("P2_Move_Front",			"../Resource/Texture/Byssa/P2_MoveFront.png", 302, 302, 1208, 302);
 	spriteList["P2_Move_Side"] = SpritesheetInfo("P2_Move_Side",			"../Resource/Texture/Byssa/P2_MoveSide.png", 302, 302, 1208, 302);
 	// Place Trap
-	spriteList["P2_Place"] = SpritesheetInfo("P2_Place",					"../Resource/Texture/Byssa/P2_Place.png", 302, 302, 1208, 302);
+	spriteList["P2_Place"] = SpritesheetInfo("P2_Place",					"../Resource/Texture/Byssa/P2_Place.png", 302, 302, 1208, 302, false);
 	// Smash
-	spriteList["P2_Smash_DiagDown"] = SpritesheetInfo("P2_Smash_DiagDown",	"../Resource/Texture/Byssa/P2_SmashDiagDown.png", 302, 302, 1208, 302);
-	spriteList["P2_Smash_DiagUp"] = SpritesheetInfo("P2_Smash_DiagUp",		"../Resource/Texture/Byssa/P2_SmashDiagUp.png", 302, 302, 1208, 302);
-	spriteList["P2_Smash_Down"] = SpritesheetInfo("P2_Smash_Down",			"../Resource/Texture/Byssa/P2_SmashDown.png", 302, 302, 1208, 302);
-	spriteList["P2_Smash_Side"] = SpritesheetInfo("P2_Smash_Side",			"../Resource/Texture/Byssa/P2_SmashSide.png", 302, 302, 1208, 302);
-	spriteList["P2_Smash_Up"] = SpritesheetInfo("P2_Smash_Up",				"../Resource/Texture/Byssa/P2_SmashUp.png", 302, 302, 1208, 302);
+	spriteList["P2_Smash_DiagDown"] = SpritesheetInfo("P2_Smash_DiagDown",	"../Resource/Texture/Byssa/P2_SmashDiagDown.png", 302, 302, 1208, 302, false);
+	spriteList["P2_Smash_DiagUp"] = SpritesheetInfo("P2_Smash_DiagUp",		"../Resource/Texture/Byssa/P2_SmashDiagUp.png", 302, 302, 1208, 302, false);
+	spriteList["P2_Smash_Down"] = SpritesheetInfo("P2_Smash_Down",			"../Resource/Texture/Byssa/P2_SmashDown.png", 302, 302, 1208, 302, false);
+	spriteList["P2_Smash_Side"] = SpritesheetInfo("P2_Smash_Side",			"../Resource/Texture/Byssa/P2_SmashSide.png", 302, 302, 1208, 302, false);
+	spriteList["P2_Smash_Up"] = SpritesheetInfo("P2_Smash_Up",				"../Resource/Texture/Byssa/P2_SmashUp.png", 302, 302, 1208, 302, false);
 	// Stun
-	spriteList["P2_Stun"] = SpritesheetInfo("P2_Stun",						"../Resource/Texture/Byssa/P2_Stun.png", 350, 350, 700, 350);
+	spriteList["P2_Stun"] = SpritesheetInfo("P2_Stun",						"../Resource/Texture/Byssa/P2_Stun.png", 350, 350, 700, 350, false);
 
 	// Axolotl ----------------------------------------------------------------------------------------------------------------------------
 	//  ---------------------------------------------------------------------------------------------------------------------------------
 	// Cast
-	spriteList["P3_Cast"] = SpritesheetInfo("P3_Cast",						"../Resource/Texture/Xoey/P3_Cast.png", 302, 302, 1208, 302);
+	spriteList["P3_Cast"] = SpritesheetInfo("P3_Cast",						"../Resource/Texture/Xoey/P3_Cast.png", 302, 302, 1208, 302, false);
 	// Cleave
-	spriteList["P3_Cleave_Down"] = SpritesheetInfo("P3_Cleave_Down",		"../Resource/Texture/Xoey/P3_CleaveDown.png", 402, 402, 1608, 402);
-	spriteList["P3_Cleave_Side"] = SpritesheetInfo("P3_Cleave_Side",		"../Resource/Texture/Xoey/P3_CleaveSide.png", 402, 402, 1608, 402);
-	spriteList["P3_Cleave_Up"] = SpritesheetInfo("P3_Cleave_Up",			"../Resource/Texture/Xoey/P3_CleaveUp.png", 402, 402, 1608, 402);
+	spriteList["P3_Cleave_Down"] = SpritesheetInfo("P3_Cleave_Down",		"../Resource/Texture/Xoey/P3_CleaveDown.png", 402, 402, 1608, 402, false);
+	spriteList["P3_Cleave_Side"] = SpritesheetInfo("P3_Cleave_Side",		"../Resource/Texture/Xoey/P3_CleaveSide.png", 402, 402, 1608, 402, false);
+	spriteList["P3_Cleave_Up"] = SpritesheetInfo("P3_Cleave_Up",			"../Resource/Texture/Xoey/P3_CleaveUp.png", 402, 402, 1608, 402, false);
 	// Dash																								
-	spriteList["P3_Dash_Back"] = SpritesheetInfo("P3_Dash_Back",			"../Resource/Texture/Xoey/P3_DashBack.png", 302, 302, 906, 302);
-	spriteList["P3_Dash_Front"] = SpritesheetInfo("P3_Dash_Front",			"../Resource/Texture/Xoey/P3_DashFront.png", 302, 302, 906, 302);
-	spriteList["P3_Dash_Side"] = SpritesheetInfo("P3_Dash_Side",			"../Resource/Texture/Xoey/P3_DashSide.png", 302, 302, 906, 302);
+	spriteList["P3_Dash_Back"] = SpritesheetInfo("P3_Dash_Back",			"../Resource/Texture/Xoey/P3_DashBack.png", 302, 302, 906, 302, false);
+	spriteList["P3_Dash_Front"] = SpritesheetInfo("P3_Dash_Front",			"../Resource/Texture/Xoey/P3_DashFront.png", 302, 302, 906, 302, false);
+	spriteList["P3_Dash_Side"] = SpritesheetInfo("P3_Dash_Side",			"../Resource/Texture/Xoey/P3_DashSide.png", 302, 302, 906, 302, false);
 	// Dead (Temp)																						
-	spriteList["P3_Dead"] =	SpritesheetInfo("P3_Dead",						"../Resource/Texture/Xoey/P3_Dead.png", 302, 302, 302, 302);
+	spriteList["P3_Dead"] =	SpritesheetInfo("P3_Dead",						"../Resource/Texture/Xoey/P3_Dead.png", 302, 302, 302, 302, false);
 	// Hit																								
-	spriteList["P3_Hit"] = SpritesheetInfo("P3_Hit",						"../Resource/Texture/Xoey/P3_Hit.png", 302, 302, 906, 302);
+	spriteList["P3_Hit"] = SpritesheetInfo("P3_Hit",						"../Resource/Texture/Xoey/P3_Hit.png", 302, 302, 906, 302, false);
 	// Idle																								
 	spriteList["P3_Idle"] =	SpritesheetInfo("P3_Idle",						"../Resource/Texture/Xoey/P3_Idle.png", 302, 302, 1812, 302);
 	// Move																								
@@ -139,32 +139,32 @@ void LevelShowcase::LevelLoad()
 	spriteList["P3_Move_Front"] = SpritesheetInfo("P3_Move_Front",			"../Resource/Texture/Xoey/P3_MoveFront.png", 302, 302, 1208, 302);
 	spriteList["P3_Move_Side"] = SpritesheetInfo("P3_Move_Side",			"../Resource/Texture/Xoey/P3_MoveSide.png", 302, 302, 1208, 302);
 	// Place Trap																						
-	spriteList["P3_Place"] = SpritesheetInfo("P3_Place",					"../Resource/Texture/Xoey/P3_Place.png", 302, 302, 1208, 302);
+	spriteList["P3_Place"] = SpritesheetInfo("P3_Place",					"../Resource/Texture/Xoey/P3_Place.png", 302, 302, 1208, 302, false);
 	// Smash																							
-	spriteList["P3_Smash_DiagDown"] = SpritesheetInfo("P3_Smash_DiagDown",	"../Resource/Texture/Xoey/P3_SmashDiagDown.png", 302, 302, 1208, 302);
-	spriteList["P3_Smash_DiagUp"] = SpritesheetInfo("P3_Smash_DiagUp",		"../Resource/Texture/Xoey/P3_SmashDiagUp.png", 302, 302, 1208, 302);
-	spriteList["P3_Smash_Down"] = SpritesheetInfo("P3_Smash_Down",			"../Resource/Texture/Xoey/P3_SmashDown.png", 302, 302, 1208, 302);
-	spriteList["P3_Smash_Side"] = SpritesheetInfo("P3_Smash_Side",			"../Resource/Texture/Xoey/P3_SmashSide.png", 302, 302, 1208, 302);
-	spriteList["P3_Smash_Up"] =	SpritesheetInfo("P3_Smash_Up",				"../Resource/Texture/Xoey/P3_SmashUp.png", 302, 302, 1208, 302);
+	spriteList["P3_Smash_DiagDown"] = SpritesheetInfo("P3_Smash_DiagDown",	"../Resource/Texture/Xoey/P3_SmashDiagDown.png", 302, 302, 1208, 302, false);
+	spriteList["P3_Smash_DiagUp"] = SpritesheetInfo("P3_Smash_DiagUp",		"../Resource/Texture/Xoey/P3_SmashDiagUp.png", 302, 302, 1208, 302, false);
+	spriteList["P3_Smash_Down"] = SpritesheetInfo("P3_Smash_Down",			"../Resource/Texture/Xoey/P3_SmashDown.png", 302, 302, 1208, 302, false);
+	spriteList["P3_Smash_Side"] = SpritesheetInfo("P3_Smash_Side",			"../Resource/Texture/Xoey/P3_SmashSide.png", 302, 302, 1208, 302, false);
+	spriteList["P3_Smash_Up"] =	SpritesheetInfo("P3_Smash_Up",				"../Resource/Texture/Xoey/P3_SmashUp.png", 302, 302, 1208, 302, false);
 	// Stun																								
-	spriteList["P3_Stun"] = SpritesheetInfo("P3_Stun",						"../Resource/Texture/Xoey/P3_Stun.png", 350, 350, 700, 350);
+	spriteList["P3_Stun"] = SpritesheetInfo("P3_Stun",						"../Resource/Texture/Xoey/P3_Stun.png", 350, 350, 700, 350, false);
 
 	// Crocodile ----------------------------------------------------------------------------------------------------------------------------
 	//  ---------------------------------------------------------------------------------------------------------------------------------
 	// Cast
-	spriteList["P4_Cast"] = SpritesheetInfo("P4_Cast",						"../Resource/Texture/Crunk/P4_Cast.png", 302, 302, 1208, 302);
+	spriteList["P4_Cast"] = SpritesheetInfo("P4_Cast",						"../Resource/Texture/Crunk/P4_Cast.png", 302, 302, 1208, 302, false);
 	// Cleave	 																					   
-	spriteList["P4_Cleave_Down"] = SpritesheetInfo("P4_Cleave_Down",		"../Resource/Texture/Crunk/P4_CleaveDown.png", 402, 402, 1608, 402);
-	spriteList["P4_Cleave_Side"] = SpritesheetInfo("P4_Cleave_Side",		"../Resource/Texture/Crunk/P4_CleaveSide.png", 402, 402, 1608, 402);
-	spriteList["P4_Cleave_Up"] = SpritesheetInfo("P4_Cleave_Up",			"../Resource/Texture/Crunk/P4_CleaveUp.png", 402, 402, 1608, 402);
+	spriteList["P4_Cleave_Down"] = SpritesheetInfo("P4_Cleave_Down",		"../Resource/Texture/Crunk/P4_CleaveDown.png", 402, 402, 1608, 402, false);
+	spriteList["P4_Cleave_Side"] = SpritesheetInfo("P4_Cleave_Side",		"../Resource/Texture/Crunk/P4_CleaveSide.png", 402, 402, 1608, 402, false);
+	spriteList["P4_Cleave_Up"] = SpritesheetInfo("P4_Cleave_Up",			"../Resource/Texture/Crunk/P4_CleaveUp.png", 402, 402, 1608, 402, false);
 	// Dash																							   
-	spriteList["P4_Dash_Back"] = SpritesheetInfo("P4_Dash_Back",			"../Resource/Texture/Crunk/P4_DashBack.png", 302, 302, 906, 302);
-	spriteList["P4_Dash_Front"] = SpritesheetInfo("P4_Dash_Front",			"../Resource/Texture/Crunk/P4_DashFront.png", 302, 302, 906, 302);
-	spriteList["P4_Dash_Side"] = SpritesheetInfo("P4_Dash_Side",			"../Resource/Texture/Crunk/P4_DashSide.png", 302, 302, 906, 302);
+	spriteList["P4_Dash_Back"] = SpritesheetInfo("P4_Dash_Back",			"../Resource/Texture/Crunk/P4_DashBack.png", 302, 302, 906, 302, false);
+	spriteList["P4_Dash_Front"] = SpritesheetInfo("P4_Dash_Front",			"../Resource/Texture/Crunk/P4_DashFront.png", 302, 302, 906, 302, false);
+	spriteList["P4_Dash_Side"] = SpritesheetInfo("P4_Dash_Side",			"../Resource/Texture/Crunk/P4_DashSide.png", 302, 302, 906, 302, false);
 	// Dead																							   
-	spriteList["P4_Dead"] = SpritesheetInfo("P4_Dead",						"../Resource/Texture/Crunk/P4_Dead.png", 302, 302, 302, 302);
+	spriteList["P4_Dead"] = SpritesheetInfo("P4_Dead",						"../Resource/Texture/Crunk/P4_Dead.png", 302, 302, 302, 302, false);
 	// Hit																							   
-	spriteList["P4_Hit"] = SpritesheetInfo("P4_Hit",						"../Resource/Texture/Crunk/P4_Hit.png", 302, 302, 906, 302);
+	spriteList["P4_Hit"] = SpritesheetInfo("P4_Hit",						"../Resource/Texture/Crunk/P4_Hit.png", 302, 302, 906, 302, false);
 	// Idle																							   
 	spriteList["P4_Idle"] = SpritesheetInfo("P4_Idle",						"../Resource/Texture/Crunk/P4_Idle.png", 302, 302, 1812, 302);
 	// Move																							   
@@ -172,15 +172,15 @@ void LevelShowcase::LevelLoad()
 	spriteList["P4_Move_Front"] = SpritesheetInfo("P4_Move_Front",			"../Resource/Texture/Crunk/P4_MoveFront.png", 302, 302, 1208, 302);
 	spriteList["P4_Move_Side"] = SpritesheetInfo("P4_Move_Side",			"../Resource/Texture/Crunk/P4_MoveSide.png", 302, 302, 1208, 302);
 	// Place Trap																					   
-	spriteList["P4_Place"] = SpritesheetInfo("P4_Place",					"../Resource/Texture/Crunk/P4_Place.png", 302, 302, 1208, 302);
+	spriteList["P4_Place"] = SpritesheetInfo("P4_Place",					"../Resource/Texture/Crunk/P4_Place.png", 302, 302, 1208, 302, false);
 	// Smash																						   
-	spriteList["P4_Smash_DiagDown"] = SpritesheetInfo("P4_Smash_DiagDown",	"../Resource/Texture/Crunk/P4_SmashDiagDown.png", 302, 302, 1208, 302);
-	spriteList["P4_Smash_DiagUp"] = SpritesheetInfo("P4_Smash_DiagUp",		"../Resource/Texture/Crunk/P4_SmashDiagUp.png", 302, 302, 1208, 302);
-	spriteList["P4_Smash_Down"] = SpritesheetInfo("P4_Smash_Down",			"../Resource/Texture/Crunk/P4_SmashDown.png", 302, 302, 1208, 302);
-	spriteList["P4_Smash_Side"] = SpritesheetInfo("P4_Smash_Side",			"../Resource/Texture/Crunk/P4_SmashSide.png", 302, 302, 1208, 302);
-	spriteList["P4_Smash_Up"] = SpritesheetInfo("P4_Smash_Up",				"../Resource/Texture/Crunk/P4_SmashUp.png", 302, 302, 1208, 302);
+	spriteList["P4_Smash_DiagDown"] = SpritesheetInfo("P4_Smash_DiagDown",	"../Resource/Texture/Crunk/P4_SmashDiagDown.png", 302, 302, 1208, 302, false);
+	spriteList["P4_Smash_DiagUp"] = SpritesheetInfo("P4_Smash_DiagUp",		"../Resource/Texture/Crunk/P4_SmashDiagUp.png", 302, 302, 1208, 302, false);
+	spriteList["P4_Smash_Down"] = SpritesheetInfo("P4_Smash_Down",			"../Resource/Texture/Crunk/P4_SmashDown.png", 302, 302, 1208, 302, false);
+	spriteList["P4_Smash_Side"] = SpritesheetInfo("P4_Smash_Side",			"../Resource/Texture/Crunk/P4_SmashSide.png", 302, 302, 1208, 302, false);
+	spriteList["P4_Smash_Up"] = SpritesheetInfo("P4_Smash_Up",				"../Resource/Texture/Crunk/P4_SmashUp.png", 302, 302, 1208, 302, false);
 	// Stun																							   
-	spriteList["P4_Stun"] = SpritesheetInfo("P3_Stun",						"../Resource/Texture/Crunk/P4_Stun.png", 350, 350, 700, 350);
+	spriteList["P4_Stun"] = SpritesheetInfo("P3_Stun",						"../Resource/Texture/Crunk/P4_Stun.png", 350, 350, 700, 350, false);
 
 	spriteList["Bomb"] = SpritesheetInfo("Bomb", "../Resource/Texture/Bomb_icon.png", 256, 256, 256, 256);
 	spriteList["Trap"] = SpritesheetInfo("Trap", "../Resource/Texture/Trap.png", 512, 512, 512, 512);
@@ -371,10 +371,17 @@ void LevelShowcase::LevelInit()
 	KK_TRACE("Init Player-----------");
 	PlayerObject* p1 = new PlayerObject();
 	p1->SetAnimationSprite(PlayerObject::AnimationState::Idle, spriteList.find("P1_Idle")->second);
-	p1->SetAnimationSprite(PlayerObject::AnimationState::Running, spriteList.find("P1_Move_Side")->second);
-	p1->SetAnimationSprite(PlayerObject::AnimationState::Melee, spriteList.find("P1_Smash_Side")->second);
+	p1->SetAnimationSprite(PlayerObject::AnimationState::GetHit, spriteList.find("P1_Hit")->second);
+	p1->SetAnimationSprite(PlayerObject::AnimationState::Stun, spriteList.find("P1_Stun")->second);
+	//p1->SetAnimationSprite(PlayerObject::AnimationState::Running, spriteList.find("P1_Move_Side")->second);
+	//p1->SetAnimationSprite(PlayerObject::AnimationState::Melee, spriteList.find("P1_Smash_Side")->second);
 	p1->SetAnimationSprite(PlayerObject::AnimationState::FellDown, spriteList.find("P1_Dead")->second);
-	
+
+	p1->SetAnimationSprite(PlayerObject::AnimationState::Move_Side, spriteList.find("P1_Move_Side")->second);
+	p1->SetAnimationSprite(PlayerObject::AnimationState::Move_Back, spriteList.find("P1_Move_Back")->second);
+	p1->SetAnimationSprite(PlayerObject::AnimationState::Move_Front, spriteList.find("P1_Move_Front")->second);
+	p1->SetAnimationSprite(PlayerObject::AnimationState::Cast, spriteList.find("P1_Cast")->second);
+	p1->SetAnimationSprite(PlayerObject::AnimationState::PlaceItem, spriteList.find("P1_Place")->second);
 	std::ifstream readFile("Ability0.txt");
 	while (std::getline(readFile, line)) {
 		data[count] = line;
@@ -406,10 +413,16 @@ void LevelShowcase::LevelInit()
 
 	PlayerObject* p2 = new PlayerObject();
 	p2->SetAnimationSprite(PlayerObject::AnimationState::Idle, spriteList.find("P2_Idle")->second);
-	p2->SetAnimationSprite(PlayerObject::AnimationState::Running, spriteList.find("P2_Move_Side")->second);
-	p2->SetAnimationSprite(PlayerObject::AnimationState::Melee, spriteList.find("P2_Smash_Side")->second);
+	//p2->SetAnimationSprite(PlayerObject::AnimationState::Running, spriteList.find("P2_Move_Side")->second);
+	//p2->SetAnimationSprite(PlayerObject::AnimationState::Melee, spriteList.find("P2_Smash_Side")->second);
+	p2->SetAnimationSprite(PlayerObject::AnimationState::Stun, spriteList.find("P2_Stun")->second);
 	p2->SetAnimationSprite(PlayerObject::AnimationState::FellDown, spriteList.find("P2_Dead")->second);
-
+	p2->SetAnimationSprite(PlayerObject::AnimationState::GetHit, spriteList.find("P2_Hit")->second);
+	p2->SetAnimationSprite(PlayerObject::AnimationState::Move_Side, spriteList.find("P2_Move_Side")->second);
+	p2->SetAnimationSprite(PlayerObject::AnimationState::Move_Back, spriteList.find("P2_Move_Back")->second);
+	p2->SetAnimationSprite(PlayerObject::AnimationState::Move_Front, spriteList.find("P2_Move_Front")->second);
+	p2->SetAnimationSprite(PlayerObject::AnimationState::Cast, spriteList.find("P2_Cast")->second);
+	p2->SetAnimationSprite(PlayerObject::AnimationState::PlaceItem, spriteList.find("P2_Place")->second);
 	std::ifstream read2File("Ability1.txt");
 	while (std::getline(read2File, line)) {
 		data[count] = line;
@@ -445,9 +458,14 @@ void LevelShowcase::LevelInit()
 
 	PlayerObject* p3 = new PlayerObject();
 	p3->SetAnimationSprite(PlayerObject::AnimationState::Idle, spriteList.find("P3_Idle")->second);
-	p3->SetAnimationSprite(PlayerObject::AnimationState::Running, spriteList.find("P3_Move_Side")->second);
-	p3->SetAnimationSprite(PlayerObject::AnimationState::Melee, spriteList.find("P3_Smash_Side")->second);
+	p3->SetAnimationSprite(PlayerObject::AnimationState::Stun, spriteList.find("P3_Stun")->second);
 	p3->SetAnimationSprite(PlayerObject::AnimationState::FellDown, spriteList.find("P3_Dead")->second);
+	p3->SetAnimationSprite(PlayerObject::AnimationState::GetHit, spriteList.find("P3_Hit")->second);
+	p3->SetAnimationSprite(PlayerObject::AnimationState::Move_Side, spriteList.find("P3_Move_Side")->second);
+	p3->SetAnimationSprite(PlayerObject::AnimationState::Move_Back, spriteList.find("P3_Move_Back")->second);
+	p3->SetAnimationSprite(PlayerObject::AnimationState::Move_Front, spriteList.find("P3_Move_Front")->second);
+	p3->SetAnimationSprite(PlayerObject::AnimationState::Cast, spriteList.find("P3_Cast")->second);
+	p3->SetAnimationSprite(PlayerObject::AnimationState::PlaceItem, spriteList.find("P3_Place")->second);
 
 	std::ifstream read3File("Ability2.txt");
 	while (std::getline(read3File, line)) {
@@ -479,9 +497,17 @@ void LevelShowcase::LevelInit()
 
 	PlayerObject* p4 = new PlayerObject();
 	p4->SetAnimationSprite(PlayerObject::AnimationState::Idle, spriteList.find("P4_Idle")->second);
-	p4->SetAnimationSprite(PlayerObject::AnimationState::Running, spriteList.find("P4_Move_Side")->second);
-	p4->SetAnimationSprite(PlayerObject::AnimationState::Melee, spriteList.find("P4_Smash_Side")->second);
+	p4->SetAnimationSprite(PlayerObject::AnimationState::Stun, spriteList.find("P4_Stun")->second);
+	//p4->SetAnimationSprite(PlayerObject::AnimationState::Running, spriteList.find("P4_Move_Side")->second);
+	//p4->SetAnimationSprite(PlayerObject::AnimationState::Melee, spriteList.find("P4_Smash_Side")->second);
 	p4->SetAnimationSprite(PlayerObject::AnimationState::FellDown, spriteList.find("P4_Dead")->second);
+	p4->SetAnimationSprite(PlayerObject::AnimationState::GetHit, spriteList.find("P4_Hit")->second);
+	
+	p4->SetAnimationSprite(PlayerObject::AnimationState::Move_Side, spriteList.find("P4_Move_Side")->second);
+	p4->SetAnimationSprite(PlayerObject::AnimationState::Move_Back, spriteList.find("P4_Move_Back")->second);
+	p4->SetAnimationSprite(PlayerObject::AnimationState::Move_Front, spriteList.find("P4_Move_Front")->second);
+	p4->SetAnimationSprite(PlayerObject::AnimationState::Cast, spriteList.find("P4_Cast")->second);
+	p4->SetAnimationSprite(PlayerObject::AnimationState::PlaceItem, spriteList.find("P4_Place")->second);
 
 	std::ifstream read4File("Ability3.txt");
 	while (std::getline(read4File, line)) {
@@ -883,7 +909,7 @@ void LevelShowcase::UpdateInput()
 
 			if (Joystick::GetButtonDown(i, Joystick::Button::Square))
 			{
-				players[i]->ChangeAnimationState(PlayerObject::AnimationState::Melee);
+				//players[i]->ChangeAnimationState(PlayerObject::AnimationState::Melee);
 				players[i]->HitAimingTile();
 				soundManager->PlaySFX("hit_test", false);
 			}
@@ -923,9 +949,7 @@ void LevelShowcase::UpdateCollision()
 	for (int i = 0; i < playerSize; i++)
 	{
 		players[i]->SetIsOnGround(false);
-		
 	}
-
 
 	int entityCount = 0;
 	for (int i = 0; i < entityObjects.size(); i++)
@@ -1351,30 +1375,30 @@ void LevelShowcase::LevelDraw()
 					Bola = 5,
 					Cleave = 6*/
 
-				//for (int j = 0; j < 3; j++)
-				//{
-				//	ImGui::PushID(j);
+				for (int j = 0; j < 3; j++)
+				{
+					ImGui::PushID(j);
 
 
-				//	ImGui::Text("skill %d", j);
-				//	ImGui::Text("ability %d cooldown: %.2f", i ,players[i]->GetCooldown(static_cast<PlayerObject::AbilityButton>(j)));
-				//	ImGui::RadioButton("Fireball", &playersSkill[i][j], 0);
-				//	ImGui::SameLine();
-				//	ImGui::RadioButton("Trap", &playersSkill[i][j], 1);
-				//	ImGui::SameLine();
-				//	ImGui::RadioButton("Dash", &playersSkill[i][j], 2);
-				//	//ImGui::SameLine();
-				//	ImGui::RadioButton("TNT", &playersSkill[i][j], 3);
-				//	ImGui::SameLine();
-				//	ImGui::RadioButton("Teleport", &playersSkill[i][j], 4);
-				//	ImGui::SameLine();
-				//	ImGui::RadioButton("Bola", &playersSkill[i][j], 5);
-				//	ImGui::SameLine();
-				//	ImGui::RadioButton("Cleave", &playersSkill[i][j], 6);
-				//	ImGui::SeparatorText("");
+					ImGui::Text("skill %d", j);
+					ImGui::Text("ability %d cooldown: %.2f", i ,players[i]->GetCooldown(static_cast<PlayerObject::AbilityButton>(j)));
+					ImGui::RadioButton("Fireball", &playersSkill[i][j], 0);
+					ImGui::SameLine();
+					ImGui::RadioButton("Trap", &playersSkill[i][j], 1);
+					ImGui::SameLine();
+					ImGui::RadioButton("Dash", &playersSkill[i][j], 2);
+					//ImGui::SameLine();
+					ImGui::RadioButton("TNT", &playersSkill[i][j], 3);
+					ImGui::SameLine();
+					ImGui::RadioButton("Teleport", &playersSkill[i][j], 4);
+					ImGui::SameLine();
+					ImGui::RadioButton("Bola", &playersSkill[i][j], 5);
+					ImGui::SameLine();
+					ImGui::RadioButton("Cleave", &playersSkill[i][j], 6);
+					ImGui::SeparatorText("");
 
-				//	ImGui::PopID();
-				//}
+					ImGui::PopID();
+				}
 				ImGui::EndTabItem();
 			}
 			
@@ -1384,7 +1408,7 @@ void LevelShowcase::LevelDraw()
 		ImGui::EndTabBar();
 	}
 	
-	/*for (int i = 0; i < playerSize; i++)
+	for (int i = 0; i < playerSize; i++)
 	{
 		for (int j = 0; j < 3; j++)
 		{
@@ -1394,7 +1418,7 @@ void LevelShowcase::LevelDraw()
 				static_cast<PlayerObject::Ability>(playersSkill[i][j])
 			);
 		}
-	}*/
+	}
 
 	// Rendering
 	ImGui::Render();
@@ -1679,6 +1703,7 @@ void LevelShowcase::UsingAbilityKeyDown(int numPlayer, PlayerObject::AbilityButt
 		case PlayerObject::Ability::Fireball:
 			if (!players[numPlayer]->GetIsAiming()) {
 				AimFireball(numPlayer, button);
+				
 				break;
 			}
 			break;
@@ -1803,6 +1828,7 @@ void LevelShowcase::AimFireball(int numPlayer, PlayerObject::AbilityButton butto
 	players[numPlayer]->SetVelocity(0, 0, false, false);
 	players[numPlayer]->SetIsAiming(true);
 	players[numPlayer]->SetHoldingProjectile(ProjectileObject::TypeProjectile::Fireball);
+	//players[numPlayer]->ChangeAnimationState(PlayerObject::AnimationState::Cast);
 	ProjectileObject* projectile = new ProjectileObject();
 	projectile->SetSpriteInfo(spriteList.find("Bomb")->second);
 	projectile->SetTexture(spriteList.find("Bomb")->second.texture);
@@ -1836,6 +1862,7 @@ void LevelShowcase::ShootFireball(int numPlayer, PlayerObject::AbilityButton but
 }
 
 void LevelShowcase::Trap(int numPlayer, PlayerObject::AbilityButton button) {
+	players[numPlayer]->ChangeAnimationState(PlayerObject::AnimationState::PlaceItem);
 	players[numPlayer]->SetAbilityCooldown(button, 3);
 	TrapObject* Trap = new TrapObject();
 	Trap->SetSpriteInfo(spriteList.find("Trap")->second);
@@ -1859,6 +1886,7 @@ void LevelShowcase::Dash(int num, PlayerObject::AbilityButton button) {
 
 void LevelShowcase::TNT(int numPlayer, PlayerObject::AbilityButton button) {
 	players[numPlayer]->SetIsTNT(true);
+	players[numPlayer]->ChangeAnimationState(PlayerObject::AnimationState::PlaceItem);
 	TrapObject* TNT = new TrapObject();
 	TNT->SetSpriteInfo(spriteList.find("TNT")->second);
 	TNT->SetTexture(spriteList.find("TNT")->second.texture);

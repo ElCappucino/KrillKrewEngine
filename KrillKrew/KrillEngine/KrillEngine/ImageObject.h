@@ -15,6 +15,7 @@ class ImageObject :public DrawableObject
 {
 
 protected:
+
 	unsigned int texture;
 	SpriteRenderer* spriteRenderer;
 	SpritesheetInfo sheetInfo;

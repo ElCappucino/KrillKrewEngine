@@ -58,7 +58,7 @@ void LevelGameplay::LevelInit()
 	obj1->SetPosition(glm::vec3(-200.f, -200.f, 0));
 	obj1->SetPlayerNumber(0);
 	obj1->SetAnimationSprite(PlayerObject::AnimationState::Idle, spriteList.find("Shark_idle")->second);
-	obj1->SetAnimationSprite(PlayerObject::AnimationState::Running, spriteList.find("Shark_run")->second);
+	//obj1->SetAnimationSprite(PlayerObject::AnimationState::Running, spriteList.find("Shark_run")->second);
 	// New enum type
 	 obj1->SetAbility(PlayerObject::AbilityButton::Triangle, PlayerObject::Ability::Fireball);
 	 obj1->SetAbility(PlayerObject::AbilityButton::Circle, PlayerObject::Ability::Trap);
@@ -80,7 +80,7 @@ void LevelGameplay::LevelInit()
 	obj2->SetPosition(glm::vec3(200.f, -200.f, 0));
 	obj2->SetPlayerNumber(1);
 	obj2->SetAnimationSprite(PlayerObject::AnimationState::Idle, spriteList.find("Shark_idle")->second);
-	obj2->SetAnimationSprite(PlayerObject::AnimationState::Running, spriteList.find("Shark_run")->second);
+	//obj2->SetAnimationSprite(PlayerObject::AnimationState::Running, spriteList.find("Shark_run")->second);
 	obj2->SetAbility(PlayerObject::AbilityButton::Triangle, PlayerObject::Ability::Fireball);
 	obj2->SetAbility(PlayerObject::AbilityButton::Circle, PlayerObject::Ability::TNT);
 	obj2->SetAbility(PlayerObject::AbilityButton::Cross, PlayerObject::Ability::Dash);
@@ -96,7 +96,7 @@ void LevelGameplay::LevelInit()
 	obj3->GetSpriteRenderer()->SetFrame(15);
 	obj3->SetPlayerNumber(2);
 	obj3->SetAnimationSprite(PlayerObject::AnimationState::Idle, spriteList.find("Shark_idle")->second);
-	obj3->SetAnimationSprite(PlayerObject::AnimationState::Running, spriteList.find("Shark_run")->second);
+	//obj3->SetAnimationSprite(PlayerObject::AnimationState::Running, spriteList.find("Shark_run")->second);
 	obj3->SetAbility(PlayerObject::AbilityButton::Triangle, PlayerObject::Ability::Fireball);
 	obj3->SetAbility(PlayerObject::AbilityButton::Circle, PlayerObject::Ability::Trap);
 	obj3->SetAbility(PlayerObject::AbilityButton::Cross, PlayerObject::Ability::Dash);
@@ -113,7 +113,7 @@ void LevelGameplay::LevelInit()
 	obj4->GetSpriteRenderer()->SetFrame(15);
 	obj4->SetPlayerNumber(3);
 	obj4->SetAnimationSprite(PlayerObject::AnimationState::Idle, spriteList.find("Shark_idle")->second);
-	obj4->SetAnimationSprite(PlayerObject::AnimationState::Running, spriteList.find("Shark_run")->second);
+	//obj4->SetAnimationSprite(PlayerObject::AnimationState::Running, spriteList.find("Shark_run")->second);
 	obj4->SetAbility(PlayerObject::AbilityButton::Triangle, PlayerObject::Ability::Fireball);
 	obj4->SetAbility(PlayerObject::AbilityButton::Circle, PlayerObject::Ability::Trap);
 	obj4->SetAbility(PlayerObject::AbilityButton::Cross, PlayerObject::Ability::Dash);

@@ -27,12 +27,35 @@ class PlayerObject : public EntityObject
 public:
 	virtual enum class AnimationState
 	{
-		Idle,
-		Running,
-		Melee,
-		Shooting,
-		PlaceItem,
-		FellDown
+		
+		//Running,
+		//Melee,
+		//Shooting,
+
+		Idle, // Done
+		FellDown, // Done
+		Stun, // Done
+		GetHit, // Done
+		PlaceItem, // Done
+		Cast, // Done
+
+		Move_Back, // Done
+		Move_Front, // Done
+		Move_Side, // Done
+		
+		Smash_DiagDown,
+		Smash_DiagUp,
+		Smash_Down,
+		Smash_Side,
+		Smash_Up,
+		
+		Dash_Back,
+		Dash_Front,
+		Dash_Side,
+		Cleave_Down,
+		Cleave_Up,
+		Cleave_Side,
+		
 	};
 
 	enum class Ability
