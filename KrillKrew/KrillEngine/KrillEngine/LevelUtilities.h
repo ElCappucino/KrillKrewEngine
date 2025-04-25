@@ -17,6 +17,7 @@
 // Object Classes
 
 #include "DrawableObject.h"
+#include "TextObject.h"
 #include "EntityObject.h"
 #include "GameObject.h"
 #include "GizmosObject.h"
@@ -26,6 +27,7 @@
 #include "TrapObject.h"
 #include "UiObject.h"
 #include "TileObject.h"
+#include "UiText.h"
 #include "PlayerHitboxObject.h"
 #include "PlayerGroundColliderObject.h"
 

@@ -36,6 +36,7 @@
     <ClInclude Include="LevelGameplay.h" />
     <ClInclude Include="LevelImGui.h" />
     <ClInclude Include="LevelLoading.h" />
+    <ClInclude Include="LevelMainMenu.h" />
     <ClInclude Include="LevelMapTest.h" />
     <ClInclude Include="LevelSelectAbility.h" />
     <ClInclude Include="LevelShowcase.h" />
@@ -58,11 +59,13 @@
     <ClInclude Include="Shader.h" />
     <ClInclude Include="SpriteRenderer.h" />
     <ClInclude Include="SquareMeshVbo.h" />
+    <ClInclude Include="TextObject.h" />
     <ClInclude Include="TileObject.h" />
     <ClInclude Include="Timer.h" />
     <ClInclude Include="TrapObject.h" />
     <ClInclude Include="TriangleMeshVbo.h" />
     <ClInclude Include="UiObject.h" />
+    <ClInclude Include="UiText.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Camera.cpp" />
@@ -80,6 +83,7 @@
     <ClCompile Include="LevelGameplay.cpp" />
     <ClCompile Include="LevelImGui.cpp" />
     <ClCompile Include="LevelLoading.cpp" />
+    <ClCompile Include="LevelMainMenu.cpp" />
     <ClCompile Include="LevelMapTest.cpp" />
     <ClCompile Include="LevelSelectAbility.cpp" />
     <ClCompile Include="LevelShowcase.cpp" />
@@ -102,11 +106,13 @@
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="SpriteRenderer.cpp" />
     <ClCompile Include="SquareMeshVbo.cpp" />
+    <ClCompile Include="TextObject.cpp" />
     <ClCompile Include="TileObject.cpp" />
     <ClCompile Include="Timer.cpp" />
     <ClCompile Include="TrapObject.cpp" />
     <ClCompile Include="TriangleMeshVbo.cpp" />
     <ClCompile Include="UiObject.cpp" />
+    <ClCompile Include="UiText.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>
@@ -190,7 +196,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>../Resource/glew/include;../Resource/glm;../Resource/SDL2-2.0.5/include;../Resource;../Resource/spdlog/include;../Resource/imgui-1.91.8;../Resource/imgui-1.91.8/backends;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../Resource/glew/include;../Resource/glm;C:\Github\KrillKrewEngine\KrillKrew\KrillEngine\KrillEngine\Resource\SDL2-2.0.5\include;../Resource;../Resource/spdlog/include;../Resource/imgui-1.91.8;../Resource/imgui-1.91.8/backends;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
@@ -198,8 +204,8 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>..\Resource\glew\lib\Release\Win32;..\Resource\SDL2-2.0.5\lib\x86</AdditionalLibraryDirectories>
-      <AdditionalDependencies>SDL2main.lib;SDL2.lib;opengl32.lib;glew32.lib;glew32s.lib;SDL2_image.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>..\Resource\glew\lib\Release\Win32;C:\Github\KrillKrewEngine\KrillKrew\KrillEngine\KrillEngine\Resource\SDL2-2.0.5\lib\x86</AdditionalLibraryDirectories>
+      <AdditionalDependencies>SDL2main.lib;SDL2.lib;opengl32.lib;glew32.lib;glew32s.lib;SDL2_image.lib;SDL2_ttf.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
