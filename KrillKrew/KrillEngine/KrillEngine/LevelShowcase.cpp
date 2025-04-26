@@ -729,7 +729,10 @@ void LevelShowcase::UpdateInput()
 		Joystick::Update();
 		for (int i = 0; i < playerSize; i++)
 		{
-			
+			if (players[i]->GetIsFell())
+			{
+				continue;
+			}
 			float axisX = Joystick::GetAxis(i, Joystick::Axis::LeftStickHorizontal) / 32768.0f;
 			float axisY = Joystick::GetAxis(i, Joystick::Axis::LeftStickVertical) / 32768.0f;
 			float norAxisX = 0;

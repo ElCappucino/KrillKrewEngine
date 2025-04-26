@@ -13,6 +13,7 @@ struct SpritesheetInfo
 {
 	std::string name;
 	std::string texture;
+	unsigned int textureid;
 	float spritewidth; 
 	float spriteheight; 
 	float sheetwidth; 
@@ -28,6 +29,7 @@ struct SpritesheetInfo
 		this->sheetwidth = 0;
 		this->sheetheight = 0;
 		this->isLoop = false;
+		textureid = 0;
 	}
 	SpritesheetInfo(std::string name,
 					std::string texture,
@@ -44,5 +46,11 @@ struct SpritesheetInfo
 		this->sheetwidth = sheetwidth;
 		this->sheetheight = sheetheight;
 		this->isLoop = isLoop;
+		textureid = 0;
+	}
+
+	void SetTextureID(unsigned int id)
+	{
+		textureid = id;
 	}
 };

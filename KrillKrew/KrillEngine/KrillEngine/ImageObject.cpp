@@ -26,7 +26,11 @@ void ImageObject::SetSpriteInfo(SpritesheetInfo info)
 	spriteRenderer->SetSpriteInfo(info.spritewidth, info.spriteheight, info.sheetwidth, info.sheetheight);
 	this->SetTexture(info.texture);
 }
-
+void ImageObject::SetTextureWithID(SpritesheetInfo info, unsigned int id)
+{
+	spriteRenderer->SetSpriteInfo(info.spritewidth, info.spriteheight, info.sheetwidth, info.sheetheight);
+	texture = id;
+}
 SpriteRenderer* ImageObject::GetSpriteRenderer()
 {
 	return spriteRenderer;

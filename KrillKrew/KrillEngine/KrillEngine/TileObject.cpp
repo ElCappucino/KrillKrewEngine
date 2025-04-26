@@ -131,6 +131,7 @@ void TileObject::SetSpriteInfo(SpritesheetInfo info)
 void TileObject::SetTexture(std::string path)
 {
 	this->texture = GameEngine::GetInstance()->GetRenderer()->LoadTexture(path);
+	KK_INFO(this->texture);
 }
 
 void TileObject::SetIsBreakable(bool isBreakable)

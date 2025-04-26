@@ -26,6 +26,7 @@ public:
 	virtual ~ImageObject();
 	SpriteRenderer* GetSpriteRenderer();
 	void SetSpriteInfo(SpritesheetInfo info);
+	void SetTextureWithID(SpritesheetInfo info, unsigned int id);
 	void SetTexture(std::string path);
 	void Render(glm::mat4 globalModelTransform);
 
