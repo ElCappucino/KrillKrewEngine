@@ -860,11 +860,13 @@ void LevelShowcase::UpdateInput()
 							PlayerObject* player = projectile->GetOwner();
 							float veloX = player->GetCurrentDirection().x;
 							float veloY = player->GetCurrentDirection().y;
+							float angle = atan2(player->GetCurrentDirection().y, player->GetCurrentDirection().x);
 							bool PositiveX = veloX > 0.f ? true : false;
 							bool PositiveY = veloY < 0.f ? true : false;
 
 
 							projectile->SetPosition(players[i]->getPos() + (projectile->GetVelocity() * glm::vec3(15.f, 15.f, 0.f)));
+							projectile->SetRotation(angle);
 							projectile->SetVelocity(abs(veloX), abs(veloY), PositiveX, PositiveY);
 
 							if (projectile->type == ProjectileObject::Cleave && projectile->GetLifetime() <= 9997) {

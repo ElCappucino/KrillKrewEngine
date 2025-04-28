@@ -10,6 +10,7 @@ class DrawableObject
 protected:
 	glm::vec3 pos;
 	glm::vec3 size;
+	float rotateAngle;
 	int orderingLayer;
 	bool isActive = true;
 public:
@@ -21,6 +22,7 @@ public:
 	virtual void Render(glm::mat4 globalModelTransform) = 0;
 	virtual void SetSize(float sizeX, float sizeY);
 	virtual void SetPosition(glm::vec3 newPosition);
+	virtual void SetRotation(float degree);
 	void SetOrderingLayer(int layer);
 	void Translate(glm::vec3 moveDistance);
 	glm::vec3 getPos();
