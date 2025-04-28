@@ -210,9 +210,9 @@ void PlayerObject::ChangeAnimationState(AnimationState anim)
 	if (currAnimState != anim)
 	{
 		currAnimState = anim;
-		this->SetSpriteInfo(animList.find(anim)->second);
+		this->SetTextureWithID(animList.find(anim)->second, animList.find(anim)->second.textureid);
 		this->spriteRenderer->SetTexture(animList.find(anim)->second.texture);
-		this->SetTexture(animList.find(anim)->second.texture);
+		//this->SetTexture(animList.find(anim)->second.texture);
 		this->spriteRenderer->ShiftTo(0, 0);
 		this->spriteRenderer->isLoop = animList.find(anim)->second.isLoop;
 	}

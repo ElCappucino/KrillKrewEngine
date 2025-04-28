@@ -29,8 +29,9 @@ void EntityObject::SetTexture(std::string path)
 
 void EntityObject::SetSpriteInfo(SpritesheetInfo info)
 {
-	spriteRenderer->SetSpriteInfo(info.spritewidth, info.spriteheight, info.sheetwidth, info.sheetheight);
 	this->SetTexture(info.texture);
+	spriteRenderer->SetSpriteInfo(info.spritewidth, info.spriteheight, info.sheetwidth, info.sheetheight);
+	
 }
 
 void EntityObject::Render(glm::mat4 globalModelTransform)
@@ -120,6 +121,7 @@ void EntityObject::ChangeAnimationState(AnimationState anim)
 	{
 		currAnimState = anim;
 		this->SetTextureWithID(animList.find(anim)->second, animList.find(anim)->second.textureid);
+		this->spriteRenderer->SetTexture(animList.find(anim)->second.texture);
 	}
 }
 void EntityObject::UpdateCurrentAnimation()

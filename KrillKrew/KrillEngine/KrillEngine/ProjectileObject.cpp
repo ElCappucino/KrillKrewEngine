@@ -161,6 +161,16 @@ void ProjectileObject::OnColliderEnter(Collider* other)
 	if (tile != nullptr)
 	{
 		AddTileInRange(tile);
+
+		if (this->type == TypeProjectile::Cleave && this->isShooting)
+		{
+			auto checktile = std::find(TileInRange.begin(), TileInRange.end(), tile);
+			if (checktile != TileInRange.end())
+			{
+				tile->GotHit();
+			}
+		}
+		
 	}
 	// Behavior
 	PlayerObject* player = dynamic_cast<PlayerObject*>(other->GetParent());
@@ -168,6 +178,8 @@ void ProjectileObject::OnColliderEnter(Collider* other)
 	{
 		if (this->playerOwner != player)
 		{
+			playerOwner->SetIsShooting(false);
+			playerOwner->SetIsAiming(false);
 			if (playerOwner == nullptr)
 			{
 				KK_ERROR("Projectile has no owner");
