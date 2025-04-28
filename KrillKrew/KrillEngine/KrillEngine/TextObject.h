@@ -10,6 +10,7 @@ class TextObject :public DrawableObject
 {
 private:
 	unsigned int texture;
+	float w, h = 0.0f;
 
 public:
 	TextObject();
@@ -17,5 +18,6 @@ public:
 	void Render(glm::mat4 globalModelTransform);
 	void update(float deltaTime);
 	void loadText(std::string text, SDL_Color textColor, int fontSize);
-	
+	void InitSDL();
+	void cleanSDL();
 };

@@ -5,6 +5,7 @@ void LevelMainMenu::LevelLoad() {
 	square->LoadData();
 	GameEngine::GetInstance()->AddMesh(SquareMeshVbo::MESH_NAME, square);
 
+
 }
 
 void LevelMainMenu::LevelInit() {
@@ -14,10 +15,12 @@ void LevelMainMenu::LevelInit() {
 		(SCREEN_HEIGHT / 2));
 
 	//test text
-	UiText* testText = new UiText();
-	testText->loadText("testttttttttttttt", SDL_Color{255,0,0,0}, 30);
-	testText->SetPosition(glm::vec3(100,100,0));
-	objectsList.push_back(testText);
+	TextObject* texted = new TextObject();
+	texted->loadText("Start", SDL_Color{ 255,0,0,0 }, 50);
+	texted->SetPosition(glm::vec3(100, 100, 0));
+	posX.push_back(texted->getPos().x);
+	posY.push_back(texted->getPos().y);
+	objectsList.push_back(texted);
 
 	// Setup Dear ImGui context
 	IMGUI_CHECKVERSION();
@@ -36,7 +39,10 @@ void LevelMainMenu::LevelInit() {
 	std::cout << GameEngine::GetInstance()->GetStateController()->loadingState << std::endl;
 }
 void LevelMainMenu::LevelUpdate() {
-
+	for (int i = 0; i < posX.size(); i++) {
+		objectsList.at(i)->SetPosition(glm::vec3(posX.at(i), posY.at(i), 0));
+	}
+	
 }
 
 void LevelMainMenu::LevelDraw() {
@@ -57,9 +63,12 @@ void LevelMainMenu::LevelDraw() {
 	//if (show_demo_window)
 	//	ImGui::ShowDemoWindow(&show_demo_window);
 
-	ImGui::Text("Mouse pos: (%g, %g)", io.MousePos.x, io.MousePos.y);
-
-
+	for (int i = 0; i < posX.size(); i++) {
+		ImGui::Text("Button%d", i);
+		ImGui::SliderFloat("posX", &posX.at(i), -camera.GetCameraWidth() / 2, camera.GetCameraWidth() / 2);
+		ImGui::SliderFloat("posY", &posY.at(i), -camera.GetCameraHeight() / 2, camera.GetCameraHeight() / 2);
+	}
+	
 	// Rendering
 	ImGui::Render();
 

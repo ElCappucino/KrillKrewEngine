@@ -10,10 +10,8 @@ private:
 	int playerSize = 0;
 
 	int playerNumber = 4; // Change later
-	float uiWidth = 215.f;
-	float uiHeight = 100.f;
-	float posX = camera.GetCenterX() - (uiWidth * camera.GetCameraWidth() / SCREEN_WIDTH / 2.f) * (playerNumber - 1);
-	float posY = camera.GetCenterY() + ((uiHeight * camera.GetCameraHeight() / SCREEN_HEIGHT) / 2.f) * (playerNumber - 1);
+	std::vector<float> posX;
+	std::vector<float> posY;
 	int ready[4] = { 0 };
 
 	OrthographicValue targetSceneProjection; // use for lerping between the current projection and this (target projection).
