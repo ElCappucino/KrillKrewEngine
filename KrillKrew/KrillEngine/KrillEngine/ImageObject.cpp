@@ -20,6 +20,7 @@ ImageObject::~ImageObject()
 void ImageObject::SetTexture(std::string path)
 {
 	texture = GameEngine::GetInstance()->GetRenderer()->LoadTexture(path);
+	
 }
 void ImageObject::SetSpriteInfo(SpritesheetInfo info)
 {

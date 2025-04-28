@@ -119,7 +119,7 @@ void EntityObject::ChangeAnimationState(AnimationState anim)
 	if (currAnimState != anim)
 	{
 		currAnimState = anim;
-		this->SetSpriteInfo(animList.find(anim)->second);
+		this->SetTextureWithID(animList.find(anim)->second, animList.find(anim)->second.textureid);
 	}
 }
 void EntityObject::UpdateCurrentAnimation()

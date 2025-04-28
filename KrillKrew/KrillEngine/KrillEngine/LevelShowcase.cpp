@@ -201,6 +201,8 @@ void LevelShowcase::LevelLoad()
 	soundManager->LoadMusic("bgm_test", "../Resource/Audio/bgm_test.mp3");
 	soundManager->LoadSFX("hit_test", "../Resource/Audio/cute-pop-sfx.mp3");
 
+
+
 	soundManager->PlayMusic("bgm_test", true);
 
 	//cout << "Load Level" << endl;
@@ -224,6 +226,10 @@ void LevelShowcase::InitTile()
 
 	float totalLoadedTile = MAP_HEIGHT * MAP_WIDTH;
 	float currentLoadedTile = 0;
+
+	// Load Texture beforehand
+	//unsigned int tileTexture = GameEngine::GetInstance()->GetRenderer()->LoadTexture(spriteList.find("Blobtile")->second.texture);
+	//spriteList.find("Blobtile")->second.textureid = tileTexture;
 	KK_TRACE("Generate Map-----------{0}", totalLoadedTile);
 	for (int i = 0; i < MAP_HEIGHT; i++)
 	{
@@ -307,9 +313,10 @@ void LevelShowcase::InitTile()
 			{
 				// KK_TRACE("Pos {0}, {1} pos.first = {2} pos.second = {3} ", i, j, pos.first, pos.second);
 				TileObject* obj = new TileObject();
-				obj->SetSpriteInfo(spriteList.find("Blobtile")->second);
+				obj->SetTextureWithID(spriteList.find("Blobtile")->second, spriteList.find("Blobtile")->second.textureid);
+				//obj->SetSpriteInfo(spriteList.find("Blobtile")->second);
 				obj->GetSpriteRenderer()->ShiftTo(pos.first - 1, pos.second - 1);
-				obj->SetTexture(spriteList.find("Blobtile")->second.texture);
+				//obj->SetTexture(spriteList.find("Blobtile")->second.texture);
 				obj->SetSize(128.f, -128.f);
 				obj->SetPosition(glm::vec3(map_left + (j * 126.f), map_top - (i * 126.f), 0));
 				obj->SetTilePosition(i, j);
@@ -360,6 +367,14 @@ void LevelShowcase::LevelInit()
 
 	// Create and Initialize 4 players object
 
+	for (auto& info : spriteList)
+	{
+		unsigned int texture = GameEngine::GetInstance()->GetRenderer()->LoadTexture(info.second.texture);
+		info.second.textureid = texture;
+		KK_CORE_TRACE("Load Texture: {0}", texture);
+		//info.second.textureid = GameEngine::GetInstance()->GetRenderer()->LoadTexture(info.second.texture);
+	}
+
 	InitTile();
 
 	// Example Code
@@ -409,7 +424,7 @@ void LevelShowcase::LevelInit()
 	p1->SetAbility(PlayerObject::AbilityButton::Triangle, static_cast<PlayerObject::Ability>(abilityId[0]));
 	p1->SetAbility(PlayerObject::AbilityButton::Circle, static_cast<PlayerObject::Ability>(abilityId[1]));
 	p1->SetAbility(PlayerObject::AbilityButton::Cross, static_cast<PlayerObject::Ability>(abilityId[2]));
-	p1->SetSpriteInfo(spriteList.find("P1_Idle")->second);
+	p1->SetTextureWithID(spriteList.find("P1_Idle")->second, spriteList.find("P1_Idle")->second.textureid);
 	p1->SetPosition(glm::vec3(-400.f, -400.f, 0.f));
 	p1->GetSpriteRenderer()->SetFrame(10);
 	p1->SetPlayerNumber(0);
@@ -460,7 +475,7 @@ void LevelShowcase::LevelInit()
 	KK_TRACE("Ability 2 : {0}", static_cast<int>(p2->GetAbilityByButton(PlayerObject::AbilityButton::Circle)));
 	KK_TRACE("Ability 3 : {0}", static_cast<int>(p2->GetAbilityByButton(PlayerObject::AbilityButton::Cross)));*/
 
-	p2->SetSpriteInfo(spriteList.find("P2_Idle")->second);
+	p2->SetTextureWithID(spriteList.find("P2_Idle")->second, spriteList.find("P2_Idle")->second.textureid);
 	p2->SetPosition(glm::vec3(400.f, -400.f, 0));
 	p2->GetSpriteRenderer()->SetFrame(10);
 	p2->SetPlayerNumber(1);
@@ -505,7 +520,7 @@ void LevelShowcase::LevelInit()
 	p3->SetAbility(PlayerObject::AbilityButton::Triangle, static_cast<PlayerObject::Ability>(abilityId[0]));
 	p3->SetAbility(PlayerObject::AbilityButton::Circle, static_cast<PlayerObject::Ability>(abilityId[1]));
 	p3->SetAbility(PlayerObject::AbilityButton::Cross, static_cast<PlayerObject::Ability>(abilityId[2]));
-	p3->SetSpriteInfo(spriteList.find("P3_Idle")->second);
+	p3->SetTextureWithID(spriteList.find("P3_Idle")->second, spriteList.find("P3_Idle")->second.textureid);
 	p3->SetPosition(glm::vec3(400.f, 400.f, 0));
 	p3->GetSpriteRenderer()->SetFrame(10);
 	p3->SetPlayerNumber(2);
@@ -553,7 +568,7 @@ void LevelShowcase::LevelInit()
 	p4->SetAbility(PlayerObject::AbilityButton::Triangle, static_cast<PlayerObject::Ability>(abilityId[0]));
 	p4->SetAbility(PlayerObject::AbilityButton::Circle, static_cast<PlayerObject::Ability>(abilityId[1]));
 	p4->SetAbility(PlayerObject::AbilityButton::Cross, static_cast<PlayerObject::Ability>(abilityId[2]));
-	p4->SetSpriteInfo(spriteList.find("P4_Idle")->second);
+	p4->SetTextureWithID(spriteList.find("P4_Idle")->second, spriteList.find("P4_Idle")->second.textureid);
 	p4->SetPosition(glm::vec3(-400.f, 400.f, 0));
 	p4->GetSpriteRenderer()->SetFrame(10);
 	p4->SetPlayerNumber(3);
