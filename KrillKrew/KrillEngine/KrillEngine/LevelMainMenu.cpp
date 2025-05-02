@@ -16,10 +16,12 @@ void LevelMainMenu::LevelInit() {
 
 	//test text
 	TextObject* texted = new TextObject();
-	texted->loadText("Start", SDL_Color{ 255,0,0,0 }, 50);
+	std::string text1 = "Start";
+	texted->loadText(text1, SDL_Color{ 255,0,0,0 }, 50);
 	texted->SetPosition(glm::vec3(100, 100, 0));
-	posX.push_back(texted->getPos().x);
-	posY.push_back(texted->getPos().y);
+	posXs.push_back(texted->getPos().x);
+	posYs.push_back(texted->getPos().y);
+	texts.push_back(text1);
 	objectsList.push_back(texted);
 
 	// Setup Dear ImGui context
@@ -39,8 +41,8 @@ void LevelMainMenu::LevelInit() {
 	std::cout << GameEngine::GetInstance()->GetStateController()->loadingState << std::endl;
 }
 void LevelMainMenu::LevelUpdate() {
-	for (int i = 0; i < posX.size(); i++) {
-		objectsList.at(i)->SetPosition(glm::vec3(posX.at(i), posY.at(i), 0));
+	for (int i = 0; i < posXs.size(); i++) {
+		objectsList.at(i)->SetPosition(glm::vec3(posXs.at(i), posYs.at(i), 0));
 	}
 	
 }
@@ -62,11 +64,21 @@ void LevelMainMenu::LevelDraw() {
 	//// 1. Show the big demo window (Most of the sample code is in ImGui::ShowDemoWindow()! You can browse its code to learn more about Dear ImGui!).
 	//if (show_demo_window)
 	//	ImGui::ShowDemoWindow(&show_demo_window);
-
-	for (int i = 0; i < posX.size(); i++) {
+	
+	for (int i = 0; i < posXs.size(); i++) {
 		ImGui::Text("Button%d", i);
-		ImGui::SliderFloat("posX", &posX.at(i), -camera.GetCameraWidth() / 2, camera.GetCameraWidth() / 2);
-		ImGui::SliderFloat("posY", &posY.at(i), -camera.GetCameraHeight() / 2, camera.GetCameraHeight() / 2);
+		ImGui::InputTextWithHint("Text", "enter text here", &texts.at(i)[0], texts.at(i).capacity() + 1);
+		ImGui::SliderFloat("posX", &posXs.at(i), -camera.GetCameraWidth() / 2, camera.GetCameraWidth() / 2);
+		ImGui::SliderFloat("posY", &posYs.at(i), -camera.GetCameraHeight() / 2, camera.GetCameraHeight() / 2);
+		if (ImGui::Button("Save config")) {
+			LevelMainMenu::config c;
+			c.text = texts.at(i);
+			c.textPosX = posXs.at(i);
+			c.textPosY = posYs.at(i);
+
+			std::string fileName = "button" + std::to_string(i) + ".json";
+			saveConfig(fileName, c);
+		}
 	}
 	
 	// Rendering
@@ -110,5 +122,26 @@ void LevelMainMenu::UpdateInput() {
 }
 
 void LevelMainMenu::UpdateUi() {
+
+}
+
+void LevelMainMenu::saveConfig(std::string& filename, config con) {
+	nlohmann::json data;
+	data["text"] = con.text;
+	data["textPosX"] = con.textPosX;
+	data["textPosY"] = con.textPosY;
+
+	std::ofstream file(filename);
+	if (file.is_open()) {
+		file << data;
+		file.close();
+		std::cout << "Saved" << std::endl;
+	}
+	else {
+		std::cout << "Failed" << std::endl;
+	}
+}
+
+void LevelMainMenu::loadConfig() {
 
 }

@@ -1,8 +1,14 @@
 #pragma once
 #include "Level.h"
 #include "LevelUtilities.h"
+#include "nlohmann/json.hpp"
+#include <fstream>
+//using json = nlohmann::json;
 class LevelMainMenu : public Level
 {
+
+
+
 private:
 	std::vector<DrawableObject*> objectsList;
 	std::map<std::string, SpritesheetInfo> spriteList;
@@ -10,9 +16,11 @@ private:
 	int playerSize = 0;
 
 	int playerNumber = 4; // Change later
-	std::vector<float> posX;
-	std::vector<float> posY;
+	std::vector<float> posXs;
+	std::vector<float> posYs;
+	std::vector<std::string> texts;
 	int ready[4] = { 0 };
+	
 
 	OrthographicValue targetSceneProjection; // use for lerping between the current projection and this (target projection).
 	Camera camera;
@@ -22,6 +30,15 @@ private:
 	float time1s = 0;
 	float time05s = 0;
 	float previousWidth = 0, previousHeight = 0;
+
+	struct config
+	{
+		std::string text;
+		int textPosX;
+		int textPosY;
+	};
+
+	std::vector<config> configs;
 
 public:
 	virtual void LevelLoad();
@@ -36,4 +53,6 @@ public:
 
 	void UpdateInput();
 	void UpdateUi();
+	void saveConfig(std::string& filename, config con);
+	void loadConfig();
 };
