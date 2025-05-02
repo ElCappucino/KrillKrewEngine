@@ -10,6 +10,11 @@ ProjectileObject::ProjectileObject()
 	this->playerOwner = nullptr;
 	
 	this->orderingLayer = 3;
+
+	this->isAnimated = true;
+	this->rotateAngle = 0;
+
+	this->spriteRenderer->SetFrame(10);
 }
 
 
@@ -108,14 +113,14 @@ void ProjectileObject::ReduceLifeTime()
 		}
 		else
 		{
-			KK_ERROR("This is not fireball");
+			//KK_ERROR("This is not fireball");
 		}
 	}
 }
 
 void ProjectileObject::AddTileInRange(TileObject* tile)
 {
-	KK_TRACE("AddTileInRange");
+	//KK_TRACE("AddTileInRange");
 	TileInRange.push_back(tile);
 }
 void ProjectileObject::DeleteTileInRange(TileObject* tile)
@@ -127,14 +132,14 @@ void ProjectileObject::DeleteTileInRange(TileObject* tile)
 	if (clearTile != TileInRange.end())
 	{
 		// KK_INFO("completely clear tile");
-		KK_TRACE("DeleteTileInRange");
+		//KK_TRACE("DeleteTileInRange");
 		TileInRange.erase(clearTile);
 
 	}
 }
 void ProjectileObject::ExplodeTileInRange()
 {
-	KK_TRACE("Tile in range = {0}", TileInRange.size());
+	//KK_TRACE("Tile in range = {0}", TileInRange.size());
 	for (TileObject* tile : TileInRange)
 	{
 		tile->GotHit();
@@ -182,11 +187,11 @@ void ProjectileObject::OnColliderEnter(Collider* other)
 			playerOwner->SetIsAiming(false);
 			if (playerOwner == nullptr)
 			{
-				KK_ERROR("Projectile has no owner");
+				//KK_ERROR("Projectile has no owner");
 			}
 			else
 			{
-				KK_INFO("Projectile Hit Player");
+				//KK_INFO("Projectile Hit Player");
 				playerOwner->SetIsShooting(false);
 
 				if (this->type == TypeProjectile::Fireball)
@@ -206,7 +211,7 @@ void ProjectileObject::OnColliderEnter(Collider* other)
 				}
 				else
 				{
-					KK_ERROR("This is not fireball");
+					//KK_ERROR("This is not fireball");
 				}
 				
 				this->isActive = false;
@@ -277,6 +282,22 @@ bool ProjectileObject::GetCanKnockback() {
 
 void ProjectileObject::SetType(TypeProjectile Type) {
 	this->type = Type;
+
+	switch (type)
+	{
+		case ProjectileObject::TypeProjectile::Fireball:
+			this->SetSize(300.f, -300.f);
+			break;
+		case ProjectileObject::TypeProjectile::Teleport:
+			this->SetSize(211.f * 0.8f, -97.f * 0.8f);
+			break;
+		case ProjectileObject::TypeProjectile::Bola:
+			this->SetSize(400.f * 0.7f, -400.f * 0.7f);
+			break;
+		case ProjectileObject::TypeProjectile::Cleave:
+			this->SetSize(358.f * 0.8f, -258.f * 0.8f);
+			break;
+	}
 }
 
 ProjectileObject::TypeProjectile ProjectileObject::GetType() {

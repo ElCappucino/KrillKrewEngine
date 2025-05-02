@@ -5,7 +5,7 @@
 GizmosObject::GizmosObject()
 {
 	borderColor = glm::vec3(0.0, 0.0, 0.0);
-
+	this->rotateAngle = 0;
 	this->orderingLayer = 3;
 }
 

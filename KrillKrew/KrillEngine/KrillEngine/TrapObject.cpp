@@ -9,6 +9,9 @@ TrapObject::TrapObject()
 	this->pos = glm::vec3(0, 0, 0);
 
 	this->orderingLayer = 3;
+
+	this->isAnimated = true;
+	this->spriteRenderer->SetFrame(10);
 }
 
 
@@ -211,6 +214,17 @@ bool TrapObject::GetCanKnockback() {
 
 void TrapObject::SetType(int type) {
 	this->type = type;
+
+	switch (type)
+	{
+	case TrapObject::TypeTrap::Trap:
+		this->SetSize(256.f, -256.f);
+		this->spriteRenderer->isLoop = false;
+		break;
+	case TrapObject::TypeTrap::Tnt:
+		this->SetSize(370.f, -370.f);
+		break;
+	}
 }
 
 bool TrapObject::GetType() {

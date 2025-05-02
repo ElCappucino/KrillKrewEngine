@@ -182,12 +182,12 @@ void LevelShowcase::LevelLoad()
 	// Stun																							   
 	spriteList["P4_Stun"] = SpritesheetInfo("P3_Stun",						"../Resource/Texture/Crunk/P4_Stun.png", 350, 350, 700, 350, false);
 
-	spriteList["Bomb"] = SpritesheetInfo("Bomb", "../Resource/Texture/Bomb_icon.png", 256, 256, 256, 256);
-	spriteList["Trap"] = SpritesheetInfo("Trap", "../Resource/Texture/Trap.png", 512, 512, 512, 512);
-	spriteList["TNT"] = SpritesheetInfo("TNT", "../Resource/Texture/TNT.png", 348, 348, 348, 348);
-	spriteList["Teleport"] = SpritesheetInfo("Teleport", "../Resource/Texture/EnderPearl.png", 512, 512, 512, 512);
-	spriteList["Bola"] = SpritesheetInfo("Bola", "../Resource/Texture/Bola.png", 317, 314, 317, 314);
-	spriteList["Cleave"] = SpritesheetInfo("Cleave", "../Resource/Texture/Cleave.png", 647, 386, 647, 386);
+	spriteList["Bomb"] = SpritesheetInfo("Bomb", "../Resource/Texture/Ability/abi_spr_bomb_projecttile.png", 300, 300, 1800, 300, true);
+	spriteList["Trap"] = SpritesheetInfo("Trap", "../Resource/Texture/Ability/abi_spr_jellyfish_putdown.png", 256, 256, 4096, 256, false);
+	spriteList["TNT"] = SpritesheetInfo("TNT", "../Resource/Texture/Ability/abi_spr_landmine_idle.png", 370, 370, 740, 370, true);
+	spriteList["Teleport"] = SpritesheetInfo("Teleport", "../Resource/Texture/Ability/abi_spr_teleport_projectile.png", 211, 97, 422, 97, true);
+	spriteList["Bola"] = SpritesheetInfo("Bola", "../Resource/Texture/Ability/abi_spr_stun_projecttile.png", 400, 400, 1600, 400, true);
+	spriteList["Cleave"] = SpritesheetInfo("Cleave", "../Resource/Texture/Ability/abi_spr_cleave_side.png", 358, 258, 1074, 258, true);
 	
 	spriteList["Xoey_UI"] = SpritesheetInfo("Xoey_UI", "../Resource/Texture/xoey.png", 430, 220, 430, 220);
 	spriteList["Byssa_UI"] = SpritesheetInfo("Byssa_UI", "../Resource/Texture/byssa.png", 430, 220, 430, 220);
@@ -372,7 +372,6 @@ void LevelShowcase::LevelInit()
 		unsigned int texture = GameEngine::GetInstance()->GetRenderer()->LoadTexture(info.second.texture);
 		info.second.textureid = texture;
 		KK_CORE_TRACE("Load Texture: {0}", texture);
-		//info.second.textureid = GameEngine::GetInstance()->GetRenderer()->LoadTexture(info.second.texture);
 	}
 
 	InitTile();
@@ -388,8 +387,6 @@ void LevelShowcase::LevelInit()
 	p1->SetAnimationSprite(PlayerObject::AnimationState::Idle, spriteList.find("P1_Idle")->second);
 	p1->SetAnimationSprite(PlayerObject::AnimationState::GetHit, spriteList.find("P1_Hit")->second);
 	p1->SetAnimationSprite(PlayerObject::AnimationState::Stun, spriteList.find("P1_Stun")->second);
-	//p1->SetAnimationSprite(PlayerObject::AnimationState::Running, spriteList.find("P1_Move_Side")->second);
-	//p1->SetAnimationSprite(PlayerObject::AnimationState::Melee, spriteList.find("P1_Smash_Side")->second);
 	p1->SetAnimationSprite(PlayerObject::AnimationState::FellDown, spriteList.find("P1_Dead")->second);
 
 	p1->SetAnimationSprite(PlayerObject::AnimationState::Move_Side, spriteList.find("P1_Move_Side")->second);
@@ -435,8 +432,6 @@ void LevelShowcase::LevelInit()
 
 	PlayerObject* p2 = new PlayerObject();
 	p2->SetAnimationSprite(PlayerObject::AnimationState::Idle, spriteList.find("P2_Idle")->second);
-	//p2->SetAnimationSprite(PlayerObject::AnimationState::Running, spriteList.find("P2_Move_Side")->second);
-	//p2->SetAnimationSprite(PlayerObject::AnimationState::Melee, spriteList.find("P2_Smash_Side")->second);
 	p2->SetAnimationSprite(PlayerObject::AnimationState::Stun, spriteList.find("P2_Stun")->second);
 	p2->SetAnimationSprite(PlayerObject::AnimationState::FellDown, spriteList.find("P2_Dead")->second);
 	p2->SetAnimationSprite(PlayerObject::AnimationState::GetHit, spriteList.find("P2_Hit")->second);
@@ -470,10 +465,6 @@ void LevelShowcase::LevelInit()
 	p2->SetAbility(PlayerObject::AbilityButton::Triangle, static_cast<PlayerObject::Ability>(abilityId[0]));
 	p2->SetAbility(PlayerObject::AbilityButton::Circle, static_cast<PlayerObject::Ability>(abilityId[1]));
 	p2->SetAbility(PlayerObject::AbilityButton::Cross, static_cast<PlayerObject::Ability>(abilityId[2]));
-
-	/*KK_TRACE("Ability 1 : {0}", static_cast<int>(p2->GetAbilityByButton(PlayerObject::AbilityButton::Triangle)));
-	KK_TRACE("Ability 2 : {0}", static_cast<int>(p2->GetAbilityByButton(PlayerObject::AbilityButton::Circle)));
-	KK_TRACE("Ability 3 : {0}", static_cast<int>(p2->GetAbilityByButton(PlayerObject::AbilityButton::Cross)));*/
 
 	p2->SetTextureWithID(spriteList.find("P2_Idle")->second, spriteList.find("P2_Idle")->second.textureid);
 	p2->SetPosition(glm::vec3(400.f, -400.f, 0));
@@ -532,8 +523,6 @@ void LevelShowcase::LevelInit()
 	PlayerObject* p4 = new PlayerObject();
 	p4->SetAnimationSprite(PlayerObject::AnimationState::Idle, spriteList.find("P4_Idle")->second);
 	p4->SetAnimationSprite(PlayerObject::AnimationState::Stun, spriteList.find("P4_Stun")->second);
-	//p4->SetAnimationSprite(PlayerObject::AnimationState::Running, spriteList.find("P4_Move_Side")->second);
-	//p4->SetAnimationSprite(PlayerObject::AnimationState::Melee, spriteList.find("P4_Smash_Side")->second);
 	p4->SetAnimationSprite(PlayerObject::AnimationState::FellDown, spriteList.find("P4_Dead")->second);
 	p4->SetAnimationSprite(PlayerObject::AnimationState::GetHit, spriteList.find("P4_Hit")->second);
 	
@@ -576,26 +565,6 @@ void LevelShowcase::LevelInit()
 	objectsList.push_back(p4);
 	playerSize++;
 	players[3] = p4;
-
-	/*entityObjects.push_back(players[0]->GetAttackColliderObject());
-	entityObjects.push_back(players[1]->GetAttackColliderObject());
-	entityObjects.push_back(players[2]->GetAttackColliderObject());
-	entityObjects.push_back(players[3]->GetAttackColliderObject());
-
-	objectsList.push_back(players[0]->GetAttackColliderObject());
-	objectsList.push_back(players[1]->GetAttackColliderObject());
-	objectsList.push_back(players[2]->GetAttackColliderObject());
-	objectsList.push_back(players[3]->GetAttackColliderObject());
-
-	objectsList.push_back(players[0]->GetAttackCollider()->GetGizmos());
-	objectsList.push_back(players[1]->GetAttackCollider()->GetGizmos());
-	objectsList.push_back(players[2]->GetAttackCollider()->GetGizmos());
-	objectsList.push_back(players[3]->GetAttackCollider()->GetGizmos());
-
-	objectsList.push_back(players[0]->GetCollider()->GetGizmos());
-	objectsList.push_back(players[1]->GetCollider()->GetGizmos());
-	objectsList.push_back(players[2]->GetCollider()->GetGizmos());
-	objectsList.push_back(players[3]->GetCollider()->GetGizmos());*/
 
 	for (int i = 0; i < playerSize; i++)
 	{
@@ -726,14 +695,6 @@ void LevelShowcase::LevelUpdate()
 
 	GroundTileRefactor();
 
-	/*KK_TRACE("player 1 Ability 1 : {0}", static_cast<int>(players[0]->GetAbilityByButton(PlayerObject::AbilityButton::Triangle)));
-	KK_TRACE("player 1 Ability 2 : {0}", static_cast<int>(players[0]->GetAbilityByButton(PlayerObject::AbilityButton::Circle)));
-	KK_TRACE("player 1 Ability 3 : {0}", static_cast<int>(players[0]->GetAbilityByButton(PlayerObject::AbilityButton::Cross)));
-
-	KK_TRACE("player 2 Ability 1 : {0}", static_cast<int>(players[1]->GetAbilityByButton(PlayerObject::AbilityButton::Triangle)));
-	KK_TRACE("player 2 Ability 2 : {0}", static_cast<int>(players[1]->GetAbilityByButton(PlayerObject::AbilityButton::Circle)));
-	KK_TRACE("player 2 Ability 3 : {0}", static_cast<int>(players[1]->GetAbilityByButton(PlayerObject::AbilityButton::Cross)));*/
-
 	std::sort(objectsList.begin(), objectsList.end(), compareLayer);
 }
 
@@ -860,9 +821,41 @@ void LevelShowcase::UpdateInput()
 							PlayerObject* player = projectile->GetOwner();
 							float veloX = player->GetCurrentDirection().x;
 							float veloY = player->GetCurrentDirection().y;
-							float angle = atan2(player->GetCurrentDirection().y, player->GetCurrentDirection().x);
+							float angle = atan2(-player->GetCurrentDirection().y, player->GetCurrentDirection().x);
+							//float absangle = abs(angle);
+							float absSizeX = abs(projectile->getSize().x);
+							if (angle < -3.14f / 2.f || angle > 3.14f / 2.f)
+							{
+								
+								projectile->SetSize(-absSizeX, projectile->getSize().y);
+								//KK_TRACE("Projectile angle = {0} at left side", angle);
+								//KK_TRACE("Projectile size x = {0}", projectile->getSize().x);
+								if (angle > 0)
+								{
+									angle = -(3.14f - angle);
+								}
+								else
+								{
+									angle = 3.14f + angle;
+								}
+								//KK_TRACE("Projectile angle = {0} after calc", angle);
+								
+							}
+							else
+							{
+								projectile->SetSize(absSizeX, projectile->getSize().y);
+								//angle = angle;
+							}
 							bool PositiveX = veloX > 0.f ? true : false;
 							bool PositiveY = veloY < 0.f ? true : false;
+
+							
+							/*KK_TRACE("Projectile angle = {0}", angle);
+							if (angle > 180)
+							{
+								angle = 360 - angle;
+								projectile->SetSize(-projectile->getSize().x, projectile->getSize().y);
+							}*/
 
 
 							projectile->SetPosition(players[i]->getPos() + (projectile->GetVelocity() * glm::vec3(15.f, 15.f, 0.f)));
@@ -979,12 +972,10 @@ void LevelShowcase::UpdateInput()
 				GameEngine::GetInstance()->GetStateController()->gameStateNext = GameState::GS_LEVELLOADING;
 			}
 
-			// players[i + playerNum % 4]->Translate(players[0]->GetVelocity());
 			players[0]->Translate(players[0]->GetVelocity());
 			players[1]->Translate(players[1]->GetVelocity());
 			players[2]->Translate(players[2]->GetVelocity());
 			players[3]->Translate(players[3]->GetVelocity());
-			//players[i + playerNum]->Translate(players[i + playerNum]->GetVelocity());
 		}
 
 	}
