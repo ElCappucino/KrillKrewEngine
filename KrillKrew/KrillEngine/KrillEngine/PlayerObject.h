@@ -97,7 +97,8 @@ private:
 	int playerNumber;
 
 	std::array<Ability, 3> abilities;
-	float abilityCooldown[3] = {0};
+	std::array<float, 3> abilityCooldown = {0};
+	float meleeCooldown = 0;
 
 	float slowness = 2;
 	float slowDuration; // add value if slow and decrease over time
@@ -192,7 +193,9 @@ public:
 	float GetStunDuration() const;
 	bool GetIsOnGround() const;
 	bool GetIsFell() const;
+	bool GetMeleeCooldown() const;
 	PlayerObject::Ability GetAbilityByButton(AbilityButton button) const;
+
 
 	void ClearAimingTile(TileObject* tile);
 	void AddAimingTile(TileObject* tile);
@@ -208,4 +211,5 @@ public:
 	void CheckIfOnGround();
 
 	void ApplyKnockback(EntityObject* obj);
+	void UpdateAbilityCooldown(float dt);
 };

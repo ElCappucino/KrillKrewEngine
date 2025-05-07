@@ -1,25 +1,29 @@
 #include "Timer.h"
 
-Timer* Timer::sIntance = nullptr;
+Timer* Timer::instance = nullptr;
 
 Timer* Timer::Instance() {
-	if (sIntance == nullptr) {
-		sIntance = new Timer();
+	if (instance == nullptr) {
+		instance = new Timer();
 	}
-	return sIntance;
+	return instance;
 }
 
-Timer::Timer() {
+Timer::Timer()
+	: timerScale(1.0f), deltaTime(0.0f), frameCount(0), fps(0.0f), fpsUpdateInterval(1.0f), fpsElapsedTime(0.0f) {
 	reset();
-	timerScale = 1.0f;
-	deltaTime = std::chrono::duration<float>(0.0f);
 }
 
 void Timer::reset() {
-	startTime = std::chrono::system_clock::now();
+	startTime = std::chrono::high_resolution_clock::now();
+	lastTime = startTime;
+	deltaTime = std::chrono::duration<float>(0.0f);
+	frameCount = 0;
+	fps = 0.0f;
+	fpsElapsedTime = 0.0f;
 }
 
-float Timer::getDeltaTime() {
+float Timer::getDeltaTime() const {
 	return deltaTime.count();
 }
 
@@ -27,10 +31,31 @@ void Timer::setTimeScale(float T) {
 	timerScale = T;
 }
 
-float Timer::getTimeScale() {
+float Timer::getTimeScale() const {
 	return timerScale;
 }
 
-void Timer::tick() {
-	deltaTime = std::chrono::system_clock::now() - startTime;
+void Timer::tick() 
+{
+	auto now = std::chrono::high_resolution_clock::now();
+	deltaTime = (now - lastTime) * timerScale;
+	lastTime = now;
+
+	// FPS tracking
+	fpsElapsedTime += deltaTime.count();
+	frameCount++;
+	//KK_CORE_INFO("fpsElapsedTime: {0}", fpsElapsedTime);
+	if (fpsElapsedTime >= fpsUpdateInterval) {
+		fps = frameCount / fpsElapsedTime;
+		
+		frameCount = 0;
+		fpsElapsedTime = 0.0f;
+	}
+	//KK_CORE_INFO("FPS: {0}", fps);
+	
+}
+
+float Timer::getFps() const
+{
+	return fps;
 }

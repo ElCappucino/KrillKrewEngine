@@ -423,7 +423,7 @@ void LevelShowcase::LevelInit()
 	p1->SetAbility(PlayerObject::AbilityButton::Cross, static_cast<PlayerObject::Ability>(abilityId[2]));
 	p1->SetTextureWithID(spriteList.find("P1_Idle")->second, spriteList.find("P1_Idle")->second.textureid);
 	p1->SetPosition(glm::vec3(-400.f, -400.f, 0.f));
-	p1->GetSpriteRenderer()->SetFrame(10);
+	p1->GetSpriteRenderer()->SetFrame(4);
 	p1->SetPlayerNumber(0);
 	entityObjects.push_back(p1);
 	objectsList.push_back(p1);
@@ -468,7 +468,7 @@ void LevelShowcase::LevelInit()
 
 	p2->SetTextureWithID(spriteList.find("P2_Idle")->second, spriteList.find("P2_Idle")->second.textureid);
 	p2->SetPosition(glm::vec3(400.f, -400.f, 0));
-	p2->GetSpriteRenderer()->SetFrame(10);
+	p2->GetSpriteRenderer()->SetFrame(4);
 	p2->SetPlayerNumber(1);
 	entityObjects.push_back(p2);
 	objectsList.push_back(p2);
@@ -513,7 +513,7 @@ void LevelShowcase::LevelInit()
 	p3->SetAbility(PlayerObject::AbilityButton::Cross, static_cast<PlayerObject::Ability>(abilityId[2]));
 	p3->SetTextureWithID(spriteList.find("P3_Idle")->second, spriteList.find("P3_Idle")->second.textureid);
 	p3->SetPosition(glm::vec3(400.f, 400.f, 0));
-	p3->GetSpriteRenderer()->SetFrame(10);
+	p3->GetSpriteRenderer()->SetFrame(4);
 	p3->SetPlayerNumber(2);
 	entityObjects.push_back(p3);
 	objectsList.push_back(p3);
@@ -559,7 +559,7 @@ void LevelShowcase::LevelInit()
 	p4->SetAbility(PlayerObject::AbilityButton::Cross, static_cast<PlayerObject::Ability>(abilityId[2]));
 	p4->SetTextureWithID(spriteList.find("P4_Idle")->second, spriteList.find("P4_Idle")->second.textureid);
 	p4->SetPosition(glm::vec3(-400.f, 400.f, 0));
-	p4->GetSpriteRenderer()->SetFrame(10);
+	p4->GetSpriteRenderer()->SetFrame(4);
 	p4->SetPlayerNumber(3);
 	entityObjects.push_back(p4);
 	objectsList.push_back(p4);
@@ -596,7 +596,7 @@ void LevelShowcase::LevelInit()
 		uiSkills->setNumOwner(1);
 		objectsList.push_back(uiSkills);
 	}
-	/*if (playerSize >= 2) {
+	if (playerSize >= 2) {
 
 		UiObject* uiSkills = new UiObject();
 		uiSkills->SetSpriteInfo(spriteList.find("Byssa_UI")->second);
@@ -609,7 +609,7 @@ void LevelShowcase::LevelInit()
 		uiSkills->SetSpriteInfo(spriteList.find("Crunk_UI")->second);
 		uiSkills->setNumOwner(3);
 		objectsList.push_back(uiSkills);
-	}*/
+	}
 
 	// sort with ordering layer
 	std::sort(objectsList.begin(), objectsList.end(), compareLayer);
@@ -634,68 +634,78 @@ void LevelShowcase::LevelInit()
 
 void LevelShowcase::LevelUpdate()
 {
-	dt++;
+	//dt++;
+	frame++;
+	UpdateTime();
 
-	// Clear inactive object
-	for (int i = 0; i < objectsList.size(); i++)
+	if (dt >= targetFrameDuration)
 	{
-		if (objectsList[i]->GetIsActive() == false)
+		// KK_TRACE("Update Per Frame");
+		// Clear inactive object
+		for (int i = 0; i < objectsList.size(); i++)
 		{
-			objectsList.erase(objectsList.begin() + i);
-		}
-	}
-
-	for (int i = 0; i < entityObjects.size(); i++)
-	{
-		if (entityObjects[i]->GetIsActive() == false)
-		{
-			entityObjects.erase(entityObjects.begin() + i);
-		}
-	}
-
-	UpdateInput();
-
-	for (int i = 0; i < playerSize; i++) {
-		camera.setPlayerPos(i, players[i]->getPos());
-	}
-	camera.LerpCamera(playerSize); // update smooth camera here
-
-	// Set Animation
-	for (int i = 0; i < objectsList.size(); i++)
-	{
-		EntityObject* entity = dynamic_cast<EntityObject*>(objectsList[i]);
-		if (entity == nullptr)
-		{
-			continue;
-		}
-		else
-		{
-			if (entity->GetIsAnimated() && dt % entity->GetSpriteRenderer()->GetFrame() == 0)
+			if (objectsList[i]->GetIsActive() == false)
 			{
-				entity->GetSpriteRenderer()->ShiftColumn();
-				entity->UpdateCurrentAnimation();
+				objectsList.erase(objectsList.begin() + i);
 			}
 		}
+
+		for (int i = 0; i < entityObjects.size(); i++)
+		{
+			if (entityObjects[i]->GetIsActive() == false)
+			{
+				entityObjects.erase(entityObjects.begin() + i);
+			}
+		}
+
+		UpdateInput();
+
+		for (int i = 0; i < playerSize; i++) {
+			camera.setPlayerPos(i, players[i]->getPos());
+		}
+		camera.LerpCamera(playerSize); // update smooth camera here
+
+		// Set Animation
+		for (int i = 0; i < objectsList.size(); i++)
+		{
+			EntityObject* entity = dynamic_cast<EntityObject*>(objectsList[i]);
+			if (entity == nullptr)
+			{
+				continue;
+			}
+			else
+			{
+				if (entity->GetIsAnimated() && frame % entity->GetSpriteRenderer()->GetFrame() == 0)
+				{
+					entity->GetSpriteRenderer()->ShiftColumn();
+					entity->UpdateCurrentAnimation();
+				}
+			}
+		}
+
+		// slowness
+		UpdateMovement();
+
+		// projectile collider player
+		UpdateCollision();
+
+		// delete projectile
+		UpdateProjectile();
+
+		// reduce cooldown skill
+		UpdateCooldown();
+
+		//Ui Skills
+		UpdateUI();
+
+		GroundTileRefactor();
+
+		std::sort(objectsList.begin(), objectsList.end(), compareLayer);
+
+		dt = 0;
 	}
 
-	// slowness
-	UpdateMovement();
-
-	// projectile collider player
-	UpdateCollision();
-
-	// delete projectile
-	UpdateProjectile();
-
-	// reduce cooldown skill
-	UpdateCooldown();
-
-	//Ui Skills
-	UpdateUI();
-
-	GroundTileRefactor();
-
-	std::sort(objectsList.begin(), objectsList.end(), compareLayer);
+	
 }
 
 void LevelShowcase::UpdateInput()
@@ -1092,7 +1102,7 @@ void LevelShowcase::UpdateCollision()
 	currentCollisions.clear();
 
 
-	if (dt > 10)
+	if (frame > 10)
 	{
 		for (int i = 0; i < playerSize; i++)
 		{
@@ -1110,7 +1120,7 @@ void LevelShowcase::UpdateProjectile()
 		ProjectileObject* projectile = dynamic_cast<ProjectileObject*>(objectsList[i]);
 		if (projectile != nullptr) {
 
-			if ((dt % 50) == 0) {
+			if ((frame % 50) == 0) { // FIX
 				projectile->ReduceLifeTime();
 			}
 
@@ -1148,17 +1158,22 @@ void LevelShowcase::UpdateCooldown()
 		{
 			continue;
 		}
-		for (int j = 0; j < 3; j++)
+		if (time1s >= 0.1f)
 		{
-
-			if (time1s >= 0.1f && players[i]->GetCooldown(static_cast<PlayerObject::AbilityButton>(j)) > 0)
-			{
-				//std::cout << j << std::endl;
-				players[i]->ReduceAbilityCooldown(j, 0.1f);
-
-			}
+			players[i]->UpdateAbilityCooldown(0.1f);
 		}
-		UpdateTime();
+		
+		//for (int j = 0; j < 3; j++)
+		//{
+
+		//	if (time1s >= 0.1f && players[i]->GetCooldown(static_cast<PlayerObject::AbilityButton>(j)) > 0)
+		//	{
+		//		//std::cout << j << std::endl;
+		//		players[i]->ReduceAbilityCooldown(j, 0.1f);
+
+		//	}
+		//}
+		// UpdateTime();
 	}
 }
 
@@ -1223,7 +1238,7 @@ void LevelShowcase::UpdateMovement()
 			players[i]->SetIsStun(false);
 		}
 
-		UpdateTime();
+		//UpdateTime();
 	}
 }
 
@@ -1231,10 +1246,12 @@ void LevelShowcase::UpdateMovement()
 void LevelShowcase::UpdateTime() {
 
 	timer->tick();
-	timer->reset();
+	//timer->reset();
+	//KK_TRACE("timer->getDeltaTime() = {0}", timer->getDeltaTime());
 	time1s += timer->getDeltaTime();
 	time05s += timer->getDeltaTime();
-
+	dt += timer->getDeltaTime();
+	// KK_TRACE("dt = {0}", dt);
 	if (time1s >= 1.01f) 
 	{
 		time1s = 0.0f;
@@ -1258,6 +1275,8 @@ void LevelShowcase::UpdateTime() {
 			}
 		}
 	}
+
+	KK_CORE_INFO("fps: {0}", timer->getFps());
 
 }
 
@@ -1389,15 +1408,6 @@ void LevelShowcase::LevelDraw()
 				ImGui::Text("isOnGround: %s", players[i]->GetIsOnGround() ? "true" : "false");
 				ImGui::Text("Current Velocity: %f, %f", players[i]->GetVelocity().x, players[i]->GetVelocity().y);
 
-				if (ImGui::Button("Test Button"))
-					clicked[i]++;
-
-				if (clicked[i] & 1)
-				{
-					ImGui::SameLine();
-					ImGui::Text("Thanks for clicking me!");
-				}
-
 				ImGui::DragFloat("ColX Button", &groundColX[i], 2.0f, 0.0f, 1024.f, "%.3f");
 				ImGui::DragFloat("ColY Button", &groundColY[i], 2.0f, 0.0f, 1024.f, "%.3f");
 				ImGui::DragFloat("Col offset X", &groundColOffsetX[i], 2.0f, -1024.f, 1024.f, "%.3f");
@@ -1478,32 +1488,7 @@ void LevelShowcase::LevelFree()
 	currentCollisions.clear();
 	previousCollisions.clear();
 	spriteList.clear();
-	/*std::fill(players.begin(), players.end(), nullptr);
-	std::fill(currentGroundTile.begin(), currentGroundTile.end(), 0);
-	std::fill(groundTile.begin(), groundTile.end(), 0);
-	std::fill(propsTile.begin(), propsTile.end(), 0);
-	std::fill(colliderTile.begin(), colliderTile.end(), 0);
-	std::fill(tilesList.begin(), tilesList.end(), nullptr);*/
 
-	
-	//// Clean up EntityObjects
-	//for (auto entity : entityObjects) {
-	//	delete entity;
-	//}
-	//entityObjects.clear();
-
-	// Clean up TileObjects in tilesList
-	/*for (int y = 0; y < MAP_HEIGHT; ++y) {
-		for (int x = 0; x < MAP_WIDTH; ++x) {
-			delete tilesList[y][x];
-			tilesList[y][x] = nullptr;
-		}
-	}*/
-
-	/*for (DrawableObject* obj : entityObjects) {
-		delete obj;
-	}
-	entityObjects.clear();*/
 	//cout << "Free Level" << endl;
 }
 

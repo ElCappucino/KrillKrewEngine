@@ -503,6 +503,10 @@ glm::vec2 PlayerObject::GetCurrentDirection() const
 {
 	return currDirection;
 }
+bool PlayerObject::GetMeleeCooldown() const
+{
+	return meleeCooldown;
+}
 PlayerObject::Ability PlayerObject::GetAbilityByButton(AbilityButton button) const
 {
 	return abilities[static_cast<int>(button)];
@@ -683,4 +687,21 @@ void PlayerObject::ApplyKnockback(EntityObject* obj)
 		//std::cout << knockbackDirectionY << std::endl;
 	}
 	
+}
+
+void PlayerObject::UpdateAbilityCooldown(float dt)
+{
+	for (float& cd : abilityCooldown)
+	{
+		if (cd > 0.f)
+		{
+			cd -= dt;
+
+		}
+		else if (cd < 0)
+		{
+			cd = 0;
+		}
+
+	}
 }

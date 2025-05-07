@@ -164,7 +164,6 @@ private:
 	};
 
 	// ImGUI
-	int clicked[4] = {0, 0, 0, 0};
 	float groundColX[4] = { 64.f, 64.f, 64.f, 64.f };
 	float groundColY[4] = { 64.f, 64.f, 64.f, 64.f };
 	float groundColOffsetX[4] = { 0.f, 0.f, 0.f, 0.f };
@@ -172,13 +171,24 @@ private:
 	int playersSkill[4][3];
 	int isResetScene;
 
+	float CooldownMelee = 2.f;
+	float CooldownFireball = 3.f;
+	float CooldownTrap = 3.f;
+	float CooldownDash = 3.f;
+	float CooldownTNT = 3.f;
+	float CooldownTeleport = 3.f;
+	float CooldownBola = 3.f;
+	float CooldownCleave = 3.f;
+
 	int playerSize = 0;
 	int playerNum = 0;
 	OrthographicValue targetSceneProjection; // use for lerping between the current projection and this (target projection).
 	Camera camera;
 	Timer* timer;
 
-	int dt = 0;
+	float dt = 0;
+	int frame = 0;
+	float targetFrameDuration = 1.0f / 60.0f; // cap at 60 fps
 	float time1s = 0;
 	float time05s = 0;
 	float time[4] = { 0 };
