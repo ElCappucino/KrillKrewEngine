@@ -21,6 +21,7 @@ private:
 	// std::map<std::string, ability> abilities;
 
 	std::array<PlayerObject*, 4> players; // add up to 4 players
+	std::array<UiObject*, 4> playerUIs; // add up to 4 players
 
 	std::array<std::array<int, MAP_WIDTH>, MAP_HEIGHT> currentGroundTile = { 0 };
 	std::array<std::array<int, MAP_WIDTH>, MAP_HEIGHT> groundTile = { 0 };
@@ -188,9 +189,10 @@ private:
 
 	float dt = 0;
 	int frame = 0;
-	float targetFrameDuration = 1.0f / 60.0f; // cap at 60 fps
+	int framePerSecond = 0;
+	float targetFrameDuration = 1.0f / 288.0f; // cap at 144 fps
 	float time1s = 0;
-	float time05s = 0;
+	float time01s = 0;
 	float time[4] = { 0 };
 	float previousWidth = 0, previousHeight = 0;
 

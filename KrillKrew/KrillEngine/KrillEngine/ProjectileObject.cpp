@@ -14,7 +14,7 @@ ProjectileObject::ProjectileObject()
 	this->isAnimated = true;
 	this->rotateAngle = 0;
 
-	this->spriteRenderer->SetFrame(4);
+	this->spriteRenderer->SetFrame(10);
 }
 
 

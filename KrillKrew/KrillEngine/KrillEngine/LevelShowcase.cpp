@@ -423,7 +423,7 @@ void LevelShowcase::LevelInit()
 	p1->SetAbility(PlayerObject::AbilityButton::Cross, static_cast<PlayerObject::Ability>(abilityId[2]));
 	p1->SetTextureWithID(spriteList.find("P1_Idle")->second, spriteList.find("P1_Idle")->second.textureid);
 	p1->SetPosition(glm::vec3(-400.f, -400.f, 0.f));
-	p1->GetSpriteRenderer()->SetFrame(4);
+	p1->GetSpriteRenderer()->SetFrame(10);
 	p1->SetPlayerNumber(0);
 	entityObjects.push_back(p1);
 	objectsList.push_back(p1);
@@ -468,7 +468,7 @@ void LevelShowcase::LevelInit()
 
 	p2->SetTextureWithID(spriteList.find("P2_Idle")->second, spriteList.find("P2_Idle")->second.textureid);
 	p2->SetPosition(glm::vec3(400.f, -400.f, 0));
-	p2->GetSpriteRenderer()->SetFrame(4);
+	p2->GetSpriteRenderer()->SetFrame(10);
 	p2->SetPlayerNumber(1);
 	entityObjects.push_back(p2);
 	objectsList.push_back(p2);
@@ -513,7 +513,7 @@ void LevelShowcase::LevelInit()
 	p3->SetAbility(PlayerObject::AbilityButton::Cross, static_cast<PlayerObject::Ability>(abilityId[2]));
 	p3->SetTextureWithID(spriteList.find("P3_Idle")->second, spriteList.find("P3_Idle")->second.textureid);
 	p3->SetPosition(glm::vec3(400.f, 400.f, 0));
-	p3->GetSpriteRenderer()->SetFrame(4);
+	p3->GetSpriteRenderer()->SetFrame(10);
 	p3->SetPlayerNumber(2);
 	entityObjects.push_back(p3);
 	objectsList.push_back(p3);
@@ -559,7 +559,7 @@ void LevelShowcase::LevelInit()
 	p4->SetAbility(PlayerObject::AbilityButton::Cross, static_cast<PlayerObject::Ability>(abilityId[2]));
 	p4->SetTextureWithID(spriteList.find("P4_Idle")->second, spriteList.find("P4_Idle")->second.textureid);
 	p4->SetPosition(glm::vec3(-400.f, 400.f, 0));
-	p4->GetSpriteRenderer()->SetFrame(4);
+	p4->GetSpriteRenderer()->SetFrame(10);
 	p4->SetPlayerNumber(3);
 	entityObjects.push_back(p4);
 	objectsList.push_back(p4);
@@ -588,6 +588,7 @@ void LevelShowcase::LevelInit()
 		uiSkills->SetSpriteInfo(spriteList.find("Xoey_UI")->second);
 		uiSkills->setNumOwner(0);
 		objectsList.push_back(uiSkills);
+		playerUIs[0] = uiSkills;
 	}
 	if (playerSize >= 1) {
 
@@ -595,6 +596,7 @@ void LevelShowcase::LevelInit()
 		uiSkills->SetSpriteInfo(spriteList.find("Ham_UI")->second);
 		uiSkills->setNumOwner(1);
 		objectsList.push_back(uiSkills);
+		playerUIs[1] = uiSkills;
 	}
 	if (playerSize >= 2) {
 
@@ -602,6 +604,7 @@ void LevelShowcase::LevelInit()
 		uiSkills->SetSpriteInfo(spriteList.find("Byssa_UI")->second);
 		uiSkills->setNumOwner(2);
 		objectsList.push_back(uiSkills);
+		playerUIs[2] = uiSkills;
 	}
 	if (playerSize >= 3) {
 
@@ -609,6 +612,7 @@ void LevelShowcase::LevelInit()
 		uiSkills->SetSpriteInfo(spriteList.find("Crunk_UI")->second);
 		uiSkills->setNumOwner(3);
 		objectsList.push_back(uiSkills);
+		playerUIs[3] = uiSkills;
 	}
 
 	// sort with ordering layer
@@ -635,75 +639,67 @@ void LevelShowcase::LevelInit()
 void LevelShowcase::LevelUpdate()
 {
 	//dt++;
-	frame++;
-	UpdateTime();
-
-	if (dt >= targetFrameDuration)
-	{
-		// KK_TRACE("Update Per Frame");
+	// KK_TRACE("Update Per Frame");
 		// Clear inactive object
-		for (int i = 0; i < objectsList.size(); i++)
+	for (int i = 0; i < objectsList.size(); i++)
+	{
+		if (objectsList[i]->GetIsActive() == false)
 		{
-			if (objectsList[i]->GetIsActive() == false)
-			{
-				objectsList.erase(objectsList.begin() + i);
-			}
+			objectsList.erase(objectsList.begin() + i);
 		}
-
-		for (int i = 0; i < entityObjects.size(); i++)
-		{
-			if (entityObjects[i]->GetIsActive() == false)
-			{
-				entityObjects.erase(entityObjects.begin() + i);
-			}
-		}
-
-		UpdateInput();
-
-		for (int i = 0; i < playerSize; i++) {
-			camera.setPlayerPos(i, players[i]->getPos());
-		}
-		camera.LerpCamera(playerSize); // update smooth camera here
-
-		// Set Animation
-		for (int i = 0; i < objectsList.size(); i++)
-		{
-			EntityObject* entity = dynamic_cast<EntityObject*>(objectsList[i]);
-			if (entity == nullptr)
-			{
-				continue;
-			}
-			else
-			{
-				if (entity->GetIsAnimated() && frame % entity->GetSpriteRenderer()->GetFrame() == 0)
-				{
-					entity->GetSpriteRenderer()->ShiftColumn();
-					entity->UpdateCurrentAnimation();
-				}
-			}
-		}
-
-		// slowness
-		UpdateMovement();
-
-		// projectile collider player
-		UpdateCollision();
-
-		// delete projectile
-		UpdateProjectile();
-
-		// reduce cooldown skill
-		UpdateCooldown();
-
-		//Ui Skills
-		UpdateUI();
-
-		GroundTileRefactor();
-
-		std::sort(objectsList.begin(), objectsList.end(), compareLayer);
-
-		dt = 0;
 	}
+
+	for (int i = 0; i < entityObjects.size(); i++)
+	{
+		if (entityObjects[i]->GetIsActive() == false)
+		{
+			entityObjects.erase(entityObjects.begin() + i);
+		}
+	}
+
+	UpdateInput();
+
+	for (int i = 0; i < playerSize; i++) {
+		camera.setPlayerPos(i, players[i]->getPos());
+	}
+	camera.LerpCamera(playerSize); // update smooth camera here
+
+	// Set Animation
+	for (int i = 0; i < objectsList.size(); i++)
+	{
+		EntityObject* entity = dynamic_cast<EntityObject*>(objectsList[i]);
+		if (entity == nullptr)
+		{
+			continue;
+		}
+		else
+		{
+			if (entity->GetIsAnimated() && frame % entity->GetSpriteRenderer()->GetFrame() == 0)
+			{
+				entity->GetSpriteRenderer()->ShiftColumn();
+				entity->UpdateCurrentAnimation();
+			}
+		}
+	}
+
+	// slowness
+	UpdateMovement();
+
+	// projectile collider player
+	UpdateCollision();
+
+	// delete projectile
+	UpdateProjectile();
+
+	// reduce cooldown skill
+	UpdateCooldown();
+
+	//Ui Skills
+	UpdateUI();
+
+	GroundTileRefactor();
+
+	std::sort(objectsList.begin(), objectsList.end(), compareLayer);
 
 	
 }
@@ -1185,17 +1181,67 @@ void LevelShowcase::UpdateMovement()
 		{
 			continue;
 		}
-		if (time1s >= 1.0f && players[i]->GetIsSlow() == true)
+
+		if (players[i]->GetIsKnockback() == true)
 		{
-			players[i]->ReduceSlowDuration();
+			glm::vec3 knockbackVelo = players[i]->GetVelocity();
+
+			float knockbackVeloX = abs(knockbackVelo.x);
+			float knockbackVeloY = abs(knockbackVelo.y);
+
+			players[i]->SetVelocity
+			(
+				knockbackVeloX / 1.01f,
+				knockbackVeloY / 1.01f,
+				players[i]->GetXIsPositive(),
+				players[i]->GetYIsPositive()
+			);
+
+			KK_CORE_WARN("Set Velocity = {0}, {1}", knockbackVeloX, knockbackVeloY);
 		}
 
-		if (players[i]->GetSlowDuration() <= 0)
+		
+
+		/*if (players[i]->GetDurationKnockback() <= 0 &&
+			players[i]->GetIsKnockback() &&
+			(abs(players[i]->GetVelocity().x) / 5 < 0.1) &&
+			(abs(players[i]->GetVelocity().y) / 5 < 0.1))
 		{
-			players[i]->SetIsSlow(false);
+
+			players[i]->SetIsKnockback(false);
+			players[i]->SetVelocity(0, 0, false, false);
+		}*/
+
+		if (players[i]->GetIsSlow() == true)
+		{
+			players[i]->ReduceSlowDuration(timer->getDeltaTime());
 		}
 
-		if (time05s >= 0.1f && players[i]->GetIsKnockback() == true) 
+		if (players[i]->GetIsKnockback() == true)
+		{
+			players[i]->ReduceKnockbackDuration(timer->getDeltaTime());
+		}
+
+		if (players[i]->GetIsStun() == true)
+		{
+			players[i]->ReduceStunDuration(timer->getDeltaTime());
+
+		}
+		if (players[i]->GetIsDashing() == true)
+		{
+			players[i]->ReduceDashDuration(timer->getDeltaTime());
+		}
+		/*if (time1s >= 1.0f && players[i]->GetIsSlow() == true)
+		{
+			players[i]->ReduceSlowDuration(1.0f);
+
+			if (players[i]->GetSlowDuration() <= 0)
+			{
+				players[i]->SetIsSlow(false);
+			}
+		}
+
+		if (time01s >= 0.1f && players[i]->GetIsKnockback() == true)
 		{
 			glm::vec3 knockbackVelo = players[i]->GetVelocity();
 
@@ -1220,25 +1266,21 @@ void LevelShowcase::UpdateMovement()
 
 		if (time1s >= 1.0f && players[i]->GetIsKnockback() == true)
 		{
-			players[i]->ReduceKnockbackDuration();
-		}
-
-		if (players[i]->GetDurationKnockback() <= 0)
-		{
-			players[i]->SetIsKnockback(false);
+			players[i]->ReduceKnockbackDuration(1.0f);
 		}
 
 		if (time1s >= 1.0f && players[i]->GetIsStun() == true)
 		{
-			players[i]->ReduceStunDuration();
-		}
+			players[i]->ReduceStunDuration(1.0f);
 
-		if (players[i]->GetStunDuration() <= 0)
+
+		if (time01s >= 0.1f)
 		{
-			players[i]->SetIsStun(false);
-		}
-
-		//UpdateTime();
+			if(players[i]->GetIsDashing() == true)
+			{
+				players[i]->ReduceDashDuration(0.1f);
+			}
+		}*/
 	}
 }
 
@@ -1249,117 +1291,63 @@ void LevelShowcase::UpdateTime() {
 	//timer->reset();
 	//KK_TRACE("timer->getDeltaTime() = {0}", timer->getDeltaTime());
 	time1s += timer->getDeltaTime();
-	time05s += timer->getDeltaTime();
+	time01s += timer->getDeltaTime();
 	dt += timer->getDeltaTime();
-	// KK_TRACE("dt = {0}", dt);
-	if (time1s >= 1.01f) 
+
+	if (time1s >= 1.0f)
 	{
+		KK_INFO("UpdateTime() FPS: {0} time1s = {1}", framePerSecond, time1s);
+		framePerSecond = 0;
+
 		time1s = 0.0f;
 	}
 
-	if (time05s >= 0.11f) 
+	if (time01s >= 0.1f)
 	{
-		time05s = 0.0f;
-
-		for (int i = 0; i < playerSize; i++)
-		{
-			if (players[i]->GetIsDashing() == true)
-			{
-				players[i]->ReduceDashDuration();
-				
-			}
-
-			if (players[i]->GetDashDuration() <= 0)
-			{
-				players[i]->SetIsDashing(false);
-			}
-		}
+		time01s = 0.0f;
 	}
-
-	KK_CORE_INFO("fps: {0}", timer->getFps());
 
 }
 
 void LevelShowcase::UpdateUI()
 {
-	int playerNumber = 1; // Change later
+	int playerNumber = 4; // Change later
 	float uiWidth = 215.f;
 	float uiHeight = 100.f;
 	
-	float posX = camera.GetCenterX() - (uiWidth * camera.GetCameraWidth() / SCREEN_WIDTH / 2.f) * playerNumber;
+	float posX = camera.GetCenterX() - (uiWidth * camera.GetCameraWidth() / SCREEN_WIDTH / 2.f) * (playerNumber - 1);
 	float posY = GameEngine::GetInstance()->GetRenderer()->GetOrthovalue().bottom + ((uiHeight * camera.GetCameraHeight() / SCREEN_HEIGHT) / 2.f);
 	
-	for (int i = 0; i < objectsList.size(); i++)
+	for (int i = 0; i < playerNumber; i++)
 	{
-		UiObject* ui = dynamic_cast<UiObject*>(objectsList[i]);
-		if (ui != nullptr) 
-		{
-			ui->SetPosition(glm::vec3(posX + (ui->getNumOwner() * uiWidth * camera.GetCameraWidth() / SCREEN_WIDTH), posY, 0));
-			ui->SetSize(uiWidth * camera.GetCameraWidth() / SCREEN_WIDTH, -uiHeight * camera.GetCameraHeight() / SCREEN_HEIGHT);
-			
-			//posX += uiWidth * camera.GetCameraWidth() / SCREEN_WIDTH;
-		}
+		UiObject* ui = playerUIs[i];
+		ui->SetPosition(glm::vec3(posX + (ui->getNumOwner() * uiWidth * camera.GetCameraWidth() / SCREEN_WIDTH), posY, 0));
+		ui->SetSize(uiWidth * camera.GetCameraWidth() / SCREEN_WIDTH, -uiHeight * camera.GetCameraHeight() / SCREEN_HEIGHT);
 	}
 }
 
 void LevelShowcase::LevelDraw()
 {
-	// Collider position update
-	for (int i = 0; i < objectsList.size(); i++)
+	frame++;
+	
+	UpdateTime();
+
+	// render image per frame cap
+	if (dt >= targetFrameDuration)
 	{
-		PlayerObject* player = dynamic_cast<PlayerObject*>(objectsList[i]);
-		PlayerHitboxObject* hitbox = dynamic_cast<PlayerHitboxObject*>(objectsList[i]);
-		GizmosObject* gizmos = dynamic_cast<GizmosObject*>(objectsList[i]);
-		TrapObject* trap = dynamic_cast<TrapObject*>(objectsList[i]);
+		framePerSecond++;
 
-		if (player != nullptr)
+		// Collider position update
+		for (int i = 0; i < entityObjects.size(); i++)
 		{
-			player->GetCollider()->Update(player->getSize(), player->getPos());
-
-			glm::vec3 attackSize = glm::vec3(player->getSize().x / 4, player->getSize().y / 4, 0);
-			glm::vec3 attackPos = glm::vec3(
-				player->getPos().x + (player->GetCurrentDirection().x * 128.f), 
-				player->getPos().y - (player->GetCurrentDirection().y * 128.f), 
-				0);
-			player->GetAttackColliderObject()->SetSize(attackSize.x, attackSize.y);
-			player->GetAttackColliderObject()->SetPosition(attackPos);
-			player->GetAttackCollider()->Update(attackSize, attackPos);
-
-			// KK_TRACE("{0} groundColX = {1}, groundColY = {2}", player->GetPlayerNumber(), groundColX[player->GetPlayerNumber()], groundColY[player->GetPlayerNumber()]);
-			glm::vec3 groundCheckSize = glm::vec3
-			(
-				groundColX[player->GetPlayerNumber()],
-				groundColY[player->GetPlayerNumber()],
-				0
-			);
-
-			glm::vec3 groundCheckPos = glm::vec3
-			(
-				player->getPos().x + player->GetGroundColliderObject()->GetColliderOffset().x,
-				player->getPos().y + player->GetGroundColliderObject()->GetColliderOffset().y,
-				0
-			);
-
-			player->GetGroundColliderObject()->SetSize(groundCheckSize.x, groundCheckSize.y);
-			player->GetGroundColliderObject()->SetPosition(groundCheckPos);
-			player->GetGroundCollider()->Update(groundCheckSize, groundCheckPos);
-
-			/*players[i + playerNum]->GetAttackColliderObject()->SetPosition(glm::vec3(
-				players[i + playerNum]->getPos().x + players[i + playerNum]->GetCurrentDirection().x,
-				players[i + playerNum]->getPos().y + players[i + playerNum]->GetCurrentDirection().y,
-				0));*/
+			entityObjects[i]->UpdateCollider();
+			
 		}
-		else if (hitbox == nullptr)
-		{
-			EntityObject* object = dynamic_cast<EntityObject*>(objectsList[i]);
-			if (object != nullptr)
-			{
-				object->GetCollider()->Update(object->GetCollider()->GetSize(), object->getPos());
-			}
-		}
+
+		GameEngine::GetInstance()->Render(objectsList);
+
+		dt = 0;
 	}
-
-	GameEngine::GetInstance()->Render(objectsList);
 
 	bool show_demo_window = true;
 	bool show_another_window = false;
@@ -1506,47 +1494,6 @@ void LevelShowcase::LevelUnload()
 void LevelShowcase::HandleKey(char key)
 {
 
-	switch (key)
-	{
-		// switch player
-	/*case '1': this->playerNum = 0; break;
-	case '2': this->playerNum = 1; break;
-	case '3': this->playerNum = 2; break;
-	case '4': this->playerNum = 3; break;*/
-
-	case 'q': GameEngine::GetInstance()->GetStateController()->gameStateNext = GameState::GS_QUIT; ; break;
-	case 'r': GameEngine::GetInstance()->GetStateController()->gameStateNext = GameState::GS_RESTART; ; break;
-	case 'e':
-		GameEngine::GetInstance()->GetStateController()->loadingState = GameState::GS_LEVELGAMEPLAY;
-		GameEngine::GetInstance()->GetStateController()->gameStateNext = GameState::GS_LEVELLOADING; ; break;
-	case 'i':
-
-		GameEngine::GetInstance()->SetDrawArea
-		(camera.getCameraOrthoValue().left + SCREEN_WIDTH * ZOOM_VELOCITY,
-			camera.getCameraOrthoValue().right - SCREEN_WIDTH * ZOOM_VELOCITY,
-			camera.getCameraOrthoValue().bottom + SCREEN_HEIGHT * ZOOM_VELOCITY,
-			camera.getCameraOrthoValue().top - SCREEN_HEIGHT * ZOOM_VELOCITY);
-
-		break;
-
-	case 'o':
-
-		GameEngine::GetInstance()->SetDrawArea
-		(camera.getCameraOrthoValue().left - SCREEN_WIDTH * ZOOM_VELOCITY,
-			camera.getCameraOrthoValue().right + SCREEN_WIDTH * ZOOM_VELOCITY,
-			camera.getCameraOrthoValue().bottom - SCREEN_HEIGHT * ZOOM_VELOCITY,
-			camera.getCameraOrthoValue().top + SCREEN_HEIGHT * ZOOM_VELOCITY);
-
-		break;
-
-	case 'y':
-		/*this->playerNum++;
-
-		if (this->playerNum >= 4) {
-			this->playerNum = 0;
-		}*/
-		break;
-	}
 }
 
 void LevelShowcase::HandleMouse(int type, int x, int y)
@@ -1690,7 +1637,8 @@ void LevelShowcase::GroundTileRefactor()
 	}
 }
 
-void LevelShowcase::TileImport(std::array<std::array<int, MAP_WIDTH>, MAP_HEIGHT> &TileBuffer, std::string fileName) {
+void LevelShowcase::TileImport(std::array<std::array<int, MAP_WIDTH>, MAP_HEIGHT> &TileBuffer, std::string fileName) 
+{
 	std::ifstream mapfile(fileName);
 	std::string line;
 	int row = 0;

@@ -11,7 +11,7 @@ TrapObject::TrapObject()
 	this->orderingLayer = 3;
 
 	this->isAnimated = true;
-	this->spriteRenderer->SetFrame(4);
+	this->spriteRenderer->SetFrame(10);
 }
 
 

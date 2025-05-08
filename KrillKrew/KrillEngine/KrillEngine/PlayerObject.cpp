@@ -122,6 +122,10 @@ void PlayerObject::SetVelocity(float axisX, float axisY, bool isPositiveX, bool 
 		std::cout << "IsSlow" << std::endl;
 		velocity = glm::vec3(axisX * 5.f, axisY * 5.f, 0) / slowness;
 	}
+	else if (isKnockback)
+	{
+		velocity = glm::vec3(axisX, axisY, 0);
+	}
 	else
 	{
 		velocity = glm::vec3(axisX * 5.f, axisY * 5.f, 0);
@@ -188,17 +192,23 @@ void PlayerObject::ReduceAbilityCooldown(int button, float dt)
 	if (abilityCooldown[button] <= 0) { abilityCooldown[button] = 0; }
 	// KK_TRACE("Reduce Cooldown Skill: {0} Cooldown {1}", button, GetCooldown(button));
 }
-void PlayerObject::ReduceSlowDuration()
+void PlayerObject::ReduceSlowDuration(float dt)
 {
-	slowDuration -= 1;
+	slowDuration -= dt;
+	if (slowDuration <= 0.0f)
+	{
+		slowDuration = 0.0f;
+		isSlow = false;
+	}
 	// KK_TRACE("Reduce slow duration: Player Number {0} Duration: {1}", GetPlayerNumber(), slowDuration);
 }
-void PlayerObject::ReduceDashDuration() 
+void PlayerObject::ReduceDashDuration(float dt)
 {
-	dashDuration -= 0.2f;
-	if (dashDuration <= 0)
+	dashDuration -= dt;
+	if (dashDuration <= 0.0f)
 	{
-		dashDuration = 0;
+		dashDuration = 0.0f;
+		SetIsDashing(false);
 	}
 }
 void PlayerObject::SetAnimationSprite(AnimationState state, SpritesheetInfo spriteInfo)
@@ -568,11 +578,19 @@ void PlayerObject::SetIsOnGround(bool isOnGround)
 	this->isOnGround = isOnGround;
 }
 
-void PlayerObject::ReduceKnockbackDuration() {
-	durationKnockback -= 1;
-	if (durationKnockback <= 0)
+void PlayerObject::ReduceKnockbackDuration(float dt) 
+{
+	durationKnockback -= dt;
+	if (durationKnockback <= 0.0f)
 	{
-		durationKnockback = 0;
+		durationKnockback = 0.0f;
+		isKnockback = false;
+
+		/*if ((abs(this->GetVelocity().x) / 5 < 0.1) &&
+			(abs(this->GetVelocity().y) / 5 < 0.1))
+		{
+			this->SetVelocity(0, 0, false, false);
+		}*/
 	}
 }
 
@@ -612,11 +630,12 @@ void PlayerObject::SetStunDuraion(int time) {
 	durationStun = time;
 }
 
-void PlayerObject::ReduceStunDuration() {
-	durationStun -= 1;
-	if (durationStun <= 0)
+void PlayerObject::ReduceStunDuration(float dt) {
+	durationStun -= dt;
+	if (durationStun <= 0.0f)
 	{
-		durationStun = 0;
+		durationStun = 0.0f;
+		isStun = false;
 	}
 }
 
@@ -651,12 +670,11 @@ void PlayerObject::ApplyKnockback(EntityObject* obj)
 	if ((projectile != nullptr	&& projectile->GetCanKnockback()	&& projectile->GetOwner()->GetPlayerNumber() != playerNumber) || 
 		(trap != nullptr		&& trap->GetCanKnockback()			&& trap->GetPlayerNumber() != playerNumber)) // check if it is projectile or trap
 	{
-		this->SetIsKnockback(true);
-		this->SetKnockbackDuration(2);
+		
 		glm::vec3 knockbackDirection = obj->getPos() - this->getPos();
 
-		float knockbackDirectionX = knockbackDirection.x / 255.f / 5.f;
-		float knockbackDirectionY = knockbackDirection.y / 255.f / 5.f;
+		float knockbackDirectionX = knockbackDirection.x / 255.f;
+		float knockbackDirectionY = knockbackDirection.y / 255.f;
 
 		bool knockbackDirectionXisPositive = false;
 		bool knockbackDirectionYisPositive = false;
@@ -682,8 +700,11 @@ void PlayerObject::ApplyKnockback(EntityObject* obj)
 		knockbackDirectionX = abs(knockbackDirectionX);
 		knockbackDirectionY = abs(knockbackDirectionY);
 
-
+		KK_CORE_WARN("knockback Direction abs = {0}, {1}", knockbackDirectionX, knockbackDirectionY);
 		this->SetVelocity(knockbackDirectionX, knockbackDirectionY, knockbackDirectionXisPositive, knockbackDirectionYisPositive);
+		
+		this->SetIsKnockback(true);
+		this->SetKnockbackDuration(2);
 		//std::cout << knockbackDirectionY << std::endl;
 	}
 	
@@ -704,4 +725,38 @@ void PlayerObject::UpdateAbilityCooldown(float dt)
 		}
 
 	}
+}
+
+void PlayerObject::UpdateCollider()
+{
+	// 
+	this->GetCollider()->Update(this->getSize(), this->getPos());
+
+	glm::vec3 attackSize = glm::vec3(this->getSize().x / 4, this->getSize().y / 4, 0);
+	glm::vec3 attackPos = glm::vec3(
+		this->getPos().x + (this->GetCurrentDirection().x * 128.f),
+		this->getPos().y - (this->GetCurrentDirection().y * 128.f),
+		0);
+	this->GetAttackColliderObject()->SetSize(attackSize.x, attackSize.y);
+	this->GetAttackColliderObject()->SetPosition(attackPos);
+	this->GetAttackCollider()->Update(attackSize, attackPos);
+
+	// KK_TRACE("{0} groundColX = {1}, groundColY = {2}", player->GetPlayerNumber(), groundColX[player->GetPlayerNumber()], groundColY[player->GetPlayerNumber()]);
+	glm::vec3 groundCheckSize = glm::vec3
+	(
+		64.f, // change to modifiable size
+		64.f,
+		0
+	);
+
+	glm::vec3 groundCheckPos = glm::vec3
+	(
+		this->getPos().x + this->GetGroundColliderObject()->GetColliderOffset().x,
+		this->getPos().y + this->GetGroundColliderObject()->GetColliderOffset().y,
+		0
+	);
+
+	this->GetGroundColliderObject()->SetSize(groundCheckSize.x, groundCheckSize.y);
+	this->GetGroundColliderObject()->SetPosition(groundCheckPos);
+	this->GetGroundCollider()->Update(groundCheckSize, groundCheckPos);
 }

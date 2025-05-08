@@ -128,3 +128,9 @@ void EntityObject::UpdateCurrentAnimation()
 {
 	std::cout << "Update Animation Entity" << std::endl;
 }
+
+void EntityObject::UpdateCollider()
+{
+	// 
+	this->GetCollider()->Update(this->GetCollider()->GetSize(), this->getPos());
+}

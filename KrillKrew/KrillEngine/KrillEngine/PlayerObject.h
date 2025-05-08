@@ -156,15 +156,16 @@ public:
 	void SetIsOnGround(bool isOnGround);
 
 	void ReduceAbilityCooldown(int button, float dt);
-	void ReduceSlowDuration();
-	void ReduceDashDuration();
-	void ReduceKnockbackDuration();
-	void ReduceStunDuration();
+	void ReduceSlowDuration(float dt);
+	void ReduceDashDuration(float dt);
+	void ReduceKnockbackDuration(float dt);
+	void ReduceStunDuration(float dt);
 	
 
 	virtual void SetAnimationSprite(AnimationState state, SpritesheetInfo spriteInfo);
 	virtual void ChangeAnimationState(AnimationState anim);
 	virtual void UpdateCurrentAnimation();
+	virtual void UpdateCollider();
 	void ChangeMeleeAnimation();
 
 	virtual Collider* GetCollider() const;

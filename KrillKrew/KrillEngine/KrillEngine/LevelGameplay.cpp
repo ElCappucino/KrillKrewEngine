@@ -714,7 +714,7 @@ void LevelGameplay::UpdateMovement()
 	{
 		if (time1s >= 1.0f && players[i]->GetIsSlow() == true)
 		{
-			players[i]->ReduceSlowDuration();
+			players[i]->ReduceSlowDuration(1.0f);
 		}
 
 		if (players[i]->GetSlowDuration() <= 0)
@@ -724,7 +724,7 @@ void LevelGameplay::UpdateMovement()
 
 		if (time1s >= 1.0f && players[i]->GetIsDashing() == true) {
 			std::cout << "reduce dash time" << std::endl;
-			players[i]->ReduceDashDuration();
+			players[i]->ReduceDashDuration(1.0f);
 		}
 
 		if (players[i]->GetDashDuration() <= 0)
@@ -759,7 +759,7 @@ void LevelGameplay::UpdateMovement()
 		
 		if (time1s >= 1.0f && players[i]->GetIsStun() == true)
 		{
-			players[i]->ReduceStunDuration();
+			players[i]->ReduceStunDuration(1.0f);
 		}
 
 		if (players[i]->GetStunDuration() <= 0)
