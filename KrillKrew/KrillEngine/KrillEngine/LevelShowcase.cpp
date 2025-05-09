@@ -182,12 +182,18 @@ void LevelShowcase::LevelLoad()
 	// Stun																							   
 	spriteList["P4_Stun"] = SpritesheetInfo("P3_Stun",						"../Resource/Texture/Crunk/P4_Stun.png", 350, 350, 700, 350, false);
 
+	// Item
 	spriteList["Bomb"] = SpritesheetInfo("Bomb", "../Resource/Texture/Ability/abi_spr_bomb_projecttile.png", 300, 300, 1800, 300, true);
 	spriteList["Trap"] = SpritesheetInfo("Trap", "../Resource/Texture/Ability/abi_spr_jellyfish_putdown.png", 256, 256, 4096, 256, false);
 	spriteList["TNT"] = SpritesheetInfo("TNT", "../Resource/Texture/Ability/abi_spr_landmine_idle.png", 370, 370, 740, 370, true);
 	spriteList["Teleport"] = SpritesheetInfo("Teleport", "../Resource/Texture/Ability/abi_spr_teleport_projectile.png", 211, 97, 422, 97, true);
 	spriteList["Bola"] = SpritesheetInfo("Bola", "../Resource/Texture/Ability/abi_spr_stun_projecttile.png", 400, 400, 1600, 400, true);
 	spriteList["Cleave"] = SpritesheetInfo("Cleave", "../Resource/Texture/Ability/abi_spr_cleave_side.png", 358, 258, 1074, 258, true);
+
+	spriteList["Bomb_Explode"] = SpritesheetInfo("Bomb_Explode",					"../Resource/Texture/Ability/abi_spr_bomb_explosion.png", 498, 498, 2490, 498, false);
+	spriteList["Landmine_Explode"] = SpritesheetInfo("Landmine_Explode",			"../Resource/Texture/Ability/abi_spr_landmine_explosion.png", 370, 370, 2590, 370, false);
+	spriteList["Teleport_Explode"] = SpritesheetInfo("Teleport_Explode",			"../Resource/Texture/Ability/abi_spr_teleport_explosion.png", 250, 250, 1000, 250, false);
+	spriteList["Stun_Explode"] = SpritesheetInfo("Stun_Explode",					"../Resource/Texture/Ability/abi_spr_stun_explosion.png", 400, 400, 1600, 400, false);
 	
 	spriteList["Xoey_UI"] = SpritesheetInfo("Xoey_UI", "../Resource/Texture/xoey.png", 430, 220, 430, 220);
 	spriteList["Byssa_UI"] = SpritesheetInfo("Byssa_UI", "../Resource/Texture/byssa.png", 430, 220, 430, 220);
@@ -1090,7 +1096,7 @@ void LevelShowcase::UpdateProjectile()
 		{
 			//KK_TRACE("UpdateProjectile: Projectile check");
 			projectile->ReduceLifeTime(timer->getDeltaTime());
-			KK_INFO("Prpjectile Lifetime {0}", projectile->GetLifetime());
+			//KK_INFO("Prpjectile Lifetime {0}", projectile->GetLifetime());
 			projectile->Translate(projectile->GetVelocity());
 
 			
@@ -1146,7 +1152,7 @@ void LevelShowcase::UpdateMovement()
 				player->GetYIsPositive()
 			);
 
-			KK_CORE_WARN("Set Velocity = {0}, {1}", knockbackVeloX, knockbackVeloY);
+			//KK_CORE_WARN("Set Velocity = {0}, {1}", knockbackVeloX, knockbackVeloY);
 		}
 
 		if (player->GetIsSlow() == true)
@@ -1726,6 +1732,7 @@ void LevelShowcase::AimFireball(int numPlayer, PlayerObject::AbilityButton butto
 	players[numPlayer]->SetIsAiming(true);
 	players[numPlayer]->SetHoldingProjectile(ProjectileObject::TypeProjectile::Fireball);
 	ProjectileObject* projectile = new ProjectileObject();
+	projectile->SetAnimationSprite(ProjectileObject::Collide, spriteList.find("Bomb_Explode")->second);
 	projectile->SetSpriteInfo(spriteList.find("Bomb")->second);
 	projectile->SetTexture(spriteList.find("Bomb")->second.texture);
 	projectile->SetPosition(players[numPlayer]->getPos());
@@ -1809,6 +1816,7 @@ void LevelShowcase::AimTeleport(int numPlayer, PlayerObject::AbilityButton butto
 	players[numPlayer]->SetIsAiming(true);
 	players[numPlayer]->SetHoldingProjectile(ProjectileObject::TypeProjectile::Teleport);
 	ProjectileObject* projectile = new ProjectileObject();
+	//projectile->SetAnimationSprite(ProjectileObject::Collide, spriteList.find("Teleport_Explode")->second);
 	projectile->SetSpriteInfo(spriteList.find("Teleport")->second);
 	projectile->SetTexture(spriteList.find("Teleport")->second.texture);
 	projectile->SetPosition(players[numPlayer]->getPos());
@@ -1850,6 +1858,7 @@ void LevelShowcase::AimBola(int numPlayer, PlayerObject::AbilityButton button) {
 	players[numPlayer]->SetIsAiming(true);
 	players[numPlayer]->SetHoldingProjectile(ProjectileObject::TypeProjectile::Bola);
 	ProjectileObject* projectile = new ProjectileObject();
+	//projectile->SetAnimationSprite(ProjectileObject::Collide, spriteList.find("Bola_Explode")->second);
 	projectile->SetSpriteInfo(spriteList.find("Bola")->second);
 	projectile->SetTexture(spriteList.find("Bola")->second.texture);
 	projectile->SetPosition(players[numPlayer]->getPos());
@@ -1888,6 +1897,7 @@ void LevelShowcase::AimCleave(int numPlayer, PlayerObject::AbilityButton button)
 	players[numPlayer]->SetIsAiming(true);
 	players[numPlayer]->SetHoldingProjectile(ProjectileObject::TypeProjectile::Cleave);
 	ProjectileObject* projectile = new ProjectileObject();
+	
 	projectile->SetSpriteInfo(spriteList.find("Cleave")->second);
 	projectile->SetTexture(spriteList.find("Cleave")->second.texture);
 	projectile->SetPosition(players[numPlayer]->getPos());

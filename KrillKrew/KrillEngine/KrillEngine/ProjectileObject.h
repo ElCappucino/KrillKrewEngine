@@ -23,11 +23,21 @@ public:
 		Cleave
 	};
 
+	virtual enum AnimationState
+	{
+		Idle = 1,
+		Collide
+	};
+
+	AnimationState currAnimState;
+	std::map<AnimationState, SpritesheetInfo> animList;
+
 	glm::vec3 velocity;
 	float lifeTime;
 	PlayerObject* playerOwner;
 	bool CanKnockback;
 	TypeProjectile type;
+	
 	bool isShooting;
 	bool CanStun;
 
@@ -68,5 +78,9 @@ public:
 	virtual void OnTriggerEnter(Collider* other);
 	virtual void OnTriggerStay(Collider* other);
 	virtual void OnTriggerExit(Collider* other);
+
+	virtual void UpdateCurrentAnimation();
+	virtual void SetAnimationSprite(AnimationState state, SpritesheetInfo spriteInfo);
+	virtual void ChangeAnimationState(AnimationState anim);
 
 };

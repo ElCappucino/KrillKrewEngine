@@ -100,7 +100,7 @@ void ProjectileObject::SetOwner(PlayerObject* player)
 void ProjectileObject::ReduceLifeTime(float dt) 
 {
 	lifeTime -= dt;
-	if (lifeTime <= 0.0f) 
+	if (lifeTime <= 0.0f && currAnimState != AnimationState::Collide)
 	{ 
 		if (type == ProjectileObject::TypeProjectile::Teleport) {
 			playerOwner->SetPosition(this->getPos());
@@ -117,10 +117,8 @@ void ProjectileObject::ReduceLifeTime(float dt)
 		{
 			//KK_ERROR("This is not fireball");
 		}
-
-		this->SetIsActive(false);
-		playerOwner->SetIsShooting(false);
-		playerOwner->RemoveOwningProjectile(this);
+		ProjectileObject::ChangeAnimationState(AnimationState::Collide);
+		
 	}
 }
 
@@ -150,7 +148,7 @@ void ProjectileObject::ExplodeTileInRange()
 	{
 		tile->GotHit();
 	}
-	this->isActive = false;
+	//this->isActive = false;
 }
 
 float ProjectileObject::GetLifetime()
@@ -161,7 +159,6 @@ Collider* ProjectileObject::GetCollider()
 {
 	return collider;
 }
-
 void ProjectileObject::OnColliderEnter(Collider* other)
 {
 	// Base
@@ -195,7 +192,7 @@ void ProjectileObject::OnColliderEnter(Collider* other)
 			{
 				//KK_ERROR("Projectile has no owner");
 			}
-			else
+			else if (currAnimState != AnimationState::Collide)
 			{
 				//KK_INFO("Projectile Hit Player");
 				playerOwner->SetIsShooting(false);
@@ -220,11 +217,16 @@ void ProjectileObject::OnColliderEnter(Collider* other)
 					//KK_ERROR("This is not fireball");
 				}
 				
-				playerOwner->RemoveOwningProjectile(this);
-				this->isActive = false;
+				/*playerOwner->RemoveOwningProjectile(this);
+				this->isActive = false;*/
 
-				
+				// updateSpritesheet
+
+				ProjectileObject::ChangeAnimationState(AnimationState::Collide);
+				// set column to 0
 			}
+
+			
 		}
 		
 	}
@@ -324,4 +326,39 @@ void ProjectileObject::SetIsCanStun(bool isCanStun) {
 
 bool ProjectileObject::GetIsCanStun() {
 	return CanStun;
+}
+void ProjectileObject::UpdateCurrentAnimation()
+{
+	
+	if (currAnimState == AnimationState::Collide)
+	{
+		this->SetVelocity(0, 0, true, true);
+		
+		float lastFrame = (GetSpriteRenderer()->GetSheetWidth() / GetSpriteRenderer()->GetSpriteWidth()) - 1;
+		KK_CORE_WARN("ProjectileObject: lastFrame = {0}", lastFrame);
+		KK_CORE_WARN("ProjectileObject: GetSpriteRenderer()->GetColumn() = {0}", GetSpriteRenderer()->GetColumn());
+		if (GetIsAnimated() && GetSpriteRenderer()->GetColumn() == lastFrame)
+		{
+			this->SetIsActive(false);
+			playerOwner->SetIsShooting(false);
+			playerOwner->RemoveOwningProjectile(this);
+		}
+	}
+}
+
+void ProjectileObject::SetAnimationSprite(AnimationState state, SpritesheetInfo spriteInfo)
+{
+	animList.insert({ state, spriteInfo });
+}
+void ProjectileObject::ChangeAnimationState(AnimationState anim)
+{
+	if (currAnimState != anim)
+	{
+		currAnimState = anim;
+		this->SetTextureWithID(animList.find(anim)->second, animList.find(anim)->second.textureid);
+		this->spriteRenderer->SetTexture(animList.find(anim)->second.texture);
+		//this->SetTexture(animList.find(anim)->second.texture);
+		this->spriteRenderer->ShiftTo(0, 0);
+		this->spriteRenderer->isLoop = animList.find(anim)->second.isLoop;
+	}
 }
