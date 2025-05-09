@@ -19,6 +19,8 @@
 
 class PlayerHitboxObject;
 class TileObject;
+class ProjectileObject;
+class TrapObject;
 
 
 /// @brief The class for creating object that render using texture
@@ -82,6 +84,8 @@ private:
 	AnimationState currAnimState;
 	std::map<AnimationState, SpritesheetInfo> animList;
 	//std::array<Ability*, 3> abilities;
+	std::vector<ProjectileObject*> ownProjectile;
+	std::vector<TrapObject*> ownTrap;
 	
 	glm::vec3 velocity;
 	glm::vec2 currDirection;
@@ -213,4 +217,13 @@ public:
 
 	void ApplyKnockback(EntityObject* obj);
 	void UpdateAbilityCooldown(float dt);
+
+	// Owning trap and projectile will remove owning when object is destroyed
+	std::vector<ProjectileObject*> GetOwningProjectile() const;
+	void AddOwningProjectile(ProjectileObject* projectile);
+	void RemoveOwningProjectile(ProjectileObject* projectile);
+
+	std::vector<TrapObject*> GetOwningTrap() const;
+	void AddOwningTrap(TrapObject* trap);
+	void RemoveOwningTrap(TrapObject* trap);
 };

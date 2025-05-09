@@ -661,9 +661,7 @@ void LevelGameplay::UpdateProjectile()
 		ProjectileObject* projectile = dynamic_cast<ProjectileObject*>(objectsList[i]);
 		if (projectile != nullptr) {
 
-			if ((dt % 50) == 0) {
-				projectile->ReduceLifeTime();
-			}
+			projectile->ReduceLifeTime(timer->getDeltaTime());
 
 			if (projectile->GetLifetime() <= 0)
 			{

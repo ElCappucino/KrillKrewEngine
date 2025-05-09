@@ -97,13 +97,15 @@ void ProjectileObject::SetOwner(PlayerObject* player)
 {
 	this->playerOwner = player;
 }
-void ProjectileObject::ReduceLifeTime() 
+void ProjectileObject::ReduceLifeTime(float dt) 
 {
-	lifeTime -= 1;
-	if (lifeTime <= 0) 
+	lifeTime -= dt;
+	if (lifeTime <= 0.0f) 
 	{ 
+		if (type == ProjectileObject::TypeProjectile::Teleport) {
+			playerOwner->SetPosition(this->getPos());
+		}
 		
-		playerOwner->SetIsShooting(false);
 		if (this->type == TypeProjectile::Fireball)
 		{
 			ExplodeTileInRange();
@@ -115,6 +117,10 @@ void ProjectileObject::ReduceLifeTime()
 		{
 			//KK_ERROR("This is not fireball");
 		}
+
+		this->SetIsActive(false);
+		playerOwner->SetIsShooting(false);
+		playerOwner->RemoveOwningProjectile(this);
 	}
 }
 
@@ -214,6 +220,7 @@ void ProjectileObject::OnColliderEnter(Collider* other)
 					//KK_ERROR("This is not fireball");
 				}
 				
+				playerOwner->RemoveOwningProjectile(this);
 				this->isActive = false;
 
 				

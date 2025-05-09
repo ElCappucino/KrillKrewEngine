@@ -760,3 +760,45 @@ void PlayerObject::UpdateCollider()
 	this->GetGroundColliderObject()->SetPosition(groundCheckPos);
 	this->GetGroundCollider()->Update(groundCheckSize, groundCheckPos);
 }
+std::vector<ProjectileObject*> PlayerObject::GetOwningProjectile() const
+{
+	return ownProjectile;
+}
+void PlayerObject::AddOwningProjectile(ProjectileObject* projectile)
+{
+	ownProjectile.emplace_back(projectile);
+}
+
+void PlayerObject::RemoveOwningProjectile(ProjectileObject* projectile)
+{
+	auto it = std::find(ownProjectile.begin(), ownProjectile.end(), projectile);
+	if (it == ownProjectile.end())
+	{
+		KK_ERROR("PlayerObject: could not find projectile to remove");
+	}
+	else
+	{
+		ownProjectile.erase(it);
+	}
+}
+
+std::vector<TrapObject*> PlayerObject::GetOwningTrap() const
+{
+	return ownTrap;
+}
+void PlayerObject::AddOwningTrap(TrapObject* trap)
+{
+	ownTrap.emplace_back(trap);
+}
+void PlayerObject::RemoveOwningTrap(TrapObject* trap)
+{
+	auto it = std::find(ownTrap.begin(), ownTrap.end(), trap);
+	if (it == ownTrap.end())
+	{
+		KK_ERROR("PlayerObject: could not find trap to remove");
+	}
+	else
+	{
+		ownTrap.erase(it);
+	}
+}
