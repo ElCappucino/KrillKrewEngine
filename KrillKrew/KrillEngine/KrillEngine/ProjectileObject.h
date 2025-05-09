@@ -45,7 +45,7 @@ public:
 
 	glm::vec3 GetVelocity();
 	void ReduceLifeTime(float dt);
-	int GetLifetime();
+	float GetLifetime();
 	void SetCanKnockback(bool isCanKnockback);
 	bool GetCanKnockback();
 	PlayerObject* GetOwner();

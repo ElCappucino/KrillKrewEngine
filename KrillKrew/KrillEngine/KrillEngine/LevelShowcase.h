@@ -172,14 +172,21 @@ private:
 	int playersSkill[4][3];
 	int isResetScene;
 
-	float CooldownMelee = 2.f;
-	float CooldownFireball = 3.f;
-	float CooldownTrap = 3.f;
-	float CooldownDash = 3.f;
-	float CooldownTNT = 3.f;
-	float CooldownTeleport = 3.f;
-	float CooldownBola = 3.f;
-	float CooldownCleave = 3.f;
+	float MeleeCooldown = 2.f;
+	float FireballCooldown = 3.f;
+	float TrapCooldown = 3.f;
+	float DashCooldown = 3.f;
+	float TNTCooldown = 3.f;
+	float TeleportCooldown = 3.f;
+	float BolaCooldown = 3.f;
+	float CleaveCooldown = 3.f;
+
+	float FireballLifetime = 1.f;
+	float TeleportLifetime = 2.f;
+	float BolaLifetime = 2.f;
+	float CleaveLifetime = 2.f;
+
+	float DashDuration = 0.2f;
 
 	int playerSize = 0;
 	int playerNum = 0;

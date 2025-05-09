@@ -773,8 +773,8 @@ void LevelShowcase::UpdateInput()
 					{
 						// use old velo during dash to disable control
 						players[i]->SetVelocity(
-							abs(norAxisXOld / 5.f),
-							abs(norAxisYOld / 5.f),
+							abs(norAxisXOld),
+							abs(norAxisYOld),
 							isPositiveXOld,
 							isPositiveYOld
 						);
@@ -783,8 +783,8 @@ void LevelShowcase::UpdateInput()
 					{
 						// if not affecit by anything, use normaml velocity
 						players[i]->SetVelocity(
-							abs(norAxisX) / 5.f,
-							abs(norAxisY) / 5.f,
+							abs(norAxisX),
+							abs(norAxisY),
 							isPositiveX,
 							isPositiveY
 						);
@@ -933,7 +933,7 @@ void LevelShowcase::UpdateInput()
 				{
 					players[i]->ChangeMeleeAnimation();
 					players[i]->HitAimingTile();
-					players[i]->SetMeleeCooldown(2.f);
+					players[i]->SetMeleeCooldown(MeleeCooldown);
 					soundManager->PlaySFX("hit_test", false);
 				}
 				
@@ -1090,7 +1090,7 @@ void LevelShowcase::UpdateProjectile()
 		{
 			//KK_TRACE("UpdateProjectile: Projectile check");
 			projectile->ReduceLifeTime(timer->getDeltaTime());
-
+			KK_INFO("Prpjectile Lifetime {0}", projectile->GetLifetime());
 			projectile->Translate(projectile->GetVelocity());
 
 			
@@ -1253,7 +1253,37 @@ void LevelShowcase::LevelDraw()
 
 	if (ImGui::Button("Reset Scene", ImVec2(100, 50)))
 		isResetScene++;
-		
+	// Cooldown Stats
+	/*float MeleeCooldown = 2.f;
+	float FireballCooldown = 3.f;
+	float TrapCooldown = 3.f;
+	float DashCooldown = 3.f;
+	float TNTCooldown = 3.f;
+	float TeleportCooldown = 3.f;
+	float BolaCooldown = 3.f;
+	float CleaveCooldown = 3.f;
+
+	float FireballLifetime = 3.f;
+	float TeleportLifetime = 2.f;
+	float BolaLifetime = 2.f;
+	float CleaveLifetime = 2.f;*/
+
+	ImGui::Text("Cooldown stats");
+	ImGui::InputFloat("Melee Cooldown", &MeleeCooldown, 0.1f, 1.0f, "%.2f");
+	ImGui::InputFloat("Fireball Cooldown", &FireballCooldown, 0.1f, 1.0f, "%.2f");
+	ImGui::InputFloat("Trap Cooldown", &TrapCooldown, 0.1f, 1.0f, "%.2f");
+	ImGui::InputFloat("Dash Cooldown", &DashCooldown, 0.1f, 1.0f, "%.2f");
+	ImGui::InputFloat("TNT Cooldown", &TNTCooldown, 0.1f, 1.0f, "%.2f");
+	ImGui::InputFloat("Teleport Cooldown", &TeleportCooldown, 0.1f, 1.0f, "%.2f");
+	ImGui::InputFloat("Bola Cooldown", &BolaCooldown, 0.1f, 1.0f, "%.2f");
+	ImGui::InputFloat("Cleave Cooldown", &CleaveCooldown, 0.1f, 1.0f, "%.2f");
+
+	ImGui::Text("Lifetime stats");
+	ImGui::InputFloat("Fireball Lifetime", &FireballLifetime, 0.1f, 1.0f, "%.2f");
+	ImGui::InputFloat("Teleport Lifetime", &TeleportLifetime, 0.1f, 1.0f, "%.2f");
+	ImGui::InputFloat("Bola Lifetime", &BolaLifetime, 0.1f, 1.0f, "%.2f");
+	ImGui::InputFloat("Cleave Lifetime", &CleaveLifetime, 0.1f, 1.0f, "%.2f");
+
 	if (isResetScene & 1)
 	{
 		GameEngine::GetInstance()->GetStateController()->loadingState = GameState::GS_LEVELSHOWCASE;
@@ -1283,8 +1313,8 @@ void LevelShowcase::LevelDraw()
 				ImGui::Text("isOnGround: %s", players[i]->GetIsOnGround() ? "true" : "false");
 				ImGui::Text("Current Velocity: %f, %f", players[i]->GetVelocity().x, players[i]->GetVelocity().y);
 
-				ImGui::DragFloat("ColX Button", &groundColX[i], 2.0f, 0.0f, 1024.f, "%.3f");
-				ImGui::DragFloat("ColY Button", &groundColY[i], 2.0f, 0.0f, 1024.f, "%.3f");
+				/*ImGui::DragFloat("ColX Button", &groundColX[i], 2.0f, 0.0f, 1024.f, "%.3f");
+				ImGui::DragFloat("ColY Button", &groundColY[i], 2.0f, 0.0f, 1024.f, "%.3f");*/
 				ImGui::DragFloat("Col offset X", &groundColOffsetX[i], 2.0f, -1024.f, 1024.f, "%.3f");
 				ImGui::DragFloat("Col offset Y", &groundColOffsetY[i], 2.0f, -1024.f, 1024.f, "%.3f");
 
@@ -1592,7 +1622,7 @@ void LevelShowcase::UsingAbilityKeyDown(int numPlayer, PlayerObject::AbilityButt
 						trap->ExplodeTileInRange();
 						KK_TRACE("Press Again");
 						trap->isActivate = true;
-						players[numPlayer]->SetAbilityCooldown(button, 3);
+						players[numPlayer]->SetAbilityCooldown(button, TNTCooldown);
 						players[numPlayer]->SetIsTNT(false);
 					}
 				}
@@ -1695,7 +1725,6 @@ void LevelShowcase::AimFireball(int numPlayer, PlayerObject::AbilityButton butto
 	players[numPlayer]->SetVelocity(0, 0, false, false);
 	players[numPlayer]->SetIsAiming(true);
 	players[numPlayer]->SetHoldingProjectile(ProjectileObject::TypeProjectile::Fireball);
-	//players[numPlayer]->ChangeAnimationState(PlayerObject::AnimationState::Cast);
 	ProjectileObject* projectile = new ProjectileObject();
 	projectile->SetSpriteInfo(spriteList.find("Bomb")->second);
 	projectile->SetTexture(spriteList.find("Bomb")->second.texture);
@@ -1715,23 +1744,25 @@ void LevelShowcase::AimFireball(int numPlayer, PlayerObject::AbilityButton butto
 	//objectsList.push_back(projectile->GetCollider()->GetGizmos());
 }
 
-void LevelShowcase::ShootFireball(int numPlayer, PlayerObject::AbilityButton button) {
+void LevelShowcase::ShootFireball(int numPlayer, PlayerObject::AbilityButton button) 
+{
 	players[numPlayer]->SetIsAiming(false);
-	for (int j = 0; j < objectsList.size(); j++) {
-		ProjectileObject* projectile = dynamic_cast<ProjectileObject*>(objectsList[j]);
-		if (projectile != nullptr && projectile->GetOwner() == players[numPlayer] && projectile->GetType() == ProjectileObject::TypeProjectile::Fireball) {
-			projectile->SetLifeTime(1);
+	for (ProjectileObject* projectile : players[numPlayer]->GetOwningProjectile()) 
+	{
+		if (projectile->GetType() == ProjectileObject::TypeProjectile::Fireball) 
+		{
+			projectile->SetLifeTime(FireballLifetime);
 			projectile->SetIsShooting(true);
 			//projectile->SetIsActive(true);
 			players[numPlayer]->SetHoldingProjectile(0);
 		}
 	}
-	players[numPlayer]->SetAbilityCooldown(button, 6);
+	players[numPlayer]->SetAbilityCooldown(button, FireballCooldown);
 }
 
 void LevelShowcase::Trap(int numPlayer, PlayerObject::AbilityButton button) {
 	players[numPlayer]->ChangeAnimationState(PlayerObject::AnimationState::PlaceItem);
-	players[numPlayer]->SetAbilityCooldown(button, 3);
+	players[numPlayer]->SetAbilityCooldown(button, TrapCooldown);
 	TrapObject* Trap = new TrapObject();
 	Trap->SetSpriteInfo(spriteList.find("Trap")->second);
 	Trap->SetTexture(spriteList.find("Trap")->second.texture);
@@ -1748,9 +1779,9 @@ void LevelShowcase::Trap(int numPlayer, PlayerObject::AbilityButton button) {
 }
 
 void LevelShowcase::Dash(int num, PlayerObject::AbilityButton button) {
-	players[num]->SetAbilityCooldown(button, 3);
+	players[num]->SetAbilityCooldown(button, DashCooldown);
 	players[num]->SetIsDashing(true);
-	players[num]->SetDashDuration(0.4f);
+	players[num]->SetDashDuration(DashDuration);
 }
 
 void LevelShowcase::TNT(int numPlayer, PlayerObject::AbilityButton button) {
@@ -1795,16 +1826,19 @@ void LevelShowcase::AimTeleport(int numPlayer, PlayerObject::AbilityButton butto
 	players[numPlayer]->AddOwningProjectile(projectile);
 }
 
-void LevelShowcase::ShootTeleport(int numPlayer, PlayerObject::AbilityButton button) {
-	if (players[numPlayer]->GetIsShooting() == false) {
+void LevelShowcase::ShootTeleport(int numPlayer, PlayerObject::AbilityButton button) 
+{
+	if (players[numPlayer]->GetIsShooting() == false) 
+	{
 		players[numPlayer]->SetIsShooting(true);
 		players[numPlayer]->SetIsAiming(false);
-		for (int j = 0; j < objectsList.size(); j++) {
-			ProjectileObject* projectile = dynamic_cast<ProjectileObject*>(objectsList[j]);
-			if (projectile != nullptr && projectile->GetOwner() == players[numPlayer] && projectile->GetType() == ProjectileObject::TypeProjectile::Teleport) {
-				projectile->SetLifeTime(2);
+
+		for (ProjectileObject* projectile : players[numPlayer]->GetOwningProjectile()) 
+		{
+			if (projectile->GetType() == ProjectileObject::TypeProjectile::Teleport) 
+			{
+				projectile->SetLifeTime(TeleportLifetime);
 				projectile->SetIsShooting(true);
-				//projectile->SetIsActive(true);
 				players[numPlayer]->SetHoldingProjectile(0);
 			}
 		}
@@ -1833,21 +1867,23 @@ void LevelShowcase::AimBola(int numPlayer, PlayerObject::AbilityButton button) {
 	players[numPlayer]->AddOwningProjectile(projectile);
 }
 
-void LevelShowcase::ShootBola(int numPlayer, PlayerObject::AbilityButton button) {
+void LevelShowcase::ShootBola(int numPlayer, PlayerObject::AbilityButton button) 
+{
 	players[numPlayer]->SetIsAiming(false);
-	for (int j = 0; j < objectsList.size(); j++) {
-		ProjectileObject* projectile = dynamic_cast<ProjectileObject*>(objectsList[j]);
-		if (projectile != nullptr && projectile->GetOwner() == players[numPlayer] && projectile->GetType() == ProjectileObject::TypeProjectile::Bola) {
-			projectile->SetLifeTime(2);
+	for (ProjectileObject* projectile : players[numPlayer]->GetOwningProjectile()) 
+	{
+		if (projectile->GetType() == ProjectileObject::TypeProjectile::Bola) 
+		{
+			projectile->SetLifeTime(BolaLifetime);
 			projectile->SetIsShooting(true);
-			//projectile->SetIsActive(true);
 			players[numPlayer]->SetHoldingProjectile(0);
 		}
 	}
-	players[numPlayer]->SetAbilityCooldown(button, 6);
+	players[numPlayer]->SetAbilityCooldown(button, BolaCooldown);
 }
 
-void LevelShowcase::AimCleave(int numPlayer, PlayerObject::AbilityButton button) {
+void LevelShowcase::AimCleave(int numPlayer, PlayerObject::AbilityButton button) 
+{
 	players[numPlayer]->SetVelocity(0, 0, false, false);
 	players[numPlayer]->SetIsAiming(true);
 	players[numPlayer]->SetHoldingProjectile(ProjectileObject::TypeProjectile::Cleave);
@@ -1866,20 +1902,20 @@ void LevelShowcase::AimCleave(int numPlayer, PlayerObject::AbilityButton button)
 	std::cout << "Owner " << projectile->GetOwner()->GetPlayerNumber() << std::endl;
 	objectsList.push_back(projectile);
 	entityObjects.push_back(projectile);
-	players[numPlayer]->SetAbilityCooldown(button, 6);
+	//players[numPlayer]->SetAbilityCooldown(button, CleaveCooldown);
 	players[numPlayer]->AddOwningProjectile(projectile);
 }
 
 void LevelShowcase::ShootCleave(int numPlayer, PlayerObject::AbilityButton button) {
 	players[numPlayer]->SetIsAiming(false);
-	for (int j = 0; j < objectsList.size(); j++) {
-		ProjectileObject* projectile = dynamic_cast<ProjectileObject*>(objectsList[j]);
-		if (projectile != nullptr && projectile->GetOwner() == players[numPlayer] && projectile->GetType() == ProjectileObject::TypeProjectile::Cleave) {
-			projectile->SetLifeTime(2);
+	for (ProjectileObject* projectile : players[numPlayer]->GetOwningProjectile()) 
+	{
+		if (projectile->GetType() == ProjectileObject::TypeProjectile::Cleave) 
+		{
+			projectile->SetLifeTime(CleaveLifetime);
 			projectile->SetIsShooting(true);
-			//projectile->SetIsActive(true);
 			players[numPlayer]->SetHoldingProjectile(0);
 		}
 	}
-	players[numPlayer]->SetAbilityCooldown(button, 6);
+	players[numPlayer]->SetAbilityCooldown(button, CleaveCooldown);
 }

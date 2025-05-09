@@ -115,20 +115,16 @@ void PlayerObject::SetVelocity(float axisX, float axisY, bool isPositiveX, bool 
 
 	if (isDashing) 
 	{
-		velocity = glm::vec3(axisX * 5.f, axisY * 5.f, 0) * dashSpeed;
+		velocity = glm::vec3(axisX, axisY, 0) * dashSpeed;
 	}
 	else if (isSlow) 
 	{
-		std::cout << "IsSlow" << std::endl;
-		velocity = glm::vec3(axisX * 5.f, axisY * 5.f, 0) / slowness;
-	}
-	else if (isKnockback)
-	{
-		velocity = glm::vec3(axisX, axisY, 0);
+		//std::cout << "IsSlow" << std::endl;
+		velocity = glm::vec3(axisX, axisY, 0) / slowness;
 	}
 	else
 	{
-		velocity = glm::vec3(axisX * 5.f, axisY * 5.f, 0);
+		velocity = glm::vec3(axisX, axisY, 0);
 	}
 
 }
@@ -676,9 +672,10 @@ void PlayerObject::ApplyKnockback(EntityObject* obj)
 	{
 		
 		glm::vec3 knockbackDirection = obj->getPos() - this->getPos();
-
-		float knockbackDirectionX = knockbackDirection.x / 255.f;
-		float knockbackDirectionY = knockbackDirection.y / 255.f;
+		float magnitude = sqrt(std::pow(knockbackDirection.x, 2) + pow(knockbackDirection.y, 2));
+		KK_CORE_INFO("PlayerObject: magnitude = {0}", magnitude);
+		float knockbackDirectionX = knockbackDirection.x / magnitude;
+		float knockbackDirectionY = knockbackDirection.y / magnitude;
 
 		bool knockbackDirectionXisPositive = false;
 		bool knockbackDirectionYisPositive = false;

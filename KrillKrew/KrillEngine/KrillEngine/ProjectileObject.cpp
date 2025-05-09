@@ -153,7 +153,7 @@ void ProjectileObject::ExplodeTileInRange()
 	this->isActive = false;
 }
 
-int ProjectileObject::GetLifetime() 
+float ProjectileObject::GetLifetime()
 {
 	return lifeTime;
 }
