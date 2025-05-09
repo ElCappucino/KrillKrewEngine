@@ -11,14 +11,12 @@ class LevelMainMenu : public Level
 
 private:
 	std::vector<DrawableObject*> objectsList;
+	std::vector<TextObject*> textList;
 	std::map<std::string, SpritesheetInfo> spriteList;
 	PlayerObject* players[4]; // add up to 4 players
 	int playerSize = 0;
 
 	int playerNumber = 4; // Change later
-	std::vector<float> posXs;
-	std::vector<float> posYs;
-	std::vector<std::string> texts;
 	int ready[4] = { 0 };
 	
 
@@ -33,9 +31,11 @@ private:
 
 	struct config
 	{
+		int number;
 		std::string text;
-		int textPosX;
-		int textPosY;
+		float textPosX;
+		float textPosY;
+		int textSize;
 	};
 
 	std::vector<config> configs;
@@ -54,5 +54,5 @@ public:
 	void UpdateInput();
 	void UpdateUi();
 	void saveConfig(std::string& filename, config con);
-	void loadConfig();
+	void loadConfig(std::string filename);
 };

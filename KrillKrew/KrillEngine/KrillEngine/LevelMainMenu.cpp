@@ -15,14 +15,20 @@ void LevelMainMenu::LevelInit() {
 		(SCREEN_HEIGHT / 2));
 
 	//test text
+	config configbutton0;
+	configbutton0.number = 0;
+	configbutton0.text = "start";
+	configbutton0.textPosX = 100.f;
+	configbutton0.textPosY = 100.f;
+	configbutton0.textSize = 50;
 	TextObject* texted = new TextObject();
-	std::string text1 = "Start";
-	texted->loadText(text1, SDL_Color{ 255,0,0,0 }, 50);
-	texted->SetPosition(glm::vec3(100, 100, 0));
-	posXs.push_back(texted->getPos().x);
-	posYs.push_back(texted->getPos().y);
-	texts.push_back(text1);
+	configs.push_back(configbutton0);
+	loadConfig("button0.json");
+	texted->loadText(configs.at(0).text, SDL_Color{255,0,0,0}, configs.at(0).textSize);
+	texted->SetPosition(glm::vec3(configs.at(0).textPosX, configs.at(0).textPosY, 0));
 	objectsList.push_back(texted);
+	textList.push_back(texted);
+	
 
 	// Setup Dear ImGui context
 	IMGUI_CHECKVERSION();
@@ -41,10 +47,9 @@ void LevelMainMenu::LevelInit() {
 	std::cout << GameEngine::GetInstance()->GetStateController()->loadingState << std::endl;
 }
 void LevelMainMenu::LevelUpdate() {
-	for (int i = 0; i < posXs.size(); i++) {
-		objectsList.at(i)->SetPosition(glm::vec3(posXs.at(i), posYs.at(i), 0));
+	for (int i = 0; i < configs.size(); i++) {
+		objectsList.at(i)->SetPosition(glm::vec3(configs.at(i).textPosX, configs.at(i).textPosY, 0));
 	}
-	
 }
 
 void LevelMainMenu::LevelDraw() {
@@ -64,18 +69,31 @@ void LevelMainMenu::LevelDraw() {
 	//// 1. Show the big demo window (Most of the sample code is in ImGui::ShowDemoWindow()! You can browse its code to learn more about Dear ImGui!).
 	//if (show_demo_window)
 	//	ImGui::ShowDemoWindow(&show_demo_window);
+
+	if (ImGui::Button("Go levelSelectAbility")) {
+		GameEngine::GetInstance()->GetStateController()->gameStateNext = GameState::GS_LEVELSELECTABILITY;
+	}
+
+	if (ImGui::Button("Load config")) {
+		loadConfig("button0.json");
+		textList.at(0)->loadText(configs.at(0).text, SDL_Color{255,0,0,0}, configs.at(0).textSize);
+		textList.at(0)->SetPosition(glm::vec3(configs.at(0).textPosX, configs.at(0).textPosY, 0));
+	}
 	
-	for (int i = 0; i < posXs.size(); i++) {
+	for (int i = 0; i < configs.size(); i++) {
 		ImGui::Text("Button%d", i);
-		ImGui::InputTextWithHint("Text", "enter text here", &texts.at(i)[0], texts.at(i).capacity() + 1);
-		ImGui::SliderFloat("posX", &posXs.at(i), -camera.GetCameraWidth() / 2, camera.GetCameraWidth() / 2);
-		ImGui::SliderFloat("posY", &posYs.at(i), -camera.GetCameraHeight() / 2, camera.GetCameraHeight() / 2);
+		//ImGui::InputTextWithHint("Text", "enter text here", &configs.at(i).text[0], configs.at(i).text[0] + 1);
+		ImGui::InputInt("Text Size", &configs.at(i).textSize);
+		ImGui::SliderFloat("PosX", &configs.at(i).textPosX, -camera.GetCameraWidth() / 2, camera.GetCameraWidth() / 2);
+		ImGui::SliderFloat("PosY", &configs.at(i).textPosY, -camera.GetCameraHeight() / 2, camera.GetCameraHeight() / 2);
 		if (ImGui::Button("Save config")) {
 			LevelMainMenu::config c;
-			c.text = texts.at(i);
-			c.textPosX = posXs.at(i);
-			c.textPosY = posYs.at(i);
-
+			c.number = configs.at(i).number;
+			//c.text = configs.at(i).text;
+			c.textPosX = configs.at(i).textPosX;
+			c.textPosY = configs.at(i).textPosY;
+			c.textSize = configs.at(i).textSize;
+			//std::cout << c.text << std::endl;
 			std::string fileName = "button" + std::to_string(i) + ".json";
 			saveConfig(fileName, c);
 		}
@@ -127,9 +145,11 @@ void LevelMainMenu::UpdateUi() {
 
 void LevelMainMenu::saveConfig(std::string& filename, config con) {
 	nlohmann::json data;
-	data["text"] = con.text;
+	data["number"] = con.number;
+	//data["text"] = con.text;
 	data["textPosX"] = con.textPosX;
 	data["textPosY"] = con.textPosY;
+	data["textSize"] = con.textSize;
 
 	std::ofstream file(filename);
 	if (file.is_open()) {
@@ -142,6 +162,25 @@ void LevelMainMenu::saveConfig(std::string& filename, config con) {
 	}
 }
 
-void LevelMainMenu::loadConfig() {
+void LevelMainMenu::loadConfig(std::string filename) {
+	std::ifstream file(filename);
+	nlohmann::json data = nlohmann::json::parse(file);
+	int id = data["number"];
 
+	if (file.is_open()) {
+		std::cout << "Opened" << std::endl;
+		for (int i = 0; i < configs.size(); i++) {
+			if (configs.at(i).number == id) {
+				std::cout << "Loaded" << std::endl;
+				//configs.at(i).text = data["text"];
+				configs.at(i).textPosX = data["textPosX"];
+				configs.at(i).textPosY = data["textPosY"];
+				configs.at(i).textSize = data["textSize"];
+			}
+		}
+	}
+
+	else {
+		std::cout << "Failed" << std::endl;
+	}
 }

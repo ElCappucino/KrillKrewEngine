@@ -1,6 +1,7 @@
 #pragma once
 #include "Level.h"
 #include "LevelUtilities.h"
+#include "nlohmann/json.hpp"
 
 /// @brief The class for level inherit test from P'tiam
 class LevelSelectAbility : public Level

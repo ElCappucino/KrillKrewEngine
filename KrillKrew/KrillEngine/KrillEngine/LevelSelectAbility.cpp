@@ -348,12 +348,12 @@ void LevelSelectAbility::LevelInit()
 	std::cout << GameEngine::GetInstance()->GetStateController()->loadingState << std::endl;
 	//std::ofstream MyFile("Ability.txt");
 	//std::ofstream abilityFile("Ability.txt");
-	for (int i = 0; i < 4; i++)
+	/*for (int i = 0; i < 4; i++)
 	{
 		std::string fileName = "Ability" + std::to_string(i) + ".txt";
 		std::ofstream abilityFile(fileName);
 		abilityFile.close();
-	}
+	}*/
 }
 
 void LevelSelectAbility::LevelUpdate()
@@ -594,7 +594,7 @@ void LevelSelectAbility::UpdateInput()
 			if (ready[0] + ready[1] + ready[2] + ready[3] == SDL_NumJoysticks()) {
 				for (int i = 0; i < SDL_NumJoysticks(); i++)
 				{
-					std::string fileName = "Ability" + std::to_string(i) + ".txt";
+					std::string fileName = "Ability" + std::to_string(i) + ".json";
 					abilityToFile(fileName, i);
 				}
 				GameEngine::GetInstance()->GetStateController()->gameStateNext = GameState::GS_LEVELSHOWCASE;
@@ -698,7 +698,7 @@ void LevelSelectAbility::LevelDraw()
 		//abilityToFile("Ability.txt", -1);
 		for (int i = 0; i < 4; i++)
 		{
-			std::string fileName = "Ability" + std::to_string(i) + ".txt";
+			std::string fileName = "Ability" + std::to_string(i) + ".json";
 			abilityToFile(fileName, i);
 		}
 		GameEngine::GetInstance()->GetStateController()->gameStateNext = GameState::GS_LEVELSHOWCASE;
@@ -710,45 +710,6 @@ void LevelSelectAbility::LevelDraw()
 		std::string buttonName;
 		ImGui::SeparatorText("");
 		ImGui::Text("Ability Player %d", i);
-
-		//buttonName = "FireBall##" + std::to_string(i);
-		//if (ImGui::Button(buttonName.c_str())) {
-		//	//abilityToFile(fileName, PlayerObject::Ability::Fireball, i);
-		//}
-
-		//ImGui::SameLine();
-		//buttonName = "Trap##" + std::to_string(i);
-		//if (ImGui::Button(buttonName.c_str())) {
-		//	//abilityToFile(fileName, PlayerObject::Ability::Trap, i);
-		//}
-
-		//ImGui::SameLine();
-		//buttonName = "Dash##" + std::to_string(i);
-		//if (ImGui::Button(buttonName.c_str())) {
-		//	//abilityToFile(fileName, PlayerObject::Ability::Dash, i);
-		//}
-
-		//ImGui::SameLine();
-		//buttonName = "TNT##" + std::to_string(i);
-		//if (ImGui::Button(buttonName.c_str())) {
-		//	//abilityToFile(fileName, PlayerObject::Ability::TNT, i);
-		//}
-
-		//buttonName = "Teleport##" + std::to_string(i);
-		//if (ImGui::Button(buttonName.c_str())) {
-		//	//abilityToFile(fileName, PlayerObject::Ability::Teleport, i);
-		//}
-
-		//ImGui::SameLine();
-		//buttonName = "Bola##" + std::to_string(i);
-		//if (ImGui::Button(buttonName.c_str())) {
-		//	//abilityToFile(fileName, PlayerObject::Ability::Bola, i);
-		//}
-		//ImGui::SameLine();
-		//buttonName = "Cleave##" + std::to_string(i);
-		//if (ImGui::Button(buttonName.c_str())) {
-		//	//abilityToFile(fileName, PlayerObject::Ability::Cleave, i);
-		//}
 
 		for (int j = 0; j < 3; j++) {
 			ImGui::Text("Ability%d: ", j);
@@ -816,11 +777,22 @@ void LevelSelectAbility::HandleKey(char key){}
 void LevelSelectAbility::HandleMouse(int type, int x, int y){}
 
 void LevelSelectAbility::abilityToFile(const std::string& fileName, int who) {
-	std::ofstream abilityFile(fileName);
-	for (int i = 0; i < 3; i++) {
-		abilityFile << playerAbility[who][i] << std::endl;
+
+	std::ofstream file(fileName);
+	nlohmann::json data;
+	data["ability0"] = playerAbility[who][0];
+	data["ability1"] = playerAbility[who][1];
+	data["ability2"] = playerAbility[who][2];
+
+	if (file.is_open()) {
+		file << data;
+		file.close();
+		std::cout << "Saved" << std::endl;
 	}
-	abilityFile.close();
+
+	else {
+		std::cout << "Failed" << std::endl;
+	}
 	
 	
 }

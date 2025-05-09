@@ -1,6 +1,7 @@
 #pragma once
 #include "Level.h"
 #include "LevelUtilities.h"
+#include "nlohmann/json.hpp"
 
 #define MAP_WIDTH  20 // 29
 #define MAP_HEIGHT 16 // 30
@@ -170,6 +171,7 @@ private:
 
 	int playerSize = 0;
 	int playerNum = 0;
+	int abilityId[3];
 	OrthographicValue targetSceneProjection; // use for lerping between the current projection and this (target projection).
 	Camera camera;
 	Timer* timer;
@@ -224,4 +226,6 @@ public:
 	void ShootBola(int numPlayer, PlayerObject::AbilityButton button);
 	void AimCleave(int numPlayer, PlayerObject::AbilityButton button);
 	void ShootCleave(int numPlayer, PlayerObject::AbilityButton button);
+
+	void loadAbility(std::string filename);
 };
