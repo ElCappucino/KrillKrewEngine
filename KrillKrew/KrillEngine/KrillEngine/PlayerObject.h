@@ -198,7 +198,7 @@ public:
 	float GetStunDuration() const;
 	bool GetIsOnGround() const;
 	bool GetIsFell() const;
-	bool GetMeleeCooldown() const;
+
 	PlayerObject::Ability GetAbilityByButton(AbilityButton button) const;
 
 
@@ -212,6 +212,9 @@ public:
 	bool GetIsTNT();
 	int GetHoldingProjectile();
 	bool GetIsStun();
+
+	bool GetMeleeCooldown() const;
+	void SetMeleeCooldown(float duration);
 
 	void CheckIfOnGround();
 

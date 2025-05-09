@@ -929,9 +929,14 @@ void LevelShowcase::UpdateInput()
 			if (Joystick::GetButtonDown(i, Joystick::Button::Square))
 			{
 				//players[i]->ChangeAnimationState(PlayerObject::AnimationState::Melee);
-				players[i]->ChangeMeleeAnimation();
-				players[i]->HitAimingTile();
-				soundManager->PlaySFX("hit_test", false);
+				if (players[i]->GetMeleeCooldown() <= 0.f)
+				{
+					players[i]->ChangeMeleeAnimation();
+					players[i]->HitAimingTile();
+					players[i]->SetMeleeCooldown(2.f);
+					soundManager->PlaySFX("hit_test", false);
+				}
+				
 			}
 
 			// Debug other player

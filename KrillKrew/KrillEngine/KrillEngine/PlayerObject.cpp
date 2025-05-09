@@ -513,10 +513,7 @@ glm::vec2 PlayerObject::GetCurrentDirection() const
 {
 	return currDirection;
 }
-bool PlayerObject::GetMeleeCooldown() const
-{
-	return meleeCooldown;
-}
+
 PlayerObject::Ability PlayerObject::GetAbilityByButton(AbilityButton button) const
 {
 	return abilities[static_cast<int>(button)];
@@ -647,7 +644,14 @@ bool PlayerObject::GetIsFell() const
 {
 	return this->isFell;
 }
-
+bool PlayerObject::GetMeleeCooldown() const
+{
+	return meleeCooldown;
+}
+void PlayerObject::SetMeleeCooldown(float duration)
+{
+	meleeCooldown = duration;
+}
 void PlayerObject::CheckIfOnGround()
 {
 	if (!isOnGround)
@@ -725,6 +729,15 @@ void PlayerObject::UpdateAbilityCooldown(float dt)
 		}
 
 	}
+	if (meleeCooldown > 0.f)
+	{
+		meleeCooldown -= dt;
+	}
+	else if (meleeCooldown < 0.f)
+	{
+		meleeCooldown = 0;
+	}
+	
 }
 
 void PlayerObject::UpdateCollider()
