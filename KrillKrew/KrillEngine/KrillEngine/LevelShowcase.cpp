@@ -1816,7 +1816,7 @@ void LevelShowcase::AimTeleport(int numPlayer, PlayerObject::AbilityButton butto
 	players[numPlayer]->SetIsAiming(true);
 	players[numPlayer]->SetHoldingProjectile(ProjectileObject::TypeProjectile::Teleport);
 	ProjectileObject* projectile = new ProjectileObject();
-	//projectile->SetAnimationSprite(ProjectileObject::Collide, spriteList.find("Teleport_Explode")->second);
+	projectile->SetAnimationSprite(ProjectileObject::Collide, spriteList.find("Teleport_Explode")->second);
 	projectile->SetSpriteInfo(spriteList.find("Teleport")->second);
 	projectile->SetTexture(spriteList.find("Teleport")->second.texture);
 	projectile->SetPosition(players[numPlayer]->getPos());
@@ -1858,7 +1858,7 @@ void LevelShowcase::AimBola(int numPlayer, PlayerObject::AbilityButton button) {
 	players[numPlayer]->SetIsAiming(true);
 	players[numPlayer]->SetHoldingProjectile(ProjectileObject::TypeProjectile::Bola);
 	ProjectileObject* projectile = new ProjectileObject();
-	//projectile->SetAnimationSprite(ProjectileObject::Collide, spriteList.find("Bola_Explode")->second);
+	projectile->SetAnimationSprite(ProjectileObject::Collide, spriteList.find("Stun_Explode")->second);
 	projectile->SetSpriteInfo(spriteList.find("Bola")->second);
 	projectile->SetTexture(spriteList.find("Bola")->second.texture);
 	projectile->SetPosition(players[numPlayer]->getPos());

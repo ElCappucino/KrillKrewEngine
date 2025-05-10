@@ -102,7 +102,8 @@ void ProjectileObject::ReduceLifeTime(float dt)
 	lifeTime -= dt;
 	if (lifeTime <= 0.0f && currAnimState != AnimationState::Collide)
 	{ 
-		if (type == ProjectileObject::TypeProjectile::Teleport) {
+		if (type == ProjectileObject::TypeProjectile::Teleport) 
+		{
 			playerOwner->SetPosition(this->getPos());
 		}
 		
@@ -110,14 +111,19 @@ void ProjectileObject::ReduceLifeTime(float dt)
 		{
 			ExplodeTileInRange();
 		}
-		else if (this->type == ProjectileObject::TypeProjectile::Teleport) {
+		else if (this->type == ProjectileObject::TypeProjectile::Teleport) 
+		{
 			playerOwner->SetPosition(this->getPos());
 		}
 		else
 		{
 			//KK_ERROR("This is not fireball");
 		}
-		ProjectileObject::ChangeAnimationState(AnimationState::Collide);
+		auto CollideSprite = animList.find(AnimationState::Collide);
+		if (CollideSprite != animList.end())
+		{
+			ProjectileObject::ChangeAnimationState(AnimationState::Collide);
+		}
 		
 	}
 }
@@ -221,8 +227,18 @@ void ProjectileObject::OnColliderEnter(Collider* other)
 				this->isActive = false;*/
 
 				// updateSpritesheet
+				if (this->type == TypeProjectile::Fireball)
+				{
+					this->SetRotation(0);
+				}
+				
 
-				ProjectileObject::ChangeAnimationState(AnimationState::Collide);
+				auto CollideSprite = animList.find(AnimationState::Collide);
+				if (CollideSprite != animList.end())
+				{
+					ProjectileObject::ChangeAnimationState(AnimationState::Collide);
+				}
+				
 				// set column to 0
 			}
 
@@ -350,6 +366,7 @@ void ProjectileObject::SetAnimationSprite(AnimationState state, SpritesheetInfo 
 {
 	animList.insert({ state, spriteInfo });
 }
+
 void ProjectileObject::ChangeAnimationState(AnimationState anim)
 {
 	if (currAnimState != anim)
