@@ -332,7 +332,7 @@ void LevelShowcase::InitTile()
 				entityObjects.push_back(obj);
 				tileCount++;
 				objectsList.push_back(obj);
-				objectsList.push_back(obj->GetCollider()->GetGizmos());
+				//objectsList.push_back(obj->GetCollider()->GetGizmos());
 				objectsList.push_back(obj->GetOverlaySprite());
 
 				
@@ -564,11 +564,11 @@ void LevelShowcase::LevelInit()
 	{
 		entityObjects.push_back(players[i]->GetAttackColliderObject());
 		objectsList.push_back(players[i]->GetAttackColliderObject());
-		objectsList.push_back(players[i]->GetAttackCollider()->GetGizmos());
-		objectsList.push_back(players[i]->GetCollider()->GetGizmos());
+		//objectsList.push_back(players[i]->GetAttackCollider()->GetGizmos());
+		//objectsList.push_back(players[i]->GetCollider()->GetGizmos());
 
 		entityObjects.push_back(players[i]->GetGroundColliderObject());
-		objectsList.push_back(players[i]->GetGroundCollider()->GetGizmos());
+		//objectsList.push_back(players[i]->GetGroundCollider()->GetGizmos());
 	}
 
 	//create Ui by PlayerObject
@@ -1807,7 +1807,7 @@ void LevelShowcase::TNT(int numPlayer, PlayerObject::AbilityButton button) {
 	//std::cout << "Owner " << Trap->getNumOwner() << std::endl;
 	objectsList.push_back(TNT);
 	entityObjects.push_back(TNT);
-	objectsList.push_back(TNT->GetCollider()->GetGizmos());
+	//objectsList.push_back(TNT->GetCollider()->GetGizmos());
 	players[numPlayer]->AddOwningTrap(TNT);
 }
 

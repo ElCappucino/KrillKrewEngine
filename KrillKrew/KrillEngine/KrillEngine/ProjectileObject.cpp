@@ -377,5 +377,17 @@ void ProjectileObject::ChangeAnimationState(AnimationState anim)
 		//this->SetTexture(animList.find(anim)->second.texture);
 		this->spriteRenderer->ShiftTo(0, 0);
 		this->spriteRenderer->isLoop = animList.find(anim)->second.isLoop;
+
+		if (anim == AnimationState::Collide)
+		{
+			// up size explode effect
+			this->SetSize(this->getSize().x * 2.0f, this->getSize().y * 2.0f);
+		}
+		
 	}
+}
+
+void ProjectileObject::UpdateCollider()
+{
+	this->GetCollider()->Update(this->getSize() * 0.5f, this->getPos());
 }

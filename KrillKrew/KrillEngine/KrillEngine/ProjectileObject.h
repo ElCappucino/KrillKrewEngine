@@ -82,5 +82,5 @@ public:
 	virtual void UpdateCurrentAnimation();
 	virtual void SetAnimationSprite(AnimationState state, SpritesheetInfo spriteInfo);
 	virtual void ChangeAnimationState(AnimationState anim);
-
+	virtual void UpdateCollider();
 };
