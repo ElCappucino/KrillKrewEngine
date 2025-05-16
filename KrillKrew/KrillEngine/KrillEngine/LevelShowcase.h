@@ -238,6 +238,8 @@ public:
 	void GroundTileRefactor();
 	void TileImport(std::array<std::array<int, MAP_WIDTH>, MAP_HEIGHT> &TileBuffer, std::string fileName);
 
+	virtual void AddEntityToScene(EntityObject* entity);
+
 	void UsingAbilityKeyDown(int numPlayer, PlayerObject::AbilityButton button);
 	void UsingAbilityKeyUp(int numPlayer, PlayerObject::AbilityButton button);
 	void AimFireball(int numPlayer, PlayerObject::AbilityButton button);

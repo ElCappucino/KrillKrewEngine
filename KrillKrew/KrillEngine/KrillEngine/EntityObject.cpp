@@ -134,3 +134,20 @@ void EntityObject::UpdateCollider()
 	// 
 	this->GetCollider()->Update(this->GetCollider()->GetSize(), this->getPos());
 }
+
+void EntityObject::UpdateSpriteSheetPosition()
+{
+	this->GetSpriteRenderer()->ShiftColumn();
+	//this->UpdateCurrentAnimation();
+}
+
+void EntityObject::LocateCurrentLevel(Level* currLevel)
+{
+	KK_CORE_INFO("EntityObject: LocateCurrentLevel");
+	currentLevel = currLevel;
+
+	if (currentLevel == nullptr)
+	{
+		KK_CORE_ERROR("EntityObject: currentLevel == nullptr");
+	}
+}

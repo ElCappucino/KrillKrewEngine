@@ -288,6 +288,7 @@ void LevelShowcase::InitTile()
 				{
 					auto lookup_sheet = blob_lookup_table.find((int)(surround.to_ulong()));
 
+
 					if (lookup_sheet != blob_lookup_table_underground.end())
 					{
 						pos = lookup_sheet->second;
@@ -315,6 +316,7 @@ void LevelShowcase::InitTile()
 				obj->SetPosition(glm::vec3(map_left + (j * 126.f), map_top - (i * 126.f), 0));
 				obj->SetTilePosition(i, j);
 				obj->SetUpdateTileset(&currentGroundTile);
+				obj->LocateCurrentLevel(this);
 
 				if (flag == 0)
 				{
@@ -670,8 +672,10 @@ void LevelShowcase::LevelUpdate()
 		{
 			if (entity->GetIsAnimated() && frame % entity->GetSpriteRenderer()->GetFrame() == 0)
 			{
-				entity->GetSpriteRenderer()->ShiftColumn();
+				entity->UpdateSpriteSheetPosition();
 				entity->UpdateCurrentAnimation();
+				/*entity->GetSpriteRenderer()->ShiftColumn();
+				entity->UpdateCurrentAnimation();*/
 			}
 		}
 	}
@@ -1463,6 +1467,10 @@ void LevelShowcase::GroundTileRefactor()
 			{
 				continue;
 			}
+			else if (tilesList[i][j]->currAnimState == TileObject::AnimationState::Breaking)
+			{
+				continue;
+			}
 			else if (flag == 0)
 			{
 				// tilesList[i][j]->GetCollider()->GetGizmos()->SetIsActive(false);
@@ -1928,4 +1936,11 @@ void LevelShowcase::ShootCleave(int numPlayer, PlayerObject::AbilityButton butto
 		}
 	}
 	players[numPlayer]->SetAbilityCooldown(button, CleaveCooldown);
+}
+
+void LevelShowcase::AddEntityToScene(EntityObject* entity)
+{
+	entityObjects.push_back(entity);
+	objectsList.push_back(entity);
+	//objectsList.push_back(entity->GetCollider()->GetGizmos());
 }

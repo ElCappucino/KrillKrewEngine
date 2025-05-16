@@ -1,5 +1,6 @@
 #include "TileObject.h"
 #include "PlayerObject.h"
+#include "Level.h"
 
 int BFSTile
 (
@@ -241,13 +242,10 @@ void TileObject::CheckIfBreak()
 	if (currentDurability >= maxDurability)
 	{
 		// create tile falling animation object
-		this->isBroke = true;
-		this->isBreakable = false;
-		this->crackOverlay->SetIsActive(false);
-		this->GetCollider()->GetGizmos()->SetIsActive(false);
+		DisableOverlaySprite();
 
 		UpdateTileArray(0);
-
+		AddCollapseTileToScene();
 		// this->SetIsActive(false);
 
 		/*std::cout << "Check Before Collapse -----------------------------" << std::endl;
@@ -306,3 +304,53 @@ void TileObject::OnTriggerExit(Collider* other)
 {
 
 }
+
+void TileObject::UpdateSpriteSheetPosition()
+{
+	if (currAnimState == AnimationState::Breaking)
+	{
+		this->GetSpriteRenderer()->ShiftRow();
+		this->GetSpriteRenderer()->ShiftRow();
+		this->GetSpriteRenderer()->ShiftRow();
+		this->GetSpriteRenderer()->ShiftRow();
+		currentDurability++;
+	}
+	if (currentDurability >= maxDurability)
+	{
+		this->SetIsActive(false);
+	}
+}
+void TileObject::AddCollapseTileToScene()
+{
+	if (currentLevel == nullptr)
+	{
+		KK_CORE_ERROR("TileObject: current level == nullptr");
+		return;
+	}
+	SpritesheetInfo collapseTileSprite = SpritesheetInfo("CollapseTile", "../Resource/Texture/tileset_01_breaking.png", 128, 128, 1664, 2048);
+	TileObject* collapseTile = new TileObject();
+	collapseTile->SetIsAnimated(true);
+	collapseTile->currAnimState = AnimationState::Breaking;
+	collapseTile->SetSize(128.f, -128.f);
+	collapseTile->SetPosition(this->pos);
+	collapseTile->GetSpriteRenderer()->SetFrame(10);
+	collapseTile->SetSpriteInfo(collapseTileSprite);
+	collapseTile->GetSpriteRenderer()->ShiftTo(this->GetSpriteRenderer()->GetRow(), this->GetSpriteRenderer()->GetColumn());
+
+	int bottomTileFlag = (*updateTile)[tilePos.x][tilePos.y];
+	if (bottomTileFlag == 0)
+	{
+		TileObject* collapseBottomTile = new TileObject();
+		collapseBottomTile->SetIsAnimated(true);
+		collapseBottomTile->currAnimState = AnimationState::Breaking;
+		collapseBottomTile->SetSize(128.f, -128.f);
+		collapseBottomTile->SetPosition(glm::vec3(this->pos.x, this->pos.y - 128.f, 0));
+		collapseBottomTile->GetSpriteRenderer()->SetFrame(10);
+		collapseBottomTile->SetSpriteInfo(collapseTileSprite);
+		collapseBottomTile->GetSpriteRenderer()->ShiftTo(this->GetSpriteRenderer()->GetRow(), this->GetSpriteRenderer()->GetColumn());
+		currentLevel->AddEntityToScene(collapseTile);
+	}
+
+	currentLevel->AddEntityToScene(collapseTile);
+}
+

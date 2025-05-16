@@ -11,6 +11,8 @@
 #include <map>
 #include <chrono>
 
+class EntityObject;
+
 /// @brief The class for setup object in the level
 /// @brief It intent to inherit this class for creating any new unique scene.
 class Level
@@ -34,4 +36,6 @@ public:
 	virtual void Movement(float axisX, float axisY, bool isPositiveX, bool isPositiveY);
 	virtual void HandleKey(char key);
 	virtual void HandleMouse(int type, int x, int y);
+
+	virtual void AddEntityToScene(EntityObject* entity);
 };
