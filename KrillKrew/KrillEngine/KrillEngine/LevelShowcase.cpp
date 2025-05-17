@@ -588,7 +588,7 @@ void LevelShowcase::LevelInit()
 	//create Ui by PlayerObject
 	//int playerSize = playerSize;
 	KK_TRACE("Init UI-----------");
-	count = 0;
+	//count = 0;
 
 	if (playerSize >= 0) {
 
@@ -1955,7 +1955,7 @@ void LevelShowcase::AddEntityToScene(EntityObject* entity)
 	entityObjects.push_back(entity);
 	objectsList.push_back(entity);
 	//objectsList.push_back(entity->GetCollider()->GetGizmos());
-	players[numPlayer]->SetAbilityCooldown(button, 6);
+	//players[numPlayer]->SetAbilityCooldown(button, 6);
 }
 
 void LevelShowcase::loadAbility(std::string filename) {
