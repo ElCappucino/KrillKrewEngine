@@ -348,12 +348,12 @@ void LevelSelectAbility::LevelInit()
 	std::cout << GameEngine::GetInstance()->GetStateController()->loadingState << std::endl;
 	//std::ofstream MyFile("Ability.txt");
 	//std::ofstream abilityFile("Ability.txt");
-	for (int i = 0; i < 4; i++)
+	/*for (int i = 0; i < 4; i++)
 	{
 		std::string fileName = "Ability" + std::to_string(i) + ".txt";
 		std::ofstream abilityFile(fileName);
 		abilityFile.close();
-	}
+	}*/
 }
 
 void LevelSelectAbility::LevelUpdate()
@@ -458,15 +458,39 @@ void LevelSelectAbility::UpdateInput()
 			if (Joystick::GetButtonDown(i, Joystick::Button::Cross)) {
 				std::cout << "Pos playerX " << players[i]->getPos().y << std::endl;//90
 				std::cout << "Pos playerY " << SkillBoxList.at(4)->getPos().y + playerHoverPosY << std::endl;//70 0.75
-
+				bool press = false;
 				if (players[i]->getPos().x == SkillBoxList.at(0)->getPos().x + playerHoverPosX &&
 					players[i]->getPos().y >= SkillBoxList.at(0)->getPos().y + playerHoverPosY + playerHoverList.at(i)->getSize().y * 3){
-					abilityToFile(fileName, PlayerObject::Ability::Fireball, i);
+					for (int j = 0; j < 3; j++) {
+						if (playerAbility[i][j] == static_cast<int>(PlayerObject::Ability::Fireball) && !press) {
+							playerAbility[i][j] = -1;
+							press = true;
+						}
+					}
+					for (int j = 0; j < 3; j++) {
+						if (playerAbility[i][j] == -1 && !press) {
+							playerAbility[i][j] = static_cast<int>(PlayerObject::Ability::Fireball);
+							press = true;
+						}
+					}
+					//abilityToFile(fileName, PlayerObject::Ability::Fireball, i);
 				}
 
 				if (players[i]->getPos().x == SkillBoxList.at(1)->getPos().x + playerHoverPosX &&
 					players[i]->getPos().y >= SkillBoxList.at(0)->getPos().y + playerHoverPosY + playerHoverList.at(i)->getSize().y * 3) {
-					abilityToFile(fileName, PlayerObject::Ability::TNT, i);
+					for (int j = 0; j < 3; j++) {
+						if (playerAbility[i][j] == static_cast<int>(PlayerObject::Ability::TNT) && !press) {
+							playerAbility[i][j] = -1;
+							press = true;
+						}
+					}
+					for (int j = 0; j < 3; j++) {
+						if (playerAbility[i][j] == -1 && !press) {
+							playerAbility[i][j] = static_cast<int>(PlayerObject::Ability::TNT);
+							press = true;
+						}
+					}
+					//abilityToFile(fileName, PlayerObject::Ability::TNT, i);
 				}
 
 				if (players[i]->getPos().x == SkillBoxList.at(2)->getPos().x + playerHoverPosX &&
@@ -476,27 +500,87 @@ void LevelSelectAbility::UpdateInput()
 
 				if (players[i]->getPos().x == SkillBoxList.at(3)->getPos().x + playerHoverPosX &&
 					players[i]->getPos().y >= SkillBoxList.at(0)->getPos().y + playerHoverPosY + playerHoverList.at(i)->getSize().y * 3) {
-					abilityToFile(fileName, PlayerObject::Ability::Cleave, i);
+					for (int j = 0; j < 3; j++) {
+						if (playerAbility[i][j] == static_cast<int>(PlayerObject::Ability::Cleave) && !press) {
+							playerAbility[i][j] = -1;
+							press = true;
+						}
+					}
+					for (int j = 0; j < 3; j++) {
+						if (playerAbility[i][j] == -1 && !press) {
+							playerAbility[i][j] = static_cast<int>(PlayerObject::Ability::Cleave);
+							press = true;
+						}
+					}
+					//abilityToFile(fileName, PlayerObject::Ability::Cleave, i);
 				}
 
 				if (players[i]->getPos().x == SkillBoxList.at(4)->getPos().x + playerHoverPosX && 
 					players[i]->getPos().y <= SkillBoxList.at(4)->getPos().y + playerHoverPosY) {
-					abilityToFile(fileName, PlayerObject::Ability::Bola, i);
+					for (int j = 0; j < 3; j++) {
+						if (playerAbility[i][j] == static_cast<int>(PlayerObject::Ability::Bola) && !press) {
+							playerAbility[i][j] = -1;
+							press = true;
+						}
+					}
+					for (int j = 0; j < 3; j++) {
+						if (playerAbility[i][j] == -1 && !press) {
+							playerAbility[i][j] = static_cast<int>(PlayerObject::Ability::Bola);
+							press = true;
+						}
+					}
+					//abilityToFile(fileName, PlayerObject::Ability::Bola, i);
 				}
 
 				if (players[i]->getPos().x == SkillBoxList.at(5)->getPos().x + playerHoverPosX &&
 					players[i]->getPos().y <= SkillBoxList.at(4)->getPos().y + playerHoverPosY) {
-					abilityToFile(fileName, PlayerObject::Ability::Teleport, i);
+					for (int j = 0; j < 3; j++) {
+						if (playerAbility[i][j] == static_cast<int>(PlayerObject::Ability::Teleport) && !press) {
+							playerAbility[i][j] = -1;
+							press = true;
+						}
+					}
+					for (int j = 0; j < 3; j++) {
+						if (playerAbility[i][j] == -1 && !press) {
+							playerAbility[i][j] = static_cast<int>(PlayerObject::Ability::Teleport);
+							press = true;
+						}
+					}
+					//abilityToFile(fileName, PlayerObject::Ability::Teleport, i);
 				}
 
 				if (players[i]->getPos().x == SkillBoxList.at(6)->getPos().x + playerHoverPosX &&
 					players[i]->getPos().y <= SkillBoxList.at(4)->getPos().y + playerHoverPosY) {
-					abilityToFile(fileName, PlayerObject::Ability::Trap, i);
+					for (int j = 0; j < 3; j++) {
+						if (playerAbility[i][j] == static_cast<int>(PlayerObject::Ability::Trap) && !press) {
+							playerAbility[i][j] = -1;
+							press = true;
+						}
+					}
+					for (int j = 0; j < 3; j++) {
+						if (playerAbility[i][j] == -1 && !press) {
+							playerAbility[i][j] = static_cast<int>(PlayerObject::Ability::Trap);
+							press = true;
+						}
+					}
+					//abilityToFile(fileName, PlayerObject::Ability::Trap, i);
 				}
 
 				if (players[i]->getPos().x == SkillBoxList.at(7)->getPos().x + playerHoverPosX &&
 					players[i]->getPos().y <= SkillBoxList.at(4)->getPos().y + playerHoverPosY) {
-					abilityToFile(fileName, PlayerObject::Ability::Dash, i);
+					for (int j = 0; j < 3; j++) {
+						if (playerAbility[i][j] == static_cast<int>(PlayerObject::Ability::Dash) && !press) {
+							playerAbility[i][j] = -1;
+							press = true;
+						}
+					}
+					for (int j = 0; j < 3; j++) {
+						if (playerAbility[i][j] == -1 && !press) {
+							playerAbility[i][j] = static_cast<int>(PlayerObject::Ability::Dash);
+							press = true;
+						}
+					}
+					//abilityToFile(fileName, PlayerObject::Ability::Dash, i);
 				}
 			}
 			if (Joystick::GetButtonDown(i, Joystick::Button::Square)) {
@@ -508,6 +592,11 @@ void LevelSelectAbility::UpdateInput()
 				}
 			}
 			if (ready[0] + ready[1] + ready[2] + ready[3] == SDL_NumJoysticks()) {
+				for (int i = 0; i < SDL_NumJoysticks(); i++)
+				{
+					std::string fileName = "Ability" + std::to_string(i) + ".json";
+					abilityToFile(fileName, i);
+				}
 				GameEngine::GetInstance()->GetStateController()->gameStateNext = GameState::GS_LEVELSHOWCASE;
 			}
 
@@ -552,6 +641,10 @@ void LevelSelectAbility::UpdateUi() {
 	float iconHeight = -133.81;
 	for (int i = 0; i < 4; i++) {
 		for (int j = 0; j < 3; j++) {
+			if (playerAbility[i][j] == -1) {
+				playerIconSkillList[i].at(j)->SetSpriteInfo(spriteList.find("NoSkill")->second);
+				playerIconSkillList[i].at(j)->SetSize(iconWidth / 3, iconHeight / 3);
+			}
 			if (playerAbility[i][j] == static_cast<int>(PlayerObject::Ability::Fireball)) {
 				playerIconSkillList[i].at(j)->SetSpriteInfo(spriteList.find("Bomb")->second);
 				playerIconSkillList[i].at(j)->SetSize(iconWidth / 3, iconHeight / 3);
@@ -603,6 +696,11 @@ void LevelSelectAbility::LevelDraw()
 
 	if (ImGui::Button("Go levelShowcase")) {
 		//abilityToFile("Ability.txt", -1);
+		for (int i = 0; i < 4; i++)
+		{
+			std::string fileName = "Ability" + std::to_string(i) + ".json";
+			abilityToFile(fileName, i);
+		}
 		GameEngine::GetInstance()->GetStateController()->gameStateNext = GameState::GS_LEVELSHOWCASE;
 	}
 
@@ -612,45 +710,6 @@ void LevelSelectAbility::LevelDraw()
 		std::string buttonName;
 		ImGui::SeparatorText("");
 		ImGui::Text("Ability Player %d", i);
-
-		buttonName = "FireBall##" + std::to_string(i);
-		if (ImGui::Button(buttonName.c_str())) {
-			abilityToFile(fileName, PlayerObject::Ability::Fireball, i);
-		}
-
-		ImGui::SameLine();
-		buttonName = "Trap##" + std::to_string(i);
-		if (ImGui::Button(buttonName.c_str())) {
-			abilityToFile(fileName, PlayerObject::Ability::Trap, i);
-		}
-
-		ImGui::SameLine();
-		buttonName = "Dash##" + std::to_string(i);
-		if (ImGui::Button(buttonName.c_str())) {
-			abilityToFile(fileName, PlayerObject::Ability::Dash, i);
-		}
-
-		ImGui::SameLine();
-		buttonName = "TNT##" + std::to_string(i);
-		if (ImGui::Button(buttonName.c_str())) {
-			abilityToFile(fileName, PlayerObject::Ability::TNT, i);
-		}
-
-		buttonName = "Teleport##" + std::to_string(i);
-		if (ImGui::Button(buttonName.c_str())) {
-			abilityToFile(fileName, PlayerObject::Ability::Teleport, i);
-		}
-
-		ImGui::SameLine();
-		buttonName = "Bola##" + std::to_string(i);
-		if (ImGui::Button(buttonName.c_str())) {
-			abilityToFile(fileName, PlayerObject::Ability::Bola, i);
-		}
-		ImGui::SameLine();
-		buttonName = "Cleave##" + std::to_string(i);
-		if (ImGui::Button(buttonName.c_str())) {
-			abilityToFile(fileName, PlayerObject::Ability::Cleave, i);
-		}
 
 		for (int j = 0; j < 3; j++) {
 			ImGui::Text("Ability%d: ", j);
@@ -717,58 +776,24 @@ void LevelSelectAbility::Movement(float axisX, float axisY, bool isPositiveX, bo
 void LevelSelectAbility::HandleKey(char key){}
 void LevelSelectAbility::HandleMouse(int type, int x, int y){}
 
-void LevelSelectAbility::abilityToFile(const std::string& fileName, PlayerObject::Ability abilityId, int who) {
-	std::ifstream readFile(fileName);
-	std::string oldContent[3];
-	std::string line;
-	clicked[who]++;
-	int count = 0;
-	int num;
-	while (std::getline(readFile, line)) {
-		oldContent[count] += line + "\n";
-		count++;
-		std::cout << "have content" << std::endl;
-	}
-	//std::getline(readFile, oldContent);
-	readFile.close();
+void LevelSelectAbility::abilityToFile(const std::string& fileName, int who) {
 
-	std::ofstream abilityFile(fileName);
-	std::cout << clicked[who] << std::endl;
-	if (clicked[who] > 3) {
-		if (clicked[who] % 3 == 0) {
-			num = static_cast<int>(abilityId);
-			oldContent[2] = std::to_string(num) + "\n";
-			std::cout << "new ablity 3" << std::endl;
-			playerAbility[who][2] = static_cast<int>(abilityId);
-		}
-		else if (clicked[who] % 3 == 1) {
-			num = static_cast<int>(abilityId);
-			oldContent[0] = std::to_string(num) + "\n";
-			std::cout << "new ablity 1" << std::endl;
-			playerAbility[who][0] = static_cast<int>(abilityId);
-		}
-		else if (clicked[who] % 3 == 2) {
-			num = static_cast<int>(abilityId);
-			oldContent[1] = std::to_string(num) + "\n";
-			std::cout << "new ablity 2" << std::endl;
-			playerAbility[who][1] = static_cast<int>(abilityId);
-		}
-		for (int i = 0; i < count; i++) {
-			abilityFile << oldContent[i];
-		}
-		abilityFile.close();
+	std::ofstream file(fileName);
+	nlohmann::json data;
+	data["ability0"] = playerAbility[who][0];
+	data["ability1"] = playerAbility[who][1];
+	data["ability2"] = playerAbility[who][2];
+
+	if (file.is_open()) {
+		file << data;
+		file.close();
+		std::cout << "Saved" << std::endl;
 	}
+
 	else {
-		for (int i = 0; i < count; i++) {
-			abilityFile << oldContent[i];
-			playerAbility[who][i] = stoi(oldContent[i]);
-		}
-		abilityFile << static_cast<int>(abilityId);
-		if (count < 4) {
-			playerAbility[who][count] = static_cast<int>(abilityId);
-		}
-		abilityFile.close();
+		std::cout << "Failed" << std::endl;
 	}
+	
 	
 }
 
