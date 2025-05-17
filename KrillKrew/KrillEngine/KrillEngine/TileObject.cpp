@@ -89,7 +89,7 @@ void TileCollapseCheck(std::array<std::array<int, MAP_WIDTH>, MAP_HEIGHT>& curre
 			// check tile
 			if (bufferTile[i][j] == minFlag)// if not 1 skip
 			{
-				currentTile[i][j] = 0;
+				currentTile[i][j] = 2;
 			}
 
 		}
@@ -114,6 +114,8 @@ TileObject::TileObject()
 	this->crackOverlay->SetSize(128.f, -128.f);
 
 	this->orderingLayer = 0;
+
+	this->currAnimState = AnimationState::Idle;
 
 }
 TileObject::~TileObject()
@@ -309,14 +311,12 @@ void TileObject::UpdateSpriteSheetPosition()
 {
 	if (currAnimState == AnimationState::Breaking)
 	{
-		this->GetSpriteRenderer()->ShiftRow();
-		this->GetSpriteRenderer()->ShiftRow();
-		this->GetSpriteRenderer()->ShiftRow();
-		this->GetSpriteRenderer()->ShiftRow();
+		this->GetSpriteRenderer()->ShiftColumn();
 		currentDurability++;
 	}
 	if (currentDurability >= maxDurability)
 	{
+		this->currAnimState = TileObject::AnimationState::FinishBreaking;
 		this->SetIsActive(false);
 	}
 }
@@ -327,29 +327,15 @@ void TileObject::AddCollapseTileToScene()
 		KK_CORE_ERROR("TileObject: current level == nullptr");
 		return;
 	}
-	SpritesheetInfo collapseTileSprite = SpritesheetInfo("CollapseTile", "../Resource/Texture/tileset_01_breaking.png", 128, 128, 1664, 2048);
+	SpritesheetInfo collapseTileSprite = SpritesheetInfo("CollapseTile", "../Resource/Texture/Props/prop_spr_vfx_smoke.png", 200, 200, 800, 200);
 	TileObject* collapseTile = new TileObject();
 	collapseTile->SetIsAnimated(true);
 	collapseTile->currAnimState = AnimationState::Breaking;
-	collapseTile->SetSize(128.f, -128.f);
+	collapseTile->SetSize(256.f, -256.f);
 	collapseTile->SetPosition(this->pos);
 	collapseTile->GetSpriteRenderer()->SetFrame(10);
 	collapseTile->SetSpriteInfo(collapseTileSprite);
 	collapseTile->GetSpriteRenderer()->ShiftTo(this->GetSpriteRenderer()->GetRow(), this->GetSpriteRenderer()->GetColumn());
-
-	int bottomTileFlag = (*updateTile)[tilePos.x][tilePos.y];
-	if (bottomTileFlag == 0)
-	{
-		TileObject* collapseBottomTile = new TileObject();
-		collapseBottomTile->SetIsAnimated(true);
-		collapseBottomTile->currAnimState = AnimationState::Breaking;
-		collapseBottomTile->SetSize(128.f, -128.f);
-		collapseBottomTile->SetPosition(glm::vec3(this->pos.x, this->pos.y - 128.f, 0));
-		collapseBottomTile->GetSpriteRenderer()->SetFrame(10);
-		collapseBottomTile->SetSpriteInfo(collapseTileSprite);
-		collapseBottomTile->GetSpriteRenderer()->ShiftTo(this->GetSpriteRenderer()->GetRow(), this->GetSpriteRenderer()->GetColumn());
-		currentLevel->AddEntityToScene(collapseTile);
-	}
 
 	currentLevel->AddEntityToScene(collapseTile);
 }

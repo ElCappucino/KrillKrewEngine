@@ -202,6 +202,7 @@ void LevelShowcase::LevelLoad()
 
 	spriteList["Blobtile"] = SpritesheetInfo("Blobtile", "../Resource/Texture/tileset_01.png", 128, 128, 1664, 512);
 
+	spriteList["CollapseTile"] = SpritesheetInfo("CollapseTile", "../Resource/Texture/Props/prop_spr_vfx_smoke.png", 200, 200, 800, 200);
 	soundManager = KrillSoundManager::SoundManager::GetInstance();
 
 	soundManager->LoadMusic("bgm_test", "../Resource/Audio/bgm_test.mp3");
@@ -1479,12 +1480,41 @@ void LevelShowcase::GroundTileRefactor()
 			{
 				continue;
 			}
-			else if (tilesList[i][j]->currAnimState == TileObject::AnimationState::Breaking)
+			else if (tilesList[i][j]->currAnimState == TileObject::AnimationState::FinishBreaking)
 			{
+				KK_TRACE("Refactor check: finish breaking");
 				continue;
 			}
-			else if (flag == 0)
+			else if (flag == 2)
 			{
+				KK_TRACE("Refactor check: if tile is breaking");
+				//SpritesheetInfo collapseTileSprite = SpritesheetInfo("CollapseTile", "../Resource/Texture/Props/prop_spr_vfx_smoke.png", 200, 200, 800, 200);
+				
+				
+				TileObject* collapseTile = new TileObject();
+				collapseTile->SetIsAnimated(true);
+				collapseTile->currAnimState = TileObject::AnimationState::Breaking;
+				collapseTile->SetSize(256.f, -256.f);
+				collapseTile->SetPosition(tilesList[i][j]->getPos());
+				collapseTile->GetSpriteRenderer()->SetFrame(10);
+				collapseTile->SetTextureWithID(spriteList.find("CollapseTile")->second, spriteList.find("CollapseTile")->second.textureid);
+				collapseTile->GetSpriteRenderer()->ShiftTo(tilesList[i][j]->GetSpriteRenderer()->GetRow(), tilesList[i][j]->GetSpriteRenderer()->GetColumn());
+
+				AddEntityToScene(collapseTile);
+				tilesList[i][j]->currAnimState = TileObject::AnimationState::FinishBreaking;
+
+				currentGroundTile[i][j] = 0;
+			}
+
+			flag = currentGroundTile[i][j];
+
+			if (flag == 0)
+			{
+				if (tilesList[i - 1][j] == 0)
+				{
+					tilesList[i][j]->currAnimState = TileObject::AnimationState::Breaking;
+				}
+				
 				// tilesList[i][j]->GetCollider()->GetGizmos()->SetIsActive(false);
 				tilesList[i][j]->DisableOverlaySprite();
 
