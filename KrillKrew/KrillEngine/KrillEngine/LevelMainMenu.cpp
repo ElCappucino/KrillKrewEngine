@@ -4,7 +4,7 @@ void LevelMainMenu::LevelLoad() {
 	SquareMeshVbo* square = new SquareMeshVbo();
 	square->LoadData();
 	GameEngine::GetInstance()->AddMesh(SquareMeshVbo::MESH_NAME, square);
-
+	spriteList["SkillIconBox"] = SpritesheetInfo("SkillIconBox", "../Resource/Texture/SkillIconBox.png", 167, 157, 334, 157);
 
 }
 
@@ -15,19 +15,58 @@ void LevelMainMenu::LevelInit() {
 		(SCREEN_HEIGHT / 2));
 
 	//test text
-	config configbutton0;
-	configbutton0.number = 0;
-	configbutton0.text = "start";
-	configbutton0.textPosX = 100.f;
-	configbutton0.textPosY = 100.f;
-	configbutton0.textSize = 50;
-	TextObject* texted = new TextObject();
+	config* configbutton0 = new config();
+	configbutton0->number = 0;
+	configbutton0->text = "start";
+	configbutton0->textPosX = 100.f;
+	configbutton0->textPosY = 100.f;
+	configbutton0->textSize = 50.f;
+	configbutton0->boxHight = 157.f;
+	configbutton0->boxWidth = 167.f;
+	configbutton0->boxPosX = 100.f;
+	configbutton0->boxPosY = 100.f;
 	configs.push_back(configbutton0);
-	loadConfig("button0.json");
-	texted->loadText(configs.at(0).text, SDL_Color{255,0,0,0}, configs.at(0).textSize);
-	texted->SetPosition(glm::vec3(configs.at(0).textPosX, configs.at(0).textPosY, 0));
-	objectsList.push_back(texted);
-	textList.push_back(texted);
+	if (checkConfig("button0.json")) {
+		loadConfig("button0.json");
+	}
+	UiObject* box0 = new UiObject();
+	box0->SetSpriteInfo(spriteList.find("SkillIconBox")->second);
+	box0->SetPosition(glm::vec3(configs.at(0)->boxPosX, configs.at(0)->boxPosY, 0.f));
+	box0->SetSize(configs.at(0)->boxWidth, configs.at(0)->boxHight);
+	TextObject* text0 = new TextObject();
+	text0->loadText(configs.at(0)->text, SDL_Color{255,0,0,0}, configs.at(0)->textSize);
+	text0->SetPosition(glm::vec3(configs.at(0)->textPosX, configs.at(0)->textPosY, 0.f));
+	objectsList.push_back(box0);
+	boxList.push_back(box0);
+	objectsList.push_back(text0);
+	textList.push_back(text0);
+
+	config* configbutton1 = new config();
+	configbutton1->number = 1;
+	configbutton1->text = "text1";
+	configbutton1->textPosX = 100.f;
+	configbutton1->textPosY = 100.f;
+	configbutton1->textSize = 50.f;
+	configbutton1->boxHight = 157.f;
+	configbutton1->boxWidth = 167.f;
+	configbutton1->boxPosX = 100.f;
+	configbutton1->boxPosY = 100.f;
+	configs.push_back(configbutton1);
+	if (checkConfig("button1.json")) {
+		loadConfig("button1.json");
+	}
+	UiObject* box1 = new UiObject();
+	box1->SetSpriteInfo(spriteList.find("SkillIconBox")->second);
+	box1->SetPosition(glm::vec3(configs.at(1)->boxPosX, configs.at(1)->boxPosY, 0.f));
+	box1->SetSize(configs.at(1)->boxWidth, configs.at(1)->boxHight);
+	TextObject* text1 = new TextObject();
+	text1->loadText(configs.at(1)->text, SDL_Color { 255, 0, 0, 0 }, configs.at(1)->textSize);
+	text1->SetPosition(glm::vec3(configs.at(1)->textPosX, configs.at(1)->textPosY, 0.f));
+	objectsList.push_back(box1);
+	boxList.push_back(box1);
+	objectsList.push_back(text1);
+	textList.push_back(text1);
+	
 	
 
 	// Setup Dear ImGui context
@@ -47,8 +86,26 @@ void LevelMainMenu::LevelInit() {
 	std::cout << GameEngine::GetInstance()->GetStateController()->loadingState << std::endl;
 }
 void LevelMainMenu::LevelUpdate() {
+	UpdateInput();
+
+	// select box
+	for (int i = 0; i < configs.size(); i++)
+	{
+		if (configs.at(i)->number == playerWhere[0])
+		{
+			boxList.at(i)->GetSpriteRenderer()->ShiftColumn();
+		}
+		else {
+			boxList.at(i)->GetSpriteRenderer()->ShiftTo(0,0);
+		}
+		
+	}
+
 	for (int i = 0; i < configs.size(); i++) {
-		objectsList.at(i)->SetPosition(glm::vec3(configs.at(i).textPosX, configs.at(i).textPosY, 0));
+		textList.at(i)->loadText(configs.at(i)->text, SDL_Color { 255, 0, 0, 0 }, configs.at(i)->textSize);
+		textList.at(i)->SetPosition(glm::vec3(configs.at(i)->textPosX, configs.at(i)->textPosY, 0));
+		boxList.at(i)->SetSize(configs.at(i)->boxWidth, configs.at(i)->boxHight);
+		boxList.at(i)->SetPosition(glm::vec3(configs.at(i)->boxPosX, configs.at(i)->boxPosY, 0));
 	}
 }
 
@@ -75,27 +132,35 @@ void LevelMainMenu::LevelDraw() {
 	}
 
 	if (ImGui::Button("Load config")) {
-		loadConfig("button0.json");
-		textList.at(0)->loadText(configs.at(0).text, SDL_Color{255,0,0,0}, configs.at(0).textSize);
-		textList.at(0)->SetPosition(glm::vec3(configs.at(0).textPosX, configs.at(0).textPosY, 0));
+		for(int i = 0; i < configs.size(); i++) {
+			std::string fileName = "button" + std::to_string(i) + ".json";
+			loadConfig(fileName);
+			textList.at(i)->loadText(configs.at(i)->text, SDL_Color{ 255,0,0,0 }, configs.at(0)->textSize);
+			textList.at(i)->SetPosition(glm::vec3(configs.at(i)->textPosX, configs.at(i)->textPosY, 0));
+			boxList.at(i)->SetSize(configs.at(i)->boxWidth, configs.at(i)->boxHight);
+			boxList.at(i)->SetPosition(glm::vec3(configs.at(i)->boxPosX, configs.at(i)->boxPosY, 0));
+		}
+		
 	}
 	
 	for (int i = 0; i < configs.size(); i++) {
+		ImGui::PushID(i);
 		ImGui::Text("Button%d", i);
 		//ImGui::InputTextWithHint("Text", "enter text here", &configs.at(i).text[0], configs.at(i).text[0] + 1);
-		ImGui::InputInt("Text Size", &configs.at(i).textSize);
-		ImGui::SliderFloat("PosX", &configs.at(i).textPosX, -camera.GetCameraWidth() / 2, camera.GetCameraWidth() / 2);
-		ImGui::SliderFloat("PosY", &configs.at(i).textPosY, -camera.GetCameraHeight() / 2, camera.GetCameraHeight() / 2);
-		if (ImGui::Button("Save config")) {
-			LevelMainMenu::config c;
-			c.number = configs.at(i).number;
-			//c.text = configs.at(i).text;
-			c.textPosX = configs.at(i).textPosX;
-			c.textPosY = configs.at(i).textPosY;
-			c.textSize = configs.at(i).textSize;
-			//std::cout << c.text << std::endl;
+		ImGui::InputFloat("Text Size", &configs.at(i)->textSize);
+		ImGui::SliderFloat("Text PosX", &configs.at(i)->textPosX, -camera.GetCameraWidth() / 2, camera.GetCameraWidth() / 2);
+		ImGui::SliderFloat("Text PosY", &configs.at(i)->textPosY, -camera.GetCameraHeight() / 2, camera.GetCameraHeight() / 2);
+		ImGui::InputFloat("Box Hight", &configs.at(i)->boxHight);
+		ImGui::InputFloat("Box Width", &configs.at(i)->boxWidth);
+		ImGui::SliderFloat("Box PosX", &configs.at(i)->boxPosX, -camera.GetCameraWidth() / 2, camera.GetCameraWidth() / 2);
+		ImGui::SliderFloat("Box PosY", &configs.at(i)->boxPosY, -camera.GetCameraHeight() / 2, camera.GetCameraHeight() / 2);
+		ImGui::PopID();
+	}
+
+	if (ImGui::Button("Save config")) {
+		for (int i = 0; i < configs.size(); i++) {
 			std::string fileName = "button" + std::to_string(i) + ".json";
-			saveConfig(fileName, c);
+			saveConfig(fileName, configs.at(i));
 		}
 	}
 	
@@ -136,20 +201,79 @@ void LevelMainMenu::HandleMouse(int type, int x, int y) {
 }
 
 void LevelMainMenu::UpdateInput() {
+	if (SDL_NumJoysticks() > 0)
+	{
+		Joystick::Update();
+		for (int i = 0; i < SDL_NumJoysticks(); i++)
+		{
+			float axisX = Joystick::GetAxis(i, Joystick::Axis::LeftStickHorizontal) / 32768.0f;
+			/*std::cout << "axisX : " << axisX << std::endl;*/
+			float axisY = Joystick::GetAxis(i, Joystick::Axis::LeftStickVertical) / 32768.0f;
+			//std::cout << "axisY : " << axisY << std::endl;
+			bool up = false;
+			bool down = false;
+			bool right = false;
+			bool left = false;
 
+			if (axisX > 0.8) {
+				right = true;
+			}
+
+			else if (axisX < -0.8) {
+				left = true;
+			}
+
+			else if (axisY > 0.8) {
+				up = true;
+			}
+
+			else if (axisY < -0.8) {
+				down = true;
+			}
+
+			if (!playerMove[i]) {
+				if (up || Joystick::GetButtonDown(i, Joystick::Button::DPAD_Up))
+				{
+					playerWhere[i] -= 1;
+					if (playerWhere[i] < 0) {
+						playerWhere[i] = 1;
+					}
+					playerMove[i] = true;
+					std::cout << "y" << i << std::endl;
+				}
+				else if (down || Joystick::GetButtonDown(i, Joystick::Button::DPAD_Down))
+				{
+					playerWhere[i] += 1;
+					if (playerWhere[i] > 1) {
+						playerWhere[i] = 0;
+					}
+					playerMove[i] = true;
+					std::cout << "-y" << i << std::endl;
+				}
+			}
+
+			if (axisX <= 0.3 && axisX >= -0.3 && axisY <= 0.3 && axisY >= -0.3) {
+				playerMove[i] = false;
+			}
+		}
+	}
 }
 
 void LevelMainMenu::UpdateUi() {
 
 }
 
-void LevelMainMenu::saveConfig(std::string& filename, config con) {
+void LevelMainMenu::saveConfig(std::string& filename, config* con) {
 	nlohmann::json data;
-	data["number"] = con.number;
+	data["number"] = con->number;
 	//data["text"] = con.text;
-	data["textPosX"] = con.textPosX;
-	data["textPosY"] = con.textPosY;
-	data["textSize"] = con.textSize;
+	data["textPosX"] = con->textPosX;
+	data["textPosY"] = con->textPosY;
+	data["textSize"] = con->textSize;
+	data["boxPosX"] = con->boxPosX;
+	data["boxPosY"] = con->boxPosY;
+	data["boxHight"] = con->boxHight;
+	data["boxWidth"] = con->boxWidth;
 
 	std::ofstream file(filename);
 	if (file.is_open()) {
@@ -170,12 +294,36 @@ void LevelMainMenu::loadConfig(std::string filename) {
 	if (file.is_open()) {
 		std::cout << "Opened" << std::endl;
 		for (int i = 0; i < configs.size(); i++) {
-			if (configs.at(i).number == id) {
+			if (configs.at(i)->number == id) {
 				std::cout << "Loaded" << std::endl;
 				//configs.at(i).text = data["text"];
-				configs.at(i).textPosX = data["textPosX"];
-				configs.at(i).textPosY = data["textPosY"];
-				configs.at(i).textSize = data["textSize"];
+				if (data.contains("textPosX") && !data["textPosX"].is_null()) {
+					configs.at(i)->textPosX = data["textPosX"];
+				}
+				
+				if (data.contains("textPosY") && !data["textPosY"].is_null()) {
+					configs.at(i)->textPosY = data["textPosY"];
+				}
+				
+				if (data.contains("textSize") && !data["textSize"].is_null()) {
+					configs.at(i)->textSize = data["textSize"];
+				}
+
+				if (data.contains("boxPosX") && !data["boxPosX"].is_null()) {
+					configs.at(i)->boxPosX = data["boxPosX"];
+				}
+				
+				if (data.contains("boxPosY") && !data["boxPosY"].is_null()) {
+					configs.at(i)->boxPosY = data["boxPosY"];
+				}
+
+				if (data.contains("boxHight") && !data["boxHight"].is_null()) {
+					configs.at(i)->boxHight = data["boxHight"];
+				}
+				
+				if (data.contains("boxWidth") && !data["boxWidth"].is_null()) {
+					configs.at(i)->boxWidth = data["boxWidth"];
+				}
 			}
 		}
 	}
@@ -183,4 +331,43 @@ void LevelMainMenu::loadConfig(std::string filename) {
 	else {
 		std::cout << "Failed" << std::endl;
 	}
+}
+
+bool LevelMainMenu::checkConfig(std::string filename) {
+	std::ifstream file(filename);
+	if (file.is_open()) {
+		nlohmann::json data = nlohmann::json::parse(file);
+		if (!data.contains("textPosX") || data["textPosX"].is_null()) {
+			return false;
+		}
+
+		if (!data.contains("textPosY") || data["textPosY"].is_null()) {
+			return false;
+		}
+
+		if (!data.contains("textSize") || data["textSize"].is_null()) {
+			return false;
+		}
+
+		if (!data.contains("boxPosX") || data["boxPosX"].is_null()) {
+			return false;
+		}
+
+		if (!data.contains("boxPosY") || data["boxPosY"].is_null()) {
+			return false;
+		}
+
+		if (!data.contains("boxHight") || data["boxHight"].is_null()) {
+			return false;
+		}
+
+		if (!data.contains("boxWidth") || data["boxWidth"].is_null()) {
+			return false;
+		}
+	}
+	else {
+		std::cout << "No file for check" << std::endl;
+		return false;
+	}
+	return true;
 }

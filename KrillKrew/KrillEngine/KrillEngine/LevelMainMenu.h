@@ -6,18 +6,19 @@
 //using json = nlohmann::json;
 class LevelMainMenu : public Level
 {
-
-
-
 private:
 	std::vector<DrawableObject*> objectsList;
 	std::vector<TextObject*> textList;
+	std::vector<UiObject*> boxList;
 	std::map<std::string, SpritesheetInfo> spriteList;
+	
 	PlayerObject* players[4]; // add up to 4 players
 	int playerSize = 0;
 
 	int playerNumber = 4; // Change later
-	int ready[4] = { 0 };
+	bool playerMove[4] = { false };
+	int playerWhere[4] = { 0 };
+	bool playerReady[4] = { false };
 	
 
 	OrthographicValue targetSceneProjection; // use for lerping between the current projection and this (target projection).
@@ -35,10 +36,14 @@ private:
 		std::string text;
 		float textPosX;
 		float textPosY;
-		int textSize;
+		float boxPosX;
+		float boxPosY;
+		float textSize;
+		float boxHight;
+		float boxWidth;
 	};
 
-	std::vector<config> configs;
+	std::vector<config*> configs;
 
 public:
 	virtual void LevelLoad();
@@ -53,6 +58,7 @@ public:
 
 	void UpdateInput();
 	void UpdateUi();
-	void saveConfig(std::string& filename, config con);
+	void saveConfig(std::string& filename, config* con);
 	void loadConfig(std::string filename);
+	bool checkConfig(std::string filename);
 };
