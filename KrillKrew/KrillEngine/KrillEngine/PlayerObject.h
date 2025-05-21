@@ -7,6 +7,7 @@
 #include <map>
 #include <chrono>
 #include <vector>
+#include <cstdlib>
 
 #include "Collider.h"
 #include "GameEngine.h"
@@ -130,9 +131,12 @@ private:
 	int holdingProjectile = 0;
 	bool isStun;
 	float durationStun;
+	
 
 public:
 	
+	float projectileHoldDuration = 0;
+
 	PlayerObject();
 	virtual ~PlayerObject();
 	
@@ -173,6 +177,7 @@ public:
 	virtual void ChangeAnimationState(AnimationState anim);
 	virtual void UpdateCurrentAnimation();
 	virtual void UpdateCollider();
+	virtual void UpdateSpriteSheetPosition();
 	void ChangeMeleeAnimation();
 
 	virtual Collider* GetCollider() const;

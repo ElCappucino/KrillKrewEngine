@@ -42,6 +42,8 @@ PlayerObject::PlayerObject()
 	this->slowStatusObject = nullptr;
 
 	this->orderingLayer = 1;
+
+	srand(time(0));
 }
 
 PlayerObject::~PlayerObject()
@@ -693,7 +695,7 @@ void PlayerObject::ApplyKnockback(EntityObject* obj)
 		
 		glm::vec3 knockbackDirection = obj->getPos() - this->getPos();
 		float magnitude = sqrt(std::pow(knockbackDirection.x, 2) + pow(knockbackDirection.y, 2));
-		KK_CORE_INFO("PlayerObject: magnitude = {0}", magnitude);
+		//KK_CORE_INFO("PlayerObject: magnitude = {0}", magnitude);
 		float knockbackDirectionX = knockbackDirection.x / magnitude;
 		float knockbackDirectionY = knockbackDirection.y / magnitude;
 
@@ -721,7 +723,7 @@ void PlayerObject::ApplyKnockback(EntityObject* obj)
 		knockbackDirectionX = abs(knockbackDirectionX);
 		knockbackDirectionY = abs(knockbackDirectionY);
 
-		KK_CORE_WARN("knockback Direction abs = {0}, {1}", knockbackDirectionX, knockbackDirectionY);
+		//KK_CORE_WARN("knockback Direction abs = {0}, {1}", knockbackDirectionX, knockbackDirectionY);
 		this->SetVelocity(knockbackDirectionX, knockbackDirectionY, knockbackDirectionXisPositive, knockbackDirectionYisPositive);
 		
 		this->SetIsKnockback(true);
@@ -754,7 +756,13 @@ void PlayerObject::UpdateAbilityCooldown(float dt)
 	{
 		meleeCooldown = 0;
 	}
+
+	if (this->isAiming)
+	{
+		projectileHoldDuration += dt;
+	}
 	
+	//KK_CORE_TRACE("PlayerObject: projectileHoldDuration = {0}", projectileHoldDuration);
 }
 
 void PlayerObject::UpdateCollider()
@@ -836,4 +844,38 @@ void PlayerObject::RemoveOwningTrap(TrapObject* trap)
 	{
 		ownTrap.erase(it);
 	}
+}
+
+void PlayerObject::UpdateSpriteSheetPosition()
+{
+	
+
+	if (this->currAnimState != AnimationState::Idle)
+	{
+		this->GetSpriteRenderer()->ShiftColumn();
+	}
+	else
+	{
+		int randnum = rand() % 10;
+
+		if (this->GetSpriteRenderer()->GetColumn() == 1)
+		{
+			if (randnum == 0)
+			{
+
+				this->GetSpriteRenderer()->ShiftColumn();
+			}
+			else
+			{
+				KK_TRACE("randnum = {0}", randnum);
+				this->GetSpriteRenderer()->ShiftTo(0, 0);
+			}
+		}
+		else
+		{
+			this->GetSpriteRenderer()->ShiftColumn();
+		}
+	}
+
+	
 }

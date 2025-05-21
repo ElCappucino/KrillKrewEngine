@@ -420,7 +420,7 @@ void LevelShowcase::LevelInit()
 	p1->SetAbility(PlayerObject::AbilityButton::Cross, static_cast<PlayerObject::Ability>(abilityId[2]));
 	p1->SetTextureWithID(spriteList.find("P1_Idle")->second, spriteList.find("P1_Idle")->second.textureid);
 	p1->SetPosition(glm::vec3(-400.f, -400.f, 0.f));
-	p1->GetSpriteRenderer()->SetFrame(10);
+	p1->GetSpriteRenderer()->SetFrame(16);
 	p1->SetPlayerNumber(0);
 	p1->LocateCurrentLevel(this);
 	entityObjects.push_back(p1);
@@ -470,7 +470,7 @@ void LevelShowcase::LevelInit()
 
 	p2->SetTextureWithID(spriteList.find("P2_Idle")->second, spriteList.find("P2_Idle")->second.textureid);
 	p2->SetPosition(glm::vec3(400.f, -400.f, 0));
-	p2->GetSpriteRenderer()->SetFrame(10);
+	p2->GetSpriteRenderer()->SetFrame(16);
 	p2->SetPlayerNumber(1);
 	p2->LocateCurrentLevel(this);
 	entityObjects.push_back(p2);
@@ -520,7 +520,7 @@ void LevelShowcase::LevelInit()
 	p3->SetAbility(PlayerObject::AbilityButton::Cross, static_cast<PlayerObject::Ability>(abilityId[2]));
 	p3->SetTextureWithID(spriteList.find("P3_Idle")->second, spriteList.find("P3_Idle")->second.textureid);
 	p3->SetPosition(glm::vec3(400.f, 400.f, 0));
-	p3->GetSpriteRenderer()->SetFrame(10);
+	p3->GetSpriteRenderer()->SetFrame(16);
 	p3->SetPlayerNumber(2);
 	p3->LocateCurrentLevel(this);
 	entityObjects.push_back(p3);
@@ -572,7 +572,7 @@ void LevelShowcase::LevelInit()
 	p4->SetAbility(PlayerObject::AbilityButton::Cross, static_cast<PlayerObject::Ability>(abilityId[2]));
 	p4->SetTextureWithID(spriteList.find("P4_Idle")->second, spriteList.find("P4_Idle")->second.textureid);
 	p4->SetPosition(glm::vec3(-400.f, 400.f, 0));
-	p4->GetSpriteRenderer()->SetFrame(10);
+	p4->GetSpriteRenderer()->SetFrame(16);
 	p4->SetPlayerNumber(3);
 	p4->LocateCurrentLevel(this);
 	entityObjects.push_back(p4);
@@ -831,6 +831,31 @@ void LevelShowcase::UpdateInput()
 
 				if (players[i + currentPlayer]->GetIsAiming())
 				{
+
+					if (players[i]->GetHoldingProjectile() == static_cast<int>(ProjectileObject::Cleave) && players[i]->projectileHoldDuration >= 3) {
+						PlayerObject::Ability idAbility = players[i]->GetAbilityByButton(PlayerObject::AbilityButton::Circle);
+						if (idAbility == PlayerObject::Ability::Cleave)
+						{
+							ShootCleave(i, PlayerObject::AbilityButton::Circle);
+						}
+
+						idAbility = players[i]->GetAbilityByButton(PlayerObject::AbilityButton::Cross);
+						if (idAbility == PlayerObject::Ability::Cleave)
+						{
+							ShootCleave(i, PlayerObject::AbilityButton::Cross);
+						}
+
+						idAbility = players[i]->GetAbilityByButton(PlayerObject::AbilityButton::Triangle);
+						if (idAbility == PlayerObject::Ability::Cleave)
+						{
+							ShootCleave(i, PlayerObject::AbilityButton::Triangle);
+						}
+
+						players[i]->SetIsAiming(false);
+						players[i]->SetHoldingProjectile(0);
+						players[i]->projectileHoldDuration = 0;
+					}
+
 					std::vector<ProjectileObject*> owningProjectile = players[i + currentPlayer]->GetOwningProjectile();
 					for (int j = 0; j < owningProjectile.size(); j++)
 					{
@@ -871,12 +896,8 @@ void LevelShowcase::UpdateInput()
 							projectile->SetRotation(angle);
 							projectile->SetVelocity(abs(veloX), abs(veloY), PositiveX, PositiveY);
 
-							if (projectile->type == ProjectileObject::Cleave && projectile->GetLifetime() <= 9997) {
-								players[i]->SetIsAiming(false);
-								projectile->SetLifeTime(2);
-								projectile->SetIsShooting(true);
-								players[i]->SetHoldingProjectile(0);
-							}
+							KK_TRACE("players[i]->GetHoldingProjectile() = {0}", players[i]->GetHoldingProjectile());
+							
 						}
 
 						// cancel aim
@@ -1978,13 +1999,36 @@ void LevelShowcase::AimCleave(int numPlayer, PlayerObject::AbilityButton button)
 	players[numPlayer]->SetVelocity(0, 0, false, false);
 	players[numPlayer]->SetIsAiming(true);
 	players[numPlayer]->SetHoldingProjectile(ProjectileObject::TypeProjectile::Cleave);
+	//ProjectileObject* projectile = new ProjectileObject();
+	//
+	//projectile->SetSpriteInfo(spriteList.find("Cleave")->second);
+	//projectile->SetTexture(spriteList.find("Cleave")->second.texture);
+	//projectile->SetPosition(players[numPlayer]->getPos());
+	//projectile->SetSize(256.f, -256.f);
+	//projectile->SetLifeTime(9999);
+	//projectile->SetOwner(players[numPlayer]);
+	//projectile->SetType(ProjectileObject::TypeProjectile::Cleave);
+	//projectile->SetCanKnockback(false);
+	//projectile->SetIsCanStun(true);
+	//projectile->SetIsShooting(false);
+	////projectile->SetIsActive(false);
+	//std::cout << "Owner " << projectile->GetOwner()->GetPlayerNumber() << std::endl;
+	//objectsList.push_back(projectile);
+	//entityObjects.push_back(projectile);
+	////players[numPlayer]->SetAbilityCooldown(button, CleaveCooldown);
+	//players[numPlayer]->AddOwningProjectile(projectile);
+}
+
+void LevelShowcase::ShootCleave(int numPlayer, PlayerObject::AbilityButton button) {
+	players[numPlayer]->SetIsAiming(false);
+
 	ProjectileObject* projectile = new ProjectileObject();
-	
+
 	projectile->SetSpriteInfo(spriteList.find("Cleave")->second);
 	projectile->SetTexture(spriteList.find("Cleave")->second.texture);
 	projectile->SetPosition(players[numPlayer]->getPos());
 	projectile->SetSize(256.f, -256.f);
-	projectile->SetLifeTime(9999);
+	
 	projectile->SetOwner(players[numPlayer]);
 	projectile->SetType(ProjectileObject::TypeProjectile::Cleave);
 	projectile->SetCanKnockback(false);
@@ -1996,19 +2040,43 @@ void LevelShowcase::AimCleave(int numPlayer, PlayerObject::AbilityButton button)
 	entityObjects.push_back(projectile);
 	//players[numPlayer]->SetAbilityCooldown(button, CleaveCooldown);
 	players[numPlayer]->AddOwningProjectile(projectile);
-}
 
-void LevelShowcase::ShootCleave(int numPlayer, PlayerObject::AbilityButton button) {
-	players[numPlayer]->SetIsAiming(false);
-	for (ProjectileObject* projectile : players[numPlayer]->GetOwningProjectile()) 
+	projectile->SetLifeTime(CleaveLifetime);
+	projectile->SetIsShooting(true);
+	players[numPlayer]->SetHoldingProjectile(0);
+	projectile->SetLifeTime(1);
+
+	PlayerObject* player = players[numPlayer];
+	float veloX = player->GetCurrentDirection().x;
+	float veloY = player->GetCurrentDirection().y;
+	float angle = atan2(-player->GetCurrentDirection().y, player->GetCurrentDirection().x);
+
+	float absSizeX = abs(projectile->getSize().x);
+
+	if (angle < -3.14f / 2.f || angle > 3.14f / 2.f)
 	{
-		if (projectile->GetType() == ProjectileObject::TypeProjectile::Cleave) 
+		projectile->SetSize(-absSizeX, projectile->getSize().y);
+
+		if (angle > 0)
 		{
-			projectile->SetLifeTime(CleaveLifetime);
-			projectile->SetIsShooting(true);
-			players[numPlayer]->SetHoldingProjectile(0);
+			angle = -(3.14f - angle);
+		}
+		else
+		{
+			angle = 3.14f + angle;
 		}
 	}
+	else
+	{
+		projectile->SetSize(absSizeX, projectile->getSize().y);
+	}
+
+	bool PositiveX = veloX > 0.f ? true : false;
+	bool PositiveY = veloY < 0.f ? true : false;
+
+	projectile->SetPosition(player->getPos() + (projectile->GetVelocity() * glm::vec3(15.f, 15.f, 0.f)));
+	projectile->SetRotation(angle);
+	projectile->SetVelocity(abs(veloX), abs(veloY), PositiveX, PositiveY);
 	players[numPlayer]->SetAbilityCooldown(button, CleaveCooldown);
 }
 

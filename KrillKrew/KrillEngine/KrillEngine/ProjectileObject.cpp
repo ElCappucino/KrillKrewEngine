@@ -101,7 +101,11 @@ void ProjectileObject::ReduceLifeTime(float dt)
 {
 	lifeTime -= dt;
 	if (lifeTime <= 0.0f && currAnimState != AnimationState::Collide)
-	{ 
+	{
+		if (type == ProjectileObject::TypeProjectile::Cleave)
+		{
+			this->SetIsActive(false);
+		}
 		if (type == ProjectileObject::TypeProjectile::Teleport) 
 		{
 			playerOwner->SetPosition(this->getPos());
