@@ -6,6 +6,7 @@
 
 #include "PlayerHitboxObject.h"
 #include "TileObject.h"
+#include "Level.h"
 
 PlayerObject::PlayerObject()
 {
@@ -37,6 +38,8 @@ PlayerObject::PlayerObject()
 
 	this->attackCollider = new PlayerHitboxObject(this);
 	this->groundCheckCollider = new PlayerGroundColliderObject(this);
+
+	this->slowStatusObject = nullptr;
 
 	this->orderingLayer = 1;
 }
@@ -161,6 +164,23 @@ void PlayerObject::SetSlowDuration(int duration)
 void PlayerObject::SetIsSlow(bool isSlow)
 {
 	this->isSlow = isSlow;
+
+	if (isSlow)
+	{
+		SpritesheetInfo slowSprite = SpritesheetInfo("slowSprite", "../Resource/Texture/Ability/abi_spr_jellyfish_effect.png", 55, 79, 55, 79);
+
+		ImageObject* slowEffect = new ImageObject();
+		slowEffect->SetSpriteInfo(slowSprite);
+		slowEffect->SetSize(55.f, 79.f);
+		slowEffect->SetOrderingLayer(1);
+		this->slowStatusObject = slowEffect;
+		currentLevel->AddObjectToScene(slowEffect);
+	}
+	else
+	{
+		this->slowStatusObject->SetIsActive(false);
+		this->slowStatusObject = nullptr;
+	}
 }
 void PlayerObject::SetIsDashing(bool isDashing)
 {
@@ -194,7 +214,7 @@ void PlayerObject::ReduceSlowDuration(float dt)
 	if (slowDuration <= 0.0f)
 	{
 		slowDuration = 0.0f;
-		isSlow = false;
+		this->SetIsSlow(false);
 	}
 	// KK_TRACE("Reduce slow duration: Player Number {0} Duration: {1}", GetPlayerNumber(), slowDuration);
 }
@@ -769,6 +789,11 @@ void PlayerObject::UpdateCollider()
 	this->GetGroundColliderObject()->SetSize(groundCheckSize.x, groundCheckSize.y);
 	this->GetGroundColliderObject()->SetPosition(groundCheckPos);
 	this->GetGroundCollider()->Update(groundCheckSize, groundCheckPos);
+
+	if (this->slowStatusObject)
+	{
+		this->slowStatusObject->SetPosition(glm::vec3(this->pos.x + 48.f, this->pos.y + 48.f, 0));
+	}
 }
 std::vector<ProjectileObject*> PlayerObject::GetOwningProjectile() const
 {

@@ -12,6 +12,8 @@ TrapObject::TrapObject()
 
 	this->isAnimated = true;
 	this->spriteRenderer->SetFrame(10);
+
+	this->currAnimState = AnimationState::Idle;
 }
 
 
@@ -109,7 +111,7 @@ void TrapObject::ExplodeTileInRange()
 	{
 		tile->GotHit();
 	}
-	this->isActive = false;
+	//this->isActive = false;
 }
 
 void TrapObject::OnColliderEnter(Collider* other)
@@ -133,21 +135,26 @@ void TrapObject::OnColliderEnter(Collider* other)
 			{
 				case TypeTrap::Trap:
 					//KK_TRACE("Trap of player {0} hit player {1}", this->GetPlayerNumber(), player->GetPlayerNumber());
-					player->SetSlowDuration(100);
-					player->SetIsSlow(true);
-
+					if (currAnimState == AnimationState::Idle)
+					{
+						player->SetSlowDuration(3.f);
+						player->SetIsSlow(true);
+						ChangeAnimationState(AnimationState::Collide);
+					}
+					
 					// player->ApplyKnockback(this);
 
 
-					this->isActive = false;
+					//this->isActive = false;
 					break;
 				case TypeTrap::Tnt:
 					if (isActivate)
 					{
-						//KK_TRACE("Activate TNT");
+						ChangeAnimationState(AnimationState::Collide);
+						////KK_TRACE("Activate TNT");
 						SetCanKnockback(true);
 						player->ApplyKnockback(this);
-						this->isActive = false;
+						//this->isActive = false;
 						
 					}
 					break;
@@ -172,9 +179,10 @@ void TrapObject::OnColliderStay(Collider* other)
 				if (isActivate)
 				{
 					//KK_TRACE("Activate TNT");
+					ChangeAnimationState(AnimationState::Collide);
 					SetCanKnockback(true);
 					player->ApplyKnockback(this);
-					this->isActive = false;
+					//this->isActive = false;
 
 				}
 				break;
@@ -229,4 +237,39 @@ void TrapObject::SetType(int type) {
 
 bool TrapObject::GetType() {
 	return type;
+}
+
+void TrapObject::UpdateCurrentAnimation()
+{
+
+	if (currAnimState == AnimationState::Collide)
+	{
+		float lastFrame = (GetSpriteRenderer()->GetSheetWidth() / GetSpriteRenderer()->GetSpriteWidth()) - 1;
+		KK_CORE_WARN("ProjectileObject: lastFrame = {0}", lastFrame);
+		KK_CORE_WARN("ProjectileObject: GetSpriteRenderer()->GetColumn() = {0}", GetSpriteRenderer()->GetColumn());
+		if (GetIsAnimated() && GetSpriteRenderer()->GetColumn() == lastFrame)
+		{
+			this->SetIsActive(false);
+		}
+	}
+}
+
+void TrapObject::SetAnimationSprite(AnimationState state, SpritesheetInfo spriteInfo)
+{
+	animList.insert({ state, spriteInfo });
+}
+
+void TrapObject::ChangeAnimationState(AnimationState anim)
+{
+	if (currAnimState != anim)
+	{
+		KK_CORE_TRACE("TrapObject: ChangeAnimationState");
+		currAnimState = anim;
+		this->SetTextureWithID(animList.find(anim)->second, animList.find(anim)->second.textureid);
+		this->spriteRenderer->SetTexture(animList.find(anim)->second.texture);
+		//this->SetTexture(animList.find(anim)->second.texture);
+		this->spriteRenderer->ShiftTo(0, 0);
+		this->spriteRenderer->isLoop = animList.find(anim)->second.isLoop;
+
+	}
 }

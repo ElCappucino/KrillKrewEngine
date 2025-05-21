@@ -196,6 +196,8 @@ private:
 	Camera camera;
 	Timer* timer;
 
+	int currentPlayer = 0;
+
 	float dt = 0;
 	int frame = 0;
 	int framePerSecond = 0;
@@ -241,6 +243,7 @@ public:
 	void TileImport(std::array<std::array<int, MAP_WIDTH>, MAP_HEIGHT> &TileBuffer, std::string fileName);
 
 	virtual void AddEntityToScene(EntityObject* entity);
+	virtual void AddObjectToScene(DrawableObject* object);
 
 	void UsingAbilityKeyDown(int numPlayer, PlayerObject::AbilityButton button);
 	void UsingAbilityKeyUp(int numPlayer, PlayerObject::AbilityButton button);

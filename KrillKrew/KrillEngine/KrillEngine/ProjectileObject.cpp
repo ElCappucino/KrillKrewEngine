@@ -109,6 +109,7 @@ void ProjectileObject::ReduceLifeTime(float dt)
 		
 		if (this->type == TypeProjectile::Fireball)
 		{
+			this->SetRotation(0);
 			ExplodeTileInRange();
 		}
 		else if (this->type == ProjectileObject::TypeProjectile::Teleport) 

@@ -86,6 +86,9 @@ private:
 	//std::array<Ability*, 3> abilities;
 	std::vector<ProjectileObject*> ownProjectile;
 	std::vector<TrapObject*> ownTrap;
+
+	// Slow Status
+	ImageObject* slowStatusObject;
 	
 	glm::vec3 velocity;
 	glm::vec2 currDirection;

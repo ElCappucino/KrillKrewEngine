@@ -38,4 +38,5 @@ public:
 	virtual void HandleMouse(int type, int x, int y);
 
 	virtual void AddEntityToScene(EntityObject* entity);
+	virtual void AddObjectToScene(DrawableObject* object);
 };

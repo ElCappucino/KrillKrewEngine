@@ -194,6 +194,7 @@ void LevelShowcase::LevelLoad()
 	spriteList["Landmine_Explode"] = SpritesheetInfo("Landmine_Explode",			"../Resource/Texture/Ability/abi_spr_landmine_explosion.png", 370, 370, 2590, 370, false);
 	spriteList["Teleport_Explode"] = SpritesheetInfo("Teleport_Explode",			"../Resource/Texture/Ability/abi_spr_teleport_explosion.png", 250, 250, 1000, 250, false);
 	spriteList["Stun_Explode"] = SpritesheetInfo("Stun_Explode",					"../Resource/Texture/Ability/abi_spr_stun_explosion.png", 400, 400, 1600, 400, false);
+	spriteList["Trap_Explode"] = SpritesheetInfo("Trap_Explode",					"../Resource/Texture/Ability/abi_spr_jellyfish_explosion.png", 332, 332, 4316, 332, false);
 	
 	spriteList["Xoey_UI"] = SpritesheetInfo("Xoey_UI", "../Resource/Texture/xoey.png", 430, 220, 430, 220);
 	spriteList["Byssa_UI"] = SpritesheetInfo("Byssa_UI", "../Resource/Texture/byssa.png", 430, 220, 430, 220);
@@ -421,6 +422,7 @@ void LevelShowcase::LevelInit()
 	p1->SetPosition(glm::vec3(-400.f, -400.f, 0.f));
 	p1->GetSpriteRenderer()->SetFrame(10);
 	p1->SetPlayerNumber(0);
+	p1->LocateCurrentLevel(this);
 	entityObjects.push_back(p1);
 	objectsList.push_back(p1);
 	playerSize++;
@@ -470,6 +472,7 @@ void LevelShowcase::LevelInit()
 	p2->SetPosition(glm::vec3(400.f, -400.f, 0));
 	p2->GetSpriteRenderer()->SetFrame(10);
 	p2->SetPlayerNumber(1);
+	p2->LocateCurrentLevel(this);
 	entityObjects.push_back(p2);
 	objectsList.push_back(p2);
 	playerSize++;
@@ -519,6 +522,7 @@ void LevelShowcase::LevelInit()
 	p3->SetPosition(glm::vec3(400.f, 400.f, 0));
 	p3->GetSpriteRenderer()->SetFrame(10);
 	p3->SetPlayerNumber(2);
+	p3->LocateCurrentLevel(this);
 	entityObjects.push_back(p3);
 	objectsList.push_back(p3);
 	playerSize++;
@@ -570,6 +574,7 @@ void LevelShowcase::LevelInit()
 	p4->SetPosition(glm::vec3(-400.f, 400.f, 0));
 	p4->GetSpriteRenderer()->SetFrame(10);
 	p4->SetPlayerNumber(3);
+	p4->LocateCurrentLevel(this);
 	entityObjects.push_back(p4);
 	objectsList.push_back(p4);
 	playerSize++;
@@ -722,7 +727,7 @@ void LevelShowcase::UpdateInput()
 		Joystick::Update();
 		for (int i = 0; i < playerSize; i++)
 		{
-			if (players[i]->GetIsFell())
+			if (players[i + currentPlayer]->GetIsFell())
 			{
 				continue;
 			}
@@ -773,39 +778,39 @@ void LevelShowcase::UpdateInput()
 			}
 			if (norAxisX != 0 || norAxisY != 0)
 			{
-				players[i]->SetCurrentDirection(glm::vec2(norAxisX, norAxisY));
+				players[i + currentPlayer]->SetCurrentDirection(glm::vec2(norAxisX, norAxisY));
 			}
 
-			if (players[i]->GetIsFell() == false)
+			if (players[i + currentPlayer]->GetIsFell() == false)
 			{
 				// update facing
 				if (abs(axisX) > 0.2f)
 				{
-					players[i]->UpdateFacingSide(isPositiveX);
+					players[i + currentPlayer]->UpdateFacingSide(isPositiveX);
 				}
 
 				// movement control
-				if (players[i]->GetIsKnockback() == false)
+				if (players[i + currentPlayer]->GetIsKnockback() == false)
 				{
-					if (players[i]->GetIsStun() == true)
+					if (players[i + currentPlayer]->GetIsStun() == true)
 					{
 						// velo to zero if stun
-						players[i]->SetVelocity(0, 0, isPositiveXOld, isPositiveYOld);
+						players[i + currentPlayer]->SetVelocity(0, 0, isPositiveXOld, isPositiveYOld);
 					}
-					else if (players[i]->GetIsDashing() == true)
+					else if (players[i + currentPlayer]->GetIsDashing() == true)
 					{
 						// use old velo during dash to disable control
-						players[i]->SetVelocity(
+						players[i + currentPlayer]->SetVelocity(
 							abs(norAxisXOld),
 							abs(norAxisYOld),
 							isPositiveXOld,
 							isPositiveYOld
 						);
 					}
-					else if (players[i]->GetIsAiming() == false)
+					else if (players[i + currentPlayer]->GetIsAiming() == false)
 					{
 						// if not affecit by anything, use normaml velocity
-						players[i]->SetVelocity(
+						players[i + currentPlayer]->SetVelocity(
 							abs(norAxisX),
 							abs(norAxisY),
 							isPositiveX,
@@ -816,7 +821,7 @@ void LevelShowcase::UpdateInput()
 
 				// update old velocity in case dashing
 
-				if (players[i]->GetIsDashing())
+				if (players[i + currentPlayer]->GetIsDashing())
 				{
 					norAxisXOld = norAxisX;
 					norAxisYOld = norAxisY;
@@ -824,9 +829,9 @@ void LevelShowcase::UpdateInput()
 					isPositiveYOld = isPositiveY;
 				}
 
-				if (players[i]->GetIsAiming())
+				if (players[i + currentPlayer]->GetIsAiming())
 				{
-					std::vector<ProjectileObject*> owningProjectile = players[i]->GetOwningProjectile();
+					std::vector<ProjectileObject*> owningProjectile = players[i + currentPlayer]->GetOwningProjectile();
 					for (int j = 0; j < owningProjectile.size(); j++)
 					{
 						ProjectileObject* projectile = owningProjectile[j];
@@ -882,15 +887,15 @@ void LevelShowcase::UpdateInput()
 							players[i]->SetIsAiming(false);
 							if (Joystick::GetButton(i, Joystick::Button::Circle))
 							{
-								players[i]->SetAbilityCooldown(PlayerObject::AbilityButton::Circle, 6);
+								players[i + currentPlayer]->SetAbilityCooldown(PlayerObject::AbilityButton::Circle, 6);
 							}
 							if (Joystick::GetButton(i, Joystick::Button::Cross))
 							{
-								players[i]->SetAbilityCooldown(PlayerObject::AbilityButton::Cross, 6);
+								players[i + currentPlayer]->SetAbilityCooldown(PlayerObject::AbilityButton::Cross, 6);
 							}
 							if (Joystick::GetButton(i, Joystick::Button::Triangle))
 							{
-								players[i]->SetAbilityCooldown(PlayerObject::AbilityButton::Triangle, 6);
+								players[i + currentPlayer]->SetAbilityCooldown(PlayerObject::AbilityButton::Triangle, 6);
 							}
 						}
 					}
@@ -903,60 +908,60 @@ void LevelShowcase::UpdateInput()
 			//Ability Triangle
 			if (Joystick::GetButtonDown(i, Joystick::Button::Triangle))
 			{
-				if (players[i]->GetCooldown(PlayerObject::AbilityButton::Triangle) <= 0)
+				if (players[i + currentPlayer]->GetCooldown(PlayerObject::AbilityButton::Triangle) <= 0)
 				{
-					UsingAbilityKeyDown(i, PlayerObject::AbilityButton::Triangle);
+					UsingAbilityKeyDown(i + currentPlayer, PlayerObject::AbilityButton::Triangle);
 				}
 			}
 
 			if (Joystick::GetButtonUp(i, Joystick::Button::Triangle)) {
-				if (players[i]->GetCooldown(PlayerObject::AbilityButton::Triangle) <= 0)
+				if (players[i + currentPlayer]->GetCooldown(PlayerObject::AbilityButton::Triangle) <= 0)
 				{
-					UsingAbilityKeyUp(i, PlayerObject::AbilityButton::Triangle);
+					UsingAbilityKeyUp(i + currentPlayer, PlayerObject::AbilityButton::Triangle);
 				}
 			}
 
 			//Ability Circle
 			if (Joystick::GetButtonDown(i, Joystick::Button::Circle))
 			{
-				if (players[i]->GetCooldown(PlayerObject::AbilityButton::Circle) <= 0)
+				if (players[i + currentPlayer]->GetCooldown(PlayerObject::AbilityButton::Circle) <= 0)
 				{
-					UsingAbilityKeyDown(i, PlayerObject::AbilityButton::Circle);
+					UsingAbilityKeyDown(i + currentPlayer, PlayerObject::AbilityButton::Circle);
 				}
 			}
 
 			if (Joystick::GetButtonUp(i, Joystick::Button::Circle)) {
-				if (players[i]->GetCooldown(PlayerObject::AbilityButton::Circle) <= 0)
+				if (players[i + currentPlayer]->GetCooldown(PlayerObject::AbilityButton::Circle) <= 0)
 				{
-					UsingAbilityKeyUp(i, PlayerObject::AbilityButton::Circle);
+					UsingAbilityKeyUp(i + currentPlayer, PlayerObject::AbilityButton::Circle);
 				}
 			}
 
 			//Ability Cross
 			if (Joystick::GetButtonDown(i, Joystick::Button::Cross))
 			{
-				if (players[i]->GetCooldown(PlayerObject::AbilityButton::Cross) <= 0)
+				if (players[i + currentPlayer]->GetCooldown(PlayerObject::AbilityButton::Cross) <= 0)
 				{
-					UsingAbilityKeyDown(i, PlayerObject::AbilityButton::Cross);
+					UsingAbilityKeyDown(i + currentPlayer, PlayerObject::AbilityButton::Cross);
 				}
 			}
 
 			if (Joystick::GetButtonUp(i, Joystick::Button::Cross))
 			{
-				if (players[i]->GetCooldown(PlayerObject::AbilityButton::Cross) <= 0)
+				if (players[i + currentPlayer]->GetCooldown(PlayerObject::AbilityButton::Cross) <= 0)
 				{
-					UsingAbilityKeyUp(i, PlayerObject::AbilityButton::Cross);
+					UsingAbilityKeyUp(i + currentPlayer, PlayerObject::AbilityButton::Cross);
 				}
 			}
 
 			if (Joystick::GetButtonDown(i, Joystick::Button::Square))
 			{
 				//players[i]->ChangeAnimationState(PlayerObject::AnimationState::Melee);
-				if (players[i]->GetMeleeCooldown() <= 0.f)
+				if (players[i + currentPlayer]->GetMeleeCooldown() <= 0.f)
 				{
-					players[i]->ChangeMeleeAnimation();
-					players[i]->HitAimingTile();
-					players[i]->SetMeleeCooldown(MeleeCooldown);
+					players[i + currentPlayer]->ChangeMeleeAnimation();
+					players[i + currentPlayer]->HitAimingTile();
+					players[i + currentPlayer]->SetMeleeCooldown(MeleeCooldown);
 					soundManager->PlaySFX("hit_test", false);
 				}
 				
@@ -965,7 +970,8 @@ void LevelShowcase::UpdateInput()
 			// Debug other player
 			if (Joystick::GetButtonDown(i, Joystick::Button::R1))
 			{
-
+				currentPlayer++;
+				currentPlayer = currentPlayer % 4;
 			}
 
 			if (Joystick::GetButtonDown(i, Joystick::Button::P5Button))
@@ -1124,7 +1130,7 @@ void LevelShowcase::UpdateProjectile()
 			//KK_TRACE("UpdateProjectile: trap check");
 			if (trap->GetCanKnockback()) 
 			{
-				trap->SetIsActive(false);
+				//trap->SetIsActive(false);
 				player->RemoveOwningTrap(trap);
 			}
 		}
@@ -1676,10 +1682,12 @@ void LevelShowcase::UsingAbilityKeyDown(int numPlayer, PlayerObject::AbilityButt
 					if (trap->GetType() == TrapObject::TypeTrap::Tnt) 
 					{
 						trap->ExplodeTileInRange();
+						trap->ChangeAnimationState(TrapObject::AnimationState::Collide);
 						KK_TRACE("Press Again");
 						trap->isActivate = true;
 						players[numPlayer]->SetAbilityCooldown(button, TNTCooldown);
 						players[numPlayer]->SetIsTNT(false);
+						players[numPlayer]->RemoveOwningTrap(trap);
 					}
 				}
 			}
@@ -1828,6 +1836,8 @@ void LevelShowcase::Trap(int numPlayer, PlayerObject::AbilityButton button) {
 	Trap->SetPlayerNumber(players[numPlayer]->GetPlayerNumber());
 	Trap->SetType(TrapObject::TypeTrap::Trap);
 	Trap->SetIsActive(true);
+	Trap->SetAnimationSprite(TrapObject::AnimationState::Idle, spriteList.find("Trap")->second);
+	Trap->SetAnimationSprite(TrapObject::AnimationState::Collide, spriteList.find("Trap_Explode")->second);
 	//std::cout << "Owner " << Trap->getNumOwner() << std::endl;
 	objectsList.push_back(Trap);
 	entityObjects.push_back(Trap);
@@ -1852,6 +1862,8 @@ void LevelShowcase::TNT(int numPlayer, PlayerObject::AbilityButton button) {
 	TNT->GetCollider()->setColliderSize(glm::vec3(500.f, 500.f, 0));
 	TNT->SetPlayerNumber(players[numPlayer]->GetPlayerNumber());
 	TNT->SetType(TrapObject::TypeTrap::Tnt);
+	TNT->SetAnimationSprite(TrapObject::AnimationState::Idle, spriteList.find("TNT")->second);
+	TNT->SetAnimationSprite(TrapObject::AnimationState::Collide, spriteList.find("Landmine_Explode")->second);
 	//TNT->GetCollider()->Update(glm::vec3(0, 0, 0), TNT->getPos());
 	//TNT->setIsCanKnockback(true);
 	//std::cout << "Owner " << Trap->getNumOwner() << std::endl;
@@ -1987,7 +1999,10 @@ void LevelShowcase::AddEntityToScene(EntityObject* entity)
 	//objectsList.push_back(entity->GetCollider()->GetGizmos());
 	//players[numPlayer]->SetAbilityCooldown(button, 6);
 }
-
+void LevelShowcase::AddObjectToScene(DrawableObject* object)
+{
+	objectsList.push_back(object);
+}
 void LevelShowcase::loadAbility(std::string filename) {
 	std::ifstream file(filename);
 	nlohmann::json data = nlohmann::json::parse(file);

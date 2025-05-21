@@ -119,3 +119,8 @@ void Level::AddEntityToScene(EntityObject* entity)
 {
 
 }
+
+void Level::AddObjectToScene(DrawableObject* object)
+{
+
+}
