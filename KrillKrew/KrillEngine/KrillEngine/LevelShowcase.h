@@ -172,6 +172,8 @@ private:
 	float groundColOffsetY[4] = { -96.f, -96.f, -96.f, -96.f };
 	int playersSkill[4][3];
 	int isResetScene;
+	int isFullScreen;
+	int isWindowScreen;
 
 	float MeleeCooldown = 2.f;
 	float FireballCooldown = 3.f;

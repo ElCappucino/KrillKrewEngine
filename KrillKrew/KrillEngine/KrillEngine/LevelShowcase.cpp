@@ -1282,6 +1282,26 @@ void LevelShowcase::LevelDraw()
 
 	if (ImGui::Button("Reset Scene", ImVec2(100, 50)))
 		isResetScene++;
+
+	if (ImGui::Button("To FullScreen", ImVec2(100, 50)))
+		isFullScreen++;
+
+	if (ImGui::Button("To WindowScreen", ImVec2(100, 50)))
+		isWindowScreen++;
+
+	if (isFullScreen & 1)
+	{
+		SDL_SetWindowFullscreen(GameEngine::GetInstance()->GetSDLWindow(), SDL_WINDOW_FULLSCREEN_DESKTOP);
+		glViewport(0, 0, 1920, 1080);
+		isFullScreen = 0;
+	}
+
+	if (isWindowScreen & 1)
+	{
+		SDL_SetWindowFullscreen(GameEngine::GetInstance()->GetSDLWindow(), 0);
+		glViewport(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
+		isWindowScreen = 0;
+	}
 	// Cooldown Stats
 	/*float MeleeCooldown = 2.f;
 	float FireballCooldown = 3.f;
