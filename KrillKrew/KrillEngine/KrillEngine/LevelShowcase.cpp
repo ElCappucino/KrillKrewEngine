@@ -632,6 +632,11 @@ void LevelShowcase::LevelInit()
 	// sort with ordering layer
 	std::sort(objectsList.begin(), objectsList.end(), compareLayer);
 
+	// Read config file
+
+	LoadConfigInfo("LevelShowcase.json");
+
+
 	// Setup Dear ImGui context
 	IMGUI_CHECKVERSION();
 	ImGui::CreateContext();
@@ -1481,6 +1486,8 @@ void LevelShowcase::LevelUnload()
 	ImGui_ImplSDL2_Shutdown();
 	ImGui::DestroyContext();
 
+	SaveConfigInfo("LevelShowcase.json");
+
 	//cout << "Unload Level" << endl;
 }
 
@@ -2119,4 +2126,117 @@ void LevelShowcase::loadAbility(std::string filename) {
 	else {
 		std::cout << "Failed" << std::endl;
 	}
+}
+
+void LevelShowcase::SaveConfigInfo(const std::string& fileName) {
+
+	std::ofstream file(fileName);
+	nlohmann::json data;
+
+	//// ImGUI
+	//float groundColX[4] = { 64.f, 64.f, 64.f, 64.f };
+	//float groundColY[4] = { 64.f, 64.f, 64.f, 64.f };
+	//float groundColOffsetX[4] = { 0.f, 0.f, 0.f, 0.f };
+	//float groundColOffsetY[4] = { -96.f, -96.f, -96.f, -96.f };
+	//int playersSkill[4][3];
+
+	data["groundColOffsetY"] = 
+	{ 
+		{ "0", groundColOffsetY[0] },
+		{ "1", groundColOffsetY[1] },
+		{ "2", groundColOffsetY[2] },
+		{ "3", groundColOffsetY[3] }
+	};
+
+	for (int i = 0; i < 4; i++)
+	{
+		std::string playerName = "Player " + std::to_string(i) + " Skill";
+		data[playerName] =
+		{
+			playersSkill[i][0],
+			playersSkill[i][1],
+			playersSkill[i][2]
+		};
+	}
+
+	data["MeleeCooldown"] = MeleeCooldown;
+	data["FireballCooldown"] = FireballCooldown;
+	data["TrapCooldown"] = TrapCooldown;
+	data["DashCooldown"] = DashCooldown;
+	data["TNTCooldown"] = MeleeCooldown;
+	data["TeleportCooldown"] = MeleeCooldown;
+	data["BolaCooldown"] = BolaCooldown;
+	data["CleaveCooldown"] = CleaveCooldown;
+
+	//float MeleeCooldown = 2.f;
+	//float FireballCooldown = 3.f;
+	//float TrapCooldown = 3.f;
+	//float DashCooldown = 3.f;
+	//float TNTCooldown = 3.f;
+	//float TeleportCooldown = 3.f;
+	//float BolaCooldown = 3.f;
+	//float CleaveCooldown = 3.f;
+
+	data["FireballLifetime"] = FireballLifetime;
+	data["TeleportLifetime"] = TeleportLifetime;
+	data["BolaLifetime"] = BolaLifetime;
+	data["CleaveLifetime"] = CleaveLifetime;
+	data["DashDuration"] = DashDuration;
+
+	//float FireballLifetime = 1.f;
+	//float TeleportLifetime = 2.f;
+	//float BolaLifetime = 2.f;
+	//float CleaveLifetime = 2.f;
+
+	//float DashDuration = 0.2f;
+
+	if (!file.is_open())
+	{
+		KK_ERROR("LevelShowcase: Fail to save config");
+	}
+	else
+	{
+		file << data;
+		file.close();
+		KK_INFO("LevelShowcase: Save config Complete");
+	}
+
+	
+}
+
+void LevelShowcase::LoadConfigInfo(const std::string& fileName)
+{
+	std::ifstream file(fileName);
+	nlohmann::json data = nlohmann::json::parse(file);
+
+	groundColOffsetY[0] = data["groundColOffsetY"]["0"];
+	groundColOffsetY[1] = data["groundColOffsetY"]["1"];
+	groundColOffsetY[2] = data["groundColOffsetY"]["2"];
+	groundColOffsetY[3] = data["groundColOffsetY"]["3"];
+
+	for (int i = 0; i < 4; i++)
+	{
+		std::string playerName = "Player " + std::to_string(i) + " Skill";
+
+		for (int j = 0; j < 3; j++)
+		{
+			playersSkill[i][j] = data[playerName][j].get<int>();
+		}
+	}
+
+	MeleeCooldown = data["MeleeCooldown"];
+	FireballCooldown = data["FireballCooldown"];
+	TrapCooldown = data["TrapCooldown"];
+	DashCooldown = data["DashCooldown"];
+	TNTCooldown = data["TNTCooldown"];
+	TeleportCooldown = data["TeleportCooldown"];
+	BolaCooldown = data["BolaCooldown"];
+	CleaveCooldown = data["CleaveCooldown"];
+
+	FireballLifetime = data["FireballLifetime"];
+	TeleportLifetime = data["TeleportLifetime"];
+	BolaLifetime = data["BolaLifetime"];
+	CleaveLifetime = data["CleaveLifetime"];
+	DashDuration = data["DashDuration"];
+
 }

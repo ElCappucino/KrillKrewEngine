@@ -264,4 +264,6 @@ public:
 	void ShootCleave(int numPlayer, PlayerObject::AbilityButton button);
 
 	void loadAbility(std::string filename);
+	void SaveConfigInfo(const std::string& fileName);
+	void LoadConfigInfo(const std::string& fileName);
 };

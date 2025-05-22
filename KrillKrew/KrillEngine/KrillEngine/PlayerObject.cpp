@@ -862,12 +862,10 @@ void PlayerObject::UpdateSpriteSheetPosition()
 		{
 			if (randnum == 0)
 			{
-
 				this->GetSpriteRenderer()->ShiftColumn();
 			}
 			else
 			{
-				KK_TRACE("randnum = {0}", randnum);
 				this->GetSpriteRenderer()->ShiftTo(0, 0);
 			}
 		}
