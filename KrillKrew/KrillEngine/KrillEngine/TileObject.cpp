@@ -112,7 +112,7 @@ TileObject::TileObject()
 	this->crackOverlay = new ImageObject();
 	this->crackOverlay->SetSpriteInfo(crackEffectSprite);
 	this->crackOverlay->SetSize(128.f, -128.f);
-
+	this->crackOverlay->SetOrderingLayer(2000.f);
 	this->orderingLayer = 0;
 
 	this->currAnimState = AnimationState::Idle;
@@ -248,31 +248,8 @@ void TileObject::CheckIfBreak()
 
 		UpdateTileArray(0);
 		AddCollapseTileToScene();
-		// this->SetIsActive(false);
-
-		/*std::cout << "Check Before Collapse -----------------------------" << std::endl;
-
-		for (int i = 0; i < MAP_HEIGHT; i++)
-		{
-			for (int j = 0; j < MAP_WIDTH; j++)
-			{
-				std::cout << (*updateTile)[i][j] << ", ";
-			}
-			std::cout << std::endl;
-		}*/
 
 		TileCollapseCheck(*updateTile);
-
-		/*std::cout << "Check After Collapse -----------------------------" << std::endl;
-
-		for (int i = 0; i < MAP_HEIGHT; i++)
-		{
-			for (int j = 0; j < MAP_WIDTH; j++)
-			{
-				std::cout << (*updateTile)[i][j] << ", ";
-			}
-			std::cout << std::endl;
-		}*/
 	}
 }
 void TileObject::GotHit()
@@ -338,5 +315,9 @@ void TileObject::AddCollapseTileToScene()
 	collapseTile->GetSpriteRenderer()->ShiftTo(this->GetSpriteRenderer()->GetRow(), this->GetSpriteRenderer()->GetColumn());
 
 	currentLevel->AddEntityToScene(collapseTile);
+}
+
+float TileObject::getOrderingLayer() const {
+	return 2000.f;
 }
 

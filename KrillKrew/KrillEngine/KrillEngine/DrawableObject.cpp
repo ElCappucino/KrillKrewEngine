@@ -63,7 +63,7 @@ glm::vec3 DrawableObject::getSize() {
 	return size;
 
 }
-int DrawableObject::getOrderingLayer() const
+float DrawableObject::getOrderingLayer() const
 {
 	return orderingLayer;
 }
@@ -75,4 +75,3 @@ void DrawableObject::SetIsActive(bool isActive)
 {
 	this->isActive = isActive;
 }
-

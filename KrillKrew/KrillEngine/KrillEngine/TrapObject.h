@@ -71,4 +71,6 @@ public:
 	virtual void OnTriggerStay(Collider* other);
 	virtual void OnTriggerExit(Collider* other);
 
+	virtual float getOrderingLayer() const;
+
 };

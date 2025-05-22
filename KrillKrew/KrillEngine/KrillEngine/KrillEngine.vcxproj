@@ -50,6 +50,7 @@
     <ClInclude Include="PlayerHitboxObject.h" />
     <ClInclude Include="PlayerObject.h" />
     <ClInclude Include="ProjectileObject.h" />
+    <ClInclude Include="PropObject.h" />
     <ClInclude Include="Resource\imgui-1.91.8\backends\imgui_impl_opengl3.h" />
     <ClInclude Include="Resource\imgui-1.91.8\backends\imgui_impl_sdl2.h" />
     <ClInclude Include="Resource\imgui-1.91.8\imgui.h" />
@@ -101,6 +102,7 @@
     <ClCompile Include="PlayerHitboxObject.cpp" />
     <ClCompile Include="PlayerObject.cpp" />
     <ClCompile Include="ProjectileObject.cpp" />
+    <ClCompile Include="PropObject.cpp" />
     <ClCompile Include="Resource\imgui-1.91.8\backends\imgui_impl_opengl3.cpp" />
     <ClCompile Include="Resource\imgui-1.91.8\backends\imgui_impl_sdl2.cpp" />
     <ClCompile Include="Resource\imgui-1.91.8\imgui.cpp" />

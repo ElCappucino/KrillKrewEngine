@@ -273,3 +273,7 @@ void TrapObject::ChangeAnimationState(AnimationState anim)
 
 	}
 }
+
+float TrapObject::getOrderingLayer() const {
+	return this->pos.y;
+}

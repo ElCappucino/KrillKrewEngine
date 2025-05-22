@@ -27,7 +27,7 @@ public:
 	void Translate(glm::vec3 moveDistance);
 	glm::vec3 getPos();
 	glm::vec3 getSize();
-	int getOrderingLayer() const;
+	virtual float getOrderingLayer() const;
 
 	//Rotate, Scale ???
 

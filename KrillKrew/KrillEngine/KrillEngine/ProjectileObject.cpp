@@ -396,3 +396,7 @@ void ProjectileObject::UpdateCollider()
 {
 	this->GetCollider()->Update(this->getSize() * 0.5f, this->getPos());
 }
+
+float ProjectileObject::getOrderingLayer() const {
+	return 1000;
+}

@@ -2,7 +2,7 @@
 
 bool compareLayer(const DrawableObject* a, const DrawableObject* b)
 {
-	return a->getOrderingLayer() < b->getOrderingLayer();
+	return a->getOrderingLayer() > b->getOrderingLayer();
 }
 
 void LevelShowcase::LevelLoad()
@@ -203,7 +203,19 @@ void LevelShowcase::LevelLoad()
 
 	spriteList["Blobtile"] = SpritesheetInfo("Blobtile", "../Resource/Texture/tileset_01.png", 128, 128, 1664, 512);
 
+	// Prop
+	spriteList["Prop_A"] = SpritesheetInfo("Prop_A", "../Resource/Texture/Props/prop_A.png", 170, 170, 1020, 170);
+	spriteList["Prop_B"] = SpritesheetInfo("Prop_B", "../Resource/Texture/Props/prop_B.png", 123, 123, 369, 170);
+	spriteList["Prop_C"] = SpritesheetInfo("Prop_C", "../Resource/Texture/Props/prop_C.png", 91, 91, 637, 91);
+
+	spriteList["Tree_A"] = SpritesheetInfo("Tree_A", "../Resource/Texture/Props/prop_spr_CoconutTree_A.png", 300, 400, 900, 400);
+	spriteList["Tree_B"] = SpritesheetInfo("Tree_B", "../Resource/Texture/Props/prop_spr_CoconutTree_B.png", 250, 370, 750, 370);
+
+	spriteList["Leaf1_Collapse"] = SpritesheetInfo("Tree_B", "../Resource/Texture/Props/prop_spr_vfx_leaf.png", 200, 200, 800, 200);
+	spriteList["Leaf2_Collapse"] = SpritesheetInfo("Tree_B", "../Resource/Texture/Props/prop_spr_vfx_smallleaf.png", 120, 120, 480, 120);
+
 	spriteList["CollapseTile"] = SpritesheetInfo("CollapseTile", "../Resource/Texture/Props/prop_spr_vfx_smoke.png", 200, 200, 800, 200);
+
 	soundManager = KrillSoundManager::SoundManager::GetInstance();
 
 	soundManager->LoadMusic("bgm_test", "../Resource/Audio/bgm_test.mp3");
@@ -346,6 +358,88 @@ void LevelShowcase::InitTile()
 	}
 }
 
+void LevelShowcase::InitProp()
+{
+	srand(time(0));
+
+	float map_left = -1280.f;
+	float map_top = 1080.f;
+
+	int tileCount = 0;
+
+	float totalLoadedTile = MAP_HEIGHT * MAP_WIDTH;
+	float currentLoadedTile = 0;
+
+	KK_TRACE("Generate Prop-----------{0}", totalLoadedTile);
+	for (int i = 0; i < MAP_HEIGHT; i++)
+	{
+		for (int j = 0; j < MAP_WIDTH; j++)
+		{
+			currentLoadedTile++;
+			//KK_CORE_TRACE("Generate Prop-----------{0}%", 100.f * currentLoadedTile / totalLoadedTile);
+
+			int flag = propsTile[i][j];
+
+			//KK_CORE_TRACE("flag = {0}", flag);
+			
+			if (flag == 0)
+			{
+				continue;
+			}
+
+			PropObject* obj = new PropObject();
+			//obj->SetTexture(spriteList.find("Blobtile")->second.texture);
+			
+			obj->SetPosition(glm::vec3(map_left + (j * 126.f), map_top - (i * 126.f), 0));
+			obj->LocateCurrentLevel(this);
+
+			int randnum = 0;
+
+			switch (flag)
+			{
+			case 1:
+				obj->SetTextureWithID(spriteList.find("Prop_A")->second, spriteList.find("Prop_A")->second.textureid);
+				obj->SetSize(170.f, -170.f);
+				randnum = rand() % 6;
+				obj->GetSpriteRenderer()->ShiftTo(0, randnum);
+				obj->propType = PropObject::PropType::Small;
+				break;
+			case 2:
+				obj->SetTextureWithID(spriteList.find("Prop_B")->second, spriteList.find("Prop_B")->second.textureid);
+				obj->SetSize(123.f, -123.f);
+				randnum = rand() % 3;
+				obj->GetSpriteRenderer()->ShiftTo(0, randnum);
+				obj->propType = PropObject::PropType::Small;
+				break;
+			case 3:
+				obj->SetTextureWithID(spriteList.find("Prop_C")->second, spriteList.find("Prop_C")->second.textureid);
+				obj->SetSize(91.f, -91.f);
+				randnum = rand() % 7;
+				obj->GetSpriteRenderer()->ShiftTo(0, randnum);
+				obj->propType = PropObject::PropType::Small;
+				break;
+			case 4:
+				obj->SetTextureWithID(spriteList.find("Tree_A")->second, spriteList.find("Tree_A")->second.textureid);
+				obj->SetSize(450.f, -600.f);
+				obj->GetSpriteRenderer()->ShiftTo(0, 0);
+				obj->propType = PropObject::PropType::Tree;
+				break;
+			case 5:
+				obj->SetTextureWithID(spriteList.find("Tree_B")->second, spriteList.find("Tree_B")->second.textureid);
+				obj->SetSize(375.f, -555.f);
+				obj->GetSpriteRenderer()->ShiftTo(0, 0);
+				obj->propType = PropObject::PropType::Tree;
+				break;
+			}
+
+			entityObjects.push_back(obj);
+			tileCount++;
+			objectsList.push_back(obj);
+
+		}
+	}
+}
+
 void LevelShowcase::LevelInit()
 {
 	std::cout << "Init Level" << std::endl;
@@ -362,6 +456,8 @@ void LevelShowcase::LevelInit()
 
 	TileImport(groundTile, "../Resource/Texture/Tilemap0.txt");
 	TileImport(currentGroundTile, "../Resource/Texture/Tilemap0.txt");
+	TileImport(propsTile, "../Resource/Texture/Propmap0.txt");
+	TileImport(currentPropTile, "../Resource/Texture/Propmap0.txt");
 
 	// Create and Initialize 4 players object
 
@@ -373,6 +469,7 @@ void LevelShowcase::LevelInit()
 	}
 
 	InitTile();
+	InitProp();
 
 	// Example Code
 

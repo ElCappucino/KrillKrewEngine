@@ -29,6 +29,7 @@
 #include "TileObject.h"
 #include "PlayerHitboxObject.h"
 #include "PlayerGroundColliderObject.h"
+#include "PropObject.h"
 
 // Vbo
 
@@ -67,6 +68,7 @@
 #include <unordered_set>
 #include <queue>
 #include <numeric>
+#include <cstdlib>
 
 #define MAP_WIDTH  20
 #define MAP_HEIGHT 16

@@ -26,8 +26,16 @@ private:
 
 	std::array<std::array<int, MAP_WIDTH>, MAP_HEIGHT> currentGroundTile = { 0 };
 	std::array<std::array<int, MAP_WIDTH>, MAP_HEIGHT> groundTile = { 0 };
+
+	// 0 = no prop
+	// 1 = prop A
+	// 2 = prop B
+	// 3 = prop C
+	// 4 = Tree A
+	// 5 = Tree B
+	std::array<std::array<int, MAP_WIDTH>, MAP_HEIGHT> currentPropTile = { 0 };
 	std::array<std::array<int, MAP_WIDTH>, MAP_HEIGHT> propsTile = { 0 };
-	std::array<std::array<int, MAP_WIDTH>, MAP_HEIGHT> colliderTile = { 0 };
+	
 	/*int groundTile[MAP_HEIGHT][MAP_WIDTH] = { 0 };
 	int propsTile[MAP_HEIGHT][MAP_WIDTH] = { 0 };
 	int colliderTile[MAP_HEIGHT][MAP_WIDTH] = { 0 };*/
@@ -206,7 +214,6 @@ private:
 	float targetFrameDuration = 1.0f / 288.0f; // cap at 144 fps
 	float time1s = 0;
 	float time01s = 0;
-	float time[4] = { 0 };
 	float previousWidth = 0, previousHeight = 0;
 
 	float musicVolume = 1.f, sfxVolume = 1.f;
@@ -233,6 +240,7 @@ public:
 	virtual void HandleMouse(int type, int x, int y);
 
 	void InitTile();
+	void InitProp();
 
 	void UpdateInput();
 	void UpdateCollision();

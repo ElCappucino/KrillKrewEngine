@@ -90,4 +90,6 @@ public:
 	virtual void OnTriggerExit(Collider* other);
 
 	virtual void UpdateSpriteSheetPosition();
+
+	virtual float getOrderingLayer() const;
 };

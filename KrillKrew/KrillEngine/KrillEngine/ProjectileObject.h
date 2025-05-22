@@ -83,4 +83,6 @@ public:
 	virtual void SetAnimationSprite(AnimationState state, SpritesheetInfo spriteInfo);
 	virtual void ChangeAnimationState(AnimationState anim);
 	virtual void UpdateCollider();
+
+	virtual float getOrderingLayer() const;
 };

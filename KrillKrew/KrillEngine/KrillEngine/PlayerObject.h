@@ -237,4 +237,6 @@ public:
 	std::vector<TrapObject*> GetOwningTrap() const;
 	void AddOwningTrap(TrapObject* trap);
 	void RemoveOwningTrap(TrapObject* trap);
+
+	virtual float getOrderingLayer() const;
 };

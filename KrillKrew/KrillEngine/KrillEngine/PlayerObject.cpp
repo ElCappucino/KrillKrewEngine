@@ -877,3 +877,7 @@ void PlayerObject::UpdateSpriteSheetPosition()
 
 	
 }
+
+float PlayerObject::getOrderingLayer() const {
+	return this->pos.y + (this->size.y / 2.f);
+}
