@@ -1310,6 +1310,12 @@ void LevelShowcase::LevelDraw()
 	if (ImGui::Button("To WindowScreen", ImVec2(100, 50)))
 		isWindowScreen++;
 
+	ImGui::SliderFloat("musicVolume", &musicVolume, 0.0f, 1.0f, "ratio = %.3f");
+	ImGui::SliderFloat("sfxVolume", &sfxVolume, 0.0f, 1.0f, "ratio = %.3f");
+
+	soundManager->SetVolumeAllMusic(0 + (musicVolume * (128.f - 0)));
+	soundManager->SetVolumeAllSFX(0 + (sfxVolume * (128.f - 0)));
+
 	if (isFullScreen & 1)
 	{
 		SDL_SetWindowFullscreen(GameEngine::GetInstance()->GetSDLWindow(), SDL_WINDOW_FULLSCREEN_DESKTOP);

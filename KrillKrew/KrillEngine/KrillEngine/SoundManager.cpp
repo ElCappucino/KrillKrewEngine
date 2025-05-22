@@ -101,6 +101,20 @@ namespace KrillSoundManager
         }
     }
 
+    void SoundManager::SetVolumeAllSFX(int volume)
+    {
+        for (auto music : SFXSounds)
+        {
+            SetVolumeSFX(music.first, volume);
+        }
+    }
+    void SoundManager::SetVolumeAllMusic(int volume)
+    {
+        for (auto music : musicSounds)
+        {
+            SetVolumeMusic(music.first, volume);
+        }
+    }
 
     void SoundManager::Cleanup()
     {

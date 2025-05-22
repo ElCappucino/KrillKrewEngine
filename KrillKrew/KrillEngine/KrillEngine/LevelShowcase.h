@@ -209,6 +209,8 @@ private:
 	float time[4] = { 0 };
 	float previousWidth = 0, previousHeight = 0;
 
+	float musicVolume = 1.f, sfxVolume = 1.f;
+
 	// player
 	float axisXOld;
 	float axisYOld;

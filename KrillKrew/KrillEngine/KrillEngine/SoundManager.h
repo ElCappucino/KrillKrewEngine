@@ -32,6 +32,9 @@ namespace KrillSoundManager
         void SetVolumeSFX(const std::string& name, int volume);
         void SetVolumeMusic(const std::string& name, int volume);
 
+        void SetVolumeAllSFX(int volume);
+        void SetVolumeAllMusic(int volume);
+
         void Cleanup();
     };
 }

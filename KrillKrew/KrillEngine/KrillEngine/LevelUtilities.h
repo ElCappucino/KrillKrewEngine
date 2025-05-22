@@ -66,6 +66,7 @@
 #include <set>
 #include <unordered_set>
 #include <queue>
+#include <numeric>
 
 #define MAP_WIDTH  20
 #define MAP_HEIGHT 16
