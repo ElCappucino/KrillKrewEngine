@@ -18,11 +18,12 @@
 #include "ProjectileObject.h"
 #include "TrapObject.h"
 
+
 class PlayerHitboxObject;
 class TileObject;
 class ProjectileObject;
 class TrapObject;
-
+class PropObject;
 
 /// @brief The class for creating object that render using texture
 class PlayerObject : public EntityObject
@@ -120,6 +121,7 @@ private:
 	PlayerGroundColliderObject* groundCheckCollider;
 	
 	std::vector<TileObject*> aimingTile;
+	std::vector<PropObject*> aimingProp;
 	float durationSlowness;
 	bool isSlowness;
 	bool isDash;
@@ -212,6 +214,10 @@ public:
 
 	void ClearAimingTile(TileObject* tile);
 	void AddAimingTile(TileObject* tile);
+
+	void ClearAimingProp(PropObject* prop);
+	void AddAimingProp(PropObject* prop);
+
 	void HitAimingTile();
 	bool GetXIsPositive();
 	bool GetYIsPositive();

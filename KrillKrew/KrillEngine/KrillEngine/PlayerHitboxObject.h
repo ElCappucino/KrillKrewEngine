@@ -15,6 +15,7 @@
 //#include "PlayerObject.h"
 #include "EntityObject.h"
 #include "TileObject.h"
+#include "PropObject.h"
 
 class PlayerObject;
 

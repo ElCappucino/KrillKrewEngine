@@ -44,6 +44,8 @@ private:
 	int maxDurability;
 	int currentDurability;
 
+	bool isBreakable;
+
 public:
 
 	PropObject();
@@ -60,6 +62,9 @@ public:
 
 	void CheckIfBreak();
 	void GotHit();
+
+	void SetIsBreakable(bool isBreakable);
+	bool GetIsBreakable() const;
 
 	virtual Collider* GetCollider();
 

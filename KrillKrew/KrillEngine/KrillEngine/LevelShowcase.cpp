@@ -403,6 +403,7 @@ void LevelShowcase::InitProp()
 				randnum = rand() % 6;
 				obj->GetSpriteRenderer()->ShiftTo(0, randnum);
 				obj->propType = PropObject::PropType::Small;
+				obj->SetIsBreakable(true);
 				break;
 			case 2:
 				obj->SetTextureWithID(spriteList.find("Prop_B")->second, spriteList.find("Prop_B")->second.textureid);
@@ -410,6 +411,7 @@ void LevelShowcase::InitProp()
 				randnum = rand() % 3;
 				obj->GetSpriteRenderer()->ShiftTo(0, randnum);
 				obj->propType = PropObject::PropType::Small;
+				obj->SetIsBreakable(true);
 				break;
 			case 3:
 				obj->SetTextureWithID(spriteList.find("Prop_C")->second, spriteList.find("Prop_C")->second.textureid);
@@ -417,18 +419,21 @@ void LevelShowcase::InitProp()
 				randnum = rand() % 7;
 				obj->GetSpriteRenderer()->ShiftTo(0, randnum);
 				obj->propType = PropObject::PropType::Small;
+				obj->SetIsBreakable(false);
 				break;
 			case 4:
 				obj->SetTextureWithID(spriteList.find("Tree_A")->second, spriteList.find("Tree_A")->second.textureid);
 				obj->SetSize(450.f, -600.f);
 				obj->GetSpriteRenderer()->ShiftTo(0, 0);
 				obj->propType = PropObject::PropType::Tree;
+				obj->SetIsBreakable(true);
 				break;
 			case 5:
 				obj->SetTextureWithID(spriteList.find("Tree_B")->second, spriteList.find("Tree_B")->second.textureid);
 				obj->SetSize(375.f, -555.f);
 				obj->GetSpriteRenderer()->ShiftTo(0, 0);
 				obj->propType = PropObject::PropType::Tree;
+				obj->SetIsBreakable(true);
 				break;
 			}
 

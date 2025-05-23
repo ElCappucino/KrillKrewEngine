@@ -76,14 +76,28 @@ void PropObject::CheckIfBreak()
 	if (currentDurability >= maxDurability)
 	{
 		currAnimState = AnimationState::Breaking;
+
+		// Change to animation later
+		this->isActive = false;
 	}
 }
 void PropObject::GotHit()
 {
-	currentDurability++;
-	CheckIfBreak();
+	if (isBreakable)
+	{
+		currentDurability++;
+		CheckIfBreak();
+	}
+	
 }
-
+void PropObject::SetIsBreakable(bool isBreakable)
+{
+	this->isBreakable = isBreakable;
+}
+bool PropObject::GetIsBreakable() const
+{
+	return this->isBreakable;
+}
 Collider* PropObject::GetCollider()
 {
 	return this->collider;

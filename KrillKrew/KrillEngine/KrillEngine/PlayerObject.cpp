@@ -7,6 +7,7 @@
 #include "PlayerHitboxObject.h"
 #include "TileObject.h"
 #include "Level.h"
+#include "PropObject.h"
 
 PlayerObject::PlayerObject()
 {
@@ -553,27 +554,64 @@ void PlayerObject::ClearAimingTile(TileObject* tile)
 		
 	}
 }
+void PlayerObject::AddAimingProp(PropObject* prop)
+{
+	aimingProp.push_back(prop);
+}
+void PlayerObject::ClearAimingProp(PropObject* prop)
+{
+	auto clearProp = std::find(aimingProp.begin(), aimingProp.end(), prop);
+
+	// KK_INFO("clearTile");
+
+	if (clearProp != aimingProp.end())
+	{
+		// KK_INFO("completely clear tile");
+		aimingProp.erase(clearProp);
+
+	}
+}
+
 
 void PlayerObject::HitAimingTile()
 {
 	// KK_INFO("aiming Tile Amount = {0}", aimingTile.size());
-	for (int i = 0; i < aimingTile.size(); i++)
+
+	if (!aimingProp.empty())
 	{
-		if (aimingTile[i]->GetIsActive() == false)
+		for (int i = 0; i < aimingProp.size(); i++)
 		{
-			auto clearTile = std::find(aimingTile.begin(), aimingTile.end(), aimingTile[i]);
-			aimingTile.erase(clearTile);
-		}
-		else
-		{
-			if (aimingTile[i]->GetIsBreakable())
+			if (aimingProp[i]->GetIsActive() == false)
 			{
-				aimingTile[i]->GotHit();
+				auto clearTile = std::find(aimingProp.begin(), aimingProp.end(), aimingProp[i]);
+				aimingProp.erase(clearTile);
 			}
-			
+			else
+			{
+				aimingProp[i]->GotHit();
+			}
 		}
-		
 	}
+	else
+	{
+		for (int i = 0; i < aimingTile.size(); i++)
+		{
+			if (aimingTile[i]->GetIsActive() == false)
+			{
+				auto clearTile = std::find(aimingTile.begin(), aimingTile.end(), aimingTile[i]);
+				aimingTile.erase(clearTile);
+			}
+			else
+			{
+				if (aimingTile[i]->GetIsBreakable())
+				{
+					aimingTile[i]->GotHit();
+				}
+
+			}
+		}
+	}
+	
 }
 
 //int PlayerObject::getIdAbility(int numberAbility) {
