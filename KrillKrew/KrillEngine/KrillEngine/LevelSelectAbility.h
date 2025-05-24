@@ -2,14 +2,17 @@
 #include "Level.h"
 #include "LevelUtilities.h"
 #include "nlohmann/json.hpp"
+#include <fstream>
 
 /// @brief The class for level inherit test from P'tiam
 class LevelSelectAbility : public Level
 {
 private:
 	std::vector<DrawableObject*> objectsList;
-	std::vector<DrawableObject*> playerHoverList;
-	std::vector<DrawableObject*> SkillBoxList;
+	std::vector<DrawableObject*> playerWindowList;
+	std::vector<DrawableObject*> AbilityIconListTop;
+	std::vector<DrawableObject*> AbilityIconListDown;
+
 	std::vector<UiObject*> playerIconList;
 	std::map<int, std::vector<UiObject*>> playerIconSkillList;
 	std::map<std::string, SpritesheetInfo> spriteList;
@@ -47,6 +50,20 @@ private:
 	bool isPositiveXOld;
 	bool isPositiveYOld;
 
+	struct config
+	{
+		int number;
+		float posX;
+		float posY;
+		float offSetX;
+		float offSetY;
+		float height;
+		float width;
+	
+	};
+
+	std::vector<config*> configs;
+
 public:
 	virtual void LevelLoad();
 	virtual void LevelInit();
@@ -61,4 +78,8 @@ public:
 	void UpdateInput();
 	void UpdateUi();
 	void abilityToFile(const std::string& fileName, int who);
+
+	//Config
+	void saveConfig(std::string& filename, config* con);
+	void loadConfig(std::string filename);
 };

@@ -60,5 +60,4 @@ public:
 	void UpdateUi();
 	void saveConfig(std::string& filename, config* con);
 	void loadConfig(std::string filename);
-	bool checkConfig(std::string filename);
 };

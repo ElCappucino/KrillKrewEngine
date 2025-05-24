@@ -26,9 +26,7 @@ void LevelMainMenu::LevelInit() {
 	configbutton0->boxPosX = 100.f;
 	configbutton0->boxPosY = 100.f;
 	configs.push_back(configbutton0);
-	if (checkConfig("button0.json")) {
-		loadConfig("button0.json");
-	}
+	loadConfig("button0.json");
 	UiObject* box0 = new UiObject();
 	box0->SetSpriteInfo(spriteList.find("SkillIconBox")->second);
 	box0->SetPosition(glm::vec3(configs.at(0)->boxPosX, configs.at(0)->boxPosY, 0.f));
@@ -52,9 +50,7 @@ void LevelMainMenu::LevelInit() {
 	configbutton1->boxPosX = 100.f;
 	configbutton1->boxPosY = 100.f;
 	configs.push_back(configbutton1);
-	if (checkConfig("button1.json")) {
-		loadConfig("button1.json");
-	}
+	loadConfig("button1.json");
 	UiObject* box1 = new UiObject();
 	box1->SetSpriteInfo(spriteList.find("SkillIconBox")->second);
 	box1->SetPosition(glm::vec3(configs.at(1)->boxPosX, configs.at(1)->boxPosY, 0.f));
@@ -140,7 +136,6 @@ void LevelMainMenu::LevelDraw() {
 			boxList.at(i)->SetSize(configs.at(i)->boxWidth, configs.at(i)->boxHight);
 			boxList.at(i)->SetPosition(glm::vec3(configs.at(i)->boxPosX, configs.at(i)->boxPosY, 0));
 		}
-		
 	}
 	
 	for (int i = 0; i < configs.size(); i++) {
@@ -288,41 +283,44 @@ void LevelMainMenu::saveConfig(std::string& filename, config* con) {
 
 void LevelMainMenu::loadConfig(std::string filename) {
 	std::ifstream file(filename);
-	nlohmann::json data = nlohmann::json::parse(file);
-	int id = data["number"];
 
 	if (file.is_open()) {
+		nlohmann::json data = nlohmann::json::parse(file);
+		int id = -1;
 		std::cout << "Opened" << std::endl;
-		for (int i = 0; i < configs.size(); i++) {
-			if (configs.at(i)->number == id) {
-				std::cout << "Loaded" << std::endl;
-				//configs.at(i).text = data["text"];
-				if (data.contains("textPosX") && !data["textPosX"].is_null()) {
-					configs.at(i)->textPosX = data["textPosX"];
-				}
-				
-				if (data.contains("textPosY") && !data["textPosY"].is_null()) {
-					configs.at(i)->textPosY = data["textPosY"];
-				}
-				
-				if (data.contains("textSize") && !data["textSize"].is_null()) {
-					configs.at(i)->textSize = data["textSize"];
-				}
+		if (data.contains("number") && !data["number"].is_null()) {
+			id = data["number"];
+			for (int i = 0; i < configs.size(); i++) {
+				if (configs.at(i)->number == id) {
+					std::cout << "Loaded" << std::endl;
+					//configs.at(i).text = data["text"];
+					if (data.contains("textPosX") && !data["textPosX"].is_null()) {
+						configs.at(i)->textPosX = data["textPosX"];
+					}
 
-				if (data.contains("boxPosX") && !data["boxPosX"].is_null()) {
-					configs.at(i)->boxPosX = data["boxPosX"];
-				}
-				
-				if (data.contains("boxPosY") && !data["boxPosY"].is_null()) {
-					configs.at(i)->boxPosY = data["boxPosY"];
-				}
+					if (data.contains("textPosY") && !data["textPosY"].is_null()) {
+						configs.at(i)->textPosY = data["textPosY"];
+					}
 
-				if (data.contains("boxHight") && !data["boxHight"].is_null()) {
-					configs.at(i)->boxHight = data["boxHight"];
-				}
-				
-				if (data.contains("boxWidth") && !data["boxWidth"].is_null()) {
-					configs.at(i)->boxWidth = data["boxWidth"];
+					if (data.contains("textSize") && !data["textSize"].is_null()) {
+						configs.at(i)->textSize = data["textSize"];
+					}
+
+					if (data.contains("boxPosX") && !data["boxPosX"].is_null()) {
+						configs.at(i)->boxPosX = data["boxPosX"];
+					}
+
+					if (data.contains("boxPosY") && !data["boxPosY"].is_null()) {
+						configs.at(i)->boxPosY = data["boxPosY"];
+					}
+
+					if (data.contains("boxHight") && !data["boxHight"].is_null()) {
+						configs.at(i)->boxHight = data["boxHight"];
+					}
+
+					if (data.contains("boxWidth") && !data["boxWidth"].is_null()) {
+						configs.at(i)->boxWidth = data["boxWidth"];
+					}
 				}
 			}
 		}
@@ -331,43 +329,4 @@ void LevelMainMenu::loadConfig(std::string filename) {
 	else {
 		std::cout << "Failed" << std::endl;
 	}
-}
-
-bool LevelMainMenu::checkConfig(std::string filename) {
-	std::ifstream file(filename);
-	if (file.is_open()) {
-		nlohmann::json data = nlohmann::json::parse(file);
-		if (!data.contains("textPosX") || data["textPosX"].is_null()) {
-			return false;
-		}
-
-		if (!data.contains("textPosY") || data["textPosY"].is_null()) {
-			return false;
-		}
-
-		if (!data.contains("textSize") || data["textSize"].is_null()) {
-			return false;
-		}
-
-		if (!data.contains("boxPosX") || data["boxPosX"].is_null()) {
-			return false;
-		}
-
-		if (!data.contains("boxPosY") || data["boxPosY"].is_null()) {
-			return false;
-		}
-
-		if (!data.contains("boxHight") || data["boxHight"].is_null()) {
-			return false;
-		}
-
-		if (!data.contains("boxWidth") || data["boxWidth"].is_null()) {
-			return false;
-		}
-	}
-	else {
-		std::cout << "No file for check" << std::endl;
-		return false;
-	}
-	return true;
 }
