@@ -9,27 +9,34 @@ class LevelSelectAbility : public Level
 {
 private:
 	std::vector<DrawableObject*> objectsList;
-	std::vector<DrawableObject*> playerWindowList;
-	std::vector<DrawableObject*> AbilityIconListTop;
-	std::vector<DrawableObject*> AbilityIconListDown;
-
+	std::vector<ImageObject*> playerWindowList;
+	std::vector<UiObject*> AbilityIconListTop;
+	std::vector<UiObject*> AbilityIconListDown;
+	std::vector<UiObject*> playerHoverList;
+	std::vector<UiObject*> playerIconSmallList;
 	std::vector<UiObject*> playerIconList;
-	std::map<int, std::vector<UiObject*>> playerIconSkillList;
-	std::map<std::string, SpritesheetInfo> spriteList;
-	PlayerObject* players[4]; // add up to 4 players
-	int playerSize = 0;
-	int playerAbility[4][3] = {{-1, -1, -1}, {-1, -1, -1}, {-1, -1, -1}, {-1, -1, -1}};
+	std::vector<UiObject*> playerRemainList;
 
-	int playerNumber = 4; // Change later
-	float uiWidth = 215.f;
-	float uiHeight = 100.f;
-	float posX = camera.GetCenterX() - (uiWidth * camera.GetCameraWidth() / SCREEN_WIDTH / 2.f) * (playerNumber - 1);
-	float posY = camera.GetCenterY() + ((uiHeight * camera.GetCameraHeight() / SCREEN_HEIGHT) / 2.f) * (playerNumber - 1);
+	std::map<int, std::vector<UiObject*>*> playerAbilityList;
+	std::map<std::string, SpritesheetInfo> spriteList;
+	
+	int playerSize = 0;
+	int playerAbility[4][3] = {{8, 8, 8}, {8, 8, 8}, {8, 8, 8}, {8, 8, 8}};
+	int character[4] = {-1};
+	int playerHoverWhere[4] = { 0 };
 	bool playerMove[4] = { false };
-	int playerWhere[4] = { 0 };
-	int playerHoverPosX = 60;
-	int playerHoverPosY = 35;
-	int ready[4] = { 0 };
+	int playerNumber = 4; // Change later
+	bool ready[4] = { 0 };
+	int helpHover = 0;
+
+	int axisX = 0;
+	int axisY = 0;
+	int axisXplayerIconSmall = 0;
+	int axisYplayerIconSmall = 0;
+	int axisXplayerIcon = 0;
+	int axisYplayerIcon = 0;
+	int axisXAbilityIconSmall = 0;
+	int axisYAbilityIconSmall = 0;
 
 	OrthographicValue targetSceneProjection; // use for lerping between the current projection and this (target projection).
 	Camera camera;

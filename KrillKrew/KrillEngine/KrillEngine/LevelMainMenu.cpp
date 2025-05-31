@@ -63,7 +63,6 @@ void LevelMainMenu::LevelInit() {
 	objectsList.push_back(text1);
 	textList.push_back(text1);
 	
-	
 
 	// Setup Dear ImGui context
 	IMGUI_CHECKVERSION();

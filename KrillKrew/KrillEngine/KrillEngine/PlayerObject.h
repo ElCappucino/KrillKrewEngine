@@ -65,12 +65,12 @@ public:
 	enum class Ability
 	{
 		Fireball = 0,
-		Trap = 1,
-		Dash = 2,
-		TNT = 3,
-		Teleport = 4,
-		Bola = 5,
-		Cleave = 6
+		Bola = 1,
+		Cleave = 2,
+		Dash = 3,
+		TNT = 4,
+		Trap = 5,
+		Teleport = 6
 	};
 
 	enum class AbilityButton

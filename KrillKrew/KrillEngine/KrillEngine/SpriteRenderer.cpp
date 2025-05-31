@@ -42,6 +42,18 @@ void SpriteRenderer::ShiftRow()
 }
 void SpriteRenderer::ShiftTo(float row, float column)
 {
+	if (row <= - 1)
+	{
+		row = (sheetheight / spriteheight) - 1;
+	}
+	if (column <= -1)
+	{
+		if (isLoop)
+		{
+			column = (sheetwidth / spritewidth) - 1;
+		}
+	}
+
 	this->row = row;
 	this->column = column;
 }
