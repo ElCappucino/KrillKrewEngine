@@ -4,8 +4,9 @@ void LevelMainMenu::LevelLoad() {
 	SquareMeshVbo* square = new SquareMeshVbo();
 	square->LoadData();
 	GameEngine::GetInstance()->AddMesh(SquareMeshVbo::MESH_NAME, square);
-	spriteList["SkillIconBox"] = SpritesheetInfo("SkillIconBox", "../Resource/Texture/SkillIconBox.png", 167, 157, 334, 157);
-
+	spriteList["BG"] = SpritesheetInfo("BG", "../Resource/Texture/Menu/UI_Menu_BG.png", 1920, 1080, 1920, 1080);
+	spriteList["Text"] = SpritesheetInfo("Text", "../Resource/Texture/Menu/UI_Menu_Text.png", 289, 65, 2312, 65);
+	spriteList["Name"] = SpritesheetInfo("Name", "../Resource/Texture/Menu/UI_Menu_KrillsKrew.png", 470, 55, 940, 55);
 }
 
 void LevelMainMenu::LevelInit() {
@@ -14,54 +15,49 @@ void LevelMainMenu::LevelInit() {
 		-(SCREEN_HEIGHT / 2),
 		(SCREEN_HEIGHT / 2));
 
-	//test text
-	config* configbutton0 = new config();
-	configbutton0->number = 0;
-	configbutton0->text = "start";
-	configbutton0->textPosX = 100.f;
-	configbutton0->textPosY = 100.f;
-	configbutton0->textSize = 50.f;
-	configbutton0->boxHight = 157.f;
-	configbutton0->boxWidth = 167.f;
-	configbutton0->boxPosX = 100.f;
-	configbutton0->boxPosY = 100.f;
-	configs.push_back(configbutton0);
-	loadConfig("button0.json");
-	UiObject* box0 = new UiObject();
-	box0->SetSpriteInfo(spriteList.find("SkillIconBox")->second);
-	box0->SetPosition(glm::vec3(configs.at(0)->boxPosX, configs.at(0)->boxPosY, 0.f));
-	box0->SetSize(configs.at(0)->boxWidth, configs.at(0)->boxHight);
-	TextObject* text0 = new TextObject();
-	text0->loadText(configs.at(0)->text, SDL_Color{255,0,0,0}, configs.at(0)->textSize);
-	text0->SetPosition(glm::vec3(configs.at(0)->textPosX, configs.at(0)->textPosY, 0.f));
-	objectsList.push_back(box0);
-	boxList.push_back(box0);
-	objectsList.push_back(text0);
-	textList.push_back(text0);
+	//BG
+	UiObject* BG = new UiObject();
+	BG->SetSpriteInfo(spriteList.find("BG")->second);
+	BG->SetSize(camera.GetCameraWidth(), -camera.GetCameraHeight());
+	objectsList.push_back(BG);
+	
 
-	config* configbutton1 = new config();
-	configbutton1->number = 1;
-	configbutton1->text = "text1";
-	configbutton1->textPosX = 100.f;
-	configbutton1->textPosY = 100.f;
-	configbutton1->textSize = 50.f;
-	configbutton1->boxHight = 157.f;
-	configbutton1->boxWidth = 167.f;
-	configbutton1->boxPosX = 100.f;
-	configbutton1->boxPosY = 100.f;
-	configs.push_back(configbutton1);
-	loadConfig("button1.json");
-	UiObject* box1 = new UiObject();
-	box1->SetSpriteInfo(spriteList.find("SkillIconBox")->second);
-	box1->SetPosition(glm::vec3(configs.at(1)->boxPosX, configs.at(1)->boxPosY, 0.f));
-	box1->SetSize(configs.at(1)->boxWidth, configs.at(1)->boxHight);
-	TextObject* text1 = new TextObject();
-	text1->loadText(configs.at(1)->text, SDL_Color { 255, 0, 0, 0 }, configs.at(1)->textSize);
-	text1->SetPosition(glm::vec3(configs.at(1)->textPosX, configs.at(1)->textPosY, 0.f));
-	objectsList.push_back(box1);
-	boxList.push_back(box1);
-	objectsList.push_back(text1);
-	textList.push_back(text1);
+	//text
+	for (int i = 0; i < 4; i++) {
+		std::string fileName = "text" + std::to_string(i) + ".json";
+		config* configtext = new config();
+		configtext->number = i;
+		configtext->posX = 100;
+		configtext->posY = 100;
+		configtext->width = 289;
+		configtext->height = 65;
+		configs.push_back(configtext);
+		loadConfig(fileName);
+		UiObject* text = new UiObject();
+		text->SetSpriteInfo(spriteList.find("Text")->second);
+		text->SetPosition(glm::vec3(configs.at(i)->posX, configs.at(i)->posY, 0));
+		text->SetSize(configs.at(i)->width, -configs.at(i)->height);
+		text->GetSpriteRenderer()->ShiftTo(text->GetSpriteRenderer()->GetRow(), i * 2);
+		objectsList.push_back(text);
+		textList.push_back(text);
+		
+	}
+	
+	// game name
+	config* configName = new config();
+	configName->number = 4;
+	configName->posX = 100;
+	configName->posY = 100;
+	configName->width = 470;
+	configName->height = 55;
+	configs.push_back(configName);
+	loadConfig("text4.json");
+	UiObject* name = new UiObject();
+	name->SetSpriteInfo(spriteList.find("Name")->second);
+	name->SetPosition(glm::vec3(configs.at(4)->posX, configs.at(4)->posY, 0));
+	name->SetSize(configs.at(4)->width, configs.at(4)->width);
+	objectsList.push_back(name);
+	textList.push_back(name);
 	
 
 	// Setup Dear ImGui context
@@ -82,26 +78,22 @@ void LevelMainMenu::LevelInit() {
 }
 void LevelMainMenu::LevelUpdate() {
 	UpdateInput();
+	UpdateUi();
 
 	// select box
-	for (int i = 0; i < configs.size(); i++)
+	/*for (int i = 0; i < configs.size(); i++)
 	{
 		if (configs.at(i)->number == playerWhere[0])
 		{
-			boxList.at(i)->GetSpriteRenderer()->ShiftColumn();
+			textList.at(i)->GetSpriteRenderer()->ShiftColumn();
 		}
 		else {
-			boxList.at(i)->GetSpriteRenderer()->ShiftTo(0,0);
+			textList.at(i)->GetSpriteRenderer()->ShiftTo(0,0);
 		}
 		
-	}
+	}*/
 
-	for (int i = 0; i < configs.size(); i++) {
-		textList.at(i)->loadText(configs.at(i)->text, SDL_Color { 255, 0, 0, 0 }, configs.at(i)->textSize);
-		textList.at(i)->SetPosition(glm::vec3(configs.at(i)->textPosX, configs.at(i)->textPosY, 0));
-		boxList.at(i)->SetSize(configs.at(i)->boxWidth, configs.at(i)->boxHight);
-		boxList.at(i)->SetPosition(glm::vec3(configs.at(i)->boxPosX, configs.at(i)->boxPosY, 0));
-	}
+	
 }
 
 void LevelMainMenu::LevelDraw() {
@@ -126,37 +118,34 @@ void LevelMainMenu::LevelDraw() {
 		GameEngine::GetInstance()->GetStateController()->gameStateNext = GameState::GS_LEVELSELECTABILITY;
 	}
 
+	if (ImGui::Button("Save config")) {
+		for (int i = 0; i < configs.size(); i++) {
+			std::string fileName = "text" + std::to_string(i) + ".json";
+			saveConfig(fileName, configs.at(i));
+		}
+	}
+
+	ImGui::SameLine();
 	if (ImGui::Button("Load config")) {
 		for(int i = 0; i < configs.size(); i++) {
-			std::string fileName = "button" + std::to_string(i) + ".json";
+			std::string fileName = "text" + std::to_string(i) + ".json";
 			loadConfig(fileName);
-			textList.at(i)->loadText(configs.at(i)->text, SDL_Color{ 255,0,0,0 }, configs.at(0)->textSize);
-			textList.at(i)->SetPosition(glm::vec3(configs.at(i)->textPosX, configs.at(i)->textPosY, 0));
-			boxList.at(i)->SetSize(configs.at(i)->boxWidth, configs.at(i)->boxHight);
-			boxList.at(i)->SetPosition(glm::vec3(configs.at(i)->boxPosX, configs.at(i)->boxPosY, 0));
+			textList.at(i)->SetPosition(glm::vec3(configs.at(i)->posX, configs.at(i)->posY, 0));
+			textList.at(i)->SetSize(configs.at(i)->width, -configs.at(i)->height);
 		}
 	}
 	
 	for (int i = 0; i < configs.size(); i++) {
 		ImGui::PushID(i);
-		ImGui::Text("Button%d", i);
-		//ImGui::InputTextWithHint("Text", "enter text here", &configs.at(i).text[0], configs.at(i).text[0] + 1);
-		ImGui::InputFloat("Text Size", &configs.at(i)->textSize);
-		ImGui::SliderFloat("Text PosX", &configs.at(i)->textPosX, -camera.GetCameraWidth() / 2, camera.GetCameraWidth() / 2);
-		ImGui::SliderFloat("Text PosY", &configs.at(i)->textPosY, -camera.GetCameraHeight() / 2, camera.GetCameraHeight() / 2);
-		ImGui::InputFloat("Box Hight", &configs.at(i)->boxHight);
-		ImGui::InputFloat("Box Width", &configs.at(i)->boxWidth);
-		ImGui::SliderFloat("Box PosX", &configs.at(i)->boxPosX, -camera.GetCameraWidth() / 2, camera.GetCameraWidth() / 2);
-		ImGui::SliderFloat("Box PosY", &configs.at(i)->boxPosY, -camera.GetCameraHeight() / 2, camera.GetCameraHeight() / 2);
+		ImGui::Text("Text%d", i);
+		ImGui::InputFloat("PosX", &configs.at(i)->posX, 1.0f, 1.0f, "%.2f");
+		ImGui::InputFloat("PosY", &configs.at(i)->posY, 1.0f, 1.0f, "%.2f");
+		ImGui::InputFloat("Width", &configs.at(i)->width, 1.0f, 1.0f, "%.2f");
+		ImGui::InputFloat("Height", &configs.at(i)->height, 1.0f, 1.0f, "%.2f");
 		ImGui::PopID();
 	}
 
-	if (ImGui::Button("Save config")) {
-		for (int i = 0; i < configs.size(); i++) {
-			std::string fileName = "button" + std::to_string(i) + ".json";
-			saveConfig(fileName, configs.at(i));
-		}
-	}
+	
 	
 	// Rendering
 	ImGui::Render();
@@ -255,19 +244,22 @@ void LevelMainMenu::UpdateInput() {
 
 void LevelMainMenu::UpdateUi() {
 
+
+	//Updata by config
+	//text
+	for (int i = 0; i < configs.size(); i++) {
+		textList.at(i)->SetPosition(glm::vec3(configs.at(i)->posX, configs.at(i)->posY, 0));
+		textList.at(i)->SetSize(configs.at(i)->width, -configs.at(i)->height);
+	}
 }
 
 void LevelMainMenu::saveConfig(std::string& filename, config* con) {
 	nlohmann::json data;
 	data["number"] = con->number;
-	//data["text"] = con.text;
-	data["textPosX"] = con->textPosX;
-	data["textPosY"] = con->textPosY;
-	data["textSize"] = con->textSize;
-	data["boxPosX"] = con->boxPosX;
-	data["boxPosY"] = con->boxPosY;
-	data["boxHight"] = con->boxHight;
-	data["boxWidth"] = con->boxWidth;
+	data["posX"] = con->posX;
+	data["posY"] = con->posY;
+	data["hight"] = con->height;
+	data["width"] = con->width;
 
 	std::ofstream file(filename);
 	if (file.is_open()) {
@@ -293,32 +285,20 @@ void LevelMainMenu::loadConfig(std::string filename) {
 				if (configs.at(i)->number == id) {
 					std::cout << "Loaded" << std::endl;
 					//configs.at(i).text = data["text"];
-					if (data.contains("textPosX") && !data["textPosX"].is_null()) {
-						configs.at(i)->textPosX = data["textPosX"];
+					if (data.contains("posX") && !data["posX"].is_null()) {
+						configs.at(i)->posX = data["posX"];
 					}
 
-					if (data.contains("textPosY") && !data["textPosY"].is_null()) {
-						configs.at(i)->textPosY = data["textPosY"];
+					if (data.contains("posY") && !data["posY"].is_null()) {
+						configs.at(i)->posY = data["posY"];
 					}
 
-					if (data.contains("textSize") && !data["textSize"].is_null()) {
-						configs.at(i)->textSize = data["textSize"];
+					if (data.contains("hight") && !data["hight"].is_null()) {
+						configs.at(i)->height = data["hight"];
 					}
 
-					if (data.contains("boxPosX") && !data["boxPosX"].is_null()) {
-						configs.at(i)->boxPosX = data["boxPosX"];
-					}
-
-					if (data.contains("boxPosY") && !data["boxPosY"].is_null()) {
-						configs.at(i)->boxPosY = data["boxPosY"];
-					}
-
-					if (data.contains("boxHight") && !data["boxHight"].is_null()) {
-						configs.at(i)->boxHight = data["boxHight"];
-					}
-
-					if (data.contains("boxWidth") && !data["boxWidth"].is_null()) {
-						configs.at(i)->boxWidth = data["boxWidth"];
+					if (data.contains("width") && !data["width"].is_null()) {
+						configs.at(i)->width = data["width"];
 					}
 				}
 			}
