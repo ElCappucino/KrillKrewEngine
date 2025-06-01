@@ -21,6 +21,7 @@ private:
 	// use pos and scale from Object class
 	ImageObject* parent;
 	glm::vec3 previousPos;
+	glm::vec3 offset;
 	CollisionType collisionType;
 	GizmosObject* gizmos;
 
@@ -45,5 +46,8 @@ public:
 	CollisionType GetCollisionType();
 	void SetCollisionType(CollisionType type);
 	void setColliderSize(glm::vec3 size);
+
+	glm::vec3 GetOffset() const;
+	void SetOffset(float x, float y, float z);
 
 };

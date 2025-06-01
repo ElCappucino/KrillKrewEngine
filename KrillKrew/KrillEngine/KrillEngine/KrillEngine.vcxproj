@@ -45,6 +45,7 @@
     <ClInclude Include="Log.h" />
     <ClInclude Include="MeshVbo.h" />
     <ClInclude Include="Music.h" />
+    <ClInclude Include="ParticleObject.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="PlayerGroundColliderObject.h" />
     <ClInclude Include="PlayerHitboxObject.h" />
@@ -97,6 +98,7 @@
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="MeshVbo.cpp" />
     <ClCompile Include="Music.cpp" />
+    <ClCompile Include="ParticleObject.cpp" />
     <ClCompile Include="pch.cpp" />
     <ClCompile Include="PlayerGroundColliderObject.cpp" />
     <ClCompile Include="PlayerHitboxObject.cpp" />

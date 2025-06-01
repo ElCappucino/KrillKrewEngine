@@ -12,14 +12,13 @@ class LevelShowcase : public Level
 private:
 	std::vector<DrawableObject*> objectsList;
 	std::vector<EntityObject*> entityObjects;
+	std::vector<PropObject*> propObjects;
+	std::vector<TextObject*> textObjects;
+
 	std::set<std::pair<Collider*, Collider*>> currentCollisions;
 	std::set<std::pair<Collider*, Collider*>> previousCollisions;
+
 	std::map<std::string, SpritesheetInfo> spriteList;
-
-	//std::map<std::string, SpritesheetInfo> spriteList;
-
-	// typedef std::function<void(int, PlayerObject*, std::vector<DrawableObject*>&, SpritesheetInfo)> ability;
-	// std::map<std::string, ability> abilities;
 
 	std::array<PlayerObject*, 4> players; // add up to 4 players
 	std::array<UiObject*, 4> playerUIs; // add up to 4 players
@@ -41,6 +40,14 @@ private:
 	int colliderTile[MAP_HEIGHT][MAP_WIDTH] = { 0 };*/
 
 	std::array<std::array<TileObject*, MAP_WIDTH>, MAP_HEIGHT> tilesList;
+
+	float text_t = 0.f;
+	float text_SizeX = 0.f;
+	float text_SizeY = 0.f;
+
+	int currentCountdownNum = 3;
+	float countdownDelay = 1.5f;
+	float currentCountdownDelay = -1.f;
 
 	std::map<int, std::pair<int, int>> blob_lookup_table = {
 
@@ -250,6 +257,7 @@ public:
 	void UpdateUI();
 	// void UpdateKnockback(DrawableObject* obj1, DrawableObject* obj2);
 	void UpdateTime();
+	void UpdateCountdown();
 
 	void GroundTileRefactor();
 	void TileImport(std::array<std::array<int, MAP_WIDTH>, MAP_HEIGHT> &TileBuffer, std::string fileName);

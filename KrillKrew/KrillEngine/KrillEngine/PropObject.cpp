@@ -1,4 +1,6 @@
 #include "PropObject.h"
+#include "Level.h"
+#include "TileObject.h"
 
 PropObject::PropObject()
 {
@@ -77,7 +79,48 @@ void PropObject::CheckIfBreak()
 	{
 		currAnimState = AnimationState::Breaking;
 
-		// Change to animation later
+		//SpritesheetInfo collapseTileSprite = SpritesheetInfo("CollapseTile", "../Resource/Texture/Props/prop_spr_vfx_smoke.png", 200, 200, 800, 200);
+
+		if (propType == PropType::Tree)
+		{
+			std::vector<ParticleObject*> particleList;
+
+			int particleAmount = 7;
+			for (int i = 0; i < particleAmount; i++)
+			{
+				particleList.push_back(new ParticleObject());
+			}
+
+			for (int i = 0; i < particleAmount; i++)
+			{
+				particleList[i]->SetSpriteInfo(propBreakSprite);
+				//breakEffect->SetSpriteInfo(propBreakSprite);
+				glm::vec3 position = glm::vec3
+				(
+					this->pos.x,
+					(this->pos.y + (this->size.y / 2.f)) + ((i * (-this->size.y) / (float)particleAmount)),
+					0.f
+				);
+
+				particleList[i]->SetPosition(position);
+				particleList[i]->SetSize(particleList[i]->GetSpriteRenderer()->GetSpriteWidth() * 2.f, particleList[i]->GetSpriteRenderer()->GetSpriteHeight() * 2.f);
+				this->currentLevel->AddEntityToScene(particleList[i]);
+			}
+		}
+		else
+		{
+			ParticleObject* particle = new ParticleObject();
+			particle->SetSpriteInfo(propBreakSprite);
+
+			particle->SetPosition(this->pos);
+			particle->SetSize(particle->GetSpriteRenderer()->GetSpriteWidth(), particle->GetSpriteRenderer()->GetSpriteHeight());
+			this->currentLevel->AddEntityToScene(particle);
+
+			KK_TRACE("PropObject:destroy Prop");
+		}
+
+		
+
 		this->isActive = false;
 	}
 }
@@ -86,6 +129,28 @@ void PropObject::GotHit()
 	if (isBreakable)
 	{
 		currentDurability++;
+		CheckIfBreak();
+	}
+	
+}
+
+void PropObject::CheckIfNoTileSurround()
+{
+	for (TileObject* tile : surroundTile)
+	{
+		if (tile->GetIsBroke())
+		{
+			auto it = std::find(surroundTile.begin(), surroundTile.end(), tile);
+			if (it != surroundTile.end())
+			{
+				surroundTile.erase(it);
+			}
+		}
+	}
+	if (surroundTile.empty())
+	{
+		//KK_TRACE("PropObject: surroundTile.empty()");
+		currentDurability = maxDurability;
 		CheckIfBreak();
 	}
 	
@@ -103,9 +168,30 @@ Collider* PropObject::GetCollider()
 	return this->collider;
 }
 
+void PropObject::UpdateCollider()
+{
+	if (propType == PropType::Tree)
+	{
+		glm::vec3 size = glm::vec3(this->getSize().x / 4.f, this->getSize().x / 4.f, 0);
+		glm::vec3 pos = glm::vec3(this->getPos().x, this->getPos().y , 0);
+		this->GetCollider()->Update(size, pos);
+	}
+	else
+	{
+		this->GetCollider()->Update(this->getSize(), this->getPos());
+	}
+}
+
+
 void PropObject::OnColliderEnter(Collider* other)
 {
+	TileObject* tile = dynamic_cast<TileObject*>(other->GetParent());
 
+	if (tile != nullptr)
+	{
+		surroundTile.push_back(tile);
+
+	}
 }
 void PropObject::OnColliderStay(Collider* other) 
 {
@@ -113,7 +199,16 @@ void PropObject::OnColliderStay(Collider* other)
 }
 void PropObject::OnColliderExit(Collider* other) 
 {
+	/*TileObject* tile = dynamic_cast<TileObject*>(other->GetParent());
 
+	if (tile != nullptr)
+	{
+		auto it = std::find(surroundTile.begin(), surroundTile.end(), tile);
+		if (it != surroundTile.end())
+		{
+			surroundTile.erase(it);
+		}
+	}*/
 }
 void PropObject::OnTriggerEnter(Collider* other) 
 {

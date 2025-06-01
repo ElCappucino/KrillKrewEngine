@@ -398,5 +398,5 @@ void ProjectileObject::UpdateCollider()
 }
 
 float ProjectileObject::getOrderingLayer() const {
-	return 1000;
+	return -2000;
 }

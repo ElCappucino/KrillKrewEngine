@@ -305,16 +305,24 @@ void TileObject::AddCollapseTileToScene()
 		return;
 	}
 	SpritesheetInfo collapseTileSprite = SpritesheetInfo("CollapseTile", "../Resource/Texture/Props/prop_spr_vfx_smoke.png", 200, 200, 800, 200);
-	TileObject* collapseTile = new TileObject();
+
+	ParticleObject* particle = new ParticleObject();
+	particle->SetSpriteInfo(collapseTileSprite);
+
+	particle->SetPosition(this->pos);
+	particle->SetSize(particle->GetSpriteRenderer()->GetSpriteWidth(), particle->GetSpriteRenderer()->GetSpriteHeight());
+	this->currentLevel->AddEntityToScene(particle);
+
+	/*TileObject* collapseTile = new TileObject();
 	collapseTile->SetIsAnimated(true);
 	collapseTile->currAnimState = AnimationState::Breaking;
 	collapseTile->SetSize(256.f, -256.f);
 	collapseTile->SetPosition(this->pos);
 	collapseTile->GetSpriteRenderer()->SetFrame(10);
 	collapseTile->SetSpriteInfo(collapseTileSprite);
-	collapseTile->GetSpriteRenderer()->ShiftTo(this->GetSpriteRenderer()->GetRow(), this->GetSpriteRenderer()->GetColumn());
+	collapseTile->GetSpriteRenderer()->ShiftTo(this->GetSpriteRenderer()->GetRow(), this->GetSpriteRenderer()->GetColumn());*/
 
-	currentLevel->AddEntityToScene(collapseTile);
+	currentLevel->AddEntityToScene(particle);
 }
 
 float TileObject::getOrderingLayer() const {

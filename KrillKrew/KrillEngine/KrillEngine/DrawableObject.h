@@ -25,7 +25,7 @@ public:
 	virtual void SetRotation(float degree);
 	void SetOrderingLayer(int layer);
 	void Translate(glm::vec3 moveDistance);
-	glm::vec3 getPos();
+	virtual glm::vec3 getPos();
 	glm::vec3 getSize();
 	virtual float getOrderingLayer() const;
 

@@ -577,19 +577,20 @@ void PlayerObject::HitAimingTile()
 {
 	// KK_INFO("aiming Tile Amount = {0}", aimingTile.size());
 
+	for (int i = 0; i < aimingProp.size(); i++)
+	{
+		if (aimingProp[i]->GetIsActive() == false)
+		{
+			auto clearTile = std::find(aimingProp.begin(), aimingProp.end(), aimingProp[i]);
+			aimingProp.erase(clearTile);
+		}
+	}
+
 	if (!aimingProp.empty())
 	{
 		for (int i = 0; i < aimingProp.size(); i++)
 		{
-			if (aimingProp[i]->GetIsActive() == false)
-			{
-				auto clearTile = std::find(aimingProp.begin(), aimingProp.end(), aimingProp[i]);
-				aimingProp.erase(clearTile);
-			}
-			else
-			{
-				aimingProp[i]->GotHit();
-			}
+			aimingProp[i]->GotHit();
 		}
 	}
 	else

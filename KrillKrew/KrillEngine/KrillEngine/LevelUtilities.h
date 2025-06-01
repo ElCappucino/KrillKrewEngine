@@ -30,6 +30,8 @@
 #include "PlayerHitboxObject.h"
 #include "PlayerGroundColliderObject.h"
 #include "PropObject.h"
+#include "ParticleObject.h"
+#include "TextObject.h"
 
 // Vbo
 

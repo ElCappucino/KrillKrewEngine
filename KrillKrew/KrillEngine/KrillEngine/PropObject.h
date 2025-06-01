@@ -13,11 +13,13 @@
 #include "SquareMeshVbo.h"
 #include "EntityObject.h"
 #include "PlayerHitboxObject.h"
+#include "ParticleObject.h"
 
 
 #define MAP_WIDTH  20
 #define MAP_HEIGHT 16
 
+class TileObject;
 
 /// @brief The class for creating object that render using texture
 class PropObject : public EntityObject
@@ -33,12 +35,16 @@ public:
 
 	enum PropType
 	{
+		Tiny,
 		Small,
 		Tree
 	};
 
 	AnimationState currAnimState;
 	PropType propType;
+	SpritesheetInfo propBreakSprite;
+	std::vector<TileObject*> surroundTile;
+
 private:
 
 	int maxDurability;
@@ -62,6 +68,7 @@ public:
 
 	void CheckIfBreak();
 	void GotHit();
+	void CheckIfNoTileSurround();
 
 	void SetIsBreakable(bool isBreakable);
 	bool GetIsBreakable() const;
@@ -74,6 +81,8 @@ public:
 	virtual void OnTriggerEnter(Collider* other);
 	virtual void OnTriggerStay(Collider* other);
 	virtual void OnTriggerExit(Collider* other);
+
+	virtual void UpdateCollider();
 
 	virtual void UpdateSpriteSheetPosition();
 

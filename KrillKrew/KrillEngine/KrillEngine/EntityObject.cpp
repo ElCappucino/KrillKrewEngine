@@ -8,6 +8,7 @@ EntityObject::EntityObject()
 	isAnimated = false;
 	collider = new Collider(Collider::Trigger, this);
 	collider->setColliderSize(this->size);
+	
 	spriteRenderer = new SpriteRenderer("");
 	this->pos = glm::vec3(0, 0, 0);
 
@@ -126,7 +127,7 @@ void EntityObject::ChangeAnimationState(AnimationState anim)
 }
 void EntityObject::UpdateCurrentAnimation()
 {
-	std::cout << "Update Animation Entity" << std::endl;
+	//std::cout << "Update Animation Entity" << std::endl;
 }
 
 void EntityObject::UpdateCollider()

@@ -20,4 +20,6 @@ public:
 	void loadText(std::string text, SDL_Color textColor, int fontSize);
 	void InitSDL();
 	void cleanSDL();
+
+	virtual float getOrderingLayer() const;
 };

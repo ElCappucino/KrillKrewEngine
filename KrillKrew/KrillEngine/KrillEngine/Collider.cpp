@@ -19,11 +19,14 @@ Collider::Collider(CollisionType type, ImageObject* parent)
 			gizmos->SetColor(0, 0, 1.f);
 			break;
 	}
+
+	this->offset = glm::vec3(0, 0, 0);
 	
 }
 void Collider::Update(glm::vec3 size, glm::vec3 position)
 {
 	this->size = size;
+	//this->previousPos = position;
 	this->halfSize = glm::vec3(size.x / 2, size.y / 2, 1);
 	gizmos->SetSize(size.x, size.y);
 	gizmos->SetPosition(position);
@@ -81,4 +84,13 @@ void Collider::SetCollisionType(Collider::CollisionType type)
 
 void Collider::setColliderSize(glm::vec3 size) {
 	this->size = size;
+}
+
+glm::vec3 Collider::GetOffset() const
+{
+	return this->offset;
+}
+void Collider::SetOffset(float x, float y, float z)
+{
+	this->offset = glm::vec3(x, y, z);
 }

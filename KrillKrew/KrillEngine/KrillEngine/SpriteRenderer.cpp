@@ -57,6 +57,8 @@ SpriteRenderer::SpriteRenderer(std::string texture)
 	this->sheetheight = 0;
 
 	this->isLoop = true;
+
+	this->frame = 10;
 }
 
 float SpriteRenderer::GetRow()

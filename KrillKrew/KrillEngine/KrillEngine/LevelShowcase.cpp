@@ -5,6 +5,19 @@ bool compareLayer(const DrawableObject* a, const DrawableObject* b)
 	return a->getOrderingLayer() > b->getOrderingLayer();
 }
 
+float SmoothStep(float t)
+{
+	float v1 = t * t;
+	float v2 = 1.0 - ((1.0 - t) * (1.0 - t));
+	return v1 + t * (v2);
+}
+
+float ElasticOut(float t)
+{
+	float output = std::sin(-13.0 * (t + 1.0) * 3.14 / 2) * std::pow(2.0, -10.0 * t) + 1.0;
+	return output;
+}
+
 void LevelShowcase::LevelLoad()
 {
 	SquareMeshVbo* square = new SquareMeshVbo();
@@ -208,8 +221,8 @@ void LevelShowcase::LevelLoad()
 	spriteList["Prop_B"] = SpritesheetInfo("Prop_B", "../Resource/Texture/Props/prop_B.png", 123, 123, 369, 170);
 	spriteList["Prop_C"] = SpritesheetInfo("Prop_C", "../Resource/Texture/Props/prop_C.png", 91, 91, 637, 91);
 
-	spriteList["Tree_A"] = SpritesheetInfo("Tree_A", "../Resource/Texture/Props/prop_spr_CoconutTree_A.png", 300, 400, 900, 400);
-	spriteList["Tree_B"] = SpritesheetInfo("Tree_B", "../Resource/Texture/Props/prop_spr_CoconutTree_B.png", 250, 370, 750, 370);
+	spriteList["Tree_A"] = SpritesheetInfo("Tree_A", "../Resource/Texture/Props/prop_spr_CoconutTree_A.png", 300, 400, 900, 400, true);
+	spriteList["Tree_B"] = SpritesheetInfo("Tree_B", "../Resource/Texture/Props/prop_spr_CoconutTree_B.png", 250, 370, 750, 370, true);
 
 	spriteList["Leaf1_Collapse"] = SpritesheetInfo("Tree_B", "../Resource/Texture/Props/prop_spr_vfx_leaf.png", 200, 200, 800, 200);
 	spriteList["Leaf2_Collapse"] = SpritesheetInfo("Tree_B", "../Resource/Texture/Props/prop_spr_vfx_smallleaf.png", 120, 120, 480, 120);
@@ -238,13 +251,13 @@ void LevelShowcase::InitTile()
 	float totalLoadedTile = MAP_HEIGHT * MAP_WIDTH;
 	float currentLoadedTile = 0;
 
-	KK_TRACE("Generate Map-----------{0}", totalLoadedTile);
+	//KK_TRACE("Generate Map-----------{0}", totalLoadedTile);
 	for (int i = 0; i < MAP_HEIGHT; i++)
 	{
 		for (int j = 0; j < MAP_WIDTH; j++)
 		{
 			currentLoadedTile++;
-			KK_CORE_TRACE("Generate Map-----------{0}%", 100.f * currentLoadedTile / totalLoadedTile);
+			//KK_CORE_TRACE("Generate Map-----------{0}%", 100.f * currentLoadedTile / totalLoadedTile);
 
 			int flag = groundTile[i][j];
 
@@ -370,7 +383,7 @@ void LevelShowcase::InitProp()
 	float totalLoadedTile = MAP_HEIGHT * MAP_WIDTH;
 	float currentLoadedTile = 0;
 
-	KK_TRACE("Generate Prop-----------{0}", totalLoadedTile);
+	//KK_TRACE("Generate Prop-----------{0}", totalLoadedTile);
 	for (int i = 0; i < MAP_HEIGHT; i++)
 	{
 		for (int j = 0; j < MAP_WIDTH; j++)
@@ -392,6 +405,7 @@ void LevelShowcase::InitProp()
 			
 			obj->SetPosition(glm::vec3(map_left + (j * 126.f), map_top - (i * 126.f), 0));
 			obj->LocateCurrentLevel(this);
+			propObjects.push_back(obj);
 
 			int randnum = 0;
 
@@ -403,6 +417,7 @@ void LevelShowcase::InitProp()
 				randnum = rand() % 6;
 				obj->GetSpriteRenderer()->ShiftTo(0, randnum);
 				obj->propType = PropObject::PropType::Small;
+				obj->propBreakSprite = spriteList.find("CollapseTile")->second;
 				obj->SetIsBreakable(true);
 				break;
 			case 2:
@@ -411,6 +426,7 @@ void LevelShowcase::InitProp()
 				randnum = rand() % 3;
 				obj->GetSpriteRenderer()->ShiftTo(0, randnum);
 				obj->propType = PropObject::PropType::Small;
+				obj->propBreakSprite = spriteList.find("CollapseTile")->second;
 				obj->SetIsBreakable(true);
 				break;
 			case 3:
@@ -418,7 +434,8 @@ void LevelShowcase::InitProp()
 				obj->SetSize(91.f, -91.f);
 				randnum = rand() % 7;
 				obj->GetSpriteRenderer()->ShiftTo(0, randnum);
-				obj->propType = PropObject::PropType::Small;
+				obj->propType = PropObject::PropType::Tiny;
+				obj->propBreakSprite = spriteList.find("Leaf1_Collapse")->second;
 				obj->SetIsBreakable(false);
 				break;
 			case 4:
@@ -426,6 +443,9 @@ void LevelShowcase::InitProp()
 				obj->SetSize(450.f, -600.f);
 				obj->GetSpriteRenderer()->ShiftTo(0, 0);
 				obj->propType = PropObject::PropType::Tree;
+				obj->propBreakSprite = spriteList.find("Leaf2_Collapse")->second;
+				obj->GetCollider()->SetOffset(0, -270.f, 0);
+				obj->SetIsAnimated(true);
 				obj->SetIsBreakable(true);
 				break;
 			case 5:
@@ -433,6 +453,9 @@ void LevelShowcase::InitProp()
 				obj->SetSize(375.f, -555.f);
 				obj->GetSpriteRenderer()->ShiftTo(0, 0);
 				obj->propType = PropObject::PropType::Tree;
+				obj->propBreakSprite = spriteList.find("Leaf2_Collapse")->second;
+				obj->GetCollider()->SetOffset(0, -250.5f, 0);
+				obj->SetIsAnimated(true);
 				obj->SetIsBreakable(true);
 				break;
 			}
@@ -478,7 +501,7 @@ void LevelShowcase::LevelInit()
 
 	// Example Code
 
-	KK_TRACE("Init Player-----------");
+	//KK_TRACE("Init Player-----------");
 	PlayerObject* p1 = new PlayerObject();
 	p1->SetAnimationSprite(PlayerObject::AnimationState::Idle, spriteList.find("P1_Idle")->second);
 	p1->SetAnimationSprite(PlayerObject::AnimationState::GetHit, spriteList.find("P1_Hit")->second);
@@ -695,7 +718,7 @@ void LevelShowcase::LevelInit()
 
 	//create Ui by PlayerObject
 	//int playerSize = playerSize;
-	KK_TRACE("Init UI-----------");
+	//KK_TRACE("Init UI-----------");
 	//count = 0;
 
 	if (playerSize >= 0) {
@@ -730,6 +753,17 @@ void LevelShowcase::LevelInit()
 		objectsList.push_back(uiSkills);
 		playerUIs[3] = uiSkills;
 	}
+
+	TextObject* text = new TextObject();
+	//text->InitSDL();
+	text->loadText("3", SDL_Color{ 0, 0, 0 }, 256);
+	text->SetPosition(glm::vec3(0, 0, 0));
+	text_SizeX = text->getSize().x;
+	text_SizeY = text->getSize().y;
+	objectsList.push_back(text);
+	
+	
+	textObjects.push_back(text);
 
 	// sort with ordering layer
 	std::sort(objectsList.begin(), objectsList.end(), compareLayer);
@@ -778,7 +812,21 @@ void LevelShowcase::LevelUpdate()
 		}
 	}
 
-	UpdateInput();
+	for (int i = 0; i < propObjects.size(); i++)
+	{
+		if (propObjects[i]->GetIsActive() == false)
+		{
+			propObjects.erase(propObjects.begin() + i);
+		}
+	}
+
+	
+
+	/*for (TextObject* text : textObjects)
+	{
+		text->loadText("3", SDL_Color{ 255, 0, 0 }, 256);
+		text->SetPosition(glm::vec3(0, 0, 0));
+	}*/
 
 	for (int i = 0; i < playerSize; i++) {
 		camera.setPlayerPos(i, players[i]->getPos());
@@ -805,17 +853,32 @@ void LevelShowcase::LevelUpdate()
 		}
 	}
 
-	// slowness
-	UpdateMovement();
+	
+	if (currentCountdownNum > -1)
+	{
+		UpdateCountdown();
+	}
+	else
+	{
+		UpdateInput();
 
-	// projectile collider player
-	UpdateCollision();
+		// slowness
+		UpdateMovement();
 
-	// delete projectile
-	UpdateProjectile();
+		// projectile collider player
+		UpdateCollision();
 
-	// reduce cooldown skill
-	UpdateCooldown();
+		// delete projectile
+		UpdateProjectile();
+
+		// reduce cooldown skill
+		UpdateCooldown();
+	}
+	
+
+	
+
+	
 
 	//Ui Skills
 	UpdateUI();
@@ -825,6 +888,56 @@ void LevelShowcase::LevelUpdate()
 	std::sort(objectsList.begin(), objectsList.end(), compareLayer);
 
 	
+}
+
+void LevelShowcase::UpdateCountdown()
+{
+	for (TextObject* text : textObjects)
+	{
+		if (text_t >= 1.0f) { break; }
+		text_t += 0.01f;
+		float maxSizeX = text_SizeX * 1.5f;
+		float maxSizeY = text_SizeY * 1.5f;
+		text->SetSize(text_SizeX + ElasticOut(text_t) * maxSizeX, text_SizeY + ElasticOut(text_t) * maxSizeY);
+	}
+
+	currentCountdownDelay += timer->getDeltaTime();
+
+	if (currentCountdownDelay >= countdownDelay)
+	{
+		currentCountdownDelay = 0;
+		currentCountdownNum--;
+
+		KK_TRACE("LevelShowcase: currentCountdownNum = {0}", currentCountdownNum);
+
+		if (currentCountdownNum < 0)
+		{
+			for (TextObject* text : textObjects)
+			{
+				text->SetIsActive(false);
+			}
+		}
+		else
+		{
+			std::string displayString = std::to_string(currentCountdownNum);
+
+			if (currentCountdownNum == 0)
+			{
+				displayString = "Start!";
+			}
+
+			for (TextObject* text : textObjects)
+			{
+				text->loadText(displayString, SDL_Color{ 0, 0, 0 }, 256);
+				text_SizeX = text->getSize().x;
+				text_SizeY = text->getSize().y;
+
+				text->SetSize(text_SizeX, text_SizeY);
+			}
+
+			text_t = 0;
+		}
+	}
 }
 
 void LevelShowcase::UpdateInput()
@@ -1003,7 +1116,7 @@ void LevelShowcase::UpdateInput()
 							projectile->SetRotation(angle);
 							projectile->SetVelocity(abs(veloX), abs(veloY), PositiveX, PositiveY);
 
-							KK_TRACE("players[i]->GetHoldingProjectile() = {0}", players[i]->GetHoldingProjectile());
+							//KK_TRACE("players[i]->GetHoldingProjectile() = {0}", players[i]->GetHoldingProjectile());
 							
 						}
 
@@ -1150,8 +1263,15 @@ void LevelShowcase::UpdateCollision()
 			Collider* col1 = entity1->GetCollider();
 			Collider* col2 = entity2->GetCollider();
 
-			float deltaX = entity1->getPos().x - entity2->getPos().x;
-			float deltaY = entity1->getPos().y - entity2->getPos().y;
+			glm::vec3 offsetEntity1 = entity1->GetCollider()->GetOffset();
+			glm::vec3 offsetEntity2 = entity2->GetCollider()->GetOffset();
+
+			glm::vec3 posAfterOffset1 = entity1->getPos() + offsetEntity1;
+			glm::vec3 posAfterOffset2 = entity2->getPos() + offsetEntity2;
+
+			float deltaX = posAfterOffset1.x - posAfterOffset2.x;
+			float deltaY = posAfterOffset1.y - posAfterOffset2.y;
+
 			glm::vec2 delta(abs(deltaX), abs(deltaY));
 
 			float previousDeltaX = col1->GetPreviousPos().x - col2->GetPreviousPos().x;
@@ -1218,9 +1338,9 @@ void LevelShowcase::UpdateCollision()
 				}
 			}
 
-			entity2->GetCollider()->SetPreviousPos(entity2->getPos());
+			entity2->GetCollider()->SetPreviousPos(entity2->getPos() + entity2->GetCollider()->GetOffset());
 		}
-		entity1->GetCollider()->SetPreviousPos(entity1->getPos());
+		entity1->GetCollider()->SetPreviousPos(entity1->getPos() + entity1->GetCollider()->GetOffset());
 	}
 
 	// previousCollisions = currentCollisions;
@@ -1234,6 +1354,12 @@ void LevelShowcase::UpdateCollision()
 		{
 			players[i]->CheckIfOnGround();
 			continue;
+		}
+
+		for (PropObject* prop : propObjects)
+		{
+			//KK_TRACE("----------------------------------------");
+			prop->CheckIfNoTileSurround();
 		}
 	}
 	
@@ -1644,12 +1770,12 @@ void LevelShowcase::GroundTileRefactor()
 			}
 			else if (tilesList[i][j]->currAnimState == TileObject::AnimationState::FinishBreaking)
 			{
-				KK_TRACE("Refactor check: finish breaking");
+				//KK_TRACE("Refactor check: finish breaking");
 				continue;
 			}
 			else if (flag == 2)
 			{
-				KK_TRACE("Refactor check: if tile is breaking");
+				//KK_TRACE("Refactor check: if tile is breaking");
 				//SpritesheetInfo collapseTileSprite = SpritesheetInfo("CollapseTile", "../Resource/Texture/Props/prop_spr_vfx_smoke.png", 200, 200, 800, 200);
 				
 				

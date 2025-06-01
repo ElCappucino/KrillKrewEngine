@@ -96,7 +96,7 @@ void PlayerHitboxObject::OnColliderEnter(Collider* other)
 	}
 
 	PropObject* prop = dynamic_cast<PropObject*>(other->GetParent());
-	if (prop != nullptr)
+	if (prop != nullptr && prop->propType != PropObject::PropType::Tiny)
 	{
 		// KK_TRACE("hit Tile");
 		this->parent->AddAimingProp(prop);

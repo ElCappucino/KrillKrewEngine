@@ -19,6 +19,7 @@ TextObject::~TextObject()
 
 void TextObject::Render(glm::mat4 globalModelTransform)
 {
+	//KK_TRACE("TextObject: Render");
 	SquareMeshVbo*squareMesh = dynamic_cast<SquareMeshVbo*> (GameEngine::GetInstance()->GetRenderer()->GetMesh(SquareMeshVbo::MESH_NAME));
 
 	GLuint modelMatixId = GameEngine::GetInstance()->GetRenderer()->GetModelMatrixAttrId();
@@ -79,7 +80,7 @@ void TextObject::loadText(std::string text, SDL_Color textColor, int fontSize)
 	glBindTexture(GL_TEXTURE_2D, texture);
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-	TTF_Font* font = TTF_OpenFont("../Resource/Font/Debrosee-ALPnL.ttf", fontSize);
+	TTF_Font* font = TTF_OpenFont("../Resource/Font/Mitr-Bold.ttf", fontSize);
 	if (font)
 	{
 		SDL_Surface* surfaceMessage = TTF_RenderText_Blended(font, text.c_str(), textColor);
@@ -116,4 +117,9 @@ void TextObject::InitSDL() {
 void TextObject::cleanSDL() {
 	TTF_Quit();
 	SDL_Quit();
+}
+
+float TextObject::getOrderingLayer() const
+{
+	return -5000.f;
 }
