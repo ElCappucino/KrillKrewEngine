@@ -1015,16 +1015,16 @@ void LevelShowcase::UpdateInput()
 					if (players[i + currentPlayer]->GetIsStun() == true)
 					{
 						// velo to zero if stun
-						players[i + currentPlayer]->SetVelocity(0, 0, isPositiveXOld, isPositiveYOld);
+						players[i + currentPlayer]->SetVelocity(0, 0, isPositiveXOld[i + currentPlayer], isPositiveYOld[i + currentPlayer]);
 					}
 					else if (players[i + currentPlayer]->GetIsDashing() == true)
 					{
 						// use old velo during dash to disable control
 						players[i + currentPlayer]->SetVelocity(
-							abs(norAxisXOld),
-							abs(norAxisYOld),
-							isPositiveXOld,
-							isPositiveYOld
+							abs(norAxisXOld[i + currentPlayer]),
+							abs(norAxisYOld[i + currentPlayer]),
+							isPositiveXOld[i + currentPlayer],
+							isPositiveYOld[i + currentPlayer]
 						);
 					}
 					else if (players[i + currentPlayer]->GetIsAiming() == false)
@@ -1043,10 +1043,10 @@ void LevelShowcase::UpdateInput()
 
 				if (players[i + currentPlayer]->GetIsDashing())
 				{
-					norAxisXOld = norAxisX;
-					norAxisYOld = norAxisY;
-					isPositiveXOld = isPositiveX;
-					isPositiveYOld = isPositiveY;
+					norAxisXOld[i + currentPlayer] = norAxisX;
+					norAxisYOld[i + currentPlayer] = norAxisY;
+					isPositiveXOld[i + currentPlayer] = isPositiveX;
+					isPositiveYOld[i + currentPlayer] = isPositiveY;
 				}
 
 				if (players[i + currentPlayer]->GetIsAiming())
@@ -1221,11 +1221,13 @@ void LevelShowcase::UpdateInput()
 				GameEngine::GetInstance()->GetStateController()->gameStateNext = GameState::GS_LEVELLOADING;
 			}
 
-			players[0]->Translate(players[0]->GetVelocity());
-			players[1]->Translate(players[1]->GetVelocity());
-			players[2]->Translate(players[2]->GetVelocity());
-			players[3]->Translate(players[3]->GetVelocity());
+			
 		}
+
+		players[0]->Translate(players[0]->GetVelocity() * playerMovementSpeed);
+		players[1]->Translate(players[1]->GetVelocity() * playerMovementSpeed);
+		players[2]->Translate(players[2]->GetVelocity() * playerMovementSpeed);
+		players[3]->Translate(players[3]->GetVelocity() * playerMovementSpeed);
 
 	}
 }
@@ -1592,6 +1594,9 @@ void LevelShowcase::LevelDraw()
 	ImGui::InputFloat("Teleport Lifetime", &TeleportLifetime, 0.1f, 1.0f, "%.2f");
 	ImGui::InputFloat("Bola Lifetime", &BolaLifetime, 0.1f, 1.0f, "%.2f");
 	ImGui::InputFloat("Cleave Lifetime", &CleaveLifetime, 0.1f, 1.0f, "%.2f");
+
+	ImGui::Text("Overall stats");
+	ImGui::InputFloat("Move Speed", &playerMovementSpeed, 0.1f, 1.0f, "%.2f");
 
 	if (isResetScene & 1)
 	{
@@ -2410,7 +2415,7 @@ void LevelShowcase::SaveConfigInfo(const std::string& fileName) {
 	data["BolaLifetime"] = BolaLifetime;
 	data["CleaveLifetime"] = CleaveLifetime;
 	data["DashDuration"] = DashDuration;
-
+	data["playerMovementSpeed"] = playerMovementSpeed;
 	//float FireballLifetime = 1.f;
 	//float TeleportLifetime = 2.f;
 	//float BolaLifetime = 2.f;
@@ -2466,5 +2471,7 @@ void LevelShowcase::LoadConfigInfo(const std::string& fileName)
 	BolaLifetime = data["BolaLifetime"];
 	CleaveLifetime = data["CleaveLifetime"];
 	DashDuration = data["DashDuration"];
+
+	playerMovementSpeed = data["playerMovementSpeed"];
 
 }

@@ -205,6 +205,7 @@ private:
 	float CleaveLifetime = 2.f;
 
 	float DashDuration = 0.2f;
+	float playerMovementSpeed = 3.f;
 
 	int playerSize = 0;
 	int playerNum = 0;
@@ -226,12 +227,12 @@ private:
 	float musicVolume = 1.f, sfxVolume = 1.f;
 
 	// player
-	float axisXOld;
-	float axisYOld;
-	float norAxisXOld;
-	float norAxisYOld;
-	bool isPositiveXOld;
-	bool isPositiveYOld;
+	std::array<float, 4> axisXOld;
+	std::array<float, 4> axisYOld;
+	std::array<float, 4> norAxisXOld;
+	std::array<float, 4> norAxisYOld;
+	std::array<bool, 4> isPositiveXOld;
+	std::array<bool, 4> isPositiveYOld;
 
 	KrillSoundManager::SoundManager* soundManager;
 
