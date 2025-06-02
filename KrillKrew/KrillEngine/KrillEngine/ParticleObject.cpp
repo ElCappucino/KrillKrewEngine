@@ -108,8 +108,8 @@ void ParticleObject::UpdateSpriteSheetPosition()
 }
 void ParticleObject::UpdateCurrentAnimation() 
 {
-	KK_CORE_WARN("ParticleObject: UpdateCurrentAnimation");
-	KK_CORE_WARN("ParticleObject: Position = {0} {1} {2}", this->pos.x, this->pos.y, this->pos.z);
+	//KK_CORE_WARN("ParticleObject: UpdateCurrentAnimation");
+	//KK_CORE_WARN("ParticleObject: Position = {0} {1} {2}", this->pos.x, this->pos.y, this->pos.z);
 	int currentColumn = this->GetSpriteRenderer()->GetColumn();
 	float lastFrame = (GetSpriteRenderer()->GetSheetWidth() / GetSpriteRenderer()->GetSpriteWidth()) - 1;
 

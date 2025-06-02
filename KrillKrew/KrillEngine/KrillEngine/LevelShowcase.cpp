@@ -873,12 +873,10 @@ void LevelShowcase::LevelUpdate()
 
 		// reduce cooldown skill
 		UpdateCooldown();
+
+		// UpdateKrakenEvent()
+		UpdateKrakenEvent();
 	}
-	
-
-	
-
-	
 
 	//Ui Skills
 	UpdateUI();
@@ -888,6 +886,105 @@ void LevelShowcase::LevelUpdate()
 	std::sort(objectsList.begin(), objectsList.end(), compareLayer);
 
 	
+}
+
+void LevelShowcase::UpdateKrakenEvent()
+{
+	if (timeUntilKrakenCounter > timeUntilKrakenEvent && !isStartKrakenEvent)
+	{
+		isStartKrakenEvent = true;
+		KK_INFO("Kraken Event Start!");
+	}
+	else
+	{
+		timeUntilKrakenCounter += timer->getDeltaTime();
+		//KK_INFO("Kraken Event not yet start dt = {0}", dt);
+	}
+
+	// currently in kraken event
+	if (isStartKrakenEvent)
+	{
+		if (KrakenEventOffset_bottom >= (MAP_HEIGHT / 2) + 1 ||
+			KrakenEventOffset_top >= (MAP_HEIGHT / 2) + 1 ||
+			KrakenEventOffset_left >= (MAP_WIDTH / 2) + 1 ||
+			KrakenEventOffset_right >= (MAP_WIDTH / 2) + 1)
+		{
+			return;
+		}
+
+		timePerTileCounter += timer->getDeltaTime();
+
+		if (timePerTileCounter > timePerTileKrakenEvent)
+		{
+			timePerTileCounter = 0.f;
+
+			int x = currrentCollapsePosition.x;
+			int y = currrentCollapsePosition.y;
+			
+			// break tile
+			if (currentGroundTile[y][x] != 0)
+			{
+				tilesList[y][x]->ImmediatelyBreak();
+			}
+
+			// shift current collapse position
+			switch (currentCollapseDirection)
+			{
+
+			case TileCollapseDirection::Down:
+
+				currrentCollapsePosition.y = currrentCollapsePosition.y + 1;
+				
+				if (currrentCollapsePosition.y == MAP_HEIGHT - 1 - KrakenEventOffset_bottom)
+				{
+					currentCollapseDirection = TileCollapseDirection::Right;
+
+					KrakenEventOffset_bottom++;
+				}
+
+				break;
+
+			case TileCollapseDirection::Right:
+
+				currrentCollapsePosition.x = currrentCollapsePosition.x + 1;
+
+				if (currrentCollapsePosition.x == MAP_WIDTH - 1 - KrakenEventOffset_right)
+				{
+					currentCollapseDirection = TileCollapseDirection::Up;
+
+					KrakenEventOffset_right++;
+				}
+
+				break;
+
+			case TileCollapseDirection::Up:
+
+				currrentCollapsePosition.y = currrentCollapsePosition.y - 1;
+
+				if (currrentCollapsePosition.y == 0 + KrakenEventOffset_top)
+				{
+					currentCollapseDirection = TileCollapseDirection::Left;
+
+					KrakenEventOffset_top++;
+				}
+
+				break;
+
+			case TileCollapseDirection::Left:
+
+				currrentCollapsePosition.x = currrentCollapsePosition.x - 1;
+
+				if (currrentCollapsePosition.x == 0 + KrakenEventOffset_left)
+				{
+					currentCollapseDirection = TileCollapseDirection::Down;
+
+					KrakenEventOffset_left++;
+				}
+
+				break;
+			}
+		}
+	}
 }
 
 void LevelShowcase::UpdateCountdown()

@@ -41,6 +41,7 @@ private:
 
 	std::array<std::array<TileObject*, MAP_WIDTH>, MAP_HEIGHT> tilesList;
 
+	// Countdown from start
 	float text_t = 0.f;
 	float text_SizeX = 0.f;
 	float text_SizeY = 0.f;
@@ -48,6 +49,30 @@ private:
 	int currentCountdownNum = 3;
 	float countdownDelay = 1.5f;
 	float currentCountdownDelay = -1.f;
+
+	enum TileCollapseDirection
+	{
+		Down,
+		Right,
+		Up,
+		Left
+	};
+	// Kraken's Rampage
+	TileCollapseDirection currentCollapseDirection = TileCollapseDirection::Down;
+	bool isStartKrakenEvent = false;
+
+	int KrakenEventOffset_bottom = 1;
+	int KrakenEventOffset_right = 2;
+	int KrakenEventOffset_top = 1;
+	int KrakenEventOffset_left = 1;
+
+	float timeUntilKrakenEvent = 10.f;
+	float timeUntilKrakenCounter = 0.f;
+
+	float timePerTileKrakenEvent = 0.5f;
+	float timePerTileCounter = 0.f;
+	glm::vec2 currrentCollapsePosition = {0, 2};
+
 
 	std::map<int, std::pair<int, int>> blob_lookup_table = {
 
@@ -259,6 +284,7 @@ public:
 	// void UpdateKnockback(DrawableObject* obj1, DrawableObject* obj2);
 	void UpdateTime();
 	void UpdateCountdown();
+	void UpdateKrakenEvent();
 
 	void GroundTileRefactor();
 	void TileImport(std::array<std::array<int, MAP_WIDTH>, MAP_HEIGHT> &TileBuffer, std::string fileName);

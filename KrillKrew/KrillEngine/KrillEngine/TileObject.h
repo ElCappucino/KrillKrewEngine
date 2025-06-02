@@ -78,6 +78,7 @@ public:
 	void GotHit();
 	void DisableOverlaySprite();
 	void AddCollapseTileToScene();
+	void ImmediatelyBreak();
 
 	virtual Collider* GetCollider();
 	ImageObject* GetOverlaySprite();

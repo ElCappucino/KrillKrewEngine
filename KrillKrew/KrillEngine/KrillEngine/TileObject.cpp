@@ -259,6 +259,12 @@ void TileObject::GotHit()
 	CheckIfBreak();
 }
 
+void TileObject::ImmediatelyBreak()
+{
+	currentDurability = maxDurability;
+	CheckIfBreak();
+}
+
 void TileObject::OnColliderEnter(Collider* other)
 {
 
