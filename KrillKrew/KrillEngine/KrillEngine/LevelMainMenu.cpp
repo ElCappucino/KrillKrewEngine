@@ -781,7 +781,7 @@ void LevelMainMenu::UpdateInput() {
 			//volume
 			else if (isSelectVolume == true) {
 				//select option
-				if (!playerMove[i]) {
+				if (/*!playerMove[i]*/1) {
 					if ((right || left || Joystick::GetButtonDown(i, Joystick::Button::DPAD_Right) || Joystick::GetButtonDown(i, Joystick::Button::DPAD_Left)) && (isSlider == false))
 					{
 						playerWhere[i] += 1;
@@ -826,11 +826,11 @@ void LevelMainMenu::UpdateInput() {
 						}
 						if (isSFXVolume == true) {
 							SFXVolume++;
-							volumeKnobList.at(0)->SetPosition(glm::vec3((SFXVolume - 57.5 / 0.25), configs.at(8)->posY, 0));
+							volumeKnobList.at(1)->SetPosition(glm::vec3((SFXVolume - 57.5 / 0.25), configs.at(8)->posY + (-1 * configs.at(8)->offSetY), 0));
 						}
 						if (isBGMVolume == true) {
 							BGMVolume++;
-							volumeKnobList.at(0)->SetPosition(glm::vec3((BGMVolume - 57.5 / 0.25), configs.at(8)->posY, 0));
+							volumeKnobList.at(2)->SetPosition(glm::vec3((BGMVolume - 57.5 / 0.25), configs.at(8)->posY + (-2 * configs.at(8)->offSetY), 0));
 						}
 						
 					}
@@ -842,11 +842,11 @@ void LevelMainMenu::UpdateInput() {
 						}
 						if (isSFXVolume == true) {
 							SFXVolume--;
-							volumeKnobList.at(0)->SetPosition(glm::vec3((SFXVolume - 57.5 / 0.25), configs.at(8)->posY, 0));
+							volumeKnobList.at(1)->SetPosition(glm::vec3((SFXVolume - 57.5 / 0.25), configs.at(8)->posY + (-1 * configs.at(8)->offSetY), 0));
 						}
 						if (isBGMVolume == true) {
 							BGMVolume--;
-							volumeKnobList.at(0)->SetPosition(glm::vec3((BGMVolume - 57.5 / 0.25), configs.at(8)->posY, 0));
+							volumeKnobList.at(2)->SetPosition(glm::vec3((BGMVolume - 57.5 / 0.25), configs.at(8)->posY + (-2 * configs.at(8)->offSetY), 0));
 						}
 					}
 				}
