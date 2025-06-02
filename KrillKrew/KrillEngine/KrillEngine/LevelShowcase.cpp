@@ -241,6 +241,9 @@ void LevelShowcase::LevelLoad()
 
 	spriteList["DangerSign"] = SpritesheetInfo("DangerSign", "../Resource/Texture/Gameplay/UI_GP_Event_DangerSign.png", 544, 215, 544, 215);
 
+	spriteList["Pause_BG"] = SpritesheetInfo("Pause_BG", "../Resource/Texture/Menu/Pause/UI_Pause_BG.png", 623, 671, 623, 671);
+	spriteList["Pause_text"] = SpritesheetInfo("Pause_text", "../Resource/Texture/Menu/Pause/UI_Pause_text.png", 300, 70, 1800, 70);
+
 	soundManager = KrillSoundManager::SoundManager::GetInstance();
 
 	soundManager->LoadMusic("bgm_test", "../Resource/Audio/bgm_test.mp3");
@@ -877,6 +880,43 @@ void LevelShowcase::LevelInit()
 		uiSkills3->uiType = UiObject::UIType::SkillIcon;
 	}
 
+	/*UiObject* uiSkills = new UiObject();
+	uiSkills->SetSpriteInfo(spriteList.find("Player_UI")->second);
+	uiSkills->GetSpriteRenderer()->ShiftTo(0, 3);
+	uiSkills->setNumOwner(3);
+	objectsList.push_back(uiSkills);
+	playerUIs[3] = uiSkills;*/
+
+
+	// Pause_BG. Pause_text
+	PauseMenu = new UiObject();
+	PauseMenu->SetSpriteInfo(spriteList.find("Pause_BG")->second);
+	PauseMenu->SetIsRender(false);
+	PauseMenu->uiType = UiObject::UIType::PauseMenu;
+	objectsList.push_back(PauseMenu);
+
+	ResumeButton = new UiObject();
+	ResumeButton->SetSpriteInfo(spriteList.find("Pause_text")->second);
+	ResumeButton->GetSpriteRenderer()->ShiftTo(0, 0);
+	ResumeButton->SetIsRender(false);
+	ResumeButton->uiType = UiObject::UIType::PauseText;
+	objectsList.push_back(ResumeButton);
+
+	OptionButton = new UiObject();
+	OptionButton->SetSpriteInfo(spriteList.find("Pause_text")->second);
+	OptionButton->GetSpriteRenderer()->ShiftTo(0, 2);
+	OptionButton->SetIsRender(false);
+	OptionButton->uiType = UiObject::UIType::PauseText;
+	objectsList.push_back(OptionButton);
+
+	MainMenuButton = new UiObject();
+	MainMenuButton->SetSpriteInfo(spriteList.find("Pause_text")->second);
+	MainMenuButton->GetSpriteRenderer()->ShiftTo(0, 4);
+	MainMenuButton->SetIsRender(false);
+	MainMenuButton->uiType = UiObject::UIType::PauseText;
+	objectsList.push_back(MainMenuButton);
+
+
 	for (int i = 0; i < playerSize; i++)
 	{
 		for (int j = 0; j < 3; j++)
@@ -971,64 +1011,130 @@ void LevelShowcase::LevelUpdate()
 		text->SetPosition(glm::vec3(0, 0, 0));
 	}*/
 
-	for (int i = 0; i < playerSize; i++) {
-		camera.setPlayerPos(i, players[i]->getPos());
-	}
-	camera.LerpCamera(playerSize); // update smooth camera here
-
-	// Set Animation
-	for (int i = 0; i < entityObjects.size(); i++)
+	if (isPause)
 	{
-		EntityObject* entity = entityObjects[i];
-		if (entity == nullptr)
+		if (!PauseMenu->GetIsRender())
 		{
-			continue;
+			PauseMenu->SetIsRender(true);
 		}
-		else
-		{
-			if (entity->GetIsAnimated() && frame % entity->GetSpriteRenderer()->GetFrame() == 0)
-			{
-				entity->UpdateSpriteSheetPosition();
-				entity->UpdateCurrentAnimation();
-				/*entity->GetSpriteRenderer()->ShiftColumn();
-				entity->UpdateCurrentAnimation();*/
-			}
-		}
-	}
 
-	
-	if (currentCountdownNum > -1)
-	{
-		UpdateCountdown();
+		if (!ResumeButton->GetIsRender())
+		{
+			ResumeButton->SetIsRender(true);
+		}
+
+		if (!OptionButton->GetIsRender())
+		{
+			OptionButton->SetIsRender(true);
+		}
+
+		if (!MainMenuButton->GetIsRender())
+		{
+			MainMenuButton->SetIsRender(true);
+		}
+
+		switch (currentPauseButton)
+		{
+		case PauseMenuButton::Resume:
+			ResumeButton->GetSpriteRenderer()->ShiftTo(0, 1);
+			OptionButton->GetSpriteRenderer()->ShiftTo(0, 2);
+			MainMenuButton->GetSpriteRenderer()->ShiftTo(0, 4);
+			break;
+		case PauseMenuButton::Option:
+			ResumeButton->GetSpriteRenderer()->ShiftTo(0, 0);
+			OptionButton->GetSpriteRenderer()->ShiftTo(0, 3);
+			MainMenuButton->GetSpriteRenderer()->ShiftTo(0, 4);
+			break;
+		case PauseMenuButton::MainMenu:
+			ResumeButton->GetSpriteRenderer()->ShiftTo(0, 0);
+			OptionButton->GetSpriteRenderer()->ShiftTo(0, 2);
+			MainMenuButton->GetSpriteRenderer()->ShiftTo(0, 5);
+			break;
+
+		}
+
+		UpdateInput();
+
 	}
 	else
 	{
-		UpdateInput();
+		if (PauseMenu->GetIsRender())
+		{
+			PauseMenu->SetIsRender(false);
+		}
 
-		// slowness
-		UpdateMovement();
+		if (ResumeButton->GetIsRender())
+		{
+			ResumeButton->SetIsRender(false);
+		}
 
-		// projectile collider player
-		UpdateCollision();
+		if (OptionButton->GetIsRender())
+		{
+			OptionButton->SetIsRender(false);
+		}
 
-		// delete projectile
-		UpdateProjectile();
+		if (MainMenuButton->GetIsRender())
+		{
+			MainMenuButton->SetIsRender(false);
+		}
 
-		// reduce cooldown skill
-		UpdateCooldown();
+		for (int i = 0; i < playerSize; i++) {
+			camera.setPlayerPos(i, players[i]->getPos());
+		}
+		camera.LerpCamera(playerSize); // update smooth camera here
 
-		// UpdateKrakenEvent()
-		UpdateKrakenEvent();
+		// Set Animation
+		for (int i = 0; i < entityObjects.size(); i++)
+		{
+			EntityObject* entity = entityObjects[i];
+			if (entity == nullptr)
+			{
+				continue;
+			}
+			else
+			{
+				if (entity->GetIsAnimated() && frame % entity->GetSpriteRenderer()->GetFrame() == 0)
+				{
+					entity->UpdateSpriteSheetPosition();
+					entity->UpdateCurrentAnimation();
+					/*entity->GetSpriteRenderer()->ShiftColumn();
+					entity->UpdateCurrentAnimation();*/
+				}
+			}
+		}
+
+
+		if (currentCountdownNum > -1)
+		{
+			UpdateCountdown();
+		}
+		else
+		{
+			UpdateInput();
+
+			// slowness
+			UpdateMovement();
+
+			// projectile collider player
+			UpdateCollision();
+
+			// delete projectile
+			UpdateProjectile();
+
+			// reduce cooldown skill
+			UpdateCooldown();
+
+			// UpdateKrakenEvent()
+			UpdateKrakenEvent();
+		}
+
+		//Ui Skills
+		UpdateUI();
+
+		GroundTileRefactor();
+
+		std::sort(objectsList.begin(), objectsList.end(), compareLayer);
 	}
-
-	//Ui Skills
-	UpdateUI();
-
-	GroundTileRefactor();
-
-	std::sort(objectsList.begin(), objectsList.end(), compareLayer);
-
-	
 }
 
 void LevelShowcase::UpdateKrakenEvent()
@@ -1192,14 +1298,12 @@ void LevelShowcase::UpdateInput()
 	if (SDL_NumJoysticks() > 0)
 	{
 		Joystick::Update();
-		for (int i = 0; i < playerSize; i++)
+
+		if (isPause)
 		{
-			if (players[i + currentPlayer]->GetIsFell())
-			{
-				continue;
-			}
-			float axisX = Joystick::GetAxis(i, Joystick::Axis::LeftStickHorizontal) / 32768.0f;
-			float axisY = Joystick::GetAxis(i, Joystick::Axis::LeftStickVertical) / 32768.0f;
+			float axisX = Joystick::GetAxis(0, Joystick::Axis::LeftStickHorizontal) / 32768.0f;
+			float axisY = Joystick::GetAxis(0, Joystick::Axis::LeftStickVertical) / 32768.0f;
+
 			float norAxisX = 0;
 			float norAxisY = 0;
 
@@ -1243,239 +1347,356 @@ void LevelShowcase::UpdateInput()
 			{
 				isPositiveY = true;
 			}
-			if (norAxisX != 0 || norAxisY != 0)
+			KK_INFO("norAxisY == {0}", norAxisY);
+			if (!isPressedInPause)
 			{
-				players[i + currentPlayer]->SetCurrentDirection(glm::vec2(norAxisX, norAxisY));
-			}
+				//KK_INFO("Pressed in pause!");
 
-			if (players[i + currentPlayer]->GetIsFell() == false)
-			{
-				// update facing
-				if (abs(axisX) > 0.2f)
+				if ((norAxisY > 0.0f && isPositiveY == false) || Joystick::GetButton(0, Joystick::Button::DPAD_Down)) // press down
 				{
-					players[i + currentPlayer]->UpdateFacingSide(isPositiveX);
-				}
-
-				// movement control
-				if (players[i + currentPlayer]->GetIsKnockback() == false)
-				{
-					if (players[i + currentPlayer]->GetIsStun() == true)
+					if (currentPauseButton == PauseMenuButton::Resume)
 					{
-						// velo to zero if stun
-						players[i + currentPlayer]->SetVelocity(0, 0, isPositiveXOld[i + currentPlayer], isPositiveYOld[i + currentPlayer]);
+						currentPauseButton = PauseMenuButton::Option;
 					}
-					else if (players[i + currentPlayer]->GetIsDashing() == true)
+					else if (currentPauseButton == PauseMenuButton::Option)
 					{
-						// use old velo during dash to disable control
-						players[i + currentPlayer]->SetVelocity(
-							abs(norAxisXOld[i + currentPlayer]),
-							abs(norAxisYOld[i + currentPlayer]),
-							isPositiveXOld[i + currentPlayer],
-							isPositiveYOld[i + currentPlayer]
-						);
+						currentPauseButton = PauseMenuButton::MainMenu;
 					}
-					else if (players[i + currentPlayer]->GetIsAiming() == false)
+
+					isPressedInPause = true;
+				}
+
+				if ((norAxisY < 0.0f && isPositiveY == true) || Joystick::GetButton(0, Joystick::Button::DPAD_Up)) // press up
+				{
+					
+					if (currentPauseButton == PauseMenuButton::Option)
 					{
-						// if not affecit by anything, use normaml velocity
-						players[i + currentPlayer]->SetVelocity(
-							abs(norAxisX),
-							abs(norAxisY),
-							isPositiveX,
-							isPositiveY
-						);
+						currentPauseButton = PauseMenuButton::Resume;
 					}
-				}
-
-				// update old velocity in case dashing
-
-				if (players[i + currentPlayer]->GetIsDashing())
-				{
-					norAxisXOld[i + currentPlayer] = norAxisX;
-					norAxisYOld[i + currentPlayer] = norAxisY;
-					isPositiveXOld[i + currentPlayer] = isPositiveX;
-					isPositiveYOld[i + currentPlayer] = isPositiveY;
-				}
-
-				if (players[i + currentPlayer]->GetIsAiming())
-				{
-
-					if (players[i]->GetHoldingProjectile() == static_cast<int>(ProjectileObject::Cleave) && players[i]->projectileHoldDuration >= 3) {
-						PlayerObject::Ability idAbility = players[i]->GetAbilityByButton(PlayerObject::AbilityButton::Circle);
-						if (idAbility == PlayerObject::Ability::Cleave)
-						{
-							ShootCleave(i, PlayerObject::AbilityButton::Circle);
-						}
-
-						idAbility = players[i]->GetAbilityByButton(PlayerObject::AbilityButton::Cross);
-						if (idAbility == PlayerObject::Ability::Cleave)
-						{
-							ShootCleave(i, PlayerObject::AbilityButton::Cross);
-						}
-
-						idAbility = players[i]->GetAbilityByButton(PlayerObject::AbilityButton::Triangle);
-						if (idAbility == PlayerObject::Ability::Cleave)
-						{
-							ShootCleave(i, PlayerObject::AbilityButton::Triangle);
-						}
-
-						players[i]->SetIsAiming(false);
-						players[i]->SetHoldingProjectile(0);
-						players[i]->projectileHoldDuration = 0;
-					}
-
-					std::vector<ProjectileObject*> owningProjectile = players[i + currentPlayer]->GetOwningProjectile();
-					for (int j = 0; j < owningProjectile.size(); j++)
+					else if (currentPauseButton == PauseMenuButton::MainMenu)
 					{
-						ProjectileObject* projectile = owningProjectile[j];
-						if ((projectile != nullptr) &&
-							(players[i]->GetPlayerNumber() == projectile->GetOwner()->GetPlayerNumber()) &&
-							(projectile->GetIsShooting() == false))
-						{
-							PlayerObject* player = projectile->GetOwner();
-							float veloX = player->GetCurrentDirection().x;
-							float veloY = player->GetCurrentDirection().y;
-							float angle = atan2(-player->GetCurrentDirection().y, player->GetCurrentDirection().x);
-
-							float absSizeX = abs(projectile->getSize().x);
-
-							if (angle < -3.14f / 2.f || angle > 3.14f / 2.f)
-							{
-								projectile->SetSize(-absSizeX, projectile->getSize().y);
-
-								if (angle > 0)
-								{
-									angle = -(3.14f - angle);
-								}
-								else
-								{
-									angle = 3.14f + angle;
-								}
-							}
-							else
-							{
-								projectile->SetSize(absSizeX, projectile->getSize().y);
-							}
-
-							bool PositiveX = veloX > 0.f ? true : false;
-							bool PositiveY = veloY < 0.f ? true : false;
-
-							projectile->SetPosition(players[i]->getPos() + (projectile->GetVelocity() * glm::vec3(15.f, 15.f, 0.f)));
-							projectile->SetRotation(angle);
-							projectile->SetVelocity(abs(veloX), abs(veloY), PositiveX, PositiveY);
-
-							//KK_TRACE("players[i]->GetHoldingProjectile() = {0}", players[i]->GetHoldingProjectile());
-							
-						}
-
-						// cancel aim
-						if ((projectile != nullptr) && (players[i]->GetIsKnockback() == true || players[i]->GetIsStun() == true)) {
-							players[i]->SetHoldingProjectile(0);
-							//players[i + playerNum]->SetIsShooting(false);
-							projectile->SetLifeTime(0);
-							players[i]->SetIsAiming(false);
-							if (Joystick::GetButton(i, Joystick::Button::Circle))
-							{
-								players[i + currentPlayer]->SetAbilityCooldown(PlayerObject::AbilityButton::Circle, 6);
-							}
-							if (Joystick::GetButton(i, Joystick::Button::Cross))
-							{
-								players[i + currentPlayer]->SetAbilityCooldown(PlayerObject::AbilityButton::Cross, 6);
-							}
-							if (Joystick::GetButton(i, Joystick::Button::Triangle))
-							{
-								players[i + currentPlayer]->SetAbilityCooldown(PlayerObject::AbilityButton::Triangle, 6);
-							}
-						}
+						currentPauseButton = PauseMenuButton::Option;
 					}
 
-
+					isPressedInPause = true;
 				}
-
-			}	
-
-			//Ability Triangle
-			if (Joystick::GetButtonDown(i, Joystick::Button::Triangle))
+			}
+			else
 			{
-				if (players[i + currentPlayer]->GetCooldown(PlayerObject::AbilityButton::Triangle) <= 0)
+				if (abs(norAxisY) < 0.3f && norAxisX < 0.3f && !Joystick::GetButton(0, Joystick::Button::DPAD_Up) && !Joystick::GetButton(0, Joystick::Button::DPAD_Down)) // press down
 				{
-					UsingAbilityKeyDown(i + currentPlayer, PlayerObject::AbilityButton::Triangle);
+					isPressedInPause = false;
 				}
 			}
 
-			if (Joystick::GetButtonUp(i, Joystick::Button::Triangle)) {
-				if (players[i + currentPlayer]->GetCooldown(PlayerObject::AbilityButton::Triangle) <= 0)
-				{
-					UsingAbilityKeyUp(i + currentPlayer, PlayerObject::AbilityButton::Triangle);
-				}
-			}
-
-			//Ability Circle
-			if (Joystick::GetButtonDown(i, Joystick::Button::Circle))
+			if (Joystick::GetButton(0, Joystick::Button::Cross))
 			{
-				if (players[i + currentPlayer]->GetCooldown(PlayerObject::AbilityButton::Circle) <= 0)
+				if (currentPauseButton == PauseMenuButton::MainMenu)
 				{
-					UsingAbilityKeyDown(i + currentPlayer, PlayerObject::AbilityButton::Circle);
+					GameEngine::GetInstance()->GetStateController()->loadingState = GameState::GS_LEVELSELECTABILITY;
+					GameEngine::GetInstance()->GetStateController()->gameStateNext = GameState::GS_LEVELLOADING;
 				}
-			}
-
-			if (Joystick::GetButtonUp(i, Joystick::Button::Circle)) {
-				if (players[i + currentPlayer]->GetCooldown(PlayerObject::AbilityButton::Circle) <= 0)
+				else if (currentPauseButton == PauseMenuButton::Resume)
 				{
-					UsingAbilityKeyUp(i + currentPlayer, PlayerObject::AbilityButton::Circle);
-				}
-			}
-
-			//Ability Cross
-			if (Joystick::GetButtonDown(i, Joystick::Button::Cross))
-			{
-				if (players[i + currentPlayer]->GetCooldown(PlayerObject::AbilityButton::Cross) <= 0)
-				{
-					UsingAbilityKeyDown(i + currentPlayer, PlayerObject::AbilityButton::Cross);
-				}
-			}
-
-			if (Joystick::GetButtonUp(i, Joystick::Button::Cross))
-			{
-				if (players[i + currentPlayer]->GetCooldown(PlayerObject::AbilityButton::Cross) <= 0)
-				{
-					UsingAbilityKeyUp(i + currentPlayer, PlayerObject::AbilityButton::Cross);
-				}
-			}
-
-			if (Joystick::GetButtonDown(i, Joystick::Button::Square))
-			{
-				//players[i]->ChangeAnimationState(PlayerObject::AnimationState::Melee);
-				if (players[i + currentPlayer]->GetMeleeCooldown() <= 0.f)
-				{
-					players[i + currentPlayer]->ChangeMeleeAnimation();
-					players[i + currentPlayer]->HitAimingTile();
-					players[i + currentPlayer]->SetMeleeCooldown(MeleeCooldown);
-					soundManager->PlaySFX("hit_test", false);
+					isPause = false;
 				}
 				
 			}
 
-			// Debug other player
-			if (Joystick::GetButtonDown(i, Joystick::Button::R1))
+			if (Joystick::GetButtonDown(0, Joystick::Button::ShareButton))
 			{
-				currentPlayer++;
-				currentPlayer = currentPlayer % 4;
+				isPause = false;
 			}
-
-			if (Joystick::GetButtonDown(i, Joystick::Button::P5Button))
-			{
-				GameEngine::GetInstance()->GetStateController()->loadingState = GameState::GS_LEVELGAMEPLAY;
-				GameEngine::GetInstance()->GetStateController()->gameStateNext = GameState::GS_LEVELLOADING;
-			}
-
-			
 		}
+		else
+		{
+			for (int i = 0; i < playerSize; i++)
+			{
+				if (players[i + currentPlayer]->GetIsFell())
+				{
+					continue;
+				}
+				float axisX = Joystick::GetAxis(i, Joystick::Axis::LeftStickHorizontal) / 32768.0f;
+				float axisY = Joystick::GetAxis(i, Joystick::Axis::LeftStickVertical) / 32768.0f;
+				float norAxisX = 0;
+				float norAxisY = 0;
 
-		players[0]->Translate(players[0]->GetVelocity() * playerMovementSpeed);
-		players[1]->Translate(players[1]->GetVelocity() * playerMovementSpeed);
-		players[2]->Translate(players[2]->GetVelocity() * playerMovementSpeed);
-		players[3]->Translate(players[3]->GetVelocity() * playerMovementSpeed);
+				bool isPositiveX = false;
+				bool isPositiveY = false;
 
+				if (abs(axisX) < 0.1)
+				{
+					norAxisX = 0;
+				}
+				else
+				{
+					float axis = atan2(axisY, axisX);
+					norAxisX = cos(axis);
+				}
+
+				if (abs(axisY) < 0.1)
+				{
+					norAxisY = 0;
+				}
+				else
+				{
+					float axis = atan2(axisY, axisX);
+					norAxisY = sin(axis);
+				}
+
+				if (axisX > 0)
+				{
+					isPositiveX = true;
+				}
+				else if (axisX <= 0)
+				{
+					isPositiveX = false;
+				}
+
+				if (axisY > 0)
+				{
+					isPositiveY = false;
+				}
+				else if (axisY < 0)
+				{
+					isPositiveY = true;
+				}
+				if (norAxisX != 0 || norAxisY != 0)
+				{
+					players[i + currentPlayer]->SetCurrentDirection(glm::vec2(norAxisX, norAxisY));
+				}
+
+				if (players[i + currentPlayer]->GetIsFell() == false)
+				{
+					// update facing
+					if (abs(axisX) > 0.2f)
+					{
+						players[i + currentPlayer]->UpdateFacingSide(isPositiveX);
+					}
+
+					// movement control
+					if (players[i + currentPlayer]->GetIsKnockback() == false)
+					{
+						if (players[i + currentPlayer]->GetIsStun() == true)
+						{
+							// velo to zero if stun
+							players[i + currentPlayer]->SetVelocity(0, 0, isPositiveXOld[i + currentPlayer], isPositiveYOld[i + currentPlayer]);
+						}
+						else if (players[i + currentPlayer]->GetIsDashing() == true)
+						{
+							// use old velo during dash to disable control
+							players[i + currentPlayer]->SetVelocity(
+								abs(norAxisXOld[i + currentPlayer]),
+								abs(norAxisYOld[i + currentPlayer]),
+								isPositiveXOld[i + currentPlayer],
+								isPositiveYOld[i + currentPlayer]
+							);
+						}
+						else if (players[i + currentPlayer]->GetIsAiming() == false)
+						{
+							// if not affecit by anything, use normaml velocity
+							players[i + currentPlayer]->SetVelocity(
+								abs(norAxisX),
+								abs(norAxisY),
+								isPositiveX,
+								isPositiveY
+							);
+						}
+					}
+
+					// update old velocity in case dashing
+
+					if (players[i + currentPlayer]->GetIsDashing())
+					{
+						norAxisXOld[i + currentPlayer] = norAxisX;
+						norAxisYOld[i + currentPlayer] = norAxisY;
+						isPositiveXOld[i + currentPlayer] = isPositiveX;
+						isPositiveYOld[i + currentPlayer] = isPositiveY;
+					}
+
+					if (players[i + currentPlayer]->GetIsAiming())
+					{
+
+						if (players[i]->GetHoldingProjectile() == static_cast<int>(ProjectileObject::Cleave) && players[i]->projectileHoldDuration >= 3) {
+							PlayerObject::Ability idAbility = players[i]->GetAbilityByButton(PlayerObject::AbilityButton::Circle);
+							if (idAbility == PlayerObject::Ability::Cleave)
+							{
+								ShootCleave(i, PlayerObject::AbilityButton::Circle);
+							}
+
+							idAbility = players[i]->GetAbilityByButton(PlayerObject::AbilityButton::Cross);
+							if (idAbility == PlayerObject::Ability::Cleave)
+							{
+								ShootCleave(i, PlayerObject::AbilityButton::Cross);
+							}
+
+							idAbility = players[i]->GetAbilityByButton(PlayerObject::AbilityButton::Triangle);
+							if (idAbility == PlayerObject::Ability::Cleave)
+							{
+								ShootCleave(i, PlayerObject::AbilityButton::Triangle);
+							}
+
+							players[i]->SetIsAiming(false);
+							players[i]->SetHoldingProjectile(0);
+							players[i]->projectileHoldDuration = 0;
+						}
+
+						std::vector<ProjectileObject*> owningProjectile = players[i + currentPlayer]->GetOwningProjectile();
+						for (int j = 0; j < owningProjectile.size(); j++)
+						{
+							ProjectileObject* projectile = owningProjectile[j];
+							if ((projectile != nullptr) &&
+								(players[i]->GetPlayerNumber() == projectile->GetOwner()->GetPlayerNumber()) &&
+								(projectile->GetIsShooting() == false))
+							{
+								PlayerObject* player = projectile->GetOwner();
+								float veloX = player->GetCurrentDirection().x;
+								float veloY = player->GetCurrentDirection().y;
+								float angle = atan2(-player->GetCurrentDirection().y, player->GetCurrentDirection().x);
+
+								float absSizeX = abs(projectile->getSize().x);
+
+								if (angle < -3.14f / 2.f || angle > 3.14f / 2.f)
+								{
+									projectile->SetSize(-absSizeX, projectile->getSize().y);
+
+									if (angle > 0)
+									{
+										angle = -(3.14f - angle);
+									}
+									else
+									{
+										angle = 3.14f + angle;
+									}
+								}
+								else
+								{
+									projectile->SetSize(absSizeX, projectile->getSize().y);
+								}
+
+								bool PositiveX = veloX > 0.f ? true : false;
+								bool PositiveY = veloY < 0.f ? true : false;
+
+								projectile->SetPosition(players[i]->getPos() + (projectile->GetVelocity() * glm::vec3(15.f, 15.f, 0.f)));
+								projectile->SetRotation(angle);
+								projectile->SetVelocity(abs(veloX), abs(veloY), PositiveX, PositiveY);
+
+								//KK_TRACE("players[i]->GetHoldingProjectile() = {0}", players[i]->GetHoldingProjectile());
+
+							}
+
+							// cancel aim
+							if ((projectile != nullptr) && (players[i]->GetIsKnockback() == true || players[i]->GetIsStun() == true)) {
+								players[i]->SetHoldingProjectile(0);
+								//players[i + playerNum]->SetIsShooting(false);
+								projectile->SetLifeTime(0);
+								players[i]->SetIsAiming(false);
+								if (Joystick::GetButton(i, Joystick::Button::Circle))
+								{
+									players[i + currentPlayer]->SetAbilityCooldown(PlayerObject::AbilityButton::Circle, 6);
+								}
+								if (Joystick::GetButton(i, Joystick::Button::Cross))
+								{
+									players[i + currentPlayer]->SetAbilityCooldown(PlayerObject::AbilityButton::Cross, 6);
+								}
+								if (Joystick::GetButton(i, Joystick::Button::Triangle))
+								{
+									players[i + currentPlayer]->SetAbilityCooldown(PlayerObject::AbilityButton::Triangle, 6);
+								}
+							}
+						}
+
+
+					}
+
+				}
+
+				//Ability Triangle
+				if (Joystick::GetButtonDown(i, Joystick::Button::Triangle))
+				{
+					if (players[i + currentPlayer]->GetCooldown(PlayerObject::AbilityButton::Triangle) <= 0)
+					{
+						UsingAbilityKeyDown(i + currentPlayer, PlayerObject::AbilityButton::Triangle);
+					}
+				}
+
+				if (Joystick::GetButtonUp(i, Joystick::Button::Triangle)) {
+					if (players[i + currentPlayer]->GetCooldown(PlayerObject::AbilityButton::Triangle) <= 0)
+					{
+						UsingAbilityKeyUp(i + currentPlayer, PlayerObject::AbilityButton::Triangle);
+					}
+				}
+
+				//Ability Circle
+				if (Joystick::GetButtonDown(i, Joystick::Button::Circle))
+				{
+					if (players[i + currentPlayer]->GetCooldown(PlayerObject::AbilityButton::Circle) <= 0)
+					{
+						UsingAbilityKeyDown(i + currentPlayer, PlayerObject::AbilityButton::Circle);
+					}
+				}
+
+				if (Joystick::GetButtonUp(i, Joystick::Button::Circle)) {
+					if (players[i + currentPlayer]->GetCooldown(PlayerObject::AbilityButton::Circle) <= 0)
+					{
+						UsingAbilityKeyUp(i + currentPlayer, PlayerObject::AbilityButton::Circle);
+					}
+				}
+
+				//Ability Cross
+				if (Joystick::GetButtonDown(i, Joystick::Button::Cross))
+				{
+					if (players[i + currentPlayer]->GetCooldown(PlayerObject::AbilityButton::Cross) <= 0)
+					{
+						UsingAbilityKeyDown(i + currentPlayer, PlayerObject::AbilityButton::Cross);
+					}
+				}
+
+				if (Joystick::GetButtonUp(i, Joystick::Button::Cross))
+				{
+					if (players[i + currentPlayer]->GetCooldown(PlayerObject::AbilityButton::Cross) <= 0)
+					{
+						UsingAbilityKeyUp(i + currentPlayer, PlayerObject::AbilityButton::Cross);
+					}
+				}
+
+				if (Joystick::GetButtonDown(i, Joystick::Button::Square))
+				{
+					//players[i]->ChangeAnimationState(PlayerObject::AnimationState::Melee);
+					if (players[i + currentPlayer]->GetMeleeCooldown() <= 0.f)
+					{
+						players[i + currentPlayer]->ChangeMeleeAnimation();
+						players[i + currentPlayer]->HitAimingTile();
+						players[i + currentPlayer]->SetMeleeCooldown(MeleeCooldown);
+						soundManager->PlaySFX("hit_test", false);
+					}
+
+				}
+
+				// Debug other player
+				if (Joystick::GetButtonDown(i, Joystick::Button::R1))
+				{
+					currentPlayer++;
+					currentPlayer = currentPlayer % 4;
+				}
+
+				if (Joystick::GetButtonDown(i, Joystick::Button::ShareButton))
+				{
+					isPause = true;
+				}
+
+				if (Joystick::GetButtonDown(i, Joystick::Button::P5Button))
+				{
+					GameEngine::GetInstance()->GetStateController()->loadingState = GameState::GS_LEVELGAMEPLAY;
+					GameEngine::GetInstance()->GetStateController()->gameStateNext = GameState::GS_LEVELLOADING;
+				}
+			}
+
+			players[0]->Translate(players[0]->GetVelocity() * playerMovementSpeed);
+			players[1]->Translate(players[1]->GetVelocity() * playerMovementSpeed);
+			players[2]->Translate(players[2]->GetVelocity() * playerMovementSpeed);
+			players[3]->Translate(players[3]->GetVelocity() * playerMovementSpeed);
+		}
 	}
 }
 
@@ -1824,6 +2045,28 @@ void LevelShowcase::UpdateUI()
 		}
 		//ui->SetPosition(glm::vec3(posX + (ui->getNumOwner() * ui->getSize().x * camera.GetCameraWidth() / SCREEN_WIDTH), posY, 0));
 		
+	}
+
+	if (isPause)
+	{
+		float uiWidth_PauseBG = 623.f;
+		float uiHeight_PauseBG = 671.f;
+
+		float uiWidth_PauseText = 300.f;
+		float uiHeight_PauseText = 70.f;
+
+		PauseMenu->SetPosition(glm::vec3(0, 0, 0));
+		PauseMenu->SetSize(uiWidth_PauseBG * camera.GetCameraWidth() / SCREEN_WIDTH, -uiHeight_PauseBG * camera.GetCameraHeight() / SCREEN_HEIGHT);
+
+		ResumeButton->SetPosition(glm::vec3(0, 300, 0));
+		ResumeButton->SetSize(uiWidth_PauseText * camera.GetCameraWidth() / SCREEN_WIDTH, -uiHeight_PauseText * camera.GetCameraHeight() / SCREEN_HEIGHT);
+
+		OptionButton->SetPosition(glm::vec3(0, 0, 0));
+		OptionButton->SetSize(uiWidth_PauseText * camera.GetCameraWidth() / SCREEN_WIDTH, -uiHeight_PauseText * camera.GetCameraHeight() / SCREEN_HEIGHT);
+
+		MainMenuButton->SetPosition(glm::vec3(0, -300, 0));
+		MainMenuButton->SetSize(uiWidth_PauseText * camera.GetCameraWidth() / SCREEN_WIDTH, -uiHeight_PauseText * camera.GetCameraHeight() / SCREEN_HEIGHT);
+
 	}
 }
 

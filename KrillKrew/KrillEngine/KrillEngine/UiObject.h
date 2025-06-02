@@ -21,7 +21,9 @@ public:
 		Default,
 		Kraken,
 		SkillIcon,
-		SkillCover
+		SkillCover,
+		PauseMenu,
+		PauseText
 	};
 
 	UIType uiType = UIType::Default;

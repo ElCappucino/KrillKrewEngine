@@ -121,5 +121,5 @@ void TextObject::cleanSDL() {
 
 float TextObject::getOrderingLayer() const
 {
-	return -5000.f;
+	return -2300.f;
 }

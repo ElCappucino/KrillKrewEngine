@@ -117,6 +117,12 @@ float UiObject::getOrderingLayer() const
 	case SkillCover:
 		return -2200.0f;
 		break;
+	case PauseMenu:
+		return -2500.0f;
+		break;
+	case PauseText:
+		return -2600.0f;
+		break;
 	default:
 		return -2000.f;
 		break;

@@ -80,6 +80,26 @@ private:
 
 	float krakenSign_t = 0.0f;
 
+	
+
+	// Pause Menu
+	enum PauseMenuButton
+	{
+		Resume = 0,
+		Option,
+		MainMenu
+	};
+
+	bool isPause = false;
+	bool isPressedInPause = false;
+
+	PauseMenuButton currentPauseButton = PauseMenuButton::Resume;
+
+	UiObject* PauseMenu;
+	UiObject* ResumeButton;
+	UiObject* OptionButton;
+	UiObject* MainMenuButton;
+
 
 	std::map<int, std::pair<int, int>> blob_lookup_table = {
 
