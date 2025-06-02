@@ -18,6 +18,12 @@ float ElasticOut(float t)
 	return output;
 }
 
+float Parabola(float t)
+{
+	float output = std::pow((t / 2.f) - 1.5f, 2) - 0.15f;
+	return output;
+}
+
 void LevelShowcase::LevelLoad()
 {
 	SquareMeshVbo* square = new SquareMeshVbo();
@@ -214,6 +220,10 @@ void LevelShowcase::LevelLoad()
 	spriteList["Crunk_UI"] = SpritesheetInfo("Crunk_UI", "../Resource/Texture/crunk.png", 430, 220, 430, 220);
 	spriteList["Ham_UI"] = SpritesheetInfo("Ham_UI", "../Resource/Texture/Ham.png", 430, 220, 430, 220);
 
+	spriteList["Player_UI"] = SpritesheetInfo("Player_UI", "../Resource/Texture/Gameplay/UI_GP_PlayerWindow.png", 420, 116, 1680, 116);
+	spriteList["AbilityGameplay_UI"] = SpritesheetInfo("AbilityGameplay_UI", "../Resource/Texture/Gameplay/UI_GP_Abilityicon.png", 69, 69, 552, 69);
+	spriteList["AbilityCover_UI"] = SpritesheetInfo("AbilityCover_UI", "../Resource/Texture/Gameplay/UI_GP_Abilityicon_black.png", 69, 69, 69, 69);
+
 	spriteList["Blobtile"] = SpritesheetInfo("Blobtile", "../Resource/Texture/tileset_01.png", 128, 128, 1664, 512);
 
 	// Prop
@@ -228,6 +238,8 @@ void LevelShowcase::LevelLoad()
 	spriteList["Leaf2_Collapse"] = SpritesheetInfo("Tree_B", "../Resource/Texture/Props/prop_spr_vfx_smallleaf.png", 120, 120, 480, 120);
 
 	spriteList["CollapseTile"] = SpritesheetInfo("CollapseTile", "../Resource/Texture/Props/prop_spr_vfx_smoke.png", 200, 200, 800, 200);
+
+	spriteList["DangerSign"] = SpritesheetInfo("DangerSign", "../Resource/Texture/Gameplay/UI_GP_Event_DangerSign.png", 544, 215, 544, 215);
 
 	soundManager = KrillSoundManager::SoundManager::GetInstance();
 
@@ -482,10 +494,10 @@ void LevelShowcase::LevelInit()
 
 	timer = Timer::Instance();
 
-	TileImport(groundTile, "../Resource/Texture/Tilemap0.txt");
-	TileImport(currentGroundTile, "../Resource/Texture/Tilemap0.txt");
-	TileImport(propsTile, "../Resource/Texture/Propmap0.txt");
-	TileImport(currentPropTile, "../Resource/Texture/Propmap0.txt");
+	TileImport(groundTile, "../Resource/MapFile/Tilemap0.txt");
+	TileImport(currentGroundTile, "../Resource/MapFile/Tilemap0.txt");
+	TileImport(propsTile, "../Resource/MapFile/Propmap0.txt");
+	TileImport(currentPropTile, "../Resource/MapFile/Propmap0.txt");
 
 	// Create and Initialize 4 players object
 
@@ -724,34 +736,165 @@ void LevelShowcase::LevelInit()
 	if (playerSize >= 0) {
 
 		UiObject* uiSkills = new UiObject();
-		uiSkills->SetSpriteInfo(spriteList.find("Xoey_UI")->second);
+		uiSkills->SetSpriteInfo(spriteList.find("Player_UI")->second);
+		uiSkills->GetSpriteRenderer()->ShiftTo(0, 0);
 		uiSkills->setNumOwner(0);
 		objectsList.push_back(uiSkills);
 		playerUIs[0] = uiSkills;
+
+		//playerSkillUIs AbilityGameplay_UI
+		UiObject* uiSkills1 = new UiObject();
+		uiSkills1->SetSpriteInfo(spriteList.find("AbilityGameplay_UI")->second);
+		uiSkills1->GetSpriteRenderer()->ShiftTo(0, playersSkill[0][0]);
+		uiSkills1->setNumOwner(0);
+		objectsList.push_back(uiSkills1);
+		playerSkillUIs[0][0] = uiSkills1;
+
+		UiObject* uiSkills2 = new UiObject();
+		uiSkills2->SetSpriteInfo(spriteList.find("AbilityGameplay_UI")->second);
+		uiSkills2->GetSpriteRenderer()->ShiftTo(0, playersSkill[0][1]);
+		uiSkills2->setNumOwner(0);
+		objectsList.push_back(uiSkills2);
+		playerSkillUIs[0][1] = uiSkills2;
+
+		UiObject* uiSkills3 = new UiObject();
+		uiSkills3->SetSpriteInfo(spriteList.find("AbilityGameplay_UI")->second);
+		uiSkills3->GetSpriteRenderer()->ShiftTo(0, playersSkill[0][2]);
+		uiSkills3->setNumOwner(0);
+		objectsList.push_back(uiSkills3);
+		playerSkillUIs[0][2] = uiSkills3;
+
+		uiSkills1->uiType = UiObject::UIType::SkillIcon;
+		uiSkills2->uiType = UiObject::UIType::SkillIcon;
+		uiSkills3->uiType = UiObject::UIType::SkillIcon;
+
+		
+
 	}
 	if (playerSize >= 1) {
 
 		UiObject* uiSkills = new UiObject();
-		uiSkills->SetSpriteInfo(spriteList.find("Ham_UI")->second);
+		uiSkills->SetSpriteInfo(spriteList.find("Player_UI")->second);
+		uiSkills->GetSpriteRenderer()->ShiftTo(0, 1);
 		uiSkills->setNumOwner(1);
 		objectsList.push_back(uiSkills);
 		playerUIs[1] = uiSkills;
+
+		//playerSkillUIs AbilityGameplay_UI
+		UiObject* uiSkills1 = new UiObject();
+		uiSkills1->SetSpriteInfo(spriteList.find("AbilityGameplay_UI")->second);
+		uiSkills1->GetSpriteRenderer()->ShiftTo(0, playersSkill[1][0]);
+		uiSkills1->setNumOwner(1);
+		objectsList.push_back(uiSkills1);
+		playerSkillUIs[1][0] = uiSkills1;
+
+		UiObject* uiSkills2 = new UiObject();
+		uiSkills2->SetSpriteInfo(spriteList.find("AbilityGameplay_UI")->second);
+		uiSkills2->GetSpriteRenderer()->ShiftTo(0, playersSkill[1][1]);
+		uiSkills2->setNumOwner(1);
+		objectsList.push_back(uiSkills2);
+		playerSkillUIs[1][1] = uiSkills2;
+
+		UiObject* uiSkills3 = new UiObject();
+		uiSkills3->SetSpriteInfo(spriteList.find("AbilityGameplay_UI")->second);
+		uiSkills3->GetSpriteRenderer()->ShiftTo(0, playersSkill[1][2]);
+		uiSkills3->setNumOwner(1);
+		objectsList.push_back(uiSkills3);
+		playerSkillUIs[1][2] = uiSkills3;
+
+		uiSkills1->uiType = UiObject::UIType::SkillIcon;
+		uiSkills2->uiType = UiObject::UIType::SkillIcon;
+		uiSkills3->uiType = UiObject::UIType::SkillIcon;
 	}
 	if (playerSize >= 2) {
 
 		UiObject* uiSkills = new UiObject();
-		uiSkills->SetSpriteInfo(spriteList.find("Byssa_UI")->second);
+		uiSkills->SetSpriteInfo(spriteList.find("Player_UI")->second);
+		uiSkills->GetSpriteRenderer()->ShiftTo(0, 2);
 		uiSkills->setNumOwner(2);
 		objectsList.push_back(uiSkills);
 		playerUIs[2] = uiSkills;
+
+		//playerSkillUIs AbilityGameplay_UI
+		UiObject* uiSkills1 = new UiObject();
+		uiSkills1->SetSpriteInfo(spriteList.find("AbilityGameplay_UI")->second);
+		uiSkills1->GetSpriteRenderer()->ShiftTo(0, playersSkill[2][0]);
+		uiSkills1->setNumOwner(2);
+		objectsList.push_back(uiSkills1);
+		playerSkillUIs[2][0] = uiSkills1;
+
+		UiObject* uiSkills2 = new UiObject();
+		uiSkills2->SetSpriteInfo(spriteList.find("AbilityGameplay_UI")->second);
+		uiSkills2->GetSpriteRenderer()->ShiftTo(0, playersSkill[2][1]);
+		uiSkills2->setNumOwner(2);
+		objectsList.push_back(uiSkills2);
+		playerSkillUIs[2][1] = uiSkills2;
+
+		UiObject* uiSkills3 = new UiObject();
+		uiSkills3->SetSpriteInfo(spriteList.find("AbilityGameplay_UI")->second);
+		uiSkills3->GetSpriteRenderer()->ShiftTo(0, playersSkill[2][2]);
+		uiSkills3->setNumOwner(2);
+		objectsList.push_back(uiSkills3);
+		playerSkillUIs[2][2] = uiSkills3;
+
+		uiSkills1->uiType = UiObject::UIType::SkillIcon;
+		uiSkills2->uiType = UiObject::UIType::SkillIcon;
+		uiSkills3->uiType = UiObject::UIType::SkillIcon;
 	}
 	if (playerSize >= 3) {
 
 		UiObject* uiSkills = new UiObject();
-		uiSkills->SetSpriteInfo(spriteList.find("Crunk_UI")->second);
+		uiSkills->SetSpriteInfo(spriteList.find("Player_UI")->second);
+		uiSkills->GetSpriteRenderer()->ShiftTo(0, 3);
 		uiSkills->setNumOwner(3);
 		objectsList.push_back(uiSkills);
 		playerUIs[3] = uiSkills;
+
+		//playerSkillUIs AbilityGameplay_UI
+		UiObject* uiSkills1 = new UiObject();
+		uiSkills1->SetSpriteInfo(spriteList.find("AbilityGameplay_UI")->second);
+		uiSkills1->GetSpriteRenderer()->ShiftTo(0, playersSkill[3][0]);
+		uiSkills1->setNumOwner(3);
+		objectsList.push_back(uiSkills1);
+		playerSkillUIs[3][0] = uiSkills1;
+
+		UiObject* uiSkills2 = new UiObject();
+		uiSkills2->SetSpriteInfo(spriteList.find("AbilityGameplay_UI")->second);
+		uiSkills2->GetSpriteRenderer()->ShiftTo(0, playersSkill[3][1]);
+		uiSkills2->setNumOwner(3);
+		objectsList.push_back(uiSkills2);
+		playerSkillUIs[3][1] = uiSkills2;
+
+		UiObject* uiSkills3 = new UiObject();
+		uiSkills3->SetSpriteInfo(spriteList.find("AbilityGameplay_UI")->second);
+		uiSkills3->GetSpriteRenderer()->ShiftTo(0, playersSkill[3][2]);
+		uiSkills3->setNumOwner(3);
+		objectsList.push_back(uiSkills3);
+		playerSkillUIs[3][2] = uiSkills3;
+
+		uiSkills1->uiType = UiObject::UIType::SkillIcon;
+		uiSkills2->uiType = UiObject::UIType::SkillIcon;
+		uiSkills3->uiType = UiObject::UIType::SkillIcon;
+	}
+
+	for (int i = 0; i < playerSize; i++)
+	{
+		for (int j = 0; j < 3; j++)
+		{
+			playerSkillCooldownTexts[i][j] = new TextObject();
+
+			playerSkillCooldownTexts[i][j]->loadText("5", SDL_Color{ 255, 255, 255 }, 64);
+			//playerSkillCooldownTexts[i][j]->SetPosition(glm::vec3(0, 0, 0));
+
+			objectsList.push_back(playerSkillCooldownTexts[i][j]);
+
+			playerSkillCooldownCovers[i][j] = new UiObject();
+			playerSkillCooldownCovers[i][j]->SetSpriteInfo(spriteList.find("AbilityCover_UI")->second);
+			playerSkillCooldownCovers[i][j]->SetIsRender(false);
+			playerSkillCooldownCovers[i][j]->uiType = UiObject::UIType::SkillCover;
+
+			objectsList.push_back(playerSkillCooldownCovers[i][j]);
+		}
 	}
 
 	TextObject* text = new TextObject();
@@ -894,6 +1037,13 @@ void LevelShowcase::UpdateKrakenEvent()
 	{
 		isStartKrakenEvent = true;
 		KK_INFO("Kraken Event Start!");
+
+		UiObject* signUI = new UiObject();
+		signUI->uiType = UiObject::UIType::Kraken;
+		signUI->SetSpriteInfo(spriteList.find("DangerSign")->second);
+
+		uiObjects.push_back(signUI);
+		objectsList.push_back(signUI);
 	}
 	else
 	{
@@ -1581,8 +1731,9 @@ void LevelShowcase::UpdateTime() {
 void LevelShowcase::UpdateUI()
 {
 	int playerNumber = 4; // Change later
-	float uiWidth = 215.f;
-	float uiHeight = 100.f;
+
+	float uiWidth = 420.f * 0.7f;
+	float uiHeight = 116.f * 0.7f;
 	
 	float posX = camera.GetCenterX() - (uiWidth * camera.GetCameraWidth() / SCREEN_WIDTH / 2.f) * (playerNumber - 1);
 	float posY = GameEngine::GetInstance()->GetRenderer()->GetOrthovalue().bottom + ((uiHeight * camera.GetCameraHeight() / SCREEN_HEIGHT) / 2.f);
@@ -1590,8 +1741,89 @@ void LevelShowcase::UpdateUI()
 	for (int i = 0; i < playerNumber; i++)
 	{
 		UiObject* ui = playerUIs[i];
-		ui->SetPosition(glm::vec3(posX + (ui->getNumOwner() * uiWidth * camera.GetCameraWidth() / SCREEN_WIDTH), posY, 0));
+
+		float posX_current = posX + (ui->getNumOwner() * uiWidth * camera.GetCameraWidth() / SCREEN_WIDTH);
+
+		ui->SetPosition(glm::vec3(posX_current, posY, 0));
 		ui->SetSize(uiWidth * camera.GetCameraWidth() / SCREEN_WIDTH, -uiHeight * camera.GetCameraHeight() / SCREEN_HEIGHT);
+
+		for (int j = 0; j < 3; j++)
+		{
+			UiObject* uiSkill = playerSkillUIs[i][j];
+
+			float offsetX = (57.f * j - 26.f) * camera.GetCameraWidth() / SCREEN_WIDTH;
+			float posX_currentSkill = posX_current + offsetX;
+
+			float skillWidth = 69.f * 0.7f;
+			float skillHeight = 69.f * 0.7f;
+
+			uiSkill->SetPosition(glm::vec3(posX_currentSkill, posY, 0));
+			uiSkill->SetSize(skillWidth * camera.GetCameraWidth() / SCREEN_WIDTH, -skillHeight * camera.GetCameraHeight() / SCREEN_HEIGHT);
+
+			TextObject* cooldownText = playerSkillCooldownTexts[i][j];
+			cooldownText->SetPosition(glm::vec3(posX_currentSkill, posY, 0));
+
+			UiObject* uiCover = playerSkillCooldownCovers[i][j];
+
+			uiCover->SetPosition(glm::vec3(posX_currentSkill, posY, 0));
+			uiCover->SetSize(skillWidth * camera.GetCameraWidth() / SCREEN_WIDTH, -skillHeight * camera.GetCameraHeight() / SCREEN_HEIGHT);
+
+			float cooldown = players[i]->GetCooldown(static_cast<PlayerObject::AbilityButton>(j));
+			
+			if (cooldown > 0)
+			{
+				std::string cooldownString = std::to_string((int)std::roundf(cooldown));
+				uiCover->SetIsRender(true);
+				cooldownText->loadText(cooldownString, SDL_Color{ 255, 255, 255 }, 64);
+			}
+			else
+			{
+				if (uiCover->GetIsRender() == true)
+				{
+					std::string cooldownString = " ";
+					uiCover->SetIsRender(false);
+					cooldownText->loadText(cooldownString, SDL_Color{ 255, 255, 255 }, 64);
+				}
+				
+			}
+
+		}
+		
+
+	}
+
+	for (UiObject* ui : uiObjects)
+	{
+		switch (ui->uiType)
+		{
+		case UiObject::Kraken:
+
+			if (krakenSign_t >= 6.0f)
+			{
+				break;
+			}
+
+			krakenSign_t += 0.01f;
+			
+			float uiWidth = 544.f;
+			float uiHeight = -215.f;
+
+			// krakenSign_t
+			float posY_start = GameEngine::GetInstance()->GetRenderer()->GetOrthovalue().top - (uiHeight / 2.f);
+			float posY_end = GameEngine::GetInstance()->GetRenderer()->GetOrthovalue().top + (uiHeight / 2.f);
+
+			float t = Parabola(krakenSign_t);
+
+			float posX = camera.GetCenterX();
+			float posY = posY_end + t * posY_start;
+
+			ui->SetPosition(glm::vec3(posX, posY, 0));
+			ui->SetSize(uiWidth * camera.GetCameraWidth() / SCREEN_WIDTH, uiHeight * camera.GetCameraHeight() / SCREEN_HEIGHT);
+
+			
+		}
+		//ui->SetPosition(glm::vec3(posX + (ui->getNumOwner() * ui->getSize().x * camera.GetCameraWidth() / SCREEN_WIDTH), posY, 0));
+		
 	}
 }
 
@@ -1745,19 +1977,19 @@ void LevelShowcase::LevelDraw()
 
 					ImGui::Text("skill %d", j);
 					ImGui::Text("ability %d cooldown: %.2f", i ,players[i]->GetCooldown(static_cast<PlayerObject::AbilityButton>(j)));
-					ImGui::RadioButton("Fireball", &playersSkill[i][j], 0);
+					ImGui::RadioButton("Fireball", &playersSkill[i][j], static_cast<int>(PlayerObject::Ability::Fireball));
 					ImGui::SameLine();
-					ImGui::RadioButton("Trap", &playersSkill[i][j], 1);
+					ImGui::RadioButton("Trap", &playersSkill[i][j], static_cast<int>(PlayerObject::Ability::Trap));
 					ImGui::SameLine();
-					ImGui::RadioButton("Dash", &playersSkill[i][j], 2);
+					ImGui::RadioButton("Dash", &playersSkill[i][j], static_cast<int>(PlayerObject::Ability::Dash));
 					//ImGui::SameLine();
-					ImGui::RadioButton("TNT", &playersSkill[i][j], 3);
+					ImGui::RadioButton("TNT", &playersSkill[i][j], static_cast<int>(PlayerObject::Ability::TNT));
 					ImGui::SameLine();
-					ImGui::RadioButton("Teleport", &playersSkill[i][j], 4);
+					ImGui::RadioButton("Teleport", &playersSkill[i][j], static_cast<int>(PlayerObject::Ability::Teleport));
 					ImGui::SameLine();
-					ImGui::RadioButton("Bola", &playersSkill[i][j], 5);
+					ImGui::RadioButton("Bola", &playersSkill[i][j], static_cast<int>(PlayerObject::Ability::Bola));
 					ImGui::SameLine();
-					ImGui::RadioButton("Cleave", &playersSkill[i][j], 6);
+					ImGui::RadioButton("Cleave", &playersSkill[i][j], static_cast<int>(PlayerObject::Ability::Cleave));
 					ImGui::SeparatorText("");
 
 					ImGui::PopID();

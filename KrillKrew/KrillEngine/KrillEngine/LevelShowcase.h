@@ -14,6 +14,7 @@ private:
 	std::vector<EntityObject*> entityObjects;
 	std::vector<PropObject*> propObjects;
 	std::vector<TextObject*> textObjects;
+	std::vector<UiObject*> uiObjects;
 
 	std::set<std::pair<Collider*, Collider*>> currentCollisions;
 	std::set<std::pair<Collider*, Collider*>> previousCollisions;
@@ -22,6 +23,9 @@ private:
 
 	std::array<PlayerObject*, 4> players; // add up to 4 players
 	std::array<UiObject*, 4> playerUIs; // add up to 4 players
+	std::array<std::array<UiObject*, 3>, 4> playerSkillUIs; // add up to 4 players
+	std::array<std::array<TextObject*, 3>, 4> playerSkillCooldownTexts; // add up to 4 players
+	std::array<std::array<UiObject*, 3>, 4> playerSkillCooldownCovers; // add up to 4 players
 
 	std::array<std::array<int, MAP_WIDTH>, MAP_HEIGHT> currentGroundTile = { 0 };
 	std::array<std::array<int, MAP_WIDTH>, MAP_HEIGHT> groundTile = { 0 };
@@ -57,6 +61,7 @@ private:
 		Up,
 		Left
 	};
+
 	// Kraken's Rampage
 	TileCollapseDirection currentCollapseDirection = TileCollapseDirection::Down;
 	bool isStartKrakenEvent = false;
@@ -71,7 +76,9 @@ private:
 
 	float timePerTileKrakenEvent = 0.5f;
 	float timePerTileCounter = 0.f;
-	glm::vec2 currrentCollapsePosition = {0, 2};
+	glm::vec2 currrentCollapsePosition = {1, 1};
+
+	float krakenSign_t = 0.0f;
 
 
 	std::map<int, std::pair<int, int>> blob_lookup_table = {

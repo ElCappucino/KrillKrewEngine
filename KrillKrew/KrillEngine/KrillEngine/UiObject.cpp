@@ -22,8 +22,22 @@ void UiObject::SetTexture(std::string path)
 	texture = GameEngine::GetInstance()->GetRenderer()->LoadTexture(path);
 }
 
+void UiObject::SetIsRender(bool isRender)
+{
+	this->isRender = isRender;
+}
+bool UiObject::GetIsRender() const
+{
+	return this->isRender;
+}
+
 void UiObject::Render(glm::mat4 globalModelTransform)
 {
+	if (!isRender)
+	{
+		return;
+	}
+
 	SquareMeshVbo* squareMesh = dynamic_cast<SquareMeshVbo*> (GameEngine::GetInstance()->GetRenderer()->GetMesh(SquareMeshVbo::MESH_NAME));
 
 	GLuint modelMatixId = GameEngine::GetInstance()->GetRenderer()->GetModelMatrixAttrId();
@@ -91,5 +105,21 @@ void UiObject::OnTriggerStay(Collider* other)
 void UiObject::OnTriggerExit(Collider* other)
 {
 
+}
+
+float UiObject::getOrderingLayer() const
+{
+	switch (uiType)
+	{
+	case SkillIcon:
+		return -2100.0f;
+		break;
+	case SkillCover:
+		return -2200.0f;
+		break;
+	default:
+		return -2000.f;
+		break;
+	}
 }
 

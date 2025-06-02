@@ -13,7 +13,23 @@
 /// @brief The class for creating object that render using texture
 class UiObject : public ImageObject
 {
+
+public:
+
+	enum UIType
+	{
+		Default,
+		Kraken,
+		SkillIcon,
+		SkillCover
+	};
+
+	UIType uiType = UIType::Default;
+
+private:
+
 	int playerNumOwner;
+	bool isRender = true;
 
 public:
 	UiObject();
@@ -23,10 +39,15 @@ public:
 	void setNumOwner(int Num);
 	int getNumOwner();
 
+	void SetIsRender(bool isRender);
+	bool GetIsRender() const;
+
 	virtual void OnColliderEnter(Collider* other);
 	virtual void OnColliderStay(Collider* other);
 	virtual void OnColliderExit(Collider* other);
 	virtual void OnTriggerEnter(Collider* other);
 	virtual void OnTriggerStay(Collider* other);
 	virtual void OnTriggerExit(Collider* other);
+
+	virtual float getOrderingLayer() const;
 };
