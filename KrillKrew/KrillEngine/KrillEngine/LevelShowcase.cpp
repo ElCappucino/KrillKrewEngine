@@ -555,6 +555,14 @@ void LevelShowcase::LevelInit()
 	loadAbility("Ability0.json");
 	readFile.close();
 
+	KK_TRACE("abilityId[0] = {0}", abilityId[0]);
+	KK_TRACE("abilityId[1] = {0}", abilityId[1]);
+	KK_TRACE("abilityId[2] = {0}", abilityId[2]);
+
+	playersSkill[0][0] = abilityId[0];
+	playersSkill[0][1] = abilityId[1];
+	playersSkill[0][2] = abilityId[2];
+
 	p1->SetAbility(PlayerObject::AbilityButton::Triangle, static_cast<PlayerObject::Ability>(abilityId[0]));
 	p1->SetAbility(PlayerObject::AbilityButton::Circle, static_cast<PlayerObject::Ability>(abilityId[1]));
 	p1->SetAbility(PlayerObject::AbilityButton::Cross, static_cast<PlayerObject::Ability>(abilityId[2]));
@@ -603,6 +611,14 @@ void LevelShowcase::LevelInit()
 	std::ifstream read2File("Ability1.json");
 	loadAbility("Ability1.json");
 	read2File.close();
+
+	playersSkill[1][0] = abilityId[0];
+	playersSkill[1][1] = abilityId[1];
+	playersSkill[1][2] = abilityId[2];
+
+	KK_TRACE("abilityId[0] = {0}", abilityId[0]);
+	KK_TRACE("abilityId[1] = {0}", abilityId[1]);
+	KK_TRACE("abilityId[2] = {0}", abilityId[2]);
 
 	p2->SetAbility(PlayerObject::AbilityButton::Triangle, static_cast<PlayerObject::Ability>(abilityId[0]));
 	p2->SetAbility(PlayerObject::AbilityButton::Circle, static_cast<PlayerObject::Ability>(abilityId[1]));
@@ -654,6 +670,14 @@ void LevelShowcase::LevelInit()
 	std::ifstream read3File("Ability2.json");
 	loadAbility("Ability2.json");
 	read3File.close();
+
+	KK_TRACE("abilityId[0] = {0}", abilityId[0]);
+	KK_TRACE("abilityId[1] = {0}", abilityId[1]);
+	KK_TRACE("abilityId[2] = {0}", abilityId[2]);
+
+	playersSkill[2][0] = abilityId[0];
+	playersSkill[2][1] = abilityId[1];
+	playersSkill[2][2] = abilityId[2];
 
 	p3->SetAbility(PlayerObject::AbilityButton::Triangle, static_cast<PlayerObject::Ability>(abilityId[0]));
 	p3->SetAbility(PlayerObject::AbilityButton::Circle, static_cast<PlayerObject::Ability>(abilityId[1]));
@@ -707,6 +731,14 @@ void LevelShowcase::LevelInit()
 	loadAbility("Ability3.json");
 	read4File.close();
 
+	KK_TRACE("abilityId[0] = {0}", abilityId[0]);
+	KK_TRACE("abilityId[1] = {0}", abilityId[1]);
+	KK_TRACE("abilityId[2] = {0}", abilityId[2]);
+
+	playersSkill[3][0] = abilityId[0];
+	playersSkill[3][1] = abilityId[1];
+	playersSkill[3][2] = abilityId[2];
+
 	p4->SetAbility(PlayerObject::AbilityButton::Triangle, static_cast<PlayerObject::Ability>(abilityId[0]));
 	p4->SetAbility(PlayerObject::AbilityButton::Circle, static_cast<PlayerObject::Ability>(abilityId[1]));
 	p4->SetAbility(PlayerObject::AbilityButton::Cross, static_cast<PlayerObject::Ability>(abilityId[2]));
@@ -738,6 +770,9 @@ void LevelShowcase::LevelInit()
 
 	if (playerSize >= 0) {
 
+		KK_TRACE("playersSkill[0][0] = {0}", playersSkill[0][0]);
+		KK_TRACE("playersSkill[0][1] = {0}", playersSkill[0][1]);
+		KK_TRACE("playersSkill[0][2] = {0}", playersSkill[0][2]);
 		UiObject* uiSkills = new UiObject();
 		uiSkills->SetSpriteInfo(spriteList.find("Player_UI")->second);
 		uiSkills->GetSpriteRenderer()->ShiftTo(0, 0);
@@ -776,6 +811,9 @@ void LevelShowcase::LevelInit()
 	}
 	if (playerSize >= 1) {
 
+		KK_TRACE("playersSkill[1][0] = {0}", playersSkill[1][0]);
+		KK_TRACE("playersSkill[1][1] = {0}", playersSkill[1][1]);
+		KK_TRACE("playersSkill[1][2] = {0}", playersSkill[1][2]);
 		UiObject* uiSkills = new UiObject();
 		uiSkills->SetSpriteInfo(spriteList.find("Player_UI")->second);
 		uiSkills->GetSpriteRenderer()->ShiftTo(0, 1);
@@ -786,6 +824,7 @@ void LevelShowcase::LevelInit()
 		//playerSkillUIs AbilityGameplay_UI
 		UiObject* uiSkills1 = new UiObject();
 		uiSkills1->SetSpriteInfo(spriteList.find("AbilityGameplay_UI")->second);
+		
 		uiSkills1->GetSpriteRenderer()->ShiftTo(0, playersSkill[1][0]);
 		uiSkills1->setNumOwner(1);
 		objectsList.push_back(uiSkills1);
@@ -810,6 +849,10 @@ void LevelShowcase::LevelInit()
 		uiSkills3->uiType = UiObject::UIType::SkillIcon;
 	}
 	if (playerSize >= 2) {
+
+		KK_TRACE("playersSkill[2][0] = {0}", playersSkill[2][0]);
+		KK_TRACE("playersSkill[2][1] = {0}", playersSkill[2][1]);
+		KK_TRACE("playersSkill[2][2] = {0}", playersSkill[2][2]);
 
 		UiObject* uiSkills = new UiObject();
 		uiSkills->SetSpriteInfo(spriteList.find("Player_UI")->second);
@@ -845,6 +888,10 @@ void LevelShowcase::LevelInit()
 		uiSkills3->uiType = UiObject::UIType::SkillIcon;
 	}
 	if (playerSize >= 3) {
+
+		KK_TRACE("playersSkill[3][0] = {0}", playersSkill[3][0]);
+		KK_TRACE("playersSkill[3][1] = {0}", playersSkill[3][1]);
+		KK_TRACE("playersSkill[3][2] = {0}", playersSkill[3][2]);
 
 		UiObject* uiSkills = new UiObject();
 		uiSkills->SetSpriteInfo(spriteList.find("Player_UI")->second);
@@ -2937,6 +2984,7 @@ void LevelShowcase::loadAbility(std::string filename) {
 			selectStr = "ability" + std::to_string(i);
 			if (data.count(selectStr)) {
 				abilityId[i] = data[selectStr];
+
 			}
 			else {
 				std::cout << selectStr << "Not found" << std::endl;
@@ -2970,7 +3018,7 @@ void LevelShowcase::SaveConfigInfo(const std::string& fileName) {
 		{ "3", groundColOffsetY[3] }
 	};
 
-	for (int i = 0; i < 4; i++)
+	/*for (int i = 0; i < 4; i++)
 	{
 		std::string playerName = "Player " + std::to_string(i) + " Skill";
 		data[playerName] =
@@ -2979,7 +3027,7 @@ void LevelShowcase::SaveConfigInfo(const std::string& fileName) {
 			playersSkill[i][1],
 			playersSkill[i][2]
 		};
-	}
+	}*/
 
 	data["MeleeCooldown"] = MeleeCooldown;
 	data["FireballCooldown"] = FireballCooldown;
@@ -3036,7 +3084,7 @@ void LevelShowcase::LoadConfigInfo(const std::string& fileName)
 	groundColOffsetY[2] = data["groundColOffsetY"]["2"];
 	groundColOffsetY[3] = data["groundColOffsetY"]["3"];
 
-	for (int i = 0; i < 4; i++)
+	/*for (int i = 0; i < 4; i++)
 	{
 		std::string playerName = "Player " + std::to_string(i) + " Skill";
 
@@ -3044,7 +3092,7 @@ void LevelShowcase::LoadConfigInfo(const std::string& fileName)
 		{
 			playersSkill[i][j] = data[playerName][j].get<int>();
 		}
-	}
+	}*/
 
 	MeleeCooldown = data["MeleeCooldown"];
 	FireballCooldown = data["FireballCooldown"];

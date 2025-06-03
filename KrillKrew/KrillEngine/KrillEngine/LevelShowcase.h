@@ -237,7 +237,7 @@ private:
 	float groundColY[4] = { 64.f, 64.f, 64.f, 64.f };
 	float groundColOffsetX[4] = { 0.f, 0.f, 0.f, 0.f };
 	float groundColOffsetY[4] = { -96.f, -96.f, -96.f, -96.f };
-	int playersSkill[4][3];
+	int playersSkill[4][3] = {0};
 	int isResetScene;
 	int isFullScreen;
 	int isWindowScreen;

@@ -7,6 +7,7 @@
 class LevelWinMatch : public Level
 {
 private:
+
 	std::vector<DrawableObject*> objectsList;
 
 	std::map<std::string, SpritesheetInfo> spriteList;
