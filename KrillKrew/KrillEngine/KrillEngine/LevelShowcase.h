@@ -267,6 +267,7 @@ private:
 	Timer* timer;
 
 	int currentPlayer = 0;
+	int playerRemain = 4;
 
 	float dt = 0;
 	int frame = 0;
@@ -336,4 +337,6 @@ public:
 	void loadAbility(std::string filename);
 	void SaveConfigInfo(const std::string& fileName);
 	void LoadConfigInfo(const std::string& fileName);
+
+	void SaveWinRoundInfo(const std::string& fileName);
 };

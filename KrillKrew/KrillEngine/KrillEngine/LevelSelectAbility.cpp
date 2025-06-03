@@ -1062,6 +1062,8 @@ void LevelSelectAbility::LevelUnload()
 	ImGui_ImplSDL2_Shutdown();
 	ImGui::DestroyContext();
 
+	GameEngine::GetInstance()->ResetWinScore("../Resource/SceneData/RoundWin.json");
+
 	//cout << "Unload Level" << endl;
 }
 
@@ -1157,4 +1159,5 @@ void LevelSelectAbility::loadConfig(std::string filename) {
 		std::cout << "Failed" << std::endl;
 	}
 }
+
 

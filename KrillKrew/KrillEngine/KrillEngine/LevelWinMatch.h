@@ -8,17 +8,28 @@ class LevelWinMatch : public Level
 {
 private:
 	std::vector<DrawableObject*> objectsList;
-	
+
 	std::map<std::string, SpritesheetInfo> spriteList;
 
-	int winningPlayer;
+	int matchWinner = 0;
+	
+	bool isHold = false;
+	float holdTime = 0.0f;
 
-	int playerNumber = 4; // Change later
+	std::array<int, 4> playerScores = {0};
 
-	std::array<int, 4> playerScores;
+	GLint currentViewport[4];
 
-	int windowWidth = SCREEN_WIDTH;
-	int windowHeight = SCREEN_HEIGHT;
+	UiObject* Background_UI; // pos 0, 0 no config
+	UiObject* PlayerNum_UI;
+
+	glm::vec3 PlayerNum_pos = {0, 0, 0};
+
+	glm::vec3 Background_size = { 1920, -1080, 0 };
+	glm::vec3 PlayerNum_size = { 820, -175, 0 };
+
+	float windowWidth = SCREEN_WIDTH;
+	float windowHeight = SCREEN_HEIGHT;
 
 	OrthographicValue targetSceneProjection;
 	Camera camera;
@@ -37,4 +48,9 @@ public:
 
 	void UpdateInput();
 	void UpdateUI();
+
+	bool LoadWinnerInfo(const std::string filename);
+
+	void SaveUIPositionConfig(std::string filename);
+	bool LoadUIPositionConfig(std::string filename);
 };

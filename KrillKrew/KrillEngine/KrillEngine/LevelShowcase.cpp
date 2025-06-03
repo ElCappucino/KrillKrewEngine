@@ -1131,6 +1131,23 @@ void LevelShowcase::LevelUpdate()
 		//Ui Skills
 		UpdateUI();
 
+		playerRemain = 0;
+		// Check Amount of player
+		for (int i = 0; i < playerSize; i++)
+		{
+			if (!players[i]->GetIsFell())
+			{
+				playerRemain++;
+			}
+		}
+
+		if (playerRemain <= 1)
+		{
+			SaveWinRoundInfo("../Resource/SceneData/RoundWin.json");
+			GameEngine::GetInstance()->GetStateController()->loadingState = GameState::GS_LEVELROUNDWIN;
+			GameEngine::GetInstance()->GetStateController()->gameStateNext = GameState::GS_LEVELLOADING;
+		}
+
 		GroundTileRefactor();
 
 		std::sort(objectsList.begin(), objectsList.end(), compareLayer);
@@ -3046,4 +3063,115 @@ void LevelShowcase::LoadConfigInfo(const std::string& fileName)
 
 	playerMovementSpeed = data["playerMovementSpeed"];
 
+}
+
+void LevelShowcase::SaveWinRoundInfo(const std::string& fileName)
+{
+	int playerRoundWin[4] = { 0 };
+	int currentRoundWinner = 0;
+	int currentRound;
+
+	std::ifstream readfile(fileName);
+
+	// read file
+	if (!readfile.is_open())
+	{
+		KK_ERROR("LevelShowcase: Cannot read round win file!");
+	}
+	else
+	{
+		nlohmann::json data = nlohmann::json::parse(readfile);
+
+		std::string playerScore;
+
+		for (int i = 0; i < 4; i++)
+		{
+			playerScore = "Score_Player" + std::to_string(i);
+
+			if (!data.count(playerScore))
+			{
+				KK_ERROR("LevelShowcase: Cannot read player Score!");
+			}
+			else
+			{
+				playerRoundWin[i] = data[playerScore];
+
+				KK_ERROR("playerRoundWin[{0}] = {1}", i, playerRoundWin[i]);
+			}
+		}
+
+		std::string roundNumber = "roundNumber";
+
+		if (!data.count(roundNumber))
+		{
+			KK_ERROR("LevelShowcase: Cannot read round Number!");
+		}
+		else
+		{
+			currentRound = data[roundNumber];
+		}
+
+		readfile.close();
+	}
+	
+	// save value + new round win
+	for (int i = 0; i < playerSize; i++)
+	{
+		if (!players[i]->GetIsFell())
+		{
+			int winner = i;
+
+			if (winner == 3)
+			{
+				winner = 2;
+			}
+			else if (winner == 2)
+			{
+				winner = 3;
+			}
+			currentRoundWinner = winner;
+			playerRoundWin[winner]++;
+			break;
+		}
+	}
+
+	currentRound++;
+	
+	// save value to file
+
+	std::ofstream writefile(fileName);
+
+	if (!writefile.is_open())
+	{
+		KK_ERROR("LevelShowcase: Cannot write Ui Position config file!");
+	}
+	else
+	{
+		KK_INFO("LevelShowcase: Open file Round Win Complete");
+
+		nlohmann::json data;
+
+		std::string playerScore;
+
+		for (int i = 0; i < 4; i++)
+		{
+			playerScore = "Score_Player" + std::to_string(i);
+
+			data[playerScore] = playerRoundWin[i];
+		}
+
+		std::string roundWinner = "RoundWinner";
+
+		data[roundWinner] = currentRoundWinner;
+
+		std::string roundNumber = "roundNumber";
+
+		data[roundNumber] = currentRound;
+
+		writefile << data;
+
+		KK_INFO("LevelShowcase: Save Round Win Complete");
+
+		writefile.close();
+	}
 }

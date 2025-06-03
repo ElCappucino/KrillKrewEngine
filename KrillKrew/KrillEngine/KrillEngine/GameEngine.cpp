@@ -61,10 +61,11 @@ void GameEngine::Init(int width, int height)
 	std::string s = "Second";
 	KK_TRACE("Initialized Logger! {0}", f);
 	KK_INFO("Initialized Logger! {0} {1}", f, s);
+	ResetWinScore("../Resource/SceneData/RoundWin.json");
 
 	stateController = new GameStateController();
 	//stateController->loadingState = GameState::GS_LEVELSHOWCASE;
-	stateController->loadingState = GameState::GS_LEVELROUNDWIN;
+	stateController->loadingState = GameState::GS_LEVELMATCHWIN;
 	stateController->Init(GameState::GS_LEVELLOADING);
 }
 
@@ -103,4 +104,43 @@ int GameEngine::GetWindowWidth()
 int GameEngine::GetWindowHeight()
 {
 	return winHeight;
+}
+
+void GameEngine::ResetWinScore(const std::string& fileName)
+{
+	std::ofstream writefile(fileName);
+
+	if (!writefile.is_open())
+	{
+		KK_ERROR("GameEngine: Cannot write Ui Position config file!");
+	}
+	else
+	{
+		KK_INFO("GameEngine: Open file Round Win Complete");
+
+		nlohmann::json data;
+
+		std::string playerScore;
+
+		for (int i = 0; i < 4; i++)
+		{
+			playerScore = "Score_Player" + std::to_string(i);
+
+			data[playerScore] = 0;
+		}
+
+		std::string roundWinner = "RoundWinner";
+
+		data[roundWinner] = 0;
+
+		std::string roundNumber = "roundNumber";
+
+		data[roundNumber] = 0;
+
+		writefile << data;
+
+		KK_INFO("GameEngine: Save Round Win Complete");
+
+		writefile.close();
+	}
 }

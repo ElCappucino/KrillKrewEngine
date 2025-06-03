@@ -87,6 +87,15 @@ void LevelWinRound::LevelInit()
 	RoundNum_UI->uiType = UiObject::UIType::PauseMenu;
 	objectsList.push_back(RoundNum_UI);
 
+	/*if (roundWinner == 2)
+	{
+		roundWinner = 3;
+	}
+	else if (roundWinner == 3)
+	{
+		roundWinner = 2;
+	}*/
+
 	RoundWinCharacter_UI = new UiObject();
 	RoundWinCharacter_UI->SetSpriteInfo(spriteList.find("WinRound_AllChar")->second);
 	RoundWinCharacter_UI->GetSpriteRenderer()->ShiftTo(0, roundWinner);
@@ -133,7 +142,7 @@ void LevelWinRound::LevelUpdate()
 	windowWidth = currentViewport[2];
 	windowHeight = currentViewport[3];
 
-	KK_TRACE("Current viewport width = {0}, height = {1}", windowWidth, windowHeight);
+	//KK_TRACE("Current viewport width = {0}, height = {1}", windowWidth, windowHeight);
 
 	UpdateInput();
 	UpdateUI();
@@ -222,12 +231,31 @@ void LevelWinRound::UpdateInput()
 	{
 		Joystick::Update();
 
-		for (int i = 0; i < 1; i++)
+		for (int i = 0; i < 4; i++)
 		{
 			if (Joystick::GetButtonDown(i, Joystick::Button::Square))
 			{
-				GameEngine::GetInstance()->GetStateController()->loadingState = GameState::GS_LEVELSHOWCASE;
-				GameEngine::GetInstance()->GetStateController()->gameStateNext = GameState::GS_LEVELLOADING;
+				int maxPoint = -1;
+
+				for (int i = 0; i < 4; i++)
+				{
+					if (playerScores[i] > maxPoint)
+					{
+						maxPoint = playerScores[i];
+					}
+				}
+
+				if (maxPoint >= 3)
+				{
+					GameEngine::GetInstance()->GetStateController()->loadingState = GameState::GS_LEVELMATCHWIN;
+					GameEngine::GetInstance()->GetStateController()->gameStateNext = GameState::GS_LEVELLOADING;
+				}
+				else
+				{
+					GameEngine::GetInstance()->GetStateController()->loadingState = GameState::GS_LEVELSHOWCASE;
+					GameEngine::GetInstance()->GetStateController()->gameStateNext = GameState::GS_LEVELLOADING;
+				}
+				
 			}
 		}
 	}
@@ -399,7 +427,7 @@ bool LevelWinRound::LoadUIPositionConfig(std::string filename)
 			RoundNum_pos.y = data["RoundNum_Pos"]["y"];
 		}
 
-		if (!data.count("RoundNum_Pos"))
+		if (!data.count("RoundWinCharacter_Pos"))
 		{
 			KK_ERROR("LevelWinRound: Cannot read RoundWinCharacter_pos!");
 		}
@@ -409,7 +437,7 @@ bool LevelWinRound::LoadUIPositionConfig(std::string filename)
 			RoundWinCharacter_pos.y = data["RoundWinCharacter_Pos"]["y"];
 		}
 
-		if (!data.count("RoundNum_Pos"))
+		if (!data.count("PlayerProfile_Pos"))
 		{
 			KK_ERROR("LevelWinRound: Cannot read RoundNum_Pos!");
 		}
