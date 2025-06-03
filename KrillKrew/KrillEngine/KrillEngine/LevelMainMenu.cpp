@@ -1,6 +1,7 @@
 #include "LevelMainMenu.h"
 
-void LevelMainMenu::LevelLoad() {
+void LevelMainMenu::LevelLoad() 
+{
 	SquareMeshVbo* square = new SquareMeshVbo();
 	square->LoadData();
 	GameEngine::GetInstance()->AddMesh(SquareMeshVbo::MESH_NAME, square);

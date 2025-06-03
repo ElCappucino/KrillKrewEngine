@@ -12,6 +12,8 @@ enum GameState
 	GS_LEVELIMGUI,
 	GS_LEVELSELECTABILITY,
 	GS_LEVELMAINMENU,
+	GS_LEVELROUNDWIN,
+	GS_LEVELMATCHWIN,
 
 	// special game state. Do not change
 	GS_RESTART,

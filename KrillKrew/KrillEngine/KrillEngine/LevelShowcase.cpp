@@ -1687,7 +1687,7 @@ void LevelShowcase::UpdateInput()
 
 				if (Joystick::GetButtonDown(i, Joystick::Button::P5Button))
 				{
-					GameEngine::GetInstance()->GetStateController()->loadingState = GameState::GS_LEVELGAMEPLAY;
+					GameEngine::GetInstance()->GetStateController()->loadingState = GameState::GS_LEVELSHOWCASE;
 					GameEngine::GetInstance()->GetStateController()->gameStateNext = GameState::GS_LEVELLOADING;
 				}
 			}

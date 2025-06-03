@@ -41,6 +41,8 @@
     <ClInclude Include="LevelSelectAbility.h" />
     <ClInclude Include="LevelShowcase.h" />
     <ClInclude Include="LevelUtilities.h" />
+    <ClInclude Include="LevelWinMatch.h" />
+    <ClInclude Include="LevelWinRound.h" />
     <ClInclude Include="LineMeshVbo.h" />
     <ClInclude Include="Log.h" />
     <ClInclude Include="MeshVbo.h" />
@@ -93,6 +95,8 @@
     <ClCompile Include="LevelMapTest.cpp" />
     <ClCompile Include="LevelSelectAbility.cpp" />
     <ClCompile Include="LevelShowcase.cpp" />
+    <ClCompile Include="LevelWinMatch.cpp" />
+    <ClCompile Include="LevelWinRound.cpp" />
     <ClCompile Include="LineMeshVbo.cpp" />
     <ClCompile Include="Log.cpp" />
     <ClCompile Include="Main.cpp" />
