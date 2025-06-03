@@ -16,7 +16,7 @@ void LevelMainMenu::LevelLoad() {
 	spriteList["AreYouSure"] = SpritesheetInfo("AreYouSure", "../Resource/Texture/Are You Sure/UI_AreYouSure_BG.png", 676, 317, 2028, 317);
 	spriteList["AreYouSureYN"] = SpritesheetInfo("AreYouSureYN", "../Resource/Texture/Are You Sure/UI_AreYouSure_YesNo.png", 235, 45, 940, 45);
 
-	spriteList["OptionsBG"] = SpritesheetInfo("BG", "../Resource/Texture/Pause and Options/UI_Options_BG.png", 623, 671, 623, 671);
+	spriteList["OptionsBG"] = SpritesheetInfo("OptionsBG", "../Resource/Texture/Pause and Options/UI_Options_BG.png", 623, 671, 623, 671);
 	spriteList["OptionsDisplay"] = SpritesheetInfo("OptionsDisplay", "../Resource/Texture/Pause and Options/UI_Options_Display_tab.png", 309, 50, 1236, 50);
 	spriteList["OptionsDisplayDropdown"] = SpritesheetInfo("OptionsDisplayDropdown", "../Resource/Texture/Pause and Options/UI_Options_Display_tabdropdown.png", 300, 94, 600, 94);
 	spriteList["OptionsText"] = SpritesheetInfo("OptionsText", "../Resource/Texture/Pause and Options/UI_Options_text.png", 183, 25, 1464, 25);
@@ -30,6 +30,9 @@ void LevelMainMenu::LevelInit() {
 		(SCREEN_WIDTH / 2),
 		-(SCREEN_HEIGHT / 2),
 		(SCREEN_HEIGHT / 2));
+
+	SDL_GetWindowSize(GameEngine::GetInstance()->GetSDLWindow(), &windowWidth, &windowHeight);
+	glViewport(0, 0, windowWidth, windowHeight);
 
 	//BG
 	UiObject* BG = new UiObject();

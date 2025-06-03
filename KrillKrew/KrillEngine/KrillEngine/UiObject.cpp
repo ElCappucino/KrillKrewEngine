@@ -123,8 +123,14 @@ float UiObject::getOrderingLayer() const
 	case PauseText:
 		return -2600.0f;
 		break;
+	case AreYouSureBG:
+		return -2900.0f;
+		break;
+	case YesNoButton:
+		return -3000.0f;
+		break;
 	default:
-		return -2000.f;
+		return -2000;
 		break;
 	}
 }

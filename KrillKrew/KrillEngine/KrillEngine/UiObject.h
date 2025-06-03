@@ -23,7 +23,10 @@ public:
 		SkillIcon,
 		SkillCover,
 		PauseMenu,
-		PauseText
+		PauseText,
+		AreYouSureBG,
+		YesNoButton,
+
 	};
 
 	UIType uiType = UIType::Default;
