@@ -744,297 +744,297 @@ void LevelSelectAbility::LevelDraw()
 	ImGui_ImplSDL2_NewFrame();
 	ImGui::NewFrame();
 
-	//ImGui::Text("Mouse pos: (%g, %g)", io.MousePos.x, io.MousePos.y);
-	int configNum = -1;
-	if (ImGui::Button("Go levelShowcase")) {
-		for (int i = 0; i < 4; i++)
-		{
-			std::string fileName = "Ability" + std::to_string(i) + ".json";
-			abilityToFile(fileName, i);
-		}
-		GameEngine::GetInstance()->GetStateController()->gameStateNext = GameState::GS_LEVELSHOWCASE;
-	}
+	////ImGui::Text("Mouse pos: (%g, %g)", io.MousePos.x, io.MousePos.y);
+	//int configNum = -1;
+	//if (ImGui::Button("Go levelShowcase")) {
+	//	for (int i = 0; i < 4; i++)
+	//	{
+	//		std::string fileName = "Ability" + std::to_string(i) + ".json";
+	//		abilityToFile(fileName, i);
+	//	}
+	//	GameEngine::GetInstance()->GetStateController()->gameStateNext = GameState::GS_LEVELSHOWCASE;
+	//}
 
-	ImGuiTabBarFlags tab_bar_flags = ImGuiTabBarFlags_None;
-	if (ImGui::BeginTabBar("MyTabBar", tab_bar_flags)) {
-		if (ImGui::BeginTabItem("Player ability")) {
-			for (int i = 0; i < 4; i++)
-			{
-				std::string fileName = "Ability" + std::to_string(i) + ".txt";
-				std::string buttonName;
-				ImGui::SeparatorText("");
-				ImGui::Text("Ability Player %d", i);
+	//ImGuiTabBarFlags tab_bar_flags = ImGuiTabBarFlags_None;
+	//if (ImGui::BeginTabBar("MyTabBar", tab_bar_flags)) {
+	//	if (ImGui::BeginTabItem("Player ability")) {
+	//		for (int i = 0; i < 4; i++)
+	//		{
+	//			std::string fileName = "Ability" + std::to_string(i) + ".txt";
+	//			std::string buttonName;
+	//			ImGui::SeparatorText("");
+	//			ImGui::Text("Ability Player %d", i);
 
-				for (int j = 0; j < 3; j++) {
-					ImGui::Text("Ability%d: ", j);
-					if (playerAbility[i][j] == static_cast<int>(PlayerObject::Ability::Fireball)) {
-						ImGui::SameLine();
-						ImGui::Text("Fireball");
-					}
-					if (playerAbility[i][j] == static_cast<int>(PlayerObject::Ability::Trap)) {
-						ImGui::SameLine();
-						ImGui::Text("Trap");
-					}
-					if (playerAbility[i][j] == static_cast<int>(PlayerObject::Ability::Dash)) {
-						ImGui::SameLine();
-						ImGui::Text("Dash");
-					}
-					if (playerAbility[i][j] == static_cast<int>(PlayerObject::Ability::TNT)) {
-						ImGui::SameLine();
-						ImGui::Text("TNT");
-					}
-					if (playerAbility[i][j] == static_cast<int>(PlayerObject::Ability::Teleport)) {
-						ImGui::SameLine();
-						ImGui::Text("Teleport");
-					}
-					if (playerAbility[i][j] == static_cast<int>(PlayerObject::Ability::Bola)) {
-						ImGui::SameLine();
-						ImGui::Text("Bola");
-					}
-					if (playerAbility[i][j] == static_cast<int>(PlayerObject::Ability::Cleave)) {
-						ImGui::SameLine();
-						ImGui::Text("Cleave");
-					}
-				}
-			}
-			ImGui::EndTabItem();
-		}
+	//			for (int j = 0; j < 3; j++) {
+	//				ImGui::Text("Ability%d: ", j);
+	//				if (playerAbility[i][j] == static_cast<int>(PlayerObject::Ability::Fireball)) {
+	//					ImGui::SameLine();
+	//					ImGui::Text("Fireball");
+	//				}
+	//				if (playerAbility[i][j] == static_cast<int>(PlayerObject::Ability::Trap)) {
+	//					ImGui::SameLine();
+	//					ImGui::Text("Trap");
+	//				}
+	//				if (playerAbility[i][j] == static_cast<int>(PlayerObject::Ability::Dash)) {
+	//					ImGui::SameLine();
+	//					ImGui::Text("Dash");
+	//				}
+	//				if (playerAbility[i][j] == static_cast<int>(PlayerObject::Ability::TNT)) {
+	//					ImGui::SameLine();
+	//					ImGui::Text("TNT");
+	//				}
+	//				if (playerAbility[i][j] == static_cast<int>(PlayerObject::Ability::Teleport)) {
+	//					ImGui::SameLine();
+	//					ImGui::Text("Teleport");
+	//				}
+	//				if (playerAbility[i][j] == static_cast<int>(PlayerObject::Ability::Bola)) {
+	//					ImGui::SameLine();
+	//					ImGui::Text("Bola");
+	//				}
+	//				if (playerAbility[i][j] == static_cast<int>(PlayerObject::Ability::Cleave)) {
+	//					ImGui::SameLine();
+	//					ImGui::Text("Cleave");
+	//				}
+	//			}
+	//		}
+	//		ImGui::EndTabItem();
+	//	}
 
-		if (ImGui::BeginTabItem("Config Player Window")) {
-			configNum = 0;
-			if (ImGui::Button("Save config")) {
-				std::string fileName = "ConfigLevelSelectAbility0.json";
-				saveConfig(fileName, configs.at(configNum));
-			}
-			
-			ImGui::SameLine();
-			if (ImGui::Button("Load config")) {
-				
-				std::string fileName = "ConfigLevelSelectAbility0.json";
-				loadConfig(fileName);
-				int axisX = 1;
-				int axisY = 2;
-				for (int i = 0; i < playerWindowList.size(); i++) {
-					if (i == 2) {
-						axisX = 1;
-						axisY = 1;
-					}
-					playerWindowList.at(i)->SetPosition(glm::vec3(configs.at(configNum)->posX + (configs.at(configNum)->offSetX * axisX), configs.at(configNum)->posY + (configs.at(configNum)->offSetY * axisY), 0));
-					playerWindowList.at(i)->SetSize(configs.at(configNum)->width, -configs.at(configNum)->height);
-					axisX++;
-				}
-				
-			}
-			ImGui::InputFloat("PosX", &configs.at(configNum)->posX, 1.0f, 1.0f, "%.2f");
-			ImGui::InputFloat("PosY", &configs.at(configNum)->posY, 1.0f, 1.0f, "%.2f");
-			ImGui::InputFloat("OffSetX", &configs.at(configNum)->offSetX, 1.0f, 1.0f, "%.2f");
-			ImGui::InputFloat("OffSetY", &configs.at(configNum)->offSetY, 1.0f, 1.0f, "%.2f");
-			ImGui::InputFloat("Width", &configs.at(configNum)->width, 1.0f, 1.0f, "%.2f");
-			ImGui::InputFloat("Height", &configs.at(configNum)->height, 1.0f, 1.0f, "%.2f");
-			ImGui::EndTabItem();
-		}
+	//	if (ImGui::BeginTabItem("Config Player Window")) {
+	//		configNum = 0;
+	//		if (ImGui::Button("Save config")) {
+	//			std::string fileName = "ConfigLevelSelectAbility0.json";
+	//			saveConfig(fileName, configs.at(configNum));
+	//		}
+	//		
+	//		ImGui::SameLine();
+	//		if (ImGui::Button("Load config")) {
+	//			
+	//			std::string fileName = "ConfigLevelSelectAbility0.json";
+	//			loadConfig(fileName);
+	//			int axisX = 1;
+	//			int axisY = 2;
+	//			for (int i = 0; i < playerWindowList.size(); i++) {
+	//				if (i == 2) {
+	//					axisX = 1;
+	//					axisY = 1;
+	//				}
+	//				playerWindowList.at(i)->SetPosition(glm::vec3(configs.at(configNum)->posX + (configs.at(configNum)->offSetX * axisX), configs.at(configNum)->posY + (configs.at(configNum)->offSetY * axisY), 0));
+	//				playerWindowList.at(i)->SetSize(configs.at(configNum)->width, -configs.at(configNum)->height);
+	//				axisX++;
+	//			}
+	//			
+	//		}
+	//		ImGui::InputFloat("PosX", &configs.at(configNum)->posX, 1.0f, 1.0f, "%.2f");
+	//		ImGui::InputFloat("PosY", &configs.at(configNum)->posY, 1.0f, 1.0f, "%.2f");
+	//		ImGui::InputFloat("OffSetX", &configs.at(configNum)->offSetX, 1.0f, 1.0f, "%.2f");
+	//		ImGui::InputFloat("OffSetY", &configs.at(configNum)->offSetY, 1.0f, 1.0f, "%.2f");
+	//		ImGui::InputFloat("Width", &configs.at(configNum)->width, 1.0f, 1.0f, "%.2f");
+	//		ImGui::InputFloat("Height", &configs.at(configNum)->height, 1.0f, 1.0f, "%.2f");
+	//		ImGui::EndTabItem();
+	//	}
 
-		if (ImGui::BeginTabItem("Config Player remain")) {
-			configNum = 1;
-			if (ImGui::Button("Save config")) {
-				std::string fileName = "ConfigLevelSelectAbility1.json";
-				std::cout << "save config1" << std::endl;
-				saveConfig(fileName, configs.at(configNum));
-			}
+	//	if (ImGui::BeginTabItem("Config Player remain")) {
+	//		configNum = 1;
+	//		if (ImGui::Button("Save config")) {
+	//			std::string fileName = "ConfigLevelSelectAbility1.json";
+	//			std::cout << "save config1" << std::endl;
+	//			saveConfig(fileName, configs.at(configNum));
+	//		}
 
-			ImGui::SameLine();
-			if (ImGui::Button("Load config")) {
-				std::string fileName = "ConfigLevelSelectAbility1.json";
-				loadConfig(fileName);
-				objectsList.at(5)->SetPosition(glm::vec3(configs.at(configNum)->posX, configs.at(configNum)->posY, 0));
-				objectsList.at(5)->SetSize(configs.at(configNum)->width, -configs.at(configNum)->height);
-				
-			}
-			ImGui::InputFloat("PosX", &configs.at(configNum)->posX, 1.0f, 1.0f, "%.2f");
-			ImGui::InputFloat("PosY", &configs.at(configNum)->posY, 1.0f, 1.0f, "%.2f");
-			ImGui::InputFloat("OffSetX", &configs.at(configNum)->offSetX, 1.0f, 1.0f, "%.2f");
-			ImGui::InputFloat("OffSetY", &configs.at(configNum)->offSetY, 1.0f, 1.0f, "%.2f");
-			ImGui::InputFloat("Width", &configs.at(configNum)->width, 1.0f, 1.0f, "%.2f");
-			ImGui::InputFloat("Height", &configs.at(configNum)->height, 1.0f, 1.0f, "%.2f");
-			ImGui::EndTabItem();
-		}
-		
-		if (ImGui::BeginTabItem("Config Ability top")) {
-			configNum = 2;
-			if (ImGui::Button("Save config")) {
-				std::string fileName = "ConfigLevelSelectAbility2.json";
-				std::cout << "save config1" << std::endl;
-				saveConfig(fileName, configs.at(configNum));
-			}
+	//		ImGui::SameLine();
+	//		if (ImGui::Button("Load config")) {
+	//			std::string fileName = "ConfigLevelSelectAbility1.json";
+	//			loadConfig(fileName);
+	//			objectsList.at(5)->SetPosition(glm::vec3(configs.at(configNum)->posX, configs.at(configNum)->posY, 0));
+	//			objectsList.at(5)->SetSize(configs.at(configNum)->width, -configs.at(configNum)->height);
+	//			
+	//		}
+	//		ImGui::InputFloat("PosX", &configs.at(configNum)->posX, 1.0f, 1.0f, "%.2f");
+	//		ImGui::InputFloat("PosY", &configs.at(configNum)->posY, 1.0f, 1.0f, "%.2f");
+	//		ImGui::InputFloat("OffSetX", &configs.at(configNum)->offSetX, 1.0f, 1.0f, "%.2f");
+	//		ImGui::InputFloat("OffSetY", &configs.at(configNum)->offSetY, 1.0f, 1.0f, "%.2f");
+	//		ImGui::InputFloat("Width", &configs.at(configNum)->width, 1.0f, 1.0f, "%.2f");
+	//		ImGui::InputFloat("Height", &configs.at(configNum)->height, 1.0f, 1.0f, "%.2f");
+	//		ImGui::EndTabItem();
+	//	}
+	//	
+	//	if (ImGui::BeginTabItem("Config Ability top")) {
+	//		configNum = 2;
+	//		if (ImGui::Button("Save config")) {
+	//			std::string fileName = "ConfigLevelSelectAbility2.json";
+	//			std::cout << "save config1" << std::endl;
+	//			saveConfig(fileName, configs.at(configNum));
+	//		}
 
-			ImGui::SameLine();
-			if (ImGui::Button("Load config")) {
-				std::string fileName = "ConfigLevelSelectAbility2.json";
-				loadConfig(fileName);
-				int axisX = 1;
-				for (int i = 0; i < AbilityIconListTop.size(); i++) {
-					AbilityIconListTop.at(i)->SetPosition(glm::vec3(configs.at(configNum)->posX + (configs.at(configNum)->offSetX * axisX), configs.at(configNum)->posY, 0));
-					AbilityIconListTop.at(i)->SetSize(configs.at(configNum)->width, -configs.at(configNum)->height);
-					axisX++;
-				}
+	//		ImGui::SameLine();
+	//		if (ImGui::Button("Load config")) {
+	//			std::string fileName = "ConfigLevelSelectAbility2.json";
+	//			loadConfig(fileName);
+	//			int axisX = 1;
+	//			for (int i = 0; i < AbilityIconListTop.size(); i++) {
+	//				AbilityIconListTop.at(i)->SetPosition(glm::vec3(configs.at(configNum)->posX + (configs.at(configNum)->offSetX * axisX), configs.at(configNum)->posY, 0));
+	//				AbilityIconListTop.at(i)->SetSize(configs.at(configNum)->width, -configs.at(configNum)->height);
+	//				axisX++;
+	//			}
 
-			}
-			ImGui::InputFloat("PosX", &configs.at(configNum)->posX, 1.0f, 1.0f, "%.2f");
-			ImGui::InputFloat("PosY", &configs.at(configNum)->posY, 1.0f, 1.0f, "%.2f");
-			ImGui::InputFloat("OffSetX", &configs.at(configNum)->offSetX, 1.0f, 1.0f, "%.2f");
-			ImGui::InputFloat("OffSetY", &configs.at(configNum)->offSetY, 1.0f, 1.0f, "%.2f");
-			ImGui::InputFloat("Width", &configs.at(configNum)->width, 1.0f, 1.0f, "%.2f");
-			ImGui::InputFloat("Height", &configs.at(configNum)->height, 1.0f, 1.0f, "%.2f");
-			ImGui::EndTabItem();
-		}
+	//		}
+	//		ImGui::InputFloat("PosX", &configs.at(configNum)->posX, 1.0f, 1.0f, "%.2f");
+	//		ImGui::InputFloat("PosY", &configs.at(configNum)->posY, 1.0f, 1.0f, "%.2f");
+	//		ImGui::InputFloat("OffSetX", &configs.at(configNum)->offSetX, 1.0f, 1.0f, "%.2f");
+	//		ImGui::InputFloat("OffSetY", &configs.at(configNum)->offSetY, 1.0f, 1.0f, "%.2f");
+	//		ImGui::InputFloat("Width", &configs.at(configNum)->width, 1.0f, 1.0f, "%.2f");
+	//		ImGui::InputFloat("Height", &configs.at(configNum)->height, 1.0f, 1.0f, "%.2f");
+	//		ImGui::EndTabItem();
+	//	}
 
-		if (ImGui::BeginTabItem("Config Ability Down")) {
-			configNum = 3;
-			if (ImGui::Button("Save config")) {
-				std::string fileName = "ConfigLevelSelectAbility3.json";
-				std::cout << "save config1" << std::endl;
-				saveConfig(fileName, configs.at(configNum));
-			}
+	//	if (ImGui::BeginTabItem("Config Ability Down")) {
+	//		configNum = 3;
+	//		if (ImGui::Button("Save config")) {
+	//			std::string fileName = "ConfigLevelSelectAbility3.json";
+	//			std::cout << "save config1" << std::endl;
+	//			saveConfig(fileName, configs.at(configNum));
+	//		}
 
-			ImGui::SameLine();
-			if (ImGui::Button("Load config")) {
-				std::string fileName = "ConfigLevelSelectAbility3.json";
-				loadConfig(fileName);
-				int axisX = 1;
-				for (int i = 0; i < AbilityIconListDown.size(); i++) {
-					AbilityIconListDown.at(i)->SetPosition(glm::vec3(configs.at(configNum)->posX + (configs.at(configNum)->offSetX * axisX), configs.at(configNum)->posY, 0));
-					AbilityIconListDown.at(i)->SetSize(configs.at(configNum)->width, -configs.at(configNum)->height);
-					axisX++;
-				}
+	//		ImGui::SameLine();
+	//		if (ImGui::Button("Load config")) {
+	//			std::string fileName = "ConfigLevelSelectAbility3.json";
+	//			loadConfig(fileName);
+	//			int axisX = 1;
+	//			for (int i = 0; i < AbilityIconListDown.size(); i++) {
+	//				AbilityIconListDown.at(i)->SetPosition(glm::vec3(configs.at(configNum)->posX + (configs.at(configNum)->offSetX * axisX), configs.at(configNum)->posY, 0));
+	//				AbilityIconListDown.at(i)->SetSize(configs.at(configNum)->width, -configs.at(configNum)->height);
+	//				axisX++;
+	//			}
 
-			}
-			ImGui::InputFloat("PosX", &configs.at(configNum)->posX, 1.0f, 1.0f, "%.2f");
-			ImGui::InputFloat("PosY", &configs.at(configNum)->posY, 1.0f, 1.0f, "%.2f");
-			ImGui::InputFloat("OffSetX", &configs.at(configNum)->offSetX, 1.0f, 1.0f, "%.2f");
-			ImGui::InputFloat("OffSetY", &configs.at(configNum)->offSetY, 1.0f, 1.0f, "%.2f");
-			ImGui::InputFloat("Width", &configs.at(configNum)->width, 1.0f, 1.0f, "%.2f");
-			ImGui::InputFloat("Height", &configs.at(configNum)->height, 1.0f, 1.0f, "%.2f");
-			ImGui::EndTabItem();
-		}
+	//		}
+	//		ImGui::InputFloat("PosX", &configs.at(configNum)->posX, 1.0f, 1.0f, "%.2f");
+	//		ImGui::InputFloat("PosY", &configs.at(configNum)->posY, 1.0f, 1.0f, "%.2f");
+	//		ImGui::InputFloat("OffSetX", &configs.at(configNum)->offSetX, 1.0f, 1.0f, "%.2f");
+	//		ImGui::InputFloat("OffSetY", &configs.at(configNum)->offSetY, 1.0f, 1.0f, "%.2f");
+	//		ImGui::InputFloat("Width", &configs.at(configNum)->width, 1.0f, 1.0f, "%.2f");
+	//		ImGui::InputFloat("Height", &configs.at(configNum)->height, 1.0f, 1.0f, "%.2f");
+	//		ImGui::EndTabItem();
+	//	}
 
-		if (ImGui::BeginTabItem("Config Player Hover")) {
-			configNum = 4;
-			if (ImGui::Button("Save config")) {
-				std::string fileName = "ConfigLevelSelectAbility4.json";
-				std::cout << "save config1" << std::endl;
-				saveConfig(fileName, configs.at(configNum));
-			}
+	//	if (ImGui::BeginTabItem("Config Player Hover")) {
+	//		configNum = 4;
+	//		if (ImGui::Button("Save config")) {
+	//			std::string fileName = "ConfigLevelSelectAbility4.json";
+	//			std::cout << "save config1" << std::endl;
+	//			saveConfig(fileName, configs.at(configNum));
+	//		}
 
-			ImGui::SameLine();
-			if (ImGui::Button("Load config")) {
-				std::string fileName = "ConfigLevelSelectAbility4.json";
-				loadConfig(fileName);
-				int axisX = 1;
-				for (int i = 0; i < AbilityIconListDown.size(); i++) {
-					AbilityIconListDown.at(i)->SetPosition(glm::vec3(configs.at(configNum)->posX + (configs.at(configNum)->offSetX * axisX), configs.at(configNum)->posY, 0));
-					AbilityIconListDown.at(i)->SetSize(configs.at(configNum)->width, -configs.at(configNum)->height);
-					axisX++;
-				}
+	//		ImGui::SameLine();
+	//		if (ImGui::Button("Load config")) {
+	//			std::string fileName = "ConfigLevelSelectAbility4.json";
+	//			loadConfig(fileName);
+	//			int axisX = 1;
+	//			for (int i = 0; i < AbilityIconListDown.size(); i++) {
+	//				AbilityIconListDown.at(i)->SetPosition(glm::vec3(configs.at(configNum)->posX + (configs.at(configNum)->offSetX * axisX), configs.at(configNum)->posY, 0));
+	//				AbilityIconListDown.at(i)->SetSize(configs.at(configNum)->width, -configs.at(configNum)->height);
+	//				axisX++;
+	//			}
 
-			}
-			ImGui::InputFloat("PosX", &configs.at(configNum)->posX, 1.0f, 1.0f, "%.2f");
-			ImGui::InputFloat("PosY", &configs.at(configNum)->posY, 1.0f, 1.0f, "%.2f");
-			ImGui::InputFloat("OffSetX", &configs.at(configNum)->offSetX, 1.0f, 1.0f, "%.2f");
-			ImGui::InputFloat("OffSetY", &configs.at(configNum)->offSetY, 1.0f, 1.0f, "%.2f");
-			ImGui::InputFloat("Width", &configs.at(configNum)->width, 1.0f, 1.0f, "%.2f");
-			ImGui::InputFloat("Height", &configs.at(configNum)->height, 1.0f, 1.0f, "%.2f");
-			ImGui::EndTabItem();
-		}
+	//		}
+	//		ImGui::InputFloat("PosX", &configs.at(configNum)->posX, 1.0f, 1.0f, "%.2f");
+	//		ImGui::InputFloat("PosY", &configs.at(configNum)->posY, 1.0f, 1.0f, "%.2f");
+	//		ImGui::InputFloat("OffSetX", &configs.at(configNum)->offSetX, 1.0f, 1.0f, "%.2f");
+	//		ImGui::InputFloat("OffSetY", &configs.at(configNum)->offSetY, 1.0f, 1.0f, "%.2f");
+	//		ImGui::InputFloat("Width", &configs.at(configNum)->width, 1.0f, 1.0f, "%.2f");
+	//		ImGui::InputFloat("Height", &configs.at(configNum)->height, 1.0f, 1.0f, "%.2f");
+	//		ImGui::EndTabItem();
+	//	}
 
-		if (ImGui::BeginTabItem("Config Player Icon")) {
-			configNum = 5;
-			if (ImGui::Button("Save config")) {
-				std::string fileName = "ConfigLevelSelectAbility5.json";
-				std::cout << "save config1" << std::endl;
-				saveConfig(fileName, configs.at(configNum));
-			}
+	//	if (ImGui::BeginTabItem("Config Player Icon")) {
+	//		configNum = 5;
+	//		if (ImGui::Button("Save config")) {
+	//			std::string fileName = "ConfigLevelSelectAbility5.json";
+	//			std::cout << "save config1" << std::endl;
+	//			saveConfig(fileName, configs.at(configNum));
+	//		}
 
-			ImGui::SameLine();
-			if (ImGui::Button("Load config")) {
-				std::string fileName = "ConfigLevelSelectAbility5.json";
-				loadConfig(fileName);
-				int axisX = 1;
-				for (int i = 0; i < AbilityIconListDown.size(); i++) {
-					AbilityIconListDown.at(i)->SetPosition(glm::vec3(configs.at(configNum)->posX + (configs.at(configNum)->offSetX * axisX), configs.at(configNum)->posY, 0));
-					AbilityIconListDown.at(i)->SetSize(configs.at(configNum)->width, -configs.at(configNum)->height);
-					axisX++;
-				}
+	//		ImGui::SameLine();
+	//		if (ImGui::Button("Load config")) {
+	//			std::string fileName = "ConfigLevelSelectAbility5.json";
+	//			loadConfig(fileName);
+	//			int axisX = 1;
+	//			for (int i = 0; i < AbilityIconListDown.size(); i++) {
+	//				AbilityIconListDown.at(i)->SetPosition(glm::vec3(configs.at(configNum)->posX + (configs.at(configNum)->offSetX * axisX), configs.at(configNum)->posY, 0));
+	//				AbilityIconListDown.at(i)->SetSize(configs.at(configNum)->width, -configs.at(configNum)->height);
+	//				axisX++;
+	//			}
 
-			}
-			ImGui::InputFloat("PosX", &configs.at(configNum)->posX, 1.0f, 1.0f, "%.2f");
-			ImGui::InputFloat("PosY", &configs.at(configNum)->posY, 1.0f, 1.0f, "%.2f");
-			ImGui::InputFloat("OffSetX", &configs.at(configNum)->offSetX, 1.0f, 1.0f, "%.2f");
-			ImGui::InputFloat("OffSetY", &configs.at(configNum)->offSetY, 1.0f, 1.0f, "%.2f");
-			ImGui::InputFloat("Width", &configs.at(configNum)->width, 1.0f, 1.0f, "%.2f");
-			ImGui::InputFloat("Height", &configs.at(configNum)->height, 1.0f, 1.0f, "%.2f");
-			ImGui::EndTabItem();
-		}
+	//		}
+	//		ImGui::InputFloat("PosX", &configs.at(configNum)->posX, 1.0f, 1.0f, "%.2f");
+	//		ImGui::InputFloat("PosY", &configs.at(configNum)->posY, 1.0f, 1.0f, "%.2f");
+	//		ImGui::InputFloat("OffSetX", &configs.at(configNum)->offSetX, 1.0f, 1.0f, "%.2f");
+	//		ImGui::InputFloat("OffSetY", &configs.at(configNum)->offSetY, 1.0f, 1.0f, "%.2f");
+	//		ImGui::InputFloat("Width", &configs.at(configNum)->width, 1.0f, 1.0f, "%.2f");
+	//		ImGui::InputFloat("Height", &configs.at(configNum)->height, 1.0f, 1.0f, "%.2f");
+	//		ImGui::EndTabItem();
+	//	}
 
-		if (ImGui::BeginTabItem("Config Player Icon Small")) {
-			configNum = 6;
-			if (ImGui::Button("Save config")) {
-				std::string fileName = "ConfigLevelSelectAbility6.json";
-				std::cout << "save config1" << std::endl;
-				saveConfig(fileName, configs.at(configNum));
-			}
+	//	if (ImGui::BeginTabItem("Config Player Icon Small")) {
+	//		configNum = 6;
+	//		if (ImGui::Button("Save config")) {
+	//			std::string fileName = "ConfigLevelSelectAbility6.json";
+	//			std::cout << "save config1" << std::endl;
+	//			saveConfig(fileName, configs.at(configNum));
+	//		}
 
-			ImGui::SameLine();
-			if (ImGui::Button("Load config")) {
-				std::string fileName = "ConfigLevelSelectAbility6.json";
-				loadConfig(fileName);
-				int axisX = 1;
-				for (int i = 0; i < AbilityIconListDown.size(); i++) {
-					AbilityIconListDown.at(i)->SetPosition(glm::vec3(configs.at(configNum)->posX + (configs.at(configNum)->offSetX * axisX), configs.at(configNum)->posY, 0));
-					AbilityIconListDown.at(i)->SetSize(configs.at(configNum)->width, -configs.at(configNum)->height);
-					axisX++;
-				}
+	//		ImGui::SameLine();
+	//		if (ImGui::Button("Load config")) {
+	//			std::string fileName = "ConfigLevelSelectAbility6.json";
+	//			loadConfig(fileName);
+	//			int axisX = 1;
+	//			for (int i = 0; i < AbilityIconListDown.size(); i++) {
+	//				AbilityIconListDown.at(i)->SetPosition(glm::vec3(configs.at(configNum)->posX + (configs.at(configNum)->offSetX * axisX), configs.at(configNum)->posY, 0));
+	//				AbilityIconListDown.at(i)->SetSize(configs.at(configNum)->width, -configs.at(configNum)->height);
+	//				axisX++;
+	//			}
 
-			}
-			ImGui::InputFloat("PosX", &configs.at(configNum)->posX, 1.0f, 1.0f, "%.2f");
-			ImGui::InputFloat("PosY", &configs.at(configNum)->posY, 1.0f, 1.0f, "%.2f");
-			ImGui::InputFloat("OffSetX", &configs.at(configNum)->offSetX, 1.0f, 1.0f, "%.2f");
-			ImGui::InputFloat("OffSetY", &configs.at(configNum)->offSetY, 1.0f, 1.0f, "%.2f");
-			ImGui::InputFloat("Width", &configs.at(configNum)->width, 1.0f, 1.0f, "%.2f");
-			ImGui::InputFloat("Height", &configs.at(configNum)->height, 1.0f, 1.0f, "%.2f");
-			ImGui::EndTabItem();
-		}
+	//		}
+	//		ImGui::InputFloat("PosX", &configs.at(configNum)->posX, 1.0f, 1.0f, "%.2f");
+	//		ImGui::InputFloat("PosY", &configs.at(configNum)->posY, 1.0f, 1.0f, "%.2f");
+	//		ImGui::InputFloat("OffSetX", &configs.at(configNum)->offSetX, 1.0f, 1.0f, "%.2f");
+	//		ImGui::InputFloat("OffSetY", &configs.at(configNum)->offSetY, 1.0f, 1.0f, "%.2f");
+	//		ImGui::InputFloat("Width", &configs.at(configNum)->width, 1.0f, 1.0f, "%.2f");
+	//		ImGui::InputFloat("Height", &configs.at(configNum)->height, 1.0f, 1.0f, "%.2f");
+	//		ImGui::EndTabItem();
+	//	}
 
-		if (ImGui::BeginTabItem("Config Ability Icon Small")) {
-			configNum = 7;
-			if (ImGui::Button("Save config")) {
-				std::string fileName = "ConfigLevelSelectAbility7.json";
-				std::cout << "save config1" << std::endl;
-				saveConfig(fileName, configs.at(configNum));
-			}
+	//	if (ImGui::BeginTabItem("Config Ability Icon Small")) {
+	//		configNum = 7;
+	//		if (ImGui::Button("Save config")) {
+	//			std::string fileName = "ConfigLevelSelectAbility7.json";
+	//			std::cout << "save config1" << std::endl;
+	//			saveConfig(fileName, configs.at(configNum));
+	//		}
 
-			ImGui::SameLine();
-			if (ImGui::Button("Load config")) {
-				std::string fileName = "ConfigLevelSelectAbility7.json";
-				loadConfig(fileName);
-				int axisX = 1;
-				for (int i = 0; i < AbilityIconListDown.size(); i++) {
-					AbilityIconListDown.at(i)->SetPosition(glm::vec3(configs.at(configNum)->posX + (configs.at(configNum)->offSetX * axisX), configs.at(configNum)->posY, 0));
-					AbilityIconListDown.at(i)->SetSize(configs.at(configNum)->width, -configs.at(configNum)->height);
-					axisX++;
-				}
+	//		ImGui::SameLine();
+	//		if (ImGui::Button("Load config")) {
+	//			std::string fileName = "ConfigLevelSelectAbility7.json";
+	//			loadConfig(fileName);
+	//			int axisX = 1;
+	//			for (int i = 0; i < AbilityIconListDown.size(); i++) {
+	//				AbilityIconListDown.at(i)->SetPosition(glm::vec3(configs.at(configNum)->posX + (configs.at(configNum)->offSetX * axisX), configs.at(configNum)->posY, 0));
+	//				AbilityIconListDown.at(i)->SetSize(configs.at(configNum)->width, -configs.at(configNum)->height);
+	//				axisX++;
+	//			}
 
-			}
-			ImGui::InputFloat("PosX", &configs.at(configNum)->posX, 1.0f, 1.0f, "%.2f");
-			ImGui::InputFloat("PosY", &configs.at(configNum)->posY, 1.0f, 1.0f, "%.2f");
-			ImGui::InputFloat("OffSetX", &configs.at(configNum)->offSetX, 1.0f, 1.0f, "%.2f");
-			ImGui::InputFloat("OffSetY", &configs.at(configNum)->offSetY, 1.0f, 1.0f, "%.2f");
-			ImGui::InputFloat("Width", &configs.at(configNum)->width, 1.0f, 1.0f, "%.2f");
-			ImGui::InputFloat("Height", &configs.at(configNum)->height, 1.0f, 1.0f, "%.2f");
-			ImGui::EndTabItem();
-		}
+	//		}
+	//		ImGui::InputFloat("PosX", &configs.at(configNum)->posX, 1.0f, 1.0f, "%.2f");
+	//		ImGui::InputFloat("PosY", &configs.at(configNum)->posY, 1.0f, 1.0f, "%.2f");
+	//		ImGui::InputFloat("OffSetX", &configs.at(configNum)->offSetX, 1.0f, 1.0f, "%.2f");
+	//		ImGui::InputFloat("OffSetY", &configs.at(configNum)->offSetY, 1.0f, 1.0f, "%.2f");
+	//		ImGui::InputFloat("Width", &configs.at(configNum)->width, 1.0f, 1.0f, "%.2f");
+	//		ImGui::InputFloat("Height", &configs.at(configNum)->height, 1.0f, 1.0f, "%.2f");
+	//		ImGui::EndTabItem();
+	//	}
 
-		ImGui::EndTabBar();
-	}
+	//	ImGui::EndTabBar();
+	//}
 	
 
 	// Rendering
@@ -1072,6 +1072,8 @@ void LevelSelectAbility::HandleKey(char key){}
 void LevelSelectAbility::HandleMouse(int type, int x, int y){}
 
 void LevelSelectAbility::abilityToFile(const std::string& fileName, int who) {
+
+	ConvertAbility();
 
 	std::ofstream file(fileName);
 	nlohmann::json data;
@@ -1157,6 +1159,25 @@ void LevelSelectAbility::loadConfig(std::string filename) {
 
 	else {
 		std::cout << "Failed" << std::endl;
+	}
+}
+
+void LevelSelectAbility::ConvertAbility()
+{
+	int ability;
+	AbilitySelectScene ability_selectScene;
+	int ability_afterConvert;
+	for (int i = 0; i < 4; i++)
+	{
+		for (int j = 0; j < 3; j++)
+		{
+			ability = playerAbility[i][j];
+			ability_selectScene = static_cast<AbilitySelectScene>(ability);
+			
+			ability_afterConvert = AbilityConverter.find(ability_selectScene)->second;
+
+			playerAbility[i][j] = ability_afterConvert;
+		}
 	}
 }
 

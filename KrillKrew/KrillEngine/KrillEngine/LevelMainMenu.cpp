@@ -168,7 +168,7 @@ void LevelMainMenu::LevelDraw() {
 	//if (show_demo_window)
 	//	ImGui::ShowDemoWindow(&show_demo_window);
 
-	if (ImGui::Button("Go levelSelectAbility")) {
+	/*if (ImGui::Button("Go levelSelectAbility")) {
 		GameEngine::GetInstance()->GetStateController()->gameStateNext = GameState::GS_LEVELSELECTABILITY;
 	}
 	ImGuiTabBarFlags tab_bar_flags = ImGuiTabBarFlags_None;
@@ -296,7 +296,7 @@ void LevelMainMenu::LevelDraw() {
 		}
 
 		ImGui::EndTabBar();
-	}
+	}*/
 	// Rendering
 	ImGui::Render();
 

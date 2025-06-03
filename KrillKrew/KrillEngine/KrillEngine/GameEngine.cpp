@@ -65,7 +65,7 @@ void GameEngine::Init(int width, int height)
 
 	stateController = new GameStateController();
 	//stateController->loadingState = GameState::GS_LEVELSHOWCASE;
-	stateController->loadingState = GameState::GS_LEVELMATCHWIN;
+	stateController->loadingState = GameState::GS_LEVELMAINMENU;
 	stateController->Init(GameState::GS_LEVELLOADING);
 }
 

@@ -109,10 +109,10 @@ void LevelWinMatch::LevelDraw()
 	ImGui_ImplSDL2_NewFrame();
 	ImGui::NewFrame();
 
-	ImGui::Text("UI Position");
+	/*ImGui::Text("UI Position");
 
 	ImGui::DragFloat("PlayerNum_pos.x", &PlayerNum_pos.x, 2.0f, -1024.f, 1024.f, "%.3f");
-	ImGui::DragFloat("PlayerNum_pos.y", &PlayerNum_pos.y, 2.0f, -1024.f, 1024.f, "%.3f");
+	ImGui::DragFloat("PlayerNum_pos.y", &PlayerNum_pos.y, 2.0f, -1024.f, 1024.f, "%.3f");*/
 
 	// Rendering
 	ImGui::Render();

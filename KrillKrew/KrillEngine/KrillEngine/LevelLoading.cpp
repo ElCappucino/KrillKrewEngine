@@ -74,7 +74,7 @@ void LevelLoading::LevelDraw()
 	//if (show_demo_window)
 	//	ImGui::ShowDemoWindow(&show_demo_window);
 
-	ImGui::Text("Mouse pos: (%g, %g)", io.MousePos.x, io.MousePos.y);
+	//ImGui::Text("Mouse pos: (%g, %g)", io.MousePos.x, io.MousePos.y);
 
 
 	// Rendering

@@ -8,6 +8,39 @@
 class LevelSelectAbility : public Level
 {
 private:
+
+	enum AbilitySelectScene
+	{
+		Fireball = 0,
+		Bola = 1,
+		Cleave = 2,
+		Dash = 3,
+		TNT = 4,
+		Trap = 5,
+		Teleport = 6
+	};
+
+	std::map<AbilitySelectScene, int> AbilityConverter =
+	{
+		{Fireball,	0},
+		{Bola,		4},
+		{Cleave,	6},
+		{Dash,		2},
+		{TNT,		1},
+		{Trap,		7},
+		{Teleport,	3}
+	};
+	/*enum GameplayScene
+	{
+		Fireball = 0,
+		TNT = 1,
+		Dash = 2,
+		Teleport = 3,
+		Bola = 4,
+		Cleave = 6,
+		Trap = 7
+	};*/
+
 	std::vector<DrawableObject*> objectsList;
 	std::vector<ImageObject*> playerWindowList;
 	std::vector<UiObject*> AbilityIconListTop;
@@ -91,4 +124,6 @@ public:
 	//Config
 	void saveConfig(std::string& filename, config* con);
 	void loadConfig(std::string filename);
+
+	void ConvertAbility();
 };
