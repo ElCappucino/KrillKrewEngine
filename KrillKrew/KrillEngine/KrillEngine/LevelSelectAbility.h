@@ -41,6 +41,8 @@ private:
 	OrthographicValue targetSceneProjection; // use for lerping between the current projection and this (target projection).
 	Camera camera;
 	Timer* timer;
+	int windowWidth;
+	int windowHeight;
 
 	int dt = 0;
 	float time1s = 0;

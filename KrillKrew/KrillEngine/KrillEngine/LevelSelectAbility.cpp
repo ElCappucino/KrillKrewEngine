@@ -29,6 +29,10 @@ void LevelSelectAbility::LevelInit()
 		(SCREEN_WIDTH / 2),
 		-(SCREEN_HEIGHT / 2),
 		(SCREEN_HEIGHT / 2));
+
+	SDL_GetWindowSize(GameEngine::GetInstance()->GetSDLWindow(), &windowWidth, &windowHeight);
+	glViewport(0, 0, windowWidth, windowHeight);
+
 	//BG
 	UiObject* BG = new UiObject();
 	BG->SetSpriteInfo(spriteList.find("BG")->second);

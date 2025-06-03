@@ -19,8 +19,8 @@ private:
 	std::map<std::string, SpritesheetInfo> spriteList;
 	
 	int playerNumber = 4; // Change later
-	bool playerMove[4] = { false };
-	int playerWhere[4] = { 1 };
+	bool playerMove = false;
+	int playerWhere = 1;
 
 	bool isCredit = false;
 
@@ -38,7 +38,7 @@ private:
 	bool isBGMVolume = false;
 	bool isToggleVolume[3] = { true, true, true };
 	bool isSlider = false;
-	int masterVolume = 20;
+	int masterVolume = 100;
 	int SFXVolume = 20;
 	int BGMVolume = 20;
 
