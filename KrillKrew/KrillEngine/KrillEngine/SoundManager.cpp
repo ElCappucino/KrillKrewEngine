@@ -1,5 +1,7 @@
 #include "SoundManager.h"
 #include <iostream>
+#include "nlohmann/json.hpp"
+#include <fstream>
 
 namespace KrillSoundManager
 {
@@ -127,5 +129,52 @@ namespace KrillSoundManager
             delete pair.second;
         }
         musicSounds.clear();
+    }
+
+    void SoundManager::SaveVolumeConfig(const std::string& filename, float master, bool ismute_master, float music, bool ismute_music, float sfx, bool ismute_sfx)
+    {
+        std::ofstream file(filename);
+        nlohmann::json data;
+
+        if (!file.is_open())
+        {
+            KK_ERROR("SaveVolumeConfig: Cannot open volume config file");
+        }
+        else
+        {
+            data["MasterVolume"] = master;
+            data["SFXVolume"] = sfx;
+            data["BGMVolume"] = music;
+
+            data["Master_isMute"] = ismute_master;
+            data["SFX_isMute"] = ismute_music;
+            data["BGM_isMute"] = ismute_sfx;
+
+            file << data;
+
+            file.close();
+        }
+    }
+    void SoundManager::LoadVolumeConfig(const std::string& filename, float& master, bool& ismute_master, float& music, bool& ismute_music, float& sfx, bool& ismute_sfx)
+    {
+        std::ifstream file(filename);
+        nlohmann::json data = nlohmann::json::parse(file);;
+
+        if (!file.is_open())
+        {
+            KK_ERROR("LoadVolumeConfig: Cannot open volume config file");
+        }
+        else
+        {
+            master = data["MasterVolume"];
+            sfx = data["SFXVolume"];
+            music = data["BGMVolume"];
+
+            ismute_master = data["Master_isMute"];
+            ismute_music = data["SFX_isMute"];
+            ismute_sfx = data["BGM_isMute"];
+
+            file.close();
+        }
     }
 }

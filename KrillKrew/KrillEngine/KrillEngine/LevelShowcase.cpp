@@ -260,9 +260,36 @@ void LevelShowcase::LevelLoad()
 	soundManager->LoadMusic("bgm_test", "../Resource/Audio/bgm_test.mp3");
 	soundManager->LoadSFX("hit_test", "../Resource/Audio/cute-pop-sfx.mp3");
 
+	// BGMusic
+	soundManager->LoadMusic("GameScene_BGM", "../Resource/Audio/BGMusic/Game_Scene.mp3");
 
+	// Environment
+	soundManager->LoadSFX("Rock_Destroyed", "../Resource/Audio/Environment/Rocks/Rock_Destroyed.mp3");
+	soundManager->LoadSFX("Water_Splashes", "../Resource/Audio/Environment/WaterSplashes/water-splash-46402-2.mp3");
 
-	soundManager->PlayMusic("bgm_test", true);
+	// Ability
+	soundManager->LoadSFX("Bomb_Explosion", "../Resource/Audio/Abilities/Bomb/First_Explosion.mp3");
+
+	soundManager->LoadSFX("Cleave_Slash", "../Resource/Audio/Abilities/Cleave/SwordSlash.mp3");
+
+	soundManager->LoadSFX("Landmine_Placed", "../Resource/Audio/Abilities/Landmine/Placed.mp3");
+	soundManager->LoadSFX("Landmine_Explode", "../Resource/Audio/Abilities/Landmine/Explode.mp3");
+
+	soundManager->LoadSFX("Jellyfish_Placed", "../Resource/Audio/Abilities/PoisonJellyfish/Placed.mp3");
+	soundManager->LoadSFX("Jellyfish_Explode", "../Resource/Audio/Abilities/PoisonJellyfish/SteppedOn.mp3");
+
+	soundManager->LoadSFX("Bola_Throwing", "../Resource/Audio/Abilities/StunShot/Throwing.mp3");
+	soundManager->LoadSFX("Bola_Hit", "../Resource/Audio/Abilities/StunShot/Zap.mp3");
+
+	soundManager->LoadSFX("Teleport_Throwing", "../Resource/Audio/Abilities/Teleport/Throw-2.mp3");
+	soundManager->LoadSFX("Teleport_Hit", "../Resource/Audio/Abilities/Teleport/Teleport-2.mp3");
+
+	// Player
+	soundManager->LoadSFX("Player_Damaged", "../Resource/Audio/PlayerState/Damaged.mp3");
+	soundManager->LoadSFX("Player_Falling", "../Resource/Audio/PlayerState/Falling_State.mp3");
+	soundManager->LoadSFX("Player_HitGround", "../Resource/Audio/PlayerState/HitGround.mp3");
+
+	soundManager->PlayMusic("GameScene_BGM", true);
 
 	//cout << "Load Level" << endl;
 }
@@ -511,6 +538,8 @@ void LevelShowcase::LevelInit()
 
 	timer = Timer::Instance();
 
+	//KrillSoundManager::SoundManager::GetInstance()->PlayMusic();
+
 	TileImport(groundTile, "../Resource/MapFile/Tilemap0.txt");
 	TileImport(currentGroundTile, "../Resource/MapFile/Tilemap0.txt");
 	TileImport(propsTile, "../Resource/MapFile/Propmap0.txt");
@@ -565,9 +594,7 @@ void LevelShowcase::LevelInit()
 	// 	count = 0;
 	// }
 
-	std::ifstream readFile("Ability0.json");
-	loadAbility("Ability0.json");
-	readFile.close();
+	loadAbility("../Resource/SceneData/Ability0.json");
 
 	KK_TRACE("abilityId[0] = {0}", abilityId[0]);
 	KK_TRACE("abilityId[1] = {0}", abilityId[1]);
@@ -622,9 +649,7 @@ void LevelShowcase::LevelInit()
 	// 	count = 0;
 	// }
 
-	std::ifstream read2File("Ability1.json");
-	loadAbility("Ability1.json");
-	read2File.close();
+	loadAbility("../Resource/SceneData/Ability1.json");
 
 	playersSkill[1][0] = abilityId[0];
 	playersSkill[1][1] = abilityId[1];
@@ -681,9 +706,7 @@ void LevelShowcase::LevelInit()
 	// 	count = 0;
 	// }
 	
-	std::ifstream read3File("Ability2.json");
-	loadAbility("Ability2.json");
-	read3File.close();
+	loadAbility("../Resource/SceneData/Ability2.json");
 
 	KK_TRACE("abilityId[0] = {0}", abilityId[0]);
 	KK_TRACE("abilityId[1] = {0}", abilityId[1]);
@@ -740,10 +763,7 @@ void LevelShowcase::LevelInit()
 	// 	count = 0;
 	// }
 	
-	
-	std::ifstream read4File("Ability3.json");
-	loadAbility("Ability3.json");
-	read4File.close();
+	loadAbility("../Resource/SceneData/Ability3.json");
 
 	KK_TRACE("abilityId[0] = {0}", abilityId[0]);
 	KK_TRACE("abilityId[1] = {0}", abilityId[1]);
@@ -1104,8 +1124,19 @@ void LevelShowcase::LevelInit()
 
 	// Read config file
 
-	LoadConfigInfo("LevelShowcase.json");
+	LoadConfigInfo("../Resource/SceneData/LevelShowcase.json");
 	
+	KrillSoundManager::SoundManager::GetInstance()->LoadVolumeConfig
+	(
+		"../Resource/SceneData/CurrentVolume.json",
+		masterVolume,
+		isToggleMasterVolume,
+		musicVolume,
+		isToggleSFXVolume,
+		sfxVolume,
+		isToggleBGMVolume
+	);
+
 
 	// Setup Dear ImGui context
 	IMGUI_CHECKVERSION();
@@ -1127,34 +1158,45 @@ void LevelShowcase::LevelInit()
 
 void LevelShowcase::LevelUpdate()
 {
+	KrillSoundManager::SoundManager::GetInstance()->SetVolumeAllMusic((masterVolume / 100.0f) * musicVolume * 0.01f * (128.f - 0));
+	KrillSoundManager::SoundManager::GetInstance()->SetVolumeAllSFX((masterVolume / 100.0f) * sfxVolume * 0.01f * (128.f - 0));
+
+	if (isToggleMasterVolume)
+	{
+		KrillSoundManager::SoundManager::GetInstance()->SetVolumeAllMusic(0);
+		KrillSoundManager::SoundManager::GetInstance()->SetVolumeAllSFX(0);
+	}
+
+	if (isToggleBGMVolume)
+	{
+		KrillSoundManager::SoundManager::GetInstance()->SetVolumeAllMusic(0);
+	}
+
+	if (isToggleSFXVolume)
+	{
+		KrillSoundManager::SoundManager::GetInstance()->SetVolumeAllSFX(0);
+	}
 	//dt++;
 	// KK_TRACE("Update Per Frame");
 		// Clear inactive object
-	for (int i = 0; i < objectsList.size(); i++)
-	{
-		if (objectsList[i]->GetIsActive() == false || objectsList[i] == nullptr)
-		{
+	for (int i = objectsList.size() - 1; i >= 0; i--) {
+		if (!objectsList[i] || !objectsList[i]->GetIsActive()) {
+			objectsList[i] = nullptr;
 			objectsList.erase(objectsList.begin() + i);
 		}
 	}
 
-	for (int i = 0; i < entityObjects.size(); i++)
-	{
-		if (entityObjects[i]->GetIsActive() == false)
-		{
+	for (int i = entityObjects.size() - 1; i >= 0; i--) {
+		if (!entityObjects[i] || !entityObjects[i]->GetIsActive()) {
 			entityObjects.erase(entityObjects.begin() + i);
 		}
 	}
 
-	for (int i = 0; i < propObjects.size(); i++)
-	{
-		if (propObjects[i]->GetIsActive() == false)
-		{
+	for (int i = propObjects.size() - 1; i >= 0; i--) {
+		if (!propObjects[i] || !propObjects[i]->GetIsActive()) {
 			propObjects.erase(propObjects.begin() + i);
 		}
 	}
-
-	
 
 	/*for (TextObject* text : textObjects)
 	{
@@ -2261,7 +2303,7 @@ void LevelShowcase::UpdateInput()
 						players[i + currentPlayer]->ChangeMeleeAnimation();
 						players[i + currentPlayer]->HitAimingTile();
 						players[i + currentPlayer]->SetMeleeCooldown(MeleeCooldown);
-						soundManager->PlaySFX("hit_test", false);
+						soundManager->PlaySFX("Player_HitGround", false);
 					}
 
 				}
@@ -2941,21 +2983,37 @@ void LevelShowcase::LevelDraw()
 
 void LevelShowcase::LevelFree()
 {
-	// Clean up DrawableObjects
-	for (DrawableObject* obj: objectsList) 
-	{
-		if (obj == nullptr)
-		{
-			continue;
+	for (int i = objectsList.size() - 1; i >= 0; i--) {
+		if (!objectsList[i] || !objectsList[i]->GetIsActive()) {
+			objectsList[i] = nullptr;
+			objectsList.erase(objectsList.begin() + i);
 		}
-		delete obj;
 	}
+
+	for (int i = entityObjects.size() - 1; i >= 0; i--) {
+		if (!entityObjects[i] || !entityObjects[i]->GetIsActive()) {
+			entityObjects.erase(entityObjects.begin() + i);
+		}
+	}
+
+	for (int i = propObjects.size() - 1; i >= 0; i--) {
+		if (!propObjects[i] || !propObjects[i]->GetIsActive()) {
+			propObjects.erase(propObjects.begin() + i);
+		}
+	}
+
+	// Clean up DrawableObjects
+	/*for (DrawableObject* obj: objectsList) 
+	{
+		delete obj;
+	}*/
 	objectsList.clear();
 	entityObjects.clear();
 	currentCollisions.clear();
 	previousCollisions.clear();
 	spriteList.clear();
 
+	soundManager->StopMusic("GameScene_BGM");
 	//cout << "Free Level" << endl;
 }
 
@@ -2967,7 +3025,18 @@ void LevelShowcase::LevelUnload()
 	ImGui_ImplSDL2_Shutdown();
 	ImGui::DestroyContext();
 
-	SaveConfigInfo("LevelShowcase.json");
+	SaveConfigInfo("../Resource/SceneData/LevelShowcase.json");
+
+	KrillSoundManager::SoundManager::GetInstance()->SaveVolumeConfig
+	(
+		"../Resource/SceneData/CurrentVolume.json",
+		masterVolume,
+		isToggleMasterVolume,
+		musicVolume,
+		isToggleSFXVolume,
+		sfxVolume,
+		isToggleBGMVolume
+	);
 
 	//cout << "Unload Level" << endl;
 }
@@ -3198,6 +3267,7 @@ void LevelShowcase::UsingAbilityKeyDown(int numPlayer, PlayerObject::AbilityButt
 
 		case PlayerObject::Ability::Trap:
 			Trap(numPlayer, button);
+			KrillSoundManager::SoundManager::GetInstance()->PlaySFX("Jellyfish_Placed", false);
 			break;
 
 		case PlayerObject::Ability::Dash:
@@ -3209,6 +3279,7 @@ void LevelShowcase::UsingAbilityKeyDown(int numPlayer, PlayerObject::AbilityButt
 			if (!players[numPlayer]->GetIsTNT()) 
 			{
 				TNT(numPlayer, button);
+				KrillSoundManager::SoundManager::GetInstance()->PlaySFX("Landmine_Placed", false);
 			}
 			else if (players[numPlayer]->GetIsTNT()) 
 			{
@@ -3216,6 +3287,7 @@ void LevelShowcase::UsingAbilityKeyDown(int numPlayer, PlayerObject::AbilityButt
 				{
 					if (trap->GetType() == TrapObject::TypeTrap::Tnt) 
 					{
+						KrillSoundManager::SoundManager::GetInstance()->PlaySFX("Landmine_Explode", false);
 						trap->ExplodeTileInRange();
 						trap->ChangeAnimationState(TrapObject::AnimationState::Collide);
 						KK_TRACE("Press Again");
@@ -3238,11 +3310,12 @@ void LevelShowcase::UsingAbilityKeyDown(int numPlayer, PlayerObject::AbilityButt
 					{
 						if (projectile->GetType() == ProjectileObject::TypeProjectile::Teleport)
 						{
-								players[numPlayer]->SetPosition(projectile->getPos());
-								players[numPlayer]->SetIsShooting(false);
-								projectile->SetIsActive(false);
-								players[numPlayer]->SetAbilityCooldown(button, 6);
-								players[numPlayer]->RemoveOwningProjectile(projectile);
+							KrillSoundManager::SoundManager::GetInstance()->PlaySFX("Teleport_Hit", false);
+							players[numPlayer]->SetPosition(projectile->getPos());
+							players[numPlayer]->SetIsShooting(false);
+							projectile->SetIsActive(false);
+							players[numPlayer]->SetAbilityCooldown(button, 6);
+							players[numPlayer]->RemoveOwningProjectile(projectile);
 						}
 					}
 				}
@@ -3287,6 +3360,7 @@ void LevelShowcase::UsingAbilityKeyUp(int numPlayer, PlayerObject::AbilityButton
 			{
 				if (players[numPlayer]->GetHoldingProjectile() == ProjectileObject::TypeProjectile::Fireball) {
 					ShootFireball(numPlayer, button);
+					
 					break;
 				}
 
@@ -3298,6 +3372,7 @@ void LevelShowcase::UsingAbilityKeyUp(int numPlayer, PlayerObject::AbilityButton
 			{
 				if (players[numPlayer]->GetHoldingProjectile() == ProjectileObject::TypeProjectile::Teleport) {
 					ShootTeleport(numPlayer, button);
+					KrillSoundManager::SoundManager::GetInstance()->PlaySFX("Teleport_Throwing", false);
 					break;
 				}
 
@@ -3309,6 +3384,7 @@ void LevelShowcase::UsingAbilityKeyUp(int numPlayer, PlayerObject::AbilityButton
 			{
 				if (players[numPlayer]->GetHoldingProjectile() == ProjectileObject::TypeProjectile::Bola) {
 					ShootBola(numPlayer, button);
+					KrillSoundManager::SoundManager::GetInstance()->PlaySFX("Bola_Throwing", false);
 					break;
 				}
 
@@ -3572,6 +3648,8 @@ void LevelShowcase::ShootCleave(int numPlayer, PlayerObject::AbilityButton butto
 	projectile->SetRotation(angle);
 	projectile->SetVelocity(abs(veloX), abs(veloY), PositiveX, PositiveY);
 	players[numPlayer]->SetAbilityCooldown(button, CleaveCooldown);
+
+	KrillSoundManager::SoundManager::GetInstance()->PlaySFX("Cleave_Slash", false);
 }
 
 void LevelShowcase::AddEntityToScene(EntityObject* entity)
@@ -3581,10 +3659,12 @@ void LevelShowcase::AddEntityToScene(EntityObject* entity)
 	//objectsList.push_back(entity->GetCollider()->GetGizmos());
 	//players[numPlayer]->SetAbilityCooldown(button, 6);
 }
+
 void LevelShowcase::AddObjectToScene(DrawableObject* object)
 {
 	objectsList.push_back(object);
 }
+
 void LevelShowcase::loadAbility(std::string filename) {
 	std::ifstream file(filename);
 	nlohmann::json data = nlohmann::json::parse(file);

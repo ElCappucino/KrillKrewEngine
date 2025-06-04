@@ -8,6 +8,7 @@
 #include "TileObject.h"
 #include "Level.h"
 #include "PropObject.h"
+#include "SoundManager.h"
 
 PlayerObject::PlayerObject()
 {
@@ -718,7 +719,12 @@ void PlayerObject::CheckIfOnGround()
 			<< this->GetGroundColliderObject()->getPos().z << std::endl;*/
 		//KK_TRACE("Player is not on ground. groundCheckCollider Pos = {0}", this->GetGroundColliderObject()->getPos());
 		this->SetVelocity(0, 0, false, false);
-		this->isFell = true;
+		if (!isFell)
+		{
+			KrillSoundManager::SoundManager::GetInstance()->PlaySFX("Water_Splashes", false);
+			this->isFell = true;
+		}
+		
 		this->ChangeAnimationState(AnimationState::FellDown);
 	}
 }

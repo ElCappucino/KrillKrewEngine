@@ -52,7 +52,7 @@ void LevelSelectAbility::LevelInit()
 	PlayerWindowConfig->width = 284;
 	PlayerWindowConfig->height = 373;
 	configs.push_back(PlayerWindowConfig);
-	loadConfig("ConfigLevelSelectAbility0.json");
+	loadConfig("../Resource/SceneData/ConfigLevelSelectAbility0.json");
 
 	for (int i = 0; i < 4; i++) {
 		std::string spriteName = "Player_Window" + std::to_string(i + 1);
@@ -81,7 +81,7 @@ void LevelSelectAbility::LevelInit()
 	PlayerRemainConfig->width = 292;
 	PlayerRemainConfig->height = 133;
 	configs.push_back(PlayerRemainConfig);
-	loadConfig("ConfigLevelSelectAbility1.json");
+	loadConfig("../Resource/SceneData/ConfigLevelSelectAbility1.json");
 
 	UiObject* PlayerRemain = new UiObject();
 	PlayerRemain->SetSpriteInfo(spriteList.find("Player_Remain")->second);
@@ -103,7 +103,7 @@ void LevelSelectAbility::LevelInit()
 	AbilityIconTopConfig->width = 160;
 	AbilityIconTopConfig->height = 160;
 	configs.push_back(AbilityIconTopConfig);
-	loadConfig("ConfigLevelSelectAbility2.json");
+	loadConfig("../Resource/SceneData/ConfigLevelSelectAbility2.json");
 
 	//Down
 	config* AbilityIconDownConfig = new config();
@@ -115,7 +115,7 @@ void LevelSelectAbility::LevelInit()
 	AbilityIconDownConfig->width = 160;
 	AbilityIconDownConfig->height = 160;
 	configs.push_back(AbilityIconDownConfig);
-	loadConfig("ConfigLevelSelectAbility3.json");
+	loadConfig("../Resource/SceneData/ConfigLevelSelectAbility3.json");
 
 	for (int i = 0; i < 7; i++) {
 		if (i < 3){
@@ -151,7 +151,7 @@ void LevelSelectAbility::LevelInit()
 	playerHoverConfig->width = 450;
 	playerHoverConfig->height = 283;
 	configs.push_back(playerHoverConfig);
-	loadConfig("ConfigLevelSelectAbility4.json");
+	loadConfig("../Resource/SceneData/ConfigLevelSelectAbility4.json");
 	/*for (int i = 0; i < 4; i++) {
 		UiObject* playerHover = new UiObject();
 		playerHover->SetSpriteInfo(spriteList.find("Player_Hover")->second);
@@ -173,7 +173,7 @@ void LevelSelectAbility::LevelInit()
 	playerIconConfig->width = 175;
 	playerIconConfig->height = 152;
 	configs.push_back(playerIconConfig);
-	loadConfig("ConfigLevelSelectAbility5.json");
+	loadConfig("../Resource/SceneData/ConfigLevelSelectAbility5.json");
 	/*axisX = 0;
 	axisY = 0;
 	for (int i = 0; i < 4; i++) {
@@ -201,7 +201,7 @@ void LevelSelectAbility::LevelInit()
 	playerIconSmallConfig->width = 127;
 	playerIconSmallConfig->height = 120;
 	configs.push_back(playerIconSmallConfig);
-	loadConfig("ConfigLevelSelectAbility6.json");
+	loadConfig("../Resource/SceneData/ConfigLevelSelectAbility6.json");
 	/*axisX = 0;
 	axisY = 0;
 	for (int i = 0; i < 4; i++) {
@@ -229,7 +229,7 @@ void LevelSelectAbility::LevelInit()
 	abilityIconSmallConfig->width = 72;
 	abilityIconSmallConfig->height = 72;
 	configs.push_back(abilityIconSmallConfig);
-	loadConfig("ConfigLevelSelectAbility7.json");
+	loadConfig("../Resource/SceneData/ConfigLevelSelectAbility7.json");
 	/*axisX = 0;
 	axisY = 0;
 	for (int i = 0; i < 4; i++) {
@@ -302,7 +302,7 @@ void LevelSelectAbility::LevelUpdate()
 	if (check == SDL_NumJoysticks()) {
 		for (int i = 0; i < SDL_NumJoysticks(); i++)
 		{
-			std::string fileName = "Ability" + std::to_string(i) + ".json";
+			std::string fileName = "../Resource/SceneData/Ability" + std::to_string(i) + ".json";
 			abilityToFile(fileName, i);
 		}
 		GameEngine::GetInstance()->GetStateController()->gameStateNext = GameState::GS_LEVELSHOWCASE;
@@ -1051,6 +1051,7 @@ void LevelSelectAbility::LevelFree()
 	}
 	objectsList.clear();
 
+	KrillSoundManager::SoundManager::GetInstance()->StopMusic("Ability_Selection");
 	//cout << "Free Level" << endl;
 }
 

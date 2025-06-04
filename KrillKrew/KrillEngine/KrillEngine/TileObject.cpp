@@ -1,6 +1,7 @@
 #include "TileObject.h"
 #include "PlayerObject.h"
 #include "Level.h"
+#include "SoundManager.h"
 
 int BFSTile
 (
@@ -234,10 +235,15 @@ void TileObject::SetUpdateTileset(std::array<std::array<int, MAP_WIDTH>, MAP_HEI
 
 void TileObject::DisableOverlaySprite()
 {
-	this->isBroke = true;
-	this->isBreakable = false;
-	this->crackOverlay->SetIsActive(false);
-	this->GetCollider()->GetGizmos()->SetIsActive(false);
+	if (!this->isBroke)
+	{
+		this->isBroke = true;
+		this->isBreakable = false;
+		this->crackOverlay->SetIsActive(false);
+		this->GetCollider()->GetGizmos()->SetIsActive(false);
+		KrillSoundManager::SoundManager::GetInstance()->PlaySFX("Rock_Destroyed", false);
+	}
+	
 }
 void TileObject::CheckIfBreak()
 {
@@ -300,7 +306,7 @@ void TileObject::UpdateSpriteSheetPosition()
 	if (currentDurability >= maxDurability)
 	{
 		this->currAnimState = TileObject::AnimationState::FinishBreaking;
-		this->SetIsActive(false);
+		//this->SetIsActive(false);
 	}
 }
 void TileObject::AddCollapseTileToScene()
@@ -318,15 +324,6 @@ void TileObject::AddCollapseTileToScene()
 	particle->SetPosition(this->pos);
 	particle->SetSize(particle->GetSpriteRenderer()->GetSpriteWidth(), particle->GetSpriteRenderer()->GetSpriteHeight());
 	this->currentLevel->AddEntityToScene(particle);
-
-	/*TileObject* collapseTile = new TileObject();
-	collapseTile->SetIsAnimated(true);
-	collapseTile->currAnimState = AnimationState::Breaking;
-	collapseTile->SetSize(256.f, -256.f);
-	collapseTile->SetPosition(this->pos);
-	collapseTile->GetSpriteRenderer()->SetFrame(10);
-	collapseTile->SetSpriteInfo(collapseTileSprite);
-	collapseTile->GetSpriteRenderer()->ShiftTo(this->GetSpriteRenderer()->GetRow(), this->GetSpriteRenderer()->GetColumn());*/
 
 	currentLevel->AddEntityToScene(particle);
 }

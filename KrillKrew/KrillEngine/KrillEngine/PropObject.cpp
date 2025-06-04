@@ -1,6 +1,7 @@
 #include "PropObject.h"
 #include "Level.h"
 #include "TileObject.h"
+#include "SoundManager.h"
 
 PropObject::PropObject()
 {
@@ -115,7 +116,7 @@ void PropObject::CheckIfBreak()
 			particle->SetPosition(this->pos);
 			particle->SetSize(particle->GetSpriteRenderer()->GetSpriteWidth(), particle->GetSpriteRenderer()->GetSpriteHeight());
 			this->currentLevel->AddEntityToScene(particle);
-
+			KrillSoundManager::SoundManager::GetInstance()->PlaySFX("Rock_Destroyed", false);
 			KK_TRACE("PropObject:destroy Prop");
 		}
 
