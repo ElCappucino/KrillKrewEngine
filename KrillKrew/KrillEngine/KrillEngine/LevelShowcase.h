@@ -26,6 +26,7 @@ private:
 	std::array<std::array<UiObject*, 3>, 4> playerSkillUIs; // add up to 4 players
 	std::array<std::array<TextObject*, 3>, 4> playerSkillCooldownTexts; // add up to 4 players
 	std::array<std::array<UiObject*, 3>, 4> playerSkillCooldownCovers; // add up to 4 players
+	std::array<std::array<UiObject*, 3>, 4> playerSkillButtons; // add up to 4 players
 
 	std::array<std::array<int, MAP_WIDTH>, MAP_HEIGHT> currentGroundTile = { 0 };
 	std::array<std::array<int, MAP_WIDTH>, MAP_HEIGHT> groundTile = { 0 };

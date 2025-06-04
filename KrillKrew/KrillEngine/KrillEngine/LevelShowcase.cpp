@@ -224,6 +224,10 @@ void LevelShowcase::LevelLoad()
 	spriteList["AbilityGameplay_UI"] = SpritesheetInfo("AbilityGameplay_UI", "../Resource/Texture/Gameplay/UI_GP_Abilityicon.png", 69, 69, 552, 69);
 	spriteList["AbilityCover_UI"] = SpritesheetInfo("AbilityCover_UI", "../Resource/Texture/Gameplay/UI_GP_Abilityicon_black.png", 69, 69, 69, 69);
 
+	spriteList["AbilityIcon_Circle_UI"] = SpritesheetInfo("AbilityCover_UI", "../Resource/Texture/Gameplay/UI_GP_Abilityicon_circle.png", 69, 69, 69, 69);
+	spriteList["AbilityIcon_Cross_UI"] = SpritesheetInfo("AbilityCover_UI", "../Resource/Texture/Gameplay/UI_GP_Abilityicon_cross.png", 69, 69, 69, 69);
+	spriteList["AbilityIcon_Triangle_UI"] = SpritesheetInfo("AbilityCover_UI", "../Resource/Texture/Gameplay/UI_GP_Abilityicon_triangle.png", 69, 69, 69, 69);
+
 	spriteList["Blobtile"] = SpritesheetInfo("Blobtile", "../Resource/Texture/tileset_01.png", 128, 128, 1664, 512);
 
 	// Prop
@@ -1106,6 +1110,25 @@ void LevelShowcase::LevelInit()
 
 			objectsList.push_back(playerSkillCooldownCovers[i][j]);
 		}
+
+		playerSkillButtons[i][0] = new UiObject();
+		playerSkillButtons[i][0]->SetSpriteInfo(spriteList.find("AbilityIcon_Triangle_UI")->second);
+		playerSkillButtons[i][0]->SetIsRender(true);
+		playerSkillButtons[i][0]->uiType = UiObject::UIType::SkillCover;
+
+		playerSkillButtons[i][1] = new UiObject();
+		playerSkillButtons[i][1]->SetSpriteInfo(spriteList.find("AbilityIcon_Circle_UI")->second);
+		playerSkillButtons[i][1]->SetIsRender(true);
+		playerSkillButtons[i][1]->uiType = UiObject::UIType::SkillCover;
+
+		playerSkillButtons[i][2] = new UiObject();
+		playerSkillButtons[i][2]->SetSpriteInfo(spriteList.find("AbilityIcon_Cross_UI")->second);
+		playerSkillButtons[i][2]->SetIsRender(true);
+		playerSkillButtons[i][2]->uiType = UiObject::UIType::SkillCover;
+
+		objectsList.push_back(playerSkillButtons[i][0]);
+		objectsList.push_back(playerSkillButtons[i][1]);
+		objectsList.push_back(playerSkillButtons[i][2]);
 	}
 
 	TextObject* text = new TextObject();
@@ -2623,6 +2646,11 @@ void LevelShowcase::UpdateUI()
 
 			uiCover->SetPosition(glm::vec3(posX_currentSkill, posY, 0));
 			uiCover->SetSize(skillWidth * camera.GetCameraWidth() / SCREEN_WIDTH, -skillHeight * camera.GetCameraHeight() / SCREEN_HEIGHT);
+
+			UiObject* uiButton = playerSkillButtons[i][j];
+
+			uiButton->SetPosition(glm::vec3(posX_currentSkill, posY, 0));
+			uiButton->SetSize(skillWidth * camera.GetCameraWidth() / SCREEN_WIDTH, -skillHeight * camera.GetCameraHeight() / SCREEN_HEIGHT);
 
 			float cooldown = players[i]->GetCooldown(static_cast<PlayerObject::AbilityButton>(j));
 			
