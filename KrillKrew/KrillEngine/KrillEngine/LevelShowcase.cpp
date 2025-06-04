@@ -507,7 +507,7 @@ void LevelShowcase::InitProp()
 				obj->GetSpriteRenderer()->ShiftTo(0, 0);
 				obj->propType = PropObject::PropType::Tree;
 				obj->propBreakSprite = spriteList.find("Leaf2_Collapse")->second;
-				obj->GetCollider()->SetOffset(0, -270.f, 0);
+				obj->GetCollider()->SetOffset(0, -250.f, 0);
 				obj->SetIsAnimated(true);
 				obj->SetIsBreakable(true);
 				break;
@@ -517,7 +517,7 @@ void LevelShowcase::InitProp()
 				obj->GetSpriteRenderer()->ShiftTo(0, 0);
 				obj->propType = PropObject::PropType::Tree;
 				obj->propBreakSprite = spriteList.find("Leaf2_Collapse")->second;
-				obj->GetCollider()->SetOffset(0, -250.5f, 0);
+				obj->GetCollider()->SetOffset(0, -230.5f, 0);
 				obj->SetIsAnimated(true);
 				obj->SetIsBreakable(true);
 				break;
@@ -3166,16 +3166,19 @@ void LevelShowcase::GroundTileRefactor()
 				//SpritesheetInfo collapseTileSprite = SpritesheetInfo("CollapseTile", "../Resource/Texture/Props/prop_spr_vfx_smoke.png", 200, 200, 800, 200);
 				
 				
-				TileObject* collapseTile = new TileObject();
+				/*TileObject* collapseTile = new TileObject();
 				collapseTile->SetIsAnimated(true);
 				collapseTile->currAnimState = TileObject::AnimationState::Breaking;
+				collapseTile->SetIsBroke(true);
 				collapseTile->SetSize(256.f, -256.f);
 				collapseTile->SetPosition(tilesList[i][j]->getPos());
 				collapseTile->GetSpriteRenderer()->SetFrame(10);
 				collapseTile->SetTextureWithID(spriteList.find("CollapseTile")->second, spriteList.find("CollapseTile")->second.textureid);
-				collapseTile->GetSpriteRenderer()->ShiftTo(tilesList[i][j]->GetSpriteRenderer()->GetRow(), tilesList[i][j]->GetSpriteRenderer()->GetColumn());
+				collapseTile->GetSpriteRenderer()->ShiftTo(tilesList[i][j]->GetSpriteRenderer()->GetRow(), tilesList[i][j]->GetSpriteRenderer()->GetColumn());*/
 
-				AddEntityToScene(collapseTile);
+				//AddEntityToScene(collapseTile);
+
+				tilesList[i][j]->ImmediatelyBreak();
 				tilesList[i][j]->currAnimState = TileObject::AnimationState::FinishBreaking;
 
 				currentGroundTile[i][j] = 0;

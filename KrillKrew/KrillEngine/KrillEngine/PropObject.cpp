@@ -148,6 +148,11 @@ void PropObject::CheckIfNoTileSurround()
 			}
 		}
 	}
+
+	if (propType == PropObject::PropType::Tree)
+	{
+		KK_INFO("PropObject: Tree surroundTile = {0}", surroundTile.size());
+	}
 	if (surroundTile.empty())
 	{
 		//KK_TRACE("PropObject: surroundTile.empty()");

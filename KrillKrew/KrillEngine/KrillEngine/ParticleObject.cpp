@@ -104,7 +104,7 @@ void ParticleObject::OnTriggerExit(Collider* other)
 }
 void ParticleObject::UpdateSpriteSheetPosition()
 {
-	KK_TRACE("ParticleObject: UpdateSpriteSheetPosition");
+	//KK_TRACE("ParticleObject: UpdateSpriteSheetPosition");
 	this->GetSpriteRenderer()->ShiftColumn();
 }
 void ParticleObject::SetAnimationSprite(ParticleObject::AnimationState state, SpritesheetInfo spriteInfo)

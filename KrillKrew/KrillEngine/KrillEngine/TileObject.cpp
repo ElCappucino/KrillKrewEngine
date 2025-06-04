@@ -226,7 +226,11 @@ void TileObject::SetTilePosition(int x, int y)
 
 void TileObject::UpdateTileArray(int flag)
 {
-	(*updateTile)[tilePos.x][tilePos.y] = flag;
+	if (updateTile)
+	{
+		(*updateTile)[tilePos.x][tilePos.y] = flag;
+	}
+	
 }
 void TileObject::SetUpdateTileset(std::array<std::array<int, MAP_WIDTH>, MAP_HEIGHT>* tiles)
 {
