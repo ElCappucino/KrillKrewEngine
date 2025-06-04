@@ -80,7 +80,9 @@ private:
 
 	float krakenSign_t = 0.0f;
 
-	
+	//display
+	int windowWidth;
+	int windowHeight;
 
 	// Pause Menu
 	enum PauseMenuButton
@@ -90,16 +92,54 @@ private:
 		MainMenu
 	};
 
+	// YesNo Menu
+	enum YesNoButton
+	{
+		Yes = 0,
+		No
+	};
+
+	// Option Button
+	enum OptionButton {
+		Display = 0,
+		MasterVolume,
+		SFXVolume,
+		BGMVolume
+	};
+
+	// Volume Button
+	enum VolumeButton {
+		Knob = 0,
+		Box
+	};
+
 	bool isPause = false;
 	bool isPressedInPause = false;
+	bool isOption = false;
+	bool isAreYouSure = false;
+	bool isDisplayDropDown = false;
+	bool isVolume = false;
+	bool isVolumeKnob = false;
 
 	PauseMenuButton currentPauseButton = PauseMenuButton::Resume;
+	YesNoButton currentYesNoButton = YesNoButton::No;
+	OptionButton currentOptionButton = OptionButton::Display;
+	VolumeButton currentVolumeButton = VolumeButton::Knob;
 
 	UiObject* PauseMenu;
 	UiObject* ResumeButton;
 	UiObject* OptionButton;
 	UiObject* MainMenuButton;
-
+	UiObject* AreYouSureBG;
+	UiObject* YesButton;
+	UiObject* NoButton;
+	UiObject* DisplayBox;
+	UiObject* DisplayDropDown;
+	UiObject* OptionBG;
+	std::vector<UiObject*> OptionTextList;
+	std::vector<UiObject*> volumeTrackList;
+	std::vector<UiObject*> volumeKnobList;
+	std::vector<UiObject*> volumeBoxList;
 
 	std::map<int, std::pair<int, int>> blob_lookup_table = {
 
@@ -277,7 +317,11 @@ private:
 	float time01s = 0;
 	float previousWidth = 0, previousHeight = 0;
 
-	float musicVolume = 1.f, sfxVolume = 1.f;
+	float masterVolume = 0.f;
+	float musicVolume = 0.f, sfxVolume = 0.f;
+	bool isToggleMasterVolume = false;
+	bool isToggleSFXVolume = false;
+	bool isToggleBGMVolume = false;
 
 	// player
 	std::array<float, 4> axisXOld;
