@@ -312,11 +312,15 @@ void LevelSelectAbility::LevelUpdate()
 void LevelSelectAbility::UpdateInput()
 {
 	if (SDL_NumJoysticks() > 0) {
+		
+		KK_INFO("configs.size() = {0}", configs.size());
+		KK_INFO("playerHoverList.size() = {0}", playerHoverList.size());
 		Joystick::Update();
 		for (int i = 0; i < SDL_NumJoysticks(); i++)
 		{
 			//join
-			if (Joystick::GetButtonDown(i, Joystick::Button::Triangle) && playerWindowList[i]->GetSpriteRenderer()->GetColumn() == 0) {
+			if (Joystick::GetButtonDown(i, Joystick::Button::Triangle) && playerWindowList[i]->GetSpriteRenderer()->GetColumn() == 0) 
+			{
 				ready[i] = 0;
 
 				//player window
@@ -410,67 +414,75 @@ void LevelSelectAbility::UpdateInput()
 				
 			}
 
-			if (playerWindowList.at(i)->GetSpriteRenderer()->GetColumn() != 0 && ready[i] == false) {
+			if (playerWindowList.at(i)->GetSpriteRenderer()->GetColumn() != 0 && ready[i] == false && i < playerHoverList.size()) {
 				//move hover
 				if (playerMove[i] == false) {
 					if (Joystick::GetButtonDown(i, Joystick::Button::DPAD_Right) || Joystick::GetButtonDown(i, Joystick::Button::DPAD_Up) || right || up) {
 						playerHoverWhere[i]++;
-						helpHover++;
+						helpHover[i]++;
 						if (playerHoverWhere[i] > 6) {
 							playerHoverWhere[i] = 0;
-							helpHover = 0;
+							helpHover[i] = 0;
 						}
 						if (playerHoverWhere[i] == 3) {
-							helpHover = 0;
+							helpHover[i] = 0;
 						}
 						playerMove[i] = true;
 					}
 
-					if (Joystick::GetButtonDown(i, Joystick::Button::DPAD_Left) || Joystick::GetButtonDown(i, Joystick::Button::DPAD_Down) || left || down) {
+					if (Joystick::GetButtonDown(i, Joystick::Button::DPAD_Left) || Joystick::GetButtonDown(i, Joystick::Button::DPAD_Down) || left || down) 
+					{
 						playerHoverWhere[i]--;
-						helpHover--;
-						if (playerHoverWhere[i] <= -1) {
+						helpHover[i]--;
+						if (playerHoverWhere[i] <= -1) 
+						{
 							playerHoverWhere[i] = 6;
-							helpHover = 3;
+							helpHover[i] = 3;
 						}
-						if (playerHoverWhere[i] == 2) {
-							helpHover = 2;
+						if (playerHoverWhere[i] == 2) 
+						{
+							helpHover[i] = 2;
 						}
 						playerMove[i] = true;
 					}
 
 					if (playerHoverWhere[i] > 2) {
-						playerHoverList.at(i)->SetPosition(glm::vec3(configs.at(4)->posX + (configs.at(4)->offSetX * (playerHoverWhere[i] - 4 + helpHover)),
+						playerHoverList.at(i)->SetPosition(glm::vec3(configs.at(4)->posX + (configs.at(4)->offSetX * (playerHoverWhere[i] - 4 + helpHover[i])),
 							configs.at(4)->posY + AbilityIconListDown.at(0)->getPos().y + configs.at(4)->offSetY, 0));
 					}
 					else {
-						playerHoverList.at(i)->SetPosition(glm::vec3(configs.at(4)->posX + (configs.at(4)->offSetX * (playerHoverWhere[i] + helpHover)),
+						playerHoverList.at(i)->SetPosition(glm::vec3(configs.at(4)->posX + (configs.at(4)->offSetX * (playerHoverWhere[i] + helpHover[i])),
 							configs.at(4)->posY, 0));
 					}
-					
+
 				}
 
 				//select character
-				if (Joystick::GetButtonDown(i, Joystick::Button::R1)) {
+				if (Joystick::GetButtonDown(i, Joystick::Button::R1)) 
+				{
 					playerIconSmallList.at(i)->GetSpriteRenderer()->ShiftColumn();
 				}
 
-				if (Joystick::GetButtonDown(i, Joystick::Button::L1)) {
+				if (Joystick::GetButtonDown(i, Joystick::Button::L1)) 
+				{
 					playerIconSmallList.at(i)->GetSpriteRenderer()->ShiftTo(playerIconSmallList.at(i)->GetSpriteRenderer()->GetRow(), playerIconSmallList.at(i)->GetSpriteRenderer()->GetColumn() - 1);
 				}
 
 				//select ability
-				if (Joystick::GetButtonDown(i, Joystick::Button::Cross)) {
+				if (Joystick::GetButtonDown(i, Joystick::Button::Cross)) 
+				{
 					bool press = false;
 					for (int j = 0; j < 3; j++) {
-						if (playerHoverWhere[i] == playerAbility[i][j]) {
+						if (playerHoverWhere[i] == playerAbility[i][j]) 
+						{
 							playerAbility[i][j] = 8;
 							press = true;
 						}
 					}
 
 					for (int j = 0; j < 3; j++) {
-						if (press == false && playerAbility[i][j] == 8) {
+						if (press == false && playerAbility[i][j] == 8) 
+						{
 							playerAbility[i][j] = playerHoverWhere[i];
 							press = true;
 						}
@@ -478,29 +490,39 @@ void LevelSelectAbility::UpdateInput()
 				}
 
 				//ready
-				if (Joystick::GetButtonDown(i, Joystick::Button::Square)) {
+				if (Joystick::GetButtonDown(i, Joystick::Button::Square)) 
+				{
 					bool canReady = true;
-					for (int j = 0; j < 3; j++) {
-						if (playerAbility[i][j] == 8) {
+
+					/*for (int j = 0; j < 3; j++) 
+					{
+						if (playerAbility[i][j] == 8) 
+						{
 							canReady = false;
 						}
 					}
 						
-					for (int j = 0; j < playerIconSmallList.size(); j++) {
+					for (int j = 0; j < playerIconSmallList.size(); j++) 
+					{
 						for (int k = 0; k < SDL_NumJoysticks(); k++) {
 							if (playerIconSmallList.at(j)->getNumOwner() == i && playerIconSmallList.at(j)->GetSpriteRenderer()->GetColumn() == character[k]) {
 								canReady = false;
 							}
 						}
-					}
+					}*/
 					
-					if (canReady == true) {
-						playerWindowList.at(i)->GetSpriteRenderer()->ShiftTo(playerWindowList.at(i)->GetSpriteRenderer()->GetRow(), playerIconSmallList.at(i)->GetSpriteRenderer()->GetColumn() + 2);
+					if (canReady == true) 
+					{
+						playerWindowList.at(i)->GetSpriteRenderer()->ShiftTo(playerWindowList.at(i)->GetSpriteRenderer()->GetRow(), playerWindowList.at(i)->GetSpriteRenderer()->GetColumn() + 2);
 						playerRemainList.at(0)->GetSpriteRenderer()->ShiftTo(playerRemainList.at(0)->GetSpriteRenderer()->GetRow(), playerRemainList.at(0)->GetSpriteRenderer()->GetColumn() + 1);
 						
-						for (int j = 0; j < 3; j++) {
-							playerAbilityList[i]->at(j)->SetPosition(glm::vec3(playerAbilityList[i]->at(j)->getPos().x,
-								playerAbilityList[i]->at(j)->getPos().y - 25, 0));
+						for (int j = 0; j < 3; j++) 
+						{
+							playerAbilityList[i]->at(j)->SetPosition
+							(
+								glm::vec3(playerAbilityList[i]->at(j)->getPos().x,
+								playerAbilityList[i]->at(j)->getPos().y - 25, 0)
+							);
 						}
 
 						//character = playerIconSmallList.at(i).;
@@ -508,6 +530,7 @@ void LevelSelectAbility::UpdateInput()
 						PlayerIcon->SetSpriteInfo(spriteList.find("Player_Icon")->second);
 						PlayerIcon->SetSize(configs.at(5)->width, -configs.at(5)->height);
 						PlayerIcon->GetSpriteRenderer()->ShiftTo(PlayerIcon->GetSpriteRenderer()->GetRow(), playerIconSmallList.at(i)->GetSpriteRenderer()->GetColumn());
+						
 						if (i == 0) {
 							axisXplayerIcon = 0;
 							axisYplayerIcon = 0;
@@ -524,14 +547,17 @@ void LevelSelectAbility::UpdateInput()
 							axisXplayerIcon = 1;
 							axisYplayerIcon = -1;
 						}
+
 						PlayerIcon->SetPosition(glm::vec3(configs.at(5)->posX + (configs.at(5)->offSetX * axisXplayerIcon), configs.at(5)->posY + (configs.at(5)->offSetY * axisYplayerIcon), 0));
 						PlayerIcon->setNumOwner(i);
 						objectsList.push_back(PlayerIcon);
 						playerIconList.push_back(PlayerIcon);
 						ready[i] = true;
 
-						for (int j = 0; j < playerIconSmallList.size(); j++) {
-							if (playerIconSmallList.at(j)->getNumOwner() == i) {
+						for (int j = 0; j < playerIconSmallList.size(); j++) 
+						{
+							if (playerIconSmallList.at(j)->getNumOwner() == i) 
+							{
 								character[i] = playerIconSmallList.at(j)->GetSpriteRenderer()->GetColumn();
 								PlayerIcon->GetSpriteRenderer()->ShiftTo(PlayerIcon->GetSpriteRenderer()->GetRow(), playerIconSmallList.at(j)->GetSpriteRenderer()->GetColumn());
 								playerIconSmallList.at(j)->SetIsActive(false);
@@ -548,32 +574,41 @@ void LevelSelectAbility::UpdateInput()
 						}
 					}
 					
-					else {
+					else 
+					{
 						playerWindowList.at(i)->GetSpriteRenderer()->ShiftTo(playerWindowList.at(i)->GetSpriteRenderer()->GetRow(), 6);
 					}
 				}
 			}
-			
-			else if (Joystick::GetButtonDown(i, Joystick::Button::Square) && ready[i] == true) {
+
+			else if (Joystick::GetButtonDown(i, Joystick::Button::Square) && ready[i] == true) 
+			{
 				playerWindowList.at(i)->GetSpriteRenderer()->ShiftTo(playerWindowList.at(i)->GetSpriteRenderer()->GetRow(), 1);
 				playerRemainList.at(0)->GetSpriteRenderer()->ShiftTo(playerRemainList.at(0)->GetSpriteRenderer()->GetRow(), playerRemainList.at(0)->GetSpriteRenderer()->GetColumn() - 1);
+				
 				character[i] = -1;
+				
 				UiObject* PlayerIconSmall = new UiObject();
 				PlayerIconSmall->SetSpriteInfo(spriteList.find("Player_Icon_Small")->second);
 				PlayerIconSmall->SetSize(configs.at(6)->width, -configs.at(6)->height);
-				if (i == 0) {
+				
+				if (i == 0) 
+				{
 					axisXplayerIconSmall = 0;
 					axisYplayerIconSmall = 0;
 				}
-				if (i == 1) {
+				if (i == 1) 
+				{
 					axisXplayerIconSmall = 1;
 					axisYplayerIconSmall = 0;
 				}
-				if (i == 2) {
+				if (i == 2) 
+				{
 					axisXplayerIconSmall = 0;
 					axisYplayerIconSmall = -1;
 				}
-				if (i == 3) {
+				if (i == 3) 
+				{
 					axisXplayerIconSmall = 1;
 					axisYplayerIconSmall = -1;
 				}
@@ -582,12 +617,18 @@ void LevelSelectAbility::UpdateInput()
 				objectsList.push_back(PlayerIconSmall);
 				playerIconSmallList.push_back(PlayerIconSmall);
 
-				for (int j = 0; j < 3; j++) {
-					playerAbilityList[i]->at(j)->SetPosition(glm::vec3(playerAbilityList[i]->at(j)->getPos().x,
-						playerAbilityList[i]->at(j)->getPos().y + 25, 0));
+				for (int j = 0; j < 3; j++) 
+				{
+					playerAbilityList[i]->at(j)->SetPosition
+					(
+						glm::vec3(playerAbilityList[i]->at(j)->getPos().x,
+						playerAbilityList[i]->at(j)->getPos().y + 25, 0)
+					);
 				}
-				for (int j = 0; j < playerIconList.size(); j++) {
-					if (playerIconList.at(j)->getNumOwner() == i) {
+				for (int j = 0; j < playerIconList.size(); j++) 
+				{
+					if (playerIconList.at(j)->getNumOwner() == i) 
+					{
 						PlayerIconSmall->GetSpriteRenderer()->ShiftTo(PlayerIconSmall->GetSpriteRenderer()->GetRow(), playerIconList.at(j)->GetSpriteRenderer()->GetColumn());
 						playerIconList.at(j)->SetIsActive(false);
 						playerIconList.erase(playerIconList.begin() + j);
@@ -608,15 +649,13 @@ void LevelSelectAbility::UpdateInput()
 				playerMove[i] = false;
 			}
 		}
-
-
 	}
 }
 
 void LevelSelectAbility::UpdateUi() {
 
 	//player hover
-	for (int i = 0; i < 4; i++) {
+	for (int i = 0; i < playerHoverList.size(); i++) {
 		int count = 0;
 		for (int j = 0; j < playerHoverList.size(); j++) {
 			if (playerHoverWhere[i] == playerHoverWhere[j] && i != j && playerHoverList.size() > 1) {
@@ -632,27 +671,33 @@ void LevelSelectAbility::UpdateUi() {
 	// player ability icon
 	for (int i = 0; i < playerAbilityList.size(); i++) {
 		for (int j = 0; j < 3; j++) {
+			//KK_TRACE("playerAbilityList[i].size() = {0}", playerAbilityList[i]->size());
+			if (!playerAbilityList[i])
+			{
+				continue;
+			}
 			playerAbilityList[i]->at(j)->GetSpriteRenderer()->ShiftTo(playerAbilityList[i]->at(j)->GetSpriteRenderer()->GetRow(), playerAbility[i][j]); 
 		}
 	}
 
 	//update by config *Replace this in LevelInit instead old code when build it.
 	//Player window
-	axisX = 1;
-	axisY = 2;
-	for (int i = 0; i < playerWindowList.size(); i++) {
+	/*axisX = 1;
+	axisY = 2;*/
+	/*for (int i = 0; i < playerWindowList.size(); i++) {
 		if (i == 2) {
 			axisX = 1;
 			axisY = 1;
 		}
+		KK_TRACE("playerWindowList.size = {0}", playerWindowList.size());
 		playerWindowList.at(i)->SetPosition(glm::vec3(configs.at(0)->posX + (configs.at(0)->offSetX * axisX), configs.at(0)->posY + (configs.at(0)->offSetY * axisY), 0));
 		playerWindowList.at(i)->SetSize(configs.at(0)->width, -configs.at(0)->height);
 		axisX++;
-	}
+	}*/
 
 	//Player remain
-	objectsList.at(5)->SetPosition(glm::vec3(configs.at(1)->posX, configs.at(1)->posY, 0));
-	objectsList.at(5)->SetSize(configs.at(1)->width, -configs.at(1)->height);
+	/*objectsList.at(5)->SetPosition(glm::vec3(configs.at(1)->posX, configs.at(1)->posY, 0));
+	objectsList.at(5)->SetSize(configs.at(1)->width, -configs.at(1)->height);*/
 
 	//Ability icon
 	//Top
@@ -1176,6 +1221,7 @@ void LevelSelectAbility::ConvertAbility()
 			ability_selectScene = static_cast<AbilitySelectScene>(ability);
 			
 			ability_afterConvert = AbilityConverter.find(ability_selectScene)->second;
+
 
 			playerAbility[i][j] = ability_afterConvert;
 		}

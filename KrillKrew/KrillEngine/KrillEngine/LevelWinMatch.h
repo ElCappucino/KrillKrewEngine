@@ -29,8 +29,8 @@ private:
 	glm::vec3 Background_size = { 1920, -1080, 0 };
 	glm::vec3 PlayerNum_size = { 820, -175, 0 };
 
-	float windowWidth = SCREEN_WIDTH;
-	float windowHeight = SCREEN_HEIGHT;
+	int windowWidth = SCREEN_WIDTH;
+	int windowHeight = SCREEN_HEIGHT;
 
 	OrthographicValue targetSceneProjection;
 	Camera camera;

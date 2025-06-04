@@ -23,6 +23,9 @@ void LevelLoading::LevelInit()
 		-(SCREEN_HEIGHT / 2),
 		(SCREEN_HEIGHT / 2));
 
+	SDL_GetWindowSize(GameEngine::GetInstance()->GetSDLWindow(), &windowWidth, &windowHeight);
+	glViewport(0, 0, windowWidth, windowHeight);
+
 	// Setup Dear ImGui context
 	IMGUI_CHECKVERSION();
 	ImGui::CreateContext();

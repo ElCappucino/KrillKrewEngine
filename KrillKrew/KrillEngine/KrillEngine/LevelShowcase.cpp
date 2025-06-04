@@ -715,9 +715,9 @@ void LevelShowcase::LevelInit()
 	
 	loadAbility("../Resource/SceneData/Ability2.json");
 
-	KK_TRACE("abilityId[0] = {0}", abilityId[0]);
-	KK_TRACE("abilityId[1] = {0}", abilityId[1]);
-	KK_TRACE("abilityId[2] = {0}", abilityId[2]);
+	KK_TRACE("LevelShowcase: abilityId[0] = {0}", abilityId[0]);
+	KK_TRACE("LevelShowcase: abilityId[1] = {0}", abilityId[1]);
+	KK_TRACE("LevelShowcase: abilityId[2] = {0}", abilityId[2]);
 
 	playersSkill[2][0] = abilityId[0];
 	playersSkill[2][1] = abilityId[1];
@@ -1187,18 +1187,18 @@ void LevelShowcase::LevelUpdate()
 	KrillSoundManager::SoundManager::GetInstance()->SetVolumeAllMusic((masterVolume / 100.0f) * musicVolume * 0.01f * (128.f - 0));
 	KrillSoundManager::SoundManager::GetInstance()->SetVolumeAllSFX((masterVolume / 100.0f) * sfxVolume * 0.01f * (128.f - 0));
 
-	if (isToggleMasterVolume)
+	if (!isToggleMasterVolume)
 	{
 		KrillSoundManager::SoundManager::GetInstance()->SetVolumeAllMusic(0);
 		KrillSoundManager::SoundManager::GetInstance()->SetVolumeAllSFX(0);
 	}
 
-	if (isToggleBGMVolume)
+	if (!isToggleBGMVolume)
 	{
 		KrillSoundManager::SoundManager::GetInstance()->SetVolumeAllMusic(0);
 	}
 
-	if (isToggleSFXVolume)
+	if (!isToggleSFXVolume)
 	{
 		KrillSoundManager::SoundManager::GetInstance()->SetVolumeAllSFX(0);
 	}

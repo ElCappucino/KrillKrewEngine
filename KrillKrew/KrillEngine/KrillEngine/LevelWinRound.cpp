@@ -27,6 +27,9 @@ void LevelWinRound::LevelInit()
 		-(SCREEN_HEIGHT / 2),
 		(SCREEN_HEIGHT / 2));
 
+	SDL_GetWindowSize(GameEngine::GetInstance()->GetSDLWindow(), &windowWidth, &windowHeight);
+	glViewport(0, 0, windowWidth, windowHeight);
+
 	/*KK_INFO("LevelWinRound: Fail to load RoundWin.json. Use test data");
 	roundWinner = 0;
 	roundNum = 1;
@@ -266,29 +269,29 @@ void LevelWinRound::UpdateUI()
 	Background_UI->SetPosition(glm::vec3(0, 0, 0));
 	Background_UI->SetSize
 	(
-		Background_size.x * windowWidth / 1920.f,
-		Background_size.y * windowHeight / 1080.f
+		Background_size.x,
+		Background_size.y
 	);
 
 	RoundNum_UI->SetPosition(RoundNum_pos);
 	RoundNum_UI->SetSize
 	(
-		RoundNum_size.x * windowWidth / 1920.f,
-		RoundNum_size.y * windowHeight / 1080.f
+		RoundNum_size.x,
+		RoundNum_size.y
 	);
 
 	RoundWinCharacter_UI->SetPosition(RoundWinCharacter_pos);
 	RoundWinCharacter_UI->SetSize
 	(
-		RoundWinCharacter_size.x * windowWidth / 1920.f,
-		RoundWinCharacter_size.y * windowHeight / 1080.f
+		RoundWinCharacter_size.x,
+		RoundWinCharacter_size.y
 	);
 
 	PlayerProfile_UI->SetPosition(PlayerProfile_pos);
 	PlayerProfile_UI->SetSize
 	(
-		PlayerProfile_size.x * windowWidth / 1920.f,
-		PlayerProfile_size.y * windowHeight / 1080.f
+		PlayerProfile_size.x,
+		PlayerProfile_size.y
 	);
 
 	for (int i = 0; i < 4; i++)
@@ -296,8 +299,8 @@ void LevelWinRound::UpdateUI()
 		PlayerScore_UI[i]->SetPosition(PlayerScore_pos[i]);
 		PlayerScore_UI[i]->SetSize
 		(
-			PlayerScore_size.x * windowWidth / 1920.f,
-			PlayerScore_size.y * windowHeight / 1080.f
+			PlayerScore_size.x,
+			PlayerScore_size.y
 		);
 	}
 }

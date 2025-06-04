@@ -60,7 +60,7 @@ private:
 	bool playerMove[4] = { false };
 	int playerNumber = 4; // Change later
 	bool ready[4] = { 0 };
-	int helpHover = 0;
+	int helpHover[4] = {0};
 
 	int axisX = 0;
 	int axisY = 0;

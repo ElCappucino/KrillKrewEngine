@@ -23,6 +23,9 @@ void LevelWinMatch::LevelInit()
 		-(SCREEN_HEIGHT / 2),
 		(SCREEN_HEIGHT / 2));
 
+	SDL_GetWindowSize(GameEngine::GetInstance()->GetSDLWindow(), &windowWidth, &windowHeight);
+	glViewport(0, 0, windowWidth, windowHeight);
+
 	timer = Timer::Instance();
 
 	if (!LoadUIPositionConfig("../Resource/SceneData/MatchWin_UI_Config.json"))
@@ -82,6 +85,8 @@ void LevelWinMatch::LevelUpdate()
 
 	windowWidth = currentViewport[2];
 	windowHeight = currentViewport[3];
+
+
 
 	if (isHold)
 	{

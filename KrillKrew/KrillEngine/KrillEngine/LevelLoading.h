@@ -13,6 +13,9 @@ private:
 	ImageObject* player;
 	Camera camera;
 
+	int windowWidth;
+	int windowHeight;
+
 	float dt = 0;
 
 public:

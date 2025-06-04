@@ -29,14 +29,14 @@ private:
 	glm::vec3 PlayerProfile_pos;
 	std::array<glm::vec3, 4> PlayerScore_pos;
 
-	glm::vec3 Background_size = {1920, -1080, 0};
-	glm::vec3 RoundNum_size = { 330, -125, 0 };
-	glm::vec3 RoundWinCharacter_size = { 919, -950, 0 };
-	glm::vec3 PlayerProfile_size = { 600, -150, 0 };
-	glm::vec3 PlayerScore_size = { 36, -46, 0 };
+	glm::vec3 Background_size = {1920 * 0.7f, -1080 * 0.7f, 0};
+	glm::vec3 RoundNum_size = { 330 * 0.7f, -125 * 0.7f, 0 };
+	glm::vec3 RoundWinCharacter_size = { 919 * 0.7f, -950 * 0.7f, 0 };
+	glm::vec3 PlayerProfile_size = { 600 * 0.7f, -150 * 0.7f, 0 };
+	glm::vec3 PlayerScore_size = { 36 * 0.7f, -46 * 0.7f, 0 };
 
-	float windowWidth = SCREEN_WIDTH;
-	float windowHeight = SCREEN_HEIGHT;
+	int windowWidth = SCREEN_WIDTH;
+	int windowHeight = SCREEN_HEIGHT;
 
 	OrthographicValue targetSceneProjection;
 	Camera camera;

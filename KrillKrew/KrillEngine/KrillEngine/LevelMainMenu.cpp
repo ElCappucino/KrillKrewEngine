@@ -157,18 +157,18 @@ void LevelMainMenu::LevelUpdate()
 	KrillSoundManager::SoundManager::GetInstance()->SetVolumeAllMusic((masterVolume / 100.0f) * BGMVolume * 0.01f * (128.f - 0));
 	KrillSoundManager::SoundManager::GetInstance()->SetVolumeAllSFX((masterVolume / 100.0f) * SFXVolume * 0.01f * (128.f - 0));
 
-	if (isToggleVolume[0])
+	if (!isToggleVolume[0])
 	{
 		KrillSoundManager::SoundManager::GetInstance()->SetVolumeAllSFX(0);
 		KrillSoundManager::SoundManager::GetInstance()->SetVolumeAllMusic(0);
 	}
 
-	if (isToggleVolume[1])
+	if (!isToggleVolume[1])
 	{
 		KrillSoundManager::SoundManager::GetInstance()->SetVolumeAllSFX(0);
 	}
 
-	if (isToggleVolume[2])
+	if (!isToggleVolume[2])
 	{
 		KrillSoundManager::SoundManager::GetInstance()->SetVolumeAllMusic(0);
 	}
