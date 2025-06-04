@@ -54,6 +54,7 @@
     <ClInclude Include="PlayerObject.h" />
     <ClInclude Include="ProjectileObject.h" />
     <ClInclude Include="PropObject.h" />
+    <ClInclude Include="resource.h" />
     <ClInclude Include="Resource\imgui-1.91.8\backends\imgui_impl_opengl3.h" />
     <ClInclude Include="Resource\imgui-1.91.8\backends\imgui_impl_sdl2.h" />
     <ClInclude Include="Resource\imgui-1.91.8\imgui.h" />
@@ -130,6 +131,15 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resource\SDL2_Mixer\lib\x86\SDL2_mixer.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="..\Resource\SSS_Icon.ico" />
+    <Image Include="icon1.ico" />
+    <Image Include="icon2.ico" />
+    <Image Include="icon3.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="KrillEngine.rc" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>
