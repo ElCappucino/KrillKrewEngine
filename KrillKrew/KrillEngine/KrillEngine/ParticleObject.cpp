@@ -104,7 +104,12 @@ void ParticleObject::OnTriggerExit(Collider* other)
 }
 void ParticleObject::UpdateSpriteSheetPosition()
 {
+	KK_TRACE("ParticleObject: UpdateSpriteSheetPosition");
 	this->GetSpriteRenderer()->ShiftColumn();
+}
+void ParticleObject::SetAnimationSprite(ParticleObject::AnimationState state, SpritesheetInfo spriteInfo)
+{
+	animList.insert({ state, spriteInfo });
 }
 void ParticleObject::UpdateCurrentAnimation() 
 {
@@ -115,9 +120,31 @@ void ParticleObject::UpdateCurrentAnimation()
 
 	if (currentColumn == lastFrame)
 	{
-		this->SetIsActive(false);
+		if (type == ParticleType::Tentacle)
+		{
+			ChangeAnimationState(AnimationState::idle);
+		}
+		else
+		{
+			this->SetIsActive(false);
+		}
+		
 	}
 }
+
+void ParticleObject::ChangeAnimationState(AnimationState anim)
+{
+	if (currAnimState != anim)
+	{
+		currAnimState = anim;
+		this->SetTextureWithID(animList.find(anim)->second, animList.find(anim)->second.textureid);
+		this->spriteRenderer->SetTexture(animList.find(anim)->second.texture);
+		//this->SetTexture(animList.find(anim)->second.texture);
+		this->spriteRenderer->ShiftTo(0, 0);
+		this->spriteRenderer->isLoop = animList.find(anim)->second.isLoop;
+	}
+}
+
 void ParticleObject::UpdateCollider() 
 {
 

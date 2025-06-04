@@ -18,19 +18,23 @@ public:
 
 	virtual enum AnimationState
 	{
-		idle
+		idle,
+		Init
 	};
 
 	virtual enum ParticleType
 	{
 		SmallProp,
-		BigProp
+		BigProp,
+		Tentacle
 	};
-
+	ParticleType type;
+	AnimationState currAnimState;
 private:
 
-	AnimationState currAnimState;
-	ParticleType type;
+	
+	std::map<AnimationState, SpritesheetInfo> animList;
+	
 
 public:
 
@@ -53,6 +57,9 @@ public:
 	virtual void UpdateCurrentAnimation();
 	virtual void UpdateCollider();
 	virtual void UpdateSpriteSheetPosition();
+	virtual void SetAnimationSprite(ParticleObject::AnimationState state, SpritesheetInfo spriteInfo);
+
+	virtual void ChangeAnimationState(AnimationState anim);
 
 	virtual float getOrderingLayer() const;
 };

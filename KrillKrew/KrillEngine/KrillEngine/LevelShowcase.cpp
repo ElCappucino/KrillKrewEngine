@@ -259,6 +259,9 @@ void LevelShowcase::LevelLoad()
 	spriteList["OptionsVolumeKnob"] = SpritesheetInfo("OptionsVolumeKnob", "../Resource/Texture/Pause and Options/UI_Options_Volume_knob.png", 21, 41, 42, 41);
 	spriteList["OptionsVolumeTrack"] = SpritesheetInfo("OptionsVolumeTrack", "../Resource/Texture/Pause and Options/UI_Options_Volume_track.png", 406, 12, 812, 12);
 
+	spriteList["Tentacle_Up"] = SpritesheetInfo("Tentacle_Up", "../Resource/Texture/Props/UI_GP_Event_VFX_Tentecle_Up.png", 319, 334, 1914, 334);
+	spriteList["Tentacle_Idle"] = SpritesheetInfo("Tentacle_Idle", "../Resource/Texture/Props/UI_GP_Event_VFX_Tentecle_Idle.png", 319, 334, 4147, 334);
+
 	soundManager = KrillSoundManager::SoundManager::GetInstance();
 
 	soundManager->LoadMusic("bgm_test", "../Resource/Audio/bgm_test.mp3");
@@ -1557,6 +1560,40 @@ void LevelShowcase::UpdateKrakenEvent()
 
 		uiObjects.push_back(signUI);
 		objectsList.push_back(signUI);
+
+		glm::vec3 tentaclePos[8] =
+		{
+			{-1500, -500, 0},
+			{-1600, 0, 0},
+			{-1500, 500, 0},
+			{1500, -500, 0},
+			{1500, 500, 0},
+			{1500, 0, 0},
+			{0, 1200, 0},
+			{0, -1200, 0},
+		};
+
+		for (int i = 0; i < 8; i++)
+		{
+			ParticleObject* particle = new ParticleObject();
+			particle->SetSpriteInfo(spriteList.find("Tentacle_Up")->second);
+
+			particle->SetPosition(tentaclePos[i]);
+			particle->SetSize(particle->GetSpriteRenderer()->GetSpriteWidth(), -particle->GetSpriteRenderer()->GetSpriteHeight());
+			
+			particle->type = ParticleObject::Tentacle;
+			particle->currAnimState = ParticleObject::AnimationState::Init;
+			particle->SetAnimationSprite(ParticleObject::AnimationState::idle, spriteList.find("Tentacle_Idle")->second);
+			particle->SetAnimationSprite(ParticleObject::AnimationState::Init, spriteList.find("Tentacle_Up")->second);
+			particle->SetIsAnimated(true);
+
+			int randFrame = (rand() % 10) + 8;
+
+			particle->GetSpriteRenderer()->SetFrame(randFrame);
+
+			objectsList.push_back(particle);
+			entityObjects.push_back(particle);
+		}
 	}
 	else
 	{
