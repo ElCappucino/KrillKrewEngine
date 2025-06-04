@@ -129,6 +129,9 @@ float UiObject::getOrderingLayer() const
 	case YesNoButton:
 		return -3000.0f;
 		break;
+	case Knob:
+		return -3100.0f;
+		break;
 	default:
 		return -2000;
 		break;

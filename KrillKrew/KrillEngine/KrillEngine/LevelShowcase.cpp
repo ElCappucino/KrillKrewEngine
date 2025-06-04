@@ -1089,7 +1089,7 @@ void LevelShowcase::LevelInit()
 		UiObject* optionVolumeKnob = new UiObject();
 		optionVolumeKnob->SetSpriteInfo(spriteList.find("OptionsVolumeKnob")->second);
 		optionVolumeKnob->SetIsRender(false);
-		optionVolumeKnob->uiType = UiObject::UIType::YesNoButton;
+		optionVolumeKnob->uiType = UiObject::UIType::Knob;
 		objectsList.push_back(optionVolumeKnob);
 		volumeKnobList.push_back(optionVolumeKnob);
 	}
@@ -2109,6 +2109,10 @@ void LevelShowcase::UpdateInput()
 		{
 			for (int i = 0; i < playerSize; i++)
 			{
+				if (Joystick::GetButtonDown(i, Joystick::Button::ShareButton))
+				{
+					isPause = true;
+				}
 				if (players[i + currentPlayer]->GetIsFell())
 				{
 					continue;
@@ -2375,10 +2379,7 @@ void LevelShowcase::UpdateInput()
 					currentPlayer = currentPlayer % 4;
 				}
 
-				if (Joystick::GetButtonDown(i, Joystick::Button::ShareButton))
-				{
-					isPause = true;
-				}
+				
 
 				if (Joystick::GetButtonDown(i, Joystick::Button::P5Button))
 				{

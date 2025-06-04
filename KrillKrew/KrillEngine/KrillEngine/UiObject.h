@@ -25,7 +25,8 @@ public:
 		PauseMenu,
 		PauseText,
 		AreYouSureBG,
-		YesNoButton
+		YesNoButton,
+		Knob
 	};
 
 	UIType uiType = UIType::Default;
