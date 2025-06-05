@@ -97,6 +97,10 @@ bool Joystick::GetButtonDown(int joystickId, Button button)
 
 	if (it != availableJoysticks.end())
 	{
+		if (it->second->buttons[static_cast<int>(button)] &&
+			!it->second->lastButtons[static_cast<int>(button)]) {
+			KK_CORE_INFO("GetButtonDown: joystickId = {0}, button = {1}", joystickId, static_cast<int>(button));
+		}
 		return  it->second->buttons[static_cast<int>(button)] &&
 			   !it->second->lastButtons[static_cast<int>(button)]; // check if it's not last button (not hold)
 	}

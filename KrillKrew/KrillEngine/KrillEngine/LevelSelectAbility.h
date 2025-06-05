@@ -60,6 +60,7 @@ private:
 	bool playerMove[4] = { false };
 	int playerNumber = 4; // Change later
 	bool ready[4] = { 0 };
+	int numReady = 0;
 	int helpHover[4] = {0};
 
 	int axisX = 0;
@@ -83,6 +84,8 @@ private:
 	float previousWidth = 0, previousHeight = 0;
 	int clicked[4] = { 0, 0, 0, 0 };
 	std::ofstream abilityFile;
+	int countdownReady = 0;
+	int countdownDelay = 2;
 
 	// player
 	float axisXOld;
