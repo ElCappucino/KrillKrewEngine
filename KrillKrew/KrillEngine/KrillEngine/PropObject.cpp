@@ -117,7 +117,7 @@ void PropObject::CheckIfBreak()
 			particle->SetSize(particle->GetSpriteRenderer()->GetSpriteWidth(), particle->GetSpriteRenderer()->GetSpriteHeight());
 			this->currentLevel->AddEntityToScene(particle);
 			KrillSoundManager::SoundManager::GetInstance()->PlaySFX("Rock_Destroyed", false);
-			KK_TRACE("PropObject:destroy Prop");
+			//KK_TRACE("PropObject:destroy Prop");
 		}
 
 		
@@ -151,7 +151,7 @@ void PropObject::CheckIfNoTileSurround()
 
 	if (propType == PropObject::PropType::Tree)
 	{
-		KK_INFO("PropObject: Tree surroundTile = {0}", surroundTile.size());
+		//KK_INFO("PropObject: Tree surroundTile = {0}", surroundTile.size());
 	}
 	if (surroundTile.empty())
 	{

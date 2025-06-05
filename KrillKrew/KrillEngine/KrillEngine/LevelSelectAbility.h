@@ -85,7 +85,7 @@ private:
 	int clicked[4] = { 0, 0, 0, 0 };
 	std::ofstream abilityFile;
 	int countdownReady = 0;
-	int countdownDelay = 2;
+	int countdownPlayerIcon = 2;
 
 	// player
 	float axisXOld;

@@ -2109,6 +2109,13 @@ void LevelShowcase::UpdateInput()
 		{
 			for (int i = 0; i < playerSize; i++)
 			{
+
+				/*if (Joystick::GetButtonDown(i, Joystick::Button::R1)) {
+					KK_TRACE("{0}", i);
+				}
+				if (Joystick::GetButtonDown(i, Joystick::Button::L1)) {
+					KK_TRACE("{0}", i);
+				}*/
 				if (Joystick::GetButtonDown(i, Joystick::Button::ShareButton))
 				{
 					isPause = true;
@@ -2373,11 +2380,11 @@ void LevelShowcase::UpdateInput()
 				}
 
 				// Debug other player
-				if (Joystick::GetButtonDown(i, Joystick::Button::R1))
+				/*if (Joystick::GetButtonDown(i, Joystick::Button::R1))
 				{
 					currentPlayer++;
 					currentPlayer = currentPlayer % 4;
-				}
+				}*/
 
 				
 

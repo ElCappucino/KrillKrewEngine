@@ -91,8 +91,8 @@ void LevelWinMatch::LevelUpdate()
 	if (isHold)
 	{
 		holdTime += 0.01f;
-		KK_TRACE("holdTime = {0}", holdTime);
-		KK_TRACE("timer->getDeltaTime() = {0}", timer->getDeltaTime());
+		//KK_TRACE("holdTime = {0}", holdTime);
+		//KK_TRACE("timer->getDeltaTime() = {0}", timer->getDeltaTime());
 	}
 	UpdateInput();
 	UpdateUI();

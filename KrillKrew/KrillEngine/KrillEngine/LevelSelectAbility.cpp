@@ -311,7 +311,10 @@ void LevelSelectAbility::LevelUpdate()
 			std::string fileName = "../Resource/SceneData/Ability" + std::to_string(i) + ".json";
 			abilityToFile(fileName, i);
 		}
-		//GameEngine::GetInstance()->GetStateController()->gameStateNext = GameState::GS_LEVELSHOWCASE;
+		
+	}
+	if (countdownReady == 3) {
+		GameEngine::GetInstance()->GetStateController()->gameStateNext = GameState::GS_LEVELSHOWCASE;
 	}
 
 	timer->tick();
@@ -319,10 +322,6 @@ void LevelSelectAbility::LevelUpdate()
 	time1s += timer->getDeltaTime();
 	if (time1s >= 1.01f) {
 		time1s = 0.0f;
-		countdownReady++;
-		if (countdownReady > 2) {
-			countdownReady = 0;
-		}
 	}
 	//std::cout << time1s << std::endl;
 }
@@ -569,16 +568,34 @@ void LevelSelectAbility::UpdateUi() {
 	if (numReady != playerSize) {
 		playerRemainList.at(0)->GetSpriteRenderer()->ShiftTo(0, 7 - playerSize + numReady);
 	}
-	else if(numReady == playerSize){
+	else if(numReady == /*playerSize*/ 1) {
 		if (time1s == 0 && countdownReady == 0) {
+			countdownReady++;
 			playerRemainList.at(0)->GetSpriteRenderer()->ShiftTo(0, 0);
 		}
 		else if (time1s == 0 && countdownReady == 1) {
+			countdownReady++;
 			playerRemainList.at(0)->GetSpriteRenderer()->ShiftTo(0, 1);
 		}
 		else if (time1s == 0 && countdownReady == 2) {
+			countdownReady++;
 			playerRemainList.at(0)->GetSpriteRenderer()->ShiftTo(0, 2);
 		}
+	}
+
+	for (int i = 0; i < playerWindowList.size(); i++) {
+		if (playerWindowList.at(i)->GetSpriteRenderer()->GetColumn() == 6) {
+			//std::cout << time1s << std::endl;
+			if (time1s == 0) {
+				countdownPlayerIcon--;
+				
+			}
+		}
+		if (countdownPlayerIcon < 0) {
+			countdownPlayerIcon = 2;
+			playerWindowList.at(i)->GetSpriteRenderer()->ShiftTo(0,1);
+		}
+		
 	}
 	
 	/*for (int i = 0; i < playerIconSmallList.size(); i++) {
