@@ -1466,7 +1466,7 @@ void LevelShowcase::LevelUpdate()
 	float frameTime = Timer::Instance()->getDeltaTime();
 	if (frameTime < TARGET_FRAME_TIME)
 	{
-		KK_TRACE("frameTime = {0} TARGET_FRAME_TIME = {1}", frameTime, TARGET_FRAME_TIME);
+		//KK_TRACE("frameTime = {0} TARGET_FRAME_TIME = {1}", frameTime, TARGET_FRAME_TIME);
 		std::this_thread::sleep_for(std::chrono::milliseconds((int)(TARGET_FRAME_TIME - frameTime)));
 	}
 
@@ -2340,6 +2340,13 @@ void LevelShowcase::UpdateInput()
 					GameEngine::GetInstance()->GetStateController()->gameStateNext = GameState::GS_LEVELLOADING;
 				}
 			}
+
+			KK_TRACE("P1 velocity = ({0}, {1}, {2}) playerMovementSpeed = {3} dt = {4}",
+				players[0]->GetVelocity().x,
+				players[0]->GetVelocity().y,
+				players[0]->GetVelocity().z,
+				playerMovementSpeed,
+				timer->getDeltaTime());
 
 			players[0]->Translate(players[0]->GetVelocity() * playerMovementSpeed * timer->getDeltaTime());
 			players[1]->Translate(players[1]->GetVelocity() * playerMovementSpeed * timer->getDeltaTime());

@@ -298,7 +298,7 @@ private:
 	float CleaveLifetime = 2.f;
 
 	float DashDuration = 0.2f;
-	float playerMovementSpeed = 3.f;
+	float playerMovementSpeed = 1000.f;
 
 	int playerSize = 0;
 	int playerNum = 0;
@@ -311,7 +311,7 @@ private:
 	int playerRemain = 4;
 
 
-	const int TARGET_FPS = 60;
+	const int TARGET_FPS = 144;
 	const float TARGET_FRAME_TIME = 1000.0f / TARGET_FPS; // ~16.67 ms
 
 	float dt = 0;
