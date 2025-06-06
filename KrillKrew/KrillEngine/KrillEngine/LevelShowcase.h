@@ -354,10 +354,14 @@ public:
 	void UpdateCooldown();
 	void UpdateMovement();
 	void UpdateUI();
-	// void UpdateKnockback(DrawableObject* obj1, DrawableObject* obj2);
 	void UpdateTime();
 	void UpdateCountdown();
 	void UpdateKrakenEvent();
+	void UpdateAnimation();
+	void UpdateVolume();
+	void ClearUnusedObject();
+	void UpdatePauseMenu();
+	void CheckPlayerRemain();
 
 	void GroundTileRefactor();
 	void TileImport(std::array<std::array<int, MAP_WIDTH>, MAP_HEIGHT> &TileBuffer, std::string fileName);
