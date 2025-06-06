@@ -434,7 +434,7 @@ void LevelSelectAbility::UpdateInput()
 				//select character
 				if (Joystick::GetButtonDown(i, Joystick::Button::R1)) 
 				{
-					playerIconSmallList.at(0)->GetSpriteRenderer()->ShiftColumn();
+					playerIconSmallList.at(i)->GetSpriteRenderer()->ShiftColumn();
 				}
 
 				if (Joystick::GetButtonDown(i, Joystick::Button::L1)) 
@@ -548,10 +548,10 @@ void LevelSelectAbility::UpdateUi() {
 		int count = 0;
 		for (int j = 0; j < playerHoverList.size(); j++) {
 			if (playerHoverWhere[i] == playerHoverWhere[j] && i != j && playerHoverList.size() > 1) {
-				playerHoverList.at(j)->SetPosition(glm::vec3(configs.at(4)->posX, configs.at(4)->posY + (configs.at(4)->offSetY * count), 0));
+				playerHoverList.at(j)->SetPosition(glm::vec3(playerHoverList.at(j)->getPos().x, playerHoverList.at(j)->getPos().y + (configs.at(4)->offSetY * count), 0));
 				count++;
 				if (playerHoverList.at(i)->getPos() == playerHoverList.at(j)->getPos()) {
-					playerHoverList.at(j)->SetPosition(glm::vec3(configs.at(4)->posX, configs.at(4)->posY + (configs.at(4)->offSetY * count), 0));
+					playerHoverList.at(j)->SetPosition(glm::vec3(playerHoverList.at(j)->getPos().x, playerHoverList.at(j)->getPos().y + (configs.at(4)->offSetY * count), 0));
 				}
 			}
 		}
@@ -568,7 +568,7 @@ void LevelSelectAbility::UpdateUi() {
 	if (numReady != playerSize) {
 		playerRemainList.at(0)->GetSpriteRenderer()->ShiftTo(0, 7 - playerSize + numReady);
 	}
-	else if(numReady == /*playerSize*/ 1) {
+	else if(numReady == playerSize) {
 		if (time1s == 0 && countdownReady == 0) {
 			countdownReady++;
 			playerRemainList.at(0)->GetSpriteRenderer()->ShiftTo(0, 0);
