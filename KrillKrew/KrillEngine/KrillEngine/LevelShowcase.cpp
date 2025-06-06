@@ -1463,6 +1463,13 @@ void LevelShowcase::LevelUpdate()
 		std::sort(objectsList.begin(), objectsList.end(), compareLayer);
 	}
 
+	float frameTime = Timer::Instance()->getDeltaTime();
+	if (frameTime < TARGET_FRAME_TIME)
+	{
+		KK_TRACE("frameTime = {0} TARGET_FRAME_TIME = {1}", frameTime, TARGET_FRAME_TIME);
+		std::this_thread::sleep_for(std::chrono::milliseconds((int)(TARGET_FRAME_TIME - frameTime)));
+	}
+
 	//std::cout << "masterVolume" << masterVolume << std::endl;
 }
 
@@ -2334,10 +2341,10 @@ void LevelShowcase::UpdateInput()
 				}
 			}
 
-			players[0]->Translate(players[0]->GetVelocity() * playerMovementSpeed);
-			players[1]->Translate(players[1]->GetVelocity() * playerMovementSpeed);
-			players[2]->Translate(players[2]->GetVelocity() * playerMovementSpeed);
-			players[3]->Translate(players[3]->GetVelocity() * playerMovementSpeed);
+			players[0]->Translate(players[0]->GetVelocity() * playerMovementSpeed * timer->getDeltaTime());
+			players[1]->Translate(players[1]->GetVelocity() * playerMovementSpeed * timer->getDeltaTime());
+			players[2]->Translate(players[2]->GetVelocity() * playerMovementSpeed * timer->getDeltaTime());
+			players[3]->Translate(players[3]->GetVelocity() * playerMovementSpeed * timer->getDeltaTime());
 		}
 	}
 }
@@ -2574,7 +2581,7 @@ void LevelShowcase::UpdateTime() {
 	//KK_TRACE("timer->getDeltaTime() = {0}", timer->getDeltaTime());
 	time1s += timer->getDeltaTime();
 	time01s += timer->getDeltaTime();
-	dt += timer->getDeltaTime();
+	//dt += timer->getDeltaTime();
 
 	if (time1s >= 1.0f)
 	{
@@ -2590,7 +2597,181 @@ void LevelShowcase::UpdateTime() {
 	}
 
 }
+void LevelShowcase::DrawImGUI()
+{
+	bool show_demo_window = true;
+	bool show_another_window = false;
+	ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
 
+	ImGuiIO& io = ImGui::GetIO(); (void)io;
+
+	// Start the Dear ImGui frame
+	ImGui_ImplOpenGL3_NewFrame();
+	ImGui_ImplSDL2_NewFrame();
+	ImGui::NewFrame();
+
+	//// 1. Show the big demo window (Most of the sample code is in ImGui::ShowDemoWindow()! You can browse its code to learn more about Dear ImGui!).
+	//if (show_demo_window)
+	//	ImGui::ShowDemoWindow(&show_demo_window);
+
+	//if (ImGui::Button("Reset Scene", ImVec2(100, 50)))
+	//	isResetScene++;
+
+	//if (ImGui::Button("To FullScreen", ImVec2(100, 50)))
+	//	isFullScreen++;
+
+	//if (ImGui::Button("To WindowScreen", ImVec2(100, 50)))
+	//	isWindowScreen++;
+
+	//ImGui::SliderFloat("musicVolume", &musicVolume, 0.0f, 1.0f, "ratio = %.3f");
+	//ImGui::SliderFloat("sfxVolume", &sfxVolume, 0.0f, 1.0f, "ratio = %.3f");
+
+	//soundManager->SetVolumeAllMusic(0 + (musicVolume * (128.f - 0)));
+	//soundManager->SetVolumeAllSFX(0 + (sfxVolume * (128.f - 0)));
+
+	//if (isFullScreen & 1)
+	//{
+	//	SDL_SetWindowFullscreen(GameEngine::GetInstance()->GetSDLWindow(), SDL_WINDOW_FULLSCREEN_DESKTOP);
+	//	glViewport(0, 0, 1920, 1080);
+	//	isFullScreen = 0;
+	//}
+
+	//if (isWindowScreen & 1)
+	//{
+	//	SDL_SetWindowFullscreen(GameEngine::GetInstance()->GetSDLWindow(), 0);
+	//	glViewport(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
+	//	isWindowScreen = 0;
+	//}
+	//// Cooldown Stats
+	///*float MeleeCooldown = 2.f;
+	//float FireballCooldown = 3.f;
+	//float TrapCooldown = 3.f;
+	//float DashCooldown = 3.f;
+	//float TNTCooldown = 3.f;
+	//float TeleportCooldown = 3.f;
+	//float BolaCooldown = 3.f;
+	//float CleaveCooldown = 3.f;
+
+	//float FireballLifetime = 3.f;
+	//float TeleportLifetime = 2.f;
+	//float BolaLifetime = 2.f;
+	//float CleaveLifetime = 2.f;*/
+
+	//ImGui::Text("Cooldown stats");
+	//ImGui::InputFloat("Melee Cooldown", &MeleeCooldown, 0.1f, 1.0f, "%.2f");
+	//ImGui::InputFloat("Fireball Cooldown", &FireballCooldown, 0.1f, 1.0f, "%.2f");
+	//ImGui::InputFloat("Trap Cooldown", &TrapCooldown, 0.1f, 1.0f, "%.2f");
+	//ImGui::InputFloat("Dash Cooldown", &DashCooldown, 0.1f, 1.0f, "%.2f");
+	//ImGui::InputFloat("TNT Cooldown", &TNTCooldown, 0.1f, 1.0f, "%.2f");
+	//ImGui::InputFloat("Teleport Cooldown", &TeleportCooldown, 0.1f, 1.0f, "%.2f");
+	//ImGui::InputFloat("Bola Cooldown", &BolaCooldown, 0.1f, 1.0f, "%.2f");
+	//ImGui::InputFloat("Cleave Cooldown", &CleaveCooldown, 0.1f, 1.0f, "%.2f");
+
+	//ImGui::Text("Lifetime stats");
+	//ImGui::InputFloat("Fireball Lifetime", &FireballLifetime, 0.1f, 1.0f, "%.2f");
+	//ImGui::InputFloat("Teleport Lifetime", &TeleportLifetime, 0.1f, 1.0f, "%.2f");
+	//ImGui::InputFloat("Bola Lifetime", &BolaLifetime, 0.1f, 1.0f, "%.2f");
+	//ImGui::InputFloat("Cleave Lifetime", &CleaveLifetime, 0.1f, 1.0f, "%.2f");
+
+	//ImGui::Text("Overall stats");
+	//ImGui::InputFloat("Move Speed", &playerMovementSpeed, 0.1f, 1.0f, "%.2f");
+
+	//if (isResetScene & 1)
+	//{
+	//	GameEngine::GetInstance()->GetStateController()->loadingState = GameState::GS_LEVELSHOWCASE;
+	//	GameEngine::GetInstance()->GetStateController()->gameStateNext = GameState::GS_LEVELLOADING;
+	//}
+	//ImGuiTabBarFlags tab_bar_flags = ImGuiTabBarFlags_None;
+	//if (ImGui::BeginTabBar("MyTabBar", tab_bar_flags))
+	//{
+	//	for (int i = 0; i < playerSize; i++)
+	//	{
+	//		std::string tabname = "player " + std::to_string(i);
+	//		ImGui::PushID(i);
+
+	//		if (ImGui::BeginTabItem(tabname.c_str()))
+	//		{
+	//			ImGui::Text("Player %d", i);
+	//			ImGui::SameLine();
+	//			ImGui::SeparatorText("");
+	//			ImGui::Text("Position: %f, %f, %f", players[i]->getPos().x, players[i]->getPos().y, players[i]->getPos().z);
+	//			
+	//			ImGui::Text("isShooting: %s", players[i]->GetIsShooting() ? "true" : "false");
+	//			ImGui::Text("isAiming: %s", players[i]->GetIsAiming() ? "true" : "false");
+	//			ImGui::Text("isSlow: %s", players[i]->GetIsSlow() ? "true" : "false");
+	//			ImGui::Text("isDashing: %s", players[i]->GetIsDashing() ? "true" : "false");
+	//			ImGui::Text("isKnockback: %s", players[i]->GetIsKnockback() ? "true" : "false");
+	//			ImGui::Text("isStun: %s", players[i]->GetIsStun() ? "true" : "false");
+	//			ImGui::Text("isOnGround: %s", players[i]->GetIsOnGround() ? "true" : "false");
+	//			ImGui::Text("Current Velocity: %f, %f", players[i]->GetVelocity().x, players[i]->GetVelocity().y);
+
+	//			/*ImGui::DragFloat("ColX Button", &groundColX[i], 2.0f, 0.0f, 1024.f, "%.3f");
+	//			ImGui::DragFloat("ColY Button", &groundColY[i], 2.0f, 0.0f, 1024.f, "%.3f");*/
+	//			ImGui::DragFloat("Col offset X", &groundColOffsetX[i], 2.0f, -1024.f, 1024.f, "%.3f");
+	//			ImGui::DragFloat("Col offset Y", &groundColOffsetY[i], 2.0f, -1024.f, 1024.f, "%.3f");
+
+	//			players[i]->GetGroundColliderObject()->SetCollisionOffset(glm::vec2(groundColOffsetX[i], groundColOffsetY[i]));
+	//			/*Fireball = 0,
+	//				Trap = 1,
+	//				Dash = 2,
+	//				TNT = 3,
+	//				Teleport = 4,
+	//				Bola = 5,
+	//				Cleave = 6*/
+
+	//			for (int j = 0; j < 3; j++)
+	//			{
+	//				ImGui::PushID(j);
+
+
+	//				ImGui::Text("skill %d", j);
+	//				ImGui::Text("ability %d cooldown: %.2f", i ,players[i]->GetCooldown(static_cast<PlayerObject::AbilityButton>(j)));
+	//				ImGui::RadioButton("Fireball", &playersSkill[i][j], static_cast<int>(PlayerObject::Ability::Fireball));
+	//				ImGui::SameLine();
+	//				ImGui::RadioButton("Trap", &playersSkill[i][j], static_cast<int>(PlayerObject::Ability::Trap));
+	//				ImGui::SameLine();
+	//				ImGui::RadioButton("Dash", &playersSkill[i][j], static_cast<int>(PlayerObject::Ability::Dash));
+	//				//ImGui::SameLine();
+	//				ImGui::RadioButton("TNT", &playersSkill[i][j], static_cast<int>(PlayerObject::Ability::TNT));
+	//				ImGui::SameLine();
+	//				ImGui::RadioButton("Teleport", &playersSkill[i][j], static_cast<int>(PlayerObject::Ability::Teleport));
+	//				ImGui::SameLine();
+	//				ImGui::RadioButton("Bola", &playersSkill[i][j], static_cast<int>(PlayerObject::Ability::Bola));
+	//				ImGui::SameLine();
+	//				ImGui::RadioButton("Cleave", &playersSkill[i][j], static_cast<int>(PlayerObject::Ability::Cleave));
+	//				ImGui::SeparatorText("");
+
+	//				ImGui::PopID();
+	//			}
+	//			ImGui::EndTabItem();
+	//		}
+	//		
+	//		ImGui::PopID();
+	//	}
+	//	
+	//	ImGui::EndTabBar();
+	//}
+	//
+	//for (int i = 0; i < playerSize; i++)
+	//{
+	//	for (int j = 0; j < 3; j++)
+	//	{
+	//		players[i]->SetAbility
+	//		(
+	//			static_cast<PlayerObject::AbilityButton>(j), 
+	//			static_cast<PlayerObject::Ability>(playersSkill[i][j])
+	//		);
+	//	}
+	//}
+
+	// Rendering
+	ImGui::Render();
+
+	ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+	SDL_GL_SwapWindow(GameEngine::GetInstance()->GetSDLWindow());
+
+
+}
 void LevelShowcase::UpdateUI()
 {
 	int playerNumber = 4; // Change later
@@ -2798,197 +2979,24 @@ void LevelShowcase::UpdateUI()
 void LevelShowcase::LevelDraw()
 {
 	frame++;
-	
+	framePerSecond++;
+
 	UpdateTime();
 
-	// render image per frame cap
-	if (dt >= targetFrameDuration)
+	// Collider position update
+	for (int i = 0; i < entityObjects.size(); i++)
 	{
-		framePerSecond++;
+		entityObjects[i]->UpdateCollider();
 
-		// Collider position update
-		for (int i = 0; i < entityObjects.size(); i++)
-		{
-			entityObjects[i]->UpdateCollider();
-			
-		}
-
-		GameEngine::GetInstance()->Render(objectsList);
-
-		dt = 0;
 	}
 
-	bool show_demo_window = true;
-	bool show_another_window = false;
-	ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
+	GameEngine::GetInstance()->Render(objectsList);
 
-	ImGuiIO& io = ImGui::GetIO(); (void)io;
+	//dt = 0;
 
-	// Start the Dear ImGui frame
-	ImGui_ImplOpenGL3_NewFrame();
-	ImGui_ImplSDL2_NewFrame();
-	ImGui::NewFrame();
+	
 
-	//// 1. Show the big demo window (Most of the sample code is in ImGui::ShowDemoWindow()! You can browse its code to learn more about Dear ImGui!).
-	//if (show_demo_window)
-	//	ImGui::ShowDemoWindow(&show_demo_window);
-
-	//if (ImGui::Button("Reset Scene", ImVec2(100, 50)))
-	//	isResetScene++;
-
-	//if (ImGui::Button("To FullScreen", ImVec2(100, 50)))
-	//	isFullScreen++;
-
-	//if (ImGui::Button("To WindowScreen", ImVec2(100, 50)))
-	//	isWindowScreen++;
-
-	//ImGui::SliderFloat("musicVolume", &musicVolume, 0.0f, 1.0f, "ratio = %.3f");
-	//ImGui::SliderFloat("sfxVolume", &sfxVolume, 0.0f, 1.0f, "ratio = %.3f");
-
-	//soundManager->SetVolumeAllMusic(0 + (musicVolume * (128.f - 0)));
-	//soundManager->SetVolumeAllSFX(0 + (sfxVolume * (128.f - 0)));
-
-	//if (isFullScreen & 1)
-	//{
-	//	SDL_SetWindowFullscreen(GameEngine::GetInstance()->GetSDLWindow(), SDL_WINDOW_FULLSCREEN_DESKTOP);
-	//	glViewport(0, 0, 1920, 1080);
-	//	isFullScreen = 0;
-	//}
-
-	//if (isWindowScreen & 1)
-	//{
-	//	SDL_SetWindowFullscreen(GameEngine::GetInstance()->GetSDLWindow(), 0);
-	//	glViewport(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
-	//	isWindowScreen = 0;
-	//}
-	//// Cooldown Stats
-	///*float MeleeCooldown = 2.f;
-	//float FireballCooldown = 3.f;
-	//float TrapCooldown = 3.f;
-	//float DashCooldown = 3.f;
-	//float TNTCooldown = 3.f;
-	//float TeleportCooldown = 3.f;
-	//float BolaCooldown = 3.f;
-	//float CleaveCooldown = 3.f;
-
-	//float FireballLifetime = 3.f;
-	//float TeleportLifetime = 2.f;
-	//float BolaLifetime = 2.f;
-	//float CleaveLifetime = 2.f;*/
-
-	//ImGui::Text("Cooldown stats");
-	//ImGui::InputFloat("Melee Cooldown", &MeleeCooldown, 0.1f, 1.0f, "%.2f");
-	//ImGui::InputFloat("Fireball Cooldown", &FireballCooldown, 0.1f, 1.0f, "%.2f");
-	//ImGui::InputFloat("Trap Cooldown", &TrapCooldown, 0.1f, 1.0f, "%.2f");
-	//ImGui::InputFloat("Dash Cooldown", &DashCooldown, 0.1f, 1.0f, "%.2f");
-	//ImGui::InputFloat("TNT Cooldown", &TNTCooldown, 0.1f, 1.0f, "%.2f");
-	//ImGui::InputFloat("Teleport Cooldown", &TeleportCooldown, 0.1f, 1.0f, "%.2f");
-	//ImGui::InputFloat("Bola Cooldown", &BolaCooldown, 0.1f, 1.0f, "%.2f");
-	//ImGui::InputFloat("Cleave Cooldown", &CleaveCooldown, 0.1f, 1.0f, "%.2f");
-
-	//ImGui::Text("Lifetime stats");
-	//ImGui::InputFloat("Fireball Lifetime", &FireballLifetime, 0.1f, 1.0f, "%.2f");
-	//ImGui::InputFloat("Teleport Lifetime", &TeleportLifetime, 0.1f, 1.0f, "%.2f");
-	//ImGui::InputFloat("Bola Lifetime", &BolaLifetime, 0.1f, 1.0f, "%.2f");
-	//ImGui::InputFloat("Cleave Lifetime", &CleaveLifetime, 0.1f, 1.0f, "%.2f");
-
-	//ImGui::Text("Overall stats");
-	//ImGui::InputFloat("Move Speed", &playerMovementSpeed, 0.1f, 1.0f, "%.2f");
-
-	//if (isResetScene & 1)
-	//{
-	//	GameEngine::GetInstance()->GetStateController()->loadingState = GameState::GS_LEVELSHOWCASE;
-	//	GameEngine::GetInstance()->GetStateController()->gameStateNext = GameState::GS_LEVELLOADING;
-	//}
-	//ImGuiTabBarFlags tab_bar_flags = ImGuiTabBarFlags_None;
-	//if (ImGui::BeginTabBar("MyTabBar", tab_bar_flags))
-	//{
-	//	for (int i = 0; i < playerSize; i++)
-	//	{
-	//		std::string tabname = "player " + std::to_string(i);
-	//		ImGui::PushID(i);
-
-	//		if (ImGui::BeginTabItem(tabname.c_str()))
-	//		{
-	//			ImGui::Text("Player %d", i);
-	//			ImGui::SameLine();
-	//			ImGui::SeparatorText("");
-	//			ImGui::Text("Position: %f, %f, %f", players[i]->getPos().x, players[i]->getPos().y, players[i]->getPos().z);
-	//			
-	//			ImGui::Text("isShooting: %s", players[i]->GetIsShooting() ? "true" : "false");
-	//			ImGui::Text("isAiming: %s", players[i]->GetIsAiming() ? "true" : "false");
-	//			ImGui::Text("isSlow: %s", players[i]->GetIsSlow() ? "true" : "false");
-	//			ImGui::Text("isDashing: %s", players[i]->GetIsDashing() ? "true" : "false");
-	//			ImGui::Text("isKnockback: %s", players[i]->GetIsKnockback() ? "true" : "false");
-	//			ImGui::Text("isStun: %s", players[i]->GetIsStun() ? "true" : "false");
-	//			ImGui::Text("isOnGround: %s", players[i]->GetIsOnGround() ? "true" : "false");
-	//			ImGui::Text("Current Velocity: %f, %f", players[i]->GetVelocity().x, players[i]->GetVelocity().y);
-
-	//			/*ImGui::DragFloat("ColX Button", &groundColX[i], 2.0f, 0.0f, 1024.f, "%.3f");
-	//			ImGui::DragFloat("ColY Button", &groundColY[i], 2.0f, 0.0f, 1024.f, "%.3f");*/
-	//			ImGui::DragFloat("Col offset X", &groundColOffsetX[i], 2.0f, -1024.f, 1024.f, "%.3f");
-	//			ImGui::DragFloat("Col offset Y", &groundColOffsetY[i], 2.0f, -1024.f, 1024.f, "%.3f");
-
-	//			players[i]->GetGroundColliderObject()->SetCollisionOffset(glm::vec2(groundColOffsetX[i], groundColOffsetY[i]));
-	//			/*Fireball = 0,
-	//				Trap = 1,
-	//				Dash = 2,
-	//				TNT = 3,
-	//				Teleport = 4,
-	//				Bola = 5,
-	//				Cleave = 6*/
-
-	//			for (int j = 0; j < 3; j++)
-	//			{
-	//				ImGui::PushID(j);
-
-
-	//				ImGui::Text("skill %d", j);
-	//				ImGui::Text("ability %d cooldown: %.2f", i ,players[i]->GetCooldown(static_cast<PlayerObject::AbilityButton>(j)));
-	//				ImGui::RadioButton("Fireball", &playersSkill[i][j], static_cast<int>(PlayerObject::Ability::Fireball));
-	//				ImGui::SameLine();
-	//				ImGui::RadioButton("Trap", &playersSkill[i][j], static_cast<int>(PlayerObject::Ability::Trap));
-	//				ImGui::SameLine();
-	//				ImGui::RadioButton("Dash", &playersSkill[i][j], static_cast<int>(PlayerObject::Ability::Dash));
-	//				//ImGui::SameLine();
-	//				ImGui::RadioButton("TNT", &playersSkill[i][j], static_cast<int>(PlayerObject::Ability::TNT));
-	//				ImGui::SameLine();
-	//				ImGui::RadioButton("Teleport", &playersSkill[i][j], static_cast<int>(PlayerObject::Ability::Teleport));
-	//				ImGui::SameLine();
-	//				ImGui::RadioButton("Bola", &playersSkill[i][j], static_cast<int>(PlayerObject::Ability::Bola));
-	//				ImGui::SameLine();
-	//				ImGui::RadioButton("Cleave", &playersSkill[i][j], static_cast<int>(PlayerObject::Ability::Cleave));
-	//				ImGui::SeparatorText("");
-
-	//				ImGui::PopID();
-	//			}
-	//			ImGui::EndTabItem();
-	//		}
-	//		
-	//		ImGui::PopID();
-	//	}
-	//	
-	//	ImGui::EndTabBar();
-	//}
-	//
-	//for (int i = 0; i < playerSize; i++)
-	//{
-	//	for (int j = 0; j < 3; j++)
-	//	{
-	//		players[i]->SetAbility
-	//		(
-	//			static_cast<PlayerObject::AbilityButton>(j), 
-	//			static_cast<PlayerObject::Ability>(playersSkill[i][j])
-	//		);
-	//	}
-	//}
-
-	// Rendering
-	ImGui::Render();
-
-	ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
-	SDL_GL_SwapWindow(GameEngine::GetInstance()->GetSDLWindow());
-
+	DrawImGUI();
 
 	// cout << "Draw Level" << endl;
 }

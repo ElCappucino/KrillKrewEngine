@@ -310,6 +310,10 @@ private:
 	int currentPlayer = 0;
 	int playerRemain = 4;
 
+
+	const int TARGET_FPS = 60;
+	const float TARGET_FRAME_TIME = 1000.0f / TARGET_FPS; // ~16.67 ms
+
 	float dt = 0;
 	int frame = 0;
 	int framePerSecond = 0;
@@ -359,6 +363,7 @@ public:
 	void UpdateKrakenEvent();
 	void UpdateAnimation();
 	void UpdateVolume();
+	void DrawImGUI();
 	void ClearUnusedObject();
 	void UpdatePauseMenu();
 	void CheckPlayerRemain();

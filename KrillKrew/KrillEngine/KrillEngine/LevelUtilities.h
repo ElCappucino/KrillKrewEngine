@@ -71,6 +71,7 @@
 #include <queue>
 #include <numeric>
 #include <cstdlib>
+#include <thread>
 
 #define MAP_WIDTH  20
 #define MAP_HEIGHT 16
