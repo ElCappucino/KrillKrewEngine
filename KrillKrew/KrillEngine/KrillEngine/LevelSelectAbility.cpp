@@ -305,15 +305,17 @@ void LevelSelectAbility::LevelUpdate()
 			numReady++;
 		}
 	}
-	if (numReady == playerSize) {
+	/*if (numReady == playerSize) {
+		
+		
+	}*/
+	if (countdownReady == 3) 
+	{
 		for (int i = 0; i < playerSize; i++)
 		{
 			std::string fileName = "../Resource/SceneData/Ability" + std::to_string(i) + ".json";
 			abilityToFile(fileName, i);
 		}
-		
-	}
-	if (countdownReady == 3) {
 		GameEngine::GetInstance()->GetStateController()->gameStateNext = GameState::GS_LEVELSHOWCASE;
 	}
 
@@ -332,6 +334,8 @@ void LevelSelectAbility::UpdateInput()
 		
 		//KK_INFO("configs.size() = {0}", configs.size());
 		//KK_INFO("playerHoverList.size() = {0}", playerHoverList.size());
+		KK_TRACE("SDL_NumJoysticks() = {0}", SDL_NumJoysticks());
+
 		Joystick::Update();
 		for (int i = 0; i < SDL_NumJoysticks(); i++)
 		{
@@ -341,7 +345,7 @@ void LevelSelectAbility::UpdateInput()
 			if (Joystick::GetButtonDown(i, Joystick::Button::L1)) {
 				KK_TRACE("{0}", i);
 			}*/
-			/*KK_TRACE("{0}", SDL_NumJoysticks());*/
+			
 
 			//join
 			if (Joystick::GetButtonDown(i, Joystick::Button::Triangle) && playerWindowList[i]->GetSpriteRenderer()->GetColumn() == 0) 
@@ -364,8 +368,8 @@ void LevelSelectAbility::UpdateInput()
 				}
 			}
 
-			float axisX = Joystick::GetAxis(i, Joystick::Axis::LeftStickHorizontal) / 32768.0f;
-			float axisY = Joystick::GetAxis(i, Joystick::Axis::LeftStickVertical) / 32768.0f;
+			float axisX = Joystick::GetAxis(i, Joystick::Axis::LeftStickHorizontal)/* / 32768.0f*/;
+			float axisY = Joystick::GetAxis(i, Joystick::Axis::LeftStickVertical)/* / 32768.0f*/;
 			bool up = false;
 			bool down = false;
 			bool right = false;
@@ -1132,7 +1136,7 @@ void LevelSelectAbility::loadConfig(std::string filename) {
 
 void LevelSelectAbility::ConvertAbility()
 {
-	/*int ability;
+	int ability;
 	AbilitySelectScene ability_selectScene;
 	int ability_afterConvert;
 	for (int i = 0; i < 4; i++)
@@ -1147,7 +1151,7 @@ void LevelSelectAbility::ConvertAbility()
 
 			playerAbility[i][j] = ability_afterConvert;
 		}
-	}*/
+	}
 }
 
 

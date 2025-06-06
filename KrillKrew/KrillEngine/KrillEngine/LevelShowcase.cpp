@@ -1691,8 +1691,8 @@ void LevelShowcase::UpdateInput()
 
 		if (isPause)
 		{
-			float axisX = Joystick::GetAxis(0, Joystick::Axis::LeftStickHorizontal) / 32768.0f;
-			float axisY = Joystick::GetAxis(0, Joystick::Axis::LeftStickVertical) / 32768.0f;
+			float axisX = Joystick::GetAxis(0, Joystick::Axis::LeftStickHorizontal)/* / 32768.0f*/;
+			float axisY = Joystick::GetAxis(0, Joystick::Axis::LeftStickVertical)/* / 32768.0f*/;
 
 			float norAxisX = 0;
 			float norAxisY = 0;
@@ -2070,8 +2070,8 @@ void LevelShowcase::UpdateInput()
 				{
 					continue;
 				}
-				float axisX = Joystick::GetAxis(i, Joystick::Axis::LeftStickHorizontal) / 32768.0f;
-				float axisY = Joystick::GetAxis(i, Joystick::Axis::LeftStickVertical) / 32768.0f;
+				float axisX = Joystick::GetAxis(i, Joystick::Axis::LeftStickHorizontal)/* / 32768.0f*/;
+				float axisY = Joystick::GetAxis(i, Joystick::Axis::LeftStickVertical)/* / 32768.0f*/;
 				float norAxisX = 0;
 				float norAxisY = 0;
 

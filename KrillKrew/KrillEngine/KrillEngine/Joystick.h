@@ -1,77 +1,51 @@
 #pragma once
 #include "SDL.h"
+#include "SDL_events.h"
+#include "SDL_gamecontroller.h"
+
 #include <array>
 #include <memory>
 #include <unordered_map>
 #include <algorithm>
 #include <iostream>
 
-#include "SDL_events.h"
-#include "SDL_gamecontroller.h"
 #include "Log.h"
 
 class Joystick
 {
 public:
-	// This reference from PS5 controller config
-	enum class Axis
-	{
-        LeftStickHorizontal = 0,
-        LeftStickVertical,
-        RightStickHorizontal,
-        RightStickVertical,
-        LeftTrigger,
-        RightTrigger,
+    // Aligned with SDL_GameControllerAxis
+    enum class Axis
+    {
+        LeftStickHorizontal = SDL_CONTROLLER_AXIS_LEFTX,
+        LeftStickVertical = SDL_CONTROLLER_AXIS_LEFTY,
+        RightStickHorizontal = SDL_CONTROLLER_AXIS_RIGHTX,
+        RightStickVertical = SDL_CONTROLLER_AXIS_RIGHTY,
+        LeftTrigger = SDL_CONTROLLER_AXIS_TRIGGERLEFT,
+        RightTrigger = SDL_CONTROLLER_AXIS_TRIGGERRIGHT,
         Count
-	};
+    };
 
-    // This reference from PS5 controller config
+    // PS-style naming, internally mapped to SDL
     enum class Button
     {
-        // Debug Version
-       /*Square = 0,
-       Cross,
-       Circle,
-       Triangle,
-       L1,
-       R1,
-       L2,
-       R2,
-       DPAD_Up,
-       DPAD_Down,
-       DPAD_Left,
-       DPAD_Right,
-       LeftStickUp,
-       RightStickUp,
-       LeftStickDown,
-       RightStickDown,
-       LeftStickLeft,
-       RightSticLeft,
-       LeftStickRight,
-       RightStickRight,
-       P5Button,
-       ShareButton,
-       OptionsButton,
-       Count*/
-        
-       // Release Version
-       Cross = 0,
-       Circle,
-       Square,
-       Triangle,
-       ShareButton,
-       P5Button,
-       OptionsButton,
-       LeftStickDown,
-       RightStickDown,
-       L1,
-       R1,
-       DPAD_Up,
-       DPAD_Down,
-       DPAD_Left,
-       DPAD_Right,
-       Touchpad,    
-       Count
+        Cross = SDL_CONTROLLER_BUTTON_A,             // A (Xbox), Cross (PS)
+        Circle = SDL_CONTROLLER_BUTTON_B,             // B (Xbox), Circle (PS)
+        Square = SDL_CONTROLLER_BUTTON_X,             // X (Xbox), Square (PS)
+        Triangle = SDL_CONTROLLER_BUTTON_Y,             // Y (Xbox), Triangle (PS)
+        ShareButton = SDL_CONTROLLER_BUTTON_BACK,          // Back/Share
+        P5Button = SDL_CONTROLLER_BUTTON_GUIDE,         // PS / Xbox Logo
+        OptionsButton = SDL_CONTROLLER_BUTTON_START,         // Start/Options
+        LeftStickDown = SDL_CONTROLLER_BUTTON_LEFTSTICK,
+        RightStickDown = SDL_CONTROLLER_BUTTON_RIGHTSTICK,
+        L1 = SDL_CONTROLLER_BUTTON_LEFTSHOULDER,
+        R1 = SDL_CONTROLLER_BUTTON_RIGHTSHOULDER,
+        DPAD_Up = SDL_CONTROLLER_BUTTON_DPAD_UP,
+        DPAD_Down = SDL_CONTROLLER_BUTTON_DPAD_DOWN,
+        DPAD_Left = SDL_CONTROLLER_BUTTON_DPAD_LEFT,
+        DPAD_Right = SDL_CONTROLLER_BUTTON_DPAD_RIGHT,
+        Touchpad = SDL_CONTROLLER_BUTTON_TOUCHPAD,      // Only on PS controllers
+        Count
     };
 
     static void OnJoystickConnected(SDL_ControllerDeviceEvent& e);
@@ -84,18 +58,17 @@ public:
     static float GetAxis(int joystickId, Axis axis);
 
 private:
-
     static int GetNextFreeIndex();
 
     struct Controller
     {
         int joystickIndex = -1;
-        SDL_Joystick* gc = nullptr;
+        SDL_GameController* gc = nullptr;
 
-        std::array<bool, (int)Button::Count> buttons;
-        std::array<bool, (int)Button::Count> lastButtons;
-        std::array<float, (int)Axis::Count> axes; // -1 to 1
-        std::array<float, (int)Axis::Count> lastAxes;
+        std::array<bool, static_cast<int>(Button::Count)> buttons;
+        std::array<bool, static_cast<int>(Button::Count)> lastButtons;
+        std::array<float, static_cast<int>(Axis::Count)> axes;
+        std::array<float, static_cast<int>(Axis::Count)> lastAxes;
     };
 
     static std::unordered_map<int, std::unique_ptr<Controller>> availableJoysticks;

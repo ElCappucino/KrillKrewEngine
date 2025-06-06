@@ -391,9 +391,9 @@ void LevelMainMenu::UpdateInput() {
 		Joystick::Update();
 		for (int i = 0; i < 1/*SDL_NumJoysticks()*/; i++)
 		{
-			float axisX = Joystick::GetAxis(0, Joystick::Axis::LeftStickHorizontal) / 32768.0f;
+			float axisX = Joystick::GetAxis(0, Joystick::Axis::LeftStickHorizontal)/* / 32768.0f*/;
 			/*std::cout << "axisX : " << axisX << std::endl;*/
-			float axisY = Joystick::GetAxis(0, Joystick::Axis::LeftStickVertical) / 32768.0f;
+			float axisY = Joystick::GetAxis(0, Joystick::Axis::LeftStickVertical)/* / 32768.0f*/;
 			//std::cout << "axisY : " << axisY << std::endl;
 			bool up = false;
 			bool down = false;
