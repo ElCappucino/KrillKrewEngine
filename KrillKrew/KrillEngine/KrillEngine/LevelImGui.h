@@ -1,6 +1,8 @@
 #pragma once
 #include "Level.h"
 #include "LevelUtilities.h"
+#include <iostream>
+#include <fstream>
 
 #define MAP_WIDTH  20 // 29
 #define MAP_HEIGHT 16 // 30

@@ -114,3 +114,13 @@ void Level::HandleMouse(int type, int x, int y)
 void Level::Movement(float axisX, float axisY, bool isPositiveX, bool isPositiveY) {
 
 }
+
+void Level::AddEntityToScene(EntityObject* entity)
+{
+
+}
+
+void Level::AddObjectToScene(DrawableObject* object)
+{
+
+}

@@ -36,18 +36,22 @@
     <ClInclude Include="LevelGameplay.h" />
     <ClInclude Include="LevelImGui.h" />
     <ClInclude Include="LevelLoading.h" />
+    <ClInclude Include="LevelMainMenu.h" />
     <ClInclude Include="LevelMapTest.h" />
+    <ClInclude Include="LevelSelectAbility.h" />
     <ClInclude Include="LevelShowcase.h" />
     <ClInclude Include="LevelUtilities.h" />
     <ClInclude Include="LineMeshVbo.h" />
     <ClInclude Include="Log.h" />
     <ClInclude Include="MeshVbo.h" />
     <ClInclude Include="Music.h" />
+    <ClInclude Include="ParticleObject.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="PlayerGroundColliderObject.h" />
     <ClInclude Include="PlayerHitboxObject.h" />
     <ClInclude Include="PlayerObject.h" />
     <ClInclude Include="ProjectileObject.h" />
+    <ClInclude Include="PropObject.h" />
     <ClInclude Include="Resource\imgui-1.91.8\backends\imgui_impl_opengl3.h" />
     <ClInclude Include="Resource\imgui-1.91.8\backends\imgui_impl_sdl2.h" />
     <ClInclude Include="Resource\imgui-1.91.8\imgui.h" />
@@ -55,12 +59,14 @@
     <ClInclude Include="Resource\imgui-1.91.8\imstb_rectpack.h" />
     <ClInclude Include="Resource\imgui-1.91.8\imstb_textedit.h" />
     <ClInclude Include="Resource\imgui-1.91.8\imstb_truetype.h" />
+    <ClInclude Include="Resource\SDL2-2.0.5\include\SDL_ttf.h" />
     <ClInclude Include="Resource\SDL2_Mixer\include\SDL_mixer.h" />
     <ClInclude Include="Shader.h" />
     <ClInclude Include="SFX.h" />
     <ClInclude Include="SoundManager.h" />
     <ClInclude Include="SpriteRenderer.h" />
     <ClInclude Include="SquareMeshVbo.h" />
+    <ClInclude Include="TextObject.h" />
     <ClInclude Include="TileObject.h" />
     <ClInclude Include="Timer.h" />
     <ClInclude Include="TrapObject.h" />
@@ -83,18 +89,22 @@
     <ClCompile Include="LevelGameplay.cpp" />
     <ClCompile Include="LevelImGui.cpp" />
     <ClCompile Include="LevelLoading.cpp" />
+    <ClCompile Include="LevelMainMenu.cpp" />
     <ClCompile Include="LevelMapTest.cpp" />
+    <ClCompile Include="LevelSelectAbility.cpp" />
     <ClCompile Include="LevelShowcase.cpp" />
     <ClCompile Include="LineMeshVbo.cpp" />
     <ClCompile Include="Log.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="MeshVbo.cpp" />
     <ClCompile Include="Music.cpp" />
+    <ClCompile Include="ParticleObject.cpp" />
     <ClCompile Include="pch.cpp" />
     <ClCompile Include="PlayerGroundColliderObject.cpp" />
     <ClCompile Include="PlayerHitboxObject.cpp" />
     <ClCompile Include="PlayerObject.cpp" />
     <ClCompile Include="ProjectileObject.cpp" />
+    <ClCompile Include="PropObject.cpp" />
     <ClCompile Include="Resource\imgui-1.91.8\backends\imgui_impl_opengl3.cpp" />
     <ClCompile Include="Resource\imgui-1.91.8\backends\imgui_impl_sdl2.cpp" />
     <ClCompile Include="Resource\imgui-1.91.8\imgui.cpp" />
@@ -107,6 +117,7 @@
     <ClCompile Include="SoundManager.cpp" />
     <ClCompile Include="SpriteRenderer.cpp" />
     <ClCompile Include="SquareMeshVbo.cpp" />
+    <ClCompile Include="TextObject.cpp" />
     <ClCompile Include="TileObject.cpp" />
     <ClCompile Include="Timer.cpp" />
     <ClCompile Include="TrapObject.cpp" />
@@ -198,7 +209,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>../Resource/glew/include;../Resource/glm;../Resource/SDL2-2.0.5/include;../Resource;../Resource/spdlog/include;../Resource/imgui-1.91.8;../Resource/imgui-1.91.8/backends;../Resource/SDL2_Mixer/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../Resource/glew/include;../Resource/glm;../Resource/SDL2-2.0.5/include;../Resource;../Resource/spdlog/include;../Resource/imgui-1.91.8;../Resource/imgui-1.91.8/backends;../Resource/SDL2_Mixer/include;../Resource/json/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
@@ -207,7 +218,7 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>..\Resource\glew\lib\Release\Win32;..\Resource\SDL2-2.0.5\lib\x86;..\Resource\SDL2_Mixer\lib\x86</AdditionalLibraryDirectories>
-      <AdditionalDependencies>SDL2main.lib;SDL2.lib;opengl32.lib;glew32.lib;glew32s.lib;SDL2_image.lib;SDL2_mixer.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>SDL2main.lib;SDL2.lib;opengl32.lib;glew32.lib;glew32s.lib;SDL2_image.lib;SDL2_mixer.lib;SDL2_ttf.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">

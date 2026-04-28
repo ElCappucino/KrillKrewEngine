@@ -17,10 +17,16 @@ class TrapObject :public EntityObject
 
 public:
 	 enum TypeTrap
-	{
+	 {
 		Trap,
 		Tnt
-	};
+	 };
+
+	 virtual enum AnimationState
+	 {
+		 Idle = 1,
+		 Collide
+	 };
 
 private:
 	int lifeTime;
@@ -29,10 +35,14 @@ private:
 	int type;
 	
 	std::vector<TileObject*> TileInRange;
+
+	AnimationState currAnimState;
+	std::map<AnimationState, SpritesheetInfo> animList;
+
 public:
 	bool isActivate = false;
 	TrapObject();
-	~TrapObject();
+	virtual ~TrapObject();
 	void Render(glm::mat4 globalModelTransform);
 	void SetTexture(std::string path);
 	void SetLifeTime(int lifeTime);
@@ -48,6 +58,11 @@ public:
 	void AddTileInRange(TileObject* tile);
 	void DeleteTileInRange(TileObject* tile);
 	void ExplodeTileInRange();
+	void ChangeStateAfterCollide();
+
+	virtual void UpdateCurrentAnimation();
+	virtual void SetAnimationSprite(AnimationState state, SpritesheetInfo spriteInfo);
+	virtual void ChangeAnimationState(AnimationState anim);
 
 	virtual void OnColliderEnter(Collider* other);
 	virtual void OnColliderStay(Collider* other);
@@ -55,5 +70,7 @@ public:
 	virtual void OnTriggerEnter(Collider* other);
 	virtual void OnTriggerStay(Collider* other);
 	virtual void OnTriggerExit(Collider* other);
+
+	virtual float getOrderingLayer() const;
 
 };

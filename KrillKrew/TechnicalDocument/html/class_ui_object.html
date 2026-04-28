@@ -148,9 +148,6 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a11df6a77a1cc3a4bcf09fa25bcefac7d" id="r_a11df6a77a1cc3a4bcf09fa25bcefac7d"><td class="memItemLeft" align="right" valign="top"><a id="a11df6a77a1cc3a4bcf09fa25bcefac7d" name="a11df6a77a1cc3a4bcf09fa25bcefac7d"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>SetTexture</b> (std::string path)</td></tr>
 <tr class="separator:a11df6a77a1cc3a4bcf09fa25bcefac7d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a497a80a5b50a05d43ae0e9c0fc24ca65" id="r_a497a80a5b50a05d43ae0e9c0fc24ca65"><td class="memItemLeft" align="right" valign="top"><a id="a497a80a5b50a05d43ae0e9c0fc24ca65" name="a497a80a5b50a05d43ae0e9c0fc24ca65"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>SetSheetInfo</b> (float row, float column, float spritewidth, float spriteheight, float sheetwidth, float sheetheight)</td></tr>
-<tr class="separator:a497a80a5b50a05d43ae0e9c0fc24ca65"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9606ed4cb7f6dce56e2333d88da275b8" id="r_a9606ed4cb7f6dce56e2333d88da275b8"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a9606ed4cb7f6dce56e2333d88da275b8">Render</a> (glm::mat4 globalModelTransform)</td></tr>
 <tr class="separator:a9606ed4cb7f6dce56e2333d88da275b8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a89ddb3d4b1eaa9b96beff107d3876809" id="r_a89ddb3d4b1eaa9b96beff107d3876809"><td class="memItemLeft" align="right" valign="top"><a id="a89ddb3d4b1eaa9b96beff107d3876809" name="a89ddb3d4b1eaa9b96beff107d3876809"></a>
@@ -159,6 +156,18 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>setNumOwner</b> (int 
 <tr class="memitem:aed6a1446f7ee2e3e3785417fdcbddf88" id="r_aed6a1446f7ee2e3e3785417fdcbddf88"><td class="memItemLeft" align="right" valign="top"><a id="aed6a1446f7ee2e3e3785417fdcbddf88" name="aed6a1446f7ee2e3e3785417fdcbddf88"></a>
 int&#160;</td><td class="memItemRight" valign="bottom"><b>getNumOwner</b> ()</td></tr>
 <tr class="separator:aed6a1446f7ee2e3e3785417fdcbddf88"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a52e20945f6e86677de7b79ab94cad851" id="r_a52e20945f6e86677de7b79ab94cad851"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a52e20945f6e86677de7b79ab94cad851">OnColliderEnter</a> (<a class="el" href="class_collider.html">Collider</a> *other)</td></tr>
+<tr class="separator:a52e20945f6e86677de7b79ab94cad851"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae70b8b22d170645a284abde354ae33a0" id="r_ae70b8b22d170645a284abde354ae33a0"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae70b8b22d170645a284abde354ae33a0">OnColliderStay</a> (<a class="el" href="class_collider.html">Collider</a> *other)</td></tr>
+<tr class="separator:ae70b8b22d170645a284abde354ae33a0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1cc7fdb480ff1a96cbb4b7b210b13222" id="r_a1cc7fdb480ff1a96cbb4b7b210b13222"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a1cc7fdb480ff1a96cbb4b7b210b13222">OnColliderExit</a> (<a class="el" href="class_collider.html">Collider</a> *other)</td></tr>
+<tr class="separator:a1cc7fdb480ff1a96cbb4b7b210b13222"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a03512216f98ed46e08986f42d57702d1" id="r_a03512216f98ed46e08986f42d57702d1"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a03512216f98ed46e08986f42d57702d1">OnTriggerEnter</a> (<a class="el" href="class_collider.html">Collider</a> *other)</td></tr>
+<tr class="separator:a03512216f98ed46e08986f42d57702d1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af4a4dfa338e05b5c82e804c06b2dd4f1" id="r_af4a4dfa338e05b5c82e804c06b2dd4f1"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af4a4dfa338e05b5c82e804c06b2dd4f1">OnTriggerStay</a> (<a class="el" href="class_collider.html">Collider</a> *other)</td></tr>
+<tr class="separator:af4a4dfa338e05b5c82e804c06b2dd4f1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a85e7c260c1a38de82109067f30d517ea" id="r_a85e7c260c1a38de82109067f30d517ea"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a85e7c260c1a38de82109067f30d517ea">OnTriggerExit</a> (<a class="el" href="class_collider.html">Collider</a> *other)</td></tr>
+<tr class="separator:a85e7c260c1a38de82109067f30d517ea"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_class_image_object"><td colspan="2" onclick="javascript:dynsection.toggleInherit('pub_methods_class_image_object')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="class_image_object.html">ImageObject</a></td></tr>
 <tr class="memitem:a73ba3fab25806f5b14e790c7e7ddfb4d inherit pub_methods_class_image_object" id="r_a73ba3fab25806f5b14e790c7e7ddfb4d"><td class="memItemLeft" align="right" valign="top">
 <a class="el" href="class_sprite_renderer.html">SpriteRenderer</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>GetSpriteRenderer</b> ()</td></tr>
@@ -179,12 +188,21 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>GetIsAnimated</b> ()<
 <tr class="memitem:a86f155d814b5e9b34b7eb72ed4dd795d inherit pub_methods_class_drawable_object" id="r_a86f155d814b5e9b34b7eb72ed4dd795d"><td class="memItemLeft" align="right" valign="top">
 glm::mat4&#160;</td><td class="memItemRight" valign="bottom"><b>getTransform</b> ()</td></tr>
 <tr class="separator:a86f155d814b5e9b34b7eb72ed4dd795d inherit pub_methods_class_drawable_object"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a122ba0ef171014d1cde924275277d28e inherit pub_methods_class_drawable_object" id="r_a122ba0ef171014d1cde924275277d28e"><td class="memItemLeft" align="right" valign="top">
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>GetIsActive</b> ()</td></tr>
+<tr class="separator:a122ba0ef171014d1cde924275277d28e inherit pub_methods_class_drawable_object"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad15212e4987bd2c5ab4d64097ea51437 inherit pub_methods_class_drawable_object" id="r_ad15212e4987bd2c5ab4d64097ea51437"><td class="memItemLeft" align="right" valign="top">
+void&#160;</td><td class="memItemRight" valign="bottom"><b>SetIsActive</b> (bool isActive)</td></tr>
+<tr class="separator:ad15212e4987bd2c5ab4d64097ea51437 inherit pub_methods_class_drawable_object"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a12876534224a9e42238ae726261b67ca inherit pub_methods_class_drawable_object" id="r_a12876534224a9e42238ae726261b67ca"><td class="memItemLeft" align="right" valign="top">
-void&#160;</td><td class="memItemRight" valign="bottom"><b>SetSize</b> (float sizeX, float sizeY)</td></tr>
+virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>SetSize</b> (float sizeX, float sizeY)</td></tr>
 <tr class="separator:a12876534224a9e42238ae726261b67ca inherit pub_methods_class_drawable_object"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:adc269b02edf37e2423a425bba0b107af inherit pub_methods_class_drawable_object" id="r_adc269b02edf37e2423a425bba0b107af"><td class="memItemLeft" align="right" valign="top">
-void&#160;</td><td class="memItemRight" valign="bottom"><b>SetPosition</b> (glm::vec3 newPosition)</td></tr>
+virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>SetPosition</b> (glm::vec3 newPosition)</td></tr>
 <tr class="separator:adc269b02edf37e2423a425bba0b107af inherit pub_methods_class_drawable_object"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa8e45b8fbdbd7c9f0d860a519df48370 inherit pub_methods_class_drawable_object" id="r_aa8e45b8fbdbd7c9f0d860a519df48370"><td class="memItemLeft" align="right" valign="top">
+void&#160;</td><td class="memItemRight" valign="bottom"><b>SetOrderingLayer</b> (int layer)</td></tr>
+<tr class="separator:aa8e45b8fbdbd7c9f0d860a519df48370 inherit pub_methods_class_drawable_object"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a526365f23ad585ededf384d7c3e870fd inherit pub_methods_class_drawable_object" id="r_a526365f23ad585ededf384d7c3e870fd"><td class="memItemLeft" align="right" valign="top">
 void&#160;</td><td class="memItemRight" valign="bottom"><b>Translate</b> (glm::vec3 moveDistance)</td></tr>
 <tr class="separator:a526365f23ad585ededf384d7c3e870fd inherit pub_methods_class_drawable_object"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -194,6 +212,9 @@ glm::vec3&#160;</td><td class="memItemRight" valign="bottom"><b>getPos</b> ()</t
 <tr class="memitem:a9e15c25583170c014d976d902ee8ddd7 inherit pub_methods_class_drawable_object" id="r_a9e15c25583170c014d976d902ee8ddd7"><td class="memItemLeft" align="right" valign="top">
 glm::vec3&#160;</td><td class="memItemRight" valign="bottom"><b>getSize</b> ()</td></tr>
 <tr class="separator:a9e15c25583170c014d976d902ee8ddd7 inherit pub_methods_class_drawable_object"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6ec47d65c17e652285cd1c5f9ce49606 inherit pub_methods_class_drawable_object" id="r_a6ec47d65c17e652285cd1c5f9ce49606"><td class="memItemLeft" align="right" valign="top">
+int&#160;</td><td class="memItemRight" valign="bottom"><b>getOrderingLayer</b> () const</td></tr>
+<tr class="separator:a6ec47d65c17e652285cd1c5f9ce49606 inherit pub_methods_class_drawable_object"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="inherited" name="inherited"></a>
 Additional Inherited Members</h2></td></tr>
@@ -217,10 +238,178 @@ glm::vec3&#160;</td><td class="memItemRight" valign="bottom"><b>pos</b></td></tr
 <tr class="memitem:a1dba675b2b1fe6c160da82f79ea58027 inherit pro_attribs_class_drawable_object" id="r_a1dba675b2b1fe6c160da82f79ea58027"><td class="memItemLeft" align="right" valign="top">
 glm::vec3&#160;</td><td class="memItemRight" valign="bottom"><b>size</b></td></tr>
 <tr class="separator:a1dba675b2b1fe6c160da82f79ea58027 inherit pro_attribs_class_drawable_object"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a49f87109b33eeee64a36af4a4ae3e4b2 inherit pro_attribs_class_drawable_object" id="r_a49f87109b33eeee64a36af4a4ae3e4b2"><td class="memItemLeft" align="right" valign="top">
+int&#160;</td><td class="memItemRight" valign="bottom"><b>orderingLayer</b></td></tr>
+<tr class="separator:a49f87109b33eeee64a36af4a4ae3e4b2 inherit pro_attribs_class_drawable_object"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afcf3afff7117d18ffa65e64a0c207fbf inherit pro_attribs_class_drawable_object" id="r_afcf3afff7117d18ffa65e64a0c207fbf"><td class="memItemLeft" align="right" valign="top">
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>isActive</b> = true</td></tr>
+<tr class="separator:afcf3afff7117d18ffa65e64a0c207fbf inherit pro_attribs_class_drawable_object"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>The class for creating object that render using texture. </p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
+<a id="a52e20945f6e86677de7b79ab94cad851" name="a52e20945f6e86677de7b79ab94cad851"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a52e20945f6e86677de7b79ab94cad851">&#9670;&#160;</a></span>OnColliderEnter()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void UiObject::OnColliderEnter </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_collider.html">Collider</a> *</td>          <td class="paramname"><span class="paramname"><em>other</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Reimplemented from <a class="el" href="class_image_object.html">ImageObject</a>.</p>
+
+</div>
+</div>
+<a id="a1cc7fdb480ff1a96cbb4b7b210b13222" name="a1cc7fdb480ff1a96cbb4b7b210b13222"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1cc7fdb480ff1a96cbb4b7b210b13222">&#9670;&#160;</a></span>OnColliderExit()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void UiObject::OnColliderExit </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_collider.html">Collider</a> *</td>          <td class="paramname"><span class="paramname"><em>other</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Reimplemented from <a class="el" href="class_image_object.html">ImageObject</a>.</p>
+
+</div>
+</div>
+<a id="ae70b8b22d170645a284abde354ae33a0" name="ae70b8b22d170645a284abde354ae33a0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae70b8b22d170645a284abde354ae33a0">&#9670;&#160;</a></span>OnColliderStay()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void UiObject::OnColliderStay </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_collider.html">Collider</a> *</td>          <td class="paramname"><span class="paramname"><em>other</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Reimplemented from <a class="el" href="class_image_object.html">ImageObject</a>.</p>
+
+</div>
+</div>
+<a id="a03512216f98ed46e08986f42d57702d1" name="a03512216f98ed46e08986f42d57702d1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a03512216f98ed46e08986f42d57702d1">&#9670;&#160;</a></span>OnTriggerEnter()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void UiObject::OnTriggerEnter </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_collider.html">Collider</a> *</td>          <td class="paramname"><span class="paramname"><em>other</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Reimplemented from <a class="el" href="class_image_object.html">ImageObject</a>.</p>
+
+</div>
+</div>
+<a id="a85e7c260c1a38de82109067f30d517ea" name="a85e7c260c1a38de82109067f30d517ea"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a85e7c260c1a38de82109067f30d517ea">&#9670;&#160;</a></span>OnTriggerExit()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void UiObject::OnTriggerExit </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_collider.html">Collider</a> *</td>          <td class="paramname"><span class="paramname"><em>other</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Reimplemented from <a class="el" href="class_image_object.html">ImageObject</a>.</p>
+
+</div>
+</div>
+<a id="af4a4dfa338e05b5c82e804c06b2dd4f1" name="af4a4dfa338e05b5c82e804c06b2dd4f1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af4a4dfa338e05b5c82e804c06b2dd4f1">&#9670;&#160;</a></span>OnTriggerStay()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void UiObject::OnTriggerStay </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_collider.html">Collider</a> *</td>          <td class="paramname"><span class="paramname"><em>other</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Reimplemented from <a class="el" href="class_image_object.html">ImageObject</a>.</p>
+
+</div>
+</div>
 <a id="a9606ed4cb7f6dce56e2333d88da275b8" name="a9606ed4cb7f6dce56e2333d88da275b8"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a9606ed4cb7f6dce56e2333d88da275b8">&#9670;&#160;</a></span>Render()</h2>
 

@@ -1,0 +1,60 @@
+\doxysection{Player\+Ground\+Collider\+Object.\+h}
+\hypertarget{_player_ground_collider_object_8h_source}{}\label{_player_ground_collider_object_8h_source}\index{KrillKrew/KrillEngine/KrillEngine/PlayerGroundColliderObject.h@{KrillKrew/KrillEngine/KrillEngine/PlayerGroundColliderObject.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ }
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ "{}DrawableObject.h"{}}}
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ "{}gtc/matrix\_transform.hpp"{}}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ "{}gtc/type\_ptr.hpp"{}}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ <string>}}
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ <array>}}
+\DoxyCodeLine{00008\ }
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#include\ "{}ImageObject.h"{}}}
+\DoxyCodeLine{00010\ \textcolor{preprocessor}{\#include\ "{}SpriteRenderer.h"{}}}
+\DoxyCodeLine{00011\ \textcolor{preprocessor}{\#include\ "{}Collider.h"{}}}
+\DoxyCodeLine{00012\ \textcolor{preprocessor}{\#include\ "{}InfoStruct.h"{}}}
+\DoxyCodeLine{00013\ \textcolor{preprocessor}{\#include\ "{}GameEngine.h"{}}}
+\DoxyCodeLine{00014\ \textcolor{preprocessor}{\#include\ "{}SquareMeshVbo.h"{}}}
+\DoxyCodeLine{00015\ \textcolor{comment}{//\ \#include\ "{}PlayerObject.h"{}}}
+\DoxyCodeLine{00016\ \textcolor{preprocessor}{\#include\ "{}EntityObject.h"{}}}
+\DoxyCodeLine{00017\ \textcolor{preprocessor}{\#include\ "{}TileObject.h"{}}}
+\DoxyCodeLine{00018\ }
+\DoxyCodeLine{00019\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_player_object}{PlayerObject}};}
+\DoxyCodeLine{00020\ }
+\DoxyCodeLine{00022\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_player_ground_collider_object}{PlayerGroundColliderObject}}\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{class_entity_object}{EntityObject}}}
+\DoxyCodeLine{00023\ \{}
+\DoxyCodeLine{00024\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00025\ }
+\DoxyCodeLine{00026\ \ \ \ \ \mbox{\hyperlink{class_player_object}{PlayerObject}}*\ parent;}
+\DoxyCodeLine{00027\ \ \ \ \ glm::vec2\ colliderOffset;}
+\DoxyCodeLine{00028\ }
+\DoxyCodeLine{00029\ \textcolor{keyword}{protected}:}
+\DoxyCodeLine{00030\ }
+\DoxyCodeLine{00031\ \ \ \ \ \mbox{\hyperlink{class_collider}{Collider}}*\ collider;}
+\DoxyCodeLine{00032\ }
+\DoxyCodeLine{00033\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00034\ }
+\DoxyCodeLine{00035\ \ \ \ \ \mbox{\hyperlink{class_player_ground_collider_object}{PlayerGroundColliderObject}}(\mbox{\hyperlink{class_player_object}{PlayerObject}}*\ parent);}
+\DoxyCodeLine{00036\ \ \ \ \ \mbox{\hyperlink{class_player_ground_collider_object}{\string~PlayerGroundColliderObject}}();}
+\DoxyCodeLine{00037\ }
+\DoxyCodeLine{00038\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ SetSpriteInfo(\mbox{\hyperlink{struct_spritesheet_info}{SpritesheetInfo}}\ info);}
+\DoxyCodeLine{00039\ \ \ \ \ \textcolor{keywordtype}{void}\ SetTexture(std::string\ path);}
+\DoxyCodeLine{00040\ \ \ \ \ \textcolor{keywordtype}{void}\ Render(glm::mat4\ globalModelTransform);}
+\DoxyCodeLine{00041\ }
+\DoxyCodeLine{00042\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ SetSize(\textcolor{keywordtype}{float}\ sizeX,\ \textcolor{keywordtype}{float}\ sizeY);}
+\DoxyCodeLine{00043\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ SetPosition(glm::vec3\ newPosition);}
+\DoxyCodeLine{00044\ \ \ \ \ \textcolor{keywordtype}{void}\ SetCollisionOffset(glm::vec2\ newOffset);}
+\DoxyCodeLine{00045\ }
+\DoxyCodeLine{00046\ \ \ \ \ \textcolor{keyword}{virtual}\ \mbox{\hyperlink{class_collider}{Collider}}*\ GetCollider();}
+\DoxyCodeLine{00047\ \ \ \ \ glm::vec2\ GetColliderOffset()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00048\ }
+\DoxyCodeLine{00049\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ OnColliderEnter(\mbox{\hyperlink{class_collider}{Collider}}*\ other);}
+\DoxyCodeLine{00050\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ OnColliderStay(\mbox{\hyperlink{class_collider}{Collider}}*\ other);}
+\DoxyCodeLine{00051\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ OnColliderExit(\mbox{\hyperlink{class_collider}{Collider}}*\ other);}
+\DoxyCodeLine{00052\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ OnTriggerEnter(\mbox{\hyperlink{class_collider}{Collider}}*\ other);}
+\DoxyCodeLine{00053\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ OnTriggerStay(\mbox{\hyperlink{class_collider}{Collider}}*\ other);}
+\DoxyCodeLine{00054\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ OnTriggerExit(\mbox{\hyperlink{class_collider}{Collider}}*\ other);}
+\DoxyCodeLine{00055\ \};}
+
+\end{DoxyCode}

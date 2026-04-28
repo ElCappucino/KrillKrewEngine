@@ -4,82 +4,189 @@
 \begin{DoxyCode}{0}
 \DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
 \DoxyCodeLine{00002\ }
-\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ "{}DrawableObject.h"{}}}
-\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ "{}gtc/matrix\_transform.hpp"{}}}
-\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ "{}gtc/type\_ptr.hpp"{}}}
-\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ <string>}}
-\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ <array>}}
-\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#include\ <map>}}
-\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#include\ "{}EntityObject.h"{}}}
-\DoxyCodeLine{00010\ \textcolor{preprocessor}{\#include\ <chrono>}}
-\DoxyCodeLine{00011\ \textcolor{preprocessor}{\#include\ "{}ImageObject.h"{}}}
-\DoxyCodeLine{00012\ \textcolor{preprocessor}{\#include\ "{}Collider.h"{}}}
-\DoxyCodeLine{00013\ \textcolor{preprocessor}{\#include\ "{}Ability.h"{}}}
-\DoxyCodeLine{00014\ }
-\DoxyCodeLine{00016\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_player_object}{PlayerObject}}\ :\textcolor{keyword}{public}\ \mbox{\hyperlink{class_entity_object}{EntityObject}}}
-\DoxyCodeLine{00017\ \{}
-\DoxyCodeLine{00018\ \textcolor{keyword}{public}:}
-\DoxyCodeLine{00019\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keyword}{enum\ class}\ AnimationState}
-\DoxyCodeLine{00020\ \ \ \ \ \{}
-\DoxyCodeLine{00021\ \ \ \ \ \ \ \ \ Idle,}
-\DoxyCodeLine{00022\ \ \ \ \ \ \ \ \ Running,}
-\DoxyCodeLine{00023\ \ \ \ \ \ \ \ \ Melee,}
-\DoxyCodeLine{00024\ \ \ \ \ \ \ \ \ Shooting,}
-\DoxyCodeLine{00025\ \ \ \ \ \ \ \ \ PlaceItem}
-\DoxyCodeLine{00026\ \ \ \ \ \};}
-\DoxyCodeLine{00027\ }
-\DoxyCodeLine{00028\ \textcolor{keyword}{private}:}
-\DoxyCodeLine{00029\ }
-\DoxyCodeLine{00030\ \ \ \ \ AnimationState\ currAnimState;}
-\DoxyCodeLine{00031\ \ \ \ \ std::map<AnimationState,\ SpritesheetInfo>\ animList;}
-\DoxyCodeLine{00032\ \ \ \ \ std::array<Ability*,\ 3>\ abilities;}
-\DoxyCodeLine{00033\ \ \ \ \ glm::vec3\ velocity;}
-\DoxyCodeLine{00034\ \ \ \ \ \textcolor{keywordtype}{bool}\ isShooting;}
-\DoxyCodeLine{00035\ \ \ \ \ \textcolor{keywordtype}{bool}\ isAiming;}
-\DoxyCodeLine{00036\ \ \ \ \ \textcolor{keywordtype}{bool}\ isFacingLeft;}
-\DoxyCodeLine{00037\ \ \ \ \ \textcolor{keywordtype}{int}\ number;}
-\DoxyCodeLine{00038\ \ \ \ \ \textcolor{keywordtype}{float}\ cooldown[3]\ =\ \{0\};}
-\DoxyCodeLine{00039\ \ \ \ \ \textcolor{keywordtype}{float}\ slowness\ =\ 2;}
-\DoxyCodeLine{00040\ \ \ \ \ \textcolor{keywordtype}{float}\ durationSlowness;}
-\DoxyCodeLine{00041\ \ \ \ \ \textcolor{keywordtype}{bool}\ isSlowness;}
-\DoxyCodeLine{00042\ }
-\DoxyCodeLine{00043\ \textcolor{keyword}{public}:}
-\DoxyCodeLine{00044\ \ \ \ \ }
-\DoxyCodeLine{00045\ \ \ \ \ \mbox{\hyperlink{class_player_object}{PlayerObject}}();}
-\DoxyCodeLine{00046\ \ \ \ \ \mbox{\hyperlink{class_player_object}{\string~PlayerObject}}();}
-\DoxyCodeLine{00047\ \ \ \ \ \textcolor{keywordtype}{void}\ UpdateFacingSide(\textcolor{keywordtype}{bool}\ isLeft);}
-\DoxyCodeLine{00048\ \ \ \ \ \textcolor{keywordtype}{void}\ SetTexture(std::string\ path);}
-\DoxyCodeLine{00049\ \ \ \ \ \textcolor{keywordtype}{void}\ Render(glm::mat4\ globalModelTransform);}
-\DoxyCodeLine{00050\ \ \ \ \ \textcolor{keywordtype}{void}\ setVelocity(\textcolor{keywordtype}{float}\ axisX,\ \textcolor{keywordtype}{float}\ axisY,\ \textcolor{keywordtype}{bool}\ isPositiveX,\ \textcolor{keywordtype}{bool}\ isPositiveY);}
-\DoxyCodeLine{00051\ \ \ \ \ \textcolor{keywordtype}{void}\ setIsShooting(\textcolor{keywordtype}{bool}\ isShoot);}
-\DoxyCodeLine{00052\ \ \ \ \ \textcolor{keywordtype}{void}\ setIsAiming(\textcolor{keywordtype}{bool}\ isAim);}
-\DoxyCodeLine{00053\ \ \ \ \ \textcolor{keywordtype}{void}\ setNumber(\textcolor{keywordtype}{int}\ num);}
-\DoxyCodeLine{00054\ \ \ \ \ \textcolor{keywordtype}{void}\ setCooldown(\textcolor{keywordtype}{int}\ skill,\ \textcolor{keywordtype}{int}\ time);}
-\DoxyCodeLine{00055\ \ \ \ \ \textcolor{keywordtype}{void}\ reduceCooldown();}
-\DoxyCodeLine{00056\ \ \ \ \ \textcolor{keywordtype}{void}\ setDurationSlowness(\textcolor{keywordtype}{int}\ time);}
-\DoxyCodeLine{00057\ \ \ \ \ \textcolor{keywordtype}{void}\ reduceDurationSlowness();}
-\DoxyCodeLine{00058\ \ \ \ \ \textcolor{keywordtype}{void}\ setIsSlowness(\textcolor{keywordtype}{bool}\ isSlow);}
-\DoxyCodeLine{00059\ \ \ \ \ glm::vec3\ getVelocity();}
-\DoxyCodeLine{00060\ \ \ \ \ \textcolor{keywordtype}{bool}\ getIsShooting();}
-\DoxyCodeLine{00061\ }
-\DoxyCodeLine{00062\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ SetAnimationSprite(AnimationState\ state,\ \mbox{\hyperlink{struct_spritesheet_info}{SpritesheetInfo}}\ spriteInfo);}
-\DoxyCodeLine{00063\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ ChangeAnimationState(AnimationState\ anim);}
-\DoxyCodeLine{00064\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ UpdateCurrentAnimation();}
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ "{}gtc/matrix\_transform.hpp"{}}}
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ "{}gtc/type\_ptr.hpp"{}}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ <string>}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ <array>}}
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ <map>}}
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#include\ <chrono>}}
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#include\ <vector>}}
+\DoxyCodeLine{00010\ }
+\DoxyCodeLine{00011\ \textcolor{preprocessor}{\#include\ "{}Collider.h"{}}}
+\DoxyCodeLine{00012\ \textcolor{preprocessor}{\#include\ "{}GameEngine.h"{}}}
+\DoxyCodeLine{00013\ \textcolor{preprocessor}{\#include\ "{}SquareMeshVbo.h"{}}}
+\DoxyCodeLine{00014\ \textcolor{preprocessor}{\#include\ "{}UiObject.h"{}}}
+\DoxyCodeLine{00015\ \textcolor{preprocessor}{\#include\ "{}EntityObject.h"{}}}
+\DoxyCodeLine{00016\ \textcolor{preprocessor}{\#include\ "{}PlayerGroundColliderObject.h"{}}}
+\DoxyCodeLine{00017\ \textcolor{preprocessor}{\#include\ "{}ProjectileObject.h"{}}}
+\DoxyCodeLine{00018\ \textcolor{preprocessor}{\#include\ "{}TrapObject.h"{}}}
+\DoxyCodeLine{00019\ }
+\DoxyCodeLine{00020\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_player_hitbox_object}{PlayerHitboxObject}};}
+\DoxyCodeLine{00021\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_tile_object}{TileObject}};}
+\DoxyCodeLine{00022\ }
+\DoxyCodeLine{00023\ }
+\DoxyCodeLine{00025\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_player_object}{PlayerObject}}\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{class_entity_object}{EntityObject}}}
+\DoxyCodeLine{00026\ \{}
+\DoxyCodeLine{00027\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00028\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keyword}{enum\ class}\ AnimationState}
+\DoxyCodeLine{00029\ \ \ \ \ \{}
+\DoxyCodeLine{00030\ \ \ \ \ \ \ \ \ Idle,}
+\DoxyCodeLine{00031\ \ \ \ \ \ \ \ \ Running,}
+\DoxyCodeLine{00032\ \ \ \ \ \ \ \ \ Melee,}
+\DoxyCodeLine{00033\ \ \ \ \ \ \ \ \ Shooting,}
+\DoxyCodeLine{00034\ \ \ \ \ \ \ \ \ PlaceItem,}
+\DoxyCodeLine{00035\ \ \ \ \ \ \ \ \ FellDown}
+\DoxyCodeLine{00036\ \ \ \ \ \};}
+\DoxyCodeLine{00037\ }
+\DoxyCodeLine{00038\ \ \ \ \ \textcolor{keyword}{enum\ class}\ \mbox{\hyperlink{class_ability}{Ability}}}
+\DoxyCodeLine{00039\ \ \ \ \ \{}
+\DoxyCodeLine{00040\ \ \ \ \ \ \ \ \ Fireball\ =\ 0,}
+\DoxyCodeLine{00041\ \ \ \ \ \ \ \ \ Trap\ =\ 1,}
+\DoxyCodeLine{00042\ \ \ \ \ \ \ \ \ Dash\ =\ 2,}
+\DoxyCodeLine{00043\ \ \ \ \ \ \ \ \ TNT\ =\ 3,}
+\DoxyCodeLine{00044\ \ \ \ \ \ \ \ \ Teleport\ =\ 4,}
+\DoxyCodeLine{00045\ \ \ \ \ \ \ \ \ Bola\ =\ 5,}
+\DoxyCodeLine{00046\ \ \ \ \ \ \ \ \ Cleave\ =\ 6}
+\DoxyCodeLine{00047\ \ \ \ \ \};}
+\DoxyCodeLine{00048\ }
+\DoxyCodeLine{00049\ \ \ \ \ \textcolor{keyword}{enum\ class}\ AbilityButton}
+\DoxyCodeLine{00050\ \ \ \ \ \{}
+\DoxyCodeLine{00051\ \ \ \ \ \ \ \ \ Triangle\ =\ 0,}
+\DoxyCodeLine{00052\ \ \ \ \ \ \ \ \ Circle\ =\ 1,}
+\DoxyCodeLine{00053\ \ \ \ \ \ \ \ \ Cross\ =\ 2}
+\DoxyCodeLine{00054\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Square\ is\ melee}}
+\DoxyCodeLine{00055\ \ \ \ \ \};}
+\DoxyCodeLine{00056\ }
+\DoxyCodeLine{00057\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00058\ }
+\DoxyCodeLine{00059\ \ \ \ \ AnimationState\ currAnimState;}
+\DoxyCodeLine{00060\ \ \ \ \ std::map<AnimationState,\ SpritesheetInfo>\ animList;}
+\DoxyCodeLine{00061\ \ \ \ \ \textcolor{comment}{//std::array<Ability*,\ 3>\ abilities;}}
+\DoxyCodeLine{00062\ \ \ \ \ }
+\DoxyCodeLine{00063\ \ \ \ \ glm::vec3\ velocity;}
+\DoxyCodeLine{00064\ \ \ \ \ glm::vec2\ currDirection;}
 \DoxyCodeLine{00065\ }
-\DoxyCodeLine{00066\ \ \ \ \ \textcolor{keyword}{virtual}\ \mbox{\hyperlink{class_collider}{Collider}}*\ GetCollider();}
-\DoxyCodeLine{00067\ }
-\DoxyCodeLine{00068\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ OnColliderEnter(\mbox{\hyperlink{class_collider}{Collider}}*\ other);}
-\DoxyCodeLine{00069\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ OnColliderStay(\mbox{\hyperlink{class_collider}{Collider}}*\ other);}
-\DoxyCodeLine{00070\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ OnColliderExit(\mbox{\hyperlink{class_collider}{Collider}}*\ other);}
-\DoxyCodeLine{00071\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ OnTriggerEnter(\mbox{\hyperlink{class_collider}{Collider}}*\ other);}
-\DoxyCodeLine{00072\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ OnTriggerStay(\mbox{\hyperlink{class_collider}{Collider}}*\ other);}
-\DoxyCodeLine{00073\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ OnTriggerExit(\mbox{\hyperlink{class_collider}{Collider}}*\ other);}
-\DoxyCodeLine{00074\ \ \ \ \ }
-\DoxyCodeLine{00075\ \ \ \ \ \textcolor{keywordtype}{bool}\ getIsAiming();}
-\DoxyCodeLine{00076\ \ \ \ \ \textcolor{keywordtype}{int}\ getNumber();}
-\DoxyCodeLine{00077\ \ \ \ \ \textcolor{keywordtype}{float}\ getCooldown(\textcolor{keywordtype}{int}\ skill);}
-\DoxyCodeLine{00078\ \ \ \ \ \textcolor{keywordtype}{float}\ getDurationSlowness();}
-\DoxyCodeLine{00079\ \ \ \ \ \textcolor{keywordtype}{bool}\ getIsSlowness();}
-\DoxyCodeLine{00080\ \};}
+\DoxyCodeLine{00066\ \ \ \ \ \textcolor{keywordtype}{bool}\ isShooting;}
+\DoxyCodeLine{00067\ \ \ \ \ \textcolor{keywordtype}{bool}\ isAiming;}
+\DoxyCodeLine{00068\ \ \ \ \ \textcolor{keywordtype}{bool}\ isFacingLeft;}
+\DoxyCodeLine{00069\ \ \ \ \ \textcolor{keywordtype}{bool}\ isSlow;}
+\DoxyCodeLine{00070\ \ \ \ \ \textcolor{keywordtype}{bool}\ isDashing;}
+\DoxyCodeLine{00071\ \ \ \ \ \textcolor{keywordtype}{bool}\ isOnGround;}
+\DoxyCodeLine{00072\ \ \ \ \ \textcolor{keywordtype}{bool}\ isFell;}
+\DoxyCodeLine{00073\ }
+\DoxyCodeLine{00074\ \ \ \ \ \textcolor{keywordtype}{int}\ playerNumber;}
+\DoxyCodeLine{00075\ }
+\DoxyCodeLine{00076\ \ \ \ \ std::array<Ability,\ 3>\ abilities;}
+\DoxyCodeLine{00077\ \ \ \ \ \textcolor{keywordtype}{float}\ abilityCooldown[3]\ =\ \{0\};}
+\DoxyCodeLine{00078\ }
+\DoxyCodeLine{00079\ \ \ \ \ \textcolor{keywordtype}{float}\ slowness\ =\ 2;}
+\DoxyCodeLine{00080\ \ \ \ \ \textcolor{keywordtype}{float}\ slowDuration;\ \textcolor{comment}{//\ add\ value\ if\ slow\ and\ decrease\ over\ time}}
+\DoxyCodeLine{00081\ \ \ \ \ }
+\DoxyCodeLine{00082\ \ \ \ \ \textcolor{keywordtype}{float}\ dashSpeed\ =\ 2;}
+\DoxyCodeLine{00083\ \ \ \ \ \textcolor{keywordtype}{float}\ dashDuration;\ \textcolor{comment}{//\ add\ value\ if\ dashing\ and\ decrease\ over\ time}}
+\DoxyCodeLine{00084\ }
+\DoxyCodeLine{00085\ \ \ \ \ \textcolor{comment}{//\ UI}}
+\DoxyCodeLine{00086\ \ \ \ \ \mbox{\hyperlink{class_ui_object}{UiObject}}*\ playerUI;}
+\DoxyCodeLine{00087\ \ \ \ \ \mbox{\hyperlink{class_player_hitbox_object}{PlayerHitboxObject}}*\ attackCollider;}
+\DoxyCodeLine{00088\ \ \ \ \ \mbox{\hyperlink{class_player_ground_collider_object}{PlayerGroundColliderObject}}*\ groundCheckCollider;}
+\DoxyCodeLine{00089\ \ \ \ \ }
+\DoxyCodeLine{00090\ \ \ \ \ std::vector<TileObject*>\ aimingTile;}
+\DoxyCodeLine{00091\ \ \ \ \ \textcolor{keywordtype}{float}\ durationSlowness;}
+\DoxyCodeLine{00092\ \ \ \ \ \textcolor{keywordtype}{bool}\ isSlowness;}
+\DoxyCodeLine{00093\ \ \ \ \ \textcolor{keywordtype}{bool}\ isDash;}
+\DoxyCodeLine{00094\ \ \ \ \ \textcolor{keywordtype}{bool}\ isKnockback;}
+\DoxyCodeLine{00095\ \ \ \ \ \textcolor{keywordtype}{float}\ durationKnockback;}
+\DoxyCodeLine{00096\ \ \ \ \ \textcolor{keywordtype}{bool}\ xIsPositive;}
+\DoxyCodeLine{00097\ \ \ \ \ \textcolor{keywordtype}{bool}\ yIsPositive;}
+\DoxyCodeLine{00098\ \ \ \ \ \textcolor{keywordtype}{bool}\ isTNT;}
+\DoxyCodeLine{00099\ \ \ \ \ \textcolor{keywordtype}{int}\ holdingProjectile\ =\ 0;}
+\DoxyCodeLine{00100\ \ \ \ \ \textcolor{keywordtype}{bool}\ isStun;}
+\DoxyCodeLine{00101\ \ \ \ \ \textcolor{keywordtype}{float}\ durationStun;}
+\DoxyCodeLine{00102\ }
+\DoxyCodeLine{00103\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00104\ \ \ \ \ }
+\DoxyCodeLine{00105\ \ \ \ \ \mbox{\hyperlink{class_player_object}{PlayerObject}}();}
+\DoxyCodeLine{00106\ \ \ \ \ \mbox{\hyperlink{class_player_object}{\string~PlayerObject}}();}
+\DoxyCodeLine{00107\ \ \ \ \ }
+\DoxyCodeLine{00108\ \ \ \ \ \textcolor{keywordtype}{void}\ SetTexture(std::string\ path);}
+\DoxyCodeLine{00109\ \ \ \ \ \textcolor{keywordtype}{void}\ Render(glm::mat4\ globalModelTransform);}
+\DoxyCodeLine{00110\ \ \ \ \ \textcolor{keywordtype}{void}\ UpdateFacingSide(\textcolor{keywordtype}{bool}\ isLeft);}
+\DoxyCodeLine{00111\ }
+\DoxyCodeLine{00112\ \ \ \ \ \textcolor{keywordtype}{void}\ SetVelocity(\textcolor{keywordtype}{float}\ axisX,\ \textcolor{keywordtype}{float}\ axisY,\ \textcolor{keywordtype}{bool}\ isPositiveX,\ \textcolor{keywordtype}{bool}\ isPositiveY);}
+\DoxyCodeLine{00113\ \ \ \ \ \textcolor{keywordtype}{void}\ SetIsShooting(\textcolor{keywordtype}{bool}\ isShooting);}
+\DoxyCodeLine{00114\ \ \ \ \ \textcolor{keywordtype}{void}\ SetIsAiming(\textcolor{keywordtype}{bool}\ isAiming);}
+\DoxyCodeLine{00115\ \ \ \ \ \textcolor{keywordtype}{void}\ SetPlayerNumber(\textcolor{keywordtype}{int}\ num);}
+\DoxyCodeLine{00116\ \ \ \ \ \textcolor{keywordtype}{void}\ SetAbilityCooldown(PlayerObject::AbilityButton\ button,\ \textcolor{keywordtype}{int}\ duration);}
+\DoxyCodeLine{00117\ \ \ \ \ \textcolor{keywordtype}{void}\ SetSlowDuration(\textcolor{keywordtype}{int}\ time);}
+\DoxyCodeLine{00118\ \ \ \ \ \textcolor{keywordtype}{void}\ SetIsSlow(\textcolor{keywordtype}{bool}\ isSlow);}
+\DoxyCodeLine{00119\ \ \ \ \ \textcolor{keywordtype}{void}\ SetIsDashing(\textcolor{keywordtype}{bool}\ isDashing);}
+\DoxyCodeLine{00120\ \ \ \ \ \textcolor{keywordtype}{void}\ SetDashDuration(\textcolor{keywordtype}{float}\ duration);}
+\DoxyCodeLine{00121\ \ \ \ \ \textcolor{keywordtype}{void}\ SetAbility(AbilityButton\ numberAbility,\ \mbox{\hyperlink{class_ability}{Ability}}\ idAbility);}
+\DoxyCodeLine{00122\ \ \ \ \ \textcolor{keywordtype}{void}\ SetPlayerUI(\mbox{\hyperlink{class_ui_object}{UiObject}}*\ ui);}
+\DoxyCodeLine{00123\ \ \ \ \ \textcolor{keywordtype}{void}\ SetCurrentDirection(glm::vec2\ dir);}
+\DoxyCodeLine{00124\ }
+\DoxyCodeLine{00125\ \ \ \ \ \textcolor{keywordtype}{void}\ SetIsKnockback(\textcolor{keywordtype}{bool}\ isKnockback);}
+\DoxyCodeLine{00126\ \ \ \ \ \textcolor{keywordtype}{void}\ SetKnockbackDuration(\textcolor{keywordtype}{int}\ time);}
+\DoxyCodeLine{00127\ \ \ \ \ \textcolor{keywordtype}{void}\ SetIsTNT(\textcolor{keywordtype}{bool}\ isTNT);}
+\DoxyCodeLine{00128\ \ \ \ \ \textcolor{keywordtype}{void}\ SetHoldingProjectile(\textcolor{keywordtype}{int}\ projectile);}
+\DoxyCodeLine{00129\ \ \ \ \ \textcolor{keywordtype}{void}\ SetIsStun(\textcolor{keywordtype}{bool}\ isStun);}
+\DoxyCodeLine{00130\ \ \ \ \ \textcolor{keywordtype}{void}\ SetStunDuraion(\textcolor{keywordtype}{int}\ time);}
+\DoxyCodeLine{00131\ \ \ \ \ \textcolor{keywordtype}{void}\ SetIsOnGround(\textcolor{keywordtype}{bool}\ isOnGround);}
+\DoxyCodeLine{00132\ }
+\DoxyCodeLine{00133\ \ \ \ \ \textcolor{keywordtype}{void}\ ReduceAbilityCooldown(\textcolor{keywordtype}{int}\ button,\ \textcolor{keywordtype}{float}\ dt);}
+\DoxyCodeLine{00134\ \ \ \ \ \textcolor{keywordtype}{void}\ ReduceSlowDuration();}
+\DoxyCodeLine{00135\ \ \ \ \ \textcolor{keywordtype}{void}\ ReduceDashDuration();}
+\DoxyCodeLine{00136\ \ \ \ \ \textcolor{keywordtype}{void}\ ReduceKnockbackDuration();}
+\DoxyCodeLine{00137\ \ \ \ \ \textcolor{keywordtype}{void}\ ReduceStunDuration();}
+\DoxyCodeLine{00138\ \ \ \ \ }
+\DoxyCodeLine{00139\ }
+\DoxyCodeLine{00140\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ SetAnimationSprite(AnimationState\ state,\ \mbox{\hyperlink{struct_spritesheet_info}{SpritesheetInfo}}\ spriteInfo);}
+\DoxyCodeLine{00141\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ ChangeAnimationState(AnimationState\ anim);}
+\DoxyCodeLine{00142\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ UpdateCurrentAnimation();}
+\DoxyCodeLine{00143\ }
+\DoxyCodeLine{00144\ }
+\DoxyCodeLine{00145\ \ \ \ \ \textcolor{keyword}{virtual}\ \mbox{\hyperlink{class_collider}{Collider}}*\ GetCollider()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00146\ \ \ \ \ \mbox{\hyperlink{class_collider}{Collider}}*\ GetAttackCollider()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00147\ \ \ \ \ \mbox{\hyperlink{class_player_hitbox_object}{PlayerHitboxObject}}*\ GetAttackColliderObject()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00148\ \ \ \ \ \mbox{\hyperlink{class_collider}{Collider}}*\ GetGroundCollider()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00149\ \ \ \ \ \mbox{\hyperlink{class_player_ground_collider_object}{PlayerGroundColliderObject}}*\ GetGroundColliderObject()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00150\ }
+\DoxyCodeLine{00151\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ OnColliderEnter(\mbox{\hyperlink{class_collider}{Collider}}*\ other);}
+\DoxyCodeLine{00152\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ OnColliderStay(\mbox{\hyperlink{class_collider}{Collider}}*\ other);}
+\DoxyCodeLine{00153\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ OnColliderExit(\mbox{\hyperlink{class_collider}{Collider}}*\ other);}
+\DoxyCodeLine{00154\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ OnTriggerEnter(\mbox{\hyperlink{class_collider}{Collider}}*\ other);}
+\DoxyCodeLine{00155\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ OnTriggerStay(\mbox{\hyperlink{class_collider}{Collider}}*\ other);}
+\DoxyCodeLine{00156\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ OnTriggerExit(\mbox{\hyperlink{class_collider}{Collider}}*\ other);}
+\DoxyCodeLine{00157\ \ \ \ \ }
+\DoxyCodeLine{00158\ \ \ \ \ glm::vec3\ GetVelocity()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00159\ \ \ \ \ \textcolor{keywordtype}{bool}\ GetIsAiming()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00160\ \ \ \ \ \textcolor{keywordtype}{bool}\ GetIsSlow()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00161\ \ \ \ \ \textcolor{keywordtype}{bool}\ GetIsDashing()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00162\ \ \ \ \ \textcolor{keywordtype}{bool}\ GetIsShooting()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00163\ \ \ \ \ \textcolor{keywordtype}{int}\ GetPlayerNumber()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00164\ \ \ \ \ \textcolor{keywordtype}{float}\ GetCooldown(PlayerObject::AbilityButton\ button)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00165\ \ \ \ \ \textcolor{keywordtype}{float}\ GetSlowDuration()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00166\ \ \ \ \ \textcolor{keywordtype}{float}\ GetDashDuration()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00167\ \ \ \ \ glm::vec2\ GetCurrentDirection()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00168\ \ \ \ \ \textcolor{keywordtype}{float}\ GetStunDuration()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00169\ \ \ \ \ \textcolor{keywordtype}{bool}\ GetIsOnGround()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00170\ \ \ \ \ \textcolor{keywordtype}{bool}\ GetIsFell()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00171\ \ \ \ \ PlayerObject::Ability\ GetAbilityByButton(AbilityButton\ button)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00172\ }
+\DoxyCodeLine{00173\ \ \ \ \ \textcolor{keywordtype}{void}\ ClearAimingTile(\mbox{\hyperlink{class_tile_object}{TileObject}}*\ tile);}
+\DoxyCodeLine{00174\ \ \ \ \ \textcolor{keywordtype}{void}\ AddAimingTile(\mbox{\hyperlink{class_tile_object}{TileObject}}*\ tile);}
+\DoxyCodeLine{00175\ \ \ \ \ \textcolor{keywordtype}{void}\ HitAimingTile();}
+\DoxyCodeLine{00176\ \ \ \ \ \textcolor{keywordtype}{bool}\ GetXIsPositive();}
+\DoxyCodeLine{00177\ \ \ \ \ \textcolor{keywordtype}{bool}\ GetYIsPositive();}
+\DoxyCodeLine{00178\ \ \ \ \ \textcolor{keywordtype}{bool}\ GetIsKnockback();}
+\DoxyCodeLine{00179\ \ \ \ \ \textcolor{keywordtype}{float}\ GetDurationKnockback();}
+\DoxyCodeLine{00180\ \ \ \ \ \textcolor{keywordtype}{bool}\ GetIsTNT();}
+\DoxyCodeLine{00181\ \ \ \ \ \textcolor{keywordtype}{int}\ GetHoldingProjectile();}
+\DoxyCodeLine{00182\ \ \ \ \ \textcolor{keywordtype}{bool}\ GetIsStun();}
+\DoxyCodeLine{00183\ }
+\DoxyCodeLine{00184\ \ \ \ \ \textcolor{keywordtype}{void}\ CheckIfOnGround();}
+\DoxyCodeLine{00185\ }
+\DoxyCodeLine{00186\ \ \ \ \ \textcolor{keywordtype}{void}\ ApplyKnockback(\mbox{\hyperlink{class_entity_object}{EntityObject}}*\ obj);}
+\DoxyCodeLine{00187\ \};}
 
 \end{DoxyCode}

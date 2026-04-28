@@ -15,6 +15,7 @@ class ImageObject :public DrawableObject
 {
 
 protected:
+
 	unsigned int texture;
 	SpriteRenderer* spriteRenderer;
 	SpritesheetInfo sheetInfo;
@@ -22,9 +23,10 @@ protected:
 
 public:
 	ImageObject();
-	~ImageObject();
+	virtual ~ImageObject();
 	SpriteRenderer* GetSpriteRenderer();
 	void SetSpriteInfo(SpritesheetInfo info);
+	void SetTextureWithID(SpritesheetInfo info, unsigned int id);
 	void SetTexture(std::string path);
 	void Render(glm::mat4 globalModelTransform);
 

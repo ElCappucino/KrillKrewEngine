@@ -40,15 +40,23 @@ void \mbox{\hyperlink{class_gizmos_object_a10a358a32182c8ce70f2a523dffa0543}{Ren
 \item 
 glm\+::mat4 {\bfseries get\+Transform} ()
 \item 
-void {\bfseries Set\+Size} (float sizeX, float sizeY)
+bool {\bfseries Get\+Is\+Active} ()
 \item 
-void {\bfseries Set\+Position} (glm\+::vec3 new\+Position)
+void {\bfseries Set\+Is\+Active} (bool is\+Active)
+\item 
+virtual void {\bfseries Set\+Size} (float sizeX, float sizeY)
+\item 
+virtual void {\bfseries Set\+Position} (glm\+::vec3 new\+Position)
+\item 
+void {\bfseries Set\+Ordering\+Layer} (int layer)
 \item 
 void {\bfseries Translate} (glm\+::vec3 move\+Distance)
 \item 
 glm\+::vec3 {\bfseries get\+Pos} ()
 \item 
 glm\+::vec3 {\bfseries get\+Size} ()
+\item 
+int {\bfseries get\+Ordering\+Layer} () const
 \end{DoxyCompactItemize}
 \doxysubsubsection*{Additional Inherited Members}
 \doxysubsection*{Protected Attributes inherited from \mbox{\hyperlink{class_drawable_object}{Drawable\+Object}}}
@@ -57,6 +65,10 @@ glm\+::vec3 {\bfseries get\+Size} ()
 glm\+::vec3 {\bfseries pos}
 \item 
 glm\+::vec3 {\bfseries size}
+\item 
+int {\bfseries ordering\+Layer}
+\item 
+bool {\bfseries is\+Active} = true
 \end{DoxyCompactItemize}
 
 

@@ -1,6 +1,7 @@
 #pragma once
 #include "Level.h"
 #include "LevelUtilities.h"
+#include "nlohmann/json.hpp"
 
 #define MAP_WIDTH  20 // 29
 #define MAP_HEIGHT 16 // 30
@@ -11,24 +12,134 @@ class LevelShowcase : public Level
 private:
 	std::vector<DrawableObject*> objectsList;
 	std::vector<EntityObject*> entityObjects;
+	std::vector<PropObject*> propObjects;
+	std::vector<TextObject*> textObjects;
+	std::vector<UiObject*> uiObjects;
+
 	std::set<std::pair<Collider*, Collider*>> currentCollisions;
 	std::set<std::pair<Collider*, Collider*>> previousCollisions;
+
 	std::map<std::string, SpritesheetInfo> spriteList;
 
-	// typedef std::function<void(int, PlayerObject*, std::vector<DrawableObject*>&, SpritesheetInfo)> ability;
-	// std::map<std::string, ability> abilities;
-
 	std::array<PlayerObject*, 4> players; // add up to 4 players
+	std::array<UiObject*, 4> playerUIs; // add up to 4 players
+	std::array<std::array<UiObject*, 3>, 4> playerSkillUIs; // add up to 4 players
+	std::array<std::array<TextObject*, 3>, 4> playerSkillCooldownTexts; // add up to 4 players
+	std::array<std::array<UiObject*, 3>, 4> playerSkillCooldownCovers; // add up to 4 players
 
 	std::array<std::array<int, MAP_WIDTH>, MAP_HEIGHT> currentGroundTile = { 0 };
 	std::array<std::array<int, MAP_WIDTH>, MAP_HEIGHT> groundTile = { 0 };
+
+	// 0 = no prop
+	// 1 = prop A
+	// 2 = prop B
+	// 3 = prop C
+	// 4 = Tree A
+	// 5 = Tree B
+	std::array<std::array<int, MAP_WIDTH>, MAP_HEIGHT> currentPropTile = { 0 };
 	std::array<std::array<int, MAP_WIDTH>, MAP_HEIGHT> propsTile = { 0 };
-	std::array<std::array<int, MAP_WIDTH>, MAP_HEIGHT> colliderTile = { 0 };
+	
 	/*int groundTile[MAP_HEIGHT][MAP_WIDTH] = { 0 };
 	int propsTile[MAP_HEIGHT][MAP_WIDTH] = { 0 };
 	int colliderTile[MAP_HEIGHT][MAP_WIDTH] = { 0 };*/
 
 	std::array<std::array<TileObject*, MAP_WIDTH>, MAP_HEIGHT> tilesList;
+
+	// Countdown from start
+	float text_t = 0.f;
+	float text_SizeX = 0.f;
+	float text_SizeY = 0.f;
+
+	int currentCountdownNum = 3;
+	float countdownDelay = 1.5f;
+	float currentCountdownDelay = -1.f;
+
+	enum TileCollapseDirection
+	{
+		Down,
+		Right,
+		Up,
+		Left
+	};
+
+	// Kraken's Rampage
+	TileCollapseDirection currentCollapseDirection = TileCollapseDirection::Down;
+	bool isStartKrakenEvent = false;
+
+	int KrakenEventOffset_bottom = 1;
+	int KrakenEventOffset_right = 2;
+	int KrakenEventOffset_top = 1;
+	int KrakenEventOffset_left = 1;
+
+	float timeUntilKrakenEvent = 10.f;
+	float timeUntilKrakenCounter = 0.f;
+
+	float timePerTileKrakenEvent = 0.5f;
+	float timePerTileCounter = 0.f;
+	glm::vec2 currrentCollapsePosition = {1, 1};
+
+	float krakenSign_t = 0.0f;
+
+	//display
+	int windowWidth;
+	int windowHeight;
+
+	// Pause Menu
+	enum PauseMenuButton
+	{
+		Resume = 0,
+		Option,
+		MainMenu
+	};
+
+	// YesNo Menu
+	enum YesNoButton
+	{
+		Yes = 0,
+		No
+	};
+
+	// Option Button
+	enum OptionButton {
+		Display = 0,
+		MasterVolume,
+		SFXVolume,
+		BGMVolume
+	};
+
+	// Volume Button
+	enum VolumeButton {
+		Knob = 0,
+		Box
+	};
+
+	bool isPause = false;
+	bool isPressedInPause = false;
+	bool isOption = false;
+	bool isAreYouSure = false;
+	bool isDisplayDropDown = false;
+	bool isVolume = false;
+	bool isVolumeKnob = false;
+
+	PauseMenuButton currentPauseButton = PauseMenuButton::Resume;
+	YesNoButton currentYesNoButton = YesNoButton::No;
+	OptionButton currentOptionButton = OptionButton::Display;
+	VolumeButton currentVolumeButton = VolumeButton::Knob;
+
+	UiObject* PauseMenu;
+	UiObject* ResumeButton;
+	UiObject* OptionButton;
+	UiObject* MainMenuButton;
+	UiObject* AreYouSureBG;
+	UiObject* YesButton;
+	UiObject* NoButton;
+	UiObject* DisplayBox;
+	UiObject* DisplayDropDown;
+	UiObject* OptionBG;
+	std::vector<UiObject*> OptionTextList;
+	std::vector<UiObject*> volumeTrackList;
+	std::vector<UiObject*> volumeKnobList;
+	std::vector<UiObject*> volumeBoxList;
 
 	std::map<int, std::pair<int, int>> blob_lookup_table = {
 
@@ -162,33 +273,62 @@ private:
 	};
 
 	// ImGUI
-	int clicked[4] = {0, 0, 0, 0};
 	float groundColX[4] = { 64.f, 64.f, 64.f, 64.f };
 	float groundColY[4] = { 64.f, 64.f, 64.f, 64.f };
 	float groundColOffsetX[4] = { 0.f, 0.f, 0.f, 0.f };
 	float groundColOffsetY[4] = { -96.f, -96.f, -96.f, -96.f };
 	int playersSkill[4][3];
 	int isResetScene;
+	int isFullScreen;
+	int isWindowScreen;
+
+	float MeleeCooldown = 2.f;
+	float FireballCooldown = 3.f;
+	float TrapCooldown = 3.f;
+	float DashCooldown = 3.f;
+	float TNTCooldown = 3.f;
+	float TeleportCooldown = 3.f;
+	float BolaCooldown = 3.f;
+	float CleaveCooldown = 3.f;
+
+	float FireballLifetime = 1.f;
+	float TeleportLifetime = 2.f;
+	float BolaLifetime = 2.f;
+	float CleaveLifetime = 2.f;
+
+	float DashDuration = 0.2f;
+	float playerMovementSpeed = 3.f;
 
 	int playerSize = 0;
 	int playerNum = 0;
+	int abilityId[3];
 	OrthographicValue targetSceneProjection; // use for lerping between the current projection and this (target projection).
 	Camera camera;
 	Timer* timer;
 
-	int dt = 0;
+	int currentPlayer = 0;
+
+	float dt = 0;
+	int frame = 0;
+	int framePerSecond = 0;
+	float targetFrameDuration = 1.0f / 288.0f; // cap at 144 fps
 	float time1s = 0;
-	float time05s = 0;
-	float time[4] = { 0 };
+	float time01s = 0;
 	float previousWidth = 0, previousHeight = 0;
 
+	float masterVolume = 0.f;
+	float musicVolume = 0.f, sfxVolume = 0.f;
+	bool isToggleMasterVolume = false;
+	bool isToggleSFXVolume = false;
+	bool isToggleBGMVolume = false;
+
 	// player
-	float axisXOld;
-	float axisYOld;
-	float norAxisXOld;
-	float norAxisYOld;
-	bool isPositiveXOld;
-	bool isPositiveYOld;
+	std::array<float, 4> axisXOld;
+	std::array<float, 4> axisYOld;
+	std::array<float, 4> norAxisXOld;
+	std::array<float, 4> norAxisYOld;
+	std::array<bool, 4> isPositiveXOld;
+	std::array<bool, 4> isPositiveYOld;
 
 	KrillSoundManager::SoundManager* soundManager;
 
@@ -203,6 +343,9 @@ public:
 	virtual void HandleKey(char key);
 	virtual void HandleMouse(int type, int x, int y);
 
+	void InitTile();
+	void InitProp();
+
 	void UpdateInput();
 	void UpdateCollision();
 	void UpdateProjectile();
@@ -211,11 +354,17 @@ public:
 	void UpdateUI();
 	// void UpdateKnockback(DrawableObject* obj1, DrawableObject* obj2);
 	void UpdateTime();
+	void UpdateCountdown();
+	void UpdateKrakenEvent();
 
 	void GroundTileRefactor();
 	void TileImport(std::array<std::array<int, MAP_WIDTH>, MAP_HEIGHT> &TileBuffer, std::string fileName);
 
-	void UsingAbility(int numPlayer, PlayerObject::AbilityButton button);
+	virtual void AddEntityToScene(EntityObject* entity);
+	virtual void AddObjectToScene(DrawableObject* object);
+
+	void UsingAbilityKeyDown(int numPlayer, PlayerObject::AbilityButton button);
+	void UsingAbilityKeyUp(int numPlayer, PlayerObject::AbilityButton button);
 	void AimFireball(int numPlayer, PlayerObject::AbilityButton button);
 	void ShootFireball(int numPlayer, PlayerObject::AbilityButton button);
 	void Trap(int numPlayer, PlayerObject::AbilityButton button);
@@ -227,4 +376,8 @@ public:
 	void ShootBola(int numPlayer, PlayerObject::AbilityButton button);
 	void AimCleave(int numPlayer, PlayerObject::AbilityButton button);
 	void ShootCleave(int numPlayer, PlayerObject::AbilityButton button);
+
+	void loadAbility(std::string filename);
+	void SaveConfigInfo(const std::string& fileName);
+	void LoadConfigInfo(const std::string& fileName);
 };

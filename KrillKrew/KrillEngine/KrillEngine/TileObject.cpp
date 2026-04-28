@@ -1,5 +1,6 @@
 #include "TileObject.h"
 #include "PlayerObject.h"
+#include "Level.h"
 
 int BFSTile
 (
@@ -88,7 +89,7 @@ void TileCollapseCheck(std::array<std::array<int, MAP_WIDTH>, MAP_HEIGHT>& curre
 			// check tile
 			if (bufferTile[i][j] == minFlag)// if not 1 skip
 			{
-				currentTile[i][j] = 0;
+				currentTile[i][j] = 2;
 			}
 
 		}
@@ -111,13 +112,18 @@ TileObject::TileObject()
 	this->crackOverlay = new ImageObject();
 	this->crackOverlay->SetSpriteInfo(crackEffectSprite);
 	this->crackOverlay->SetSize(128.f, -128.f);
-
+	this->crackOverlay->SetOrderingLayer(2000.f);
 	this->orderingLayer = 0;
+
+	this->currAnimState = AnimationState::Idle;
 
 }
 TileObject::~TileObject()
 {
-
+	//delete collider;
+	crackOverlay = nullptr;
+	currentLevel = nullptr;
+	updateTile = nullptr;
 }
 
 void TileObject::SetSpriteInfo(SpritesheetInfo info)
@@ -128,6 +134,7 @@ void TileObject::SetSpriteInfo(SpritesheetInfo info)
 void TileObject::SetTexture(std::string path)
 {
 	this->texture = GameEngine::GetInstance()->GetRenderer()->LoadTexture(path);
+	// KK_INFO(this->texture);
 }
 
 void TileObject::SetIsBreakable(bool isBreakable)
@@ -237,44 +244,24 @@ void TileObject::CheckIfBreak()
 	if (currentDurability >= maxDurability)
 	{
 		// create tile falling animation object
-		this->isBroke = true;
-		this->isBreakable = false;
-		this->crackOverlay->SetIsActive(false);
-		this->GetCollider()->GetGizmos()->SetIsActive(false);
+		DisableOverlaySprite();
 
 		UpdateTileArray(0);
-
-		// this->SetIsActive(false);
-
-		/*std::cout << "Check Before Collapse -----------------------------" << std::endl;
-
-		for (int i = 0; i < MAP_HEIGHT; i++)
-		{
-			for (int j = 0; j < MAP_WIDTH; j++)
-			{
-				std::cout << (*updateTile)[i][j] << ", ";
-			}
-			std::cout << std::endl;
-		}*/
+		AddCollapseTileToScene();
 
 		TileCollapseCheck(*updateTile);
-
-		/*std::cout << "Check After Collapse -----------------------------" << std::endl;
-
-		for (int i = 0; i < MAP_HEIGHT; i++)
-		{
-			for (int j = 0; j < MAP_WIDTH; j++)
-			{
-				std::cout << (*updateTile)[i][j] << ", ";
-			}
-			std::cout << std::endl;
-		}*/
 	}
 }
 void TileObject::GotHit()
 {
 	currentDurability++;
 	this->crackOverlay->GetSpriteRenderer()->ShiftColumn();
+	CheckIfBreak();
+}
+
+void TileObject::ImmediatelyBreak()
+{
+	currentDurability = maxDurability;
 	CheckIfBreak();
 }
 
@@ -302,3 +289,49 @@ void TileObject::OnTriggerExit(Collider* other)
 {
 
 }
+
+void TileObject::UpdateSpriteSheetPosition()
+{
+	if (currAnimState == AnimationState::Breaking)
+	{
+		this->GetSpriteRenderer()->ShiftColumn();
+		currentDurability++;
+	}
+	if (currentDurability >= maxDurability)
+	{
+		this->currAnimState = TileObject::AnimationState::FinishBreaking;
+		this->SetIsActive(false);
+	}
+}
+void TileObject::AddCollapseTileToScene()
+{
+	if (currentLevel == nullptr)
+	{
+		KK_CORE_ERROR("TileObject: current level == nullptr");
+		return;
+	}
+	SpritesheetInfo collapseTileSprite = SpritesheetInfo("CollapseTile", "../Resource/Texture/Props/prop_spr_vfx_smoke.png", 200, 200, 800, 200);
+
+	ParticleObject* particle = new ParticleObject();
+	particle->SetSpriteInfo(collapseTileSprite);
+
+	particle->SetPosition(this->pos);
+	particle->SetSize(particle->GetSpriteRenderer()->GetSpriteWidth(), particle->GetSpriteRenderer()->GetSpriteHeight());
+	this->currentLevel->AddEntityToScene(particle);
+
+	/*TileObject* collapseTile = new TileObject();
+	collapseTile->SetIsAnimated(true);
+	collapseTile->currAnimState = AnimationState::Breaking;
+	collapseTile->SetSize(256.f, -256.f);
+	collapseTile->SetPosition(this->pos);
+	collapseTile->GetSpriteRenderer()->SetFrame(10);
+	collapseTile->SetSpriteInfo(collapseTileSprite);
+	collapseTile->GetSpriteRenderer()->ShiftTo(this->GetSpriteRenderer()->GetRow(), this->GetSpriteRenderer()->GetColumn());*/
+
+	currentLevel->AddEntityToScene(particle);
+}
+
+float TileObject::getOrderingLayer() const {
+	return 2000.f;
+}
+

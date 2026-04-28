@@ -15,6 +15,7 @@
 //#include "PlayerObject.h"
 #include "EntityObject.h"
 #include "TileObject.h"
+#include "PropObject.h"
 
 class PlayerObject;
 
@@ -27,12 +28,12 @@ private:
 
 protected:
 
-	Collider* collider;
+	//Collider* collider;
 
 public:
 
 	PlayerHitboxObject(PlayerObject* parent);
-	~PlayerHitboxObject();
+	virtual ~PlayerHitboxObject();
 
 	virtual void SetSpriteInfo(SpritesheetInfo info);
 	void SetTexture(std::string path);

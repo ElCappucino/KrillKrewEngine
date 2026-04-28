@@ -5,28 +5,34 @@
 \DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
 \DoxyCodeLine{00002\ \textcolor{preprocessor}{\#include\ "{}glm.hpp"{}}}
 \DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ <vector>}}
-\DoxyCodeLine{00004\ }
-\DoxyCodeLine{00005\ }
-\DoxyCodeLine{00007\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_drawable_object}{DrawableObject}}}
-\DoxyCodeLine{00008\ \{}
-\DoxyCodeLine{00009\ \textcolor{keyword}{protected}:}
-\DoxyCodeLine{00010\ \ \ \ \ glm::vec3\ pos;}
-\DoxyCodeLine{00011\ \ \ \ \ glm::vec3\ size;}
-\DoxyCodeLine{00012\ }
-\DoxyCodeLine{00013\ \textcolor{keyword}{public}:}
-\DoxyCodeLine{00014\ \ \ \ \ glm::mat4\ getTransform();}
-\DoxyCodeLine{00015\ }
-\DoxyCodeLine{00016\ \ \ \ \ \mbox{\hyperlink{class_drawable_object}{DrawableObject}}();}
-\DoxyCodeLine{00017\ \ \ \ \ \mbox{\hyperlink{class_drawable_object}{\string~DrawableObject}}();}
-\DoxyCodeLine{00018\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ Render(glm::mat4\ globalModelTransform)\ =\ 0;}
-\DoxyCodeLine{00019\ \ \ \ \ \textcolor{keywordtype}{void}\ SetSize(\textcolor{keywordtype}{float}\ sizeX,\ \textcolor{keywordtype}{float}\ sizeY);}
-\DoxyCodeLine{00020\ \ \ \ \ \textcolor{keywordtype}{void}\ SetPosition(glm::vec3\ newPosition);}
-\DoxyCodeLine{00021\ \ \ \ \ \textcolor{keywordtype}{void}\ Translate(glm::vec3\ moveDistance);}
-\DoxyCodeLine{00022\ \ \ \ \ glm::vec3\ getPos();}
-\DoxyCodeLine{00023\ \ \ \ \ glm::vec3\ getSize();}
-\DoxyCodeLine{00024\ \ \ \ \ \textcolor{comment}{//Rotate,\ Scale\ ???}}
-\DoxyCodeLine{00025\ }
-\DoxyCodeLine{00026\ \};}
-\DoxyCodeLine{00027\ }
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ "{}gtc/matrix\_transform.hpp"{}}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ "{}gtc/type\_ptr.hpp"{}}}
+\DoxyCodeLine{00006\ }
+\DoxyCodeLine{00008\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_drawable_object}{DrawableObject}}}
+\DoxyCodeLine{00009\ \{}
+\DoxyCodeLine{00010\ \textcolor{keyword}{protected}:}
+\DoxyCodeLine{00011\ \ \ \ \ glm::vec3\ pos;}
+\DoxyCodeLine{00012\ \ \ \ \ glm::vec3\ size;}
+\DoxyCodeLine{00013\ \ \ \ \ \textcolor{keywordtype}{int}\ orderingLayer;}
+\DoxyCodeLine{00014\ \ \ \ \ \textcolor{keywordtype}{bool}\ isActive\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00015\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00016\ \ \ \ \ glm::mat4\ getTransform();}
+\DoxyCodeLine{00017\ \ \ \ \ \textcolor{keywordtype}{bool}\ GetIsActive();}
+\DoxyCodeLine{00018\ \ \ \ \ \textcolor{keywordtype}{void}\ SetIsActive(\textcolor{keywordtype}{bool}\ isActive);}
+\DoxyCodeLine{00019\ \ \ \ \ \mbox{\hyperlink{class_drawable_object}{DrawableObject}}();}
+\DoxyCodeLine{00020\ \ \ \ \ \mbox{\hyperlink{class_drawable_object}{\string~DrawableObject}}();}
+\DoxyCodeLine{00021\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ Render(glm::mat4\ globalModelTransform)\ =\ 0;}
+\DoxyCodeLine{00022\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ SetSize(\textcolor{keywordtype}{float}\ sizeX,\ \textcolor{keywordtype}{float}\ sizeY);}
+\DoxyCodeLine{00023\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ SetPosition(glm::vec3\ newPosition);}
+\DoxyCodeLine{00024\ \ \ \ \ \textcolor{keywordtype}{void}\ SetOrderingLayer(\textcolor{keywordtype}{int}\ layer);}
+\DoxyCodeLine{00025\ \ \ \ \ \textcolor{keywordtype}{void}\ Translate(glm::vec3\ moveDistance);}
+\DoxyCodeLine{00026\ \ \ \ \ glm::vec3\ getPos();}
+\DoxyCodeLine{00027\ \ \ \ \ glm::vec3\ getSize();}
+\DoxyCodeLine{00028\ \ \ \ \ \textcolor{keywordtype}{int}\ getOrderingLayer()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00029\ }
+\DoxyCodeLine{00030\ \ \ \ \ \textcolor{comment}{//Rotate,\ Scale\ ???}}
+\DoxyCodeLine{00031\ }
+\DoxyCodeLine{00032\ \};}
+\DoxyCodeLine{00033\ }
 
 \end{DoxyCode}

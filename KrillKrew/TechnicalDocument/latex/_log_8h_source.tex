@@ -1,0 +1,40 @@
+\doxysection{Log.\+h}
+\hypertarget{_log_8h_source}{}\label{_log_8h_source}\index{KrillKrew/KrillEngine/KrillEngine/Log.h@{KrillKrew/KrillEngine/KrillEngine/Log.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ }
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ <memory>}}
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ "{}spdlog/spdlog.h"{}}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ "{}spdlog/sinks/stdout\_color\_sinks.h"{}}}
+\DoxyCodeLine{00006\ }
+\DoxyCodeLine{00007\ \textcolor{keyword}{namespace\ }Krill}
+\DoxyCodeLine{00008\ \{}
+\DoxyCodeLine{00009\ \ \ \ \ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_krill_1_1_log}{Log}}}
+\DoxyCodeLine{00010\ \ \ \ \ \{}
+\DoxyCodeLine{00011\ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00012\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ Init();}
+\DoxyCodeLine{00013\ \ \ \ \ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keyword}{static}\ std::shared\_ptr<spdlog::logger>\&\ GetCoreLogger()\ \{\ \textcolor{keywordflow}{return}\ s\_CoreLogger;\ \}}
+\DoxyCodeLine{00014\ \ \ \ \ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keyword}{static}\ std::shared\_ptr<spdlog::logger>\&\ GetClientLogger()\ \{\ \textcolor{keywordflow}{return}\ s\_ClientLogger;\ \}}
+\DoxyCodeLine{00015\ \ \ \ \ }
+\DoxyCodeLine{00016\ \ \ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00017\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ std::shared\_ptr<spdlog::logger>\ s\_CoreLogger;}
+\DoxyCodeLine{00018\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ std::shared\_ptr<spdlog::logger>\ s\_ClientLogger;}
+\DoxyCodeLine{00019\ \ \ \ \ \};}
+\DoxyCodeLine{00020\ \}}
+\DoxyCodeLine{00021\ }
+\DoxyCodeLine{00022\ \textcolor{comment}{//\ Core\ log}}
+\DoxyCodeLine{00023\ \textcolor{preprocessor}{\#define\ KK\_CORE\_TRACE(...)\ ::\ Krill::Log::GetCoreLogger()-\/>trace(\_\_VA\_ARGS\_\_)}}
+\DoxyCodeLine{00024\ \textcolor{preprocessor}{\#define\ KK\_CORE\_INFO(...)\ ::\ Krill::Log::GetCoreLogger()-\/>info(\_\_VA\_ARGS\_\_)}}
+\DoxyCodeLine{00025\ \textcolor{preprocessor}{\#define\ KK\_CORE\_WARN(...)\ ::\ Krill::Log::GetCoreLogger()-\/>warn(\_\_VA\_ARGS\_\_)}}
+\DoxyCodeLine{00026\ \textcolor{preprocessor}{\#define\ KK\_CORE\_ERROR(...)\ ::\ Krill::Log::GetCoreLogger()-\/>error(\_\_VA\_ARGS\_\_)}}
+\DoxyCodeLine{00027\ \textcolor{comment}{//\ \#define\ KK\_CORE\_FATAL(...)\ ::\ Krill::Log::GetCoreLogger()-\/>fatal(\_\_VA\_ARGS\_\_)}}
+\DoxyCodeLine{00028\ }
+\DoxyCodeLine{00029\ \textcolor{comment}{//\ Client\ log}}
+\DoxyCodeLine{00030\ \textcolor{preprocessor}{\#define\ KK\_TRACE(...)\ ::\ Krill::Log::GetClientLogger()-\/>trace(\_\_VA\_ARGS\_\_)}}
+\DoxyCodeLine{00031\ \textcolor{preprocessor}{\#define\ KK\_INFO(...)\ ::\ Krill::Log::GetClientLogger()-\/>info(\_\_VA\_ARGS\_\_)}}
+\DoxyCodeLine{00032\ \textcolor{preprocessor}{\#define\ KK\_WARN(...)\ ::\ Krill::Log::GetClientLogger()-\/>warn(\_\_VA\_ARGS\_\_)}}
+\DoxyCodeLine{00033\ \textcolor{preprocessor}{\#define\ KK\_ERROR(...)\ ::\ Krill::Log::GetClientLogger()-\/>error(\_\_VA\_ARGS\_\_)}}
+\DoxyCodeLine{00034\ \textcolor{comment}{//\ \#define\ KK\_FATAL(...)\ ::\ Krill::Log::GetClientLogger()-\/>fatal(\_\_VA\_ARGS\_\_)}}
+
+\end{DoxyCode}

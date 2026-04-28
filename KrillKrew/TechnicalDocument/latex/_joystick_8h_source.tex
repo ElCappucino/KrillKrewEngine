@@ -7,96 +7,102 @@
 \DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ <array>}}
 \DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ <memory>}}
 \DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ <unordered\_map>}}
-\DoxyCodeLine{00006\ }
-\DoxyCodeLine{00007\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_joystick}{Joystick}}}
-\DoxyCodeLine{00008\ \{}
-\DoxyCodeLine{00009\ \textcolor{keyword}{public}:}
-\DoxyCodeLine{00010\ \ \ \ \ \textcolor{comment}{//\ This\ reference\ from\ PS5\ controller\ config}}
-\DoxyCodeLine{00011\ \ \ \ \ \textcolor{keyword}{enum\ class}\ Axis}
-\DoxyCodeLine{00012\ \ \ \ \ \{}
-\DoxyCodeLine{00013\ \ \ \ \ \ \ \ \ LeftStickHorizontal\ =\ 0,}
-\DoxyCodeLine{00014\ \ \ \ \ \ \ \ \ LeftStickVertical,}
-\DoxyCodeLine{00015\ \ \ \ \ \ \ \ \ RightStickHorizontal,}
-\DoxyCodeLine{00016\ \ \ \ \ \ \ \ \ RightStickVertical,}
-\DoxyCodeLine{00017\ \ \ \ \ \ \ \ \ LeftTrigger,}
-\DoxyCodeLine{00018\ \ \ \ \ \ \ \ \ RightTrigger,}
-\DoxyCodeLine{00019\ \ \ \ \ \ \ \ \ Count}
-\DoxyCodeLine{00020\ \ \ \ \ \};}
-\DoxyCodeLine{00021\ }
-\DoxyCodeLine{00022\ \ \ \ \ \textcolor{comment}{//\ This\ reference\ from\ PS5\ controller\ config}}
-\DoxyCodeLine{00023\ \ \ \ \ \textcolor{keyword}{enum\ class}\ Button}
-\DoxyCodeLine{00024\ \ \ \ \ \{}
-\DoxyCodeLine{00025\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Debug\ Version}}
-\DoxyCodeLine{00026\ \ \ \ \ \ \ \ \textcolor{comment}{/*Square\ =\ 0,}}
-\DoxyCodeLine{00027\ \textcolor{comment}{\ \ \ \ \ \ \ Cross,}}
-\DoxyCodeLine{00028\ \textcolor{comment}{\ \ \ \ \ \ \ Circle,}}
-\DoxyCodeLine{00029\ \textcolor{comment}{\ \ \ \ \ \ \ Triangle,}}
-\DoxyCodeLine{00030\ \textcolor{comment}{\ \ \ \ \ \ \ L1,}}
-\DoxyCodeLine{00031\ \textcolor{comment}{\ \ \ \ \ \ \ R1,}}
-\DoxyCodeLine{00032\ \textcolor{comment}{\ \ \ \ \ \ \ L2,}}
-\DoxyCodeLine{00033\ \textcolor{comment}{\ \ \ \ \ \ \ R2,}}
-\DoxyCodeLine{00034\ \textcolor{comment}{\ \ \ \ \ \ \ DPAD\_Up,}}
-\DoxyCodeLine{00035\ \textcolor{comment}{\ \ \ \ \ \ \ DPAD\_Down,}}
-\DoxyCodeLine{00036\ \textcolor{comment}{\ \ \ \ \ \ \ DPAD\_Left,}}
-\DoxyCodeLine{00037\ \textcolor{comment}{\ \ \ \ \ \ \ DPAD\_Right,}}
-\DoxyCodeLine{00038\ \textcolor{comment}{\ \ \ \ \ \ \ LeftStickUp,}}
-\DoxyCodeLine{00039\ \textcolor{comment}{\ \ \ \ \ \ \ RightStickUp,}}
-\DoxyCodeLine{00040\ \textcolor{comment}{\ \ \ \ \ \ \ LeftStickDown,}}
-\DoxyCodeLine{00041\ \textcolor{comment}{\ \ \ \ \ \ \ RightStickDown,}}
-\DoxyCodeLine{00042\ \textcolor{comment}{\ \ \ \ \ \ \ LeftStickLeft,}}
-\DoxyCodeLine{00043\ \textcolor{comment}{\ \ \ \ \ \ \ RightSticLeft,}}
-\DoxyCodeLine{00044\ \textcolor{comment}{\ \ \ \ \ \ \ LeftStickRight,}}
-\DoxyCodeLine{00045\ \textcolor{comment}{\ \ \ \ \ \ \ RightStickRight,}}
-\DoxyCodeLine{00046\ \textcolor{comment}{\ \ \ \ \ \ \ P5Button,}}
-\DoxyCodeLine{00047\ \textcolor{comment}{\ \ \ \ \ \ \ ShareButton,}}
-\DoxyCodeLine{00048\ \textcolor{comment}{\ \ \ \ \ \ \ OptionsButton,}}
-\DoxyCodeLine{00049\ \textcolor{comment}{\ \ \ \ \ \ \ Count*/}}
-\DoxyCodeLine{00050\ \ \ \ \ \ \ \ \ }
-\DoxyCodeLine{00051\ \ \ \ \ \ \ \ \textcolor{comment}{//\ Release\ Version}}
-\DoxyCodeLine{00052\ \ \ \ \ \ \ \ Cross\ =\ 0,}
-\DoxyCodeLine{00053\ \ \ \ \ \ \ \ Circle,}
-\DoxyCodeLine{00054\ \ \ \ \ \ \ \ Square,}
-\DoxyCodeLine{00055\ \ \ \ \ \ \ \ Triangle,}
-\DoxyCodeLine{00056\ \ \ \ \ \ \ \ ShareButton,}
-\DoxyCodeLine{00057\ \ \ \ \ \ \ \ P5Button,}
-\DoxyCodeLine{00058\ \ \ \ \ \ \ \ OptionsButton,}
-\DoxyCodeLine{00059\ \ \ \ \ \ \ \ LeftStickDown,}
-\DoxyCodeLine{00060\ \ \ \ \ \ \ \ RightStickDown,}
-\DoxyCodeLine{00061\ \ \ \ \ \ \ \ L1,}
-\DoxyCodeLine{00062\ \ \ \ \ \ \ \ R1,}
-\DoxyCodeLine{00063\ \ \ \ \ \ \ \ DPAD\_Up,}
-\DoxyCodeLine{00064\ \ \ \ \ \ \ \ DPAD\_Down,}
-\DoxyCodeLine{00065\ \ \ \ \ \ \ \ DPAD\_Left,}
-\DoxyCodeLine{00066\ \ \ \ \ \ \ \ DPAD\_Right,}
-\DoxyCodeLine{00067\ \ \ \ \ \ \ \ Touchpad,\ \ \ \ }
-\DoxyCodeLine{00068\ \ \ \ \ \ \ \ Count}
-\DoxyCodeLine{00069\ \ \ \ \ \};}
-\DoxyCodeLine{00070\ }
-\DoxyCodeLine{00071\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ OnJoystickConnected(SDL\_ControllerDeviceEvent\&\ e);}
-\DoxyCodeLine{00072\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ OnJoystickDisconnected(SDL\_ControllerDeviceEvent\&\ e);}
-\DoxyCodeLine{00073\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ Shutdown();}
-\DoxyCodeLine{00074\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ Update();}
-\DoxyCodeLine{00075\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{bool}\ GetButton(\textcolor{keywordtype}{int}\ joystickId,\ Button\ button);}
-\DoxyCodeLine{00076\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{bool}\ GetButtonDown(\textcolor{keywordtype}{int}\ joystickId,\ Button\ button);}
-\DoxyCodeLine{00077\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{bool}\ GetButtonUp(\textcolor{keywordtype}{int}\ joystickId,\ Button\ button);}
-\DoxyCodeLine{00078\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{float}\ GetAxis(\textcolor{keywordtype}{int}\ joystickId,\ Axis\ axis);}
-\DoxyCodeLine{00079\ }
-\DoxyCodeLine{00080\ \textcolor{keyword}{private}:}
-\DoxyCodeLine{00081\ }
-\DoxyCodeLine{00082\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{int}\ GetNextFreeIndex();}
-\DoxyCodeLine{00083\ }
-\DoxyCodeLine{00084\ \ \ \ \ \textcolor{keyword}{struct\ }Controller}
-\DoxyCodeLine{00085\ \ \ \ \ \{}
-\DoxyCodeLine{00086\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ joystickIndex\ =\ -\/1;}
-\DoxyCodeLine{00087\ \ \ \ \ \ \ \ \ SDL\_Joystick*\ gc\ =\ \textcolor{keyword}{nullptr};}
-\DoxyCodeLine{00088\ }
-\DoxyCodeLine{00089\ \ \ \ \ \ \ \ \ std::array<bool,\ (int)Button::Count>\ buttons;}
-\DoxyCodeLine{00090\ \ \ \ \ \ \ \ \ std::array<bool,\ (int)Button::Count>\ lastButtons;}
-\DoxyCodeLine{00091\ \ \ \ \ \ \ \ \ std::array<float,\ (int)Axis::Count>\ axes;\ \textcolor{comment}{//\ -\/1\ to\ 1}}
-\DoxyCodeLine{00092\ \ \ \ \ \ \ \ \ std::array<float,\ (int)Axis::Count>\ lastAxes;}
-\DoxyCodeLine{00093\ \ \ \ \ \};}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ <algorithm>}}
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ <iostream>}}
+\DoxyCodeLine{00008\ }
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#include\ "{}SDL\_events.h"{}}}
+\DoxyCodeLine{00010\ \textcolor{preprocessor}{\#include\ "{}SDL\_gamecontroller.h"{}}}
+\DoxyCodeLine{00011\ \textcolor{preprocessor}{\#include\ "{}Log.h"{}}}
+\DoxyCodeLine{00012\ }
+\DoxyCodeLine{00013\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_joystick}{Joystick}}}
+\DoxyCodeLine{00014\ \{}
+\DoxyCodeLine{00015\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00016\ \ \ \ \ \textcolor{comment}{//\ This\ reference\ from\ PS5\ controller\ config}}
+\DoxyCodeLine{00017\ \ \ \ \ \textcolor{keyword}{enum\ class}\ Axis}
+\DoxyCodeLine{00018\ \ \ \ \ \{}
+\DoxyCodeLine{00019\ \ \ \ \ \ \ \ \ LeftStickHorizontal\ =\ 0,}
+\DoxyCodeLine{00020\ \ \ \ \ \ \ \ \ LeftStickVertical,}
+\DoxyCodeLine{00021\ \ \ \ \ \ \ \ \ RightStickHorizontal,}
+\DoxyCodeLine{00022\ \ \ \ \ \ \ \ \ RightStickVertical,}
+\DoxyCodeLine{00023\ \ \ \ \ \ \ \ \ LeftTrigger,}
+\DoxyCodeLine{00024\ \ \ \ \ \ \ \ \ RightTrigger,}
+\DoxyCodeLine{00025\ \ \ \ \ \ \ \ \ Count}
+\DoxyCodeLine{00026\ \ \ \ \ \};}
+\DoxyCodeLine{00027\ }
+\DoxyCodeLine{00028\ \ \ \ \ \textcolor{comment}{//\ This\ reference\ from\ PS5\ controller\ config}}
+\DoxyCodeLine{00029\ \ \ \ \ \textcolor{keyword}{enum\ class}\ Button}
+\DoxyCodeLine{00030\ \ \ \ \ \{}
+\DoxyCodeLine{00031\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Debug\ Version}}
+\DoxyCodeLine{00032\ \ \ \ \ \ \ \ \textcolor{comment}{/*Square\ =\ 0,}}
+\DoxyCodeLine{00033\ \textcolor{comment}{\ \ \ \ \ \ \ Cross,}}
+\DoxyCodeLine{00034\ \textcolor{comment}{\ \ \ \ \ \ \ Circle,}}
+\DoxyCodeLine{00035\ \textcolor{comment}{\ \ \ \ \ \ \ Triangle,}}
+\DoxyCodeLine{00036\ \textcolor{comment}{\ \ \ \ \ \ \ L1,}}
+\DoxyCodeLine{00037\ \textcolor{comment}{\ \ \ \ \ \ \ R1,}}
+\DoxyCodeLine{00038\ \textcolor{comment}{\ \ \ \ \ \ \ L2,}}
+\DoxyCodeLine{00039\ \textcolor{comment}{\ \ \ \ \ \ \ R2,}}
+\DoxyCodeLine{00040\ \textcolor{comment}{\ \ \ \ \ \ \ DPAD\_Up,}}
+\DoxyCodeLine{00041\ \textcolor{comment}{\ \ \ \ \ \ \ DPAD\_Down,}}
+\DoxyCodeLine{00042\ \textcolor{comment}{\ \ \ \ \ \ \ DPAD\_Left,}}
+\DoxyCodeLine{00043\ \textcolor{comment}{\ \ \ \ \ \ \ DPAD\_Right,}}
+\DoxyCodeLine{00044\ \textcolor{comment}{\ \ \ \ \ \ \ LeftStickUp,}}
+\DoxyCodeLine{00045\ \textcolor{comment}{\ \ \ \ \ \ \ RightStickUp,}}
+\DoxyCodeLine{00046\ \textcolor{comment}{\ \ \ \ \ \ \ LeftStickDown,}}
+\DoxyCodeLine{00047\ \textcolor{comment}{\ \ \ \ \ \ \ RightStickDown,}}
+\DoxyCodeLine{00048\ \textcolor{comment}{\ \ \ \ \ \ \ LeftStickLeft,}}
+\DoxyCodeLine{00049\ \textcolor{comment}{\ \ \ \ \ \ \ RightSticLeft,}}
+\DoxyCodeLine{00050\ \textcolor{comment}{\ \ \ \ \ \ \ LeftStickRight,}}
+\DoxyCodeLine{00051\ \textcolor{comment}{\ \ \ \ \ \ \ RightStickRight,}}
+\DoxyCodeLine{00052\ \textcolor{comment}{\ \ \ \ \ \ \ P5Button,}}
+\DoxyCodeLine{00053\ \textcolor{comment}{\ \ \ \ \ \ \ ShareButton,}}
+\DoxyCodeLine{00054\ \textcolor{comment}{\ \ \ \ \ \ \ OptionsButton,}}
+\DoxyCodeLine{00055\ \textcolor{comment}{\ \ \ \ \ \ \ Count*/}}
+\DoxyCodeLine{00056\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00057\ \ \ \ \ \ \ \ \textcolor{comment}{//\ Release\ Version}}
+\DoxyCodeLine{00058\ \ \ \ \ \ \ \ Cross\ =\ 0,}
+\DoxyCodeLine{00059\ \ \ \ \ \ \ \ Circle,}
+\DoxyCodeLine{00060\ \ \ \ \ \ \ \ Square,}
+\DoxyCodeLine{00061\ \ \ \ \ \ \ \ Triangle,}
+\DoxyCodeLine{00062\ \ \ \ \ \ \ \ ShareButton,}
+\DoxyCodeLine{00063\ \ \ \ \ \ \ \ P5Button,}
+\DoxyCodeLine{00064\ \ \ \ \ \ \ \ OptionsButton,}
+\DoxyCodeLine{00065\ \ \ \ \ \ \ \ LeftStickDown,}
+\DoxyCodeLine{00066\ \ \ \ \ \ \ \ RightStickDown,}
+\DoxyCodeLine{00067\ \ \ \ \ \ \ \ L1,}
+\DoxyCodeLine{00068\ \ \ \ \ \ \ \ R1,}
+\DoxyCodeLine{00069\ \ \ \ \ \ \ \ DPAD\_Up,}
+\DoxyCodeLine{00070\ \ \ \ \ \ \ \ DPAD\_Down,}
+\DoxyCodeLine{00071\ \ \ \ \ \ \ \ DPAD\_Left,}
+\DoxyCodeLine{00072\ \ \ \ \ \ \ \ DPAD\_Right,}
+\DoxyCodeLine{00073\ \ \ \ \ \ \ \ Touchpad,\ \ \ \ }
+\DoxyCodeLine{00074\ \ \ \ \ \ \ \ Count}
+\DoxyCodeLine{00075\ \ \ \ \ \};}
+\DoxyCodeLine{00076\ }
+\DoxyCodeLine{00077\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ OnJoystickConnected(SDL\_ControllerDeviceEvent\&\ e);}
+\DoxyCodeLine{00078\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ OnJoystickDisconnected(SDL\_ControllerDeviceEvent\&\ e);}
+\DoxyCodeLine{00079\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ Shutdown();}
+\DoxyCodeLine{00080\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ Update();}
+\DoxyCodeLine{00081\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{bool}\ GetButton(\textcolor{keywordtype}{int}\ joystickId,\ Button\ button);}
+\DoxyCodeLine{00082\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{bool}\ GetButtonDown(\textcolor{keywordtype}{int}\ joystickId,\ Button\ button);}
+\DoxyCodeLine{00083\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{bool}\ GetButtonUp(\textcolor{keywordtype}{int}\ joystickId,\ Button\ button);}
+\DoxyCodeLine{00084\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{float}\ GetAxis(\textcolor{keywordtype}{int}\ joystickId,\ Axis\ axis);}
+\DoxyCodeLine{00085\ }
+\DoxyCodeLine{00086\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00087\ }
+\DoxyCodeLine{00088\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{int}\ GetNextFreeIndex();}
+\DoxyCodeLine{00089\ }
+\DoxyCodeLine{00090\ \ \ \ \ \textcolor{keyword}{struct\ }Controller}
+\DoxyCodeLine{00091\ \ \ \ \ \{}
+\DoxyCodeLine{00092\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ joystickIndex\ =\ -\/1;}
+\DoxyCodeLine{00093\ \ \ \ \ \ \ \ \ SDL\_Joystick*\ gc\ =\ \textcolor{keyword}{nullptr};}
 \DoxyCodeLine{00094\ }
-\DoxyCodeLine{00095\ \ \ \ \ \textcolor{keyword}{static}\ std::unordered\_map<int,\ std::unique\_ptr<Controller>>\ availableJoysticks;}
-\DoxyCodeLine{00096\ \};}
+\DoxyCodeLine{00095\ \ \ \ \ \ \ \ \ std::array<bool,\ (int)Button::Count>\ buttons;}
+\DoxyCodeLine{00096\ \ \ \ \ \ \ \ \ std::array<bool,\ (int)Button::Count>\ lastButtons;}
+\DoxyCodeLine{00097\ \ \ \ \ \ \ \ \ std::array<float,\ (int)Axis::Count>\ axes;\ \textcolor{comment}{//\ -\/1\ to\ 1}}
+\DoxyCodeLine{00098\ \ \ \ \ \ \ \ \ std::array<float,\ (int)Axis::Count>\ lastAxes;}
+\DoxyCodeLine{00099\ \ \ \ \ \};}
+\DoxyCodeLine{00100\ }
+\DoxyCodeLine{00101\ \ \ \ \ \textcolor{keyword}{static}\ std::unordered\_map<int,\ std::unique\_ptr<Controller>>\ availableJoysticks;}
+\DoxyCodeLine{00102\ \};}
 
 \end{DoxyCode}

@@ -13,18 +13,26 @@ ImageObject::ImageObject()
 
 ImageObject::~ImageObject()
 {
+	delete spriteRenderer;
+	spriteRenderer = nullptr;
 }
 
 void ImageObject::SetTexture(std::string path)
 {
 	texture = GameEngine::GetInstance()->GetRenderer()->LoadTexture(path);
+	
 }
 void ImageObject::SetSpriteInfo(SpritesheetInfo info)
 {
 	spriteRenderer->SetSpriteInfo(info.spritewidth, info.spriteheight, info.sheetwidth, info.sheetheight);
 	this->SetTexture(info.texture);
 }
-
+void ImageObject::SetTextureWithID(SpritesheetInfo info, unsigned int id)
+{
+	texture = id;
+	spriteRenderer->SetSpriteInfo(info.spritewidth, info.spriteheight, info.sheetwidth, info.sheetheight);
+	
+}
 SpriteRenderer* ImageObject::GetSpriteRenderer()
 {
 	return spriteRenderer;

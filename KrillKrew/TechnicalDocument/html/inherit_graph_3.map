@@ -1,19 +1,25 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="Node000000" href="$class_drawable_object.html" title="The class for creating drawable object." alt="" coords="5,56,120,83"/>
-<area shape="rect" id="Node000001" href="$class_game_object.html" title="The class for creating game object." alt="" coords="173,5,267,32"/>
-<area shape="poly" id="edge1_Node000000_Node000001" title=" " alt="" coords="120,48,175,30,177,35,122,53"/>
-<area shape="rect" id="Node000002" href="$class_gizmos_object.html" title="The class for creating game object." alt="" coords="168,56,272,83"/>
-<area shape="poly" id="edge2_Node000000_Node000002" title=" " alt="" coords="135,67,167,67,167,72,135,72"/>
-<area shape="rect" id="Node000003" href="$class_image_object.html" title="The class for creating object that render using texture." alt="" coords="172,107,268,133"/>
-<area shape="poly" id="edge3_Node000000_Node000003" title=" " alt="" coords="122,85,177,104,175,109,120,91"/>
-<area shape="rect" id="Node000004" href="$class_entity_object.html" title="The class for creating object that render using texture." alt="" coords="320,81,413,108"/>
-<area shape="poly" id="edge4_Node000003_Node000004" title=" " alt="" coords="282,107,319,100,320,105,283,112"/>
-<area shape="rect" id="Node000008" href="$class_ui_object.html" title="The class for creating object that render using texture." alt="" coords="330,132,403,159"/>
-<area shape="poly" id="edge8_Node000003_Node000008" title=" " alt="" coords="283,128,331,137,330,142,282,133"/>
-<area shape="rect" id="Node000005" href="$class_player_object.html" title="The class for creating object that render using texture." alt="" coords="470,31,566,57"/>
-<area shape="poly" id="edge5_Node000004_Node000005" title=" " alt="" coords="422,73,475,55,477,60,424,78"/>
-<area shape="rect" id="Node000006" href="$class_projectile_object.html" title="The class for creating object that render using texture." alt="" coords="461,81,575,108"/>
-<area shape="poly" id="edge6_Node000004_Node000006" title=" " alt="" coords="429,92,461,92,461,97,429,97"/>
-<area shape="rect" id="Node000007" href="$class_trap_object.html" title="The class for creating object that render using texture." alt="" coords="475,132,561,159"/>
-<area shape="poly" id="edge7_Node000004_Node000007" title=" " alt="" coords="424,111,477,129,475,134,422,116"/>
+<area shape="rect" id="Node000000" href="$class_drawable_object.html" title="The class for creating drawable object." alt="" coords="5,107,120,133"/>
+<area shape="rect" id="Node000001" href="$class_game_object.html" title="The class for creating game object." alt="" coords="173,56,267,83"/>
+<area shape="poly" id="edge1_Node000000_Node000001" title=" " alt="" coords="120,99,175,81,177,86,122,104"/>
+<area shape="rect" id="Node000002" href="$class_gizmos_object.html" title="The class for creating game object." alt="" coords="168,107,272,133"/>
+<area shape="poly" id="edge2_Node000000_Node000002" title=" " alt="" coords="135,117,167,117,167,123,135,123"/>
+<area shape="rect" id="Node000003" href="$class_image_object.html" title="The class for creating object that render using texture." alt="" coords="172,157,268,184"/>
+<area shape="poly" id="edge3_Node000000_Node000003" title=" " alt="" coords="122,136,177,154,175,159,120,141"/>
+<area shape="rect" id="Node000004" href="$class_entity_object.html" title="The class for creating object that render using texture." alt="" coords="320,132,413,159"/>
+<area shape="poly" id="edge4_Node000003_Node000004" title=" " alt="" coords="282,157,319,151,320,156,283,162"/>
+<area shape="rect" id="Node000011" href="$class_ui_object.html" title="The class for creating object that render using texture." alt="" coords="330,183,403,209"/>
+<area shape="poly" id="edge11_Node000003_Node000011" title=" " alt="" coords="283,179,331,187,330,192,282,184"/>
+<area shape="rect" id="Node000005" href="$class_player_ground_collider_object.html" title="The class for creating object that render using texture." alt="" coords="461,5,644,32"/>
+<area shape="poly" id="edge5_Node000004_Node000005" title=" " alt="" coords="383,118,416,78,437,59,460,42,484,30,487,35,463,46,440,63,420,82,388,121"/>
+<area shape="rect" id="Node000006" href="$class_player_hitbox_object.html" title="The class for creating object that render using texture." alt="" coords="485,56,620,83"/>
+<area shape="poly" id="edge6_Node000004_Node000006" title=" " alt="" coords="402,121,460,92,494,81,495,86,462,97,404,126"/>
+<area shape="rect" id="Node000007" href="$class_player_object.html" title="The class for creating object that render using texture." alt="" coords="504,107,601,133"/>
+<area shape="poly" id="edge7_Node000004_Node000007" title=" " alt="" coords="429,134,504,124,504,129,429,140"/>
+<area shape="rect" id="Node000008" href="$class_projectile_object.html" title="The class for creating object that render using texture." alt="" coords="496,157,609,184"/>
+<area shape="poly" id="edge8_Node000004_Node000008" title=" " alt="" coords="429,151,496,160,495,166,428,156"/>
+<area shape="rect" id="Node000009" href="$class_tile_object.html" title="The class for creating object that render using texture." alt="" coords="512,208,593,235"/>
+<area shape="poly" id="edge9_Node000004_Node000009" title=" " alt="" coords="407,164,462,194,513,210,511,215,460,198,405,169"/>
+<area shape="rect" id="Node000010" href="$class_trap_object.html" title="The class for creating object that render using texture." alt="" coords="510,259,595,285"/>
+<area shape="poly" id="edge10_Node000004_Node000010" title=" " alt="" coords="412,166,415,169,431,189,439,209,447,227,463,245,486,257,510,264,509,269,483,262,460,249,442,230,434,211,426,192,411,172,408,170"/>
 </map>

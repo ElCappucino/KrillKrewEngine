@@ -115,29 +115,33 @@ $(function(){initNavTree('_ui_object_8h_source.html',''); initResizable(true); }
 <div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span><span class="preprocessor">#include &lt;array&gt;</span></div>
 <div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="preprocessor">#include &quot;ImageObject.h&quot;</span></div>
 <div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span><span class="preprocessor">#include &quot;Collider.h&quot;</span></div>
-<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><span class="preprocessor">#include &quot;Ability.h&quot;</span></div>
-<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span> </div>
-<div class="foldopen" id="foldopen00013" data-start="{" data-end="};">
-<div class="line"><a id="l00013" name="l00013"></a><span class="lineno"><a class="line" href="class_ui_object.html">   13</a></span><span class="keyword">class </span><a class="code hl_class" href="class_ui_object.html">UiObject</a> :<span class="keyword">public</span> <a class="code hl_class" href="class_image_object.html">ImageObject</a></div>
-<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span>{</div>
-<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span>    <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> texture;</div>
-<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span>    <a class="code hl_struct" href="struct_spritesheet_info.html">SpritesheetInfo</a> sheetInfo;</div>
-<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span>    <span class="keywordtype">int</span> playerNumOwner;</div>
-<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span> </div>
-<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span><span class="keyword">public</span>:</div>
-<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span>    <a class="code hl_class" href="class_ui_object.html">UiObject</a>();</div>
-<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span>    <a class="code hl_class" href="class_ui_object.html">~UiObject</a>();</div>
-<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span>    <span class="keywordtype">void</span> SetTexture(std::string path);</div>
-<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span>    <span class="keywordtype">void</span> SetSheetInfo(<span class="keywordtype">float</span> row, <span class="keywordtype">float</span> column, <span class="keywordtype">float</span> spritewidth, <span class="keywordtype">float</span> spriteheight, <span class="keywordtype">float</span> sheetwidth, <span class="keywordtype">float</span> sheetheight);</div>
-<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span>    <span class="keywordtype">void</span> Render(glm::mat4 globalModelTransform);</div>
-<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span>    <span class="keywordtype">void</span> setNumOwner(<span class="keywordtype">int</span> Num);</div>
-<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span>    <span class="keywordtype">int</span> getNumOwner();</div>
-<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span>};</div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><span class="preprocessor">#include &quot;GameEngine.h&quot;</span></div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="preprocessor">#include &quot;SquareMeshVbo.h&quot;</span></div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span> </div>
+<div class="foldopen" id="foldopen00014" data-start="{" data-end="};">
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno"><a class="line" href="class_ui_object.html">   14</a></span><span class="keyword">class </span><a class="code hl_class" href="class_ui_object.html">UiObject</a> : <span class="keyword">public</span> <a class="code hl_class" href="class_image_object.html">ImageObject</a></div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span>{</div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span>    <span class="keywordtype">int</span> playerNumOwner;</div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span> </div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span><span class="keyword">public</span>:</div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span>    <a class="code hl_class" href="class_ui_object.html">UiObject</a>();</div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span>    <a class="code hl_class" href="class_ui_object.html">~UiObject</a>();</div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span>    <span class="keywordtype">void</span> SetTexture(std::string path);</div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span>    <span class="keywordtype">void</span> Render(glm::mat4 globalModelTransform);</div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span>    <span class="keywordtype">void</span> setNumOwner(<span class="keywordtype">int</span> Num);</div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span>    <span class="keywordtype">int</span> getNumOwner();</div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span> </div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span>    <span class="keyword">virtual</span> <span class="keywordtype">void</span> OnColliderEnter(<a class="code hl_class" href="class_collider.html">Collider</a>* other);</div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span>    <span class="keyword">virtual</span> <span class="keywordtype">void</span> OnColliderStay(<a class="code hl_class" href="class_collider.html">Collider</a>* other);</div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>    <span class="keyword">virtual</span> <span class="keywordtype">void</span> OnColliderExit(<a class="code hl_class" href="class_collider.html">Collider</a>* other);</div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span>    <span class="keyword">virtual</span> <span class="keywordtype">void</span> OnTriggerEnter(<a class="code hl_class" href="class_collider.html">Collider</a>* other);</div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span>    <span class="keyword">virtual</span> <span class="keywordtype">void</span> OnTriggerStay(<a class="code hl_class" href="class_collider.html">Collider</a>* other);</div>
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span>    <span class="keyword">virtual</span> <span class="keywordtype">void</span> OnTriggerExit(<a class="code hl_class" href="class_collider.html">Collider</a>* other);</div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span>};</div>
 </div>
-<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span><span class="preprocessor">#pragma once</span></div>
-<div class="ttc" id="aclass_image_object_html"><div class="ttname"><a href="class_image_object.html">ImageObject</a></div><div class="ttdoc">The class for creating object that render using texture.</div><div class="ttdef"><b>Definition</b> ImageObject.h:12</div></div>
-<div class="ttc" id="aclass_ui_object_html"><div class="ttname"><a href="class_ui_object.html">UiObject</a></div><div class="ttdoc">The class for creating object that render using texture.</div><div class="ttdef"><b>Definition</b> UiObject.h:14</div></div>
-<div class="ttc" id="astruct_spritesheet_info_html"><div class="ttname"><a href="struct_spritesheet_info.html">SpritesheetInfo</a></div><div class="ttdef"><b>Definition</b> InfoStruct.h:13</div></div>
+<div class="ttc" id="aclass_collider_html"><div class="ttname"><a href="class_collider.html">Collider</a></div><div class="ttdef"><b>Definition</b> Collider.h:8</div></div>
+<div class="ttc" id="aclass_image_object_html"><div class="ttname"><a href="class_image_object.html">ImageObject</a></div><div class="ttdoc">The class for creating object that render using texture.</div><div class="ttdef"><b>Definition</b> ImageObject.h:15</div></div>
+<div class="ttc" id="aclass_ui_object_html"><div class="ttname"><a href="class_ui_object.html">UiObject</a></div><div class="ttdoc">The class for creating object that render using texture.</div><div class="ttdef"><b>Definition</b> UiObject.h:15</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

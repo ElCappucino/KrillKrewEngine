@@ -11,37 +11,67 @@
 \DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ <array>}}
 \DoxyCodeLine{00008\ \textcolor{preprocessor}{\#include\ "{}EntityObject.h"{}}}
 \DoxyCodeLine{00009\ \textcolor{preprocessor}{\#include\ "{}Collider.h"{}}}
-\DoxyCodeLine{00010\ \textcolor{preprocessor}{\#include\ "{}Ability.h"{}}}
-\DoxyCodeLine{00011\ }
-\DoxyCodeLine{00013\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_projectile_object}{ProjectileObject}}\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{class_entity_object}{EntityObject}}}
-\DoxyCodeLine{00014\ \{}
-\DoxyCodeLine{00015\ \ \ \ \ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ texture;}
-\DoxyCodeLine{00016\ \ \ \ \ glm::vec3\ velocity;}
-\DoxyCodeLine{00017\ \ \ \ \ \textcolor{keywordtype}{int}\ lifeTime;}
-\DoxyCodeLine{00018\ \ \ \ \ \textcolor{keywordtype}{int}\ playerNumOwner;}
-\DoxyCodeLine{00019\ }
-\DoxyCodeLine{00020\ \textcolor{keyword}{public}:}
-\DoxyCodeLine{00021\ \ \ \ \ \mbox{\hyperlink{class_projectile_object}{ProjectileObject}}();}
-\DoxyCodeLine{00022\ \ \ \ \ \mbox{\hyperlink{class_projectile_object}{\string~ProjectileObject}}();}
-\DoxyCodeLine{00023\ \ \ \ \ \textcolor{keywordtype}{void}\ SetTexture(std::string\ path);}
-\DoxyCodeLine{00024\ \ \ \ \ \textcolor{keywordtype}{void}\ Render(glm::mat4\ globalModelTransform);}
-\DoxyCodeLine{00025\ \ \ \ \ \textcolor{keywordtype}{void}\ setVelocity(\textcolor{keywordtype}{float}\ axisX,\ \textcolor{keywordtype}{float}\ axisY,\ \textcolor{keywordtype}{bool}\ isPositiveX,\ \textcolor{keywordtype}{bool}\ isPositiveY);}
-\DoxyCodeLine{00026\ \ \ \ \ \textcolor{keywordtype}{void}\ setLifeTime(\textcolor{keywordtype}{int}\ lifeTime);}
-\DoxyCodeLine{00027\ \ \ \ \ \textcolor{keywordtype}{void}\ setNumOwner(\textcolor{keywordtype}{int}\ Num);}
-\DoxyCodeLine{00028\ \ \ \ \ glm::vec3\ getVelocity();}
-\DoxyCodeLine{00029\ \ \ \ \ \textcolor{keywordtype}{void}\ reduceLifeTime();}
-\DoxyCodeLine{00030\ \ \ \ \ \textcolor{keywordtype}{int}\ getLifetime();}
-\DoxyCodeLine{00031\ }
-\DoxyCodeLine{00032\ \ \ \ \ \textcolor{keyword}{virtual}\ \mbox{\hyperlink{class_collider}{Collider}}*\ GetCollider();}
+\DoxyCodeLine{00010\ \textcolor{preprocessor}{\#include\ "{}PlayerObject.h"{}}}
+\DoxyCodeLine{00011\ \textcolor{preprocessor}{\#include\ "{}GameEngine.h"{}}}
+\DoxyCodeLine{00012\ \textcolor{preprocessor}{\#include\ "{}SquareMeshVbo.h"{}}}
+\DoxyCodeLine{00013\ }
+\DoxyCodeLine{00015\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_projectile_object}{ProjectileObject}}\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{class_entity_object}{EntityObject}}}
+\DoxyCodeLine{00016\ \{}
+\DoxyCodeLine{00017\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00018\ \ \ \ \ \textcolor{keyword}{enum}\ TypeProjectile}
+\DoxyCodeLine{00019\ \ \ \ \ \{}
+\DoxyCodeLine{00020\ \ \ \ \ \ \ \ \ Fireball\ =\ 1,}
+\DoxyCodeLine{00021\ \ \ \ \ \ \ \ \ Teleport,}
+\DoxyCodeLine{00022\ \ \ \ \ \ \ \ \ Bola,}
+\DoxyCodeLine{00023\ \ \ \ \ \ \ \ \ Cleave}
+\DoxyCodeLine{00024\ \ \ \ \ \};}
+\DoxyCodeLine{00025\ }
+\DoxyCodeLine{00026\ \ \ \ \ glm::vec3\ velocity;}
+\DoxyCodeLine{00027\ \ \ \ \ \textcolor{keywordtype}{float}\ lifeTime;}
+\DoxyCodeLine{00028\ \ \ \ \ \mbox{\hyperlink{class_player_object}{PlayerObject}}*\ playerOwner;}
+\DoxyCodeLine{00029\ \ \ \ \ \textcolor{keywordtype}{bool}\ CanKnockback;}
+\DoxyCodeLine{00030\ \ \ \ \ TypeProjectile\ type;}
+\DoxyCodeLine{00031\ \ \ \ \ \textcolor{keywordtype}{bool}\ isShooting;}
+\DoxyCodeLine{00032\ \ \ \ \ \textcolor{keywordtype}{bool}\ CanStun;}
 \DoxyCodeLine{00033\ }
-\DoxyCodeLine{00034\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ OnColliderEnter(\mbox{\hyperlink{class_collider}{Collider}}*\ other);}
-\DoxyCodeLine{00035\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ OnColliderStay(\mbox{\hyperlink{class_collider}{Collider}}*\ other);}
-\DoxyCodeLine{00036\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ OnColliderExit(\mbox{\hyperlink{class_collider}{Collider}}*\ other);}
-\DoxyCodeLine{00037\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ OnTriggerEnter(\mbox{\hyperlink{class_collider}{Collider}}*\ other);}
-\DoxyCodeLine{00038\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ OnTriggerStay(\mbox{\hyperlink{class_collider}{Collider}}*\ other);}
-\DoxyCodeLine{00039\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ OnTriggerExit(\mbox{\hyperlink{class_collider}{Collider}}*\ other);}
-\DoxyCodeLine{00040\ \ \ \ \ }
-\DoxyCodeLine{00041\ \ \ \ \ \textcolor{keywordtype}{int}\ getNumOwner();}
-\DoxyCodeLine{00042\ \};}
+\DoxyCodeLine{00034\ \ \ \ \ std::vector<TileObject*>\ TileInRange;}
+\DoxyCodeLine{00035\ }
+\DoxyCodeLine{00036\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00037\ \ \ \ \ \mbox{\hyperlink{class_projectile_object}{ProjectileObject}}();}
+\DoxyCodeLine{00038\ \ \ \ \ \mbox{\hyperlink{class_projectile_object}{\string~ProjectileObject}}();}
+\DoxyCodeLine{00039\ \ \ \ \ \textcolor{keywordtype}{void}\ SetTexture(std::string\ path);}
+\DoxyCodeLine{00040\ \ \ \ \ \textcolor{keywordtype}{void}\ Render(glm::mat4\ globalModelTransform);}
+\DoxyCodeLine{00041\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ SetSize(\textcolor{keywordtype}{float}\ sizeX,\ \textcolor{keywordtype}{float}\ sizeY);}
+\DoxyCodeLine{00042\ \ \ \ \ \textcolor{keywordtype}{void}\ SetVelocity(\textcolor{keywordtype}{float}\ axisX,\ \textcolor{keywordtype}{float}\ axisY,\ \textcolor{keywordtype}{bool}\ isPositiveX,\ \textcolor{keywordtype}{bool}\ isPositiveY);}
+\DoxyCodeLine{00043\ \ \ \ \ \textcolor{keywordtype}{void}\ SetLifeTime(\textcolor{keywordtype}{float}\ lifeTime);}
+\DoxyCodeLine{00044\ \ \ \ \ \textcolor{keywordtype}{void}\ SetOwner(\mbox{\hyperlink{class_player_object}{PlayerObject}}*\ player);}
+\DoxyCodeLine{00045\ }
+\DoxyCodeLine{00046\ \ \ \ \ glm::vec3\ GetVelocity();}
+\DoxyCodeLine{00047\ \ \ \ \ \textcolor{keywordtype}{void}\ ReduceLifeTime();}
+\DoxyCodeLine{00048\ \ \ \ \ \textcolor{keywordtype}{int}\ GetLifetime();}
+\DoxyCodeLine{00049\ \ \ \ \ \textcolor{keywordtype}{void}\ SetCanKnockback(\textcolor{keywordtype}{bool}\ isCanKnockback);}
+\DoxyCodeLine{00050\ \ \ \ \ \textcolor{keywordtype}{bool}\ GetCanKnockback();}
+\DoxyCodeLine{00051\ \ \ \ \ \mbox{\hyperlink{class_player_object}{PlayerObject}}*\ GetOwner();}
+\DoxyCodeLine{00052\ \ \ \ \ \textcolor{keywordtype}{void}\ SetType(TypeProjectile\ Type);}
+\DoxyCodeLine{00053\ \ \ \ \ TypeProjectile\ GetType();}
+\DoxyCodeLine{00054\ \ \ \ \ \textcolor{keywordtype}{void}\ SetIsShooting(\textcolor{keywordtype}{bool}\ isShooting);}
+\DoxyCodeLine{00055\ \ \ \ \ \textcolor{keywordtype}{bool}\ GetIsShooting();}
+\DoxyCodeLine{00056\ \ \ \ \ \textcolor{keywordtype}{void}\ SetIsCanStun(\textcolor{keywordtype}{bool}\ isCanStun);}
+\DoxyCodeLine{00057\ \ \ \ \ \textcolor{keywordtype}{bool}\ GetIsCanStun();}
+\DoxyCodeLine{00058\ }
+\DoxyCodeLine{00059\ \ \ \ \ \textcolor{keywordtype}{void}\ AddTileInRange(\mbox{\hyperlink{class_tile_object}{TileObject}}*\ tile);}
+\DoxyCodeLine{00060\ \ \ \ \ \textcolor{keywordtype}{void}\ DeleteTileInRange(\mbox{\hyperlink{class_tile_object}{TileObject}}*\ tile);}
+\DoxyCodeLine{00061\ \ \ \ \ \textcolor{keywordtype}{void}\ ExplodeTileInRange();}
+\DoxyCodeLine{00062\ }
+\DoxyCodeLine{00063\ \ \ \ \ \textcolor{keyword}{virtual}\ \mbox{\hyperlink{class_collider}{Collider}}*\ GetCollider();}
+\DoxyCodeLine{00064\ }
+\DoxyCodeLine{00065\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ OnColliderEnter(\mbox{\hyperlink{class_collider}{Collider}}*\ other);}
+\DoxyCodeLine{00066\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ OnColliderStay(\mbox{\hyperlink{class_collider}{Collider}}*\ other);}
+\DoxyCodeLine{00067\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ OnColliderExit(\mbox{\hyperlink{class_collider}{Collider}}*\ other);}
+\DoxyCodeLine{00068\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ OnTriggerEnter(\mbox{\hyperlink{class_collider}{Collider}}*\ other);}
+\DoxyCodeLine{00069\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ OnTriggerStay(\mbox{\hyperlink{class_collider}{Collider}}*\ other);}
+\DoxyCodeLine{00070\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ OnTriggerExit(\mbox{\hyperlink{class_collider}{Collider}}*\ other);}
+\DoxyCodeLine{00071\ }
+\DoxyCodeLine{00072\ \};}
 
 \end{DoxyCode}

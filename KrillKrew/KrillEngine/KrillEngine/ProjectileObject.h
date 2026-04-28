@@ -23,11 +23,21 @@ public:
 		Cleave
 	};
 
+	virtual enum AnimationState
+	{
+		Idle = 1,
+		Collide
+	};
+
+	AnimationState currAnimState;
+	std::map<AnimationState, SpritesheetInfo> animList;
+
 	glm::vec3 velocity;
 	float lifeTime;
 	PlayerObject* playerOwner;
 	bool CanKnockback;
 	TypeProjectile type;
+	
 	bool isShooting;
 	bool CanStun;
 
@@ -44,8 +54,8 @@ public:
 	void SetOwner(PlayerObject* player);
 
 	glm::vec3 GetVelocity();
-	void ReduceLifeTime();
-	int GetLifetime();
+	void ReduceLifeTime(float dt);
+	float GetLifetime();
 	void SetCanKnockback(bool isCanKnockback);
 	bool GetCanKnockback();
 	PlayerObject* GetOwner();
@@ -69,4 +79,10 @@ public:
 	virtual void OnTriggerStay(Collider* other);
 	virtual void OnTriggerExit(Collider* other);
 
+	virtual void UpdateCurrentAnimation();
+	virtual void SetAnimationSprite(AnimationState state, SpritesheetInfo spriteInfo);
+	virtual void ChangeAnimationState(AnimationState anim);
+	virtual void UpdateCollider();
+
+	virtual float getOrderingLayer() const;
 };

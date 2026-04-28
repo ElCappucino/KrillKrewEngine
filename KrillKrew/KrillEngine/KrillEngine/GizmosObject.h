@@ -16,7 +16,7 @@ class GizmosObject :public DrawableObject
 
 public:
 	GizmosObject();
-	~GizmosObject();
+	virtual ~GizmosObject();
 	void SetColor(float r, float g, float b);
 	void Render(glm::mat4 globalModelTransform);
 };

@@ -22,7 +22,7 @@ PlayerHitboxObject::PlayerHitboxObject(PlayerObject* parent)
 }
 PlayerHitboxObject::~PlayerHitboxObject()
 {
-
+	parent = nullptr;
 }
 
 void PlayerHitboxObject::SetSpriteInfo(SpritesheetInfo info)
@@ -94,6 +94,13 @@ void PlayerHitboxObject::OnColliderEnter(Collider* other)
 		// KK_TRACE("hit Tile");
 		this->parent->AddAimingTile(tile);
 	}
+
+	PropObject* prop = dynamic_cast<PropObject*>(other->GetParent());
+	if (prop != nullptr && prop->propType != PropObject::PropType::Tiny)
+	{
+		// KK_TRACE("hit Tile");
+		this->parent->AddAimingProp(prop);
+	}
 }
 void PlayerHitboxObject::OnColliderStay(Collider* other)
 {
@@ -106,6 +113,13 @@ void PlayerHitboxObject::OnColliderExit(Collider* other)
 	{
 		// KK_TRACE("On ColliderExit PlayerHitboxObject");
 		this->parent->ClearAimingTile(tile);
+	}
+
+	PropObject* prop = dynamic_cast<PropObject*>(other->GetParent());
+	if (prop != nullptr)
+	{
+		// KK_TRACE("hit Tile");
+		this->parent->ClearAimingProp(prop);
 	}
 }
 void PlayerHitboxObject::OnTriggerEnter(Collider* other)

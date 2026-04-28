@@ -38,51 +38,109 @@ enum class {\bfseries Animation\+State} \{ \newline
 , {\bfseries Shooting}
 , \newline
 {\bfseries Place\+Item}
+, {\bfseries Fell\+Down}
+ \}
+\item 
+\Hypertarget{class_player_object_a9dfd0096322121f8ecb3f21eb29d01dd}\label{class_player_object_a9dfd0096322121f8ecb3f21eb29d01dd} 
+enum class {\bfseries Ability} \{ \newline
+{\bfseries Fireball} = 0
+, {\bfseries Trap} = 1
+, {\bfseries Dash} = 2
+, {\bfseries TNT} = 3
+, \newline
+{\bfseries Teleport} = 4
+, {\bfseries Bola} = 5
+, {\bfseries Cleave} = 6
+ \}
+\item 
+\Hypertarget{class_player_object_a9f4631fd15bb937984d40ac824ff8329}\label{class_player_object_a9f4631fd15bb937984d40ac824ff8329} 
+enum class {\bfseries Ability\+Button} \{ {\bfseries Triangle} = 0
+, {\bfseries Circle} = 1
+, {\bfseries Cross} = 2
  \}
 \end{DoxyCompactItemize}
 \doxysubsubsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
-\item 
-\Hypertarget{class_player_object_acc30f12008c08dda49cbcc97d199a46c}\label{class_player_object_acc30f12008c08dda49cbcc97d199a46c} 
-void {\bfseries Update\+Facing\+Side} (bool is\+Left)
 \item 
 \Hypertarget{class_player_object_a81069ce7ce698372b49dc847ab8d24ad}\label{class_player_object_a81069ce7ce698372b49dc847ab8d24ad} 
 void {\bfseries Set\+Texture} (std\+::string path)
 \item 
 void \mbox{\hyperlink{class_player_object_a6a2348aa6a95bab45d4976992334a959}{Render}} (glm\+::mat4 global\+Model\+Transform)
 \item 
-\Hypertarget{class_player_object_ac375c32f683d209dd5a2553ab95fad25}\label{class_player_object_ac375c32f683d209dd5a2553ab95fad25} 
-void {\bfseries set\+Velocity} (float axisX, float axisY, bool is\+PositiveX, bool is\+PositiveY)
+\Hypertarget{class_player_object_acc30f12008c08dda49cbcc97d199a46c}\label{class_player_object_acc30f12008c08dda49cbcc97d199a46c} 
+void {\bfseries Update\+Facing\+Side} (bool is\+Left)
 \item 
-\Hypertarget{class_player_object_a571743af621ae12a531b24686758dbf3}\label{class_player_object_a571743af621ae12a531b24686758dbf3} 
-void {\bfseries set\+Is\+Shooting} (bool is\+Shoot)
+\Hypertarget{class_player_object_ad14b94d7e9c04f64892d5135cf0609c3}\label{class_player_object_ad14b94d7e9c04f64892d5135cf0609c3} 
+void {\bfseries Set\+Velocity} (float axisX, float axisY, bool is\+PositiveX, bool is\+PositiveY)
 \item 
-\Hypertarget{class_player_object_a435bad85eb8589e4e9047a252d5df7d7}\label{class_player_object_a435bad85eb8589e4e9047a252d5df7d7} 
-void {\bfseries set\+Is\+Aiming} (bool is\+Aim)
+\Hypertarget{class_player_object_a6fa38e08b51bc5ae6e18e324d95c5145}\label{class_player_object_a6fa38e08b51bc5ae6e18e324d95c5145} 
+void {\bfseries Set\+Is\+Shooting} (bool is\+Shooting)
 \item 
-\Hypertarget{class_player_object_a25cc02c8ec6a3c591df076a45638a8c7}\label{class_player_object_a25cc02c8ec6a3c591df076a45638a8c7} 
-void {\bfseries set\+Number} (int num)
+\Hypertarget{class_player_object_a7f82e51de467f87614a1dd1be636afc1}\label{class_player_object_a7f82e51de467f87614a1dd1be636afc1} 
+void {\bfseries Set\+Is\+Aiming} (bool is\+Aiming)
 \item 
-\Hypertarget{class_player_object_a87f429a1f670c6de004b75c902cb02d0}\label{class_player_object_a87f429a1f670c6de004b75c902cb02d0} 
-void {\bfseries set\+Cooldown} (int skill, int time)
+\Hypertarget{class_player_object_a849be7b21eb18b84f3f5f2725b7ebb5e}\label{class_player_object_a849be7b21eb18b84f3f5f2725b7ebb5e} 
+void {\bfseries Set\+Player\+Number} (int num)
 \item 
-\Hypertarget{class_player_object_af39aeb983eb9a29f504279a90610bc83}\label{class_player_object_af39aeb983eb9a29f504279a90610bc83} 
-void {\bfseries reduce\+Cooldown} ()
+\Hypertarget{class_player_object_a10bd40f1e5da1d90b28a2d7a1ad569f2}\label{class_player_object_a10bd40f1e5da1d90b28a2d7a1ad569f2} 
+void {\bfseries Set\+Ability\+Cooldown} (Player\+Object\+::\+Ability\+Button button, int duration)
 \item 
-\Hypertarget{class_player_object_a6d9b121aa54d3aa00d1569607ada6665}\label{class_player_object_a6d9b121aa54d3aa00d1569607ada6665} 
-void {\bfseries set\+Duration\+Slowness} (int time)
+\Hypertarget{class_player_object_a2eade8ec68e319fd6f98eab0c42e48dc}\label{class_player_object_a2eade8ec68e319fd6f98eab0c42e48dc} 
+void {\bfseries Set\+Slow\+Duration} (int time)
 \item 
-\Hypertarget{class_player_object_aea1357a95b4045741e5e8161441464ab}\label{class_player_object_aea1357a95b4045741e5e8161441464ab} 
-void {\bfseries reduce\+Duration\+Slowness} ()
+\Hypertarget{class_player_object_a20814a083febd5054421d28f51ee0f58}\label{class_player_object_a20814a083febd5054421d28f51ee0f58} 
+void {\bfseries Set\+Is\+Slow} (bool is\+Slow)
 \item 
-\Hypertarget{class_player_object_aa3a92db3391c807aacd434ea4b7a0552}\label{class_player_object_aa3a92db3391c807aacd434ea4b7a0552} 
-void {\bfseries set\+Is\+Slowness} (bool is\+Slow)
+\Hypertarget{class_player_object_ae35d3665c7e3d01d4a8b6fede2463299}\label{class_player_object_ae35d3665c7e3d01d4a8b6fede2463299} 
+void {\bfseries Set\+Is\+Dashing} (bool is\+Dashing)
 \item 
-\Hypertarget{class_player_object_a9a28216d08fdecc8bed9e97aea8a6db5}\label{class_player_object_a9a28216d08fdecc8bed9e97aea8a6db5} 
-glm\+::vec3 {\bfseries get\+Velocity} ()
+\Hypertarget{class_player_object_a36fff7e993460b33d37686195be82f83}\label{class_player_object_a36fff7e993460b33d37686195be82f83} 
+void {\bfseries Set\+Dash\+Duration} (float duration)
 \item 
-\Hypertarget{class_player_object_aec65ef434fef4335e3bd92ff7fd9d579}\label{class_player_object_aec65ef434fef4335e3bd92ff7fd9d579} 
-bool {\bfseries get\+Is\+Shooting} ()
+\Hypertarget{class_player_object_a32f3ccd436cb1c470951ec96c42aa825}\label{class_player_object_a32f3ccd436cb1c470951ec96c42aa825} 
+void {\bfseries Set\+Ability} (Ability\+Button number\+Ability, \mbox{\hyperlink{class_ability}{Ability}} id\+Ability)
+\item 
+\Hypertarget{class_player_object_ac82f9df3821f52acf93a13c2e6315d66}\label{class_player_object_ac82f9df3821f52acf93a13c2e6315d66} 
+void {\bfseries Set\+Player\+UI} (\mbox{\hyperlink{class_ui_object}{Ui\+Object}} \texorpdfstring{$\ast$}{*}ui)
+\item 
+\Hypertarget{class_player_object_a15c3dfffe02ec6f3f5908aa7c6c01896}\label{class_player_object_a15c3dfffe02ec6f3f5908aa7c6c01896} 
+void {\bfseries Set\+Current\+Direction} (glm\+::vec2 dir)
+\item 
+\Hypertarget{class_player_object_a49d56788667999e46374fe08dae6fa7a}\label{class_player_object_a49d56788667999e46374fe08dae6fa7a} 
+void {\bfseries Set\+Is\+Knockback} (bool is\+Knockback)
+\item 
+\Hypertarget{class_player_object_abf6fef3ff9c5e806b36c2507c810bd7f}\label{class_player_object_abf6fef3ff9c5e806b36c2507c810bd7f} 
+void {\bfseries Set\+Knockback\+Duration} (int time)
+\item 
+\Hypertarget{class_player_object_a252cb782c96ba58c2ef3e8cb56e4ded7}\label{class_player_object_a252cb782c96ba58c2ef3e8cb56e4ded7} 
+void {\bfseries Set\+Is\+TNT} (bool is\+TNT)
+\item 
+\Hypertarget{class_player_object_aef49457a2ac9a8cba475b45e15d93e6f}\label{class_player_object_aef49457a2ac9a8cba475b45e15d93e6f} 
+void {\bfseries Set\+Holding\+Projectile} (int projectile)
+\item 
+\Hypertarget{class_player_object_a5d586ba316381e8b104da06009ac1fc5}\label{class_player_object_a5d586ba316381e8b104da06009ac1fc5} 
+void {\bfseries Set\+Is\+Stun} (bool is\+Stun)
+\item 
+\Hypertarget{class_player_object_a21b85fa6deb33671789f1abafb978d7b}\label{class_player_object_a21b85fa6deb33671789f1abafb978d7b} 
+void {\bfseries Set\+Stun\+Duraion} (int time)
+\item 
+\Hypertarget{class_player_object_a9039130fb6be270ffbf07593eb0b2800}\label{class_player_object_a9039130fb6be270ffbf07593eb0b2800} 
+void {\bfseries Set\+Is\+On\+Ground} (bool is\+On\+Ground)
+\item 
+\Hypertarget{class_player_object_ac98132cfe621280641286382e3d95d4b}\label{class_player_object_ac98132cfe621280641286382e3d95d4b} 
+void {\bfseries Reduce\+Ability\+Cooldown} (int button, float dt)
+\item 
+\Hypertarget{class_player_object_ab5a197c03f29815aa230e6710ec77ba0}\label{class_player_object_ab5a197c03f29815aa230e6710ec77ba0} 
+void {\bfseries Reduce\+Slow\+Duration} ()
+\item 
+\Hypertarget{class_player_object_a8681c875ff906397a901995a629ed107}\label{class_player_object_a8681c875ff906397a901995a629ed107} 
+void {\bfseries Reduce\+Dash\+Duration} ()
+\item 
+\Hypertarget{class_player_object_afeb24a1fbd69491a8dec9412c39376c9}\label{class_player_object_afeb24a1fbd69491a8dec9412c39376c9} 
+void {\bfseries Reduce\+Knockback\+Duration} ()
+\item 
+\Hypertarget{class_player_object_a0c3003b174a391a146c7263daabe0aad}\label{class_player_object_a0c3003b174a391a146c7263daabe0aad} 
+void {\bfseries Reduce\+Stun\+Duration} ()
 \item 
 \Hypertarget{class_player_object_a06044ad1763fde190fb4c297ce35d53f}\label{class_player_object_a06044ad1763fde190fb4c297ce35d53f} 
 virtual void {\bfseries Set\+Animation\+Sprite} (Animation\+State state, \mbox{\hyperlink{struct_spritesheet_info}{Spritesheet\+Info}} sprite\+Info)
@@ -92,7 +150,20 @@ virtual void {\bfseries Change\+Animation\+State} (Animation\+State anim)
 \item 
 virtual void \mbox{\hyperlink{class_player_object_aa2557c8c9343de4f63cd68d5a3c603c3}{Update\+Current\+Animation}} ()
 \item 
-virtual \mbox{\hyperlink{class_collider}{Collider}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{class_player_object_ac782e9c4916c03849b55f44ff13b1437}{Get\+Collider}} ()
+\Hypertarget{class_player_object_afd0a10da435f952d12cae378a359e7e3}\label{class_player_object_afd0a10da435f952d12cae378a359e7e3} 
+virtual \mbox{\hyperlink{class_collider}{Collider}} \texorpdfstring{$\ast$}{*} {\bfseries Get\+Collider} () const
+\item 
+\Hypertarget{class_player_object_aece273336a79bab227fbc330f6212103}\label{class_player_object_aece273336a79bab227fbc330f6212103} 
+\mbox{\hyperlink{class_collider}{Collider}} \texorpdfstring{$\ast$}{*} {\bfseries Get\+Attack\+Collider} () const
+\item 
+\Hypertarget{class_player_object_a0b46cc7b1bbeb105a21448087fa79366}\label{class_player_object_a0b46cc7b1bbeb105a21448087fa79366} 
+\mbox{\hyperlink{class_player_hitbox_object}{Player\+Hitbox\+Object}} \texorpdfstring{$\ast$}{*} {\bfseries Get\+Attack\+Collider\+Object} () const
+\item 
+\Hypertarget{class_player_object_a79fac1888482f233c44c7c55d95ec864}\label{class_player_object_a79fac1888482f233c44c7c55d95ec864} 
+\mbox{\hyperlink{class_collider}{Collider}} \texorpdfstring{$\ast$}{*} {\bfseries Get\+Ground\+Collider} () const
+\item 
+\Hypertarget{class_player_object_ada1be4c333a6226a859e2d9958fa1dae}\label{class_player_object_ada1be4c333a6226a859e2d9958fa1dae} 
+\mbox{\hyperlink{class_player_ground_collider_object}{Player\+Ground\+Collider\+Object}} \texorpdfstring{$\ast$}{*} {\bfseries Get\+Ground\+Collider\+Object} () const
 \item 
 virtual void \mbox{\hyperlink{class_player_object_a4703c7fc70a77bcdd59e708201d0ebc0}{On\+Collider\+Enter}} (\mbox{\hyperlink{class_collider}{Collider}} \texorpdfstring{$\ast$}{*}other)
 \item 
@@ -106,20 +177,83 @@ virtual void \mbox{\hyperlink{class_player_object_aa4f82f32bc0beb4ed45e19653b2c3
 \item 
 virtual void \mbox{\hyperlink{class_player_object_a02fd301e8a5546f6b81e8ddec99b8daf}{On\+Trigger\+Exit}} (\mbox{\hyperlink{class_collider}{Collider}} \texorpdfstring{$\ast$}{*}other)
 \item 
-\Hypertarget{class_player_object_ad31940ff3c27dc0a1c6419ac3ed38f4e}\label{class_player_object_ad31940ff3c27dc0a1c6419ac3ed38f4e} 
-bool {\bfseries get\+Is\+Aiming} ()
+\Hypertarget{class_player_object_a54bbe3c230046f305300e48307a8272d}\label{class_player_object_a54bbe3c230046f305300e48307a8272d} 
+glm\+::vec3 {\bfseries Get\+Velocity} () const
 \item 
-\Hypertarget{class_player_object_a5825afbfd28de7b35833dbb02783a977}\label{class_player_object_a5825afbfd28de7b35833dbb02783a977} 
-int {\bfseries get\+Number} ()
+\Hypertarget{class_player_object_a0a05477da0d7ccd86baec777affdb288}\label{class_player_object_a0a05477da0d7ccd86baec777affdb288} 
+bool {\bfseries Get\+Is\+Aiming} () const
 \item 
-\Hypertarget{class_player_object_a79823d15ac0301317a3d52baed1dcef9}\label{class_player_object_a79823d15ac0301317a3d52baed1dcef9} 
-float {\bfseries get\+Cooldown} (int skill)
+\Hypertarget{class_player_object_aff0f2b9f7d25a99a3d135c2d1d569a62}\label{class_player_object_aff0f2b9f7d25a99a3d135c2d1d569a62} 
+bool {\bfseries Get\+Is\+Slow} () const
 \item 
-\Hypertarget{class_player_object_ae03564f9de30a178126f8b72f1d99abd}\label{class_player_object_ae03564f9de30a178126f8b72f1d99abd} 
-float {\bfseries get\+Duration\+Slowness} ()
+\Hypertarget{class_player_object_ab055b27be9607959384d4a7e99a48651}\label{class_player_object_ab055b27be9607959384d4a7e99a48651} 
+bool {\bfseries Get\+Is\+Dashing} () const
 \item 
-\Hypertarget{class_player_object_a7eed6b8f1542ff19206685620d4c84cb}\label{class_player_object_a7eed6b8f1542ff19206685620d4c84cb} 
-bool {\bfseries get\+Is\+Slowness} ()
+\Hypertarget{class_player_object_ac9f0e07d6289fc48ec628d0bcd47a98f}\label{class_player_object_ac9f0e07d6289fc48ec628d0bcd47a98f} 
+bool {\bfseries Get\+Is\+Shooting} () const
+\item 
+\Hypertarget{class_player_object_a4ea4d8b57d8adff07f7aaabbe8a01167}\label{class_player_object_a4ea4d8b57d8adff07f7aaabbe8a01167} 
+int {\bfseries Get\+Player\+Number} () const
+\item 
+\Hypertarget{class_player_object_af72222e1640f248d3a4f6a168bd354bd}\label{class_player_object_af72222e1640f248d3a4f6a168bd354bd} 
+float {\bfseries Get\+Cooldown} (Player\+Object\+::\+Ability\+Button button) const
+\item 
+\Hypertarget{class_player_object_a63c452158a140bba77634cf9955fafa3}\label{class_player_object_a63c452158a140bba77634cf9955fafa3} 
+float {\bfseries Get\+Slow\+Duration} () const
+\item 
+\Hypertarget{class_player_object_ae40c38900ea9bbc66bb4e5ca0873611c}\label{class_player_object_ae40c38900ea9bbc66bb4e5ca0873611c} 
+float {\bfseries Get\+Dash\+Duration} () const
+\item 
+\Hypertarget{class_player_object_aa124188676015c4e0a55cb213a7da511}\label{class_player_object_aa124188676015c4e0a55cb213a7da511} 
+glm\+::vec2 {\bfseries Get\+Current\+Direction} () const
+\item 
+\Hypertarget{class_player_object_a022ffeed4d1eddfe1727a93099797c0b}\label{class_player_object_a022ffeed4d1eddfe1727a93099797c0b} 
+float {\bfseries Get\+Stun\+Duration} () const
+\item 
+\Hypertarget{class_player_object_ab16167572023f3632f0f81607f208544}\label{class_player_object_ab16167572023f3632f0f81607f208544} 
+bool {\bfseries Get\+Is\+On\+Ground} () const
+\item 
+\Hypertarget{class_player_object_a8c6cc951e36e199a466f8914842258e0}\label{class_player_object_a8c6cc951e36e199a466f8914842258e0} 
+bool {\bfseries Get\+Is\+Fell} () const
+\item 
+\Hypertarget{class_player_object_a1f61bb21aa687cd20d33e66acfa99072}\label{class_player_object_a1f61bb21aa687cd20d33e66acfa99072} 
+Player\+Object\+::\+Ability {\bfseries Get\+Ability\+By\+Button} (Ability\+Button button) const
+\item 
+\Hypertarget{class_player_object_a3a9913f8e141b3c117d764725fe2ab8f}\label{class_player_object_a3a9913f8e141b3c117d764725fe2ab8f} 
+void {\bfseries Clear\+Aiming\+Tile} (\mbox{\hyperlink{class_tile_object}{Tile\+Object}} \texorpdfstring{$\ast$}{*}tile)
+\item 
+\Hypertarget{class_player_object_a825117785fee39920391b0fa154639bd}\label{class_player_object_a825117785fee39920391b0fa154639bd} 
+void {\bfseries Add\+Aiming\+Tile} (\mbox{\hyperlink{class_tile_object}{Tile\+Object}} \texorpdfstring{$\ast$}{*}tile)
+\item 
+\Hypertarget{class_player_object_ad093a083801fa16b789f5547d93bc9e6}\label{class_player_object_ad093a083801fa16b789f5547d93bc9e6} 
+void {\bfseries Hit\+Aiming\+Tile} ()
+\item 
+\Hypertarget{class_player_object_aa6ca21cd9f6c2b65af62820bb561e3a4}\label{class_player_object_aa6ca21cd9f6c2b65af62820bb561e3a4} 
+bool {\bfseries Get\+XIs\+Positive} ()
+\item 
+\Hypertarget{class_player_object_a1640cb7eb9799679730431f5c719b09e}\label{class_player_object_a1640cb7eb9799679730431f5c719b09e} 
+bool {\bfseries Get\+YIs\+Positive} ()
+\item 
+\Hypertarget{class_player_object_ae3fe07bc3c61b2f06a1385eaaedc19d4}\label{class_player_object_ae3fe07bc3c61b2f06a1385eaaedc19d4} 
+bool {\bfseries Get\+Is\+Knockback} ()
+\item 
+\Hypertarget{class_player_object_a44c588e3293d142adaf7510bf1013eca}\label{class_player_object_a44c588e3293d142adaf7510bf1013eca} 
+float {\bfseries Get\+Duration\+Knockback} ()
+\item 
+\Hypertarget{class_player_object_a488f435cc5d488c5ec7586d9f635b5c8}\label{class_player_object_a488f435cc5d488c5ec7586d9f635b5c8} 
+bool {\bfseries Get\+Is\+TNT} ()
+\item 
+\Hypertarget{class_player_object_a72177c5fc1de8f052a7d8aa1e85afe10}\label{class_player_object_a72177c5fc1de8f052a7d8aa1e85afe10} 
+int {\bfseries Get\+Holding\+Projectile} ()
+\item 
+\Hypertarget{class_player_object_a64f20a8822f09355373659827de3d4cc}\label{class_player_object_a64f20a8822f09355373659827de3d4cc} 
+bool {\bfseries Get\+Is\+Stun} ()
+\item 
+\Hypertarget{class_player_object_a947029f57e52701e5a663dbeda13e4a2}\label{class_player_object_a947029f57e52701e5a663dbeda13e4a2} 
+void {\bfseries Check\+If\+On\+Ground} ()
+\item 
+\Hypertarget{class_player_object_a99e842949536736dfbea9397b20f7dbe}\label{class_player_object_a99e842949536736dfbea9397b20f7dbe} 
+void {\bfseries Apply\+Knockback} (\mbox{\hyperlink{class_entity_object}{Entity\+Object}} \texorpdfstring{$\ast$}{*}obj)
 \end{DoxyCompactItemize}
 \doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{class_entity_object}{Entity\+Object}}}
 \begin{DoxyCompactItemize}
@@ -127,6 +261,12 @@ bool {\bfseries get\+Is\+Slowness} ()
 virtual void {\bfseries Set\+Sprite\+Info} (\mbox{\hyperlink{struct_spritesheet_info}{Spritesheet\+Info}} info)
 \item 
 void {\bfseries Set\+Texture} (std\+::string path)
+\item 
+virtual void \mbox{\hyperlink{class_entity_object_a4cf2e4dec6ba56b63af9e08681687292}{Set\+Size}} (float sizeX, float sizeY)
+\item 
+virtual \mbox{\hyperlink{class_collider}{Collider}} \texorpdfstring{$\ast$}{*} {\bfseries Get\+Collider} ()
+\item 
+virtual void {\bfseries set\+Collider\+Size} (glm\+::vec3 size)
 \item 
 virtual void {\bfseries Set\+Animation\+Sprite} (Animation\+State state, \mbox{\hyperlink{struct_spritesheet_info}{Spritesheet\+Info}} sprite\+Info)
 \item 
@@ -150,15 +290,21 @@ bool {\bfseries Get\+Is\+Animated} ()
 \item 
 glm\+::mat4 {\bfseries get\+Transform} ()
 \item 
-void {\bfseries Set\+Size} (float sizeX, float sizeY)
+bool {\bfseries Get\+Is\+Active} ()
 \item 
-void {\bfseries Set\+Position} (glm\+::vec3 new\+Position)
+void {\bfseries Set\+Is\+Active} (bool is\+Active)
+\item 
+virtual void {\bfseries Set\+Position} (glm\+::vec3 new\+Position)
+\item 
+void {\bfseries Set\+Ordering\+Layer} (int layer)
 \item 
 void {\bfseries Translate} (glm\+::vec3 move\+Distance)
 \item 
 glm\+::vec3 {\bfseries get\+Pos} ()
 \item 
 glm\+::vec3 {\bfseries get\+Size} ()
+\item 
+int {\bfseries get\+Ordering\+Layer} () const
 \end{DoxyCompactItemize}
 \doxysubsubsection*{Additional Inherited Members}
 \doxysubsection*{Protected Attributes inherited from \mbox{\hyperlink{class_entity_object}{Entity\+Object}}}
@@ -187,6 +333,10 @@ bool {\bfseries is\+Animated}
 glm\+::vec3 {\bfseries pos}
 \item 
 glm\+::vec3 {\bfseries size}
+\item 
+int {\bfseries ordering\+Layer}
+\item 
+bool {\bfseries is\+Active} = true
 \end{DoxyCompactItemize}
 
 
@@ -194,16 +344,6 @@ glm\+::vec3 {\bfseries size}
 The class for creating object that render using texture. 
 
 \doxysubsection{Member Function Documentation}
-\Hypertarget{class_player_object_ac782e9c4916c03849b55f44ff13b1437}\index{PlayerObject@{PlayerObject}!GetCollider@{GetCollider}}
-\index{GetCollider@{GetCollider}!PlayerObject@{PlayerObject}}
-\doxysubsubsection{\texorpdfstring{GetCollider()}{GetCollider()}}
-{\footnotesize\ttfamily \label{class_player_object_ac782e9c4916c03849b55f44ff13b1437} 
-\mbox{\hyperlink{class_collider}{Collider}} \texorpdfstring{$\ast$}{*} Player\+Object\+::\+Get\+Collider (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
-
-
-
-Reimplemented from \mbox{\hyperlink{class_entity_object}{Entity\+Object}}.
-
 \Hypertarget{class_player_object_a4703c7fc70a77bcdd59e708201d0ebc0}\index{PlayerObject@{PlayerObject}!OnColliderEnter@{OnColliderEnter}}
 \index{OnColliderEnter@{OnColliderEnter}!PlayerObject@{PlayerObject}}
 \doxysubsubsection{\texorpdfstring{OnColliderEnter()}{OnColliderEnter()}}

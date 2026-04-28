@@ -24,7 +24,7 @@ PlayerGroundColliderObject::PlayerGroundColliderObject(PlayerObject* parent)
 }
 PlayerGroundColliderObject::~PlayerGroundColliderObject()
 {
-
+	parent = nullptr;
 }
 
 void PlayerGroundColliderObject::SetSpriteInfo(SpritesheetInfo info)

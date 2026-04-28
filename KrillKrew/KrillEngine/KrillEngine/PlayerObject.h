@@ -7,6 +7,7 @@
 #include <map>
 #include <chrono>
 #include <vector>
+#include <cstdlib>
 
 #include "Collider.h"
 #include "GameEngine.h"
@@ -17,9 +18,12 @@
 #include "ProjectileObject.h"
 #include "TrapObject.h"
 
+
 class PlayerHitboxObject;
 class TileObject;
-
+class ProjectileObject;
+class TrapObject;
+class PropObject;
 
 /// @brief The class for creating object that render using texture
 class PlayerObject : public EntityObject
@@ -27,23 +31,46 @@ class PlayerObject : public EntityObject
 public:
 	virtual enum class AnimationState
 	{
-		Idle,
-		Running,
-		Melee,
-		Shooting,
-		PlaceItem,
-		FellDown
+		
+		//Running,
+		//Melee,
+		//Shooting,
+
+		Idle, // Done
+		FellDown, // Done
+		Stun, // Done
+		GetHit, // Done
+		PlaceItem, // Done
+		Cast, // Done
+
+		Move_Back, // Done
+		Move_Front, // Done
+		Move_Side, // Done
+		
+		Smash_DiagDown, // Done
+		Smash_DiagUp, // Done
+		Smash_Down, // Done
+		Smash_Side, // Done
+		Smash_Up, // Done
+		
+		Dash_Back,
+		Dash_Front,
+		Dash_Side,
+		Cleave_Down,
+		Cleave_Up,
+		Cleave_Side,
+		
 	};
 
 	enum class Ability
 	{
 		Fireball = 0,
-		Trap = 1,
+		TNT = 1,
 		Dash = 2,
-		TNT = 3,
-		Teleport = 4,
-		Bola = 5,
-		Cleave = 6
+		Teleport = 3,
+		Bola = 4,
+		Cleave = 6,
+		Trap = 7
 	};
 
 	enum class AbilityButton
@@ -59,6 +86,11 @@ private:
 	AnimationState currAnimState;
 	std::map<AnimationState, SpritesheetInfo> animList;
 	//std::array<Ability*, 3> abilities;
+	std::vector<ProjectileObject*> ownProjectile;
+	std::vector<TrapObject*> ownTrap;
+
+	// Slow Status
+	ImageObject* slowStatusObject;
 	
 	glm::vec3 velocity;
 	glm::vec2 currDirection;
@@ -74,7 +106,8 @@ private:
 	int playerNumber;
 
 	std::array<Ability, 3> abilities;
-	float abilityCooldown[3] = {0};
+	std::array<float, 3> abilityCooldown = {0};
+	float meleeCooldown = 0;
 
 	float slowness = 2;
 	float slowDuration; // add value if slow and decrease over time
@@ -88,6 +121,7 @@ private:
 	PlayerGroundColliderObject* groundCheckCollider;
 	
 	std::vector<TileObject*> aimingTile;
+	std::vector<PropObject*> aimingProp;
 	float durationSlowness;
 	bool isSlowness;
 	bool isDash;
@@ -99,11 +133,14 @@ private:
 	int holdingProjectile = 0;
 	bool isStun;
 	float durationStun;
+	
 
 public:
 	
+	float projectileHoldDuration = 0;
+
 	PlayerObject();
-	~PlayerObject();
+	virtual ~PlayerObject();
 	
 	void SetTexture(std::string path);
 	void Render(glm::mat4 globalModelTransform);
@@ -122,6 +159,7 @@ public:
 	void SetPlayerUI(UiObject* ui);
 	void SetCurrentDirection(glm::vec2 dir);
 
+
 	void SetIsKnockback(bool isKnockback);
 	void SetKnockbackDuration(int time);
 	void SetIsTNT(bool isTNT);
@@ -131,16 +169,18 @@ public:
 	void SetIsOnGround(bool isOnGround);
 
 	void ReduceAbilityCooldown(int button, float dt);
-	void ReduceSlowDuration();
-	void ReduceDashDuration();
-	void ReduceKnockbackDuration();
-	void ReduceStunDuration();
+	void ReduceSlowDuration(float dt);
+	void ReduceDashDuration(float dt);
+	void ReduceKnockbackDuration(float dt);
+	void ReduceStunDuration(float dt);
 	
 
 	virtual void SetAnimationSprite(AnimationState state, SpritesheetInfo spriteInfo);
 	virtual void ChangeAnimationState(AnimationState anim);
 	virtual void UpdateCurrentAnimation();
-
+	virtual void UpdateCollider();
+	virtual void UpdateSpriteSheetPosition();
+	void ChangeMeleeAnimation();
 
 	virtual Collider* GetCollider() const;
 	Collider* GetAttackCollider() const;
@@ -168,10 +208,16 @@ public:
 	float GetStunDuration() const;
 	bool GetIsOnGround() const;
 	bool GetIsFell() const;
+
 	PlayerObject::Ability GetAbilityByButton(AbilityButton button) const;
+
 
 	void ClearAimingTile(TileObject* tile);
 	void AddAimingTile(TileObject* tile);
+
+	void ClearAimingProp(PropObject* prop);
+	void AddAimingProp(PropObject* prop);
+
 	void HitAimingTile();
 	bool GetXIsPositive();
 	bool GetYIsPositive();
@@ -181,7 +227,22 @@ public:
 	int GetHoldingProjectile();
 	bool GetIsStun();
 
+	bool GetMeleeCooldown() const;
+	void SetMeleeCooldown(float duration);
+
 	void CheckIfOnGround();
 
 	void ApplyKnockback(EntityObject* obj);
+	void UpdateAbilityCooldown(float dt);
+
+	// Owning trap and projectile will remove owning when object is destroyed
+	std::vector<ProjectileObject*> GetOwningProjectile() const;
+	void AddOwningProjectile(ProjectileObject* projectile);
+	void RemoveOwningProjectile(ProjectileObject* projectile);
+
+	std::vector<TrapObject*> GetOwningTrap() const;
+	void AddOwningTrap(TrapObject* trap);
+	void RemoveOwningTrap(TrapObject* trap);
+
+	virtual float getOrderingLayer() const;
 };

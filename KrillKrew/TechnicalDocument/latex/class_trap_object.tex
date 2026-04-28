@@ -27,6 +27,14 @@ Collaboration diagram for Trap\+Object\+:\nopagebreak
 \includegraphics[width=350pt]{class_trap_object__coll__graph}
 \end{center}
 \end{figure}
+\doxysubsubsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_trap_object_af3d30b8254197e12003ffa36f100b3a6}\label{class_trap_object_af3d30b8254197e12003ffa36f100b3a6} 
+enum {\bfseries Type\+Trap} \{ {\bfseries Trap}
+, {\bfseries Tnt}
+ \}
+\end{DoxyCompactItemize}
 \doxysubsubsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
@@ -35,20 +43,53 @@ void \mbox{\hyperlink{class_trap_object_a41723ab5271dba36b8b0f48eb884f8a6}{Rende
 \Hypertarget{class_trap_object_ad1404ed880afd81db54696d37b4aebc5}\label{class_trap_object_ad1404ed880afd81db54696d37b4aebc5} 
 void {\bfseries Set\+Texture} (std\+::string path)
 \item 
-\Hypertarget{class_trap_object_a3797b20affb51a6898c1249388c012b7}\label{class_trap_object_a3797b20affb51a6898c1249388c012b7} 
-void {\bfseries set\+Life\+Time} (int life\+Time)
+\Hypertarget{class_trap_object_af062ee7361616df2d75dd1e1c1862ff8}\label{class_trap_object_af062ee7361616df2d75dd1e1c1862ff8} 
+void {\bfseries Set\+Life\+Time} (int life\+Time)
 \item 
-\Hypertarget{class_trap_object_ae4b3c1e725fa9b6dd00838d7d98a1bd5}\label{class_trap_object_ae4b3c1e725fa9b6dd00838d7d98a1bd5} 
-void {\bfseries set\+Num\+Owner} (int Num)
+\Hypertarget{class_trap_object_ad96a47b72e10a7b9cb042227b28057cd}\label{class_trap_object_ad96a47b72e10a7b9cb042227b28057cd} 
+void {\bfseries Set\+Player\+Number} (int Num)
 \item 
-\Hypertarget{class_trap_object_acbda999ebf8664ed9f9716a8b7cc15bb}\label{class_trap_object_acbda999ebf8664ed9f9716a8b7cc15bb} 
-void {\bfseries reduce\+Life\+Time} ()
+\Hypertarget{class_trap_object_ae141e654b458f5b13f3a13e1f746703c}\label{class_trap_object_ae141e654b458f5b13f3a13e1f746703c} 
+void {\bfseries Reduce\+Life\+Time} ()
 \item 
-\Hypertarget{class_trap_object_a2b1a9e2cfea79fa4dcf66b0b3e3ad3c5}\label{class_trap_object_a2b1a9e2cfea79fa4dcf66b0b3e3ad3c5} 
-int {\bfseries get\+Lifetime} ()
+\Hypertarget{class_trap_object_a8c6f3c884027d0fe5b9500cbb7dc15cb}\label{class_trap_object_a8c6f3c884027d0fe5b9500cbb7dc15cb} 
+int {\bfseries Get\+Lifetime} ()
 \item 
-\Hypertarget{class_trap_object_a1da6563b414e816df10cd87b0edd144e}\label{class_trap_object_a1da6563b414e816df10cd87b0edd144e} 
-int {\bfseries get\+Num\+Owner} ()
+\Hypertarget{class_trap_object_afdbb8b40bfcdc2cdcf1d15bba45108dd}\label{class_trap_object_afdbb8b40bfcdc2cdcf1d15bba45108dd} 
+int {\bfseries Get\+Player\+Number} ()
+\item 
+\Hypertarget{class_trap_object_ab36701603ec75fc39ccae948c3b50283}\label{class_trap_object_ab36701603ec75fc39ccae948c3b50283} 
+void {\bfseries Set\+Can\+Knockback} (bool is\+Can\+Knockback)
+\item 
+\Hypertarget{class_trap_object_a30b72c9f1367b82d0053ce2a6dbea9c1}\label{class_trap_object_a30b72c9f1367b82d0053ce2a6dbea9c1} 
+bool {\bfseries Get\+Can\+Knockback} ()
+\item 
+\Hypertarget{class_trap_object_a29272a4a7033f8efe3c07a1f6c1bd475}\label{class_trap_object_a29272a4a7033f8efe3c07a1f6c1bd475} 
+void {\bfseries Set\+Type} (int type)
+\item 
+\Hypertarget{class_trap_object_ac171eb4d17613cada8c40b1e6f2c234e}\label{class_trap_object_ac171eb4d17613cada8c40b1e6f2c234e} 
+bool {\bfseries Get\+Type} ()
+\item 
+\Hypertarget{class_trap_object_a7f65a2b945753023a25f7d3442f7da10}\label{class_trap_object_a7f65a2b945753023a25f7d3442f7da10} 
+void {\bfseries Add\+Tile\+In\+Range} (\mbox{\hyperlink{class_tile_object}{Tile\+Object}} \texorpdfstring{$\ast$}{*}tile)
+\item 
+\Hypertarget{class_trap_object_ab88a8bf1b9bf211fb97780445ef0f1c8}\label{class_trap_object_ab88a8bf1b9bf211fb97780445ef0f1c8} 
+void {\bfseries Delete\+Tile\+In\+Range} (\mbox{\hyperlink{class_tile_object}{Tile\+Object}} \texorpdfstring{$\ast$}{*}tile)
+\item 
+\Hypertarget{class_trap_object_a518f1b6be901d7fb0f82953e17a67088}\label{class_trap_object_a518f1b6be901d7fb0f82953e17a67088} 
+void {\bfseries Explode\+Tile\+In\+Range} ()
+\item 
+virtual void \mbox{\hyperlink{class_trap_object_a1a1c426c3aee394bc97dd74c33b5bc6b}{On\+Collider\+Enter}} (\mbox{\hyperlink{class_collider}{Collider}} \texorpdfstring{$\ast$}{*}other)
+\item 
+virtual void \mbox{\hyperlink{class_trap_object_a27ac33833e384b3dffc17f420fc964c2}{On\+Collider\+Stay}} (\mbox{\hyperlink{class_collider}{Collider}} \texorpdfstring{$\ast$}{*}other)
+\item 
+virtual void \mbox{\hyperlink{class_trap_object_aef11cc75f11b7a396d2427cb3dadd677}{On\+Collider\+Exit}} (\mbox{\hyperlink{class_collider}{Collider}} \texorpdfstring{$\ast$}{*}other)
+\item 
+virtual void \mbox{\hyperlink{class_trap_object_a8f700737a1b97a764c6c613c30807a94}{On\+Trigger\+Enter}} (\mbox{\hyperlink{class_collider}{Collider}} \texorpdfstring{$\ast$}{*}other)
+\item 
+virtual void \mbox{\hyperlink{class_trap_object_ac7d70c93db11a143760c681d1254bdf7}{On\+Trigger\+Stay}} (\mbox{\hyperlink{class_collider}{Collider}} \texorpdfstring{$\ast$}{*}other)
+\item 
+virtual void \mbox{\hyperlink{class_trap_object_a6ff63d0f9b15357649d1b1dd81292a7f}{On\+Trigger\+Exit}} (\mbox{\hyperlink{class_collider}{Collider}} \texorpdfstring{$\ast$}{*}other)
 \end{DoxyCompactItemize}
 \doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{class_entity_object}{Entity\+Object}}}
 \begin{DoxyCompactItemize}
@@ -57,19 +98,11 @@ virtual void {\bfseries Set\+Sprite\+Info} (\mbox{\hyperlink{struct_spritesheet_
 \item 
 void {\bfseries Set\+Texture} (std\+::string path)
 \item 
+virtual void \mbox{\hyperlink{class_entity_object_a4cf2e4dec6ba56b63af9e08681687292}{Set\+Size}} (float sizeX, float sizeY)
+\item 
 virtual \mbox{\hyperlink{class_collider}{Collider}} \texorpdfstring{$\ast$}{*} {\bfseries Get\+Collider} ()
 \item 
-virtual void {\bfseries On\+Collider\+Enter} (\mbox{\hyperlink{class_collider}{Collider}} \texorpdfstring{$\ast$}{*}other)
-\item 
-virtual void {\bfseries On\+Collider\+Stay} (\mbox{\hyperlink{class_collider}{Collider}} \texorpdfstring{$\ast$}{*}other)
-\item 
-virtual void {\bfseries On\+Collider\+Exit} (\mbox{\hyperlink{class_collider}{Collider}} \texorpdfstring{$\ast$}{*}other)
-\item 
-virtual void {\bfseries On\+Trigger\+Enter} (\mbox{\hyperlink{class_collider}{Collider}} \texorpdfstring{$\ast$}{*}other)
-\item 
-virtual void {\bfseries On\+Trigger\+Stay} (\mbox{\hyperlink{class_collider}{Collider}} \texorpdfstring{$\ast$}{*}other)
-\item 
-virtual void {\bfseries On\+Trigger\+Exit} (\mbox{\hyperlink{class_collider}{Collider}} \texorpdfstring{$\ast$}{*}other)
+virtual void {\bfseries set\+Collider\+Size} (glm\+::vec3 size)
 \item 
 virtual void {\bfseries Set\+Animation\+Sprite} (Animation\+State state, \mbox{\hyperlink{struct_spritesheet_info}{Spritesheet\+Info}} sprite\+Info)
 \item 
@@ -95,15 +128,27 @@ bool {\bfseries Get\+Is\+Animated} ()
 \item 
 glm\+::mat4 {\bfseries get\+Transform} ()
 \item 
-void {\bfseries Set\+Size} (float sizeX, float sizeY)
+bool {\bfseries Get\+Is\+Active} ()
 \item 
-void {\bfseries Set\+Position} (glm\+::vec3 new\+Position)
+void {\bfseries Set\+Is\+Active} (bool is\+Active)
+\item 
+virtual void {\bfseries Set\+Position} (glm\+::vec3 new\+Position)
+\item 
+void {\bfseries Set\+Ordering\+Layer} (int layer)
 \item 
 void {\bfseries Translate} (glm\+::vec3 move\+Distance)
 \item 
 glm\+::vec3 {\bfseries get\+Pos} ()
 \item 
 glm\+::vec3 {\bfseries get\+Size} ()
+\item 
+int {\bfseries get\+Ordering\+Layer} () const
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_trap_object_a9f43bf5f0718cec7a1dccf2dfd7332a6}\label{class_trap_object_a9f43bf5f0718cec7a1dccf2dfd7332a6} 
+bool {\bfseries is\+Activate} = false
 \end{DoxyCompactItemize}
 \doxysubsubsection*{Additional Inherited Members}
 \doxysubsection*{Protected Attributes inherited from \mbox{\hyperlink{class_entity_object}{Entity\+Object}}}
@@ -132,6 +177,10 @@ bool {\bfseries is\+Animated}
 glm\+::vec3 {\bfseries pos}
 \item 
 glm\+::vec3 {\bfseries size}
+\item 
+int {\bfseries ordering\+Layer}
+\item 
+bool {\bfseries is\+Active} = true
 \end{DoxyCompactItemize}
 
 
@@ -139,6 +188,66 @@ glm\+::vec3 {\bfseries size}
 The class for creating object that render using texture. 
 
 \doxysubsection{Member Function Documentation}
+\Hypertarget{class_trap_object_a1a1c426c3aee394bc97dd74c33b5bc6b}\index{TrapObject@{TrapObject}!OnColliderEnter@{OnColliderEnter}}
+\index{OnColliderEnter@{OnColliderEnter}!TrapObject@{TrapObject}}
+\doxysubsubsection{\texorpdfstring{OnColliderEnter()}{OnColliderEnter()}}
+{\footnotesize\ttfamily \label{class_trap_object_a1a1c426c3aee394bc97dd74c33b5bc6b} 
+void Trap\+Object\+::\+On\+Collider\+Enter (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_collider}{Collider}} \texorpdfstring{$\ast$}{*}}]{other}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_entity_object}{Entity\+Object}}.
+
+\Hypertarget{class_trap_object_aef11cc75f11b7a396d2427cb3dadd677}\index{TrapObject@{TrapObject}!OnColliderExit@{OnColliderExit}}
+\index{OnColliderExit@{OnColliderExit}!TrapObject@{TrapObject}}
+\doxysubsubsection{\texorpdfstring{OnColliderExit()}{OnColliderExit()}}
+{\footnotesize\ttfamily \label{class_trap_object_aef11cc75f11b7a396d2427cb3dadd677} 
+void Trap\+Object\+::\+On\+Collider\+Exit (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_collider}{Collider}} \texorpdfstring{$\ast$}{*}}]{other}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_entity_object}{Entity\+Object}}.
+
+\Hypertarget{class_trap_object_a27ac33833e384b3dffc17f420fc964c2}\index{TrapObject@{TrapObject}!OnColliderStay@{OnColliderStay}}
+\index{OnColliderStay@{OnColliderStay}!TrapObject@{TrapObject}}
+\doxysubsubsection{\texorpdfstring{OnColliderStay()}{OnColliderStay()}}
+{\footnotesize\ttfamily \label{class_trap_object_a27ac33833e384b3dffc17f420fc964c2} 
+void Trap\+Object\+::\+On\+Collider\+Stay (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_collider}{Collider}} \texorpdfstring{$\ast$}{*}}]{other}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_entity_object}{Entity\+Object}}.
+
+\Hypertarget{class_trap_object_a8f700737a1b97a764c6c613c30807a94}\index{TrapObject@{TrapObject}!OnTriggerEnter@{OnTriggerEnter}}
+\index{OnTriggerEnter@{OnTriggerEnter}!TrapObject@{TrapObject}}
+\doxysubsubsection{\texorpdfstring{OnTriggerEnter()}{OnTriggerEnter()}}
+{\footnotesize\ttfamily \label{class_trap_object_a8f700737a1b97a764c6c613c30807a94} 
+void Trap\+Object\+::\+On\+Trigger\+Enter (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_collider}{Collider}} \texorpdfstring{$\ast$}{*}}]{other}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_entity_object}{Entity\+Object}}.
+
+\Hypertarget{class_trap_object_a6ff63d0f9b15357649d1b1dd81292a7f}\index{TrapObject@{TrapObject}!OnTriggerExit@{OnTriggerExit}}
+\index{OnTriggerExit@{OnTriggerExit}!TrapObject@{TrapObject}}
+\doxysubsubsection{\texorpdfstring{OnTriggerExit()}{OnTriggerExit()}}
+{\footnotesize\ttfamily \label{class_trap_object_a6ff63d0f9b15357649d1b1dd81292a7f} 
+void Trap\+Object\+::\+On\+Trigger\+Exit (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_collider}{Collider}} \texorpdfstring{$\ast$}{*}}]{other}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_entity_object}{Entity\+Object}}.
+
+\Hypertarget{class_trap_object_ac7d70c93db11a143760c681d1254bdf7}\index{TrapObject@{TrapObject}!OnTriggerStay@{OnTriggerStay}}
+\index{OnTriggerStay@{OnTriggerStay}!TrapObject@{TrapObject}}
+\doxysubsubsection{\texorpdfstring{OnTriggerStay()}{OnTriggerStay()}}
+{\footnotesize\ttfamily \label{class_trap_object_ac7d70c93db11a143760c681d1254bdf7} 
+void Trap\+Object\+::\+On\+Trigger\+Stay (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_collider}{Collider}} \texorpdfstring{$\ast$}{*}}]{other}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_entity_object}{Entity\+Object}}.
+
 \Hypertarget{class_trap_object_a41723ab5271dba36b8b0f48eb884f8a6}\index{TrapObject@{TrapObject}!Render@{Render}}
 \index{Render@{Render}!TrapObject@{TrapObject}}
 \doxysubsubsection{\texorpdfstring{Render()}{Render()}}

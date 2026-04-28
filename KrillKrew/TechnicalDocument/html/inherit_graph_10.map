@@ -1,3 +1,15 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="Node000000" href="$struct_orthographic_value.html" title=" " alt="" coords="5,5,133,32"/>
+<area shape="rect" id="Node000000" href="$class_level.html" title="The class for setup object in the level." alt="" coords="5,132,58,159"/>
+<area shape="rect" id="Node000001" href="$class_level_gameplay.html" title="The class for level inherit test from P&#39;tiam." alt="" coords="113,5,224,32"/>
+<area shape="poly" id="edge12_Node000000_Node000001" title=" " alt="" coords="44,117,69,79,104,42,123,30,126,35,107,46,73,82,49,120"/>
+<area shape="rect" id="Node000002" href="$class_level_im_gui.html" title="The class for setup object in the level." alt="" coords="125,56,212,83"/>
+<area shape="poly" id="edge13_Node000000_Node000002" title=" " alt="" coords="61,120,104,92,129,81,131,85,107,97,64,125"/>
+<area shape="rect" id="Node000003" href="$class_level_loading.html" title="The class for setup object in the level." alt="" coords="120,107,217,133"/>
+<area shape="poly" id="edge14_Node000000_Node000003" title=" " alt="" coords="72,135,119,126,120,132,73,140"/>
+<area shape="rect" id="Node000004" href="$class_level_map_test.html" title="The class for level inherit test from P&#39;tiam." alt="" coords="117,157,220,184"/>
+<area shape="poly" id="edge15_Node000000_Node000004" title=" " alt="" coords="73,150,117,159,116,164,72,155"/>
+<area shape="rect" id="Node000005" href="$class_level_select_ability.html" title="The class for level inherit test from P&#39;tiam." alt="" coords="106,208,231,235"/>
+<area shape="poly" id="edge16_Node000000_Node000005" title=" " alt="" coords="64,166,107,194,131,205,129,210,104,198,61,170"/>
+<area shape="rect" id="Node000006" href="$class_level_showcase.html" title="The class for level inherit test from P&#39;tiam." alt="" coords="112,259,225,285"/>
+<area shape="poly" id="edge17_Node000000_Node000006" title=" " alt="" coords="49,171,73,209,107,245,126,256,123,260,104,249,69,212,44,174"/>
 </map>

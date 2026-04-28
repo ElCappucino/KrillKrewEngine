@@ -26,16 +26,18 @@ protected:
 	Collider* collider;
 	std::map<AnimationState, SpritesheetInfo> animList;
 	AnimationState currAnimState;
+	Level* currentLevel;
 
 public:
 
 	EntityObject();
-	~EntityObject();
+	virtual ~EntityObject();
 
 	virtual void SetSpriteInfo(SpritesheetInfo info);
 	void SetTexture(std::string path);
 	// void SetSheetInfo(float row, float column, float spritewidth, float spriteheight, float sheetwidth, float sheetheight);
 	void Render(glm::mat4 globalModelTransform);
+	virtual void LocateCurrentLevel(Level* currLevel);
 
 	virtual void SetSize(float sizeX, float sizeY);
 	virtual Collider* GetCollider();
@@ -48,7 +50,10 @@ public:
 	virtual void OnTriggerStay(Collider* other);
 	virtual void OnTriggerExit(Collider* other);
 
+
 	virtual void SetAnimationSprite(AnimationState state, SpritesheetInfo spriteInfo);
 	virtual void ChangeAnimationState(AnimationState anim);
 	virtual void UpdateCurrentAnimation();
+	virtual void UpdateCollider();
+	virtual void UpdateSpriteSheetPosition();
 };

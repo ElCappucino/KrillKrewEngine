@@ -155,6 +155,9 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a55cf3fb3211c3eae7dba62cda7e27d20"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:abd213b6dfab4b758a68798ab9d03413c" id="r_abd213b6dfab4b758a68798ab9d03413c"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#abd213b6dfab4b758a68798ab9d03413c">HandleMouse</a> (int type, int x, int y)</td></tr>
 <tr class="separator:abd213b6dfab4b758a68798ab9d03413c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9d632d2c8c48ec1ffdd516b8d82cc7ab" id="r_a9d632d2c8c48ec1ffdd516b8d82cc7ab"><td class="memItemLeft" align="right" valign="top"><a id="a9d632d2c8c48ec1ffdd516b8d82cc7ab" name="a9d632d2c8c48ec1ffdd516b8d82cc7ab"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>InitTile</b> ()</td></tr>
+<tr class="separator:a9d632d2c8c48ec1ffdd516b8d82cc7ab"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:acc0a9d7a64c1f8708236789afefc609d" id="r_acc0a9d7a64c1f8708236789afefc609d"><td class="memItemLeft" align="right" valign="top"><a id="acc0a9d7a64c1f8708236789afefc609d" name="acc0a9d7a64c1f8708236789afefc609d"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>UpdateInput</b> ()</td></tr>
 <tr class="separator:acc0a9d7a64c1f8708236789afefc609d"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -173,9 +176,54 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>UpdateMovement</b> ()
 <tr class="memitem:a7b0339dc0602ad5469f33d97f097cda7" id="r_a7b0339dc0602ad5469f33d97f097cda7"><td class="memItemLeft" align="right" valign="top"><a id="a7b0339dc0602ad5469f33d97f097cda7" name="a7b0339dc0602ad5469f33d97f097cda7"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>UpdateUI</b> ()</td></tr>
 <tr class="separator:a7b0339dc0602ad5469f33d97f097cda7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afb82dd34f9173b5f5920c0457ad114bd" id="r_afb82dd34f9173b5f5920c0457ad114bd"><td class="memItemLeft" align="right" valign="top"><a id="afb82dd34f9173b5f5920c0457ad114bd" name="afb82dd34f9173b5f5920c0457ad114bd"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>TileImport</b> (int TileBuffer[][MAP_WIDTH], std::string fileName)</td></tr>
-<tr class="separator:afb82dd34f9173b5f5920c0457ad114bd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adb324192248e41ada3594bd47d353214" id="r_adb324192248e41ada3594bd47d353214"><td class="memItemLeft" align="right" valign="top"><a id="adb324192248e41ada3594bd47d353214" name="adb324192248e41ada3594bd47d353214"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>UpdateTime</b> ()</td></tr>
+<tr class="separator:adb324192248e41ada3594bd47d353214"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae0234ed34642f2b31809ad8f4386cf35" id="r_ae0234ed34642f2b31809ad8f4386cf35"><td class="memItemLeft" align="right" valign="top"><a id="ae0234ed34642f2b31809ad8f4386cf35" name="ae0234ed34642f2b31809ad8f4386cf35"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>GroundTileRefactor</b> ()</td></tr>
+<tr class="separator:ae0234ed34642f2b31809ad8f4386cf35"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1f554f30f290e01eb8e5a498b3c3eeb0" id="r_a1f554f30f290e01eb8e5a498b3c3eeb0"><td class="memItemLeft" align="right" valign="top"><a id="a1f554f30f290e01eb8e5a498b3c3eeb0" name="a1f554f30f290e01eb8e5a498b3c3eeb0"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>TileImport</b> (std::array&lt; std::array&lt; int, MAP_WIDTH &gt;, MAP_HEIGHT &gt; &amp;TileBuffer, std::string fileName)</td></tr>
+<tr class="separator:a1f554f30f290e01eb8e5a498b3c3eeb0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a866dc4ebe28dc06c4d627d4c1b63cbba" id="r_a866dc4ebe28dc06c4d627d4c1b63cbba"><td class="memItemLeft" align="right" valign="top"><a id="a866dc4ebe28dc06c4d627d4c1b63cbba" name="a866dc4ebe28dc06c4d627d4c1b63cbba"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>UsingAbilityKeyDown</b> (int numPlayer, PlayerObject::AbilityButton button)</td></tr>
+<tr class="separator:a866dc4ebe28dc06c4d627d4c1b63cbba"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0cd8bdb70d4779978d2701c3c2eba60b" id="r_a0cd8bdb70d4779978d2701c3c2eba60b"><td class="memItemLeft" align="right" valign="top"><a id="a0cd8bdb70d4779978d2701c3c2eba60b" name="a0cd8bdb70d4779978d2701c3c2eba60b"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>UsingAbilityKeyUp</b> (int numPlayer, PlayerObject::AbilityButton button)</td></tr>
+<tr class="separator:a0cd8bdb70d4779978d2701c3c2eba60b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6a898ec4d944e90bf8cffd37a8787707" id="r_a6a898ec4d944e90bf8cffd37a8787707"><td class="memItemLeft" align="right" valign="top"><a id="a6a898ec4d944e90bf8cffd37a8787707" name="a6a898ec4d944e90bf8cffd37a8787707"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>AimFireball</b> (int numPlayer, PlayerObject::AbilityButton button)</td></tr>
+<tr class="separator:a6a898ec4d944e90bf8cffd37a8787707"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a37b0190f6dfa6cfad4d44cf1239064d1" id="r_a37b0190f6dfa6cfad4d44cf1239064d1"><td class="memItemLeft" align="right" valign="top"><a id="a37b0190f6dfa6cfad4d44cf1239064d1" name="a37b0190f6dfa6cfad4d44cf1239064d1"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>ShootFireball</b> (int numPlayer, PlayerObject::AbilityButton button)</td></tr>
+<tr class="separator:a37b0190f6dfa6cfad4d44cf1239064d1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2d468b2b491ff0d601c7af310661a1b3" id="r_a2d468b2b491ff0d601c7af310661a1b3"><td class="memItemLeft" align="right" valign="top"><a id="a2d468b2b491ff0d601c7af310661a1b3" name="a2d468b2b491ff0d601c7af310661a1b3"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>Trap</b> (int numPlayer, PlayerObject::AbilityButton button)</td></tr>
+<tr class="separator:a2d468b2b491ff0d601c7af310661a1b3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1bd590250ed60e3027eaa672cb63fcbd" id="r_a1bd590250ed60e3027eaa672cb63fcbd"><td class="memItemLeft" align="right" valign="top"><a id="a1bd590250ed60e3027eaa672cb63fcbd" name="a1bd590250ed60e3027eaa672cb63fcbd"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>Dash</b> (int numPlayer, PlayerObject::AbilityButton button)</td></tr>
+<tr class="separator:a1bd590250ed60e3027eaa672cb63fcbd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adcff457a0f41ded81fc567419adb122c" id="r_adcff457a0f41ded81fc567419adb122c"><td class="memItemLeft" align="right" valign="top"><a id="adcff457a0f41ded81fc567419adb122c" name="adcff457a0f41ded81fc567419adb122c"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>TNT</b> (int numPlayer, PlayerObject::AbilityButton button)</td></tr>
+<tr class="separator:adcff457a0f41ded81fc567419adb122c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa0c6368ffb8aca989e303d497b0697e5" id="r_aa0c6368ffb8aca989e303d497b0697e5"><td class="memItemLeft" align="right" valign="top"><a id="aa0c6368ffb8aca989e303d497b0697e5" name="aa0c6368ffb8aca989e303d497b0697e5"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>AimTeleport</b> (int numPlayer, PlayerObject::AbilityButton button)</td></tr>
+<tr class="separator:aa0c6368ffb8aca989e303d497b0697e5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af645052fd0725038f75abc8ad3add978" id="r_af645052fd0725038f75abc8ad3add978"><td class="memItemLeft" align="right" valign="top"><a id="af645052fd0725038f75abc8ad3add978" name="af645052fd0725038f75abc8ad3add978"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>ShootTeleport</b> (int numPlayer, PlayerObject::AbilityButton button)</td></tr>
+<tr class="separator:af645052fd0725038f75abc8ad3add978"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acc009de01ae9ec90641d8391c297b6d0" id="r_acc009de01ae9ec90641d8391c297b6d0"><td class="memItemLeft" align="right" valign="top"><a id="acc009de01ae9ec90641d8391c297b6d0" name="acc009de01ae9ec90641d8391c297b6d0"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>AimBola</b> (int numPlayer, PlayerObject::AbilityButton button)</td></tr>
+<tr class="separator:acc009de01ae9ec90641d8391c297b6d0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab6dc2ec9c356afab59302d22c5cb4fab" id="r_ab6dc2ec9c356afab59302d22c5cb4fab"><td class="memItemLeft" align="right" valign="top"><a id="ab6dc2ec9c356afab59302d22c5cb4fab" name="ab6dc2ec9c356afab59302d22c5cb4fab"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>ShootBola</b> (int numPlayer, PlayerObject::AbilityButton button)</td></tr>
+<tr class="separator:ab6dc2ec9c356afab59302d22c5cb4fab"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af38827c0ea6db594765ba5f1c102dbf9" id="r_af38827c0ea6db594765ba5f1c102dbf9"><td class="memItemLeft" align="right" valign="top"><a id="af38827c0ea6db594765ba5f1c102dbf9" name="af38827c0ea6db594765ba5f1c102dbf9"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>AimCleave</b> (int numPlayer, PlayerObject::AbilityButton button)</td></tr>
+<tr class="separator:af38827c0ea6db594765ba5f1c102dbf9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac23a8552ea6e76e693a207861cee09a7" id="r_ac23a8552ea6e76e693a207861cee09a7"><td class="memItemLeft" align="right" valign="top"><a id="ac23a8552ea6e76e693a207861cee09a7" name="ac23a8552ea6e76e693a207861cee09a7"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>ShootCleave</b> (int numPlayer, PlayerObject::AbilityButton button)</td></tr>
+<tr class="separator:ac23a8552ea6e76e693a207861cee09a7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_class_level"><td colspan="2" onclick="javascript:dynsection.toggleInherit('pub_methods_class_level')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="class_level.html">Level</a></td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>

@@ -28,7 +28,7 @@ private:
 
 protected:
 
-	Collider* collider;
+	//virtual Collider* collider;
 
 public:
 

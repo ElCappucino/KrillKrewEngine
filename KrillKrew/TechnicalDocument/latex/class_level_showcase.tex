@@ -48,6 +48,9 @@ virtual void \mbox{\hyperlink{class_level_showcase_a55cf3fb3211c3eae7dba62cda7e2
 \item 
 virtual void \mbox{\hyperlink{class_level_showcase_abd213b6dfab4b758a68798ab9d03413c}{Handle\+Mouse}} (int type, int x, int y)
 \item 
+\Hypertarget{class_level_showcase_a9d632d2c8c48ec1ffdd516b8d82cc7ab}\label{class_level_showcase_a9d632d2c8c48ec1ffdd516b8d82cc7ab} 
+void {\bfseries Init\+Tile} ()
+\item 
 \Hypertarget{class_level_showcase_acc0a9d7a64c1f8708236789afefc609d}\label{class_level_showcase_acc0a9d7a64c1f8708236789afefc609d} 
 void {\bfseries Update\+Input} ()
 \item 
@@ -66,8 +69,53 @@ void {\bfseries Update\+Movement} ()
 \Hypertarget{class_level_showcase_a7b0339dc0602ad5469f33d97f097cda7}\label{class_level_showcase_a7b0339dc0602ad5469f33d97f097cda7} 
 void {\bfseries Update\+UI} ()
 \item 
-\Hypertarget{class_level_showcase_afb82dd34f9173b5f5920c0457ad114bd}\label{class_level_showcase_afb82dd34f9173b5f5920c0457ad114bd} 
-void {\bfseries Tile\+Import} (int Tile\+Buffer\mbox{[}$\,$\mbox{]}\mbox{[}MAP\+\_\+\+WIDTH\mbox{]}, std\+::string file\+Name)
+\Hypertarget{class_level_showcase_adb324192248e41ada3594bd47d353214}\label{class_level_showcase_adb324192248e41ada3594bd47d353214} 
+void {\bfseries Update\+Time} ()
+\item 
+\Hypertarget{class_level_showcase_ae0234ed34642f2b31809ad8f4386cf35}\label{class_level_showcase_ae0234ed34642f2b31809ad8f4386cf35} 
+void {\bfseries Ground\+Tile\+Refactor} ()
+\item 
+\Hypertarget{class_level_showcase_a1f554f30f290e01eb8e5a498b3c3eeb0}\label{class_level_showcase_a1f554f30f290e01eb8e5a498b3c3eeb0} 
+void {\bfseries Tile\+Import} (std\+::array$<$ std\+::array$<$ int, MAP\+\_\+\+WIDTH $>$, MAP\+\_\+\+HEIGHT $>$ \&Tile\+Buffer, std\+::string file\+Name)
+\item 
+\Hypertarget{class_level_showcase_a866dc4ebe28dc06c4d627d4c1b63cbba}\label{class_level_showcase_a866dc4ebe28dc06c4d627d4c1b63cbba} 
+void {\bfseries Using\+Ability\+Key\+Down} (int num\+Player, Player\+Object\+::\+Ability\+Button button)
+\item 
+\Hypertarget{class_level_showcase_a0cd8bdb70d4779978d2701c3c2eba60b}\label{class_level_showcase_a0cd8bdb70d4779978d2701c3c2eba60b} 
+void {\bfseries Using\+Ability\+Key\+Up} (int num\+Player, Player\+Object\+::\+Ability\+Button button)
+\item 
+\Hypertarget{class_level_showcase_a6a898ec4d944e90bf8cffd37a8787707}\label{class_level_showcase_a6a898ec4d944e90bf8cffd37a8787707} 
+void {\bfseries Aim\+Fireball} (int num\+Player, Player\+Object\+::\+Ability\+Button button)
+\item 
+\Hypertarget{class_level_showcase_a37b0190f6dfa6cfad4d44cf1239064d1}\label{class_level_showcase_a37b0190f6dfa6cfad4d44cf1239064d1} 
+void {\bfseries Shoot\+Fireball} (int num\+Player, Player\+Object\+::\+Ability\+Button button)
+\item 
+\Hypertarget{class_level_showcase_a2d468b2b491ff0d601c7af310661a1b3}\label{class_level_showcase_a2d468b2b491ff0d601c7af310661a1b3} 
+void {\bfseries Trap} (int num\+Player, Player\+Object\+::\+Ability\+Button button)
+\item 
+\Hypertarget{class_level_showcase_a1bd590250ed60e3027eaa672cb63fcbd}\label{class_level_showcase_a1bd590250ed60e3027eaa672cb63fcbd} 
+void {\bfseries Dash} (int num\+Player, Player\+Object\+::\+Ability\+Button button)
+\item 
+\Hypertarget{class_level_showcase_adcff457a0f41ded81fc567419adb122c}\label{class_level_showcase_adcff457a0f41ded81fc567419adb122c} 
+void {\bfseries TNT} (int num\+Player, Player\+Object\+::\+Ability\+Button button)
+\item 
+\Hypertarget{class_level_showcase_aa0c6368ffb8aca989e303d497b0697e5}\label{class_level_showcase_aa0c6368ffb8aca989e303d497b0697e5} 
+void {\bfseries Aim\+Teleport} (int num\+Player, Player\+Object\+::\+Ability\+Button button)
+\item 
+\Hypertarget{class_level_showcase_af645052fd0725038f75abc8ad3add978}\label{class_level_showcase_af645052fd0725038f75abc8ad3add978} 
+void {\bfseries Shoot\+Teleport} (int num\+Player, Player\+Object\+::\+Ability\+Button button)
+\item 
+\Hypertarget{class_level_showcase_acc009de01ae9ec90641d8391c297b6d0}\label{class_level_showcase_acc009de01ae9ec90641d8391c297b6d0} 
+void {\bfseries Aim\+Bola} (int num\+Player, Player\+Object\+::\+Ability\+Button button)
+\item 
+\Hypertarget{class_level_showcase_ab6dc2ec9c356afab59302d22c5cb4fab}\label{class_level_showcase_ab6dc2ec9c356afab59302d22c5cb4fab} 
+void {\bfseries Shoot\+Bola} (int num\+Player, Player\+Object\+::\+Ability\+Button button)
+\item 
+\Hypertarget{class_level_showcase_af38827c0ea6db594765ba5f1c102dbf9}\label{class_level_showcase_af38827c0ea6db594765ba5f1c102dbf9} 
+void {\bfseries Aim\+Cleave} (int num\+Player, Player\+Object\+::\+Ability\+Button button)
+\item 
+\Hypertarget{class_level_showcase_ac23a8552ea6e76e693a207861cee09a7}\label{class_level_showcase_ac23a8552ea6e76e693a207861cee09a7} 
+void {\bfseries Shoot\+Cleave} (int num\+Player, Player\+Object\+::\+Ability\+Button button)
 \end{DoxyCompactItemize}
 \doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{class_level}{Level}}}
 

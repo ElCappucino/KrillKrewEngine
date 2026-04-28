@@ -5,6 +5,8 @@
 #include "LevelLoading.h"
 #include "LevelShowcase.h"
 #include "LevelImGui.h"
+#include "LevelSelectAbility.h"
+#include "LevelMainMenu.h"
 
 GameStateController::GameStateController()
 {
@@ -46,6 +48,12 @@ void GameStateController::LoadLevel()
 			break;
 		case GameState::GS_LEVELIMGUI:
 			currentLevel = new LevelImGui();
+			break;
+		case GameState::GS_LEVELSELECTABILITY:
+			currentLevel = new LevelSelectAbility();
+			break;
+		case GameState::GS_LEVELMAINMENU:
+			currentLevel = new LevelMainMenu();
 			break;
 		
 		default:

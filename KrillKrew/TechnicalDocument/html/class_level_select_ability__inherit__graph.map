@@ -1,0 +1,5 @@
+<map id="LevelSelectAbility" name="LevelSelectAbility">
+<area shape="rect" id="Node000001" title="The class for level inherit test from P&#39;tiam." alt="" coords="5,80,131,107"/>
+<area shape="rect" id="Node000002" href="$class_level.html" title="The class for setup object in the level." alt="" coords="42,5,94,32"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="71,48,71,80,65,80,65,48"/>
+</map>

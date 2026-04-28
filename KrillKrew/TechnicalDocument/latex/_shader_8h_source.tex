@@ -5,20 +5,22 @@
 \DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
 \DoxyCodeLine{00002\ }
 \DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ <string>}}
-\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ <GL\(\backslash\)glew.h>}}
-\DoxyCodeLine{00005\ }
-\DoxyCodeLine{00007\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_shader}{Shader}}}
-\DoxyCodeLine{00008\ \{}
-\DoxyCodeLine{00009\ \ \ \ \ GLuint\ shaderId;}
-\DoxyCodeLine{00010\ \ \ \ \ std::string\ fileName;}
-\DoxyCodeLine{00011\ \ \ \ \ GLenum\ shaderType;}
-\DoxyCodeLine{00012\ }
-\DoxyCodeLine{00013\ \textcolor{keyword}{public}:}
-\DoxyCodeLine{00016\ \ \ \ \ GLuint\ \mbox{\hyperlink{class_shader_ae0dce08d0eed4dbc200c3c567ca00202}{getShaderId}}();}
-\DoxyCodeLine{00019\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_shader_a5c9c7faff990224de406f996b1068c6c}{LoadSource}}();}
-\DoxyCodeLine{00022\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_shader_a226c40eb41d60afeaa149b8ea00ba35b}{PrintShaderLog}}();}
-\DoxyCodeLine{00026\ \ \ \ \ \mbox{\hyperlink{class_shader_a01771a324e3d6d82cb6001394c5fb189}{Shader}}(std::string\ fileName,\ GLenum\ shaderType);}
-\DoxyCodeLine{00029\ \ \ \ \ \mbox{\hyperlink{class_shader_aff01df87e8a102f270b5b135a295e59d}{\string~Shader}}();}
-\DoxyCodeLine{00030\ \};}
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ <fstream>}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ <iostream>}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ <GL\(\backslash\)glew.h>}}
+\DoxyCodeLine{00007\ }
+\DoxyCodeLine{00009\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_shader}{Shader}}}
+\DoxyCodeLine{00010\ \{}
+\DoxyCodeLine{00011\ \ \ \ \ GLuint\ shaderId;}
+\DoxyCodeLine{00012\ \ \ \ \ std::string\ fileName;}
+\DoxyCodeLine{00013\ \ \ \ \ GLenum\ shaderType;}
+\DoxyCodeLine{00014\ }
+\DoxyCodeLine{00015\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00018\ \ \ \ \ GLuint\ \mbox{\hyperlink{class_shader_ae0dce08d0eed4dbc200c3c567ca00202}{getShaderId}}();}
+\DoxyCodeLine{00021\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_shader_a5c9c7faff990224de406f996b1068c6c}{LoadSource}}();}
+\DoxyCodeLine{00024\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_shader_a226c40eb41d60afeaa149b8ea00ba35b}{PrintShaderLog}}();}
+\DoxyCodeLine{00028\ \ \ \ \ \mbox{\hyperlink{class_shader_a01771a324e3d6d82cb6001394c5fb189}{Shader}}(std::string\ fileName,\ GLenum\ shaderType);}
+\DoxyCodeLine{00031\ \ \ \ \ \mbox{\hyperlink{class_shader_aff01df87e8a102f270b5b135a295e59d}{\string~Shader}}();}
+\DoxyCodeLine{00032\ \};}
 
 \end{DoxyCode}

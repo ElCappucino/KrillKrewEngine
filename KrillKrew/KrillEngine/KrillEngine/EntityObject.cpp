@@ -8,6 +8,7 @@ EntityObject::EntityObject()
 	isAnimated = false;
 	collider = new Collider(Collider::Trigger, this);
 	collider->setColliderSize(this->size);
+	
 	spriteRenderer = new SpriteRenderer("");
 	this->pos = glm::vec3(0, 0, 0);
 
@@ -17,6 +18,9 @@ EntityObject::EntityObject()
 
 EntityObject::~EntityObject()
 {
+	delete collider;
+	collider = nullptr;
+	animList.clear();
 }
 
 void EntityObject::SetTexture(std::string path)
@@ -26,8 +30,9 @@ void EntityObject::SetTexture(std::string path)
 
 void EntityObject::SetSpriteInfo(SpritesheetInfo info)
 {
-	spriteRenderer->SetSpriteInfo(info.spritewidth, info.spriteheight, info.sheetwidth, info.sheetheight);
 	this->SetTexture(info.texture);
+	spriteRenderer->SetSpriteInfo(info.spritewidth, info.spriteheight, info.sheetwidth, info.sheetheight);
+	
 }
 
 void EntityObject::Render(glm::mat4 globalModelTransform)
@@ -116,10 +121,34 @@ void EntityObject::ChangeAnimationState(AnimationState anim)
 	if (currAnimState != anim)
 	{
 		currAnimState = anim;
-		this->SetSpriteInfo(animList.find(anim)->second);
+		this->SetTextureWithID(animList.find(anim)->second, animList.find(anim)->second.textureid);
+		this->spriteRenderer->SetTexture(animList.find(anim)->second.texture);
 	}
 }
 void EntityObject::UpdateCurrentAnimation()
 {
-	std::cout << "Update Animation Entity" << std::endl;
+	//std::cout << "Update Animation Entity" << std::endl;
+}
+
+void EntityObject::UpdateCollider()
+{
+	// 
+	this->GetCollider()->Update(this->GetCollider()->GetSize(), this->getPos());
+}
+
+void EntityObject::UpdateSpriteSheetPosition()
+{
+	this->GetSpriteRenderer()->ShiftColumn();
+	//this->UpdateCurrentAnimation();
+}
+
+void EntityObject::LocateCurrentLevel(Level* currLevel)
+{
+	KK_CORE_INFO("EntityObject: LocateCurrentLevel");
+	currentLevel = currLevel;
+
+	if (currentLevel == nullptr)
+	{
+		KK_CORE_ERROR("EntityObject: currentLevel == nullptr");
+	}
 }

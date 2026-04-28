@@ -1,0 +1,80 @@
+\doxysection{Tile\+Object.\+h}
+\hypertarget{_tile_object_8h_source}{}\label{_tile_object_8h_source}\index{KrillKrew/KrillEngine/KrillEngine/TileObject.h@{KrillKrew/KrillEngine/KrillEngine/TileObject.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ }
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ "{}gtc/matrix\_transform.hpp"{}}}
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ "{}gtc/type\_ptr.hpp"{}}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ <string>}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ <array>}}
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ <queue>}}
+\DoxyCodeLine{00008\ }
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#include\ "{}SpriteRenderer.h"{}}}
+\DoxyCodeLine{00010\ \textcolor{preprocessor}{\#include\ "{}Collider.h"{}}}
+\DoxyCodeLine{00011\ \textcolor{preprocessor}{\#include\ "{}InfoStruct.h"{}}}
+\DoxyCodeLine{00012\ \textcolor{preprocessor}{\#include\ "{}GameEngine.h"{}}}
+\DoxyCodeLine{00013\ \textcolor{preprocessor}{\#include\ "{}SquareMeshVbo.h"{}}}
+\DoxyCodeLine{00014\ \textcolor{preprocessor}{\#include\ "{}EntityObject.h"{}}}
+\DoxyCodeLine{00015\ \textcolor{preprocessor}{\#include\ "{}PlayerHitboxObject.h"{}}}
+\DoxyCodeLine{00016\ }
+\DoxyCodeLine{00017\ \textcolor{preprocessor}{\#define\ MAP\_WIDTH\ \ 20}}
+\DoxyCodeLine{00018\ \textcolor{preprocessor}{\#define\ MAP\_HEIGHT\ 16}}
+\DoxyCodeLine{00019\ }
+\DoxyCodeLine{00021\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_tile_object}{TileObject}}\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{class_entity_object}{EntityObject}}}
+\DoxyCodeLine{00022\ \{}
+\DoxyCodeLine{00023\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00024\ }
+\DoxyCodeLine{00025\ \ \ \ \ \textcolor{keywordtype}{bool}\ isBreakable;}
+\DoxyCodeLine{00026\ \ \ \ \ \textcolor{keywordtype}{bool}\ isBroke;}
+\DoxyCodeLine{00027\ }
+\DoxyCodeLine{00028\ \ \ \ \ \textcolor{keywordtype}{int}\ maxDurability;}
+\DoxyCodeLine{00029\ \ \ \ \ \textcolor{keywordtype}{int}\ currentDurability;}
+\DoxyCodeLine{00030\ }
+\DoxyCodeLine{00031\ \ \ \ \ glm::ivec2\ tilePos;}
+\DoxyCodeLine{00032\ \ \ \ \ std::array<std::array<int,\ MAP\_WIDTH>,\ MAP\_HEIGHT>\ *updateTile;}
+\DoxyCodeLine{00033\ }
+\DoxyCodeLine{00034\ \ \ \ \ \mbox{\hyperlink{class_image_object}{ImageObject}}*\ crackOverlay;}
+\DoxyCodeLine{00035\ \ \ \ \ \mbox{\hyperlink{class_level}{Level}}*\ currentLevel;}
+\DoxyCodeLine{00036\ }
+\DoxyCodeLine{00037\ \textcolor{keyword}{protected}:}
+\DoxyCodeLine{00038\ }
+\DoxyCodeLine{00039\ }
+\DoxyCodeLine{00040\ \ \ \ \ \mbox{\hyperlink{class_collider}{Collider}}*\ collider;}
+\DoxyCodeLine{00041\ }
+\DoxyCodeLine{00042\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00043\ }
+\DoxyCodeLine{00044\ \ \ \ \ \mbox{\hyperlink{class_tile_object}{TileObject}}();}
+\DoxyCodeLine{00045\ \ \ \ \ \mbox{\hyperlink{class_tile_object}{\string~TileObject}}();}
+\DoxyCodeLine{00046\ }
+\DoxyCodeLine{00047\ \ \ \ \ \textcolor{comment}{//\ int(*groundTileInfo)[MAP\_HEIGHT][MAP\_WIDTH];}}
+\DoxyCodeLine{00048\ }
+\DoxyCodeLine{00049\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ SetSpriteInfo(\mbox{\hyperlink{struct_spritesheet_info}{SpritesheetInfo}}\ info);}
+\DoxyCodeLine{00050\ \ \ \ \ \textcolor{keywordtype}{void}\ SetTexture(std::string\ path);}
+\DoxyCodeLine{00051\ \ \ \ \ \textcolor{keywordtype}{void}\ Render(glm::mat4\ globalModelTransform);}
+\DoxyCodeLine{00052\ }
+\DoxyCodeLine{00053\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ SetSize(\textcolor{keywordtype}{float}\ sizeX,\ \textcolor{keywordtype}{float}\ sizeY);}
+\DoxyCodeLine{00054\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ SetPosition(glm::vec3\ newPosition);}
+\DoxyCodeLine{00055\ \ \ \ \ \textcolor{keywordtype}{bool}\ GetIsBreakable()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00056\ \ \ \ \ \textcolor{keywordtype}{bool}\ GetIsBroke()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00057\ \ \ \ \ \textcolor{keywordtype}{void}\ SetIsBroke(\textcolor{keywordtype}{bool}\ isBroke);}
+\DoxyCodeLine{00058\ \ \ \ \ \textcolor{keywordtype}{void}\ SetIsBreakable(\textcolor{keywordtype}{bool}\ isBreakable);}
+\DoxyCodeLine{00059\ \ \ \ \ \textcolor{keywordtype}{void}\ SetTilePosition(\textcolor{keywordtype}{int}\ x,\ \textcolor{keywordtype}{int}\ y);}
+\DoxyCodeLine{00060\ \ \ \ \ \textcolor{keywordtype}{void}\ SetUpdateTileset(std::array<std::array<int,\ MAP\_WIDTH>,\ MAP\_HEIGHT>*\ tiles);}
+\DoxyCodeLine{00061\ \ \ \ \ \textcolor{keywordtype}{void}\ UpdateTileArray(\textcolor{keywordtype}{int}\ flag);}
+\DoxyCodeLine{00062\ \ \ \ \ \textcolor{keywordtype}{void}\ CheckIfBreak();}
+\DoxyCodeLine{00063\ \ \ \ \ \textcolor{keywordtype}{void}\ GotHit();}
+\DoxyCodeLine{00064\ \ \ \ \ \textcolor{keywordtype}{void}\ DisableOverlaySprite();}
+\DoxyCodeLine{00065\ }
+\DoxyCodeLine{00066\ \ \ \ \ \textcolor{keyword}{virtual}\ \mbox{\hyperlink{class_collider}{Collider}}*\ GetCollider();}
+\DoxyCodeLine{00067\ \ \ \ \ \mbox{\hyperlink{class_image_object}{ImageObject}}*\ GetOverlaySprite();}
+\DoxyCodeLine{00068\ }
+\DoxyCodeLine{00069\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ OnColliderEnter(\mbox{\hyperlink{class_collider}{Collider}}*\ other);}
+\DoxyCodeLine{00070\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ OnColliderStay(\mbox{\hyperlink{class_collider}{Collider}}*\ other);}
+\DoxyCodeLine{00071\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ OnColliderExit(\mbox{\hyperlink{class_collider}{Collider}}*\ other);}
+\DoxyCodeLine{00072\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ OnTriggerEnter(\mbox{\hyperlink{class_collider}{Collider}}*\ other);}
+\DoxyCodeLine{00073\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ OnTriggerStay(\mbox{\hyperlink{class_collider}{Collider}}*\ other);}
+\DoxyCodeLine{00074\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ OnTriggerExit(\mbox{\hyperlink{class_collider}{Collider}}*\ other);}
+\DoxyCodeLine{00075\ \};}
+
+\end{DoxyCode}
