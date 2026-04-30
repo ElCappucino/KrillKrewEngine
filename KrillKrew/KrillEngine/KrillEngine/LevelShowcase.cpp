@@ -224,6 +224,10 @@ void LevelShowcase::LevelLoad()
 	spriteList["AbilityGameplay_UI"] = SpritesheetInfo("AbilityGameplay_UI", "../Resource/Texture/Gameplay/UI_GP_Abilityicon.png", 69, 69, 552, 69);
 	spriteList["AbilityCover_UI"] = SpritesheetInfo("AbilityCover_UI", "../Resource/Texture/Gameplay/UI_GP_Abilityicon_black.png", 69, 69, 69, 69);
 
+	spriteList["AbilityIcon_Circle_UI"] = SpritesheetInfo("AbilityCover_UI", "../Resource/Texture/Gameplay/UI_GP_Abilityicon_circle.png", 69, 69, 69, 69);
+	spriteList["AbilityIcon_Cross_UI"] = SpritesheetInfo("AbilityCover_UI", "../Resource/Texture/Gameplay/UI_GP_Abilityicon_cross.png", 69, 69, 69, 69);
+	spriteList["AbilityIcon_Triangle_UI"] = SpritesheetInfo("AbilityCover_UI", "../Resource/Texture/Gameplay/UI_GP_Abilityicon_triangle.png", 69, 69, 69, 69);
+
 	spriteList["Blobtile"] = SpritesheetInfo("Blobtile", "../Resource/Texture/tileset_01.png", 128, 128, 1664, 512);
 
 	// Prop
@@ -255,14 +259,44 @@ void LevelShowcase::LevelLoad()
 	spriteList["OptionsVolumeKnob"] = SpritesheetInfo("OptionsVolumeKnob", "../Resource/Texture/Pause and Options/UI_Options_Volume_knob.png", 21, 41, 42, 41);
 	spriteList["OptionsVolumeTrack"] = SpritesheetInfo("OptionsVolumeTrack", "../Resource/Texture/Pause and Options/UI_Options_Volume_track.png", 406, 12, 812, 12);
 
+	spriteList["Tentacle_Up"] = SpritesheetInfo("Tentacle_Up", "../Resource/Texture/Props/UI_GP_Event_VFX_Tentecle_Up.png", 319, 334, 1914, 334);
+	spriteList["Tentacle_Idle"] = SpritesheetInfo("Tentacle_Idle", "../Resource/Texture/Props/UI_GP_Event_VFX_Tentecle_Idle.png", 319, 334, 4147, 334);
+
 	soundManager = KrillSoundManager::SoundManager::GetInstance();
 
 	soundManager->LoadMusic("bgm_test", "../Resource/Audio/bgm_test.mp3");
 	soundManager->LoadSFX("hit_test", "../Resource/Audio/cute-pop-sfx.mp3");
 
+	// BGMusic
+	soundManager->LoadMusic("GameScene_BGM", "../Resource/Audio/BGMusic/Game_Scene.mp3");
 
+	// Environment
+	soundManager->LoadSFX("Rock_Destroyed", "../Resource/Audio/Environment/Rocks/Rock_Destroyed.mp3");
+	soundManager->LoadSFX("Water_Splashes", "../Resource/Audio/Environment/WaterSplashes/water-splash-46402-2.mp3");
 
-	soundManager->PlayMusic("bgm_test", true);
+	// Ability
+	soundManager->LoadSFX("Bomb_Explosion", "../Resource/Audio/Abilities/Bomb/First_Explosion.mp3");
+
+	soundManager->LoadSFX("Cleave_Slash", "../Resource/Audio/Abilities/Cleave/SwordSlash.mp3");
+
+	soundManager->LoadSFX("Landmine_Placed", "../Resource/Audio/Abilities/Landmine/Placed.mp3");
+	soundManager->LoadSFX("Landmine_Explode", "../Resource/Audio/Abilities/Landmine/Explode.mp3");
+
+	soundManager->LoadSFX("Jellyfish_Placed", "../Resource/Audio/Abilities/PoisonJellyfish/Placed.mp3");
+	soundManager->LoadSFX("Jellyfish_Explode", "../Resource/Audio/Abilities/PoisonJellyfish/SteppedOn.mp3");
+
+	soundManager->LoadSFX("Bola_Throwing", "../Resource/Audio/Abilities/StunShot/Throwing.mp3");
+	soundManager->LoadSFX("Bola_Hit", "../Resource/Audio/Abilities/StunShot/Zap.mp3");
+
+	soundManager->LoadSFX("Teleport_Throwing", "../Resource/Audio/Abilities/Teleport/Throw-2.mp3");
+	soundManager->LoadSFX("Teleport_Hit", "../Resource/Audio/Abilities/Teleport/Teleport-2.mp3");
+
+	// Player
+	soundManager->LoadSFX("Player_Damaged", "../Resource/Audio/PlayerState/Damaged.mp3");
+	soundManager->LoadSFX("Player_Falling", "../Resource/Audio/PlayerState/Falling_State.mp3");
+	soundManager->LoadSFX("Player_HitGround", "../Resource/Audio/PlayerState/HitGround.mp3");
+
+	soundManager->PlayMusic("GameScene_BGM", true);
 
 	//cout << "Load Level" << endl;
 }
@@ -473,7 +507,7 @@ void LevelShowcase::InitProp()
 				obj->GetSpriteRenderer()->ShiftTo(0, 0);
 				obj->propType = PropObject::PropType::Tree;
 				obj->propBreakSprite = spriteList.find("Leaf2_Collapse")->second;
-				obj->GetCollider()->SetOffset(0, -270.f, 0);
+				obj->GetCollider()->SetOffset(0, -250.f, 0);
 				obj->SetIsAnimated(true);
 				obj->SetIsBreakable(true);
 				break;
@@ -483,7 +517,7 @@ void LevelShowcase::InitProp()
 				obj->GetSpriteRenderer()->ShiftTo(0, 0);
 				obj->propType = PropObject::PropType::Tree;
 				obj->propBreakSprite = spriteList.find("Leaf2_Collapse")->second;
-				obj->GetCollider()->SetOffset(0, -250.5f, 0);
+				obj->GetCollider()->SetOffset(0, -230.5f, 0);
 				obj->SetIsAnimated(true);
 				obj->SetIsBreakable(true);
 				break;
@@ -510,6 +544,8 @@ void LevelShowcase::LevelInit()
 		(SCREEN_HEIGHT / 2));
 
 	timer = Timer::Instance();
+
+	//KrillSoundManager::SoundManager::GetInstance()->PlayMusic();
 
 	TileImport(groundTile, "../Resource/MapFile/Tilemap0.txt");
 	TileImport(currentGroundTile, "../Resource/MapFile/Tilemap0.txt");
@@ -549,25 +585,15 @@ void LevelShowcase::LevelInit()
 	p1->SetAnimationSprite(PlayerObject::AnimationState::Smash_Side, spriteList.find("P1_Smash_Side")->second);
 	p1->SetAnimationSprite(PlayerObject::AnimationState::Smash_Up, spriteList.find("P1_Smash_Up")->second);
 
-	// std::ifstream readFile("Ability0.txt");
-	// while (std::getline(readFile, line)) {
-	// 	data[count] = line;
-	// 	abilityId[count] = stoi(data[count]);
-	// 	count++;
-	// }
-	// if (count < 3) {
-	// 	abilityId[0] = 0;
-	// 	abilityId[1] = 1;
-	// 	abilityId[2] = 2;
-	// 	count = 0;
-	// }
-	// else {
-	// 	count = 0;
-	// }
+	loadAbility("../Resource/SceneData/Ability0.json");
 
-	std::ifstream readFile("Ability0.json");
-	loadAbility("Ability0.json");
-	readFile.close();
+	KK_TRACE("abilityId[0] = {0}", abilityId[0]);
+	KK_TRACE("abilityId[1] = {0}", abilityId[1]);
+	KK_TRACE("abilityId[2] = {0}", abilityId[2]);
+
+	playersSkill[0][0] = abilityId[0];
+	playersSkill[0][1] = abilityId[1];
+	playersSkill[0][2] = abilityId[2];
 
 	p1->SetAbility(PlayerObject::AbilityButton::Triangle, static_cast<PlayerObject::Ability>(abilityId[0]));
 	p1->SetAbility(PlayerObject::AbilityButton::Circle, static_cast<PlayerObject::Ability>(abilityId[1]));
@@ -598,25 +624,16 @@ void LevelShowcase::LevelInit()
 	p2->SetAnimationSprite(PlayerObject::AnimationState::Smash_Down, spriteList.find("P2_Smash_Down")->second);
 	p2->SetAnimationSprite(PlayerObject::AnimationState::Smash_Side, spriteList.find("P2_Smash_Side")->second);
 	p2->SetAnimationSprite(PlayerObject::AnimationState::Smash_Up, spriteList.find("P2_Smash_Up")->second);
-	// std::ifstream read2File("Ability1.txt");
-	// while (std::getline(read2File, line)) {
-	// 	data[count] = line;
-	// 	abilityId[count] = stoi(data[count]);
-	// 	count++;
-	// }
-	// if (count < 3) {
-	// 	abilityId[0] = 0;
-	// 	abilityId[1] = 1;
-	// 	abilityId[2] = 2;
-	// 	count = 0;
-	// }
-	// else {
-	// 	count = 0;
-	// }
 
-	std::ifstream read2File("Ability1.json");
-	loadAbility("Ability1.json");
-	read2File.close();
+	loadAbility("../Resource/SceneData/Ability1.json");
+
+	playersSkill[1][0] = abilityId[0];
+	playersSkill[1][1] = abilityId[1];
+	playersSkill[1][2] = abilityId[2];
+
+	KK_TRACE("abilityId[0] = {0}", abilityId[0]);
+	KK_TRACE("abilityId[1] = {0}", abilityId[1]);
+	KK_TRACE("abilityId[2] = {0}", abilityId[2]);
 
 	p2->SetAbility(PlayerObject::AbilityButton::Triangle, static_cast<PlayerObject::Ability>(abilityId[0]));
 	p2->SetAbility(PlayerObject::AbilityButton::Circle, static_cast<PlayerObject::Ability>(abilityId[1]));
@@ -649,25 +666,15 @@ void LevelShowcase::LevelInit()
 	p3->SetAnimationSprite(PlayerObject::AnimationState::Smash_Side, spriteList.find("P3_Smash_Side")->second);
 	p3->SetAnimationSprite(PlayerObject::AnimationState::Smash_Up, spriteList.find("P3_Smash_Up")->second);
 
-	// std::ifstream read3File("Ability2.txt");
-	// while (std::getline(read3File, line)) {
-	// 	data[count] = line;
-	// 	abilityId[count] = stoi(data[count]);
-	// 	count++;
-	// }
-	// if (count < 3) {
-	// 	abilityId[0] = 0;
-	// 	abilityId[1] = 1;
-	// 	abilityId[2] = 2;
-	// 	count = 0;
-	// }
-	// else {
-	// 	count = 0;
-	// }
-	
-	std::ifstream read3File("Ability2.json");
-	loadAbility("Ability2.json");
-	read3File.close();
+	loadAbility("../Resource/SceneData/Ability2.json");
+
+	KK_TRACE("LevelShowcase: abilityId[0] = {0}", abilityId[0]);
+	KK_TRACE("LevelShowcase: abilityId[1] = {0}", abilityId[1]);
+	KK_TRACE("LevelShowcase: abilityId[2] = {0}", abilityId[2]);
+
+	playersSkill[2][0] = abilityId[0];
+	playersSkill[2][1] = abilityId[1];
+	playersSkill[2][2] = abilityId[2];
 
 	p3->SetAbility(PlayerObject::AbilityButton::Triangle, static_cast<PlayerObject::Ability>(abilityId[0]));
 	p3->SetAbility(PlayerObject::AbilityButton::Circle, static_cast<PlayerObject::Ability>(abilityId[1]));
@@ -700,26 +707,15 @@ void LevelShowcase::LevelInit()
 	p4->SetAnimationSprite(PlayerObject::AnimationState::Smash_Side, spriteList.find("P4_Smash_Side")->second);
 	p4->SetAnimationSprite(PlayerObject::AnimationState::Smash_Up, spriteList.find("P4_Smash_Up")->second);
 
-	// std::ifstream read4File("Ability3.txt");
-	// while (std::getline(read4File, line)) {
-	// 	data[count] = line;
-	// 	abilityId[count] = stoi(data[count]);
-	// 	count++;
-	// }
-	// if (count < 3) {
-	// 	abilityId[0] = 0;
-	// 	abilityId[1] = 1;
-	// 	abilityId[2] = 2;
-	// 	count = 0;
-	// }
-	// else {
-	// 	count = 0;
-	// }
-	
-	
-	std::ifstream read4File("Ability3.json");
-	loadAbility("Ability3.json");
-	read4File.close();
+	loadAbility("../Resource/SceneData/Ability3.json");
+
+	KK_TRACE("abilityId[0] = {0}", abilityId[0]);
+	KK_TRACE("abilityId[1] = {0}", abilityId[1]);
+	KK_TRACE("abilityId[2] = {0}", abilityId[2]);
+
+	playersSkill[3][0] = abilityId[0];
+	playersSkill[3][1] = abilityId[1];
+	playersSkill[3][2] = abilityId[2];
 
 	p4->SetAbility(PlayerObject::AbilityButton::Triangle, static_cast<PlayerObject::Ability>(abilityId[0]));
 	p4->SetAbility(PlayerObject::AbilityButton::Circle, static_cast<PlayerObject::Ability>(abilityId[1]));
@@ -745,13 +741,12 @@ void LevelShowcase::LevelInit()
 		//objectsList.push_back(players[i]->GetGroundCollider()->GetGizmos());
 	}
 
-	//create Ui by PlayerObject
-	//int playerSize = playerSize;
-	//KK_TRACE("Init UI-----------");
-	//count = 0;
 
 	if (playerSize >= 0) {
 
+		KK_TRACE("playersSkill[0][0] = {0}", playersSkill[0][0]);
+		KK_TRACE("playersSkill[0][1] = {0}", playersSkill[0][1]);
+		KK_TRACE("playersSkill[0][2] = {0}", playersSkill[0][2]);
 		UiObject* uiSkills = new UiObject();
 		uiSkills->SetSpriteInfo(spriteList.find("Player_UI")->second);
 		uiSkills->GetSpriteRenderer()->ShiftTo(0, 0);
@@ -790,6 +785,9 @@ void LevelShowcase::LevelInit()
 	}
 	if (playerSize >= 1) {
 
+		KK_TRACE("playersSkill[1][0] = {0}", playersSkill[1][0]);
+		KK_TRACE("playersSkill[1][1] = {0}", playersSkill[1][1]);
+		KK_TRACE("playersSkill[1][2] = {0}", playersSkill[1][2]);
 		UiObject* uiSkills = new UiObject();
 		uiSkills->SetSpriteInfo(spriteList.find("Player_UI")->second);
 		uiSkills->GetSpriteRenderer()->ShiftTo(0, 1);
@@ -800,6 +798,7 @@ void LevelShowcase::LevelInit()
 		//playerSkillUIs AbilityGameplay_UI
 		UiObject* uiSkills1 = new UiObject();
 		uiSkills1->SetSpriteInfo(spriteList.find("AbilityGameplay_UI")->second);
+		
 		uiSkills1->GetSpriteRenderer()->ShiftTo(0, playersSkill[1][0]);
 		uiSkills1->setNumOwner(1);
 		objectsList.push_back(uiSkills1);
@@ -824,6 +823,10 @@ void LevelShowcase::LevelInit()
 		uiSkills3->uiType = UiObject::UIType::SkillIcon;
 	}
 	if (playerSize >= 2) {
+
+		KK_TRACE("playersSkill[2][0] = {0}", playersSkill[2][0]);
+		KK_TRACE("playersSkill[2][1] = {0}", playersSkill[2][1]);
+		KK_TRACE("playersSkill[2][2] = {0}", playersSkill[2][2]);
 
 		UiObject* uiSkills = new UiObject();
 		uiSkills->SetSpriteInfo(spriteList.find("Player_UI")->second);
@@ -860,6 +863,10 @@ void LevelShowcase::LevelInit()
 	}
 	if (playerSize >= 3) {
 
+		KK_TRACE("playersSkill[3][0] = {0}", playersSkill[3][0]);
+		KK_TRACE("playersSkill[3][1] = {0}", playersSkill[3][1]);
+		KK_TRACE("playersSkill[3][2] = {0}", playersSkill[3][2]);
+
 		UiObject* uiSkills = new UiObject();
 		uiSkills->SetSpriteInfo(spriteList.find("Player_UI")->second);
 		uiSkills->GetSpriteRenderer()->ShiftTo(0, 3);
@@ -893,13 +900,6 @@ void LevelShowcase::LevelInit()
 		uiSkills2->uiType = UiObject::UIType::SkillIcon;
 		uiSkills3->uiType = UiObject::UIType::SkillIcon;
 	}
-
-	/*UiObject* uiSkills = new UiObject();
-	uiSkills->SetSpriteInfo(spriteList.find("Player_UI")->second);
-	uiSkills->GetSpriteRenderer()->ShiftTo(0, 3);
-	uiSkills->setNumOwner(3);
-	objectsList.push_back(uiSkills);
-	playerUIs[3] = uiSkills;*/
 
 
 	// Pause_BG. Pause_text
@@ -1015,7 +1015,7 @@ void LevelShowcase::LevelInit()
 		UiObject* optionVolumeKnob = new UiObject();
 		optionVolumeKnob->SetSpriteInfo(spriteList.find("OptionsVolumeKnob")->second);
 		optionVolumeKnob->SetIsRender(false);
-		optionVolumeKnob->uiType = UiObject::UIType::YesNoButton;
+		optionVolumeKnob->uiType = UiObject::UIType::Knob;
 		objectsList.push_back(optionVolumeKnob);
 		volumeKnobList.push_back(optionVolumeKnob);
 	}
@@ -1027,7 +1027,7 @@ void LevelShowcase::LevelInit()
 		{
 			playerSkillCooldownTexts[i][j] = new TextObject();
 
-			playerSkillCooldownTexts[i][j]->loadText("5", SDL_Color{ 255, 255, 255 }, 64);
+			playerSkillCooldownTexts[i][j]->loadText(" ", SDL_Color{ 255, 255, 255 }, 64);
 			//playerSkillCooldownTexts[i][j]->SetPosition(glm::vec3(0, 0, 0));
 
 			objectsList.push_back(playerSkillCooldownTexts[i][j]);
@@ -1039,6 +1039,25 @@ void LevelShowcase::LevelInit()
 
 			objectsList.push_back(playerSkillCooldownCovers[i][j]);
 		}
+
+		playerSkillButtons[i][0] = new UiObject();
+		playerSkillButtons[i][0]->SetSpriteInfo(spriteList.find("AbilityIcon_Triangle_UI")->second);
+		playerSkillButtons[i][0]->SetIsRender(true);
+		playerSkillButtons[i][0]->uiType = UiObject::UIType::SkillCover;
+
+		playerSkillButtons[i][1] = new UiObject();
+		playerSkillButtons[i][1]->SetSpriteInfo(spriteList.find("AbilityIcon_Circle_UI")->second);
+		playerSkillButtons[i][1]->SetIsRender(true);
+		playerSkillButtons[i][1]->uiType = UiObject::UIType::SkillCover;
+
+		playerSkillButtons[i][2] = new UiObject();
+		playerSkillButtons[i][2]->SetSpriteInfo(spriteList.find("AbilityIcon_Cross_UI")->second);
+		playerSkillButtons[i][2]->SetIsRender(true);
+		playerSkillButtons[i][2]->uiType = UiObject::UIType::SkillCover;
+
+		objectsList.push_back(playerSkillButtons[i][0]);
+		objectsList.push_back(playerSkillButtons[i][1]);
+		objectsList.push_back(playerSkillButtons[i][2]);
 	}
 
 	TextObject* text = new TextObject();
@@ -1057,8 +1076,19 @@ void LevelShowcase::LevelInit()
 
 	// Read config file
 
-	LoadConfigInfo("LevelShowcase.json");
+	LoadConfigInfo("../Resource/SceneData/LevelShowcase.json");
 	
+	KrillSoundManager::SoundManager::GetInstance()->LoadVolumeConfig
+	(
+		"../Resource/SceneData/CurrentVolume.json",
+		masterVolume,
+		isToggleMasterVolume,
+		musicVolume,
+		isToggleSFXVolume,
+		sfxVolume,
+		isToggleBGMVolume
+	);
+
 
 	// Setup Dear ImGui context
 	IMGUI_CHECKVERSION();
@@ -1077,260 +1107,298 @@ void LevelShowcase::LevelInit()
 
 	std::cout << "Init Level" << std::endl;
 }
-
-void LevelShowcase::LevelUpdate()
+void LevelShowcase::UpdateVolume()
 {
-	//dt++;
-	// KK_TRACE("Update Per Frame");
-		// Clear inactive object
-	for (int i = 0; i < objectsList.size(); i++)
+	KrillSoundManager::SoundManager::GetInstance()->SetVolumeAllMusic((masterVolume / 100.0f) * musicVolume * 0.01f * (128.f - 0));
+	KrillSoundManager::SoundManager::GetInstance()->SetVolumeAllSFX((masterVolume / 100.0f) * sfxVolume * 0.01f * (128.f - 0));
+
+	if (!isToggleMasterVolume)
 	{
-		if (objectsList[i]->GetIsActive() == false)
-		{
+		KrillSoundManager::SoundManager::GetInstance()->SetVolumeAllMusic(0);
+		KrillSoundManager::SoundManager::GetInstance()->SetVolumeAllSFX(0);
+	}
+
+	if (!isToggleBGMVolume)
+	{
+		KrillSoundManager::SoundManager::GetInstance()->SetVolumeAllMusic(0);
+	}
+
+	if (!isToggleSFXVolume)
+	{
+		KrillSoundManager::SoundManager::GetInstance()->SetVolumeAllSFX(0);
+	}
+}
+
+void LevelShowcase::ClearUnusedObject()
+{
+	for (int i = objectsList.size() - 1; i >= 0; i--) {
+		if (!objectsList[i] || !objectsList[i]->GetIsActive()) {
+			objectsList[i] = nullptr;
 			objectsList.erase(objectsList.begin() + i);
 		}
 	}
 
-	for (int i = 0; i < entityObjects.size(); i++)
-	{
-		if (entityObjects[i]->GetIsActive() == false)
-		{
+	for (int i = entityObjects.size() - 1; i >= 0; i--) {
+		if (!entityObjects[i] || !entityObjects[i]->GetIsActive()) {
 			entityObjects.erase(entityObjects.begin() + i);
 		}
 	}
 
-	for (int i = 0; i < propObjects.size(); i++)
-	{
-		if (propObjects[i]->GetIsActive() == false)
-		{
+	for (int i = propObjects.size() - 1; i >= 0; i--) {
+		if (!propObjects[i] || !propObjects[i]->GetIsActive()) {
 			propObjects.erase(propObjects.begin() + i);
 		}
 	}
+}
 
-	
-
-	/*for (TextObject* text : textObjects)
+void LevelShowcase::UpdatePauseMenu()
+{
+	if (!PauseMenu->GetIsRender())
 	{
-		text->loadText("3", SDL_Color{ 255, 0, 0 }, 256);
-		text->SetPosition(glm::vec3(0, 0, 0));
-	}*/
+		PauseMenu->SetIsRender(true);
+	}
+
+	if (!ResumeButton->GetIsRender())
+	{
+		ResumeButton->SetIsRender(true);
+	}
+
+	if (!OptionButton->GetIsRender())
+	{
+		OptionButton->SetIsRender(true);
+	}
+
+	if (!MainMenuButton->GetIsRender())
+	{
+		MainMenuButton->SetIsRender(true);
+	}
+
+	if (isAreYouSure) {
+		AreYouSureBG->SetIsRender(true);
+		YesButton->SetIsRender(true);
+		NoButton->SetIsRender(true);
+	}
+
+	if (!isAreYouSure) {
+		AreYouSureBG->SetIsRender(false);
+		YesButton->SetIsRender(false);
+		NoButton->SetIsRender(false);
+	}
+
+	if (isOption) {
+		OptionBG->SetIsRender(true);
+		for (int i = 0; i < OptionTextList.size(); i++) {
+			OptionTextList.at(i)->SetIsRender(true);
+		}
+		for (int i = 0; i < volumeTrackList.size(); i++) {
+			volumeTrackList.at(i)->SetIsRender(true);
+		}
+		for (int i = 0; i < volumeBoxList.size(); i++) {
+			volumeBoxList.at(i)->SetIsRender(true);
+		}
+		DisplayBox->SetIsRender(true);
+		for (int i = 0; i < volumeKnobList.size(); i++) {
+			volumeKnobList.at(i)->SetIsRender(true);
+		}
+	}
+
+	if (!isOption) {
+		OptionBG->SetIsRender(false);
+		for (int i = 0; i < OptionTextList.size(); i++) {
+			OptionTextList.at(i)->SetIsRender(false);
+		}
+		for (int i = 0; i < volumeTrackList.size(); i++) {
+			volumeTrackList.at(i)->SetIsRender(false);
+		}
+		for (int i = 0; i < volumeBoxList.size(); i++) {
+			volumeBoxList.at(i)->SetIsRender(false);
+		}
+		DisplayBox->SetIsRender(false);
+		for (int i = 0; i < volumeKnobList.size(); i++) {
+			volumeKnobList.at(i)->SetIsRender(false);
+		}
+	}
+
+	if (isDisplayDropDown) {
+		DisplayDropDown->SetIsRender(true);
+	}
+
+	if (!isDisplayDropDown) {
+		DisplayDropDown->SetIsRender(false);
+	}
+
+	switch (currentPauseButton)
+	{
+	case PauseMenuButton::Resume:
+		ResumeButton->GetSpriteRenderer()->ShiftTo(0, 1);
+		OptionButton->GetSpriteRenderer()->ShiftTo(0, 2);
+		MainMenuButton->GetSpriteRenderer()->ShiftTo(0, 4);
+		break;
+	case PauseMenuButton::Option:
+		ResumeButton->GetSpriteRenderer()->ShiftTo(0, 0);
+		OptionButton->GetSpriteRenderer()->ShiftTo(0, 3);
+		MainMenuButton->GetSpriteRenderer()->ShiftTo(0, 4);
+		break;
+	case PauseMenuButton::MainMenu:
+		ResumeButton->GetSpriteRenderer()->ShiftTo(0, 0);
+		OptionButton->GetSpriteRenderer()->ShiftTo(0, 2);
+		MainMenuButton->GetSpriteRenderer()->ShiftTo(0, 5);
+		break;
+
+	}
+	switch (currentYesNoButton)
+	{
+	case YesNoButton::Yes:
+		YesButton->GetSpriteRenderer()->ShiftTo(0, 1);
+		NoButton->GetSpriteRenderer()->ShiftTo(0, 2);
+		break;
+	case YesNoButton::No:
+		YesButton->GetSpriteRenderer()->ShiftTo(0, 0);
+		NoButton->GetSpriteRenderer()->ShiftTo(0, 3);
+		break;
+	}
+	switch (currentOptionButton)
+	{
+	case OptionButton::Display:
+		OptionTextList.at(0)->GetSpriteRenderer()->ShiftTo(0, 1);
+		OptionTextList.at(1)->GetSpriteRenderer()->ShiftTo(0, 2);
+		OptionTextList.at(2)->GetSpriteRenderer()->ShiftTo(0, 4);
+		OptionTextList.at(3)->GetSpriteRenderer()->ShiftTo(0, 6);
+		break;
+	case OptionButton::MasterVolume:
+		OptionTextList.at(0)->GetSpriteRenderer()->ShiftTo(0, 0);
+		OptionTextList.at(1)->GetSpriteRenderer()->ShiftTo(0, 3);
+		OptionTextList.at(2)->GetSpriteRenderer()->ShiftTo(0, 4);
+		OptionTextList.at(3)->GetSpriteRenderer()->ShiftTo(0, 6);
+		break;
+	case OptionButton::SFXVolume:
+		OptionTextList.at(0)->GetSpriteRenderer()->ShiftTo(0, 0);
+		OptionTextList.at(1)->GetSpriteRenderer()->ShiftTo(0, 2);
+		OptionTextList.at(2)->GetSpriteRenderer()->ShiftTo(0, 5);
+		OptionTextList.at(3)->GetSpriteRenderer()->ShiftTo(0, 6);
+		break;
+	case OptionButton::BGMVolume:
+		OptionTextList.at(0)->GetSpriteRenderer()->ShiftTo(0, 0);
+		OptionTextList.at(1)->GetSpriteRenderer()->ShiftTo(0, 2);
+		OptionTextList.at(2)->GetSpriteRenderer()->ShiftTo(0, 4);
+		OptionTextList.at(3)->GetSpriteRenderer()->ShiftTo(0, 7);
+		break;
+	}
+	if (isVolume) {
+		int centerPosX = camera.GetCenterX();
+		int centerPosY = camera.GetCenterY();
+		int posX = centerPosX;
+		int posY = centerPosY;
+		switch (currentVolumeButton) {
+		case VolumeButton::Knob:
+			if (currentOptionButton == OptionButton::MasterVolume) {
+				volumeKnobList.at(0)->GetSpriteRenderer()->ShiftTo(0, 1);
+				if (volumeBoxList.at(0)->GetSpriteRenderer()->GetColumn() == 0 || volumeBoxList.at(0)->GetSpriteRenderer()->GetColumn() == 1) {
+					volumeBoxList.at(0)->GetSpriteRenderer()->ShiftTo(0, 1);
+				}
+				else {
+					volumeBoxList.at(0)->GetSpriteRenderer()->ShiftTo(0, 3);
+				}
+			}
+			else if (currentOptionButton == OptionButton::SFXVolume) {
+				volumeKnobList.at(1)->GetSpriteRenderer()->ShiftTo(0, 1);
+				if (volumeBoxList.at(1)->GetSpriteRenderer()->GetColumn() == 0 || volumeBoxList.at(1)->GetSpriteRenderer()->GetColumn() == 1) {
+					volumeBoxList.at(1)->GetSpriteRenderer()->ShiftTo(0, 1);
+				}
+				else {
+					volumeBoxList.at(1)->GetSpriteRenderer()->ShiftTo(0, 3);
+				}
+			}
+			else if (currentOptionButton == OptionButton::BGMVolume) {
+				volumeKnobList.at(2)->GetSpriteRenderer()->ShiftTo(0, 1);
+				if (volumeBoxList.at(2)->GetSpriteRenderer()->GetColumn() == 0 || volumeBoxList.at(2)->GetSpriteRenderer()->GetColumn() == 1) {
+					volumeBoxList.at(2)->GetSpriteRenderer()->ShiftTo(0, 1);
+				}
+				else {
+					volumeBoxList.at(2)->GetSpriteRenderer()->ShiftTo(0, 3);
+				}
+			}
+			break;
+		case VolumeButton::Box:
+			if (currentOptionButton == OptionButton::MasterVolume) {
+				volumeKnobList.at(0)->GetSpriteRenderer()->ShiftTo(0, 0);
+				if (volumeBoxList.at(0)->GetSpriteRenderer()->GetColumn() == 0 || volumeBoxList.at(0)->GetSpriteRenderer()->GetColumn() == 1) {
+					volumeBoxList.at(0)->GetSpriteRenderer()->ShiftTo(0, 0);
+				}
+				else {
+					volumeBoxList.at(0)->GetSpriteRenderer()->ShiftTo(0, 2);
+				}
+			}
+			else if (currentOptionButton == OptionButton::SFXVolume) {
+				volumeKnobList.at(1)->GetSpriteRenderer()->ShiftTo(0, 0);
+				if (volumeBoxList.at(1)->GetSpriteRenderer()->GetColumn() == 0 || volumeBoxList.at(1)->GetSpriteRenderer()->GetColumn() == 1) {
+					volumeBoxList.at(1)->GetSpriteRenderer()->ShiftTo(0, 0);
+				}
+				else {
+					volumeBoxList.at(1)->GetSpriteRenderer()->ShiftTo(0, 2);
+				}
+			}
+			else if (currentOptionButton == OptionButton::BGMVolume) {
+				volumeKnobList.at(2)->GetSpriteRenderer()->ShiftTo(0, 0);
+				if (volumeBoxList.at(2)->GetSpriteRenderer()->GetColumn() == 0 || volumeBoxList.at(2)->GetSpriteRenderer()->GetColumn() == 1) {
+					volumeBoxList.at(2)->GetSpriteRenderer()->ShiftTo(0, 0);
+				}
+				else {
+					volumeBoxList.at(2)->GetSpriteRenderer()->ShiftTo(0, 2);
+				}
+			}
+			break;
+		}
+		for (int i = 0; i < volumeKnobList.size(); i++) {
+			if (i == 0) {
+				posX = centerPosX + ((masterVolume * 4.f - 58.f / 0.25f) * camera.GetCameraWidth() / SCREEN_WIDTH);
+
+			}
+			else if (i == 1) {
+				posX = centerPosX + ((sfxVolume * 4.f - 58.f / 0.25f) * camera.GetCameraWidth() / SCREEN_WIDTH);
+			}
+			else if (i == 2) {
+				posX = centerPosX + ((musicVolume * 4.f - 58.f / 0.25f) * camera.GetCameraWidth() / SCREEN_WIDTH);
+			}
+			posY = centerPosY + ((95 + ((-i - 1) * 100)) * camera.GetCameraHeight() / SCREEN_HEIGHT);
+			volumeKnobList.at(i)->SetPosition(glm::vec3(posX, posY, 0));
+			volumeKnobList.at(i)->SetSize(volumeKnobList.at(i)->GetSpriteRenderer()->GetSpriteWidth() * camera.GetCameraWidth() / SCREEN_WIDTH, -volumeKnobList.at(i)->GetSpriteRenderer()->GetSpriteHeight() * camera.GetCameraHeight() / SCREEN_HEIGHT);
+		}
+	}
+}
+
+void LevelShowcase::UpdateAnimation()
+{
+	// Set Animation
+	for (int i = 0; i < entityObjects.size(); i++)
+	{
+		EntityObject* entity = entityObjects[i];
+		if (entity == nullptr)
+		{
+			continue;
+		}
+		else
+		{
+			if (entity->GetIsAnimated() && frame % entity->GetSpriteRenderer()->GetFrame() == 0)
+			{
+				entity->UpdateSpriteSheetPosition();
+				entity->UpdateCurrentAnimation();
+			}
+		}
+	}
+}
+
+void LevelShowcase::LevelUpdate()
+{
+	UpdateVolume();
+	
+	ClearUnusedObject();
 
 	if (isPause)
 	{
-		if (!PauseMenu->GetIsRender())
-		{
-			PauseMenu->SetIsRender(true);
-		}
-
-		if (!ResumeButton->GetIsRender())
-		{
-			ResumeButton->SetIsRender(true);
-		}
-
-		if (!OptionButton->GetIsRender())
-		{
-			OptionButton->SetIsRender(true);
-		}
-
-		if (!MainMenuButton->GetIsRender())
-		{
-			MainMenuButton->SetIsRender(true);
-		}
-
-		if (isAreYouSure) {
-			AreYouSureBG->SetIsRender(true);
-			YesButton->SetIsRender(true);
-			NoButton->SetIsRender(true);
-		}
-
-		if (!isAreYouSure) {
-			AreYouSureBG->SetIsRender(false);
-			YesButton->SetIsRender(false);
-			NoButton->SetIsRender(false);
-		}
-
-		if (isOption) {
-			OptionBG->SetIsRender(true);
-			for (int i = 0; i < OptionTextList.size(); i++) {
-				OptionTextList.at(i)->SetIsRender(true);
-			}
-			for (int i = 0; i < volumeTrackList.size(); i++) {
-				volumeTrackList.at(i)->SetIsRender(true);
-			}
-			for (int i = 0; i < volumeBoxList.size(); i++) {
-				volumeBoxList.at(i)->SetIsRender(true);
-			}
-			DisplayBox->SetIsRender(true);
-			for (int i = 0; i < volumeKnobList.size(); i++) {
-				volumeKnobList.at(i)->SetIsRender(true);
-			}
-		}
-
-		if (!isOption) {
-			OptionBG->SetIsRender(false);
-			for (int i = 0; i < OptionTextList.size(); i++) {
-				OptionTextList.at(i)->SetIsRender(false);
-			}
-			for (int i = 0; i < volumeTrackList.size(); i++) {
-				volumeTrackList.at(i)->SetIsRender(false);
-			}
-			for (int i = 0; i < volumeBoxList.size(); i++) {
-				volumeBoxList.at(i)->SetIsRender(false);
-			}
-			DisplayBox->SetIsRender(false);
-			for (int i = 0; i < volumeKnobList.size(); i++) {
-				volumeKnobList.at(i)->SetIsRender(false);
-			}
-		}
-
-		if (isDisplayDropDown) {
-			DisplayDropDown->SetIsRender(true);
-		}
-
-		if (!isDisplayDropDown) {
-			DisplayDropDown->SetIsRender(false);
-		}
-
-		switch (currentPauseButton)
-		{
-		case PauseMenuButton::Resume:
-			ResumeButton->GetSpriteRenderer()->ShiftTo(0, 1);
-			OptionButton->GetSpriteRenderer()->ShiftTo(0, 2);
-			MainMenuButton->GetSpriteRenderer()->ShiftTo(0, 4);
-			break;
-		case PauseMenuButton::Option:
-			ResumeButton->GetSpriteRenderer()->ShiftTo(0, 0);
-			OptionButton->GetSpriteRenderer()->ShiftTo(0, 3);
-			MainMenuButton->GetSpriteRenderer()->ShiftTo(0, 4);
-			break;
-		case PauseMenuButton::MainMenu:
-			ResumeButton->GetSpriteRenderer()->ShiftTo(0, 0);
-			OptionButton->GetSpriteRenderer()->ShiftTo(0, 2);
-			MainMenuButton->GetSpriteRenderer()->ShiftTo(0, 5);
-			break;
-
-		}
-		switch (currentYesNoButton) 
-		{
-			case YesNoButton::Yes:
-				YesButton->GetSpriteRenderer()->ShiftTo(0, 1);
-				NoButton->GetSpriteRenderer()->ShiftTo(0, 2);
-				break;
-			case YesNoButton::No:
-				YesButton->GetSpriteRenderer()->ShiftTo(0, 0);
-				NoButton->GetSpriteRenderer()->ShiftTo(0, 3);
-				break;
-		}
-		switch (currentOptionButton)
-		{
-		case OptionButton::Display:
-			OptionTextList.at(0)->GetSpriteRenderer()->ShiftTo(0, 1);
-			OptionTextList.at(1)->GetSpriteRenderer()->ShiftTo(0, 2);
-			OptionTextList.at(2)->GetSpriteRenderer()->ShiftTo(0, 4);
-			OptionTextList.at(3)->GetSpriteRenderer()->ShiftTo(0, 6);
-			break;
-		case OptionButton::MasterVolume:
-			OptionTextList.at(0)->GetSpriteRenderer()->ShiftTo(0, 0);
-			OptionTextList.at(1)->GetSpriteRenderer()->ShiftTo(0, 3);
-			OptionTextList.at(2)->GetSpriteRenderer()->ShiftTo(0, 4);
-			OptionTextList.at(3)->GetSpriteRenderer()->ShiftTo(0, 6);
-			break;
-		case OptionButton::SFXVolume:
-			OptionTextList.at(0)->GetSpriteRenderer()->ShiftTo(0, 0);
-			OptionTextList.at(1)->GetSpriteRenderer()->ShiftTo(0, 2);
-			OptionTextList.at(2)->GetSpriteRenderer()->ShiftTo(0, 5);
-			OptionTextList.at(3)->GetSpriteRenderer()->ShiftTo(0, 6);
-			break;
-		case OptionButton::BGMVolume:
-			OptionTextList.at(0)->GetSpriteRenderer()->ShiftTo(0, 0);
-			OptionTextList.at(1)->GetSpriteRenderer()->ShiftTo(0, 2);
-			OptionTextList.at(2)->GetSpriteRenderer()->ShiftTo(0, 4);
-			OptionTextList.at(3)->GetSpriteRenderer()->ShiftTo(0, 7);
-			break;
-		}
-		if (isVolume) {
-			int centerPosX = camera.GetCenterX();
-			int centerPosY = camera.GetCenterY();
-			int posX = centerPosX;
-			int posY = centerPosY;
-			switch (currentVolumeButton) {
-			case VolumeButton::Knob:
-				if (currentOptionButton == OptionButton::MasterVolume) {
-					volumeKnobList.at(0)->GetSpriteRenderer()->ShiftTo(0,1);
-					if (volumeBoxList.at(0)->GetSpriteRenderer()->GetColumn() == 0 || volumeBoxList.at(0)->GetSpriteRenderer()->GetColumn() == 1) {
-						volumeBoxList.at(0)->GetSpriteRenderer()->ShiftTo(0, 1);
-					}
-					else {
-						volumeBoxList.at(0)->GetSpriteRenderer()->ShiftTo(0, 3);
-					}
-				}
-				else if (currentOptionButton == OptionButton::SFXVolume) {
-					volumeKnobList.at(1)->GetSpriteRenderer()->ShiftTo(0, 1);
-					if (volumeBoxList.at(1)->GetSpriteRenderer()->GetColumn() == 0 || volumeBoxList.at(1)->GetSpriteRenderer()->GetColumn() == 1) {
-						volumeBoxList.at(1)->GetSpriteRenderer()->ShiftTo(0, 1);
-					}
-					else {
-						volumeBoxList.at(1)->GetSpriteRenderer()->ShiftTo(0, 3);
-					}
-				}
-				else if (currentOptionButton == OptionButton::BGMVolume) {
-					volumeKnobList.at(2)->GetSpriteRenderer()->ShiftTo(0, 1);
-					if (volumeBoxList.at(2)->GetSpriteRenderer()->GetColumn() == 0 || volumeBoxList.at(2)->GetSpriteRenderer()->GetColumn() == 1) {
-						volumeBoxList.at(2)->GetSpriteRenderer()->ShiftTo(0, 1);
-					}
-					else {
-						volumeBoxList.at(2)->GetSpriteRenderer()->ShiftTo(0, 3);
-					}
-				}
-				break;
-			case VolumeButton::Box:
-				if (currentOptionButton == OptionButton::MasterVolume) {
-					volumeKnobList.at(0)->GetSpriteRenderer()->ShiftTo(0, 0);
-					if (volumeBoxList.at(0)->GetSpriteRenderer()->GetColumn() == 0 || volumeBoxList.at(0)->GetSpriteRenderer()->GetColumn() == 1) {
-						volumeBoxList.at(0)->GetSpriteRenderer()->ShiftTo(0, 0);
-					}
-					else {
-						volumeBoxList.at(0)->GetSpriteRenderer()->ShiftTo(0, 2);
-					}
-				}
-				else if (currentOptionButton == OptionButton::SFXVolume) {
-					volumeKnobList.at(1)->GetSpriteRenderer()->ShiftTo(0, 0);
-					if (volumeBoxList.at(1)->GetSpriteRenderer()->GetColumn() == 0 || volumeBoxList.at(1)->GetSpriteRenderer()->GetColumn() == 1) {
-						volumeBoxList.at(1)->GetSpriteRenderer()->ShiftTo(0, 0);
-					}
-					else {
-						volumeBoxList.at(1)->GetSpriteRenderer()->ShiftTo(0, 2);
-					}
-				}
-				else if (currentOptionButton == OptionButton::BGMVolume) {
-					volumeKnobList.at(2)->GetSpriteRenderer()->ShiftTo(0, 0);
-					if (volumeBoxList.at(2)->GetSpriteRenderer()->GetColumn() == 0 || volumeBoxList.at(2)->GetSpriteRenderer()->GetColumn() == 1) {
-						volumeBoxList.at(2)->GetSpriteRenderer()->ShiftTo(0, 0);
-					}
-					else {
-						volumeBoxList.at(2)->GetSpriteRenderer()->ShiftTo(0, 2);
-					}
-				}
-				break;
-			}
-			for (int i = 0; i < volumeKnobList.size(); i++) {
-				if (i == 0) {
-					posX = centerPosX + ((masterVolume * 4.f - 58.f / 0.25f) * camera.GetCameraWidth() / SCREEN_WIDTH);
-
-				}
-				else if (i == 1) {
-					posX = centerPosX + ((sfxVolume * 4.f - 58.f / 0.25f) * camera.GetCameraWidth() / SCREEN_WIDTH);
-				}
-				else if (i == 2) {
-					posX = centerPosX + ((musicVolume * 4.f - 58.f / 0.25f) * camera.GetCameraWidth() / SCREEN_WIDTH);
-				}
-				posY = centerPosY + ((95 + ((-i - 1) * 100)) * camera.GetCameraHeight() / SCREEN_HEIGHT);
-				volumeKnobList.at(i)->SetPosition(glm::vec3(posX, posY, 0));
-				volumeKnobList.at(i)->SetSize(volumeKnobList.at(i)->GetSpriteRenderer()->GetSpriteWidth() * camera.GetCameraWidth() / SCREEN_WIDTH, -volumeKnobList.at(i)->GetSpriteRenderer()->GetSpriteHeight() * camera.GetCameraHeight() / SCREEN_HEIGHT);
-			}
-		}
 		UpdateInput();
 
+		UpdatePauseMenu();
 	}
 	else
 	{
@@ -1359,26 +1427,7 @@ void LevelShowcase::LevelUpdate()
 		}
 		camera.LerpCamera(playerSize); // update smooth camera here
 
-		// Set Animation
-		for (int i = 0; i < entityObjects.size(); i++)
-		{
-			EntityObject* entity = entityObjects[i];
-			if (entity == nullptr)
-			{
-				continue;
-			}
-			else
-			{
-				if (entity->GetIsAnimated() && frame % entity->GetSpriteRenderer()->GetFrame() == 0)
-				{
-					entity->UpdateSpriteSheetPosition();
-					entity->UpdateCurrentAnimation();
-					/*entity->GetSpriteRenderer()->ShiftColumn();
-					entity->UpdateCurrentAnimation();*/
-				}
-			}
-		}
-
+		UpdateAnimation();
 
 		if (currentCountdownNum > -1)
 		{
@@ -1407,12 +1456,41 @@ void LevelShowcase::LevelUpdate()
 		//Ui Skills
 		UpdateUI();
 
+		CheckPlayerRemain();
+
 		GroundTileRefactor();
 
 		std::sort(objectsList.begin(), objectsList.end(), compareLayer);
 	}
 
+	float frameTime = Timer::Instance()->getDeltaTime();
+	if (frameTime < TARGET_FRAME_TIME)
+	{
+		//KK_TRACE("frameTime = {0} TARGET_FRAME_TIME = {1}", frameTime, TARGET_FRAME_TIME);
+		std::this_thread::sleep_for(std::chrono::milliseconds((int)(TARGET_FRAME_TIME - frameTime)));
+	}
+
 	//std::cout << "masterVolume" << masterVolume << std::endl;
+}
+
+void LevelShowcase::CheckPlayerRemain()
+{
+	playerRemain = 0;
+	// Check Amount of player
+	for (int i = 0; i < playerSize; i++)
+	{
+		if (!players[i]->GetIsFell())
+		{
+			playerRemain++;
+		}
+	}
+
+	if (playerRemain <= 1)
+	{
+		SaveWinRoundInfo("../Resource/SceneData/RoundWin.json");
+		GameEngine::GetInstance()->GetStateController()->loadingState = GameState::GS_LEVELROUNDWIN;
+		GameEngine::GetInstance()->GetStateController()->gameStateNext = GameState::GS_LEVELLOADING;
+	}
 }
 
 void LevelShowcase::UpdateKrakenEvent()
@@ -1428,6 +1506,40 @@ void LevelShowcase::UpdateKrakenEvent()
 
 		uiObjects.push_back(signUI);
 		objectsList.push_back(signUI);
+
+		glm::vec3 tentaclePos[8] =
+		{
+			{-1500, -500, 0},
+			{-1600, 0, 0},
+			{-1500, 500, 0},
+			{1500, -500, 0},
+			{1500, 500, 0},
+			{1500, 0, 0},
+			{0, 1200, 0},
+			{0, -1200, 0},
+		};
+
+		for (int i = 0; i < 8; i++)
+		{
+			ParticleObject* particle = new ParticleObject();
+			particle->SetSpriteInfo(spriteList.find("Tentacle_Up")->second);
+
+			particle->SetPosition(tentaclePos[i]);
+			particle->SetSize(particle->GetSpriteRenderer()->GetSpriteWidth(), -particle->GetSpriteRenderer()->GetSpriteHeight());
+			
+			particle->type = ParticleObject::Tentacle;
+			particle->currAnimState = ParticleObject::AnimationState::Init;
+			particle->SetAnimationSprite(ParticleObject::AnimationState::idle, spriteList.find("Tentacle_Idle")->second);
+			particle->SetAnimationSprite(ParticleObject::AnimationState::Init, spriteList.find("Tentacle_Up")->second);
+			particle->SetIsAnimated(true);
+
+			int randFrame = (rand() % 10) + 8;
+
+			particle->GetSpriteRenderer()->SetFrame(randFrame);
+
+			objectsList.push_back(particle);
+			entityObjects.push_back(particle);
+		}
 	}
 	else
 	{
@@ -1579,8 +1691,8 @@ void LevelShowcase::UpdateInput()
 
 		if (isPause)
 		{
-			float axisX = Joystick::GetAxis(0, Joystick::Axis::LeftStickHorizontal) / 32768.0f;
-			float axisY = Joystick::GetAxis(0, Joystick::Axis::LeftStickVertical) / 32768.0f;
+			float axisX = Joystick::GetAxis(0, Joystick::Axis::LeftStickHorizontal)/* / 32768.0f*/;
+			float axisY = Joystick::GetAxis(0, Joystick::Axis::LeftStickVertical)/* / 32768.0f*/;
 
 			float norAxisX = 0;
 			float norAxisY = 0;
@@ -1943,12 +2055,23 @@ void LevelShowcase::UpdateInput()
 		{
 			for (int i = 0; i < playerSize; i++)
 			{
+
+				/*if (Joystick::GetButtonDown(i, Joystick::Button::R1)) {
+					KK_TRACE("{0}", i);
+				}
+				if (Joystick::GetButtonDown(i, Joystick::Button::L1)) {
+					KK_TRACE("{0}", i);
+				}*/
+				if (Joystick::GetButtonDown(i, Joystick::Button::ShareButton))
+				{
+					isPause = true;
+				}
 				if (players[i + currentPlayer]->GetIsFell())
 				{
 					continue;
 				}
-				float axisX = Joystick::GetAxis(i, Joystick::Axis::LeftStickHorizontal) / 32768.0f;
-				float axisY = Joystick::GetAxis(i, Joystick::Axis::LeftStickVertical) / 32768.0f;
+				float axisX = Joystick::GetAxis(i, Joystick::Axis::LeftStickHorizontal)/* / 32768.0f*/;
+				float axisY = Joystick::GetAxis(i, Joystick::Axis::LeftStickVertical)/* / 32768.0f*/;
 				float norAxisX = 0;
 				float norAxisY = 0;
 
@@ -2136,8 +2259,6 @@ void LevelShowcase::UpdateInput()
 								}
 							}
 						}
-
-
 					}
 
 				}
@@ -2199,34 +2320,38 @@ void LevelShowcase::UpdateInput()
 						players[i + currentPlayer]->ChangeMeleeAnimation();
 						players[i + currentPlayer]->HitAimingTile();
 						players[i + currentPlayer]->SetMeleeCooldown(MeleeCooldown);
-						soundManager->PlaySFX("hit_test", false);
+						soundManager->PlaySFX("Player_HitGround", false);
 					}
 
 				}
 
 				// Debug other player
-				if (Joystick::GetButtonDown(i, Joystick::Button::R1))
+				/*if (Joystick::GetButtonDown(i, Joystick::Button::R1))
 				{
 					currentPlayer++;
 					currentPlayer = currentPlayer % 4;
-				}
+				}*/
 
-				if (Joystick::GetButtonDown(i, Joystick::Button::ShareButton))
-				{
-					isPause = true;
-				}
+				
 
 				if (Joystick::GetButtonDown(i, Joystick::Button::P5Button))
 				{
-					GameEngine::GetInstance()->GetStateController()->loadingState = GameState::GS_LEVELGAMEPLAY;
+					GameEngine::GetInstance()->GetStateController()->loadingState = GameState::GS_LEVELSHOWCASE;
 					GameEngine::GetInstance()->GetStateController()->gameStateNext = GameState::GS_LEVELLOADING;
 				}
 			}
 
-			players[0]->Translate(players[0]->GetVelocity() * playerMovementSpeed);
-			players[1]->Translate(players[1]->GetVelocity() * playerMovementSpeed);
-			players[2]->Translate(players[2]->GetVelocity() * playerMovementSpeed);
-			players[3]->Translate(players[3]->GetVelocity() * playerMovementSpeed);
+			KK_TRACE("P1 velocity = ({0}, {1}, {2}) playerMovementSpeed = {3} dt = {4}",
+				players[0]->GetVelocity().x,
+				players[0]->GetVelocity().y,
+				players[0]->GetVelocity().z,
+				playerMovementSpeed,
+				timer->getDeltaTime());
+
+			players[0]->Translate(players[0]->GetVelocity() * playerMovementSpeed * timer->getDeltaTime());
+			players[1]->Translate(players[1]->GetVelocity() * playerMovementSpeed * timer->getDeltaTime());
+			players[2]->Translate(players[2]->GetVelocity() * playerMovementSpeed * timer->getDeltaTime());
+			players[3]->Translate(players[3]->GetVelocity() * playerMovementSpeed * timer->getDeltaTime());
 		}
 	}
 }
@@ -2463,7 +2588,7 @@ void LevelShowcase::UpdateTime() {
 	//KK_TRACE("timer->getDeltaTime() = {0}", timer->getDeltaTime());
 	time1s += timer->getDeltaTime();
 	time01s += timer->getDeltaTime();
-	dt += timer->getDeltaTime();
+	//dt += timer->getDeltaTime();
 
 	if (time1s >= 1.0f)
 	{
@@ -2479,7 +2604,181 @@ void LevelShowcase::UpdateTime() {
 	}
 
 }
+void LevelShowcase::DrawImGUI()
+{
+	bool show_demo_window = true;
+	bool show_another_window = false;
+	ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
 
+	ImGuiIO& io = ImGui::GetIO(); (void)io;
+
+	// Start the Dear ImGui frame
+	ImGui_ImplOpenGL3_NewFrame();
+	ImGui_ImplSDL2_NewFrame();
+	ImGui::NewFrame();
+
+	//// 1. Show the big demo window (Most of the sample code is in ImGui::ShowDemoWindow()! You can browse its code to learn more about Dear ImGui!).
+	//if (show_demo_window)
+	//	ImGui::ShowDemoWindow(&show_demo_window);
+
+	//if (ImGui::Button("Reset Scene", ImVec2(100, 50)))
+	//	isResetScene++;
+
+	//if (ImGui::Button("To FullScreen", ImVec2(100, 50)))
+	//	isFullScreen++;
+
+	//if (ImGui::Button("To WindowScreen", ImVec2(100, 50)))
+	//	isWindowScreen++;
+
+	//ImGui::SliderFloat("musicVolume", &musicVolume, 0.0f, 1.0f, "ratio = %.3f");
+	//ImGui::SliderFloat("sfxVolume", &sfxVolume, 0.0f, 1.0f, "ratio = %.3f");
+
+	//soundManager->SetVolumeAllMusic(0 + (musicVolume * (128.f - 0)));
+	//soundManager->SetVolumeAllSFX(0 + (sfxVolume * (128.f - 0)));
+
+	//if (isFullScreen & 1)
+	//{
+	//	SDL_SetWindowFullscreen(GameEngine::GetInstance()->GetSDLWindow(), SDL_WINDOW_FULLSCREEN_DESKTOP);
+	//	glViewport(0, 0, 1920, 1080);
+	//	isFullScreen = 0;
+	//}
+
+	//if (isWindowScreen & 1)
+	//{
+	//	SDL_SetWindowFullscreen(GameEngine::GetInstance()->GetSDLWindow(), 0);
+	//	glViewport(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
+	//	isWindowScreen = 0;
+	//}
+	//// Cooldown Stats
+	///*float MeleeCooldown = 2.f;
+	//float FireballCooldown = 3.f;
+	//float TrapCooldown = 3.f;
+	//float DashCooldown = 3.f;
+	//float TNTCooldown = 3.f;
+	//float TeleportCooldown = 3.f;
+	//float BolaCooldown = 3.f;
+	//float CleaveCooldown = 3.f;
+
+	//float FireballLifetime = 3.f;
+	//float TeleportLifetime = 2.f;
+	//float BolaLifetime = 2.f;
+	//float CleaveLifetime = 2.f;*/
+
+	//ImGui::Text("Cooldown stats");
+	//ImGui::InputFloat("Melee Cooldown", &MeleeCooldown, 0.1f, 1.0f, "%.2f");
+	//ImGui::InputFloat("Fireball Cooldown", &FireballCooldown, 0.1f, 1.0f, "%.2f");
+	//ImGui::InputFloat("Trap Cooldown", &TrapCooldown, 0.1f, 1.0f, "%.2f");
+	//ImGui::InputFloat("Dash Cooldown", &DashCooldown, 0.1f, 1.0f, "%.2f");
+	//ImGui::InputFloat("TNT Cooldown", &TNTCooldown, 0.1f, 1.0f, "%.2f");
+	//ImGui::InputFloat("Teleport Cooldown", &TeleportCooldown, 0.1f, 1.0f, "%.2f");
+	//ImGui::InputFloat("Bola Cooldown", &BolaCooldown, 0.1f, 1.0f, "%.2f");
+	//ImGui::InputFloat("Cleave Cooldown", &CleaveCooldown, 0.1f, 1.0f, "%.2f");
+
+	//ImGui::Text("Lifetime stats");
+	//ImGui::InputFloat("Fireball Lifetime", &FireballLifetime, 0.1f, 1.0f, "%.2f");
+	//ImGui::InputFloat("Teleport Lifetime", &TeleportLifetime, 0.1f, 1.0f, "%.2f");
+	//ImGui::InputFloat("Bola Lifetime", &BolaLifetime, 0.1f, 1.0f, "%.2f");
+	//ImGui::InputFloat("Cleave Lifetime", &CleaveLifetime, 0.1f, 1.0f, "%.2f");
+
+	//ImGui::Text("Overall stats");
+	//ImGui::InputFloat("Move Speed", &playerMovementSpeed, 0.1f, 1.0f, "%.2f");
+
+	//if (isResetScene & 1)
+	//{
+	//	GameEngine::GetInstance()->GetStateController()->loadingState = GameState::GS_LEVELSHOWCASE;
+	//	GameEngine::GetInstance()->GetStateController()->gameStateNext = GameState::GS_LEVELLOADING;
+	//}
+	//ImGuiTabBarFlags tab_bar_flags = ImGuiTabBarFlags_None;
+	//if (ImGui::BeginTabBar("MyTabBar", tab_bar_flags))
+	//{
+	//	for (int i = 0; i < playerSize; i++)
+	//	{
+	//		std::string tabname = "player " + std::to_string(i);
+	//		ImGui::PushID(i);
+
+	//		if (ImGui::BeginTabItem(tabname.c_str()))
+	//		{
+	//			ImGui::Text("Player %d", i);
+	//			ImGui::SameLine();
+	//			ImGui::SeparatorText("");
+	//			ImGui::Text("Position: %f, %f, %f", players[i]->getPos().x, players[i]->getPos().y, players[i]->getPos().z);
+	//			
+	//			ImGui::Text("isShooting: %s", players[i]->GetIsShooting() ? "true" : "false");
+	//			ImGui::Text("isAiming: %s", players[i]->GetIsAiming() ? "true" : "false");
+	//			ImGui::Text("isSlow: %s", players[i]->GetIsSlow() ? "true" : "false");
+	//			ImGui::Text("isDashing: %s", players[i]->GetIsDashing() ? "true" : "false");
+	//			ImGui::Text("isKnockback: %s", players[i]->GetIsKnockback() ? "true" : "false");
+	//			ImGui::Text("isStun: %s", players[i]->GetIsStun() ? "true" : "false");
+	//			ImGui::Text("isOnGround: %s", players[i]->GetIsOnGround() ? "true" : "false");
+	//			ImGui::Text("Current Velocity: %f, %f", players[i]->GetVelocity().x, players[i]->GetVelocity().y);
+
+	//			/*ImGui::DragFloat("ColX Button", &groundColX[i], 2.0f, 0.0f, 1024.f, "%.3f");
+	//			ImGui::DragFloat("ColY Button", &groundColY[i], 2.0f, 0.0f, 1024.f, "%.3f");*/
+	//			ImGui::DragFloat("Col offset X", &groundColOffsetX[i], 2.0f, -1024.f, 1024.f, "%.3f");
+	//			ImGui::DragFloat("Col offset Y", &groundColOffsetY[i], 2.0f, -1024.f, 1024.f, "%.3f");
+
+	//			players[i]->GetGroundColliderObject()->SetCollisionOffset(glm::vec2(groundColOffsetX[i], groundColOffsetY[i]));
+	//			/*Fireball = 0,
+	//				Trap = 1,
+	//				Dash = 2,
+	//				TNT = 3,
+	//				Teleport = 4,
+	//				Bola = 5,
+	//				Cleave = 6*/
+
+	//			for (int j = 0; j < 3; j++)
+	//			{
+	//				ImGui::PushID(j);
+
+
+	//				ImGui::Text("skill %d", j);
+	//				ImGui::Text("ability %d cooldown: %.2f", i ,players[i]->GetCooldown(static_cast<PlayerObject::AbilityButton>(j)));
+	//				ImGui::RadioButton("Fireball", &playersSkill[i][j], static_cast<int>(PlayerObject::Ability::Fireball));
+	//				ImGui::SameLine();
+	//				ImGui::RadioButton("Trap", &playersSkill[i][j], static_cast<int>(PlayerObject::Ability::Trap));
+	//				ImGui::SameLine();
+	//				ImGui::RadioButton("Dash", &playersSkill[i][j], static_cast<int>(PlayerObject::Ability::Dash));
+	//				//ImGui::SameLine();
+	//				ImGui::RadioButton("TNT", &playersSkill[i][j], static_cast<int>(PlayerObject::Ability::TNT));
+	//				ImGui::SameLine();
+	//				ImGui::RadioButton("Teleport", &playersSkill[i][j], static_cast<int>(PlayerObject::Ability::Teleport));
+	//				ImGui::SameLine();
+	//				ImGui::RadioButton("Bola", &playersSkill[i][j], static_cast<int>(PlayerObject::Ability::Bola));
+	//				ImGui::SameLine();
+	//				ImGui::RadioButton("Cleave", &playersSkill[i][j], static_cast<int>(PlayerObject::Ability::Cleave));
+	//				ImGui::SeparatorText("");
+
+	//				ImGui::PopID();
+	//			}
+	//			ImGui::EndTabItem();
+	//		}
+	//		
+	//		ImGui::PopID();
+	//	}
+	//	
+	//	ImGui::EndTabBar();
+	//}
+	//
+	//for (int i = 0; i < playerSize; i++)
+	//{
+	//	for (int j = 0; j < 3; j++)
+	//	{
+	//		players[i]->SetAbility
+	//		(
+	//			static_cast<PlayerObject::AbilityButton>(j), 
+	//			static_cast<PlayerObject::Ability>(playersSkill[i][j])
+	//		);
+	//	}
+	//}
+
+	// Rendering
+	ImGui::Render();
+
+	ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+	SDL_GL_SwapWindow(GameEngine::GetInstance()->GetSDLWindow());
+
+
+}
 void LevelShowcase::UpdateUI()
 {
 	int playerNumber = 4; // Change later
@@ -2519,6 +2818,11 @@ void LevelShowcase::UpdateUI()
 
 			uiCover->SetPosition(glm::vec3(posX_currentSkill, posY, 0));
 			uiCover->SetSize(skillWidth * camera.GetCameraWidth() / SCREEN_WIDTH, -skillHeight * camera.GetCameraHeight() / SCREEN_HEIGHT);
+
+			UiObject* uiButton = playerSkillButtons[i][j];
+
+			uiButton->SetPosition(glm::vec3(posX_currentSkill, posY, 0));
+			uiButton->SetSize(skillWidth * camera.GetCameraWidth() / SCREEN_WIDTH, -skillHeight * camera.GetCameraHeight() / SCREEN_HEIGHT);
 
 			float cooldown = players[i]->GetCooldown(static_cast<PlayerObject::AbilityButton>(j));
 			
@@ -2682,213 +2986,61 @@ void LevelShowcase::UpdateUI()
 void LevelShowcase::LevelDraw()
 {
 	frame++;
-	
+	framePerSecond++;
+
 	UpdateTime();
 
-	// render image per frame cap
-	if (dt >= targetFrameDuration)
+	// Collider position update
+	for (int i = 0; i < entityObjects.size(); i++)
 	{
-		framePerSecond++;
+		entityObjects[i]->UpdateCollider();
 
-		// Collider position update
-		for (int i = 0; i < entityObjects.size(); i++)
-		{
-			entityObjects[i]->UpdateCollider();
-			
-		}
-
-		GameEngine::GetInstance()->Render(objectsList);
-
-		dt = 0;
 	}
 
-	bool show_demo_window = true;
-	bool show_another_window = false;
-	ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
+	GameEngine::GetInstance()->Render(objectsList);
 
-	ImGuiIO& io = ImGui::GetIO(); (void)io;
+	//dt = 0;
 
-	// Start the Dear ImGui frame
-	ImGui_ImplOpenGL3_NewFrame();
-	ImGui_ImplSDL2_NewFrame();
-	ImGui::NewFrame();
-
-	//// 1. Show the big demo window (Most of the sample code is in ImGui::ShowDemoWindow()! You can browse its code to learn more about Dear ImGui!).
-	//if (show_demo_window)
-	//	ImGui::ShowDemoWindow(&show_demo_window);
-
-	if (ImGui::Button("Reset Scene", ImVec2(100, 50)))
-		isResetScene++;
-
-	if (ImGui::Button("To FullScreen", ImVec2(100, 50)))
-		isFullScreen++;
-
-	if (ImGui::Button("To WindowScreen", ImVec2(100, 50)))
-		isWindowScreen++;
-
-	ImGui::SliderFloat("musicVolume", &musicVolume, 0.0f, 1.0f, "ratio = %.3f");
-	ImGui::SliderFloat("sfxVolume", &sfxVolume, 0.0f, 1.0f, "ratio = %.3f");
-
-	soundManager->SetVolumeAllMusic(0 + (musicVolume * (128.f - 0)));
-	soundManager->SetVolumeAllSFX(0 + (sfxVolume * (128.f - 0)));
-
-	if (isFullScreen & 1)
-	{
-		SDL_SetWindowFullscreen(GameEngine::GetInstance()->GetSDLWindow(), SDL_WINDOW_FULLSCREEN_DESKTOP);
-		glViewport(0, 0, 1920, 1080);
-		isFullScreen = 0;
-	}
-
-	if (isWindowScreen & 1)
-	{
-		SDL_SetWindowFullscreen(GameEngine::GetInstance()->GetSDLWindow(), 0);
-		glViewport(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
-		isWindowScreen = 0;
-	}
-	// Cooldown Stats
-	/*float MeleeCooldown = 2.f;
-	float FireballCooldown = 3.f;
-	float TrapCooldown = 3.f;
-	float DashCooldown = 3.f;
-	float TNTCooldown = 3.f;
-	float TeleportCooldown = 3.f;
-	float BolaCooldown = 3.f;
-	float CleaveCooldown = 3.f;
-
-	float FireballLifetime = 3.f;
-	float TeleportLifetime = 2.f;
-	float BolaLifetime = 2.f;
-	float CleaveLifetime = 2.f;*/
-
-	ImGui::Text("Cooldown stats");
-	ImGui::InputFloat("Melee Cooldown", &MeleeCooldown, 0.1f, 1.0f, "%.2f");
-	ImGui::InputFloat("Fireball Cooldown", &FireballCooldown, 0.1f, 1.0f, "%.2f");
-	ImGui::InputFloat("Trap Cooldown", &TrapCooldown, 0.1f, 1.0f, "%.2f");
-	ImGui::InputFloat("Dash Cooldown", &DashCooldown, 0.1f, 1.0f, "%.2f");
-	ImGui::InputFloat("TNT Cooldown", &TNTCooldown, 0.1f, 1.0f, "%.2f");
-	ImGui::InputFloat("Teleport Cooldown", &TeleportCooldown, 0.1f, 1.0f, "%.2f");
-	ImGui::InputFloat("Bola Cooldown", &BolaCooldown, 0.1f, 1.0f, "%.2f");
-	ImGui::InputFloat("Cleave Cooldown", &CleaveCooldown, 0.1f, 1.0f, "%.2f");
-
-	ImGui::Text("Lifetime stats");
-	ImGui::InputFloat("Fireball Lifetime", &FireballLifetime, 0.1f, 1.0f, "%.2f");
-	ImGui::InputFloat("Teleport Lifetime", &TeleportLifetime, 0.1f, 1.0f, "%.2f");
-	ImGui::InputFloat("Bola Lifetime", &BolaLifetime, 0.1f, 1.0f, "%.2f");
-	ImGui::InputFloat("Cleave Lifetime", &CleaveLifetime, 0.1f, 1.0f, "%.2f");
-
-	ImGui::Text("Overall stats");
-	ImGui::InputFloat("Move Speed", &playerMovementSpeed, 0.1f, 1.0f, "%.2f");
-
-	if (isResetScene & 1)
-	{
-		GameEngine::GetInstance()->GetStateController()->loadingState = GameState::GS_LEVELSHOWCASE;
-		GameEngine::GetInstance()->GetStateController()->gameStateNext = GameState::GS_LEVELLOADING;
-	}
-	ImGuiTabBarFlags tab_bar_flags = ImGuiTabBarFlags_None;
-	if (ImGui::BeginTabBar("MyTabBar", tab_bar_flags))
-	{
-		for (int i = 0; i < playerSize; i++)
-		{
-			std::string tabname = "player " + std::to_string(i);
-			ImGui::PushID(i);
-
-			if (ImGui::BeginTabItem(tabname.c_str()))
-			{
-				ImGui::Text("Player %d", i);
-				ImGui::SameLine();
-				ImGui::SeparatorText("");
-				ImGui::Text("Position: %f, %f, %f", players[i]->getPos().x, players[i]->getPos().y, players[i]->getPos().z);
-				
-				ImGui::Text("isShooting: %s", players[i]->GetIsShooting() ? "true" : "false");
-				ImGui::Text("isAiming: %s", players[i]->GetIsAiming() ? "true" : "false");
-				ImGui::Text("isSlow: %s", players[i]->GetIsSlow() ? "true" : "false");
-				ImGui::Text("isDashing: %s", players[i]->GetIsDashing() ? "true" : "false");
-				ImGui::Text("isKnockback: %s", players[i]->GetIsKnockback() ? "true" : "false");
-				ImGui::Text("isStun: %s", players[i]->GetIsStun() ? "true" : "false");
-				ImGui::Text("isOnGround: %s", players[i]->GetIsOnGround() ? "true" : "false");
-				ImGui::Text("Current Velocity: %f, %f", players[i]->GetVelocity().x, players[i]->GetVelocity().y);
-
-				/*ImGui::DragFloat("ColX Button", &groundColX[i], 2.0f, 0.0f, 1024.f, "%.3f");
-				ImGui::DragFloat("ColY Button", &groundColY[i], 2.0f, 0.0f, 1024.f, "%.3f");*/
-				ImGui::DragFloat("Col offset X", &groundColOffsetX[i], 2.0f, -1024.f, 1024.f, "%.3f");
-				ImGui::DragFloat("Col offset Y", &groundColOffsetY[i], 2.0f, -1024.f, 1024.f, "%.3f");
-
-				players[i]->GetGroundColliderObject()->SetCollisionOffset(glm::vec2(groundColOffsetX[i], groundColOffsetY[i]));
-				/*Fireball = 0,
-					Trap = 1,
-					Dash = 2,
-					TNT = 3,
-					Teleport = 4,
-					Bola = 5,
-					Cleave = 6*/
-
-				for (int j = 0; j < 3; j++)
-				{
-					ImGui::PushID(j);
-
-
-					ImGui::Text("skill %d", j);
-					ImGui::Text("ability %d cooldown: %.2f", i ,players[i]->GetCooldown(static_cast<PlayerObject::AbilityButton>(j)));
-					ImGui::RadioButton("Fireball", &playersSkill[i][j], static_cast<int>(PlayerObject::Ability::Fireball));
-					ImGui::SameLine();
-					ImGui::RadioButton("Trap", &playersSkill[i][j], static_cast<int>(PlayerObject::Ability::Trap));
-					ImGui::SameLine();
-					ImGui::RadioButton("Dash", &playersSkill[i][j], static_cast<int>(PlayerObject::Ability::Dash));
-					//ImGui::SameLine();
-					ImGui::RadioButton("TNT", &playersSkill[i][j], static_cast<int>(PlayerObject::Ability::TNT));
-					ImGui::SameLine();
-					ImGui::RadioButton("Teleport", &playersSkill[i][j], static_cast<int>(PlayerObject::Ability::Teleport));
-					ImGui::SameLine();
-					ImGui::RadioButton("Bola", &playersSkill[i][j], static_cast<int>(PlayerObject::Ability::Bola));
-					ImGui::SameLine();
-					ImGui::RadioButton("Cleave", &playersSkill[i][j], static_cast<int>(PlayerObject::Ability::Cleave));
-					ImGui::SeparatorText("");
-
-					ImGui::PopID();
-				}
-				ImGui::EndTabItem();
-			}
-			
-			ImGui::PopID();
-		}
-		
-		ImGui::EndTabBar();
-	}
 	
-	for (int i = 0; i < playerSize; i++)
-	{
-		for (int j = 0; j < 3; j++)
-		{
-			players[i]->SetAbility
-			(
-				static_cast<PlayerObject::AbilityButton>(j), 
-				static_cast<PlayerObject::Ability>(playersSkill[i][j])
-			);
-		}
-	}
 
-	// Rendering
-	ImGui::Render();
-
-	ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
-	SDL_GL_SwapWindow(GameEngine::GetInstance()->GetSDLWindow());
-
+	DrawImGUI();
 
 	// cout << "Draw Level" << endl;
 }
 
 void LevelShowcase::LevelFree()
 {
-	// Clean up DrawableObjects
-	for (auto obj : objectsList) {
-		delete obj;
+	for (int i = objectsList.size() - 1; i >= 0; i--) {
+		if (!objectsList[i] || !objectsList[i]->GetIsActive()) {
+			objectsList[i] = nullptr;
+			objectsList.erase(objectsList.begin() + i);
+		}
 	}
+
+	for (int i = entityObjects.size() - 1; i >= 0; i--) {
+		if (!entityObjects[i] || !entityObjects[i]->GetIsActive()) {
+			entityObjects.erase(entityObjects.begin() + i);
+		}
+	}
+
+	for (int i = propObjects.size() - 1; i >= 0; i--) {
+		if (!propObjects[i] || !propObjects[i]->GetIsActive()) {
+			propObjects.erase(propObjects.begin() + i);
+		}
+	}
+
+	// Clean up DrawableObjects
+	/*for (DrawableObject* obj: objectsList) 
+	{
+		delete obj;
+	}*/
 	objectsList.clear();
 	entityObjects.clear();
 	currentCollisions.clear();
 	previousCollisions.clear();
 	spriteList.clear();
 
+	soundManager->StopMusic("GameScene_BGM");
 	//cout << "Free Level" << endl;
 }
 
@@ -2900,7 +3052,18 @@ void LevelShowcase::LevelUnload()
 	ImGui_ImplSDL2_Shutdown();
 	ImGui::DestroyContext();
 
-	SaveConfigInfo("LevelShowcase.json");
+	SaveConfigInfo("../Resource/SceneData/LevelShowcase.json");
+
+	KrillSoundManager::SoundManager::GetInstance()->SaveVolumeConfig
+	(
+		"../Resource/SceneData/CurrentVolume.json",
+		masterVolume,
+		isToggleMasterVolume,
+		musicVolume,
+		isToggleSFXVolume,
+		sfxVolume,
+		isToggleBGMVolume
+	);
 
 	//cout << "Unload Level" << endl;
 }
@@ -2965,16 +3128,19 @@ void LevelShowcase::GroundTileRefactor()
 				//SpritesheetInfo collapseTileSprite = SpritesheetInfo("CollapseTile", "../Resource/Texture/Props/prop_spr_vfx_smoke.png", 200, 200, 800, 200);
 				
 				
-				TileObject* collapseTile = new TileObject();
+				/*TileObject* collapseTile = new TileObject();
 				collapseTile->SetIsAnimated(true);
 				collapseTile->currAnimState = TileObject::AnimationState::Breaking;
+				collapseTile->SetIsBroke(true);
 				collapseTile->SetSize(256.f, -256.f);
 				collapseTile->SetPosition(tilesList[i][j]->getPos());
 				collapseTile->GetSpriteRenderer()->SetFrame(10);
 				collapseTile->SetTextureWithID(spriteList.find("CollapseTile")->second, spriteList.find("CollapseTile")->second.textureid);
-				collapseTile->GetSpriteRenderer()->ShiftTo(tilesList[i][j]->GetSpriteRenderer()->GetRow(), tilesList[i][j]->GetSpriteRenderer()->GetColumn());
+				collapseTile->GetSpriteRenderer()->ShiftTo(tilesList[i][j]->GetSpriteRenderer()->GetRow(), tilesList[i][j]->GetSpriteRenderer()->GetColumn());*/
 
-				AddEntityToScene(collapseTile);
+				//AddEntityToScene(collapseTile);
+
+				tilesList[i][j]->ImmediatelyBreak();
 				tilesList[i][j]->currAnimState = TileObject::AnimationState::FinishBreaking;
 
 				currentGroundTile[i][j] = 0;
@@ -3131,6 +3297,7 @@ void LevelShowcase::UsingAbilityKeyDown(int numPlayer, PlayerObject::AbilityButt
 
 		case PlayerObject::Ability::Trap:
 			Trap(numPlayer, button);
+			KrillSoundManager::SoundManager::GetInstance()->PlaySFX("Jellyfish_Placed", false);
 			break;
 
 		case PlayerObject::Ability::Dash:
@@ -3142,6 +3309,7 @@ void LevelShowcase::UsingAbilityKeyDown(int numPlayer, PlayerObject::AbilityButt
 			if (!players[numPlayer]->GetIsTNT()) 
 			{
 				TNT(numPlayer, button);
+				KrillSoundManager::SoundManager::GetInstance()->PlaySFX("Landmine_Placed", false);
 			}
 			else if (players[numPlayer]->GetIsTNT()) 
 			{
@@ -3149,6 +3317,7 @@ void LevelShowcase::UsingAbilityKeyDown(int numPlayer, PlayerObject::AbilityButt
 				{
 					if (trap->GetType() == TrapObject::TypeTrap::Tnt) 
 					{
+						KrillSoundManager::SoundManager::GetInstance()->PlaySFX("Landmine_Explode", false);
 						trap->ExplodeTileInRange();
 						trap->ChangeAnimationState(TrapObject::AnimationState::Collide);
 						KK_TRACE("Press Again");
@@ -3171,11 +3340,12 @@ void LevelShowcase::UsingAbilityKeyDown(int numPlayer, PlayerObject::AbilityButt
 					{
 						if (projectile->GetType() == ProjectileObject::TypeProjectile::Teleport)
 						{
-								players[numPlayer]->SetPosition(projectile->getPos());
-								players[numPlayer]->SetIsShooting(false);
-								projectile->SetIsActive(false);
-								players[numPlayer]->SetAbilityCooldown(button, 6);
-								players[numPlayer]->RemoveOwningProjectile(projectile);
+							KrillSoundManager::SoundManager::GetInstance()->PlaySFX("Teleport_Hit", false);
+							players[numPlayer]->SetPosition(projectile->getPos());
+							players[numPlayer]->SetIsShooting(false);
+							projectile->SetIsActive(false);
+							players[numPlayer]->SetAbilityCooldown(button, 6);
+							players[numPlayer]->RemoveOwningProjectile(projectile);
 						}
 					}
 				}
@@ -3220,6 +3390,7 @@ void LevelShowcase::UsingAbilityKeyUp(int numPlayer, PlayerObject::AbilityButton
 			{
 				if (players[numPlayer]->GetHoldingProjectile() == ProjectileObject::TypeProjectile::Fireball) {
 					ShootFireball(numPlayer, button);
+					
 					break;
 				}
 
@@ -3231,6 +3402,7 @@ void LevelShowcase::UsingAbilityKeyUp(int numPlayer, PlayerObject::AbilityButton
 			{
 				if (players[numPlayer]->GetHoldingProjectile() == ProjectileObject::TypeProjectile::Teleport) {
 					ShootTeleport(numPlayer, button);
+					KrillSoundManager::SoundManager::GetInstance()->PlaySFX("Teleport_Throwing", false);
 					break;
 				}
 
@@ -3242,6 +3414,7 @@ void LevelShowcase::UsingAbilityKeyUp(int numPlayer, PlayerObject::AbilityButton
 			{
 				if (players[numPlayer]->GetHoldingProjectile() == ProjectileObject::TypeProjectile::Bola) {
 					ShootBola(numPlayer, button);
+					KrillSoundManager::SoundManager::GetInstance()->PlaySFX("Bola_Throwing", false);
 					break;
 				}
 
@@ -3505,6 +3678,8 @@ void LevelShowcase::ShootCleave(int numPlayer, PlayerObject::AbilityButton butto
 	projectile->SetRotation(angle);
 	projectile->SetVelocity(abs(veloX), abs(veloY), PositiveX, PositiveY);
 	players[numPlayer]->SetAbilityCooldown(button, CleaveCooldown);
+
+	KrillSoundManager::SoundManager::GetInstance()->PlaySFX("Cleave_Slash", false);
 }
 
 void LevelShowcase::AddEntityToScene(EntityObject* entity)
@@ -3514,10 +3689,12 @@ void LevelShowcase::AddEntityToScene(EntityObject* entity)
 	//objectsList.push_back(entity->GetCollider()->GetGizmos());
 	//players[numPlayer]->SetAbilityCooldown(button, 6);
 }
+
 void LevelShowcase::AddObjectToScene(DrawableObject* object)
 {
 	objectsList.push_back(object);
 }
+
 void LevelShowcase::loadAbility(std::string filename) {
 	std::ifstream file(filename);
 	nlohmann::json data = nlohmann::json::parse(file);
@@ -3529,6 +3706,7 @@ void LevelShowcase::loadAbility(std::string filename) {
 			selectStr = "ability" + std::to_string(i);
 			if (data.count(selectStr)) {
 				abilityId[i] = data[selectStr];
+
 			}
 			else {
 				std::cout << selectStr << "Not found" << std::endl;
@@ -3562,7 +3740,7 @@ void LevelShowcase::SaveConfigInfo(const std::string& fileName) {
 		{ "3", groundColOffsetY[3] }
 	};
 
-	for (int i = 0; i < 4; i++)
+	/*for (int i = 0; i < 4; i++)
 	{
 		std::string playerName = "Player " + std::to_string(i) + " Skill";
 		data[playerName] =
@@ -3571,7 +3749,7 @@ void LevelShowcase::SaveConfigInfo(const std::string& fileName) {
 			playersSkill[i][1],
 			playersSkill[i][2]
 		};
-	}
+	}*/
 
 	data["MeleeCooldown"] = MeleeCooldown;
 	data["FireballCooldown"] = FireballCooldown;
@@ -3628,7 +3806,7 @@ void LevelShowcase::LoadConfigInfo(const std::string& fileName)
 	groundColOffsetY[2] = data["groundColOffsetY"]["2"];
 	groundColOffsetY[3] = data["groundColOffsetY"]["3"];
 
-	for (int i = 0; i < 4; i++)
+	/*for (int i = 0; i < 4; i++)
 	{
 		std::string playerName = "Player " + std::to_string(i) + " Skill";
 
@@ -3636,7 +3814,7 @@ void LevelShowcase::LoadConfigInfo(const std::string& fileName)
 		{
 			playersSkill[i][j] = data[playerName][j].get<int>();
 		}
-	}
+	}*/
 
 	MeleeCooldown = data["MeleeCooldown"];
 	FireballCooldown = data["FireballCooldown"];
@@ -3655,4 +3833,115 @@ void LevelShowcase::LoadConfigInfo(const std::string& fileName)
 
 	playerMovementSpeed = data["playerMovementSpeed"];
 
+}
+
+void LevelShowcase::SaveWinRoundInfo(const std::string& fileName)
+{
+	int playerRoundWin[4] = { 0 };
+	int currentRoundWinner = 0;
+	int currentRound;
+
+	std::ifstream readfile(fileName);
+
+	// read file
+	if (!readfile.is_open())
+	{
+		KK_ERROR("LevelShowcase: Cannot read round win file!");
+	}
+	else
+	{
+		nlohmann::json data = nlohmann::json::parse(readfile);
+
+		std::string playerScore;
+
+		for (int i = 0; i < 4; i++)
+		{
+			playerScore = "Score_Player" + std::to_string(i);
+
+			if (!data.count(playerScore))
+			{
+				KK_ERROR("LevelShowcase: Cannot read player Score!");
+			}
+			else
+			{
+				playerRoundWin[i] = data[playerScore];
+
+				KK_ERROR("playerRoundWin[{0}] = {1}", i, playerRoundWin[i]);
+			}
+		}
+
+		std::string roundNumber = "roundNumber";
+
+		if (!data.count(roundNumber))
+		{
+			KK_ERROR("LevelShowcase: Cannot read round Number!");
+		}
+		else
+		{
+			currentRound = data[roundNumber];
+		}
+
+		readfile.close();
+	}
+	
+	// save value + new round win
+	for (int i = 0; i < playerSize; i++)
+	{
+		if (!players[i]->GetIsFell())
+		{
+			int winner = i;
+
+			if (winner == 3)
+			{
+				winner = 2;
+			}
+			else if (winner == 2)
+			{
+				winner = 3;
+			}
+			currentRoundWinner = winner;
+			playerRoundWin[winner]++;
+			break;
+		}
+	}
+
+	currentRound++;
+	
+	// save value to file
+
+	std::ofstream writefile(fileName);
+
+	if (!writefile.is_open())
+	{
+		KK_ERROR("LevelShowcase: Cannot write Ui Position config file!");
+	}
+	else
+	{
+		KK_INFO("LevelShowcase: Open file Round Win Complete");
+
+		nlohmann::json data;
+
+		std::string playerScore;
+
+		for (int i = 0; i < 4; i++)
+		{
+			playerScore = "Score_Player" + std::to_string(i);
+
+			data[playerScore] = playerRoundWin[i];
+		}
+
+		std::string roundWinner = "RoundWinner";
+
+		data[roundWinner] = currentRoundWinner;
+
+		std::string roundNumber = "roundNumber";
+
+		data[roundNumber] = currentRound;
+
+		writefile << data;
+
+		KK_INFO("LevelShowcase: Save Round Win Complete");
+
+		writefile.close();
+	}
 }

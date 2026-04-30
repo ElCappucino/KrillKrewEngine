@@ -1,6 +1,7 @@
 #include "LevelMainMenu.h"
 
-void LevelMainMenu::LevelLoad() {
+void LevelMainMenu::LevelLoad() 
+{
 	SquareMeshVbo* square = new SquareMeshVbo();
 	square->LoadData();
 	GameEngine::GetInstance()->AddMesh(SquareMeshVbo::MESH_NAME, square);
@@ -23,9 +24,14 @@ void LevelMainMenu::LevelLoad() {
 	spriteList["OptionsVolumeBox"] = SpritesheetInfo("OptionsVolumeBox", "../Resource/Texture/Pause and Options/UI_Options_Volume_box.png", 32, 32, 128, 32);
 	spriteList["OptionsVolumeKnob"] = SpritesheetInfo("OptionsVolumeKnob", "../Resource/Texture/Pause and Options/UI_Options_Volume_knob.png", 21, 41, 42, 41);
 	spriteList["OptionsVolumeTrack"] = SpritesheetInfo("OptionsVolumeTrack", "../Resource/Texture/Pause and Options/UI_Options_Volume_track.png", 406, 12, 812, 12);
+
+	KrillSoundManager::SoundManager::GetInstance()->LoadMusic("Ability_Selection", "../Resource/Audio/BGMusic/Ability_Selection.mp3");
+
+	KrillSoundManager::SoundManager::GetInstance()->PlayMusic("Ability_Selection", true);
 }
 
-void LevelMainMenu::LevelInit() {
+void LevelMainMenu::LevelInit() 
+{
 	GameEngine::GetInstance()->GetRenderer()->SetOrthoProjection(-(SCREEN_WIDTH / 2),
 		(SCREEN_WIDTH / 2),
 		-(SCREEN_HEIGHT / 2),
@@ -49,7 +55,7 @@ void LevelMainMenu::LevelInit() {
 	configName->height = 55;
 	configName->column = 0;
 	configs.push_back(configName);
-	loadConfig("text0.json");
+	loadConfig("../Resource/SceneData/text0.json");
 	UiObject* name = new UiObject();
 	name->SetSpriteInfo(spriteList.find("Name")->second);
 	name->SetPosition(glm::vec3(configs.at(0)->posX, configs.at(0)->posY, 0));
@@ -60,7 +66,7 @@ void LevelMainMenu::LevelInit() {
 
 	//text
 	for (int i = 1; i < 5; i++) {
-		std::string fileName = "text" + std::to_string(i) + ".json";
+		std::string fileName = "../Resource/SceneData/text" + std::to_string(i) + ".json";
 		config* configtext = new config();
 		configtext->number = i;
 		configtext->posX = 100;
@@ -87,7 +93,7 @@ void LevelMainMenu::LevelInit() {
 	configYesNo->offSetX = 100;
 	configYesNo->offSetY = 0;
 	configs.push_back(configYesNo);
-	loadConfig("YesNoConfig.json");
+	loadConfig("../Resource/SceneData/YesNoConfig.json");
 
 	//config text option
 	config* configTextOption = new config();
@@ -97,7 +103,7 @@ void LevelMainMenu::LevelInit() {
 	configTextOption->offSetX = 100;
 	configTextOption->offSetY = 0;
 	configs.push_back(configTextOption);
-	loadConfig("TextOptionConfig.json");
+	loadConfig("../Resource/SceneData/TextOptionConfig.json");
 
 	//config display
 	config* configDisplay = new config();
@@ -107,7 +113,7 @@ void LevelMainMenu::LevelInit() {
 	configDisplay->offSetX = 100;
 	configDisplay->offSetY = 0;
 	configs.push_back(configDisplay);
-	loadConfig("DisplayConfig.json");
+	loadConfig("../Resource/SceneData/DisplayConfig.json");
 
 	//config volume track
 	config* configVolumeTrack = new config();
@@ -117,7 +123,18 @@ void LevelMainMenu::LevelInit() {
 	configVolumeTrack->offSetX = 100;
 	configVolumeTrack->offSetY = 0;
 	configs.push_back(configVolumeTrack);
-	loadConfig("VolumeTrackConfig.json");
+	loadConfig("../Resource/SceneData/VolumeTrackConfig.json");
+
+	KrillSoundManager::SoundManager::GetInstance()->LoadVolumeConfig
+	(
+		"../Resource/SceneData/CurrentVolume.json",
+		masterVolume,
+		isToggleVolume[0],
+		BGMVolume,
+		isToggleVolume[2],
+		SFXVolume,
+		isToggleVolume[1]
+	);
 
 	// Setup Dear ImGui context
 	IMGUI_CHECKVERSION();
@@ -135,7 +152,29 @@ void LevelMainMenu::LevelInit() {
 
 	std::cout << GameEngine::GetInstance()->GetStateController()->loadingState << std::endl;
 }
-void LevelMainMenu::LevelUpdate() {
+void LevelMainMenu::LevelUpdate() 
+{
+	KrillSoundManager::SoundManager::GetInstance()->SetVolumeAllMusic((masterVolume / 100.0f) * BGMVolume * 0.01f * (128.f - 0));
+	KrillSoundManager::SoundManager::GetInstance()->SetVolumeAllSFX((masterVolume / 100.0f) * SFXVolume * 0.01f * (128.f - 0));
+
+	if (!isToggleVolume[0])
+	{
+		KrillSoundManager::SoundManager::GetInstance()->SetVolumeAllSFX(0);
+		KrillSoundManager::SoundManager::GetInstance()->SetVolumeAllMusic(0);
+	}
+
+	if (!isToggleVolume[1])
+	{
+		KrillSoundManager::SoundManager::GetInstance()->SetVolumeAllSFX(0);
+	}
+
+	if (!isToggleVolume[2])
+	{
+		KrillSoundManager::SoundManager::GetInstance()->SetVolumeAllMusic(0);
+	}
+
+	
+
 	UpdateInput();
 	UpdateUi();
 
@@ -170,7 +209,7 @@ void LevelMainMenu::LevelDraw() {
 	//if (show_demo_window)
 	//	ImGui::ShowDemoWindow(&show_demo_window);
 
-	if (ImGui::Button("Go levelSelectAbility")) {
+	/*if (ImGui::Button("Go levelSelectAbility")) {
 		GameEngine::GetInstance()->GetStateController()->gameStateNext = GameState::GS_LEVELSELECTABILITY;
 	}
 	ImGuiTabBarFlags tab_bar_flags = ImGuiTabBarFlags_None;
@@ -298,7 +337,7 @@ void LevelMainMenu::LevelDraw() {
 		}
 
 		ImGui::EndTabBar();
-	}
+	}*/
 	// Rendering
 	ImGui::Render();
 
@@ -321,6 +360,17 @@ void LevelMainMenu::LevelUnload() {
 	ImGui_ImplOpenGL3_Shutdown();
 	ImGui_ImplSDL2_Shutdown();
 	ImGui::DestroyContext();
+
+	KrillSoundManager::SoundManager::GetInstance()->SaveVolumeConfig
+	(
+		"../Resource/SceneData/CurrentVolume.json", 
+		masterVolume, 
+		isToggleVolume[0], 
+		BGMVolume, 
+		isToggleVolume[1],
+		SFXVolume,
+		isToggleVolume[2]
+	);
 }
 
 void LevelMainMenu::Movement(float axisX, float axisY, bool isPositiveX, bool isPositiveY) {
@@ -341,9 +391,9 @@ void LevelMainMenu::UpdateInput() {
 		Joystick::Update();
 		for (int i = 0; i < 1/*SDL_NumJoysticks()*/; i++)
 		{
-			float axisX = Joystick::GetAxis(0, Joystick::Axis::LeftStickHorizontal) / 32768.0f;
+			float axisX = Joystick::GetAxis(0, Joystick::Axis::LeftStickHorizontal)/* / 32768.0f*/;
 			/*std::cout << "axisX : " << axisX << std::endl;*/
-			float axisY = Joystick::GetAxis(0, Joystick::Axis::LeftStickVertical) / 32768.0f;
+			float axisY = Joystick::GetAxis(0, Joystick::Axis::LeftStickVertical)/* / 32768.0f*/;
 			//std::cout << "axisY : " << axisY << std::endl;
 			bool up = false;
 			bool down = false;
@@ -1133,3 +1183,28 @@ void LevelMainMenu::loadConfig(std::string filename) {
 		std::cout << "Failed" << std::endl;
 	}
 }
+
+//void LevelMainMenu::SaveVolumeConfig(const std::string& filename)
+//{
+//	std::ofstream file(filename);
+//	nlohmann::json data;
+//
+//	if (!file.is_open())
+//	{
+//		KK_ERROR("Cannot open volume config file");
+//	}
+//	else
+//	{
+//		data["MasterVolume"] = masterVolume;
+//		data["SFXVolume"] = SFXVolume;
+//		data["BGMVolume"] = BGMVolume;
+//
+//		data["Master_isMute"] = !isToggleVolume[0];
+//		data["SFX_isMute"] = !isToggleVolume[1];
+//		data["BGM_isMute"] = !isToggleVolume[2];
+//
+//		file << data;
+//
+//		file.close();
+//	}
+//}

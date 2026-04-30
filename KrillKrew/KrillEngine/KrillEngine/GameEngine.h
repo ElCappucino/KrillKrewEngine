@@ -6,6 +6,7 @@
 #include "GLRenderer.h"
 #include "GameStateController.h"
 #include "Log.h"
+#include "nlohmann/json.hpp"
 
 
 /// @brief The class for creating game engine instance to control the renderer and game state.
@@ -36,4 +37,5 @@ public:
 	void Render(std::vector<DrawableObject*> renderObjects);
 	int GetWindowWidth();
 	int GetWindowHeight();
+	void ResetWinScore(const std::string& fileName);
 };

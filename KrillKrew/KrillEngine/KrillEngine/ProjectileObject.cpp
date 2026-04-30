@@ -1,6 +1,6 @@
 
 #include "ProjectileObject.h"
-
+#include "SoundManager.h"
 
 
 ProjectileObject::ProjectileObject()
@@ -207,21 +207,25 @@ void ProjectileObject::OnColliderEnter(Collider* other)
 			{
 				//KK_INFO("Projectile Hit Player");
 				playerOwner->SetIsShooting(false);
+				KrillSoundManager::SoundManager::GetInstance()->PlaySFX("Player_Damaged", false);
 
 				if (this->type == TypeProjectile::Fireball)
 				{
 					ExplodeTileInRange();
 					player->ApplyKnockback(this);
+					KrillSoundManager::SoundManager::GetInstance()->PlaySFX("Bomb_Explosion", false);
 				}
 				else if (this->type == TypeProjectile::Bola)
 				{
 					player->SetIsStun(true);
 					player->SetStunDuraion(10);
+					KrillSoundManager::SoundManager::GetInstance()->PlaySFX("Bola_Hit", false);
 				}
 				else if (this->type == ProjectileObject::TypeProjectile::Teleport) {
 					playerOwner->SetPosition(this->getPos());
 					playerOwner->GetGroundColliderObject()->SetPosition(this->getPos());
 					playerOwner->SetPosition(this->getPos());
+					KrillSoundManager::SoundManager::GetInstance()->PlaySFX("Teleport_Hit", false);
 				}
 				else
 				{

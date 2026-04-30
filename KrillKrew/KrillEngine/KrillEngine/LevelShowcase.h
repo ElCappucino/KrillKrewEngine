@@ -26,6 +26,7 @@ private:
 	std::array<std::array<UiObject*, 3>, 4> playerSkillUIs; // add up to 4 players
 	std::array<std::array<TextObject*, 3>, 4> playerSkillCooldownTexts; // add up to 4 players
 	std::array<std::array<UiObject*, 3>, 4> playerSkillCooldownCovers; // add up to 4 players
+	std::array<std::array<UiObject*, 3>, 4> playerSkillButtons; // add up to 4 players
 
 	std::array<std::array<int, MAP_WIDTH>, MAP_HEIGHT> currentGroundTile = { 0 };
 	std::array<std::array<int, MAP_WIDTH>, MAP_HEIGHT> groundTile = { 0 };
@@ -277,7 +278,7 @@ private:
 	float groundColY[4] = { 64.f, 64.f, 64.f, 64.f };
 	float groundColOffsetX[4] = { 0.f, 0.f, 0.f, 0.f };
 	float groundColOffsetY[4] = { -96.f, -96.f, -96.f, -96.f };
-	int playersSkill[4][3];
+	int playersSkill[4][3] = {0};
 	int isResetScene;
 	int isFullScreen;
 	int isWindowScreen;
@@ -297,7 +298,7 @@ private:
 	float CleaveLifetime = 2.f;
 
 	float DashDuration = 0.2f;
-	float playerMovementSpeed = 3.f;
+	float playerMovementSpeed = 1000.f;
 
 	int playerSize = 0;
 	int playerNum = 0;
@@ -307,6 +308,11 @@ private:
 	Timer* timer;
 
 	int currentPlayer = 0;
+	int playerRemain = 4;
+
+
+	const int TARGET_FPS = 144;
+	const float TARGET_FRAME_TIME = 1000.0f / TARGET_FPS; // ~16.67 ms
 
 	float dt = 0;
 	int frame = 0;
@@ -352,10 +358,15 @@ public:
 	void UpdateCooldown();
 	void UpdateMovement();
 	void UpdateUI();
-	// void UpdateKnockback(DrawableObject* obj1, DrawableObject* obj2);
 	void UpdateTime();
 	void UpdateCountdown();
 	void UpdateKrakenEvent();
+	void UpdateAnimation();
+	void UpdateVolume();
+	void DrawImGUI();
+	void ClearUnusedObject();
+	void UpdatePauseMenu();
+	void CheckPlayerRemain();
 
 	void GroundTileRefactor();
 	void TileImport(std::array<std::array<int, MAP_WIDTH>, MAP_HEIGHT> &TileBuffer, std::string fileName);
@@ -380,4 +391,6 @@ public:
 	void loadAbility(std::string filename);
 	void SaveConfigInfo(const std::string& fileName);
 	void LoadConfigInfo(const std::string& fileName);
+
+	void SaveWinRoundInfo(const std::string& fileName);
 };

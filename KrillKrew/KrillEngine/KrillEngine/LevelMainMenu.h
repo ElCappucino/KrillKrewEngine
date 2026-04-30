@@ -38,9 +38,9 @@ private:
 	bool isBGMVolume = false;
 	bool isToggleVolume[3] = { true, true, true };
 	bool isSlider = false;
-	int masterVolume = 100;
-	int SFXVolume = 20;
-	int BGMVolume = 20;
+	float masterVolume = 100;
+	float SFXVolume = 20;
+	float BGMVolume = 20;
 
 	int configNum = 0;
 	int windowWidth = SCREEN_WIDTH;
@@ -85,4 +85,6 @@ public:
 	void UpdateUi();
 	void saveConfig(std::string& filename, config* con);
 	void loadConfig(std::string filename);
+
+	//void SaveVolumeConfig(const std::string& filename);
 };

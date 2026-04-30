@@ -33,6 +33,8 @@ void LevelSelectAbility::LevelInit()
 	SDL_GetWindowSize(GameEngine::GetInstance()->GetSDLWindow(), &windowWidth, &windowHeight);
 	glViewport(0, 0, windowWidth, windowHeight);
 
+	timer = Timer::Instance();
+
 	//BG
 	UiObject* BG = new UiObject();
 	BG->SetSpriteInfo(spriteList.find("BG")->second);
@@ -52,7 +54,7 @@ void LevelSelectAbility::LevelInit()
 	PlayerWindowConfig->width = 284;
 	PlayerWindowConfig->height = 373;
 	configs.push_back(PlayerWindowConfig);
-	loadConfig("ConfigLevelSelectAbility0.json");
+	loadConfig("../Resource/SceneData/ConfigLevelSelectAbility0.json");
 
 	for (int i = 0; i < 4; i++) {
 		std::string spriteName = "Player_Window" + std::to_string(i + 1);
@@ -81,11 +83,10 @@ void LevelSelectAbility::LevelInit()
 	PlayerRemainConfig->width = 292;
 	PlayerRemainConfig->height = 133;
 	configs.push_back(PlayerRemainConfig);
-	loadConfig("ConfigLevelSelectAbility1.json");
+	loadConfig("../Resource/SceneData/ConfigLevelSelectAbility1.json");
 
 	UiObject* PlayerRemain = new UiObject();
 	PlayerRemain->SetSpriteInfo(spriteList.find("Player_Remain")->second);
-	PlayerRemain->GetSpriteRenderer()->ShiftTo(PlayerRemain->GetSpriteRenderer()->GetRow(), 3);
 	PlayerRemain->SetSize(configs.at(1)->width, -configs.at(1)->height);
 	PlayerRemain->SetPosition(glm::vec3(configs.at(1)->posX, configs.at(1)->posY, 0));
 	PlayerRemain->setNumOwner(-1);
@@ -103,7 +104,7 @@ void LevelSelectAbility::LevelInit()
 	AbilityIconTopConfig->width = 160;
 	AbilityIconTopConfig->height = 160;
 	configs.push_back(AbilityIconTopConfig);
-	loadConfig("ConfigLevelSelectAbility2.json");
+	loadConfig("../Resource/SceneData/ConfigLevelSelectAbility2.json");
 
 	//Down
 	config* AbilityIconDownConfig = new config();
@@ -115,7 +116,7 @@ void LevelSelectAbility::LevelInit()
 	AbilityIconDownConfig->width = 160;
 	AbilityIconDownConfig->height = 160;
 	configs.push_back(AbilityIconDownConfig);
-	loadConfig("ConfigLevelSelectAbility3.json");
+	loadConfig("../Resource/SceneData/ConfigLevelSelectAbility3.json");
 
 	for (int i = 0; i < 7; i++) {
 		if (i < 3){
@@ -151,17 +152,18 @@ void LevelSelectAbility::LevelInit()
 	playerHoverConfig->width = 450;
 	playerHoverConfig->height = 283;
 	configs.push_back(playerHoverConfig);
-	loadConfig("ConfigLevelSelectAbility4.json");
-	/*for (int i = 0; i < 4; i++) {
+	loadConfig("../Resource/SceneData/ConfigLevelSelectAbility4.json");
+	for (int i = 0; i < 4; i++) {
 		UiObject* playerHover = new UiObject();
 		playerHover->SetSpriteInfo(spriteList.find("Player_Hover")->second);
 		playerHover->SetSize(configs.at(4)->width, -configs.at(4)->height);
 		playerHover->SetPosition(glm::vec3(configs.at(4)->posX, configs.at(4)->posY, 0));
 		playerHover->GetSpriteRenderer()->ShiftTo(playerHover->GetSpriteRenderer()->GetRow(), i);
 		playerHover->setNumOwner(i);
+		playerHover->SetIsRender(false);
 		objectsList.push_back(playerHover);
 		playerHoverList.push_back(playerHover);
-	}*/
+	}
 
 	//Player icon
 	config* playerIconConfig = new config();
@@ -173,8 +175,8 @@ void LevelSelectAbility::LevelInit()
 	playerIconConfig->width = 175;
 	playerIconConfig->height = 152;
 	configs.push_back(playerIconConfig);
-	loadConfig("ConfigLevelSelectAbility5.json");
-	/*axisX = 0;
+	loadConfig("../Resource/SceneData/ConfigLevelSelectAbility5.json");
+	axisX = 0;
 	axisY = 0;
 	for (int i = 0; i < 4; i++) {
 		UiObject* PlayerIcon = new UiObject();
@@ -187,9 +189,10 @@ void LevelSelectAbility::LevelInit()
 		PlayerIcon->SetPosition(glm::vec3(configs.at(5)->posX + (configs.at(5)->offSetX * axisX), configs.at(5)->posY + (configs.at(5)->offSetY * axisY), 0));
 		axisX++;
 		PlayerIcon->setNumOwner(i);
+		PlayerIcon->SetIsRender(false);
 		objectsList.push_back(PlayerIcon);
 		playerIconList.push_back(PlayerIcon);
-	}*/
+	}
 
 	//Player icon(small)
 	config* playerIconSmallConfig = new config();
@@ -201,8 +204,8 @@ void LevelSelectAbility::LevelInit()
 	playerIconSmallConfig->width = 127;
 	playerIconSmallConfig->height = 120;
 	configs.push_back(playerIconSmallConfig);
-	loadConfig("ConfigLevelSelectAbility6.json");
-	/*axisX = 0;
+	loadConfig("../Resource/SceneData/ConfigLevelSelectAbility6.json");
+	axisX = 0;
 	axisY = 0;
 	for (int i = 0; i < 4; i++) {
 		UiObject* PlayerIconSmall = new UiObject();
@@ -215,9 +218,10 @@ void LevelSelectAbility::LevelInit()
 		PlayerIconSmall->SetPosition(glm::vec3(configs.at(6)->posX + (configs.at(6)->offSetX * axisX), configs.at(6)->posY + (configs.at(6)->offSetY * axisY), 0));
 		axisX++;
 		PlayerIconSmall->setNumOwner(i);
+		PlayerIconSmall->SetIsRender(false);
 		objectsList.push_back(PlayerIconSmall);
 		playerIconSmallList.push_back(PlayerIconSmall);
-	}*/
+	}
 
 	//Ability icon(small)
 	config* abilityIconSmallConfig = new config();
@@ -229,8 +233,8 @@ void LevelSelectAbility::LevelInit()
 	abilityIconSmallConfig->width = 72;
 	abilityIconSmallConfig->height = 72;
 	configs.push_back(abilityIconSmallConfig);
-	loadConfig("ConfigLevelSelectAbility7.json");
-	/*axisX = 0;
+	loadConfig("../Resource/SceneData/ConfigLevelSelectAbility7.json");
+	axisX = 0;
 	axisY = 0;
 	for (int i = 0; i < 4; i++) {
 		std::vector<UiObject*>* abilityIconSmallList = new std::vector<UiObject*>;
@@ -250,6 +254,7 @@ void LevelSelectAbility::LevelInit()
 			}
 			
 			abilityIconSmall->setNumOwner(i);
+			abilityIconSmall->SetIsRender(false);
 			objectsList.push_back(abilityIconSmall);
 			abilityIconSmallList->push_back(abilityIconSmall);
 			axisX++;
@@ -259,7 +264,7 @@ void LevelSelectAbility::LevelInit()
 			axisY = -1;
 		}
 		playerAbilityList[i] = abilityIconSmallList;
-	}*/
+	}
 
 
 	// Setup Dear ImGui context
@@ -291,103 +296,80 @@ void LevelSelectAbility::LevelUpdate()
 {
 	UpdateInput();
 	UpdateUi();
+	
 
 	//check ready
-	int check = 0;
+	numReady = 0;
 	for (int i = 0; i < SDL_NumJoysticks(); i++) {
 		if (ready[i] == true) {
-			check++;
+			numReady++;
 		}
 	}
-	if (check == SDL_NumJoysticks()) {
-		for (int i = 0; i < SDL_NumJoysticks(); i++)
+	/*if (numReady == playerSize) {
+		
+		
+	}*/
+	if (countdownReady == 3) 
+	{
+		for (int i = 0; i < playerSize; i++)
 		{
-			std::string fileName = "Ability" + std::to_string(i) + ".json";
+			std::string fileName = "../Resource/SceneData/Ability" + std::to_string(i) + ".json";
 			abilityToFile(fileName, i);
 		}
 		GameEngine::GetInstance()->GetStateController()->gameStateNext = GameState::GS_LEVELSHOWCASE;
 	}
+
+	timer->tick();
+	//timer->reset();
+	time1s += timer->getDeltaTime();
+	if (time1s >= 1.01f) {
+		time1s = 0.0f;
+	}
+	//std::cout << time1s << std::endl;
 }
 
 void LevelSelectAbility::UpdateInput()
 {
 	if (SDL_NumJoysticks() > 0) {
+		
+		//KK_INFO("configs.size() = {0}", configs.size());
+		//KK_INFO("playerHoverList.size() = {0}", playerHoverList.size());
+		KK_TRACE("SDL_NumJoysticks() = {0}", SDL_NumJoysticks());
+
 		Joystick::Update();
 		for (int i = 0; i < SDL_NumJoysticks(); i++)
 		{
-			//join
-			if (Joystick::GetButtonDown(i, Joystick::Button::Triangle) && playerWindowList[i]->GetSpriteRenderer()->GetColumn() == 0) {
-				ready[i] = 0;
+			/*if (Joystick::GetButtonDown(i, Joystick::Button::R1)) {
+				KK_TRACE("{0}", i);
+			}
+			if (Joystick::GetButtonDown(i, Joystick::Button::L1)) {
+				KK_TRACE("{0}", i);
+			}*/
+			
 
+			//join
+			if (Joystick::GetButtonDown(i, Joystick::Button::Triangle) && playerWindowList[i]->GetSpriteRenderer()->GetColumn() == 0) 
+			{
+				ready[i] = 0;
+				playerSize++;
 				//player window
 				playerWindowList[i]->GetSpriteRenderer()->ShiftColumn();
 
 				//player hover
-				UiObject* playerHover = new UiObject();
-				playerHover->SetSpriteInfo(spriteList.find("Player_Hover")->second);
-				playerHover->SetSize(configs.at(4)->width, -configs.at(4)->height);
-				playerHover->SetPosition(glm::vec3(configs.at(4)->posX, configs.at(4)->posY, 0));
-				playerHover->GetSpriteRenderer()->ShiftTo(playerHover->GetSpriteRenderer()->GetRow(), i);
-				playerHover->setNumOwner(i);
-				objectsList.push_back(playerHover);
-				playerHoverList.push_back(playerHover);
+				playerHoverList.at(i)->SetIsRender(true);
 
 				//Player icon(small)
-				UiObject* PlayerIconSmall = new UiObject();
-				PlayerIconSmall->SetSpriteInfo(spriteList.find("Player_Icon_Small")->second);
-				PlayerIconSmall->SetSize(configs.at(6)->width, -configs.at(6)->height);
-				if (i == 0) {
-					axisXplayerIconSmall = 0;
-					axisYplayerIconSmall = 0;
-				}
-				if (i == 1) {
-					axisXplayerIconSmall = 1;
-					axisYplayerIconSmall = 0;
-				}
-				if (i == 2) {
-					axisXplayerIconSmall = 0;
-					axisYplayerIconSmall = -1;
-				}
-				if (i == 3) {
-					axisXplayerIconSmall = 1;
-					axisYplayerIconSmall = -1;
-				}
-				PlayerIconSmall->SetPosition(glm::vec3(configs.at(6)->posX + (configs.at(6)->offSetX * axisXplayerIconSmall), configs.at(6)->posY + (configs.at(6)->offSetY * axisYplayerIconSmall), 0));
-				PlayerIconSmall->setNumOwner(i);
-				objectsList.push_back(PlayerIconSmall);
-				playerIconSmallList.push_back(PlayerIconSmall);
+				playerIconSmallList.at(i)->SetIsRender(true);
 
 				//player ability
 				std::vector<UiObject*>* abilityIconSmallList = new std::vector<UiObject*>;
 				for (int j = 0; j < 3; j++) {
-					UiObject* abilityIconSmall = new UiObject();
-					abilityIconSmall->SetSpriteInfo(spriteList.find("Ability_Icon_Small")->second);
-					abilityIconSmall->GetSpriteRenderer()->ShiftTo(abilityIconSmall->GetSpriteRenderer()->GetRow(), 8);
-					if (axisXAbilityIconSmall == 6) {
-						axisXAbilityIconSmall = 0;
-						axisYAbilityIconSmall = -1;
-					}
-					if (axisXAbilityIconSmall < 3) {
-						abilityIconSmall->SetSize(configs.at(7)->width, -configs.at(7)->height);
-						abilityIconSmall->SetPosition(glm::vec3(configs.at(7)->posX + (configs.at(7)->offSetX * axisXAbilityIconSmall),
-							configs.at(7)->posY + (configs.at(7)->offSetY * axisYAbilityIconSmall), 0));
-					}
-					else {
-						abilityIconSmall->SetSize(configs.at(7)->width, -configs.at(7)->height);
-						abilityIconSmall->SetPosition(glm::vec3(configs.at(7)->posX + (configs.at(7)->offSetX * (axisXAbilityIconSmall - 3)) + configs.at(0)->offSetX,
-							configs.at(7)->posY + (configs.at(7)->offSetY * axisYAbilityIconSmall), 0));
-					}
-
-					abilityIconSmall->setNumOwner(i);
-					objectsList.push_back(abilityIconSmall);
-					abilityIconSmallList->push_back(abilityIconSmall);
-					axisXAbilityIconSmall++;
+					playerAbilityList[i]->at(j)->SetIsRender(true);
 				}
-				playerAbilityList[i] = abilityIconSmallList;
 			}
 
-			float axisX = Joystick::GetAxis(i, Joystick::Axis::LeftStickHorizontal) / 32768.0f;
-			float axisY = Joystick::GetAxis(i, Joystick::Axis::LeftStickVertical) / 32768.0f;
+			float axisX = Joystick::GetAxis(i, Joystick::Axis::LeftStickHorizontal)/* / 32768.0f*/;
+			float axisY = Joystick::GetAxis(i, Joystick::Axis::LeftStickVertical)/* / 32768.0f*/;
 			bool up = false;
 			bool down = false;
 			bool right = false;
@@ -410,67 +392,75 @@ void LevelSelectAbility::UpdateInput()
 				
 			}
 
-			if (playerWindowList.at(i)->GetSpriteRenderer()->GetColumn() != 0 && ready[i] == false) {
+			if (playerWindowList.at(i)->GetSpriteRenderer()->GetColumn() != 0 && ready[i] == false && i < playerHoverList.size()) {
 				//move hover
 				if (playerMove[i] == false) {
 					if (Joystick::GetButtonDown(i, Joystick::Button::DPAD_Right) || Joystick::GetButtonDown(i, Joystick::Button::DPAD_Up) || right || up) {
 						playerHoverWhere[i]++;
-						helpHover++;
+						helpHover[i]++;
 						if (playerHoverWhere[i] > 6) {
 							playerHoverWhere[i] = 0;
-							helpHover = 0;
+							helpHover[i] = 0;
 						}
 						if (playerHoverWhere[i] == 3) {
-							helpHover = 0;
+							helpHover[i] = 0;
 						}
 						playerMove[i] = true;
 					}
 
-					if (Joystick::GetButtonDown(i, Joystick::Button::DPAD_Left) || Joystick::GetButtonDown(i, Joystick::Button::DPAD_Down) || left || down) {
+					if (Joystick::GetButtonDown(i, Joystick::Button::DPAD_Left) || Joystick::GetButtonDown(i, Joystick::Button::DPAD_Down) || left || down) 
+					{
 						playerHoverWhere[i]--;
-						helpHover--;
-						if (playerHoverWhere[i] <= -1) {
+						helpHover[i]--;
+						if (playerHoverWhere[i] <= -1) 
+						{
 							playerHoverWhere[i] = 6;
-							helpHover = 3;
+							helpHover[i] = 3;
 						}
-						if (playerHoverWhere[i] == 2) {
-							helpHover = 2;
+						if (playerHoverWhere[i] == 2) 
+						{
+							helpHover[i] = 2;
 						}
 						playerMove[i] = true;
 					}
 
 					if (playerHoverWhere[i] > 2) {
-						playerHoverList.at(i)->SetPosition(glm::vec3(configs.at(4)->posX + (configs.at(4)->offSetX * (playerHoverWhere[i] - 4 + helpHover)),
+						playerHoverList.at(i)->SetPosition(glm::vec3(configs.at(4)->posX + (configs.at(4)->offSetX * (playerHoverWhere[i] - 4 + helpHover[i])),
 							configs.at(4)->posY + AbilityIconListDown.at(0)->getPos().y + configs.at(4)->offSetY, 0));
 					}
 					else {
-						playerHoverList.at(i)->SetPosition(glm::vec3(configs.at(4)->posX + (configs.at(4)->offSetX * (playerHoverWhere[i] + helpHover)),
+						playerHoverList.at(i)->SetPosition(glm::vec3(configs.at(4)->posX + (configs.at(4)->offSetX * (playerHoverWhere[i] + helpHover[i])),
 							configs.at(4)->posY, 0));
 					}
-					
+
 				}
 
 				//select character
-				if (Joystick::GetButtonDown(i, Joystick::Button::R1)) {
+				if (Joystick::GetButtonDown(i, Joystick::Button::R1)) 
+				{
 					playerIconSmallList.at(i)->GetSpriteRenderer()->ShiftColumn();
 				}
 
-				if (Joystick::GetButtonDown(i, Joystick::Button::L1)) {
+				if (Joystick::GetButtonDown(i, Joystick::Button::L1)) 
+				{
 					playerIconSmallList.at(i)->GetSpriteRenderer()->ShiftTo(playerIconSmallList.at(i)->GetSpriteRenderer()->GetRow(), playerIconSmallList.at(i)->GetSpriteRenderer()->GetColumn() - 1);
 				}
 
 				//select ability
-				if (Joystick::GetButtonDown(i, Joystick::Button::Cross)) {
+				if (Joystick::GetButtonDown(i, Joystick::Button::Cross)) 
+				{
 					bool press = false;
 					for (int j = 0; j < 3; j++) {
-						if (playerHoverWhere[i] == playerAbility[i][j]) {
+						if (playerHoverWhere[i] == playerAbility[i][j]) 
+						{
 							playerAbility[i][j] = 8;
 							press = true;
 						}
 					}
 
 					for (int j = 0; j < 3; j++) {
-						if (press == false && playerAbility[i][j] == 8) {
+						if (press == false && playerAbility[i][j] == 8) 
+						{
 							playerAbility[i][j] = playerHoverWhere[i];
 							press = true;
 						}
@@ -478,129 +468,73 @@ void LevelSelectAbility::UpdateInput()
 				}
 
 				//ready
-				if (Joystick::GetButtonDown(i, Joystick::Button::Square)) {
+				if (Joystick::GetButtonDown(i, Joystick::Button::Square)) 
+				{
 					bool canReady = true;
-					for (int j = 0; j < 3; j++) {
-						if (playerAbility[i][j] == 8) {
+
+					for (int j = 0; j < 3; j++) 
+					{
+						if (playerAbility[i][j] == 8) 
+						{
 							canReady = false;
 						}
 					}
 						
-					for (int j = 0; j < playerIconSmallList.size(); j++) {
+					/*for (int j = 0; j < playerIconSmallList.size(); j++) 
+					{
 						for (int k = 0; k < SDL_NumJoysticks(); k++) {
 							if (playerIconSmallList.at(j)->getNumOwner() == i && playerIconSmallList.at(j)->GetSpriteRenderer()->GetColumn() == character[k]) {
 								canReady = false;
 							}
 						}
-					}
+					}*/
 					
-					if (canReady == true) {
+					if (canReady == true) 
+					{
 						playerWindowList.at(i)->GetSpriteRenderer()->ShiftTo(playerWindowList.at(i)->GetSpriteRenderer()->GetRow(), playerIconSmallList.at(i)->GetSpriteRenderer()->GetColumn() + 2);
-						playerRemainList.at(0)->GetSpriteRenderer()->ShiftTo(playerRemainList.at(0)->GetSpriteRenderer()->GetRow(), playerRemainList.at(0)->GetSpriteRenderer()->GetColumn() + 1);
+						//playerRemainList.at(0)->GetSpriteRenderer()->ShiftTo(playerRemainList.at(0)->GetSpriteRenderer()->GetRow(), playerRemainList.at(0)->GetSpriteRenderer()->GetColumn() + 1);
 						
-						for (int j = 0; j < 3; j++) {
-							playerAbilityList[i]->at(j)->SetPosition(glm::vec3(playerAbilityList[i]->at(j)->getPos().x,
-								playerAbilityList[i]->at(j)->getPos().y - 25, 0));
-						}
-
-						//character = playerIconSmallList.at(i).;
-						UiObject* PlayerIcon = new UiObject();
-						PlayerIcon->SetSpriteInfo(spriteList.find("Player_Icon")->second);
-						PlayerIcon->SetSize(configs.at(5)->width, -configs.at(5)->height);
-						PlayerIcon->GetSpriteRenderer()->ShiftTo(PlayerIcon->GetSpriteRenderer()->GetRow(), playerIconSmallList.at(i)->GetSpriteRenderer()->GetColumn());
-						if (i == 0) {
-							axisXplayerIcon = 0;
-							axisYplayerIcon = 0;
-						}
-						if (i == 1) {
-							axisXplayerIcon = 1;
-							axisYplayerIcon = 0;
-						}
-						if (i == 2) {
-							axisXplayerIcon = 0;
-							axisYplayerIcon = -1;
-						}
-						if (i == 3) {
-							axisXplayerIcon = 1;
-							axisYplayerIcon = -1;
-						}
-						PlayerIcon->SetPosition(glm::vec3(configs.at(5)->posX + (configs.at(5)->offSetX * axisXplayerIcon), configs.at(5)->posY + (configs.at(5)->offSetY * axisYplayerIcon), 0));
-						PlayerIcon->setNumOwner(i);
-						objectsList.push_back(PlayerIcon);
-						playerIconList.push_back(PlayerIcon);
-						ready[i] = true;
-
-						for (int j = 0; j < playerIconSmallList.size(); j++) {
-							if (playerIconSmallList.at(j)->getNumOwner() == i) {
-								character[i] = playerIconSmallList.at(j)->GetSpriteRenderer()->GetColumn();
-								PlayerIcon->GetSpriteRenderer()->ShiftTo(PlayerIcon->GetSpriteRenderer()->GetRow(), playerIconSmallList.at(j)->GetSpriteRenderer()->GetColumn());
-								playerIconSmallList.at(j)->SetIsActive(false);
-								playerIconSmallList.erase(playerIconSmallList.begin() + j);
-							}
-						}
-
-						for (int i = 0; i < objectsList.size(); i++)
+						for (int j = 0; j < 3; j++) 
 						{
-							if (objectsList[i]->GetIsActive() == false)
-							{
-								objectsList.erase(objectsList.begin() + i);
-							}
+							playerAbilityList[i]->at(j)->SetPosition
+							(
+								glm::vec3(playerAbilityList[i]->at(j)->getPos().x,
+								playerAbilityList[i]->at(j)->getPos().y - 25, 0)
+							);
 						}
+
+						character[i] = playerIconSmallList.at(i)->GetSpriteRenderer()->GetColumn();
+						playerIconList.at(i)->SetIsRender(true);
+						playerIconList.at(i)->GetSpriteRenderer()->ShiftTo(0, character[i]);
+						playerIconSmallList.at(i)->SetIsRender(false);
+						ready[i] = true;
 					}
 					
-					else {
+					else 
+					{
 						playerWindowList.at(i)->GetSpriteRenderer()->ShiftTo(playerWindowList.at(i)->GetSpriteRenderer()->GetRow(), 6);
 					}
 				}
 			}
-			
-			else if (Joystick::GetButtonDown(i, Joystick::Button::Square) && ready[i] == true) {
+
+			else if (Joystick::GetButtonDown(i, Joystick::Button::Square) && ready[i] == true) 
+			{
 				playerWindowList.at(i)->GetSpriteRenderer()->ShiftTo(playerWindowList.at(i)->GetSpriteRenderer()->GetRow(), 1);
-				playerRemainList.at(0)->GetSpriteRenderer()->ShiftTo(playerRemainList.at(0)->GetSpriteRenderer()->GetRow(), playerRemainList.at(0)->GetSpriteRenderer()->GetColumn() - 1);
+				//playerRemainList.at(0)->GetSpriteRenderer()->ShiftTo(playerRemainList.at(0)->GetSpriteRenderer()->GetRow(), playerRemainList.at(0)->GetSpriteRenderer()->GetColumn() - 1);
+				
 				character[i] = -1;
-				UiObject* PlayerIconSmall = new UiObject();
-				PlayerIconSmall->SetSpriteInfo(spriteList.find("Player_Icon_Small")->second);
-				PlayerIconSmall->SetSize(configs.at(6)->width, -configs.at(6)->height);
-				if (i == 0) {
-					axisXplayerIconSmall = 0;
-					axisYplayerIconSmall = 0;
-				}
-				if (i == 1) {
-					axisXplayerIconSmall = 1;
-					axisYplayerIconSmall = 0;
-				}
-				if (i == 2) {
-					axisXplayerIconSmall = 0;
-					axisYplayerIconSmall = -1;
-				}
-				if (i == 3) {
-					axisXplayerIconSmall = 1;
-					axisYplayerIconSmall = -1;
-				}
-				PlayerIconSmall->SetPosition(glm::vec3(configs.at(6)->posX + (configs.at(6)->offSetX * axisXplayerIconSmall), configs.at(6)->posY + (configs.at(6)->offSetY * axisYplayerIconSmall), 0));
-				PlayerIconSmall->setNumOwner(i);
-				objectsList.push_back(PlayerIconSmall);
-				playerIconSmallList.push_back(PlayerIconSmall);
 
-				for (int j = 0; j < 3; j++) {
-					playerAbilityList[i]->at(j)->SetPosition(glm::vec3(playerAbilityList[i]->at(j)->getPos().x,
-						playerAbilityList[i]->at(j)->getPos().y + 25, 0));
-				}
-				for (int j = 0; j < playerIconList.size(); j++) {
-					if (playerIconList.at(j)->getNumOwner() == i) {
-						PlayerIconSmall->GetSpriteRenderer()->ShiftTo(PlayerIconSmall->GetSpriteRenderer()->GetRow(), playerIconList.at(j)->GetSpriteRenderer()->GetColumn());
-						playerIconList.at(j)->SetIsActive(false);
-						playerIconList.erase(playerIconList.begin() + j);
-					}
-				}
-
-				for (int i = 0; i < objectsList.size(); i++)
+				for (int j = 0; j < 3; j++) 
 				{
-					if (objectsList[i]->GetIsActive() == false)
-					{
-						objectsList.erase(objectsList.begin() + i);
-					}
+					playerAbilityList[i]->at(j)->SetPosition
+					(
+						glm::vec3(playerAbilityList[i]->at(j)->getPos().x,
+						playerAbilityList[i]->at(j)->getPos().y + 25, 0)
+					);
 				}
+				playerIconList.at(i)->SetIsRender(false);
+				playerIconSmallList.at(i)->SetIsRender(true);
+				
 				ready[i] = false;
 			}
 
@@ -608,51 +542,88 @@ void LevelSelectAbility::UpdateInput()
 				playerMove[i] = false;
 			}
 		}
-
-
 	}
 }
 
 void LevelSelectAbility::UpdateUi() {
 
 	//player hover
-	for (int i = 0; i < 4; i++) {
+	for (int i = 0; i < playerHoverList.size(); i++) {
 		int count = 0;
 		for (int j = 0; j < playerHoverList.size(); j++) {
 			if (playerHoverWhere[i] == playerHoverWhere[j] && i != j && playerHoverList.size() > 1) {
-				playerHoverList.at(j)->SetPosition(glm::vec3(configs.at(4)->posX, configs.at(4)->posY + (configs.at(4)->offSetY * count), 0));
+				playerHoverList.at(j)->SetPosition(glm::vec3(playerHoverList.at(j)->getPos().x, playerHoverList.at(j)->getPos().y + (configs.at(4)->offSetY * count), 0));
 				count++;
 				if (playerHoverList.at(i)->getPos() == playerHoverList.at(j)->getPos()) {
-					playerHoverList.at(j)->SetPosition(glm::vec3(configs.at(4)->posX, configs.at(4)->posY + (configs.at(4)->offSetY * count), 0));
+					playerHoverList.at(j)->SetPosition(glm::vec3(playerHoverList.at(j)->getPos().x, playerHoverList.at(j)->getPos().y + (configs.at(4)->offSetY * count), 0));
 				}
 			}
 		}
 	}
-
+	
 	// player ability icon
 	for (int i = 0; i < playerAbilityList.size(); i++) {
 		for (int j = 0; j < 3; j++) {
+			
 			playerAbilityList[i]->at(j)->GetSpriteRenderer()->ShiftTo(playerAbilityList[i]->at(j)->GetSpriteRenderer()->GetRow(), playerAbility[i][j]); 
 		}
 	}
 
+	if (numReady != playerSize) {
+		playerRemainList.at(0)->GetSpriteRenderer()->ShiftTo(0, 7 - playerSize + numReady);
+	}
+	else if(numReady == playerSize) {
+		if (time1s == 0 && countdownReady == 0) {
+			countdownReady++;
+			playerRemainList.at(0)->GetSpriteRenderer()->ShiftTo(0, 0);
+		}
+		else if (time1s == 0 && countdownReady == 1) {
+			countdownReady++;
+			playerRemainList.at(0)->GetSpriteRenderer()->ShiftTo(0, 1);
+		}
+		else if (time1s == 0 && countdownReady == 2) {
+			countdownReady++;
+			playerRemainList.at(0)->GetSpriteRenderer()->ShiftTo(0, 2);
+		}
+	}
+
+	for (int i = 0; i < playerWindowList.size(); i++) {
+		if (playerWindowList.at(i)->GetSpriteRenderer()->GetColumn() == 6) {
+			//std::cout << time1s << std::endl;
+			if (time1s == 0) {
+				countdownPlayerIcon--;
+				
+			}
+		}
+		if (countdownPlayerIcon < 0) {
+			countdownPlayerIcon = 2;
+			playerWindowList.at(i)->GetSpriteRenderer()->ShiftTo(0,1);
+		}
+		
+	}
+	
+	/*for (int i = 0; i < playerIconSmallList.size(); i++) {
+		countdownDelay
+	}*/
+
 	//update by config *Replace this in LevelInit instead old code when build it.
 	//Player window
-	axisX = 1;
-	axisY = 2;
-	for (int i = 0; i < playerWindowList.size(); i++) {
+	/*axisX = 1;
+	axisY = 2;*/
+	/*for (int i = 0; i < playerWindowList.size(); i++) {
 		if (i == 2) {
 			axisX = 1;
 			axisY = 1;
 		}
+		KK_TRACE("playerWindowList.size = {0}", playerWindowList.size());
 		playerWindowList.at(i)->SetPosition(glm::vec3(configs.at(0)->posX + (configs.at(0)->offSetX * axisX), configs.at(0)->posY + (configs.at(0)->offSetY * axisY), 0));
 		playerWindowList.at(i)->SetSize(configs.at(0)->width, -configs.at(0)->height);
 		axisX++;
-	}
+	}*/
 
 	//Player remain
-	objectsList.at(5)->SetPosition(glm::vec3(configs.at(1)->posX, configs.at(1)->posY, 0));
-	objectsList.at(5)->SetSize(configs.at(1)->width, -configs.at(1)->height);
+	/*objectsList.at(5)->SetPosition(glm::vec3(configs.at(1)->posX, configs.at(1)->posY, 0));
+	objectsList.at(5)->SetSize(configs.at(1)->width, -configs.at(1)->height);*/
 
 	//Ability icon
 	//Top
@@ -744,297 +715,297 @@ void LevelSelectAbility::LevelDraw()
 	ImGui_ImplSDL2_NewFrame();
 	ImGui::NewFrame();
 
-	//ImGui::Text("Mouse pos: (%g, %g)", io.MousePos.x, io.MousePos.y);
-	int configNum = -1;
-	if (ImGui::Button("Go levelShowcase")) {
-		for (int i = 0; i < 4; i++)
-		{
-			std::string fileName = "Ability" + std::to_string(i) + ".json";
-			abilityToFile(fileName, i);
-		}
-		GameEngine::GetInstance()->GetStateController()->gameStateNext = GameState::GS_LEVELSHOWCASE;
-	}
+	////ImGui::Text("Mouse pos: (%g, %g)", io.MousePos.x, io.MousePos.y);
+	//int configNum = -1;
+	//if (ImGui::Button("Go levelShowcase")) {
+	//	for (int i = 0; i < 4; i++)
+	//	{
+	//		std::string fileName = "Ability" + std::to_string(i) + ".json";
+	//		abilityToFile(fileName, i);
+	//	}
+	//	GameEngine::GetInstance()->GetStateController()->gameStateNext = GameState::GS_LEVELSHOWCASE;
+	//}
 
-	ImGuiTabBarFlags tab_bar_flags = ImGuiTabBarFlags_None;
-	if (ImGui::BeginTabBar("MyTabBar", tab_bar_flags)) {
-		if (ImGui::BeginTabItem("Player ability")) {
-			for (int i = 0; i < 4; i++)
-			{
-				std::string fileName = "Ability" + std::to_string(i) + ".txt";
-				std::string buttonName;
-				ImGui::SeparatorText("");
-				ImGui::Text("Ability Player %d", i);
+	//ImGuiTabBarFlags tab_bar_flags = ImGuiTabBarFlags_None;
+	//if (ImGui::BeginTabBar("MyTabBar", tab_bar_flags)) {
+	//	if (ImGui::BeginTabItem("Player ability")) {
+	//		for (int i = 0; i < 4; i++)
+	//		{
+	//			std::string fileName = "Ability" + std::to_string(i) + ".txt";
+	//			std::string buttonName;
+	//			ImGui::SeparatorText("");
+	//			ImGui::Text("Ability Player %d", i);
 
-				for (int j = 0; j < 3; j++) {
-					ImGui::Text("Ability%d: ", j);
-					if (playerAbility[i][j] == static_cast<int>(PlayerObject::Ability::Fireball)) {
-						ImGui::SameLine();
-						ImGui::Text("Fireball");
-					}
-					if (playerAbility[i][j] == static_cast<int>(PlayerObject::Ability::Trap)) {
-						ImGui::SameLine();
-						ImGui::Text("Trap");
-					}
-					if (playerAbility[i][j] == static_cast<int>(PlayerObject::Ability::Dash)) {
-						ImGui::SameLine();
-						ImGui::Text("Dash");
-					}
-					if (playerAbility[i][j] == static_cast<int>(PlayerObject::Ability::TNT)) {
-						ImGui::SameLine();
-						ImGui::Text("TNT");
-					}
-					if (playerAbility[i][j] == static_cast<int>(PlayerObject::Ability::Teleport)) {
-						ImGui::SameLine();
-						ImGui::Text("Teleport");
-					}
-					if (playerAbility[i][j] == static_cast<int>(PlayerObject::Ability::Bola)) {
-						ImGui::SameLine();
-						ImGui::Text("Bola");
-					}
-					if (playerAbility[i][j] == static_cast<int>(PlayerObject::Ability::Cleave)) {
-						ImGui::SameLine();
-						ImGui::Text("Cleave");
-					}
-				}
-			}
-			ImGui::EndTabItem();
-		}
+	//			for (int j = 0; j < 3; j++) {
+	//				ImGui::Text("Ability%d: ", j);
+	//				if (playerAbility[i][j] == static_cast<int>(PlayerObject::Ability::Fireball)) {
+	//					ImGui::SameLine();
+	//					ImGui::Text("Fireball");
+	//				}
+	//				if (playerAbility[i][j] == static_cast<int>(PlayerObject::Ability::Trap)) {
+	//					ImGui::SameLine();
+	//					ImGui::Text("Trap");
+	//				}
+	//				if (playerAbility[i][j] == static_cast<int>(PlayerObject::Ability::Dash)) {
+	//					ImGui::SameLine();
+	//					ImGui::Text("Dash");
+	//				}
+	//				if (playerAbility[i][j] == static_cast<int>(PlayerObject::Ability::TNT)) {
+	//					ImGui::SameLine();
+	//					ImGui::Text("TNT");
+	//				}
+	//				if (playerAbility[i][j] == static_cast<int>(PlayerObject::Ability::Teleport)) {
+	//					ImGui::SameLine();
+	//					ImGui::Text("Teleport");
+	//				}
+	//				if (playerAbility[i][j] == static_cast<int>(PlayerObject::Ability::Bola)) {
+	//					ImGui::SameLine();
+	//					ImGui::Text("Bola");
+	//				}
+	//				if (playerAbility[i][j] == static_cast<int>(PlayerObject::Ability::Cleave)) {
+	//					ImGui::SameLine();
+	//					ImGui::Text("Cleave");
+	//				}
+	//			}
+	//		}
+	//		ImGui::EndTabItem();
+	//	}
 
-		if (ImGui::BeginTabItem("Config Player Window")) {
-			configNum = 0;
-			if (ImGui::Button("Save config")) {
-				std::string fileName = "ConfigLevelSelectAbility0.json";
-				saveConfig(fileName, configs.at(configNum));
-			}
-			
-			ImGui::SameLine();
-			if (ImGui::Button("Load config")) {
-				
-				std::string fileName = "ConfigLevelSelectAbility0.json";
-				loadConfig(fileName);
-				int axisX = 1;
-				int axisY = 2;
-				for (int i = 0; i < playerWindowList.size(); i++) {
-					if (i == 2) {
-						axisX = 1;
-						axisY = 1;
-					}
-					playerWindowList.at(i)->SetPosition(glm::vec3(configs.at(configNum)->posX + (configs.at(configNum)->offSetX * axisX), configs.at(configNum)->posY + (configs.at(configNum)->offSetY * axisY), 0));
-					playerWindowList.at(i)->SetSize(configs.at(configNum)->width, -configs.at(configNum)->height);
-					axisX++;
-				}
-				
-			}
-			ImGui::InputFloat("PosX", &configs.at(configNum)->posX, 1.0f, 1.0f, "%.2f");
-			ImGui::InputFloat("PosY", &configs.at(configNum)->posY, 1.0f, 1.0f, "%.2f");
-			ImGui::InputFloat("OffSetX", &configs.at(configNum)->offSetX, 1.0f, 1.0f, "%.2f");
-			ImGui::InputFloat("OffSetY", &configs.at(configNum)->offSetY, 1.0f, 1.0f, "%.2f");
-			ImGui::InputFloat("Width", &configs.at(configNum)->width, 1.0f, 1.0f, "%.2f");
-			ImGui::InputFloat("Height", &configs.at(configNum)->height, 1.0f, 1.0f, "%.2f");
-			ImGui::EndTabItem();
-		}
+	//	if (ImGui::BeginTabItem("Config Player Window")) {
+	//		configNum = 0;
+	//		if (ImGui::Button("Save config")) {
+	//			std::string fileName = "ConfigLevelSelectAbility0.json";
+	//			saveConfig(fileName, configs.at(configNum));
+	//		}
+	//		
+	//		ImGui::SameLine();
+	//		if (ImGui::Button("Load config")) {
+	//			
+	//			std::string fileName = "ConfigLevelSelectAbility0.json";
+	//			loadConfig(fileName);
+	//			int axisX = 1;
+	//			int axisY = 2;
+	//			for (int i = 0; i < playerWindowList.size(); i++) {
+	//				if (i == 2) {
+	//					axisX = 1;
+	//					axisY = 1;
+	//				}
+	//				playerWindowList.at(i)->SetPosition(glm::vec3(configs.at(configNum)->posX + (configs.at(configNum)->offSetX * axisX), configs.at(configNum)->posY + (configs.at(configNum)->offSetY * axisY), 0));
+	//				playerWindowList.at(i)->SetSize(configs.at(configNum)->width, -configs.at(configNum)->height);
+	//				axisX++;
+	//			}
+	//			
+	//		}
+	//		ImGui::InputFloat("PosX", &configs.at(configNum)->posX, 1.0f, 1.0f, "%.2f");
+	//		ImGui::InputFloat("PosY", &configs.at(configNum)->posY, 1.0f, 1.0f, "%.2f");
+	//		ImGui::InputFloat("OffSetX", &configs.at(configNum)->offSetX, 1.0f, 1.0f, "%.2f");
+	//		ImGui::InputFloat("OffSetY", &configs.at(configNum)->offSetY, 1.0f, 1.0f, "%.2f");
+	//		ImGui::InputFloat("Width", &configs.at(configNum)->width, 1.0f, 1.0f, "%.2f");
+	//		ImGui::InputFloat("Height", &configs.at(configNum)->height, 1.0f, 1.0f, "%.2f");
+	//		ImGui::EndTabItem();
+	//	}
 
-		if (ImGui::BeginTabItem("Config Player remain")) {
-			configNum = 1;
-			if (ImGui::Button("Save config")) {
-				std::string fileName = "ConfigLevelSelectAbility1.json";
-				std::cout << "save config1" << std::endl;
-				saveConfig(fileName, configs.at(configNum));
-			}
+	//	if (ImGui::BeginTabItem("Config Player remain")) {
+	//		configNum = 1;
+	//		if (ImGui::Button("Save config")) {
+	//			std::string fileName = "ConfigLevelSelectAbility1.json";
+	//			std::cout << "save config1" << std::endl;
+	//			saveConfig(fileName, configs.at(configNum));
+	//		}
 
-			ImGui::SameLine();
-			if (ImGui::Button("Load config")) {
-				std::string fileName = "ConfigLevelSelectAbility1.json";
-				loadConfig(fileName);
-				objectsList.at(5)->SetPosition(glm::vec3(configs.at(configNum)->posX, configs.at(configNum)->posY, 0));
-				objectsList.at(5)->SetSize(configs.at(configNum)->width, -configs.at(configNum)->height);
-				
-			}
-			ImGui::InputFloat("PosX", &configs.at(configNum)->posX, 1.0f, 1.0f, "%.2f");
-			ImGui::InputFloat("PosY", &configs.at(configNum)->posY, 1.0f, 1.0f, "%.2f");
-			ImGui::InputFloat("OffSetX", &configs.at(configNum)->offSetX, 1.0f, 1.0f, "%.2f");
-			ImGui::InputFloat("OffSetY", &configs.at(configNum)->offSetY, 1.0f, 1.0f, "%.2f");
-			ImGui::InputFloat("Width", &configs.at(configNum)->width, 1.0f, 1.0f, "%.2f");
-			ImGui::InputFloat("Height", &configs.at(configNum)->height, 1.0f, 1.0f, "%.2f");
-			ImGui::EndTabItem();
-		}
-		
-		if (ImGui::BeginTabItem("Config Ability top")) {
-			configNum = 2;
-			if (ImGui::Button("Save config")) {
-				std::string fileName = "ConfigLevelSelectAbility2.json";
-				std::cout << "save config1" << std::endl;
-				saveConfig(fileName, configs.at(configNum));
-			}
+	//		ImGui::SameLine();
+	//		if (ImGui::Button("Load config")) {
+	//			std::string fileName = "ConfigLevelSelectAbility1.json";
+	//			loadConfig(fileName);
+	//			objectsList.at(5)->SetPosition(glm::vec3(configs.at(configNum)->posX, configs.at(configNum)->posY, 0));
+	//			objectsList.at(5)->SetSize(configs.at(configNum)->width, -configs.at(configNum)->height);
+	//			
+	//		}
+	//		ImGui::InputFloat("PosX", &configs.at(configNum)->posX, 1.0f, 1.0f, "%.2f");
+	//		ImGui::InputFloat("PosY", &configs.at(configNum)->posY, 1.0f, 1.0f, "%.2f");
+	//		ImGui::InputFloat("OffSetX", &configs.at(configNum)->offSetX, 1.0f, 1.0f, "%.2f");
+	//		ImGui::InputFloat("OffSetY", &configs.at(configNum)->offSetY, 1.0f, 1.0f, "%.2f");
+	//		ImGui::InputFloat("Width", &configs.at(configNum)->width, 1.0f, 1.0f, "%.2f");
+	//		ImGui::InputFloat("Height", &configs.at(configNum)->height, 1.0f, 1.0f, "%.2f");
+	//		ImGui::EndTabItem();
+	//	}
+	//	
+	//	if (ImGui::BeginTabItem("Config Ability top")) {
+	//		configNum = 2;
+	//		if (ImGui::Button("Save config")) {
+	//			std::string fileName = "ConfigLevelSelectAbility2.json";
+	//			std::cout << "save config1" << std::endl;
+	//			saveConfig(fileName, configs.at(configNum));
+	//		}
 
-			ImGui::SameLine();
-			if (ImGui::Button("Load config")) {
-				std::string fileName = "ConfigLevelSelectAbility2.json";
-				loadConfig(fileName);
-				int axisX = 1;
-				for (int i = 0; i < AbilityIconListTop.size(); i++) {
-					AbilityIconListTop.at(i)->SetPosition(glm::vec3(configs.at(configNum)->posX + (configs.at(configNum)->offSetX * axisX), configs.at(configNum)->posY, 0));
-					AbilityIconListTop.at(i)->SetSize(configs.at(configNum)->width, -configs.at(configNum)->height);
-					axisX++;
-				}
+	//		ImGui::SameLine();
+	//		if (ImGui::Button("Load config")) {
+	//			std::string fileName = "ConfigLevelSelectAbility2.json";
+	//			loadConfig(fileName);
+	//			int axisX = 1;
+	//			for (int i = 0; i < AbilityIconListTop.size(); i++) {
+	//				AbilityIconListTop.at(i)->SetPosition(glm::vec3(configs.at(configNum)->posX + (configs.at(configNum)->offSetX * axisX), configs.at(configNum)->posY, 0));
+	//				AbilityIconListTop.at(i)->SetSize(configs.at(configNum)->width, -configs.at(configNum)->height);
+	//				axisX++;
+	//			}
 
-			}
-			ImGui::InputFloat("PosX", &configs.at(configNum)->posX, 1.0f, 1.0f, "%.2f");
-			ImGui::InputFloat("PosY", &configs.at(configNum)->posY, 1.0f, 1.0f, "%.2f");
-			ImGui::InputFloat("OffSetX", &configs.at(configNum)->offSetX, 1.0f, 1.0f, "%.2f");
-			ImGui::InputFloat("OffSetY", &configs.at(configNum)->offSetY, 1.0f, 1.0f, "%.2f");
-			ImGui::InputFloat("Width", &configs.at(configNum)->width, 1.0f, 1.0f, "%.2f");
-			ImGui::InputFloat("Height", &configs.at(configNum)->height, 1.0f, 1.0f, "%.2f");
-			ImGui::EndTabItem();
-		}
+	//		}
+	//		ImGui::InputFloat("PosX", &configs.at(configNum)->posX, 1.0f, 1.0f, "%.2f");
+	//		ImGui::InputFloat("PosY", &configs.at(configNum)->posY, 1.0f, 1.0f, "%.2f");
+	//		ImGui::InputFloat("OffSetX", &configs.at(configNum)->offSetX, 1.0f, 1.0f, "%.2f");
+	//		ImGui::InputFloat("OffSetY", &configs.at(configNum)->offSetY, 1.0f, 1.0f, "%.2f");
+	//		ImGui::InputFloat("Width", &configs.at(configNum)->width, 1.0f, 1.0f, "%.2f");
+	//		ImGui::InputFloat("Height", &configs.at(configNum)->height, 1.0f, 1.0f, "%.2f");
+	//		ImGui::EndTabItem();
+	//	}
 
-		if (ImGui::BeginTabItem("Config Ability Down")) {
-			configNum = 3;
-			if (ImGui::Button("Save config")) {
-				std::string fileName = "ConfigLevelSelectAbility3.json";
-				std::cout << "save config1" << std::endl;
-				saveConfig(fileName, configs.at(configNum));
-			}
+	//	if (ImGui::BeginTabItem("Config Ability Down")) {
+	//		configNum = 3;
+	//		if (ImGui::Button("Save config")) {
+	//			std::string fileName = "ConfigLevelSelectAbility3.json";
+	//			std::cout << "save config1" << std::endl;
+	//			saveConfig(fileName, configs.at(configNum));
+	//		}
 
-			ImGui::SameLine();
-			if (ImGui::Button("Load config")) {
-				std::string fileName = "ConfigLevelSelectAbility3.json";
-				loadConfig(fileName);
-				int axisX = 1;
-				for (int i = 0; i < AbilityIconListDown.size(); i++) {
-					AbilityIconListDown.at(i)->SetPosition(glm::vec3(configs.at(configNum)->posX + (configs.at(configNum)->offSetX * axisX), configs.at(configNum)->posY, 0));
-					AbilityIconListDown.at(i)->SetSize(configs.at(configNum)->width, -configs.at(configNum)->height);
-					axisX++;
-				}
+	//		ImGui::SameLine();
+	//		if (ImGui::Button("Load config")) {
+	//			std::string fileName = "ConfigLevelSelectAbility3.json";
+	//			loadConfig(fileName);
+	//			int axisX = 1;
+	//			for (int i = 0; i < AbilityIconListDown.size(); i++) {
+	//				AbilityIconListDown.at(i)->SetPosition(glm::vec3(configs.at(configNum)->posX + (configs.at(configNum)->offSetX * axisX), configs.at(configNum)->posY, 0));
+	//				AbilityIconListDown.at(i)->SetSize(configs.at(configNum)->width, -configs.at(configNum)->height);
+	//				axisX++;
+	//			}
 
-			}
-			ImGui::InputFloat("PosX", &configs.at(configNum)->posX, 1.0f, 1.0f, "%.2f");
-			ImGui::InputFloat("PosY", &configs.at(configNum)->posY, 1.0f, 1.0f, "%.2f");
-			ImGui::InputFloat("OffSetX", &configs.at(configNum)->offSetX, 1.0f, 1.0f, "%.2f");
-			ImGui::InputFloat("OffSetY", &configs.at(configNum)->offSetY, 1.0f, 1.0f, "%.2f");
-			ImGui::InputFloat("Width", &configs.at(configNum)->width, 1.0f, 1.0f, "%.2f");
-			ImGui::InputFloat("Height", &configs.at(configNum)->height, 1.0f, 1.0f, "%.2f");
-			ImGui::EndTabItem();
-		}
+	//		}
+	//		ImGui::InputFloat("PosX", &configs.at(configNum)->posX, 1.0f, 1.0f, "%.2f");
+	//		ImGui::InputFloat("PosY", &configs.at(configNum)->posY, 1.0f, 1.0f, "%.2f");
+	//		ImGui::InputFloat("OffSetX", &configs.at(configNum)->offSetX, 1.0f, 1.0f, "%.2f");
+	//		ImGui::InputFloat("OffSetY", &configs.at(configNum)->offSetY, 1.0f, 1.0f, "%.2f");
+	//		ImGui::InputFloat("Width", &configs.at(configNum)->width, 1.0f, 1.0f, "%.2f");
+	//		ImGui::InputFloat("Height", &configs.at(configNum)->height, 1.0f, 1.0f, "%.2f");
+	//		ImGui::EndTabItem();
+	//	}
 
-		if (ImGui::BeginTabItem("Config Player Hover")) {
-			configNum = 4;
-			if (ImGui::Button("Save config")) {
-				std::string fileName = "ConfigLevelSelectAbility4.json";
-				std::cout << "save config1" << std::endl;
-				saveConfig(fileName, configs.at(configNum));
-			}
+	//	if (ImGui::BeginTabItem("Config Player Hover")) {
+	//		configNum = 4;
+	//		if (ImGui::Button("Save config")) {
+	//			std::string fileName = "ConfigLevelSelectAbility4.json";
+	//			std::cout << "save config1" << std::endl;
+	//			saveConfig(fileName, configs.at(configNum));
+	//		}
 
-			ImGui::SameLine();
-			if (ImGui::Button("Load config")) {
-				std::string fileName = "ConfigLevelSelectAbility4.json";
-				loadConfig(fileName);
-				int axisX = 1;
-				for (int i = 0; i < AbilityIconListDown.size(); i++) {
-					AbilityIconListDown.at(i)->SetPosition(glm::vec3(configs.at(configNum)->posX + (configs.at(configNum)->offSetX * axisX), configs.at(configNum)->posY, 0));
-					AbilityIconListDown.at(i)->SetSize(configs.at(configNum)->width, -configs.at(configNum)->height);
-					axisX++;
-				}
+	//		ImGui::SameLine();
+	//		if (ImGui::Button("Load config")) {
+	//			std::string fileName = "ConfigLevelSelectAbility4.json";
+	//			loadConfig(fileName);
+	//			int axisX = 1;
+	//			for (int i = 0; i < AbilityIconListDown.size(); i++) {
+	//				AbilityIconListDown.at(i)->SetPosition(glm::vec3(configs.at(configNum)->posX + (configs.at(configNum)->offSetX * axisX), configs.at(configNum)->posY, 0));
+	//				AbilityIconListDown.at(i)->SetSize(configs.at(configNum)->width, -configs.at(configNum)->height);
+	//				axisX++;
+	//			}
 
-			}
-			ImGui::InputFloat("PosX", &configs.at(configNum)->posX, 1.0f, 1.0f, "%.2f");
-			ImGui::InputFloat("PosY", &configs.at(configNum)->posY, 1.0f, 1.0f, "%.2f");
-			ImGui::InputFloat("OffSetX", &configs.at(configNum)->offSetX, 1.0f, 1.0f, "%.2f");
-			ImGui::InputFloat("OffSetY", &configs.at(configNum)->offSetY, 1.0f, 1.0f, "%.2f");
-			ImGui::InputFloat("Width", &configs.at(configNum)->width, 1.0f, 1.0f, "%.2f");
-			ImGui::InputFloat("Height", &configs.at(configNum)->height, 1.0f, 1.0f, "%.2f");
-			ImGui::EndTabItem();
-		}
+	//		}
+	//		ImGui::InputFloat("PosX", &configs.at(configNum)->posX, 1.0f, 1.0f, "%.2f");
+	//		ImGui::InputFloat("PosY", &configs.at(configNum)->posY, 1.0f, 1.0f, "%.2f");
+	//		ImGui::InputFloat("OffSetX", &configs.at(configNum)->offSetX, 1.0f, 1.0f, "%.2f");
+	//		ImGui::InputFloat("OffSetY", &configs.at(configNum)->offSetY, 1.0f, 1.0f, "%.2f");
+	//		ImGui::InputFloat("Width", &configs.at(configNum)->width, 1.0f, 1.0f, "%.2f");
+	//		ImGui::InputFloat("Height", &configs.at(configNum)->height, 1.0f, 1.0f, "%.2f");
+	//		ImGui::EndTabItem();
+	//	}
 
-		if (ImGui::BeginTabItem("Config Player Icon")) {
-			configNum = 5;
-			if (ImGui::Button("Save config")) {
-				std::string fileName = "ConfigLevelSelectAbility5.json";
-				std::cout << "save config1" << std::endl;
-				saveConfig(fileName, configs.at(configNum));
-			}
+	//	if (ImGui::BeginTabItem("Config Player Icon")) {
+	//		configNum = 5;
+	//		if (ImGui::Button("Save config")) {
+	//			std::string fileName = "ConfigLevelSelectAbility5.json";
+	//			std::cout << "save config1" << std::endl;
+	//			saveConfig(fileName, configs.at(configNum));
+	//		}
 
-			ImGui::SameLine();
-			if (ImGui::Button("Load config")) {
-				std::string fileName = "ConfigLevelSelectAbility5.json";
-				loadConfig(fileName);
-				int axisX = 1;
-				for (int i = 0; i < AbilityIconListDown.size(); i++) {
-					AbilityIconListDown.at(i)->SetPosition(glm::vec3(configs.at(configNum)->posX + (configs.at(configNum)->offSetX * axisX), configs.at(configNum)->posY, 0));
-					AbilityIconListDown.at(i)->SetSize(configs.at(configNum)->width, -configs.at(configNum)->height);
-					axisX++;
-				}
+	//		ImGui::SameLine();
+	//		if (ImGui::Button("Load config")) {
+	//			std::string fileName = "ConfigLevelSelectAbility5.json";
+	//			loadConfig(fileName);
+	//			int axisX = 1;
+	//			for (int i = 0; i < AbilityIconListDown.size(); i++) {
+	//				AbilityIconListDown.at(i)->SetPosition(glm::vec3(configs.at(configNum)->posX + (configs.at(configNum)->offSetX * axisX), configs.at(configNum)->posY, 0));
+	//				AbilityIconListDown.at(i)->SetSize(configs.at(configNum)->width, -configs.at(configNum)->height);
+	//				axisX++;
+	//			}
 
-			}
-			ImGui::InputFloat("PosX", &configs.at(configNum)->posX, 1.0f, 1.0f, "%.2f");
-			ImGui::InputFloat("PosY", &configs.at(configNum)->posY, 1.0f, 1.0f, "%.2f");
-			ImGui::InputFloat("OffSetX", &configs.at(configNum)->offSetX, 1.0f, 1.0f, "%.2f");
-			ImGui::InputFloat("OffSetY", &configs.at(configNum)->offSetY, 1.0f, 1.0f, "%.2f");
-			ImGui::InputFloat("Width", &configs.at(configNum)->width, 1.0f, 1.0f, "%.2f");
-			ImGui::InputFloat("Height", &configs.at(configNum)->height, 1.0f, 1.0f, "%.2f");
-			ImGui::EndTabItem();
-		}
+	//		}
+	//		ImGui::InputFloat("PosX", &configs.at(configNum)->posX, 1.0f, 1.0f, "%.2f");
+	//		ImGui::InputFloat("PosY", &configs.at(configNum)->posY, 1.0f, 1.0f, "%.2f");
+	//		ImGui::InputFloat("OffSetX", &configs.at(configNum)->offSetX, 1.0f, 1.0f, "%.2f");
+	//		ImGui::InputFloat("OffSetY", &configs.at(configNum)->offSetY, 1.0f, 1.0f, "%.2f");
+	//		ImGui::InputFloat("Width", &configs.at(configNum)->width, 1.0f, 1.0f, "%.2f");
+	//		ImGui::InputFloat("Height", &configs.at(configNum)->height, 1.0f, 1.0f, "%.2f");
+	//		ImGui::EndTabItem();
+	//	}
 
-		if (ImGui::BeginTabItem("Config Player Icon Small")) {
-			configNum = 6;
-			if (ImGui::Button("Save config")) {
-				std::string fileName = "ConfigLevelSelectAbility6.json";
-				std::cout << "save config1" << std::endl;
-				saveConfig(fileName, configs.at(configNum));
-			}
+	//	if (ImGui::BeginTabItem("Config Player Icon Small")) {
+	//		configNum = 6;
+	//		if (ImGui::Button("Save config")) {
+	//			std::string fileName = "ConfigLevelSelectAbility6.json";
+	//			std::cout << "save config1" << std::endl;
+	//			saveConfig(fileName, configs.at(configNum));
+	//		}
 
-			ImGui::SameLine();
-			if (ImGui::Button("Load config")) {
-				std::string fileName = "ConfigLevelSelectAbility6.json";
-				loadConfig(fileName);
-				int axisX = 1;
-				for (int i = 0; i < AbilityIconListDown.size(); i++) {
-					AbilityIconListDown.at(i)->SetPosition(glm::vec3(configs.at(configNum)->posX + (configs.at(configNum)->offSetX * axisX), configs.at(configNum)->posY, 0));
-					AbilityIconListDown.at(i)->SetSize(configs.at(configNum)->width, -configs.at(configNum)->height);
-					axisX++;
-				}
+	//		ImGui::SameLine();
+	//		if (ImGui::Button("Load config")) {
+	//			std::string fileName = "ConfigLevelSelectAbility6.json";
+	//			loadConfig(fileName);
+	//			int axisX = 1;
+	//			for (int i = 0; i < AbilityIconListDown.size(); i++) {
+	//				AbilityIconListDown.at(i)->SetPosition(glm::vec3(configs.at(configNum)->posX + (configs.at(configNum)->offSetX * axisX), configs.at(configNum)->posY, 0));
+	//				AbilityIconListDown.at(i)->SetSize(configs.at(configNum)->width, -configs.at(configNum)->height);
+	//				axisX++;
+	//			}
 
-			}
-			ImGui::InputFloat("PosX", &configs.at(configNum)->posX, 1.0f, 1.0f, "%.2f");
-			ImGui::InputFloat("PosY", &configs.at(configNum)->posY, 1.0f, 1.0f, "%.2f");
-			ImGui::InputFloat("OffSetX", &configs.at(configNum)->offSetX, 1.0f, 1.0f, "%.2f");
-			ImGui::InputFloat("OffSetY", &configs.at(configNum)->offSetY, 1.0f, 1.0f, "%.2f");
-			ImGui::InputFloat("Width", &configs.at(configNum)->width, 1.0f, 1.0f, "%.2f");
-			ImGui::InputFloat("Height", &configs.at(configNum)->height, 1.0f, 1.0f, "%.2f");
-			ImGui::EndTabItem();
-		}
+	//		}
+	//		ImGui::InputFloat("PosX", &configs.at(configNum)->posX, 1.0f, 1.0f, "%.2f");
+	//		ImGui::InputFloat("PosY", &configs.at(configNum)->posY, 1.0f, 1.0f, "%.2f");
+	//		ImGui::InputFloat("OffSetX", &configs.at(configNum)->offSetX, 1.0f, 1.0f, "%.2f");
+	//		ImGui::InputFloat("OffSetY", &configs.at(configNum)->offSetY, 1.0f, 1.0f, "%.2f");
+	//		ImGui::InputFloat("Width", &configs.at(configNum)->width, 1.0f, 1.0f, "%.2f");
+	//		ImGui::InputFloat("Height", &configs.at(configNum)->height, 1.0f, 1.0f, "%.2f");
+	//		ImGui::EndTabItem();
+	//	}
 
-		if (ImGui::BeginTabItem("Config Ability Icon Small")) {
-			configNum = 7;
-			if (ImGui::Button("Save config")) {
-				std::string fileName = "ConfigLevelSelectAbility7.json";
-				std::cout << "save config1" << std::endl;
-				saveConfig(fileName, configs.at(configNum));
-			}
+	//	if (ImGui::BeginTabItem("Config Ability Icon Small")) {
+	//		configNum = 7;
+	//		if (ImGui::Button("Save config")) {
+	//			std::string fileName = "ConfigLevelSelectAbility7.json";
+	//			std::cout << "save config1" << std::endl;
+	//			saveConfig(fileName, configs.at(configNum));
+	//		}
 
-			ImGui::SameLine();
-			if (ImGui::Button("Load config")) {
-				std::string fileName = "ConfigLevelSelectAbility7.json";
-				loadConfig(fileName);
-				int axisX = 1;
-				for (int i = 0; i < AbilityIconListDown.size(); i++) {
-					AbilityIconListDown.at(i)->SetPosition(glm::vec3(configs.at(configNum)->posX + (configs.at(configNum)->offSetX * axisX), configs.at(configNum)->posY, 0));
-					AbilityIconListDown.at(i)->SetSize(configs.at(configNum)->width, -configs.at(configNum)->height);
-					axisX++;
-				}
+	//		ImGui::SameLine();
+	//		if (ImGui::Button("Load config")) {
+	//			std::string fileName = "ConfigLevelSelectAbility7.json";
+	//			loadConfig(fileName);
+	//			int axisX = 1;
+	//			for (int i = 0; i < AbilityIconListDown.size(); i++) {
+	//				AbilityIconListDown.at(i)->SetPosition(glm::vec3(configs.at(configNum)->posX + (configs.at(configNum)->offSetX * axisX), configs.at(configNum)->posY, 0));
+	//				AbilityIconListDown.at(i)->SetSize(configs.at(configNum)->width, -configs.at(configNum)->height);
+	//				axisX++;
+	//			}
 
-			}
-			ImGui::InputFloat("PosX", &configs.at(configNum)->posX, 1.0f, 1.0f, "%.2f");
-			ImGui::InputFloat("PosY", &configs.at(configNum)->posY, 1.0f, 1.0f, "%.2f");
-			ImGui::InputFloat("OffSetX", &configs.at(configNum)->offSetX, 1.0f, 1.0f, "%.2f");
-			ImGui::InputFloat("OffSetY", &configs.at(configNum)->offSetY, 1.0f, 1.0f, "%.2f");
-			ImGui::InputFloat("Width", &configs.at(configNum)->width, 1.0f, 1.0f, "%.2f");
-			ImGui::InputFloat("Height", &configs.at(configNum)->height, 1.0f, 1.0f, "%.2f");
-			ImGui::EndTabItem();
-		}
+	//		}
+	//		ImGui::InputFloat("PosX", &configs.at(configNum)->posX, 1.0f, 1.0f, "%.2f");
+	//		ImGui::InputFloat("PosY", &configs.at(configNum)->posY, 1.0f, 1.0f, "%.2f");
+	//		ImGui::InputFloat("OffSetX", &configs.at(configNum)->offSetX, 1.0f, 1.0f, "%.2f");
+	//		ImGui::InputFloat("OffSetY", &configs.at(configNum)->offSetY, 1.0f, 1.0f, "%.2f");
+	//		ImGui::InputFloat("Width", &configs.at(configNum)->width, 1.0f, 1.0f, "%.2f");
+	//		ImGui::InputFloat("Height", &configs.at(configNum)->height, 1.0f, 1.0f, "%.2f");
+	//		ImGui::EndTabItem();
+	//	}
 
-		ImGui::EndTabBar();
-	}
+	//	ImGui::EndTabBar();
+	//}
 	
 
 	// Rendering
@@ -1051,6 +1022,7 @@ void LevelSelectAbility::LevelFree()
 	}
 	objectsList.clear();
 
+	KrillSoundManager::SoundManager::GetInstance()->StopMusic("Ability_Selection");
 	//cout << "Free Level" << endl;
 }
 
@@ -1062,6 +1034,8 @@ void LevelSelectAbility::LevelUnload()
 	ImGui_ImplSDL2_Shutdown();
 	ImGui::DestroyContext();
 
+	GameEngine::GetInstance()->ResetWinScore("../Resource/SceneData/RoundWin.json");
+
 	//cout << "Unload Level" << endl;
 }
 
@@ -1070,6 +1044,8 @@ void LevelSelectAbility::HandleKey(char key){}
 void LevelSelectAbility::HandleMouse(int type, int x, int y){}
 
 void LevelSelectAbility::abilityToFile(const std::string& fileName, int who) {
+
+	ConvertAbility();
 
 	std::ofstream file(fileName);
 	nlohmann::json data;
@@ -1081,7 +1057,7 @@ void LevelSelectAbility::abilityToFile(const std::string& fileName, int who) {
 	if (file.is_open()) {
 		file << data;
 		file.close();
-		std::cout << "Saved" << std::endl;
+		//std::cout << "Saved" << std::endl;
 	}
 
 	else {
@@ -1105,7 +1081,7 @@ void LevelSelectAbility::saveConfig(std::string& filename, config* con) {
 	if (file.is_open()) {
 		file << data;
 		file.close();
-		std::cout << "Saved" << std::endl;
+		//std::cout << "Saved" << std::endl;
 	}
 	else {
 		std::cout << "Failed" << std::endl;
@@ -1157,4 +1133,25 @@ void LevelSelectAbility::loadConfig(std::string filename) {
 		std::cout << "Failed" << std::endl;
 	}
 }
+
+void LevelSelectAbility::ConvertAbility()
+{
+	int ability;
+	AbilitySelectScene ability_selectScene;
+	int ability_afterConvert;
+	for (int i = 0; i < 4; i++)
+	{
+		for (int j = 0; j < 3; j++)
+		{
+			ability = playerAbility[i][j];
+			ability_selectScene = static_cast<AbilitySelectScene>(ability);
+			
+			ability_afterConvert = AbilityConverter.find(ability_selectScene)->second;
+
+
+			playerAbility[i][j] = ability_afterConvert;
+		}
+	}
+}
+
 

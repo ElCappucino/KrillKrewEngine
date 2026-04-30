@@ -1,6 +1,7 @@
 #include "PropObject.h"
 #include "Level.h"
 #include "TileObject.h"
+#include "SoundManager.h"
 
 PropObject::PropObject()
 {
@@ -115,8 +116,8 @@ void PropObject::CheckIfBreak()
 			particle->SetPosition(this->pos);
 			particle->SetSize(particle->GetSpriteRenderer()->GetSpriteWidth(), particle->GetSpriteRenderer()->GetSpriteHeight());
 			this->currentLevel->AddEntityToScene(particle);
-
-			KK_TRACE("PropObject:destroy Prop");
+			KrillSoundManager::SoundManager::GetInstance()->PlaySFX("Rock_Destroyed", false);
+			//KK_TRACE("PropObject:destroy Prop");
 		}
 
 		
@@ -146,6 +147,11 @@ void PropObject::CheckIfNoTileSurround()
 				surroundTile.erase(it);
 			}
 		}
+	}
+
+	if (propType == PropObject::PropType::Tree)
+	{
+		//KK_INFO("PropObject: Tree surroundTile = {0}", surroundTile.size());
 	}
 	if (surroundTile.empty())
 	{

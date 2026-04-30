@@ -35,6 +35,9 @@ namespace KrillSoundManager
         void SetVolumeAllSFX(int volume);
         void SetVolumeAllMusic(int volume);
 
+        void SaveVolumeConfig(const std::string& filename, float master, bool ismute_master, float music, bool ismute_music, float sfx, bool ismute_sfx);
+        void LoadVolumeConfig(const std::string& filename, float& master, bool& ismute_master, float& music, bool& ismute_music, float& sfx, bool& ismute_sfx);
+
         void Cleanup();
     };
 }

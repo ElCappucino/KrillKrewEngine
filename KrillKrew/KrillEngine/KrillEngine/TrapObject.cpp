@@ -1,6 +1,6 @@
 
 #include "TrapObject.h"
-
+#include "SoundManager.h"
 
 
 TrapObject::TrapObject()
@@ -131,6 +131,7 @@ void TrapObject::OnColliderEnter(Collider* other)
 		if (this->GetPlayerNumber() != player->GetPlayerNumber())
 		{
 			//KK_TRACE("Collide with TNT");
+			KrillSoundManager::SoundManager::GetInstance()->PlaySFX("Player_Damaged", false);
 			switch (type)
 			{
 				case TypeTrap::Trap:
@@ -140,6 +141,8 @@ void TrapObject::OnColliderEnter(Collider* other)
 						player->SetSlowDuration(3.f);
 						player->SetIsSlow(true);
 						ChangeAnimationState(AnimationState::Collide);
+
+						KrillSoundManager::SoundManager::GetInstance()->PlaySFX("Jellyfish_Explode", false);
 					}
 					
 					// player->ApplyKnockback(this);
