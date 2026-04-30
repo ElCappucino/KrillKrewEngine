@@ -84,10 +84,9 @@ void LevelMainMenu::LevelInit()
 
 		int buttonColumn = (i - 1) * 2;
 		std::string buttonName = "Text" + std::to_string(i);
-		glm::vec2 spriteshiftPos(0, Buttons.at(i)->column);
-
 		InitButtonData(buttonName, i, { 100, 100 }, { 289, 65 }, { 0, 0 }, buttonColumn, fileName);
 
+		glm::vec2 spriteshiftPos(0, Buttons.at(i)->column);
 		UiObject* text = InitButtonUI(buttonName, spriteList["Text"], Buttons.at(i), spriteshiftPos);
 
 		objectsList.push_back(text);
@@ -150,26 +149,24 @@ void LevelMainMenu::InitButtonData(std::string name, int number, glm::vec2 pos, 
 
 void LevelMainMenu::LevelUpdate() 
 {
-	KrillSoundManager::SoundManager::GetInstance()->SetVolumeAllMusic((masterVolume / 100.0f) * BGMVolume * 0.01f * (128.f - 0));
-	KrillSoundManager::SoundManager::GetInstance()->SetVolumeAllSFX((masterVolume / 100.0f) * SFXVolume * 0.01f * (128.f - 0));
+	soundManager->SetVolumeAllMusic((masterVolume / 100.0f) * BGMVolume * 0.01f * (128.f - 0));
+	soundManager->SetVolumeAllSFX((masterVolume / 100.0f) * SFXVolume * 0.01f * (128.f - 0));
 
 	if (!isToggleVolume[0])
 	{
-		KrillSoundManager::SoundManager::GetInstance()->SetVolumeAllSFX(0);
-		KrillSoundManager::SoundManager::GetInstance()->SetVolumeAllMusic(0);
+		soundManager->SetVolumeAllSFX(0);
+		soundManager->SetVolumeAllMusic(0);
 	}
 
 	if (!isToggleVolume[1])
 	{
-		KrillSoundManager::SoundManager::GetInstance()->SetVolumeAllSFX(0);
+		soundManager->SetVolumeAllSFX(0);
 	}
 
 	if (!isToggleVolume[2])
 	{
-		KrillSoundManager::SoundManager::GetInstance()->SetVolumeAllMusic(0);
+		soundManager->SetVolumeAllMusic(0);
 	}
-
-	
 
 	UpdateInput();
 	UpdateUi();
@@ -189,15 +186,77 @@ void LevelMainMenu::LevelUpdate()
 
 void LevelMainMenu::LevelDraw() 
 {
-	GameEngine::GetInstance()->Render(objectsList);
+	gameEngine->Render(objectsList);
 	
 	ShowImGuiConfig(true);
 
-	SDL_GL_SwapWindow(GameEngine::GetInstance()->GetSDLWindow());
+	SDL_GL_SwapWindow(gameEngine->GetSDLWindow());
 
 	// cout << "Draw Level" << endl;
 }
+void LevelMainMenu::DrawControllerButtons() {
+	ImGui::BeginGroup();
 
+	float buttonSize = 40.0f;
+	float spacing = 10.0f;
+	ImVec2 startPos = ImGui::GetCursorPos();
+
+	// Helper to draw a button at a specific grid coordinate
+	auto DrawButton = [&](const char* label, float x_offset, float y_offset, ImVec4 color) {
+		ImGui::SetCursorPos(ImVec2(startPos.x + x_offset, startPos.y + y_offset));
+		ImGui::PushStyleColor(ImGuiCol_Button, color);
+		if (ImGui::Button(label, ImVec2(buttonSize, buttonSize))) {
+			// Button Logic Here
+			if (label == "Cross")
+			{
+				KK_TRACE("Pressed virtual Cross");
+				isPressedCross = true;
+			}
+			if (label == "Circle")
+			{
+				KK_TRACE("Pressed virtual Circle");
+				isPressedCircle = true;
+			}
+			if (label == "Square")
+			{
+				KK_TRACE("Pressed virtual Square");
+				isPressedSquare = true;
+			}
+			if (label == "Triangle")
+			{
+				KK_TRACE("Pressed virtual Triangle");
+				isPressedTriangle = true;
+			}
+		}
+		else
+		{
+			/*isPressedCross = false;
+			isPressedCircle = false;
+			isPressedSquare = false;
+			isPressedTriangle = false;*/
+		}
+		ImGui::PopStyleColor();
+	};
+
+
+
+	// Calculate offsets for the diamond shape
+	float center = buttonSize + spacing;
+
+	// Y - Top (Yellow-ish)
+	DrawButton("Cross", center, 0, ImVec4(0.0f, 0.0f, 0.0f, 1.0f));
+
+	// X - Left (Blue-ish)
+	DrawButton("Circle", 0, center, ImVec4(0.0f, 0.0f, 0.0f, 1.0f));
+
+	// B - Right (Red-ish)
+	DrawButton("Square", center * 2, center, ImVec4(0.0f, 0.0f, 0.0f, 1.0f));
+
+	// A - Bottom (Green-ish)
+	DrawButton("Triangle", center, center * 2, ImVec4(0.0f, 0.0f, 0.0f, 1.0f));
+
+	ImGui::EndGroup();
+}
 void LevelMainMenu::ShowImGuiConfig(bool isShowing)
 {
 	if (!isShowing)
@@ -211,8 +270,12 @@ void LevelMainMenu::ShowImGuiConfig(bool isShowing)
 	ImGui::NewFrame();
 
 	if (ImGui::Button("Go levelSelectAbility")) {
-		GameEngine::GetInstance()->GetStateController()->gameStateNext = GameState::GS_LEVELSELECTABILITY;
+		gameEngine->GetStateController()->gameStateNext = GameState::GS_LEVELSELECTABILITY;
 	}
+	
+	DrawVirtualJoystick("Joystick", joystickVal, 50);
+	DrawControllerButtons();
+
 	ImGuiTabBarFlags tab_bar_flags = ImGuiTabBarFlags_None;
 	if (ImGui::BeginTabBar("MyTabBar", tab_bar_flags)) {
 		if (ImGui::BeginTabItem("Text")) {
@@ -344,6 +407,43 @@ void LevelMainMenu::ShowImGuiConfig(bool isShowing)
 
 	ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 }
+
+void LevelMainMenu::DrawVirtualJoystick(const char* label, ImVec2& stickValue, float radius) {
+	ImGui::Text("%s: %.2f, %.2f", label, stickValue.x, stickValue.y);
+
+	ImDrawList* drawList = ImGui::GetWindowDrawList();
+	ImVec2 center = ImGui::GetCursorScreenPos();
+	center.x += radius; center.y += radius;
+
+	// Draw the outer boundary
+	drawList->AddCircle(center, radius, IM_COL32(200, 200, 200, 255), 32, 2.0f);
+
+	// Interaction Logic
+	ImGui::InvisibleButton(label, ImVec2(radius * 2, radius * 2));
+	if (ImGui::IsItemActive()) {
+		ImVec2 mousePos = ImGui::GetIO().MousePos;
+		stickValue.x = (mousePos.x - center.x) / radius;
+		stickValue.y = (mousePos.y - center.y) / radius;
+
+		// Clamp the vector to a length of 1.0 (circular clamping)
+		float len = sqrtf(stickValue.x * stickValue.x + stickValue.y * stickValue.y);
+		if (len > 1.0f) {
+			stickValue.x /= len;
+			stickValue.y /= len;
+		}
+	}
+	else {
+		// Optional: Auto-center (snap back to zero)
+		stickValue = ImVec2(0, 0);
+	}
+
+	// Draw the knob
+	ImVec2 knobPos = ImVec2(center.x + stickValue.x * radius, center.y + stickValue.y * radius);
+	drawList->AddCircleFilled(knobPos, radius * 0.3f, IM_COL32(66, 150, 250, 255));
+
+	stickValue.y *= -1;
+}
+
 void LevelMainMenu::LevelFree() {
 	for (DrawableObject* obj : objectsList) {
 		delete obj;
@@ -382,6 +482,8 @@ void LevelMainMenu::HandleMouse(int type, int x, int y) {
 
 }
 
+
+
 void LevelMainMenu::UpdateInput() 
 {
 	if (SDL_NumJoysticks() > 0)
@@ -389,35 +491,31 @@ void LevelMainMenu::UpdateInput()
 		Joystick::Update();
 		for (int i = 0; i < 1/*SDL_NumJoysticks()*/; i++)
 		{
-			float axisX = Joystick::GetAxis(0, Joystick::Axis::LeftStickHorizontal)/* / 32768.0f*/;
-			/*std::cout << "axisX : " << axisX << std::endl;*/
-			float axisY = Joystick::GetAxis(0, Joystick::Axis::LeftStickVertical)/* / 32768.0f*/;
-			//std::cout << "axisY : " << axisY << std::endl;
+			float axisX = Joystick::GetAxis(0, Joystick::Axis::LeftStickHorizontal);
+			float axisY = Joystick::GetAxis(0, Joystick::Axis::LeftStickVertical);
+
 			bool up = false;
 			bool down = false;
 			bool right = false;
 			bool left = false;
 
-			if (axisX > 0.8) {
+			if (axisX > 0.8 || joystickVal.x > 0.8 || Joystick::GetButtonDown(0, Joystick::Button::DPAD_Right)) {
 				right = true;
 			}
-
-			else if (axisX < -0.8) {
+			else if (axisX < -0.8 || joystickVal.x < -0.8 || Joystick::GetButtonDown(0, Joystick::Button::DPAD_Left)) {
 				left = true;
 			}
-
-			else if (axisY > 0.8) {
+			else if (axisY > 0.8 || joystickVal.y > 0.8 || Joystick::GetButtonDown(0, Joystick::Button::DPAD_Down)) {
 				up = true;
 			}
-
-			else if (axisY < -0.8) {
+			else if (axisY < -0.8 || joystickVal.y < -0.8 || Joystick::GetButtonDown(0, Joystick::Button::DPAD_Up)) {
 				down = true;
 			}
 
 			if (isCredit == false && isTutorial == false && isStart == false && isExit == false && isOption == false) {
 				//select button
 				if (playerMove == false) {
-					if (down || Joystick::GetButtonDown(0, Joystick::Button::DPAD_Up))
+					if (down)
 					{
 						playerWhere -= 1;
 						if (playerWhere < 0) {
@@ -426,7 +524,7 @@ void LevelMainMenu::UpdateInput()
 						playerMove = true;
 
 					}
-					else if (up || Joystick::GetButtonDown(0, Joystick::Button::DPAD_Down))
+					else if (up)
 					{
 						playerWhere += 1;
 						if (playerWhere > 4) {
@@ -453,6 +551,7 @@ void LevelMainMenu::UpdateInput()
 
 					//start game
 					if (playerWhere == 1) {
+						KK_TRACE("player where = 1");
 						UiObject* fadeBlack = new UiObject();
 						fadeBlack->SetSpriteInfo(spriteList.find("FadeBlack")->second);
 						fadeBlack->SetSize(camera.GetCameraWidth(), -camera.GetCameraHeight());
@@ -677,7 +776,7 @@ void LevelMainMenu::UpdateInput()
 			else if (isStart == true || isExit == true) {
 				//select button
 				if (!playerMove) {
-					if (left || right || Joystick::GetButtonDown(0, Joystick::Button::DPAD_Left) || Joystick::GetButtonDown(0, Joystick::Button::DPAD_Right))
+					if (left || right  || Joystick::GetButtonDown(0, Joystick::Button::DPAD_Right))
 					{
 						playerWhere += 1;
 						playerMove = true;
@@ -1031,6 +1130,657 @@ void LevelMainMenu::UpdateInput()
 			}
 		}
 	}
+	else
+	{
+		for (int i = 0; i < 1/*SDL_NumJoysticks()*/; i++)
+		{
+			bool up = false;
+			bool down = false;
+			bool right = false;
+			bool left = false;
+
+			if (joystickVal.x > 0.8) {
+				right = true;
+			}
+			else if (joystickVal.x < -0.8) {
+				left = true;
+			}
+			else if (joystickVal.y > 0.8) {
+				down = true;
+			}
+			else if (joystickVal.y < -0.8) {
+				up = true;
+			}
+
+			KK_TRACE("isPressedCross = " + std::to_string(isPressedCross ? 1 : 0));
+			//printf("joystickVal = %d %d\n", (int)joystickVal.x, (int)joystickVal.y);
+			if (isCredit == false && isTutorial == false && isStart == false && isExit == false && isOption == false) {
+				//select button
+				if (playerMove == false) {
+					if (down)
+					{
+						playerWhere -= 1;
+						if (playerWhere < 0) {
+							playerWhere = 0;
+						}
+						playerMove = true;
+
+					}
+					else if (up)
+					{
+						playerWhere += 1;
+						if (playerWhere > 4) {
+							playerWhere = 4;
+						}
+						playerMove = true;
+					}
+				}
+
+				if (joystickVal.x <= 0.3 && joystickVal.x >= -0.3 && joystickVal.y <= 0.3 && joystickVal.y >= -0.3) {
+					playerMove = false;
+				}
+
+				//press x
+				if (isPressedCross) {
+					//credit
+					if (playerWhere == 0) {
+						UiObject* credit = new UiObject();
+						credit->SetSpriteInfo(spriteList.find("Credit")->second);
+						credit->SetSize(camera.GetCameraWidth(), -camera.GetCameraHeight());
+						objectsList.push_back(credit);
+						isCredit = true;
+					}
+
+					//start game
+					if (playerWhere == 1) {
+						UiObject* fadeBlack = new UiObject();
+						fadeBlack->SetSpriteInfo(spriteList.find("FadeBlack")->second);
+						fadeBlack->SetSize(camera.GetCameraWidth(), -camera.GetCameraHeight());
+						objectsList.push_back(fadeBlack);
+						UiObject* areYouSure = new UiObject();
+						areYouSure->SetSpriteInfo(spriteList.find("AreYouSure")->second);
+						areYouSure->SetSize(areYouSure->GetSpriteRenderer()->GetSpriteWidth(), -areYouSure->GetSpriteRenderer()->GetSpriteHeight());
+						objectsList.push_back(areYouSure);
+						for (int j = 0; j < 2; j++) {
+							InitButtonData("AreYouSureYN", 0, { 100, 100 }, { 470, 55 }, { 0, 0 }, 0, "../Resource/SceneData/text0.json");
+
+							UiObject* name = InitButtonUI("GameNameUI", spriteList["Name"], Buttons.at(0), glm::vec2(0, 0));
+							objectsList.push_back(name);
+							textList.push_back(name);
+							/*UiObject* areYouSureYN = InitButtonUI("AreYouSureYN" + std::to_string(i), spriteList["AreYouSureYN"], );
+							areYouSureYN->SetSpriteInfo(spriteList.find("AreYouSureYN")->second);
+							areYouSureYN->SetSize(areYouSureYN->GetSpriteRenderer()->GetSpriteWidth(), -areYouSureYN->GetSpriteRenderer()->GetSpriteHeight());
+							areYouSureYN->SetPosition(glm::vec3(Buttons.at(5)->pos.x + (j * Buttons.at(5)->offset.x), Buttons.at(5)->pos.y, 0));
+							areYouSureYN->ShiftSpriteTo(areYouSureYN->GetSpriteRenderer()->GetRow(), j * 2);
+							objectsList.push_back(areYouSureYN);
+							yesNoList.push_back(areYouSureYN);*/
+						}
+
+						isStart = true;
+					}
+
+					//tutorial
+					if (playerWhere == 2) {
+						UiObject* fadeBlack = new UiObject();
+						fadeBlack->SetSpriteInfo(spriteList.find("FadeBlack")->second);
+						fadeBlack->SetSize(camera.GetCameraWidth(), -camera.GetCameraHeight());
+						objectsList.push_back(fadeBlack);
+						UiObject* tutorialBG = new UiObject();
+						tutorialBG->SetSpriteInfo(spriteList.find("TutorialBG")->second);
+						tutorialBG->SetSize(tutorialBG->GetSpriteRenderer()->GetSpriteWidth(), -tutorialBG->GetSpriteRenderer()->GetSpriteHeight());
+						objectsList.push_back(tutorialBG);
+						UiObject* tutorialInfo = new UiObject();
+						tutorialInfo->SetSpriteInfo(spriteList.find("TutorialInfo")->second);
+						tutorialInfo->SetSize(tutorialInfo->GetSpriteRenderer()->GetSpriteWidth(), -tutorialInfo->GetSpriteRenderer()->GetSpriteHeight());
+						objectsList.push_back(tutorialInfo);
+						tutorialInfoList.push_back(tutorialInfo);
+						isTutorial = true;
+					}
+
+					//options
+					if (playerWhere == 3) {
+						UiObject* fadeBlack = new UiObject();
+						fadeBlack->SetSpriteInfo(spriteList.find("FadeBlack")->second);
+						fadeBlack->SetSize(camera.GetCameraWidth(), -camera.GetCameraHeight());
+						objectsList.push_back(fadeBlack);
+						UiObject* optionsBG = new UiObject();
+						optionsBG->SetSpriteInfo(spriteList.find("OptionsBG")->second);
+						optionsBG->SetSize(optionsBG->GetSpriteRenderer()->GetSpriteWidth(), -optionsBG->GetSpriteRenderer()->GetSpriteHeight());
+						objectsList.push_back(optionsBG);
+						for (int j = 0; j < 4; j++) {
+							UiObject* textOption = new UiObject();
+							textOption->SetSpriteInfo(spriteList.find("OptionsText")->second);
+							textOption->SetSize(textOption->GetSpriteRenderer()->GetSpriteWidth(), -textOption->GetSpriteRenderer()->GetSpriteHeight());
+							textOption->SetPosition(glm::vec3(Buttons.at(6)->pos.x, Buttons.at(6)->pos.y + (-j * Buttons.at(5)->offset.y), 0));
+							textOption->ShiftSpriteTo(textOption->GetSpriteRenderer()->GetRow(), j * 2);
+							objectsList.push_back(textOption);
+							textOptionList.push_back(textOption);
+						}
+
+						UiObject* optionDisplay = new UiObject();
+						optionDisplay->SetSpriteInfo(spriteList.find("OptionsDisplay")->second);
+						optionDisplay->SetSize(optionDisplay->GetSpriteRenderer()->GetSpriteWidth(), -optionDisplay->GetSpriteRenderer()->GetSpriteHeight());
+						optionDisplay->SetPosition(glm::vec3(Buttons.at(7)->pos.x, Buttons.at(7)->pos.y, 0));
+						if (windowWidth == SCREEN_WIDTH) {
+							optionDisplay->ShiftSpriteTo(optionDisplay->GetSpriteRenderer()->GetRow(), 3);
+						}
+						else {
+							optionDisplay->ShiftSpriteTo(optionDisplay->GetSpriteRenderer()->GetRow(), 1);
+						}
+
+						objectsList.push_back(optionDisplay);
+						displayList.push_back(optionDisplay);
+
+						for (int j = 0; j < 3; j++) {
+							UiObject* optionVolumeTrack = new UiObject();
+							optionVolumeTrack->SetSpriteInfo(spriteList.find("OptionsVolumeTrack")->second);
+							optionVolumeTrack->SetSize(optionVolumeTrack->GetSpriteRenderer()->GetSpriteWidth(), -optionVolumeTrack->GetSpriteRenderer()->GetSpriteHeight());
+							optionVolumeTrack->SetPosition(glm::vec3(Buttons.at(8)->pos.x, Buttons.at(8)->pos.y - (j * Buttons.at(8)->offset.y), 0));
+							objectsList.push_back(optionVolumeTrack);
+							volumeTrackList.push_back(optionVolumeTrack);
+
+							UiObject* optionVolumeKnob = new UiObject();
+							optionVolumeKnob->SetSpriteInfo(spriteList.find("OptionsVolumeKnob")->second);
+							optionVolumeKnob->SetSize(optionVolumeKnob->GetSpriteRenderer()->GetSpriteWidth(), -optionVolumeKnob->GetSpriteRenderer()->GetSpriteHeight());
+							if (j == 0) {
+								optionVolumeKnob->SetPosition(glm::vec3((masterVolume * 4 - 57.5 / 0.25), Buttons.at(8)->pos.y - (j * Buttons.at(8)->offset.y), 0));
+							}
+							else if (j == 1) {
+								optionVolumeKnob->SetPosition(glm::vec3((SFXVolume * 4 - 57.5 / 0.25), Buttons.at(8)->pos.y - (j * Buttons.at(8)->offset.y), 0));
+							}
+							else if (j == 2) {
+								optionVolumeKnob->SetPosition(glm::vec3((BGMVolume * 4 - 57.5 / 0.25), Buttons.at(8)->pos.y - (j * Buttons.at(8)->offset.y), 0));
+							}
+							objectsList.push_back(optionVolumeKnob);
+							volumeKnobList.push_back(optionVolumeKnob);
+
+							UiObject* optionVolumeBox = new UiObject();
+							optionVolumeBox->SetSpriteInfo(spriteList.find("OptionsVolumeBox")->second);
+							optionVolumeBox->SetSize(optionVolumeBox->GetSpriteRenderer()->GetSpriteWidth(), -optionVolumeBox->GetSpriteRenderer()->GetSpriteHeight());
+							optionVolumeBox->SetPosition(glm::vec3(Buttons.at(8)->pos.x + Buttons.at(8)->offset.x, Buttons.at(8)->pos.y - (j * Buttons.at(8)->offset.y), 0));
+							if (isToggleVolume[j] == true) {
+								optionVolumeBox->ShiftSpriteTo(optionVolumeBox->GetSpriteRenderer()->GetRow(), 1);
+							}
+							else {
+								optionVolumeBox->ShiftSpriteTo(optionVolumeBox->GetSpriteRenderer()->GetRow(), 3);
+							}
+
+							objectsList.push_back(optionVolumeBox);
+							volumeBoxList.push_back(optionVolumeBox);
+						}
+
+						playerWhere = 0;
+						isOption = true;
+					}
+
+					//exit
+					if (playerWhere == 4) {
+						UiObject* fadeBlack = new UiObject();
+						fadeBlack->SetSpriteInfo(spriteList.find("FadeBlack")->second);
+						fadeBlack->SetSize(camera.GetCameraWidth(), -camera.GetCameraHeight());
+						objectsList.push_back(fadeBlack);
+						UiObject* areYouSure = new UiObject();
+						areYouSure->SetSpriteInfo(spriteList.find("AreYouSure")->second);
+						areYouSure->SetSize(areYouSure->GetSpriteRenderer()->GetSpriteWidth(), -areYouSure->GetSpriteRenderer()->GetSpriteHeight());
+						areYouSure->ShiftSpriteTo(areYouSure->GetSpriteRenderer()->GetRow(), 2);
+						objectsList.push_back(areYouSure);
+						for (int j = 0; j < 2; j++) {
+							UiObject* areYouSureYN = new UiObject();
+							areYouSureYN->SetSpriteInfo(spriteList.find("AreYouSureYN")->second);
+							areYouSureYN->SetSize(areYouSureYN->GetSpriteRenderer()->GetSpriteWidth(), -areYouSureYN->GetSpriteRenderer()->GetSpriteHeight());
+							areYouSureYN->SetPosition(glm::vec3(Buttons.at(5)->pos.x + (j * Buttons.at(5)->offset.x), Buttons.at(5)->pos.y, 0));
+							areYouSureYN->ShiftSpriteTo(areYouSureYN->GetSpriteRenderer()->GetRow(), j * 2);
+							objectsList.push_back(areYouSureYN);
+							yesNoList.push_back(areYouSureYN);
+						}
+
+						isExit = true;
+					}
+				}
+			}
+
+			//tutorial next page
+			else if (isPressedCross && isTutorial == true) {
+				tutorialInfoList.at(0)->GetSpriteRenderer()->ShiftColumn();
+				InfoPage++;
+				if (InfoPage == 3) {
+					tutorialInfoList.erase(tutorialInfoList.end() - 1);
+					for (int j = 0; j < 3; j++) {
+						objectsList.erase(objectsList.end() - 1);
+					}
+					InfoPage = 0;
+					isTutorial = false;
+				}
+			}
+
+			//press o
+			else if (isPressedCircle && isSelectDisplay == false && isSelectVolume == false) {
+				std::cout << "close option" << std::endl;
+				if (isCredit == true) {
+					objectsList.erase(objectsList.end() - 1);
+					isCredit = false;
+				}
+
+				if (isStart == true) {
+					for (int j = 0; j < 2; j++) {
+						yesNoList.erase(yesNoList.end() - 1);
+					}
+
+					for (int j = 0; j < 4; j++) {
+						objectsList.erase(objectsList.end() - 1);
+					}
+					isStart = false;
+					playerWhere = 1;
+				}
+
+				if (isTutorial == true) {
+					tutorialInfoList.erase(tutorialInfoList.end() - 1);
+					for (int j = 0; j < 3; j++) {
+						objectsList.erase(objectsList.end() - 1);
+					}
+					isTutorial = false;
+					playerWhere = 2;
+					InfoPage = 0;
+				}
+
+				if (isOption == true) {
+
+					displayList.erase(displayList.end() - 1);
+
+					for (int j = 0; j < 3; j++) {
+						volumeTrackList.erase(volumeTrackList.end() - 1);
+						volumeKnobList.erase(volumeKnobList.end() - 1);
+						volumeBoxList.erase(volumeBoxList.end() - 1);
+					}
+
+					for (int j = 0; j < 4; j++) {
+						textOptionList.erase(textOptionList.end() - 1);
+					}
+
+					for (int j = 0; j < 16; j++) {
+						objectsList.erase(objectsList.end() - 1);
+					}
+
+					isOption = false;
+					playerWhere = 3;
+				}
+
+				if (isExit == true) {
+					for (int j = 0; j < 2; j++) {
+						yesNoList.erase(yesNoList.end() - 1);
+					}
+
+					for (int j = 0; j < 4; j++) {
+						objectsList.erase(objectsList.end() - 1);
+					}
+					isExit = false;
+					playerWhere = 4;
+				}
+			}
+
+			//before start & exit
+			else if (isStart == true || isExit == true) {
+				//select button
+				if (!playerMove) {
+					if (left || right)
+					{
+						playerWhere += 1;
+						playerMove = true;
+					}
+				}
+
+				if (joystickVal.x <= 0.3 && joystickVal.x >= -0.3 && joystickVal.y <= 0.3 && joystickVal.y >= -0.3) {
+					playerMove = false;
+				}
+
+				if (isPressedCross && isStart == true) {
+					if (playerWhere % 2 == 1) {
+						GameEngine::GetInstance()->GetStateController()->gameStateNext = GameState::GS_LEVELSELECTABILITY;
+					}
+					else {
+						for (int j = 0; j < 2; j++) {
+							yesNoList.erase(yesNoList.end() - 1);
+						}
+
+						for (int j = 0; j < 4; j++) {
+							objectsList.erase(objectsList.end() - 1);
+						}
+						isStart = false;
+						playerWhere = 1;
+					}
+				}
+
+				if (isPressedCross && isExit == true) {
+					if (playerWhere % 2 == 1) {
+						GameEngine::GetInstance()->GetStateController()->gameStateNext = GameState::GS_QUIT;
+					}
+					else {
+						for (int j = 0; j < 2; j++) {
+							yesNoList.erase(yesNoList.end() - 1);
+						}
+
+						for (int j = 0; j < 4; j++) {
+							objectsList.erase(objectsList.end() - 1);
+						}
+						isExit = false;
+						playerWhere = 4;
+					}
+				}
+			}
+
+			//Option
+			else if (isOption == true && isSelectDisplay == false && isSelectVolume == false) {
+				//select button
+				if (playerMove == false) {
+					if (down)
+					{
+						playerWhere -= 1;
+						if (playerWhere < 0) {
+							playerWhere = 0;
+						}
+						playerMove = true;
+
+					}
+					else if (up)
+					{
+						playerWhere += 1;
+						if (playerWhere > 3) {
+							playerWhere = 3;
+						}
+						playerMove = true;
+					}
+				}
+				if (joystickVal.x <= 0.3 && joystickVal.x >= -0.3 && joystickVal.y <= 0.3 && joystickVal.y >= -0.3) {
+					playerMove = false;
+				}
+
+				//press X
+				if (isPressedCross) {
+					if (playerWhere == 0 && isSelectVolume == false) {
+						displayList.at(0)->ShiftSpriteTo(displayList.at(0)->GetSpriteRenderer()->GetRow(), displayList.at(0)->GetSpriteRenderer()->GetColumn() - 1);
+						UiObject* optionDisplayDropdown = new UiObject();
+						optionDisplayDropdown->SetSpriteInfo(spriteList.find("OptionsDisplayDropdown")->second);
+						optionDisplayDropdown->SetSize(optionDisplayDropdown->GetSpriteRenderer()->GetSpriteWidth(), -optionDisplayDropdown->GetSpriteRenderer()->GetSpriteHeight());
+						optionDisplayDropdown->SetPosition(glm::vec3(Buttons.at(7)->pos.x, Buttons.at(7)->pos.y + Buttons.at(7)->offset.y, 0));
+						optionDisplayDropdown->ShiftSpriteTo(optionDisplayDropdown->GetSpriteRenderer()->GetRow(), 1);
+						objectsList.push_back(optionDisplayDropdown);
+						displayList.push_back(optionDisplayDropdown);
+						playerWhere = displayList.at(0)->GetSpriteRenderer()->GetColumn();
+						isSelectDisplay = true;
+					}
+
+					if (playerWhere == 1 && isSelectDisplay == false) {
+						isSelectVolume = true;
+						isMasterVolume = true;
+						volumeKnobList.at(0)->ShiftSpriteTo(volumeKnobList.at(0)->GetSpriteRenderer()->GetRow(), 1);
+						playerWhere = 0;
+					}
+
+					if (playerWhere == 2 && isSelectDisplay == false) {
+						isSelectVolume = true;
+						isSFXVolume = true;
+						volumeKnobList.at(1)->ShiftSpriteTo(volumeKnobList.at(1)->GetSpriteRenderer()->GetRow(), 1);
+						playerWhere = 0;
+					}
+
+					if (playerWhere == 3 && isSelectDisplay == false) {
+						isSelectVolume = true;
+						isBGMVolume = true;
+						volumeKnobList.at(2)->ShiftSpriteTo(volumeKnobList.at(2)->GetSpriteRenderer()->GetRow(), 1);
+						playerWhere = 0;
+					}
+				}
+			}
+
+			//display
+			else if (isSelectDisplay == true) {
+				//select option
+				if (playerMove == false) {
+					if (up || down)
+					{
+						playerWhere += 1;
+						playerMove = true;
+					}
+				}
+				if (joystickVal.x <= 0.3 && joystickVal.x >= -0.3 && joystickVal.y <= 0.3 && joystickVal.y >= -0.3) {
+					playerMove = false;
+				}
+
+				//display mode
+				if (isPressedCross) {
+					if (playerWhere % 2 == 1) {
+						SDL_SetWindowFullscreen(GameEngine::GetInstance()->GetSDLWindow(), SDL_WINDOW_FULLSCREEN_DESKTOP);
+						SDL_GetWindowSize(GameEngine::GetInstance()->GetSDLWindow(), &windowWidth, &windowHeight);
+						glViewport(0, 0, windowWidth, windowHeight);
+						displayList.at(0)->ShiftSpriteTo(displayList.at(0)->GetSpriteRenderer()->GetRow(), 0);
+					}
+					else {
+						SDL_SetWindowFullscreen(GameEngine::GetInstance()->GetSDLWindow(), 0);
+						windowWidth = SCREEN_WIDTH;
+						windowHeight = SCREEN_HEIGHT;
+						glViewport(0, 0, windowWidth, windowHeight);
+						displayList.at(0)->ShiftSpriteTo(displayList.at(0)->GetSpriteRenderer()->GetRow(), 2);
+					}
+				}
+
+				if (isPressedCircle) {
+					playerWhere = 0;
+					if (displayList.size() > 1) {
+						displayList.erase(displayList.end() - 1);
+						objectsList.erase(objectsList.end() - 1);
+						displayList.at(0)->GetSpriteRenderer()->ShiftColumn();
+						isSelectDisplay = false;
+						isSelectVolume = false;
+					}
+				}
+			}
+
+			//volume
+			else if (isSelectVolume == true) {
+				//select option
+				if (/*!playerMove[i]*/1) {
+					if (right || left && (isSlider == false))
+					{
+						playerWhere += 1;
+						playerMove = true;
+
+						if (isMasterVolume == true) {
+							if (playerWhere % 2 == 1) {
+								volumeKnobList.at(0)->ShiftSpriteTo(volumeKnobList.at(0)->GetSpriteRenderer()->GetRow(), 0);
+								volumeBoxList.at(0)->ShiftSpriteTo(volumeBoxList.at(0)->GetSpriteRenderer()->GetRow(), volumeBoxList.at(0)->GetSpriteRenderer()->GetColumn() - 1);
+							}
+							else if (playerWhere % 2 == 0) {
+								volumeKnobList.at(0)->ShiftSpriteTo(volumeKnobList.at(0)->GetSpriteRenderer()->GetRow(), 1);
+								volumeBoxList.at(0)->ShiftSpriteTo(volumeBoxList.at(0)->GetSpriteRenderer()->GetRow(), volumeBoxList.at(0)->GetSpriteRenderer()->GetColumn() + 1);
+							}
+						}
+
+						if (isSFXVolume == true) {
+							if (playerWhere % 2 == 1) {
+								volumeKnobList.at(1)->ShiftSpriteTo(volumeKnobList.at(1)->GetSpriteRenderer()->GetRow(), 0);
+								volumeBoxList.at(1)->ShiftSpriteTo(volumeBoxList.at(1)->GetSpriteRenderer()->GetRow(), volumeBoxList.at(1)->GetSpriteRenderer()->GetColumn() - 1);
+							}
+							else if (playerWhere % 2 == 0) {
+								volumeKnobList.at(1)->ShiftSpriteTo(volumeKnobList.at(1)->GetSpriteRenderer()->GetRow(), 1);
+								volumeBoxList.at(1)->ShiftSpriteTo(volumeBoxList.at(1)->GetSpriteRenderer()->GetRow(), volumeBoxList.at(1)->GetSpriteRenderer()->GetColumn() + 1);
+							}
+						}
+
+						if (isBGMVolume == true) {
+							if (playerWhere % 2 == 1) {
+								volumeKnobList.at(2)->ShiftSpriteTo(volumeKnobList.at(2)->GetSpriteRenderer()->GetRow(), 0);
+								volumeBoxList.at(2)->ShiftSpriteTo(volumeBoxList.at(2)->GetSpriteRenderer()->GetRow(), volumeBoxList.at(2)->GetSpriteRenderer()->GetColumn() - 1);
+							}
+							else if (playerWhere % 2 == 0) {
+								volumeKnobList.at(2)->ShiftSpriteTo(volumeKnobList.at(2)->GetSpriteRenderer()->GetRow(), 1);
+								volumeBoxList.at(2)->ShiftSpriteTo(volumeBoxList.at(2)->GetSpriteRenderer()->GetRow(), volumeBoxList.at(2)->GetSpriteRenderer()->GetColumn() + 1);
+							}
+						}
+					}
+					if (right && (isSlider == true)) {
+						playerMove = true;
+						if (isMasterVolume == true && masterVolume < 100) {
+							std::cout << masterVolume << std::endl;
+							masterVolume++;
+							volumeKnobList.at(0)->SetPosition(glm::vec3((masterVolume * 4 - 57.5 / 0.25), Buttons.at(8)->pos.y, 0));
+						}
+						if (isSFXVolume == true && SFXVolume < 100) {
+							SFXVolume++;
+							volumeKnobList.at(1)->SetPosition(glm::vec3((SFXVolume * 4 - 57.5 / 0.25), Buttons.at(8)->pos.y + (-1 * Buttons.at(8)->offset.y), 0));
+						}
+						if (isBGMVolume == true && BGMVolume < 100) {
+							BGMVolume++;
+							volumeKnobList.at(2)->SetPosition(glm::vec3((BGMVolume * 4 - 57.5 / 0.25), Buttons.at(8)->pos.y + (-2 * Buttons.at(8)->offset.y), 0));
+						}
+
+					}
+					else if (left && (isSlider == true)) {
+						playerMove = true;
+						if (isMasterVolume == true && masterVolume > 0) {
+							masterVolume--;
+							volumeKnobList.at(0)->SetPosition(glm::vec3((masterVolume * 4 - 57.5 / 0.25), Buttons.at(8)->pos.y, 0));
+						}
+						if (isSFXVolume == true && SFXVolume > 0) {
+							SFXVolume--;
+							volumeKnobList.at(1)->SetPosition(glm::vec3((SFXVolume * 4 - 57.5 / 0.25), Buttons.at(8)->pos.y + (-1 * Buttons.at(8)->offset.y), 0));
+						}
+						if (isBGMVolume == true && BGMVolume > 0) {
+							BGMVolume--;
+							volumeKnobList.at(2)->SetPosition(glm::vec3((BGMVolume * 4 - 57.5 / 0.25), Buttons.at(8)->pos.y + (-2 * Buttons.at(8)->offset.y), 0));
+						}
+					}
+				}
+
+				if (joystickVal.x <= 0.3 && joystickVal.x >= -0.3 && joystickVal.y <= 0.3 && joystickVal.y >= -0.3) {
+					playerMove = false;
+				}
+
+				if (isPressedCircle) {
+					if (isMasterVolume == true) {
+						if (playerWhere % 2 == 1) {
+							volumeKnobList.at(0)->ShiftSpriteTo(volumeKnobList.at(0)->GetSpriteRenderer()->GetRow(), volumeKnobList.at(0)->GetSpriteRenderer()->GetColumn());
+							volumeBoxList.at(0)->ShiftSpriteTo(volumeBoxList.at(0)->GetSpriteRenderer()->GetRow(), volumeBoxList.at(0)->GetSpriteRenderer()->GetColumn() + 1);
+						}
+						else {
+							volumeKnobList.at(0)->ShiftSpriteTo(volumeKnobList.at(0)->GetSpriteRenderer()->GetRow(), volumeKnobList.at(0)->GetSpriteRenderer()->GetColumn() + 1);
+							volumeBoxList.at(0)->ShiftSpriteTo(volumeBoxList.at(0)->GetSpriteRenderer()->GetRow(), volumeBoxList.at(0)->GetSpriteRenderer()->GetColumn());
+						}
+
+						if (isSlider == true) {
+							isSlider = false;
+							volumeTrackList.at(0)->ShiftSpriteTo(volumeTrackList.at(0)->GetSpriteRenderer()->GetRow(), 0);
+						}
+						isSelectDisplay = false;
+						isSelectVolume = false;
+						isMasterVolume = false;
+						playerWhere = 1;
+					}
+
+					else if (isSFXVolume == true) {
+
+						if (playerWhere % 2 == 1) {
+							volumeKnobList.at(1)->ShiftSpriteTo(volumeKnobList.at(1)->GetSpriteRenderer()->GetRow(), volumeKnobList.at(1)->GetSpriteRenderer()->GetColumn());
+							volumeBoxList.at(1)->ShiftSpriteTo(volumeBoxList.at(1)->GetSpriteRenderer()->GetRow(), volumeBoxList.at(1)->GetSpriteRenderer()->GetColumn() + 1);
+						}
+						else {
+							volumeKnobList.at(1)->ShiftSpriteTo(volumeKnobList.at(1)->GetSpriteRenderer()->GetRow(), volumeKnobList.at(1)->GetSpriteRenderer()->GetColumn() + 1);
+							volumeBoxList.at(1)->ShiftSpriteTo(volumeBoxList.at(1)->GetSpriteRenderer()->GetRow(), volumeBoxList.at(1)->GetSpriteRenderer()->GetColumn());
+						}
+
+						if (isSlider == true) {
+							isSlider = false;
+							volumeTrackList.at(1)->ShiftSpriteTo(volumeTrackList.at(1)->GetSpriteRenderer()->GetRow(), 0);
+						}
+						isSelectDisplay = false;
+						isSelectVolume = false;
+						isSFXVolume = false;
+						playerWhere = 2;
+					}
+
+					else if (isBGMVolume == true) {
+						if (playerWhere % 2 == 1) {
+							volumeKnobList.at(2)->ShiftSpriteTo(volumeKnobList.at(2)->GetSpriteRenderer()->GetRow(), volumeKnobList.at(2)->GetSpriteRenderer()->GetColumn());
+							volumeBoxList.at(2)->ShiftSpriteTo(volumeBoxList.at(2)->GetSpriteRenderer()->GetRow(), volumeBoxList.at(2)->GetSpriteRenderer()->GetColumn() + 1);
+						}
+						else {
+							volumeKnobList.at(2)->ShiftSpriteTo(volumeKnobList.at(2)->GetSpriteRenderer()->GetRow(), volumeKnobList.at(2)->GetSpriteRenderer()->GetColumn() + 1);
+							volumeBoxList.at(2)->ShiftSpriteTo(volumeBoxList.at(2)->GetSpriteRenderer()->GetRow(), volumeBoxList.at(2)->GetSpriteRenderer()->GetColumn());
+						}
+						if (isSlider == true) {
+							isSlider = false;
+							volumeTrackList.at(2)->ShiftSpriteTo(volumeTrackList.at(2)->GetSpriteRenderer()->GetRow(), 0);
+						}
+						isSelectDisplay = false;
+						isSelectVolume = false;
+						isBGMVolume = false;
+						playerWhere = 3;
+					}
+
+
+				}
+
+				if (isPressedCross) {
+					if (isMasterVolume == true) {
+						if (playerWhere % 2 == 1) {
+							if (isToggleVolume[0] == false) {
+								volumeBoxList.at(0)->ShiftSpriteTo(volumeBoxList.at(0)->GetSpriteRenderer()->GetRow(), 0);
+								isToggleVolume[0] = true;
+							}
+							else {
+								volumeBoxList.at(0)->ShiftSpriteTo(volumeBoxList.at(0)->GetSpriteRenderer()->GetRow(), 2);
+								isToggleVolume[0] = false;
+							}
+
+						}
+						else {
+							isSlider = true;
+							volumeTrackList.at(0)->ShiftSpriteTo(volumeTrackList.at(0)->GetSpriteRenderer()->GetRow(), 1);
+						}
+					}
+
+					if (isSFXVolume == true) {
+						if (playerWhere % 2 == 1) {
+							if (isToggleVolume[1] == false) {
+								volumeBoxList.at(1)->ShiftSpriteTo(volumeBoxList.at(1)->GetSpriteRenderer()->GetRow(), 0);
+								isToggleVolume[1] = true;
+							}
+							else {
+								volumeBoxList.at(1)->ShiftSpriteTo(volumeBoxList.at(1)->GetSpriteRenderer()->GetRow(), 2);
+								isToggleVolume[1] = false;
+							}
+						}
+						else {
+							isSlider = true;
+							volumeTrackList.at(1)->ShiftSpriteTo(volumeTrackList.at(1)->GetSpriteRenderer()->GetRow(), 1);
+						}
+					}
+
+					if (isBGMVolume == true) {
+						if (playerWhere % 2 == 1) {
+							if (isToggleVolume[2] == false) {
+								volumeBoxList.at(2)->ShiftSpriteTo(volumeBoxList.at(2)->GetSpriteRenderer()->GetRow(), 0);
+								isToggleVolume[2] = true;
+							}
+							else {
+								volumeBoxList.at(2)->ShiftSpriteTo(volumeBoxList.at(2)->GetSpriteRenderer()->GetRow(), 2);
+								isToggleVolume[2] = false;
+							}
+						}
+						else {
+							isSlider = true;
+							volumeTrackList.at(2)->ShiftSpriteTo(volumeTrackList.at(2)->GetSpriteRenderer()->GetRow(), 1);
+						}
+					}
+				}
+
+			}
+		}
+	}
+
+	isPressedCross = false;
+    isPressedCircle = false;
+    isPressedSquare = false;
+    isPressedTriangle = false;
 }
 
 void LevelMainMenu::UpdateUi() {
@@ -1143,49 +1893,55 @@ void LevelMainMenu::saveConfig(std::string& filename, ButtonData* con)
 
 }
 
-void LevelMainMenu::loadConfig(std::string filename) {
+void LevelMainMenu::loadConfig(std::string filename) 
+{
 	std::ifstream file(filename);
 
-	if (file.is_open()) {
-		nlohmann::json data = nlohmann::json::parse(file);
-		int id = -1;
-		std::cout << "Opened" << std::endl;
-		if (data.contains("number") && !data["number"].is_null()) {
-			id = data["number"];
-			for (int i = 0; i < Buttons.size(); i++) {
-				if (Buttons.at(i)->number == id) {
-					std::cout << "Loaded" << std::endl;
-					//configs.at(i).text = data["text"];
-					if (data.contains("posX") && !data["posX"].is_null()) {
-						Buttons.at(i)->pos.x = data["posX"];
-					}
+	if (!file.is_open())
+	{
+		KK_ERROR("LevelMainMenu: Cannot Load Configuration file!");
+		return;
+	}
 
-					if (data.contains("posY") && !data["posY"].is_null()) {
-						Buttons.at(i)->pos.y = data["posY"];
-					}
+	nlohmann::json data = nlohmann::json::parse(file);
+	int id = -1;
+	std::cout << "Opened" << std::endl;
 
-					if (data.contains("width") && !data["width"].is_null()) {
-						Buttons.at(i)->size.x = data["width"];
-					}
+	if (data.contains("number") && !data["number"].is_null()) 
+	{
+		id = data["number"];
 
-					if (data.contains("hight") && !data["hight"].is_null()) {
-						Buttons.at(i)->size.y = data["hight"];
-					}
+		for (int i = 0; i < Buttons.size(); i++) 
+		{
+			if (Buttons.at(i)->number == id) 
+			{
+				std::cout << "Loaded" << std::endl;
 
-					if (data.contains("offSetX") && !data["offSetX"].is_null()) {
-						Buttons.at(i)->offset.x = data["offSetX"];
-					}
+				if (data.contains("posX") && !data["posX"].is_null()) {
+					Buttons.at(i)->pos.x = data["posX"];
+				}
 
-					if (data.contains("offSetY") && !data["offSetY"].is_null()) {
-						Buttons.at(i)->offset.y = data["offSetY"];
-					}
+				if (data.contains("posY") && !data["posY"].is_null()) {
+					Buttons.at(i)->pos.y = data["posY"];
+				}
+
+				if (data.contains("width") && !data["width"].is_null()) {
+					Buttons.at(i)->size.x = data["width"];
+				}
+
+				if (data.contains("hight") && !data["hight"].is_null()) {
+					Buttons.at(i)->size.y = data["hight"];
+				}
+
+				if (data.contains("offSetX") && !data["offSetX"].is_null()) {
+					Buttons.at(i)->offset.x = data["offSetX"];
+				}
+
+				if (data.contains("offSetY") && !data["offSetY"].is_null()) {
+					Buttons.at(i)->offset.y = data["offSetY"];
 				}
 			}
 		}
-	}
-
-	else {
-		std::cout << "Failed" << std::endl;
 	}
 }
 

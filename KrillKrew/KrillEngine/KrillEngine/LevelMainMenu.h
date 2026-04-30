@@ -3,6 +3,8 @@
 #include "LevelUtilities.h"
 #include "nlohmann/json.hpp"
 #include <fstream>
+
+
 //using json = nlohmann::json;
 class LevelMainMenu : public Level
 {
@@ -29,6 +31,11 @@ private:
 
 	bool isStart = false;
 	bool isExit = false;
+
+	bool isPressedCross = false;
+	bool isPressedCircle = false;
+	bool isPressedSquare = false;
+	bool isPressedTriangle = false;
 
 	bool isOption = false;
 	bool isSelectDisplay = false;
@@ -57,6 +64,7 @@ private:
 	float time1s = 0;
 	float time05s = 0;
 	float previousWidth = 0, previousHeight = 0;
+	ImVec2 joystickVal;
 
 	struct ButtonData
 	{
@@ -91,4 +99,6 @@ public:
 	UiObject* InitButtonUI(std::string name, SpritesheetInfo spriteInfo, ButtonData* buttonData, glm::vec2 spriteShiftPos);
 	void saveConfig(std::string& filename, ButtonData* con);
 	void loadConfig(std::string filename);
+	void DrawVirtualJoystick(const char* label, ImVec2& stickValue, float radius);
+	void DrawControllerButtons();
 };
