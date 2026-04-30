@@ -47,6 +47,8 @@ public:
 	void SetIsRender(bool isRender);
 	bool GetIsRender() const;
 
+	void ShiftSpriteTo(int row, int col);
+
 	virtual void OnColliderEnter(Collider* other);
 	virtual void OnColliderStay(Collider* other);
 	virtual void OnColliderExit(Collider* other);

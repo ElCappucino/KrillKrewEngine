@@ -49,26 +49,28 @@ private:
 	OrthographicValue targetSceneProjection; // use for lerping between the current projection and this (target projection).
 	Camera camera;
 	Timer* timer;
+	KrillSoundManager::SoundManager* soundManager;
+	GLRenderer* renderer;
+	GameEngine* gameEngine;
 
 	int dt = 0;
 	float time1s = 0;
 	float time05s = 0;
 	float previousWidth = 0, previousHeight = 0;
 
-	struct config
+	struct ButtonData
 	{
+		std::string name;
 		int number;
-		float posX;
-		float posY;
-		float height;
-		float width;
-		float offSetX;
-		float offSetY;
-		bool playerHere = false;
+		glm::vec2 pos;
+		glm::vec2 size;
+		glm::vec2 offset;
 		int column;
+
+		bool playerHere = false;
 	};
 
-	std::vector<config*> configs;
+	std::vector<ButtonData*> Buttons;
 
 public:
 	virtual void LevelLoad();
@@ -83,8 +85,10 @@ public:
 
 	void UpdateInput();
 	void UpdateUi();
-	void saveConfig(std::string& filename, config* con);
+	void ShowImGuiConfig(bool isShowing);
+	void InitButtonData(std::string name, int number, glm::vec2 pos, glm::vec2 size, glm::vec2 offset, int column, std::string configPath);
+	UiObject* InitUI(std::string name, SpritesheetInfo spriteInfo, glm::vec2 pos, glm::vec2 size, glm::vec2 spriteShiftPos);
+	UiObject* InitButtonUI(std::string name, SpritesheetInfo spriteInfo, ButtonData* buttonData, glm::vec2 spriteShiftPos);
+	void saveConfig(std::string& filename, ButtonData* con);
 	void loadConfig(std::string filename);
-
-	//void SaveVolumeConfig(const std::string& filename);
 };

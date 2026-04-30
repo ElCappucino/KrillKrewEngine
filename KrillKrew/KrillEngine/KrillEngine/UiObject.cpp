@@ -30,7 +30,10 @@ bool UiObject::GetIsRender() const
 {
 	return this->isRender;
 }
-
+void UiObject::ShiftSpriteTo(int row, int col)
+{
+	this->GetSpriteRenderer()->ShiftTo(row, col);
+}
 void UiObject::Render(glm::mat4 globalModelTransform)
 {
 	if (!isRender)
