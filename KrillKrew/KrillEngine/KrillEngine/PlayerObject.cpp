@@ -464,9 +464,9 @@ void PlayerObject::OnColliderEnter(Collider* other)
 		if (this->GetPlayerNumber() != player->GetPlayerNumber())
 		{
 			if (player->GetIsShocking()) {
-				player->SetIsStun(true);
-				player->SetStunDuraion(20);
-				player->SetIsShocking(true);
+				this->SetIsStun(true);
+				this->SetStunDuraion(10);
+				this->SetIsShocking(true);
 			}
 		}
 	}
@@ -929,15 +929,18 @@ void PlayerObject::AddOwningTrap(TrapObject* trap)
 }
 void PlayerObject::RemoveOwningTrap(TrapObject* trap)
 {
-	auto it = std::find(ownTrap.begin(), ownTrap.end(), trap);
-	if (it == ownTrap.end())
-	{
-		KK_ERROR("PlayerObject: could not find trap to remove");
+	if (trap != nullptr) {
+		auto it = std::find(ownTrap.begin(), ownTrap.end(), trap);
+		if (it == ownTrap.end())
+		{
+			KK_ERROR("PlayerObject: could not find trap to remove");
+		}
+		else
+		{
+			ownTrap.erase(it);
+		}
 	}
-	else
-	{
-		ownTrap.erase(it);
-	}
+	
 }
 
 void PlayerObject::UpdateSpriteSheetPosition()

@@ -2146,10 +2146,6 @@ void LevelShowcase::UpdateInput()
 								isPositiveXOld[i + currentPlayer],
 								isPositiveYOld[i + currentPlayer]
 							);
-
-							if (players[i + currentPlayer]->GetIsBurning()) {
-								players[i + currentPlayer]->ReduceBurningDuration(dt);
-							}
 						}
 						else if (players[i + currentPlayer]->GetIsAiming() == false)
 						{
@@ -2160,10 +2156,6 @@ void LevelShowcase::UpdateInput()
 								isPositiveX,
 								isPositiveY
 							);
-
-							if (players[i + currentPlayer]->GetIsBurning()) {
-								players[i + currentPlayer]->ReduceBurningDuration(dt);
-							}
 						}
 					}
 
@@ -2563,10 +2555,6 @@ void LevelShowcase::UpdateMovement()
 				player->GetXIsPositive(),
 				player->GetYIsPositive()
 			);
-
-			if (player->GetIsBurning()) {
-				player->ReduceBurningDuration(dt);
-			}
 			//KK_CORE_WARN("Set Velocity = {0}, {1}", knockbackVeloX, knockbackVeloY);
 		}
 
@@ -2589,6 +2577,15 @@ void LevelShowcase::UpdateMovement()
 		{
 			player->ReduceDashDuration(timer->getDeltaTime());
 		}
+
+		if (player->GetIsBurning())
+		{
+			glm::vec3 vel = player->GetVelocity();
+			if (abs(vel.x) > 0.1f || abs(vel.y) > 0.1f)
+			{
+				player->ReduceBurningDuration(timer->getDeltaTime());
+			}
+		}
 	}
 }
 
@@ -2604,7 +2601,7 @@ void LevelShowcase::UpdateTime() {
 
 	if (time1s >= 1.0f)
 	{
-		KK_INFO("UpdateTime() FPS: {0} time1s = {1}", framePerSecond, time1s);
+		//KK_INFO("UpdateTime() FPS: {0} time1s = {1}", framePerSecond, time1s);
 		framePerSecond = 0;
 
 		time1s = 0.0f;
@@ -3294,7 +3291,7 @@ void LevelShowcase::UsingAbilityKeyDown(int numPlayer, PlayerObject::AbilityButt
 
 	PlayerObject::Ability idAbility = players[numPlayer]->GetAbilityByButton(button);
 	// std::cout << "idAbility " << idAbility << std::endl;
-	if (players[numPlayer]->GetCooldown(button) <= 0 && !players[numPlayer]->GetIsBurning())
+	if (players[numPlayer]->GetCooldown(button) <= 0 && !players[numPlayer]->GetIsBurning() && !players[numPlayer]->GetIsStun())
 	{
 		switch (idAbility) 
 		{
@@ -3336,7 +3333,7 @@ void LevelShowcase::UsingAbilityKeyDown(int numPlayer, PlayerObject::AbilityButt
 						trap->ChangeAnimationState(TrapObject::AnimationState::Collide);
 						KK_TRACE("Press Again");
 						trap->isActivate = true;
-						players[numPlayer]->SetAbilityCooldown(button, TNTCooldown);
+						players[numPlayer]->SetAbilityCooldown(button, 3);
 						players[numPlayer]->SetIsTNT(false);
 						players[numPlayer]->RemoveOwningTrap(trap);
 					}
@@ -3519,6 +3516,7 @@ void LevelShowcase::TNT(int numPlayer, PlayerObject::AbilityButton button) {
 	TNT->SetType(TrapObject::TypeTrap::Tnt);
 	TNT->SetAnimationSprite(TrapObject::AnimationState::Idle, spriteList.find("TNT")->second);
 	TNT->SetAnimationSprite(TrapObject::AnimationState::Collide, spriteList.find("Landmine_Explode")->second);
+	TNT->SetOwner(players[numPlayer]);
 	//TNT->GetCollider()->Update(glm::vec3(0, 0, 0), TNT->getPos());
 	//TNT->setIsCanKnockback(true);
 	//std::cout << "Owner " << Trap->getNumOwner() << std::endl;

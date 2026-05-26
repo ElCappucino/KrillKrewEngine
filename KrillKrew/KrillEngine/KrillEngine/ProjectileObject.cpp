@@ -219,11 +219,11 @@ void ProjectileObject::OnColliderEnter(Collider* other)
 				{
 					player->SetIsStun(true);
 					if (player->GetIsSlow()) {
-						player->SetStunDuraion(20);
+						player->SetStunDuraion(10);
 						player->SetIsShocking(true);
 					}
 					else {
-						player->SetStunDuraion(10);
+						player->SetStunDuraion(5);
 					}
 					KrillSoundManager::SoundManager::GetInstance()->PlaySFX("Bola_Hit", false);
 				}
@@ -271,6 +271,23 @@ void ProjectileObject::OnColliderEnter(Collider* other)
 			trap->ExplodeTileInRange();
 			KrillSoundManager::SoundManager::GetInstance()->PlaySFX("Bomb_Explosion", false);
 			ChangeAnimationState(AnimationState::Collide);
+
+			PlayerObject* trapOwner = trap->GetOwner();
+			if (trapOwner != nullptr)
+			{
+				for (int b = 0; b < 3; b++)
+				{
+					PlayerObject::AbilityButton btn = static_cast<PlayerObject::AbilityButton>(b);
+					if (trapOwner->GetAbilityByButton(btn) == PlayerObject::Ability::TNT)
+					{
+						trapOwner->SetAbilityCooldown(btn, 3);
+						break;
+					}
+				}
+				trap->ChangeAnimationState(TrapObject::AnimationState::Collide);
+				trapOwner->SetIsTNT(false);
+				trapOwner->RemoveOwningTrap(trap);
+			}
 		}
 	}
 }

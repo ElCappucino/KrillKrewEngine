@@ -93,6 +93,13 @@ bool TrapObject::GetIsExplode() {
 	return isExplode;
 }
 
+void TrapObject::SetOwner(PlayerObject* player){ 
+	this->playerOwner = player; 
+}
+PlayerObject* TrapObject::GetOwner() { 
+	return playerOwner; 
+}
+
 void TrapObject::AddTileInRange(TileObject* tile)
 {
 	KK_TRACE("AddTileInRange");
@@ -136,15 +143,14 @@ void TrapObject::OnColliderEnter(Collider* other)
 	if (player != nullptr)
 	{
 		
-		if (this->GetPlayerNumber() != player->GetPlayerNumber())
-		{
+		
 			//KK_TRACE("Collide with TNT");
 			KrillSoundManager::SoundManager::GetInstance()->PlaySFX("Player_Damaged", false);
 			switch (type)
 			{
 				case TypeTrap::Trap:
 					//KK_TRACE("Trap of player {0} hit player {1}", this->GetPlayerNumber(), player->GetPlayerNumber());
-					if (currAnimState == AnimationState::Idle)
+					if (currAnimState == AnimationState::Idle && this->GetPlayerNumber() != player->GetPlayerNumber())
 					{
 						player->SetSlowDuration(3.f);
 						player->SetIsSlow(true);
@@ -174,7 +180,7 @@ void TrapObject::OnColliderEnter(Collider* other)
 					break;
 			}
 			
-		}
+		
 	}
 	
 }
@@ -184,8 +190,7 @@ void TrapObject::OnColliderStay(Collider* other)
 	if (player != nullptr)
 	{
 
-		if (this->GetPlayerNumber() != player->GetPlayerNumber())
-		{
+		
 			//KK_TRACE("Collide with TNT");
 			switch (type)
 			{
@@ -197,12 +202,16 @@ void TrapObject::OnColliderStay(Collider* other)
 					SetCanKnockback(true);
 					player->ApplyKnockback(this);
 					//this->isActive = false;
+					if (isExplode) {
+						player->SetIsBurning(true);
+						player->SetBurningDuration(3);
+					}
 
 				}
 				break;
 			}
 
-		}
+		
 	}
 }
 void TrapObject::OnColliderExit(Collider* other)
