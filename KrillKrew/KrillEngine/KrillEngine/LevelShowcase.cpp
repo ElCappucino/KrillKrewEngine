@@ -262,6 +262,9 @@ void LevelShowcase::LevelLoad()
 	spriteList["Tentacle_Up"] = SpritesheetInfo("Tentacle_Up", "../Resource/Texture/Props/UI_GP_Event_VFX_Tentecle_Up.png", 319, 334, 1914, 334);
 	spriteList["Tentacle_Idle"] = SpritesheetInfo("Tentacle_Idle", "../Resource/Texture/Props/UI_GP_Event_VFX_Tentecle_Idle.png", 319, 334, 4147, 334);
 
+	//elemental  effect
+	spriteList["Burning"] = SpritesheetInfo("Burning", "../Resource/Texture/burning.png", 482, 594, 482, 594);
+
 	soundManager = KrillSoundManager::SoundManager::GetInstance();
 
 	soundManager->LoadMusic("bgm_test", "../Resource/Audio/bgm_test.mp3");
@@ -1457,6 +1460,8 @@ void LevelShowcase::LevelUpdate()
 		//Ui Skills
 		UpdateUI();
 
+		BurningEffect();
+
 		CheckPlayerRemain();
 
 		GroundTileRefactor();
@@ -2589,7 +2594,6 @@ void LevelShowcase::UpdateMovement()
 	}
 }
 
-
 void LevelShowcase::UpdateTime() {
 
 	timer->tick();
@@ -3295,6 +3299,7 @@ void LevelShowcase::SetTrapAnimation(TrapObject* projectile, std::string nameIdl
 	projectile->SetAnimationSprite(TrapObject::Idle, spriteList.find(nameIdle)->second);
 	projectile->SetAnimationSprite(TrapObject::Collide, spriteList.find(nameCollide)->second);
 }
+
 void LevelShowcase::SetSprite(EntityObject* projectile, std::string name) {
 	projectile->SetSpriteInfo(spriteList.find(name)->second);
 	projectile->SetTexture(spriteList.find(name)->second.texture);
@@ -3562,5 +3567,30 @@ void LevelShowcase::SaveWinRoundInfo(const std::string& fileName)
 		KK_INFO("LevelShowcase: Save Round Win Complete");
 
 		writefile.close();
+	}
+}
+
+void LevelShowcase::BurningEffect() {
+	for (int i = 0; i < 4; i++) {
+		if (players[i]->GetIsBurning()) {
+			if (burningObjects[i] == nullptr) {
+				UiObject* burning = new UiObject();
+				burning->SetSpriteInfo(spriteList.find("Burning")->second);
+				burning->SetSize(burning->GetSpriteRenderer()->GetSpriteWidth() / 4, -burning->GetSpriteRenderer()->GetSpriteHeight() / 4);
+				burningObjects[i] = burning;
+				uiObjects.push_back(burning);
+				objectsList.push_back(burning);
+			}
+			burningObjects[i]->SetPosition(players[i]->getPos());
+		}
+		else {
+			if (burningObjects[i] != nullptr) {
+				UiObject* objectToDelete = burningObjects[i];
+				uiObjects.erase(std::remove(uiObjects.begin(), uiObjects.end(), objectToDelete), uiObjects.end());
+				objectsList.erase(std::remove(objectsList.begin(), objectsList.end(), objectToDelete), objectsList.end());
+				delete objectToDelete;
+				burningObjects[i] = nullptr;
+			}
+		}
 	}
 }

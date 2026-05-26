@@ -15,6 +15,7 @@ private:
 	std::vector<PropObject*> propObjects;
 	std::vector<TextObject*> textObjects;
 	std::vector<UiObject*> uiObjects;
+	std::array<UiObject*, 4> burningObjects;
 
 	std::set<std::pair<Collider*, Collider*>> currentCollisions;
 	std::set<std::pair<Collider*, Collider*>> previousCollisions;
@@ -355,6 +356,7 @@ public:
 	void ClearUnusedObject();
 	void UpdatePauseMenu();
 	void CheckPlayerRemain();
+	void BurningEffect();
 
 	void GroundTileRefactor();
 	void TileImport(std::array<std::array<int, MAP_WIDTH>, MAP_HEIGHT> &TileBuffer, std::string fileName);
