@@ -1165,6 +1165,7 @@ void LevelMainMenu::NewUpdateInput()
 		playerMove = false;
 	}
 
+	// update joystick inputs
 	if (!playerMove && up && currentButton->UpperButton != nullptr)
 	{
 		currentButton->playerHere = false;
