@@ -9,10 +9,27 @@
 class LevelMainMenu : public Level
 {
 private:
+
+	enum class MenuState 
+	{ 
+		Main, 
+		Credits, 
+		StartConfirm, 
+		Tutorial, 
+		Options, 
+		ExitConfirm
+	};
+
+	
+
+	MenuState currentMenuState = MenuState::Main;
+
 	std::vector<DrawableObject*> objectsList;
 	std::vector<UiObject*> textList;
 	std::vector<UiObject*> tutorialInfoList;
 	std::vector<UiObject*> yesNoList;
+	std::vector<UiObject*> yesNoList_Start;
+	std::vector<UiObject*> yesNoList_Exit;
 	std::vector<UiObject*> textOptionList;
 	std::vector<UiObject*> displayList;
 	std::vector<UiObject*> volumeTrackList;
@@ -31,6 +48,11 @@ private:
 
 	bool isStart = false;
 	bool isExit = false;
+
+	bool up = false;
+	bool down = false;
+	bool right = false;
+	bool left = false;
 
 	bool isPressedCross = false;
 	bool isPressedCircle = false;
@@ -75,10 +97,20 @@ private:
 		glm::vec2 offset;
 		int column;
 
+		UiObject* ButtonUI;
+
+		ButtonData* UpperButton = nullptr;
+		ButtonData* LowerButton = nullptr;
+		ButtonData* LeftButton = nullptr;
+		ButtonData* RightButton = nullptr;
+
 		bool playerHere = false;
 	};
 
+	std::map<std::string, ButtonData*> buttonList;
 	std::vector<ButtonData*> Buttons;
+
+	ButtonData* currentButton;
 
 public:
 	virtual void LevelLoad();
@@ -92,13 +124,25 @@ public:
 	virtual void HandleMouse(int type, int x, int y);
 
 	void UpdateInput();
+	void NewUpdateInput();
 	void UpdateUi();
+	void UpdateAudio();
+
 	void ShowImGuiConfig(bool isShowing);
-	void InitButtonData(std::string name, int number, glm::vec2 pos, glm::vec2 size, glm::vec2 offset, int column, std::string configPath);
+	LevelMainMenu::ButtonData* InitButtonData(std::string name, glm::vec2 pos, glm::vec2 size, glm::vec2 offset, int column, std::string configPath);
 	UiObject* InitUI(std::string name, SpritesheetInfo spriteInfo, glm::vec2 pos, glm::vec2 size, glm::vec2 spriteShiftPos);
 	UiObject* InitButtonUI(std::string name, SpritesheetInfo spriteInfo, ButtonData* buttonData, glm::vec2 spriteShiftPos);
 	void saveConfig(std::string& filename, ButtonData* con);
 	void loadConfig(std::string filename);
+	void loadConfigButtonData(std::string filename, ButtonData* buttonData);
 	void DrawVirtualJoystick(const char* label, ImVec2& stickValue, float radius);
 	void DrawControllerButtons();
+
+	void TransitionTo(MenuState newState);
+	void HandleMainMenuLogic();
+	void HandleCreditsLogic();
+	void HandleStartConfirmLogic();
+	void HandleTutorialLogic();
+	void HandleOptionsLogic();
+	void HandleExitConfirmLogic();
 };
