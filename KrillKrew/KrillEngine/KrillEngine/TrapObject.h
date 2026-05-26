@@ -33,6 +33,7 @@ private:
 	int playerNumOwner;
 	bool CanKnockback;
 	int type;
+	bool isExplode;
 	
 	std::vector<TileObject*> TileInRange;
 
@@ -48,12 +49,15 @@ public:
 	void SetLifeTime(int lifeTime);
 	void SetPlayerNumber(int Num);
 	void ReduceLifeTime();
+	void SetCanKnockback(bool isCanKnockback);
+	void SetType(int type);
+	void SetIsExplode(bool isExplode);
+
 	int GetLifetime();
 	int GetPlayerNumber();
-	void SetCanKnockback(bool isCanKnockback);
 	bool GetCanKnockback();
-	void SetType(int type);
 	bool GetType();
+	bool GetIsExplode();
 
 	void AddTileInRange(TileObject* tile);
 	void DeleteTileInRange(TileObject* tile);

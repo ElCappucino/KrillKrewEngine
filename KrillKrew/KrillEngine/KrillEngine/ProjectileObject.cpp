@@ -218,7 +218,13 @@ void ProjectileObject::OnColliderEnter(Collider* other)
 				else if (this->type == TypeProjectile::Bola)
 				{
 					player->SetIsStun(true);
-					player->SetStunDuraion(10);
+					if (player->GetIsSlow()) {
+						player->SetStunDuraion(20);
+						player->SetIsShocking(true);
+					}
+					else {
+						player->SetStunDuraion(10);
+					}
 					KrillSoundManager::SoundManager::GetInstance()->PlaySFX("Bola_Hit", false);
 				}
 				else if (this->type == ProjectileObject::TypeProjectile::Teleport) {
@@ -254,6 +260,18 @@ void ProjectileObject::OnColliderEnter(Collider* other)
 			
 		}
 		
+	}
+
+	TrapObject* trap = dynamic_cast<TrapObject*>(other->GetParent());
+	if (trap != nullptr) {
+		if (trap->GetType() == TrapObject::TypeTrap::Tnt && this->type == TypeProjectile::Fireball) {
+			//ExplodeTileInRange();
+			trap->SetIsExplode(true);
+			trap->isActivate = true;
+			trap->ExplodeTileInRange();
+			KrillSoundManager::SoundManager::GetInstance()->PlaySFX("Bomb_Explosion", false);
+			ChangeAnimationState(AnimationState::Collide);
+		}
 	}
 }
 void ProjectileObject::OnColliderStay(Collider* other)

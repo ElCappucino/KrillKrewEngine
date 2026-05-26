@@ -85,6 +85,14 @@ int TrapObject::GetPlayerNumber() {
 	return playerNumOwner;
 }
 
+void TrapObject::SetIsExplode(bool isExplode) {
+	this->isExplode = isExplode;
+}
+
+bool TrapObject::GetIsExplode() {
+	return isExplode;
+}
+
 void TrapObject::AddTileInRange(TileObject* tile)
 {
 	KK_TRACE("AddTileInRange");
@@ -158,7 +166,10 @@ void TrapObject::OnColliderEnter(Collider* other)
 						SetCanKnockback(true);
 						player->ApplyKnockback(this);
 						//this->isActive = false;
-						
+						if (isExplode) {
+							player->SetIsBurning(true);
+							player->SetBurningDuration(3);
+						}
 					}
 					break;
 			}

@@ -1107,6 +1107,7 @@ void LevelShowcase::LevelInit()
 
 	std::cout << "Init Level" << std::endl;
 }
+
 void LevelShowcase::UpdateVolume()
 {
 	KrillSoundManager::SoundManager::GetInstance()->SetVolumeAllMusic((masterVolume / 100.0f) * musicVolume * 0.01f * (128.f - 0));
@@ -2145,6 +2146,10 @@ void LevelShowcase::UpdateInput()
 								isPositiveXOld[i + currentPlayer],
 								isPositiveYOld[i + currentPlayer]
 							);
+
+							if (players[i + currentPlayer]->GetIsBurning()) {
+								players[i + currentPlayer]->ReduceBurningDuration(dt);
+							}
 						}
 						else if (players[i + currentPlayer]->GetIsAiming() == false)
 						{
@@ -2155,6 +2160,10 @@ void LevelShowcase::UpdateInput()
 								isPositiveX,
 								isPositiveY
 							);
+
+							if (players[i + currentPlayer]->GetIsBurning()) {
+								players[i + currentPlayer]->ReduceBurningDuration(dt);
+							}
 						}
 					}
 
@@ -2555,6 +2564,9 @@ void LevelShowcase::UpdateMovement()
 				player->GetYIsPositive()
 			);
 
+			if (player->GetIsBurning()) {
+				player->ReduceBurningDuration(dt);
+			}
 			//KK_CORE_WARN("Set Velocity = {0}, {1}", knockbackVeloX, knockbackVeloY);
 		}
 
@@ -2604,6 +2616,7 @@ void LevelShowcase::UpdateTime() {
 	}
 
 }
+
 void LevelShowcase::DrawImGUI()
 {
 	bool show_demo_window = true;
@@ -2779,6 +2792,7 @@ void LevelShowcase::DrawImGUI()
 
 
 }
+
 void LevelShowcase::UpdateUI()
 {
 	int playerNumber = 4; // Change later
@@ -3280,7 +3294,7 @@ void LevelShowcase::UsingAbilityKeyDown(int numPlayer, PlayerObject::AbilityButt
 
 	PlayerObject::Ability idAbility = players[numPlayer]->GetAbilityByButton(button);
 	// std::cout << "idAbility " << idAbility << std::endl;
-	if (players[numPlayer]->GetCooldown(button) <= 0) 
+	if (players[numPlayer]->GetCooldown(button) <= 0 && !players[numPlayer]->GetIsBurning())
 	{
 		switch (idAbility) 
 		{
