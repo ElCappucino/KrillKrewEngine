@@ -362,7 +362,7 @@ public:
 	void TileImport(std::array<std::array<int, MAP_WIDTH>, MAP_HEIGHT> &TileBuffer, std::string fileName);
 
 	virtual void SetProjectileAnimation(ProjectileObject* projectile, std::string name);
-	virtual void SetTrapAnimation(TrapObject* projectile, std::string nameIdle, std::string nameCollide);
+	virtual void SetTrapAnimation(TrapObject* trap, std::string nameIdle, std::string nameCollide);
 	virtual void SetSprite(EntityObject* projectile, std::string name);
 
 	virtual void AddEntityToScene(EntityObject* entity);

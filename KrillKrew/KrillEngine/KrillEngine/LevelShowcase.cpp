@@ -3295,9 +3295,9 @@ void LevelShowcase::SetProjectileAnimation(ProjectileObject* projectile, std::st
 	projectile->SetAnimationSprite(ProjectileObject::Collide, spriteList.find(name)->second);
 }
 
-void LevelShowcase::SetTrapAnimation(TrapObject* projectile, std::string nameIdle, std::string nameCollide) {
-	projectile->SetAnimationSprite(TrapObject::Idle, spriteList.find(nameIdle)->second);
-	projectile->SetAnimationSprite(TrapObject::Collide, spriteList.find(nameCollide)->second);
+void LevelShowcase::SetTrapAnimation(TrapObject* trap, std::string nameIdle, std::string nameCollide) {
+	trap->SetAnimationSprite(TrapObject::Idle, spriteList.find(nameIdle)->second);
+	trap->SetAnimationSprite(TrapObject::Collide, spriteList.find(nameCollide)->second);
 }
 
 void LevelShowcase::SetSprite(EntityObject* projectile, std::string name) {
