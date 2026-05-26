@@ -53,7 +53,7 @@
 
 // Library
 #include <string>
-#include <vector>
+#include <vector>s
 #include <fstream>
 #include <sstream>
 #include <iostream>
@@ -72,6 +72,7 @@
 #include <numeric>
 #include <cstdlib>
 #include <thread>
+#include <algorithm>
 
 #define MAP_WIDTH  20
 #define MAP_HEIGHT 16

@@ -20,16 +20,30 @@ private:
 		ExitConfirm
 	};
 
-	
+	const std::unordered_map<std::string, int> volumeBoxIndexMap = {
+	{"MasterVolume_Box", 0},
+	{"SFXVolume_Box",    1},
+	{"BGMVolume_Box",    2}
+	};
+
+	const std::unordered_map<std::string, int> volumeTextIndexMap = {
+	{"DisplayType_Text",  0},
+	{"MasterVolume_Text", 2},
+	{"SFXVolume_Text",    4},
+	{"BGMVolume_Text",    6}
+	};
 
 	MenuState currentMenuState = MenuState::Main;
 
 	std::vector<DrawableObject*> objectsList;
 	std::vector<UiObject*> textList;
 	std::vector<UiObject*> tutorialInfoList;
+	UiObject* tutorialInfoUI;
 	std::vector<UiObject*> yesNoList;
 	std::vector<UiObject*> yesNoList_Start;
 	std::vector<UiObject*> yesNoList_Exit;
+	std::vector<UiObject*> creditUIList;
+	std::vector<UiObject*> OptionList;
 	std::vector<UiObject*> textOptionList;
 	std::vector<UiObject*> displayList;
 	std::vector<UiObject*> volumeTrackList;
@@ -42,9 +56,11 @@ private:
 	int playerWhere = 1;
 
 	bool isCredit = false;
+	bool isFullscreen = false;
 
 	bool isTutorial = false;
 	int InfoPage = 0;
+	int InfoPageLimit = 3;
 
 	bool isStart = false;
 	bool isExit = false;
@@ -53,6 +69,11 @@ private:
 	bool down = false;
 	bool right = false;
 	bool left = false;
+
+	bool holdup = false;
+	bool holddown = false;
+	bool holdright = false;
+	bool holdleft = false;
 
 	bool isPressedCross = false;
 	bool isPressedCircle = false;
