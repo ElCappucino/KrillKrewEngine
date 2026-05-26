@@ -219,11 +219,11 @@ void ProjectileObject::OnColliderEnter(Collider* other)
 				{
 					player->SetIsStun(true);
 					if (player->GetIsSlow()) {
-						player->SetStunDuraion(10);
+						player->SetStunDuraion(5);
 						player->SetIsShocking(true);
 					}
 					else {
-						player->SetStunDuraion(5);
+						player->SetStunDuraion(3);
 					}
 					KrillSoundManager::SoundManager::GetInstance()->PlaySFX("Bola_Hit", false);
 				}

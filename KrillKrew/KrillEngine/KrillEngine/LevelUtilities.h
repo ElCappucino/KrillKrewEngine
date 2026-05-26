@@ -32,6 +32,7 @@
 #include "PropObject.h"
 #include "ParticleObject.h"
 #include "TextObject.h"
+#include "Ability.h"
 
 // Vbo
 

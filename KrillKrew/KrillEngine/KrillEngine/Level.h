@@ -7,6 +7,8 @@
 #include "Camera.h"
 #include "Joystick.h"
 #include "Timer.h"
+#include "ProjectileObject.h"
+#include "TrapObject.h"
 #include <math.h>
 #include <map>
 #include <chrono>
@@ -36,6 +38,10 @@ public:
 	virtual void Movement(float axisX, float axisY, bool isPositiveX, bool isPositiveY);
 	virtual void HandleKey(char key);
 	virtual void HandleMouse(int type, int x, int y);
+
+	virtual void SetProjectileAnimation(ProjectileObject* projectile, std::string name);
+	virtual void SetTrapAnimation(TrapObject* projectile, std::string nameIdle, std::string nameCollide);
+	virtual void SetSprite(EntityObject* projectile, std::string name);
 
 	virtual void AddEntityToScene(EntityObject* entity);
 	virtual void AddObjectToScene(DrawableObject* object);

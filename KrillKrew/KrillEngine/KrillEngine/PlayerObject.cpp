@@ -465,7 +465,7 @@ void PlayerObject::OnColliderEnter(Collider* other)
 		{
 			if (player->GetIsShocking()) {
 				this->SetIsStun(true);
-				this->SetStunDuraion(10);
+				this->SetStunDuraion(3);
 				this->SetIsShocking(true);
 			}
 		}

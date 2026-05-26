@@ -534,7 +534,6 @@ void LevelShowcase::InitProp()
 void LevelShowcase::LevelInit()
 {
 	std::cout << "Init Level" << std::endl;
-
 	glClearColor(0.f, 180.f / 255.f, 171.f / 255.f, 1.f);
 
 	GameEngine::GetInstance()->GetRenderer()->SetOrthoProjection(
@@ -602,7 +601,7 @@ void LevelShowcase::LevelInit()
 	p1->SetPosition(glm::vec3(-400.f, -400.f, 0.f));
 	p1->GetSpriteRenderer()->SetFrame(16);
 	p1->SetPlayerNumber(0);
-	p1->LocateCurrentLevel(this);
+	p1->LocateCurrentLevel (this);
 	entityObjects.push_back(p1);
 	objectsList.push_back(p1);
 	playerSize++;
@@ -1075,7 +1074,8 @@ void LevelShowcase::LevelInit()
 	std::sort(objectsList.begin(), objectsList.end(), compareLayer);
 
 	// Read config file
-
+	this->ability = new Ability();
+	this->ability->SetCurrLevel(this);
 	LoadConfigInfo("../Resource/SceneData/LevelShowcase.json");
 	
 	KrillSoundManager::SoundManager::GetInstance()->LoadVolumeConfig
@@ -2176,19 +2176,19 @@ void LevelShowcase::UpdateInput()
 							PlayerObject::Ability idAbility = players[i]->GetAbilityByButton(PlayerObject::AbilityButton::Circle);
 							if (idAbility == PlayerObject::Ability::Cleave)
 							{
-								ShootCleave(i, PlayerObject::AbilityButton::Circle);
+								ability->ShootCleave(players[i], i, PlayerObject::AbilityButton::Circle);
 							}
 
 							idAbility = players[i]->GetAbilityByButton(PlayerObject::AbilityButton::Cross);
 							if (idAbility == PlayerObject::Ability::Cleave)
 							{
-								ShootCleave(i, PlayerObject::AbilityButton::Cross);
+								ability->ShootCleave(players[i], i, PlayerObject::AbilityButton::Cross);
 							}
 
 							idAbility = players[i]->GetAbilityByButton(PlayerObject::AbilityButton::Triangle);
 							if (idAbility == PlayerObject::Ability::Cleave)
 							{
-								ShootCleave(i, PlayerObject::AbilityButton::Triangle);
+								ability->ShootCleave(players[i], i, PlayerObject::AbilityButton::Triangle);
 							}
 
 							players[i]->SetIsAiming(false);
@@ -2269,14 +2269,14 @@ void LevelShowcase::UpdateInput()
 				{
 					if (players[i + currentPlayer]->GetCooldown(PlayerObject::AbilityButton::Triangle) <= 0)
 					{
-						UsingAbilityKeyDown(i + currentPlayer, PlayerObject::AbilityButton::Triangle);
+						ability->UsingAbilityKeyDown(players[i], i + currentPlayer, PlayerObject::AbilityButton::Triangle);
 					}
 				}
 
 				if (Joystick::GetButtonUp(i, Joystick::Button::Triangle)) {
 					if (players[i + currentPlayer]->GetCooldown(PlayerObject::AbilityButton::Triangle) <= 0)
 					{
-						UsingAbilityKeyUp(i + currentPlayer, PlayerObject::AbilityButton::Triangle);
+						ability->UsingAbilityKeyUp(players[i], i + currentPlayer, PlayerObject::AbilityButton::Triangle);
 					}
 				}
 
@@ -2285,14 +2285,14 @@ void LevelShowcase::UpdateInput()
 				{
 					if (players[i + currentPlayer]->GetCooldown(PlayerObject::AbilityButton::Circle) <= 0)
 					{
-						UsingAbilityKeyDown(i + currentPlayer, PlayerObject::AbilityButton::Circle);
+						ability->UsingAbilityKeyDown(players[i], i + currentPlayer, PlayerObject::AbilityButton::Circle);
 					}
 				}
 
 				if (Joystick::GetButtonUp(i, Joystick::Button::Circle)) {
 					if (players[i + currentPlayer]->GetCooldown(PlayerObject::AbilityButton::Circle) <= 0)
 					{
-						UsingAbilityKeyUp(i + currentPlayer, PlayerObject::AbilityButton::Circle);
+						ability->UsingAbilityKeyUp(players[i], i + currentPlayer, PlayerObject::AbilityButton::Circle);
 					}
 				}
 
@@ -2301,7 +2301,7 @@ void LevelShowcase::UpdateInput()
 				{
 					if (players[i + currentPlayer]->GetCooldown(PlayerObject::AbilityButton::Cross) <= 0)
 					{
-						UsingAbilityKeyDown(i + currentPlayer, PlayerObject::AbilityButton::Cross);
+						ability->UsingAbilityKeyDown(players[i], i + currentPlayer, PlayerObject::AbilityButton::Cross);
 					}
 				}
 
@@ -2309,7 +2309,7 @@ void LevelShowcase::UpdateInput()
 				{
 					if (players[i + currentPlayer]->GetCooldown(PlayerObject::AbilityButton::Cross) <= 0)
 					{
-						UsingAbilityKeyUp(i + currentPlayer, PlayerObject::AbilityButton::Cross);
+						ability->UsingAbilityKeyUp(players[i], i + currentPlayer, PlayerObject::AbilityButton::Cross);
 					}
 				}
 
@@ -3287,411 +3287,17 @@ void LevelShowcase::TileImport(std::array<std::array<int, MAP_WIDTH>, MAP_HEIGHT
 	}
 }
 
-void LevelShowcase::UsingAbilityKeyDown(int numPlayer, PlayerObject::AbilityButton button) {
-
-	PlayerObject::Ability idAbility = players[numPlayer]->GetAbilityByButton(button);
-	// std::cout << "idAbility " << idAbility << std::endl;
-	if (players[numPlayer]->GetCooldown(button) <= 0 && !players[numPlayer]->GetIsBurning() && !players[numPlayer]->GetIsStun())
-	{
-		switch (idAbility) 
-		{
-
-		case PlayerObject::Ability::Fireball:
-
-			if (!players[numPlayer]->GetIsAiming()) 
-			{
-				AimFireball(numPlayer, button);
-				
-				break;
-			}
-			break;
-
-		case PlayerObject::Ability::Trap:
-			Trap(numPlayer, button);
-			KrillSoundManager::SoundManager::GetInstance()->PlaySFX("Jellyfish_Placed", false);
-			break;
-
-		case PlayerObject::Ability::Dash:
-			Dash(numPlayer, button);
-			break;
-
-		case PlayerObject::Ability::TNT:
-
-			if (!players[numPlayer]->GetIsTNT()) 
-			{
-				TNT(numPlayer, button);
-				KrillSoundManager::SoundManager::GetInstance()->PlaySFX("Landmine_Placed", false);
-			}
-			else if (players[numPlayer]->GetIsTNT()) 
-			{
-				for (TrapObject* trap : players[numPlayer]->GetOwningTrap()) // find tnt
-				{
-					if (trap->GetType() == TrapObject::TypeTrap::Tnt) 
-					{
-						KrillSoundManager::SoundManager::GetInstance()->PlaySFX("Landmine_Explode", false);
-						trap->ExplodeTileInRange();
-						trap->ChangeAnimationState(TrapObject::AnimationState::Collide);
-						KK_TRACE("Press Again");
-						trap->isActivate = true;
-						players[numPlayer]->SetAbilityCooldown(button, 3);
-						players[numPlayer]->SetIsTNT(false);
-						players[numPlayer]->RemoveOwningTrap(trap);
-					}
-				}
-			}
-			break;
-
-		case PlayerObject::Ability::Teleport:
-
-			if (!players[numPlayer]->GetIsAiming()) 
-			{
-				if (players[numPlayer]->GetIsShooting())
-				{
-					for (ProjectileObject* projectile : players[numPlayer]->GetOwningProjectile())
-					{
-						if (projectile->GetType() == ProjectileObject::TypeProjectile::Teleport)
-						{
-							KrillSoundManager::SoundManager::GetInstance()->PlaySFX("Teleport_Hit", false);
-							players[numPlayer]->SetPosition(projectile->getPos());
-							players[numPlayer]->SetIsShooting(false);
-							projectile->SetIsActive(false);
-							players[numPlayer]->SetAbilityCooldown(button, 6);
-							players[numPlayer]->RemoveOwningProjectile(projectile);
-						}
-					}
-				}
-				else
-				{
-					AimTeleport(numPlayer, button);
-				}
-			}
-			break;
-
-		case PlayerObject::Ability::Bola:
-
-			if (!players[numPlayer]->GetIsAiming()) 
-			{
-				AimBola(numPlayer, button);
-				break;
-			}
-			
-			break;
-
-		case PlayerObject::Ability::Cleave:
-
-			if (!players[numPlayer]->GetIsAiming()) 
-			{
-				AimCleave(numPlayer, button);
-				break;
-			}
-			break;
-		}
-	}
+void LevelShowcase::SetProjectileAnimation(ProjectileObject* projectile, std::string name) {
+	projectile->SetAnimationSprite(ProjectileObject::Collide, spriteList.find(name)->second);
 }
 
-void LevelShowcase::UsingAbilityKeyUp(int numPlayer, PlayerObject::AbilityButton button) 
-{
-	PlayerObject::Ability idAbility = players[numPlayer]->GetAbilityByButton(button);
-	// std::cout << "idAbility " << idAbility << std::endl;
-	if (players[numPlayer]->GetCooldown(button) <= 0) {
-		switch (idAbility) {
-
-		case PlayerObject::Ability::Fireball:
-			if (players[numPlayer]->GetIsAiming())
-			{
-				if (players[numPlayer]->GetHoldingProjectile() == ProjectileObject::TypeProjectile::Fireball) {
-					ShootFireball(numPlayer, button);
-					
-					break;
-				}
-
-			}
-			break;
-
-		case PlayerObject::Ability::Teleport:
-			if (players[numPlayer]->GetIsAiming())
-			{
-				if (players[numPlayer]->GetHoldingProjectile() == ProjectileObject::TypeProjectile::Teleport) {
-					ShootTeleport(numPlayer, button);
-					KrillSoundManager::SoundManager::GetInstance()->PlaySFX("Teleport_Throwing", false);
-					break;
-				}
-
-			}
-			break;
-
-		case PlayerObject::Ability::Bola:
-			if (players[numPlayer]->GetIsAiming())
-			{
-				if (players[numPlayer]->GetHoldingProjectile() == ProjectileObject::TypeProjectile::Bola) {
-					ShootBola(numPlayer, button);
-					KrillSoundManager::SoundManager::GetInstance()->PlaySFX("Bola_Throwing", false);
-					break;
-				}
-
-			}
-			break;
-		}
-
-	}
+void LevelShowcase::SetTrapAnimation(TrapObject* projectile, std::string nameIdle, std::string nameCollide) {
+	projectile->SetAnimationSprite(TrapObject::Idle, spriteList.find(nameIdle)->second);
+	projectile->SetAnimationSprite(TrapObject::Collide, spriteList.find(nameCollide)->second);
 }
-
-void LevelShowcase::AimFireball(int numPlayer, PlayerObject::AbilityButton button)
-{
-	players[numPlayer]->SetVelocity(0, 0, false, false);
-	players[numPlayer]->SetIsAiming(true);
-	players[numPlayer]->SetHoldingProjectile(ProjectileObject::TypeProjectile::Fireball);
-	ProjectileObject* projectile = new ProjectileObject();
-	projectile->SetAnimationSprite(ProjectileObject::Collide, spriteList.find("Bomb_Explode")->second);
-	projectile->SetSpriteInfo(spriteList.find("Bomb")->second);
-	projectile->SetTexture(spriteList.find("Bomb")->second.texture);
-	projectile->SetPosition(players[numPlayer]->getPos());
-	projectile->SetSize(256.f, -256.f);
-	projectile->SetLifeTime(9999);
-	projectile->SetOwner(players[numPlayer]);
-	projectile->SetType(ProjectileObject::TypeProjectile::Fireball);
-	projectile->SetCanKnockback(true);
-	projectile->SetIsCanStun(true);
-	projectile->SetIsShooting(false);
-	//projectile->SetIsActive(false);
-	std::cout << "Owner " << projectile->GetOwner()->GetPlayerNumber() << std::endl;
-	entityObjects.push_back(projectile);
-	objectsList.push_back(projectile);
-	players[numPlayer]->AddOwningProjectile(projectile);
-	//objectsList.push_back(projectile->GetCollider()->GetGizmos());
-}
-
-void LevelShowcase::ShootFireball(int numPlayer, PlayerObject::AbilityButton button) 
-{
-	players[numPlayer]->SetIsAiming(false);
-	for (ProjectileObject* projectile : players[numPlayer]->GetOwningProjectile()) 
-	{
-		if (projectile->GetType() == ProjectileObject::TypeProjectile::Fireball) 
-		{
-			projectile->SetLifeTime(FireballLifetime);
-			projectile->SetIsShooting(true);
-			//projectile->SetIsActive(true);
-			players[numPlayer]->SetHoldingProjectile(0);
-		}
-	}
-	players[numPlayer]->SetAbilityCooldown(button, FireballCooldown);
-}
-
-void LevelShowcase::Trap(int numPlayer, PlayerObject::AbilityButton button) {
-	players[numPlayer]->ChangeAnimationState(PlayerObject::AnimationState::PlaceItem);
-	players[numPlayer]->SetAbilityCooldown(button, TrapCooldown);
-	TrapObject* Trap = new TrapObject();
-	Trap->SetSpriteInfo(spriteList.find("Trap")->second);
-	Trap->SetTexture(spriteList.find("Trap")->second.texture);
-	Trap->SetPosition(players[numPlayer]->getPos());
-	Trap->SetSize(128.f, -128.f);
-	Trap->SetPlayerNumber(players[numPlayer]->GetPlayerNumber());
-	Trap->SetType(TrapObject::TypeTrap::Trap);
-	Trap->SetIsActive(true);
-	Trap->SetAnimationSprite(TrapObject::AnimationState::Idle, spriteList.find("Trap")->second);
-	Trap->SetAnimationSprite(TrapObject::AnimationState::Collide, spriteList.find("Trap_Explode")->second);
-	//std::cout << "Owner " << Trap->getNumOwner() << std::endl;
-	objectsList.push_back(Trap);
-	entityObjects.push_back(Trap);
-	players[numPlayer]->AddOwningTrap(Trap);
-	//std::cout << "place trap" << std::endl;
-}
-
-void LevelShowcase::Dash(int num, PlayerObject::AbilityButton button) {
-	players[num]->SetAbilityCooldown(button, DashCooldown);
-	players[num]->SetIsDashing(true);
-	players[num]->SetDashDuration(DashDuration);
-}
-
-void LevelShowcase::TNT(int numPlayer, PlayerObject::AbilityButton button) {
-	players[numPlayer]->SetIsTNT(true);
-	players[numPlayer]->ChangeAnimationState(PlayerObject::AnimationState::PlaceItem);
-	TrapObject* TNT = new TrapObject();
-	TNT->SetSpriteInfo(spriteList.find("TNT")->second);
-	TNT->SetTexture(spriteList.find("TNT")->second.texture);
-	TNT->SetPosition(players[numPlayer]->getPos());
-	TNT->SetSize(128.f, -128.f);
-	TNT->GetCollider()->setColliderSize(glm::vec3(500.f, 500.f, 0));
-	TNT->SetPlayerNumber(players[numPlayer]->GetPlayerNumber());
-	TNT->SetType(TrapObject::TypeTrap::Tnt);
-	TNT->SetAnimationSprite(TrapObject::AnimationState::Idle, spriteList.find("TNT")->second);
-	TNT->SetAnimationSprite(TrapObject::AnimationState::Collide, spriteList.find("Landmine_Explode")->second);
-	TNT->SetOwner(players[numPlayer]);
-	//TNT->GetCollider()->Update(glm::vec3(0, 0, 0), TNT->getPos());
-	//TNT->setIsCanKnockback(true);
-	//std::cout << "Owner " << Trap->getNumOwner() << std::endl;
-	objectsList.push_back(TNT);
-	entityObjects.push_back(TNT);
-	//objectsList.push_back(TNT->GetCollider()->GetGizmos());
-	players[numPlayer]->AddOwningTrap(TNT);
-}
-
-void LevelShowcase::AimTeleport(int numPlayer, PlayerObject::AbilityButton button) {
-	players[numPlayer]->SetVelocity(0, 0, false, false);
-	players[numPlayer]->SetIsAiming(true);
-	players[numPlayer]->SetHoldingProjectile(ProjectileObject::TypeProjectile::Teleport);
-	ProjectileObject* projectile = new ProjectileObject();
-	projectile->SetAnimationSprite(ProjectileObject::Collide, spriteList.find("Teleport_Explode")->second);
-	projectile->SetSpriteInfo(spriteList.find("Teleport")->second);
-	projectile->SetTexture(spriteList.find("Teleport")->second.texture);
-	projectile->SetPosition(players[numPlayer]->getPos());
-	projectile->SetSize(256.f, -256.f);
-	projectile->SetLifeTime(9999);
-	projectile->SetOwner(players[numPlayer]);
-	projectile->SetType(ProjectileObject::TypeProjectile::Teleport);
-	projectile->SetCanKnockback(false);
-	projectile->SetIsCanStun(false);
-	projectile->SetIsShooting(false);
-	//projectile->SetIsActive(false);
-	std::cout << "Owner " << projectile->GetOwner()->GetPlayerNumber() << std::endl;
-	objectsList.push_back(projectile);
-	entityObjects.push_back(projectile);
-	players[numPlayer]->AddOwningProjectile(projectile);
-}
-
-void LevelShowcase::ShootTeleport(int numPlayer, PlayerObject::AbilityButton button) 
-{
-	if (players[numPlayer]->GetIsShooting() == false) 
-	{
-		players[numPlayer]->SetIsShooting(true);
-		players[numPlayer]->SetIsAiming(false);
-
-		for (ProjectileObject* projectile : players[numPlayer]->GetOwningProjectile()) 
-		{
-			if (projectile->GetType() == ProjectileObject::TypeProjectile::Teleport) 
-			{
-				projectile->SetLifeTime(TeleportLifetime);
-				projectile->SetIsShooting(true);
-				players[numPlayer]->SetHoldingProjectile(0);
-			}
-		}
-	}
-}
-
-void LevelShowcase::AimBola(int numPlayer, PlayerObject::AbilityButton button) {
-	players[numPlayer]->SetVelocity(0, 0, false, false);
-	players[numPlayer]->SetIsAiming(true);
-	players[numPlayer]->SetHoldingProjectile(ProjectileObject::TypeProjectile::Bola);
-	ProjectileObject* projectile = new ProjectileObject();
-	projectile->SetAnimationSprite(ProjectileObject::Collide, spriteList.find("Stun_Explode")->second);
-	projectile->SetSpriteInfo(spriteList.find("Bola")->second);
-	projectile->SetTexture(spriteList.find("Bola")->second.texture);
-	projectile->SetPosition(players[numPlayer]->getPos());
-	projectile->SetSize(256.f, -256.f);
-	projectile->SetLifeTime(9999);
-	projectile->SetOwner(players[numPlayer]);
-	projectile->SetType(ProjectileObject::TypeProjectile::Bola);
-	projectile->SetCanKnockback(false);
-	projectile->SetIsCanStun(true);
-	projectile->SetIsShooting(false);
-	//projectile->SetIsActive(false);
-	std::cout << "Owner " << projectile->GetOwner()->GetPlayerNumber() << std::endl;
-	objectsList.push_back(projectile);
-	entityObjects.push_back(projectile);
-	players[numPlayer]->AddOwningProjectile(projectile);
-}
-
-void LevelShowcase::ShootBola(int numPlayer, PlayerObject::AbilityButton button) 
-{
-	players[numPlayer]->SetIsAiming(false);
-	for (ProjectileObject* projectile : players[numPlayer]->GetOwningProjectile()) 
-	{
-		if (projectile->GetType() == ProjectileObject::TypeProjectile::Bola) 
-		{
-			projectile->SetLifeTime(BolaLifetime);
-			projectile->SetIsShooting(true);
-			players[numPlayer]->SetHoldingProjectile(0);
-		}
-	}
-	players[numPlayer]->SetAbilityCooldown(button, BolaCooldown);
-}
-
-void LevelShowcase::AimCleave(int numPlayer, PlayerObject::AbilityButton button) 
-{
-	players[numPlayer]->SetVelocity(0, 0, false, false);
-	players[numPlayer]->SetIsAiming(true);
-	players[numPlayer]->SetHoldingProjectile(ProjectileObject::TypeProjectile::Cleave);
-	//ProjectileObject* projectile = new ProjectileObject();
-	//
-	//projectile->SetSpriteInfo(spriteList.find("Cleave")->second);
-	//projectile->SetTexture(spriteList.find("Cleave")->second.texture);
-	//projectile->SetPosition(players[numPlayer]->getPos());
-	//projectile->SetSize(256.f, -256.f);
-	//projectile->SetLifeTime(9999);
-	//projectile->SetOwner(players[numPlayer]);
-	//projectile->SetType(ProjectileObject::TypeProjectile::Cleave);
-	//projectile->SetCanKnockback(false);
-	//projectile->SetIsCanStun(true);
-	//projectile->SetIsShooting(false);
-	////projectile->SetIsActive(false);
-	//std::cout << "Owner " << projectile->GetOwner()->GetPlayerNumber() << std::endl;
-	//objectsList.push_back(projectile);
-	//entityObjects.push_back(projectile);
-	////players[numPlayer]->SetAbilityCooldown(button, CleaveCooldown);
-	//players[numPlayer]->AddOwningProjectile(projectile);
-}
-
-void LevelShowcase::ShootCleave(int numPlayer, PlayerObject::AbilityButton button) {
-	players[numPlayer]->SetIsAiming(false);
-
-	ProjectileObject* projectile = new ProjectileObject();
-
-	projectile->SetSpriteInfo(spriteList.find("Cleave")->second);
-	projectile->SetTexture(spriteList.find("Cleave")->second.texture);
-	projectile->SetPosition(players[numPlayer]->getPos());
-	projectile->SetSize(256.f, -256.f);
-	
-	projectile->SetOwner(players[numPlayer]);
-	projectile->SetType(ProjectileObject::TypeProjectile::Cleave);
-	projectile->SetCanKnockback(false);
-	projectile->SetIsCanStun(true);
-	projectile->SetIsShooting(false);
-	//projectile->SetIsActive(false);
-	std::cout << "Owner " << projectile->GetOwner()->GetPlayerNumber() << std::endl;
-	objectsList.push_back(projectile);
-	entityObjects.push_back(projectile);
-	//players[numPlayer]->SetAbilityCooldown(button, CleaveCooldown);
-	players[numPlayer]->AddOwningProjectile(projectile);
-
-	projectile->SetLifeTime(CleaveLifetime);
-	projectile->SetIsShooting(true);
-	players[numPlayer]->SetHoldingProjectile(0);
-	projectile->SetLifeTime(1);
-
-	PlayerObject* player = players[numPlayer];
-	float veloX = player->GetCurrentDirection().x;
-	float veloY = player->GetCurrentDirection().y;
-	float angle = atan2(-player->GetCurrentDirection().y, player->GetCurrentDirection().x);
-
-	float absSizeX = abs(projectile->getSize().x);
-
-	if (angle < -3.14f / 2.f || angle > 3.14f / 2.f)
-	{
-		projectile->SetSize(-absSizeX, projectile->getSize().y);
-
-		if (angle > 0)
-		{
-			angle = -(3.14f - angle);
-		}
-		else
-		{
-			angle = 3.14f + angle;
-		}
-	}
-	else
-	{
-		projectile->SetSize(absSizeX, projectile->getSize().y);
-	}
-
-	bool PositiveX = veloX > 0.f ? true : false;
-	bool PositiveY = veloY < 0.f ? true : false;
-
-	projectile->SetPosition(player->getPos() + (projectile->GetVelocity() * glm::vec3(15.f, 15.f, 0.f)));
-	projectile->SetRotation(angle);
-	projectile->SetVelocity(abs(veloX), abs(veloY), PositiveX, PositiveY);
-	players[numPlayer]->SetAbilityCooldown(button, CleaveCooldown);
-
-	KrillSoundManager::SoundManager::GetInstance()->PlaySFX("Cleave_Slash", false);
+void LevelShowcase::SetSprite(EntityObject* projectile, std::string name) {
+	projectile->SetSpriteInfo(spriteList.find(name)->second);
+	projectile->SetTexture(spriteList.find(name)->second.texture);
 }
 
 void LevelShowcase::AddEntityToScene(EntityObject* entity)
@@ -3733,7 +3339,7 @@ void LevelShowcase::loadAbility(std::string filename) {
 }
 
 void LevelShowcase::SaveConfigInfo(const std::string& fileName) {
-
+	if (ability == nullptr) { return; }
 	std::ofstream file(fileName);
 	nlohmann::json data;
 
@@ -3764,13 +3370,13 @@ void LevelShowcase::SaveConfigInfo(const std::string& fileName) {
 	}*/
 
 	data["MeleeCooldown"] = MeleeCooldown;
-	data["FireballCooldown"] = FireballCooldown;
-	data["TrapCooldown"] = TrapCooldown;
-	data["DashCooldown"] = DashCooldown;
-	data["TNTCooldown"] = MeleeCooldown;
-	data["TeleportCooldown"] = MeleeCooldown;
-	data["BolaCooldown"] = BolaCooldown;
-	data["CleaveCooldown"] = CleaveCooldown;
+	data["FireballCooldown"] = ability->GetFireballCooldown();
+	data["TrapCooldown"] = ability->GetTrapCooldown();
+	data["DashCooldown"] = ability->GetDashCooldown();
+	data["TNTCooldown"] = ability->GetTNTCooldown();
+	data["TeleportCooldown"] = ability->GetTeleportCooldown();
+	data["BolaCooldown"] = ability->GetBolaCooldown();
+	data["CleaveCooldown"] = ability->GetCleaveCooldown();
 
 	//float MeleeCooldown = 2.f;
 	//float FireballCooldown = 3.f;
@@ -3781,11 +3387,11 @@ void LevelShowcase::SaveConfigInfo(const std::string& fileName) {
 	//float BolaCooldown = 3.f;
 	//float CleaveCooldown = 3.f;
 
-	data["FireballLifetime"] = FireballLifetime;
-	data["TeleportLifetime"] = TeleportLifetime;
-	data["BolaLifetime"] = BolaLifetime;
-	data["CleaveLifetime"] = CleaveLifetime;
-	data["DashDuration"] = DashDuration;
+	data["FireballLifetime"] = ability->GetFireballLifetime();
+	data["TeleportLifetime"] = ability->GetTeleportLifetime();
+	data["BolaLifetime"] = ability->GetBolaLifetime();
+	data["CleaveLifetime"] = ability->GetCleaveLifetime();
+	data["DashDuration"] = ability->GetDashDuration();
 	data["playerMovementSpeed"] = playerMovementSpeed;
 	//float FireballLifetime = 1.f;
 	//float TeleportLifetime = 2.f;
@@ -3810,9 +3416,10 @@ void LevelShowcase::SaveConfigInfo(const std::string& fileName) {
 
 void LevelShowcase::LoadConfigInfo(const std::string& fileName)
 {
+	if (ability == nullptr) { return; }
 	std::ifstream file(fileName);
 	nlohmann::json data = nlohmann::json::parse(file);
-
+	if (!file.is_open()) { KK_ERROR("Cannot open config file!"); return; }
 	groundColOffsetY[0] = data["groundColOffsetY"]["0"];
 	groundColOffsetY[1] = data["groundColOffsetY"]["1"];
 	groundColOffsetY[2] = data["groundColOffsetY"]["2"];
@@ -3829,19 +3436,19 @@ void LevelShowcase::LoadConfigInfo(const std::string& fileName)
 	}*/
 
 	MeleeCooldown = data["MeleeCooldown"];
-	FireballCooldown = data["FireballCooldown"];
-	TrapCooldown = data["TrapCooldown"];
-	DashCooldown = data["DashCooldown"];
-	TNTCooldown = data["TNTCooldown"];
-	TeleportCooldown = data["TeleportCooldown"];
-	BolaCooldown = data["BolaCooldown"];
-	CleaveCooldown = data["CleaveCooldown"];
+	ability->SetFireballCooldown(data["FireballCooldown"]);
+	ability->SetTrapCooldown(data["TrapCooldown"]);
+	ability->SetDashCooldown(data["DashCooldown"]);
+	ability->SetTNTCooldown(data["TNTCooldown"]);
+	ability->SetTeleportCooldown(data["TeleportCooldown"]);
+	ability->SetBolaCooldown(data["BolaCooldown"]);
+	ability->SetCleaveCooldown(data["CleaveCooldown"]);
 
-	FireballLifetime = data["FireballLifetime"];
-	TeleportLifetime = data["TeleportLifetime"];
-	BolaLifetime = data["BolaLifetime"];
-	CleaveLifetime = data["CleaveLifetime"];
-	DashDuration = data["DashDuration"];
+	ability->SetFireballLifetime(data["FireballLifetime"]);
+	ability->SetTeleportLifetime(data["TeleportLifetime"]);
+	ability->SetBolaLifetime(data["BolaLifetime"]);
+	ability->SetCleaveLifetime(data["CleaveLifetime"]);
+	ability->SetDashDuration(data["DashDuration"]);
 
 	playerMovementSpeed = data["playerMovementSpeed"];
 

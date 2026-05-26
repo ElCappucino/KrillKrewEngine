@@ -284,20 +284,7 @@ private:
 	int isWindowScreen;
 
 	float MeleeCooldown = 2.f;
-	float FireballCooldown = 3.f;
-	float TrapCooldown = 3.f;
-	float DashCooldown = 3.f;
-	float TNTCooldown = 3.f;
-	float TeleportCooldown = 3.f;
-	float BolaCooldown = 3.f;
-	float CleaveCooldown = 3.f;
 
-	float FireballLifetime = 1.f;
-	float TeleportLifetime = 2.f;
-	float BolaLifetime = 2.f;
-	float CleaveLifetime = 2.f;
-
-	float DashDuration = 0.2f;
 	float playerMovementSpeed = 1000.f;
 
 	int playerSize = 0;
@@ -336,6 +323,7 @@ private:
 	std::array<bool, 4> isPositiveXOld;
 	std::array<bool, 4> isPositiveYOld;
 
+	Ability* ability;
 	KrillSoundManager::SoundManager* soundManager;
 
 public:
@@ -371,22 +359,12 @@ public:
 	void GroundTileRefactor();
 	void TileImport(std::array<std::array<int, MAP_WIDTH>, MAP_HEIGHT> &TileBuffer, std::string fileName);
 
+	virtual void SetProjectileAnimation(ProjectileObject* projectile, std::string name);
+	virtual void SetTrapAnimation(TrapObject* projectile, std::string nameIdle, std::string nameCollide);
+	virtual void SetSprite(EntityObject* projectile, std::string name);
+
 	virtual void AddEntityToScene(EntityObject* entity);
 	virtual void AddObjectToScene(DrawableObject* object);
-
-	void UsingAbilityKeyDown(int numPlayer, PlayerObject::AbilityButton button);
-	void UsingAbilityKeyUp(int numPlayer, PlayerObject::AbilityButton button);
-	void AimFireball(int numPlayer, PlayerObject::AbilityButton button);
-	void ShootFireball(int numPlayer, PlayerObject::AbilityButton button);
-	void Trap(int numPlayer, PlayerObject::AbilityButton button);
-	void Dash(int numPlayer, PlayerObject::AbilityButton button);
-	void TNT(int numPlayer, PlayerObject::AbilityButton button);
-	void AimTeleport(int numPlayer, PlayerObject::AbilityButton button);
-	void ShootTeleport(int numPlayer, PlayerObject::AbilityButton button);
-	void AimBola(int numPlayer, PlayerObject::AbilityButton button);
-	void ShootBola(int numPlayer, PlayerObject::AbilityButton button);
-	void AimCleave(int numPlayer, PlayerObject::AbilityButton button);
-	void ShootCleave(int numPlayer, PlayerObject::AbilityButton button);
 
 	void loadAbility(std::string filename);
 	void SaveConfigInfo(const std::string& fileName);
