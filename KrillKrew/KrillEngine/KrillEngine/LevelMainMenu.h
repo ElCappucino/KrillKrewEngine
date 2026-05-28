@@ -126,6 +126,8 @@ private:
 		ButtonData* RightButton = nullptr;
 
 		bool playerHere = false;
+
+		std::function<void()> OnExecute = nullptr;
 	};
 
 	std::map<std::string, ButtonData*> buttonList;
@@ -143,6 +145,17 @@ public:
 	virtual void Movement(float axisX, float axisY, bool isPositiveX, bool isPositiveY);
 	virtual void HandleKey(char key);
 	virtual void HandleMouse(int type, int x, int y);
+
+
+	void BackToMainMenu(const std::vector<UiObject*>& activeUiList, const std::string& fallbackButtonName);
+	void TransitionToMenu(MenuState newState, const std::vector<UiObject*>& hideList, const std::vector<UiObject*>& showList, const std::string& defaultButtonKey);
+	void InitializeMenuButtons();
+	void SwitchActiveButton(const std::string& targetKey, bool disableOldPlayerHere = true);
+
+	// Options
+	void HandleOptionsCancel();
+	void UpdateVolumeSlider(float& volumeValue, const std::string& knobKey, int rowIndex);
+	void HandleVolumeSliderAdjustment();
 
 	void UpdateInput();
 	void NewUpdateInput();

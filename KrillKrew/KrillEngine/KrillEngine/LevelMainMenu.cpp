@@ -52,7 +52,7 @@ UiObject* LevelMainMenu::InitButtonUI(std::string name, SpritesheetInfo spriteIn
 void LevelMainMenu::LevelInit() 
 {
 	soundManager = KrillSoundManager::SoundManager::GetInstance();
-	renderer = GameEngine::GetInstance()->GetRenderer();
+	renderer		= GameEngine::GetInstance()->GetRenderer();
 	gameEngine = GameEngine::GetInstance();
 
 	renderer->SetOrthoProjection
@@ -389,7 +389,7 @@ void LevelMainMenu::LevelInit()
 	currentButton = buttonList["Text1"];
 	buttonList["Text1"]->playerHere = true;
 
-	
+	InitializeMenuButtons();
 
 	// Setup Dear ImGui context
 	IMGUI_CHECKVERSION();
@@ -753,119 +753,140 @@ void LevelMainMenu::HandleMouse(int type, int x, int y) {
 
 }
 
+void LevelMainMenu::TransitionToMenu
+(	
+	MenuState newState, 
+	const std::vector<UiObject*>& hideList, 
+	const std::vector<UiObject*>& showList, 
+	const std::string& defaultButtonKey)
+{
+	for (UiObject* ui : hideList) ui->SetIsRender(false);
+	for (UiObject* ui : showList) ui->SetIsRender(true);
+
+	if (currentButton) currentButton->playerHere = false;
+	currentMenuState = newState;
+	currentButton = buttonList[defaultButtonKey];
+	if (currentButton) currentButton->playerHere = true;
+}
+
+void LevelMainMenu::BackToMainMenu(const std::vector<UiObject*>& activeUiList, const std::string& fallbackButtonName) {
+	TransitionToMenu(MenuState::Main, activeUiList, {}, fallbackButtonName);
+}
+
+void LevelMainMenu::InitializeMenuButtons()
+{
+	buttonList["GameName"]->OnExecute = [this]() {
+		TransitionToMenu(MenuState::Credits, {}, creditUIList, "Text1");
+	};
+
+	buttonList["Text1"]->OnExecute = [this]() {
+		TransitionToMenu(MenuState::StartConfirm, {}, yesNoList_Start, "AreYouSureStart_No");
+	};
+
+	buttonList["Text2"]->OnExecute = [this]() {
+		InfoPage = 0;
+		TransitionToMenu(MenuState::Tutorial, {}, tutorialInfoList, "Text2");
+	};
+
+	buttonList["Text3"]->OnExecute = [this]() {
+		TransitionToMenu(MenuState::Options, {}, OptionList, "DisplayType_Text");
+	};
+
+	buttonList["Text4"]->OnExecute = [this]() {
+		TransitionToMenu(MenuState::ExitConfirm, {}, yesNoList_Exit, "AreYouSureExit_No");
+	};
+
+	buttonList["AreYouSureStart_Yes"]->OnExecute = [this]() {
+		gameEngine->GetStateController()->gameStateNext = GameState::GS_LEVELSELECTABILITY;
+	};
+
+	buttonList["AreYouSureStart_No"]->OnExecute = [this]() {
+		BackToMainMenu(yesNoList_Start, "Text1");
+	};
+
+	buttonList["AreYouSureExit_Yes"]->OnExecute = [this]() {
+		gameEngine->GetStateController()->gameStateNext = GameState::GS_QUIT;
+	};
+
+	buttonList["AreYouSureExit_No"]->OnExecute = [this]() {
+		BackToMainMenu(yesNoList_Exit, "Text4");
+	};
+
+	// Options
+	// Text Links -> Sub Controls
+	buttonList["DisplayType_Text"]->OnExecute = [this]() { SwitchActiveButton("DisplayType"); };
+	buttonList["MasterVolume_Text"]->OnExecute = [this]() { SwitchActiveButton("MasterVolume_Knob"); };
+	buttonList["SFXVolume_Text"]->OnExecute = [this]() { SwitchActiveButton("SFXVolume_Knob"); };
+	buttonList["BGMVolume_Text"]->OnExecute = [this]() { SwitchActiveButton("BGMVolume_Knob"); };
+
+	// Knobs -> Sliders
+	buttonList["MasterVolume_Knob"]->OnExecute = [this]() { SwitchActiveButton("MasterVolume_Track", false); };
+	buttonList["SFXVolume_Knob"]->OnExecute = [this]() { SwitchActiveButton("SFXVolume_Track", false); };
+	buttonList["BGMVolume_Knob"]->OnExecute = [this]() { SwitchActiveButton("BGMVolume_Track", false); };
+
+	// Checkboxes / Mute Toggles
+	auto handleBoxToggle = [this]() {
+		auto it = volumeBoxIndexMap.find(currentButton->name);
+		if (it != volumeBoxIndexMap.end()) {
+			isToggleVolume[it->second] = !isToggleVolume[it->second];
+		}
+	};
+	buttonList["MasterVolume_Box"]->OnExecute = handleBoxToggle;
+	buttonList["SFXVolume_Box"]->OnExecute = handleBoxToggle;
+	buttonList["BGMVolume_Box"]->OnExecute = handleBoxToggle;
+
+	// Dropdown Toggles
+	buttonList["DisplayType"]->OnExecute = [this]() {
+		currentButton = buttonList["DisplayDropdown"];
+		currentButton->playerHere = true;
+		buttonList["DisplayDropdown"]->ButtonUI->SetIsRender(true);
+	};
+
+	// Hardware Window Resolution Execution
+	buttonList["DisplayDropdown"]->OnExecute = [this]() {
+		int currentShift = buttonList["DisplayDropdown"]->ButtonUI->GetSpriteRenderer()->GetColumn();
+
+		if (isFullscreen && currentShift == 1) {
+			SDL_SetWindowFullscreen(GameEngine::GetInstance()->GetSDLWindow(), 0);
+			windowWidth = SCREEN_WIDTH;
+			windowHeight = SCREEN_HEIGHT;
+			glViewport(0, 0, windowWidth, windowHeight);
+			buttonList["DisplayType"]->ButtonUI->ShiftSpriteTo(0, 2);
+			isFullscreen = false;
+		}
+		else if (!isFullscreen && currentShift == 0) {
+			SDL_SetWindowFullscreen(GameEngine::GetInstance()->GetSDLWindow(), SDL_WINDOW_FULLSCREEN_DESKTOP);
+			SDL_GetWindowSize(GameEngine::GetInstance()->GetSDLWindow(), &windowWidth, &windowHeight);
+			glViewport(0, 0, windowWidth, windowHeight);
+			buttonList["DisplayType"]->ButtonUI->ShiftSpriteTo(0, 0);
+			isFullscreen = true;
+		}
+	};
+}
+
 void LevelMainMenu::HandleMainMenuLogic() {
 
-	if (isPressedCross)
+	if (isPressedCross && currentButton)
 	{
-		if (currentButton->name == "GameName")
-		{
-			for (UiObject* ui : creditUIList)
-			{
-				ui->SetIsRender(true);
-			}
-			currentMenuState = MenuState::Credits;
-		}
-
-		else if (currentButton->name == "Text1")
-		{
-			for (UiObject* ui : yesNoList_Start)
-			{
-				ui->SetIsRender(true);
-			}
-			currentMenuState = MenuState::StartConfirm;
-			currentButton->playerHere = false;
-			currentButton = buttonList["AreYouSureStart_No"];
-			currentButton->playerHere = true;
-		}
-
-		else if (currentButton->name == "Text2")
-		{
-			for (UiObject* ui : tutorialInfoList)
-			{
-				ui->SetIsRender(true);
-			}
-			InfoPage = 0;
-			currentMenuState = MenuState::Tutorial;
-		}
-
-		//text3
-
-		else if (currentButton->name == "Text3")
-		{
-			for (UiObject* ui : OptionList)
-			{
-				ui->SetIsRender(true);
-			}
-			currentMenuState = MenuState::Options;
-			currentButton->playerHere = false;
-			currentButton = buttonList["DisplayType_Text"];
-			currentButton->playerHere = true;
-		}
-
-		else if (currentButton->name == "Text4")
-		{
-			for (UiObject* ui : yesNoList_Exit)
-			{
-				ui->SetIsRender(true);
-			}
-			currentMenuState = MenuState::ExitConfirm;
-			currentButton->playerHere = false;
-			currentButton = buttonList["AreYouSureExit_No"];
-			currentButton->playerHere = true;
+		if (currentButton->OnExecute) {
+			currentButton->OnExecute();
 		}
 	}
 }
 void LevelMainMenu::HandleCreditsLogic() 
 {
-	if (isPressedCross || isPressedCircle)
-	{
-		for (UiObject* ui : creditUIList)
-		{
-			ui->SetIsRender(false);
-		}
-		currentMenuState = MenuState::Main;
-		currentButton->playerHere = false;
-		currentButton = buttonList["Text1"];
-		currentButton->playerHere = true;
+	if (isPressedCross || isPressedCircle) {
+		BackToMainMenu(creditUIList, "Text1");
 	}
 }
 
 void LevelMainMenu::HandleStartConfirmLogic() 
 {
-	KK_TRACE("currentButton->name = " + currentButton->name);
-	if (isPressedCross)
-	{
-		if (currentButton->name == "AreYouSureStart_Yes")
-		{
-			gameEngine->GetStateController()->gameStateNext = GameState::GS_LEVELSELECTABILITY;
-		}
-
-		if (currentButton->name == "AreYouSureStart_No")
-		{
-			for (UiObject* ui : yesNoList_Start)
-			{
-				ui->SetIsRender(false);
-			}
-			currentMenuState = MenuState::Main;
-			currentButton->playerHere = false;
-			currentButton = buttonList["Text1"];
-			currentButton->playerHere = true;
-		}
+	if (isPressedCross && currentButton->OnExecute) {
+		currentButton->OnExecute();
 	}
-
-	if (isPressedCircle)
-	{
-		if (currentButton->name == "AreYouSureStart_No")
-		{
-			for (UiObject* ui : yesNoList_Start)
-			{
-				ui->SetIsRender(false);
-			}
-			currentMenuState = MenuState::Main;
-			currentButton->playerHere = false;
-			currentButton = buttonList["Text1"];
-			currentButton->playerHere = true;
-		}
+	else if (isPressedCircle) {
+		BackToMainMenu(yesNoList_Start, "Text1");
 	}
 }
 
@@ -875,278 +896,111 @@ void LevelMainMenu::HandleTutorialLogic() {
 	{
 		tutorialInfoUI->GetSpriteRenderer()->ShiftColumn();
 		InfoPage++;
-		if (InfoPage >= InfoPageLimit)
-		{
-			for (UiObject* ui : tutorialInfoList)
-			{
-				ui->SetIsRender(false);
-			}
-			currentMenuState = MenuState::Main;
-			currentButton = buttonList["Text2"];
-			currentButton->playerHere = true;
+
+		if (InfoPage >= InfoPageLimit) {
+			TransitionToMenu(MenuState::Main, tutorialInfoList, {}, "Text2");
 		}
 	}
+}
+
+void LevelMainMenu::HandleOptionsCancel() {
+	std::string name = currentButton->name;
+
+	// If backing out of root options, hide options menu entirely and go back to main menu
+	if (name == "DisplayType_Text" || name == "MasterVolume_Text" ||
+		name == "SFXVolume_Text" || name == "BGMVolume_Text") {
+		TransitionToMenu(MenuState::Main, OptionList, {}, "Text3");
+		return;
+	}
+
+	// Map sub-buttons directly back to their parent elements
+	std::string targetDestination = "";
+	if (name == "DisplayType")          targetDestination = "DisplayType_Text";
+	else if (name == "DisplayDropdown") {
+		targetDestination = "DisplayType";
+		buttonList["DisplayDropdown"]->ButtonUI->SetIsRender(false);
+	}
+	else if (name == "MasterVolume_Knob" || name == "MasterVolume_Box")  targetDestination = "MasterVolume_Text";
+	else if (name == "SFXVolume_Knob" || name == "SFXVolume_Box")     targetDestination = "SFXVolume_Text";
+	else if (name == "BGMVolume_Knob" || name == "BGMVolume_Box")     targetDestination = "BGMVolume_Text";
+	else if (name == "MasterVolume_Track") targetDestination = "MasterVolume_Knob";
+	else if (name == "SFXVolume_Track")    targetDestination = "SFXVolume_Knob";
+	else if (name == "BGMVolume_Track")    targetDestination = "BGMVolume_Knob";
+
+	if (!targetDestination.empty()) {
+		currentButton->playerHere = false;
+		currentButton = buttonList[targetDestination];
+		currentButton->playerHere = true;
+	}
+}
+
+void LevelMainMenu::UpdateVolumeSlider(float& volumeValue, const std::string& knobKey, int rowIndex) {
+	std::cout << masterVolume << std::endl; // Match your original debug trace
+
+	if (holdright)      volumeValue++;
+	else if (holdleft)  volumeValue--;
+
+	volumeValue = std::min(100.0f, std::max(volumeValue, 0.0f));
+
+	float newX = (volumeValue * 4.0f) - (57.5f / 0.25f);
+	float newY = buttonList[knobKey]->pos.y - (rowIndex * buttonList[knobKey]->offset.y);
+
+	buttonList[knobKey]->ButtonUI->SetPosition(glm::vec3(newX, newY, 0.0f));
+}
+
+void LevelMainMenu::HandleVolumeSliderAdjustment() {
+	if (currentButton == buttonList["MasterVolume_Track"]) {
+		UpdateVolumeSlider(masterVolume, "MasterVolume_Knob", 0);
+	}
+	else if (currentButton == buttonList["SFXVolume_Track"]) {
+		UpdateVolumeSlider(SFXVolume, "SFXVolume_Knob", 1);
+	}
+	else if (currentButton == buttonList["BGMVolume_Track"]) {
+		UpdateVolumeSlider(BGMVolume, "BGMVolume_Knob", 2);
+	}
+}
+
+void LevelMainMenu::SwitchActiveButton(const std::string& targetKey, bool disableOldPlayerHere) {
+	if (disableOldPlayerHere) currentButton->playerHere = false;
+	currentButton = buttonList[targetKey];
+	currentButton->playerHere = true;
 }
 
 void LevelMainMenu::HandleOptionsLogic() {
 
-	//KK_TRACE("currentButton = " + currentButton->name);
-	if (isPressedCross)
-	{
-		if (currentButton->name == "DisplayType_Text")
-		{
-			currentButton->playerHere = false;
-			currentButton = buttonList["DisplayType"];
-			currentButton->playerHere = true;
-		}
+	if (!currentButton) return;
 
-		else if (currentButton->name == "DisplayType")
-		{
-			currentButton = buttonList["DisplayDropdown"];
-			currentButton->playerHere = true;
-			buttonList["DisplayDropdown"]->ButtonUI->SetIsRender(true);
-		}
-
-		else if (currentButton->name == "DisplayDropdown")
-		{
-			int currentShift = buttonList["DisplayDropdown"]->ButtonUI->GetSpriteRenderer()->GetColumn();
-			
-			if (isFullscreen && currentShift == 1)
-			{
-				SDL_SetWindowFullscreen(GameEngine::GetInstance()->GetSDLWindow(), 0);
-				windowWidth = SCREEN_WIDTH;
-				windowHeight = SCREEN_HEIGHT;
-				glViewport(0, 0, windowWidth, windowHeight);
-				buttonList["DisplayType"]->ButtonUI->ShiftSpriteTo(0, 2);
-				isFullscreen = false;
-			}
-			else if (!isFullscreen && currentShift == 0)
-			{
-				SDL_SetWindowFullscreen(GameEngine::GetInstance()->GetSDLWindow(), SDL_WINDOW_FULLSCREEN_DESKTOP);
-				SDL_GetWindowSize(GameEngine::GetInstance()->GetSDLWindow(), &windowWidth, &windowHeight);
-				glViewport(0, 0, windowWidth, windowHeight);
-				buttonList["DisplayType"]->ButtonUI->ShiftSpriteTo(0, 0);
-				isFullscreen = true;
-			}
-		}
-
-		else if (currentButton->name == "MasterVolume_Text")
-		{
-			currentButton->playerHere = false;
-			currentButton = buttonList["MasterVolume_Knob"];
-			currentButton->playerHere = true;
-		}
-
-		else if (currentButton->name == "SFXVolume_Text")
-		{
-			currentButton->playerHere = false;
-			currentButton = buttonList["SFXVolume_Knob"];
-			currentButton->playerHere = true;
-		}
-
-		else if (currentButton->name == "BGMVolume_Text")
-		{
-			currentButton->playerHere = false;
-			currentButton = buttonList["BGMVolume_Knob"];
-			currentButton->playerHere = true;
-		}
-
-		else if (currentButton->name == "MasterVolume_Knob")
-		{
-			currentButton = buttonList["MasterVolume_Track"];
-			currentButton->playerHere = true;
-		}
-
-		else if (currentButton->name == "SFXVolume_Knob")
-		{
-			currentButton = buttonList["SFXVolume_Track"];
-			currentButton->playerHere = true;
-		}
-
-		else if (currentButton->name == "BGMVolume_Knob")
-		{
-			currentButton = buttonList["BGMVolume_Track"];
-			currentButton->playerHere = true;
-		}
-
-
-		else if (currentButton->name == "MasterVolume_Box" ||
-			currentButton->name == "SFXVolume_Box" ||
-			currentButton->name == "BGMVolume_Box")
-		{
-			int boxIndex = volumeBoxIndexMap.find(currentButton->name)->second;
-			isToggleVolume[boxIndex] = !isToggleVolume[boxIndex];
-		}
-
+	// 1. HANDLE CROSS PRESS (EXECUTE ACTION)
+	if (isPressedCross && currentButton->OnExecute) {
+		currentButton->OnExecute();
 	}
 
-	if (isPressedCircle)
-	{
-		if (currentButton->name == "DisplayType_Text" ||
-			currentButton->name == "MasterVolume_Text" ||
-			currentButton->name == "SFXVolume_Text" ||
-			currentButton->name == "BGMVolume_Text")
-		{
-			for (UiObject* ui : OptionList)
-			{
-				ui->SetIsRender(false);
-			}
-			currentMenuState = MenuState::Main;
-			currentButton->playerHere = false;
-			currentButton = buttonList["Text3"];
-			currentButton->playerHere = true;
-		}
-		else if (currentButton->name == "DisplayType")
-		{
-			currentButton->playerHere = false;
-			currentButton = buttonList["DisplayType_Text"];
-			currentButton->playerHere = true;
-		}
-
-		else if (currentButton->name == "MasterVolume_Knob" ||
-			currentButton->name == "MasterVolume_Box")
-		{
-			currentButton->playerHere = false;
-			currentButton = buttonList["MasterVolume_Text"];
-			currentButton->playerHere = true;
-		}
-
-		else if (currentButton->name == "SFXVolume_Knob" ||
-			currentButton->name == "SFXVolume_Box")
-		{
-			currentButton->playerHere = false;
-			currentButton = buttonList["SFXVolume_Text"];
-			currentButton->playerHere = true;
-		}
-
-		else if (currentButton->name == "BGMVolume_Knob" ||
-			currentButton->name == "BGMVolume_Box")
-		{
-			currentButton->playerHere = false;
-			currentButton = buttonList["BGMVolume_Text"];
-			currentButton->playerHere = true;
-		}
-
-		else if (currentButton->name == "MasterVolume_Track")
-		{
-			currentButton->playerHere = false;
-			currentButton = buttonList["MasterVolume_Knob"];
-			currentButton->playerHere = true;
-		}
-
-		else if (currentButton->name == "SFXVolume_Track")
-		{
-			currentButton->playerHere = false;
-			currentButton = buttonList["SFXVolume_Knob"];
-			currentButton->playerHere = true;
-		}
-
-		else if (currentButton->name == "BGMVolume_Track")
-		{
-			currentButton->playerHere = false;
-			currentButton = buttonList["BGMVolume_Knob"];
-			currentButton->playerHere = true;
-		}
-		else if (currentButton->name == "DisplayDropdown")
-		{
-			currentButton->playerHere = false;
-			currentButton = buttonList["DisplayType"];
-			currentButton->playerHere = true;
-			buttonList["DisplayDropdown"]->ButtonUI->SetIsRender(false);
-		}
+	// 2. HANDLE CIRCLE PRESS (GO BACK / CANCEL)
+	else if (isPressedCircle) {
+		HandleOptionsCancel();
 	}
 
-	if (currentButton->name == "DisplayDropdown")
-	{
-		//KK_TRACE("currentButton->name == DisplayDropdown");
-		if (playerMove) KK_TRACE("playerMove");
-
-		if ((up || down) && !playerMove)
-		{
-			currentButton->ButtonUI->GetSpriteRenderer()->ShiftColumn();
-		}
+	// 3. HANDLE DROPDOWN SELECTION NAVIGATION
+	if (currentButton->name == "DisplayDropdown" && (up || down) && !playerMove) {
+		currentButton->ButtonUI->GetSpriteRenderer()->ShiftColumn();
 	}
 
-	if (currentButton == buttonList["MasterVolume_Track"]) {
-		std::cout << masterVolume << std::endl;
-		if (holdright)
-			masterVolume++;
-		else if (holdleft)
-			masterVolume--;
-		masterVolume = std::min(100.0f, std::max(masterVolume, 0.0f));
-		buttonList["MasterVolume_Knob"]->ButtonUI->SetPosition(
-			glm::vec3((masterVolume * 4 - 57.5 / 0.25), 
-			buttonList["MasterVolume_Knob"]->pos.y - (0 * buttonList["MasterVolume_Knob"]->offset.y), 
-			0));
-	}
-	if (currentButton == buttonList["SFXVolume_Track"]) {
-		std::cout << masterVolume << std::endl;
-		if (holdright)
-			SFXVolume++;
-		else if (holdleft)
-			SFXVolume--;
-		SFXVolume = std::min(100.0f, std::max(SFXVolume, 0.0f));
-		buttonList["SFXVolume_Knob"]->ButtonUI->SetPosition(
-			glm::vec3((SFXVolume * 4 - 57.5 / 0.25),
-				buttonList["SFXVolume_Knob"]->pos.y - (1 * buttonList["SFXVolume_Knob"]->offset.y),
-				0));
-	}
-	if (currentButton == buttonList["BGMVolume_Track"]) {
-		std::cout << masterVolume << std::endl;
-		if (holdright)
-			BGMVolume++;
-		else if (holdleft)
-			BGMVolume--;
-		BGMVolume = std::min(100.0f, std::max(BGMVolume, 0.0f));
-		buttonList["BGMVolume_Knob"]->ButtonUI->SetPosition(
-			glm::vec3((BGMVolume * 4 - 57.5 / 0.25), 
-			buttonList["BGMVolume_Knob"]->pos.y - (2 * buttonList["BGMVolume_Knob"]->offset.y), 
-			0));
-	}
-	
+	// 4. HANDLE SLIDER/TRACK HOLD LOGIC
+	HandleVolumeSliderAdjustment();
 }
 void LevelMainMenu::HandleExitConfirmLogic() {
 
-	KK_TRACE("currentButton->name = " + currentButton->name);
-	if (isPressedCross)
-	{
-		if (currentButton->name == "AreYouSureExit_Yes")
-		{
-			GameEngine::GetInstance()->GetStateController()->gameStateNext = GameState::GS_QUIT;
-		}
-
-		if (currentButton->name == "AreYouSureExit_No")
-		{
-			for (UiObject* ui : yesNoList_Exit)
-			{
-				ui->SetIsRender(false);
-			}
-			currentMenuState = MenuState::Main;
-			currentButton->playerHere = false;
-			currentButton = buttonList["Text4"];
-			currentButton->playerHere = true;
-		}
+	if (isPressedCross && currentButton->OnExecute) {
+		currentButton->OnExecute();
 	}
-
-	if (isPressedCircle)
-	{
-		if (currentButton->name == "AreYouSureExit_No")
-		{
-			for (UiObject* ui : yesNoList_Exit)
-			{
-				ui->SetIsRender(false);
-			}
-			currentMenuState = MenuState::Main;
-			currentButton->playerHere = false;
-			currentButton = buttonList["Text4"];
-			currentButton->playerHere = true;
-		}
+	else if (isPressedCircle) {
+		BackToMainMenu(yesNoList_Exit, "Text4");
 	}
 }
 void LevelMainMenu::NewUpdateInput()
 {
 	// change this to test the joystick
-	bool isUsingJoystick = true;
+	bool isUsingJoystick = false;
 
 	
 	up = false;
