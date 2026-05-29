@@ -30,7 +30,7 @@ void LevelMainMenu::LevelLoad()
 	KrillSoundManager::SoundManager::GetInstance()->PlayMusic("Ability_Selection", true);
 }
 
-UiObject* LevelMainMenu::InitUI(std::string name, SpritesheetInfo spriteInfo, glm::vec2 pos, glm::vec2 size, glm::vec2 spriteShiftPos)
+UiObject* LevelMainMenu::InitUI(SpritesheetInfo spriteInfo, glm::vec2 pos, glm::vec2 size, glm::vec2 spriteShiftPos)
 {
 	UiObject* ui = new UiObject();
 	ui->SetSpriteInfo(spriteInfo);
@@ -40,7 +40,7 @@ UiObject* LevelMainMenu::InitUI(std::string name, SpritesheetInfo spriteInfo, gl
 	return ui;
 }
 
-UiObject* LevelMainMenu::InitButtonUI(std::string name, SpritesheetInfo spriteInfo, ButtonData* buttonData, glm::vec2 spriteShiftPos)
+UiObject* LevelMainMenu::InitButtonUI(SpritesheetInfo spriteInfo, ButtonData* buttonData, glm::vec2 spriteShiftPos)
 {
 	UiObject* ui = new UiObject();
 	ui->SetSpriteInfo(spriteInfo);
@@ -78,26 +78,43 @@ void LevelMainMenu::LevelInit()
 	);
 
 	glm::vec2 backgroundSize(camera.GetCameraWidth(), camera.GetCameraHeight());
-	UiObject* BG = InitUI("BG", spriteList["BG"], glm::vec2(0, 0), backgroundSize, glm::vec2(0, 0));
+	UiObject* BG = InitUI(spriteList["BG"], glm::vec2(0, 0), backgroundSize, glm::vec2(0, 0));
 	objectsList.push_back(BG);
 
 	// game name
-	buttonList["GameName"] = InitButtonData("GameName", {100, 100}, {470, 55}, {0, 0}, 0, "../Resource/SceneData/text0.json");
-	buttonList["GameName"]->ButtonUI = InitButtonUI("GameName", spriteList["Name"], buttonList["GameName"], glm::vec2(0, 0));
+	buttonList[MenuButtonName_GameName] = InitButtonData(MenuButtonName_GameName, {100, 100}, {470, 55}, {0, 0}, 0, "../Resource/SceneData/text0.json");
+	buttonList[MenuButtonName_GameName]->ButtonUI = InitButtonUI(spriteList["Name"], buttonList[MenuButtonName_GameName], glm::vec2(0, 0));
 
-	objectsList.push_back(buttonList["GameName"]->ButtonUI);
-	textList.push_back(buttonList["GameName"]->ButtonUI);
+	objectsList.push_back(buttonList[MenuButtonName_GameName]->ButtonUI);
+	textList.push_back(buttonList[MenuButtonName_GameName]->ButtonUI);
 
 	//Main button
 	for (int i = 1; i < 5; i++) 
 	{
 		// position file data
 		std::string fileName = "../Resource/SceneData/text" + std::to_string(i) + ".json";
-		std::string buttonName = "Text" + std::to_string(i);
+		MenuButtonName_ buttonName;
+
+		switch (i)
+		{
+			case 1:
+				buttonName = MenuButtonName_StartButton;
+				break;
+			case 2:
+				buttonName = MenuButtonName_TutorialButton;
+				break;
+			case 3:
+				buttonName = MenuButtonName_OptionButton;
+				break;
+			case 4:
+				buttonName = MenuButtonName_ExitButton;
+				break;
+		}
+
 		int buttonUIShiftColumn = (i - 1) * 2;
 		 
 		buttonList[buttonName] = InitButtonData(buttonName, { 100, 100 }, { 289, 65 }, { 0, 0 }, buttonUIShiftColumn, fileName);
-		buttonList[buttonName]->ButtonUI = InitButtonUI(buttonName, spriteList["Text"], buttonList[buttonName], glm::vec2(0, buttonUIShiftColumn));
+		buttonList[buttonName]->ButtonUI = InitButtonUI(spriteList["Text"], buttonList[buttonName], glm::vec2(0, buttonUIShiftColumn));
 
 		objectsList.push_back(buttonList[buttonName]->ButtonUI);
 		textList.push_back(buttonList[buttonName]->ButtonUI);
@@ -158,21 +175,21 @@ void LevelMainMenu::LevelInit()
 
 	for (int j = 0; j < 4; j++) {
 
-		std::string buttonName;
+		MenuButtonName_ buttonName;
 
 		switch (j)
 		{
 		case 0:
-			buttonName = "DisplayType_Text";
+			buttonName = MenuButtonName_DisplayType_Text;
 			break;
 		case 1:
-			buttonName = "MasterVolume_Text";
+			buttonName = MenuButtonName_MasterVolume_Text;
 			break;
 		case 2:
-			buttonName = "SFXVolume_Text";
+			buttonName = MenuButtonName_SFXVolume_Text;
 			break;
 		case 3:
-			buttonName = "BGMVolume_Text";
+			buttonName = MenuButtonName_BGMVolume_Text;
 			break;
 		}
 
@@ -190,13 +207,13 @@ void LevelMainMenu::LevelInit()
 		objectsList.push_back(textOption);
 	}
 
-	buttonList["DisplayType"] = InitButtonData("DisplayType", {100, 100}, {289, 65}, {0, 0}, 0, "../Resource/SceneData/DisplayConfig.json");
+	buttonList[MenuButtonName_DisplayType] = InitButtonData(MenuButtonName_DisplayType, {100, 100}, {289, 65}, {0, 0}, 0, "../Resource/SceneData/DisplayConfig.json");
 	UiObject* optionDisplay = new UiObject();
 	optionDisplay->SetSpriteInfo(spriteList.find("OptionsDisplay")->second);
 	optionDisplay->SetSize(optionDisplay->GetSpriteRenderer()->GetSpriteWidth(), -optionDisplay->GetSpriteRenderer()->GetSpriteHeight());
-	optionDisplay->SetPosition(glm::vec3(buttonList["DisplayType"]->pos.x, buttonList["DisplayType"]->pos.y, 0));
+	optionDisplay->SetPosition(glm::vec3(buttonList[MenuButtonName_DisplayType]->pos.x, buttonList[MenuButtonName_DisplayType]->pos.y, 0));
 	optionDisplay->SetIsRender(false);
-	buttonList["DisplayType"]->ButtonUI = optionDisplay;
+	buttonList[MenuButtonName_DisplayType]->ButtonUI = optionDisplay;
 	if (windowWidth == SCREEN_WIDTH) {
 		optionDisplay->ShiftSpriteTo(optionDisplay->GetSpriteRenderer()->GetRow(), 3);
 	}
@@ -206,32 +223,32 @@ void LevelMainMenu::LevelInit()
 	OptionList.push_back(optionDisplay);
 	objectsList.push_back(optionDisplay);
 	
-	buttonList["DisplayDropdown"] = InitButtonData("DisplayDropdown", { 100, 100 }, { 289, 65 }, { 0, 0 }, 0, "../Resource/SceneData/DisplayConfig.json");
+	buttonList[MenuButtonName_DisplayDropdown] = InitButtonData(MenuButtonName_DisplayDropdown, { 100, 100 }, { 289, 65 }, { 0, 0 }, 0, "../Resource/SceneData/DisplayConfig.json");
 	float displayDropdownOffsetY = -70.0f;
 	UiObject* optionDisplayDropdown = new UiObject();
 	optionDisplayDropdown->SetSpriteInfo(spriteList.find("OptionsDisplayDropdown")->second);
 	optionDisplayDropdown->SetSize(optionDisplayDropdown->GetSpriteRenderer()->GetSpriteWidth(), -optionDisplayDropdown->GetSpriteRenderer()->GetSpriteHeight());
-	optionDisplayDropdown->SetPosition(glm::vec3(buttonList["DisplayDropdown"]->pos.x, buttonList["DisplayDropdown"]->pos.y + displayDropdownOffsetY, 0));
+	optionDisplayDropdown->SetPosition(glm::vec3(buttonList[MenuButtonName_DisplayDropdown]->pos.x, buttonList[MenuButtonName_DisplayDropdown]->pos.y + displayDropdownOffsetY, 0));
 	//optionDisplayDropdown->ShiftSpriteTo(0, 1);
 	optionDisplayDropdown->SetIsRender(false);
-	buttonList["DisplayDropdown"]->ButtonUI = optionDisplayDropdown;
+	buttonList[MenuButtonName_DisplayDropdown]->ButtonUI = optionDisplayDropdown;
 	objectsList.push_back(optionDisplayDropdown);
 	//OptionList.push_back(optionDisplayDropdown);
 
 	for (int j = 0; j < 3; j++) 
 	{
-		std::string buttonName;
+		MenuButtonName_ buttonName;
 
 		switch (j)
 		{
 		case 0:
-			buttonName = "MasterVolume_Track";
+			buttonName = MenuButtonName_MasterVolume_Track;
 			break;
 		case 1:
-			buttonName = "SFXVolume_Track";
+			buttonName = MenuButtonName_SFXVolume_Track;
 			break;
 		case 2:
-			buttonName = "BGMVolume_Track";
+			buttonName = MenuButtonName_BGMVolume_Track;
 			break;
 		}
 
@@ -250,13 +267,13 @@ void LevelMainMenu::LevelInit()
 		switch (j)
 		{
 		case 0:
-			buttonName = "MasterVolume_Knob";
+			buttonName = MenuButtonName_MasterVolume_Knob;
 			break;
 		case 1:
-			buttonName = "SFXVolume_Knob";
+			buttonName = MenuButtonName_SFXVolume_Knob;
 			break;
 		case 2:
-			buttonName = "BGMVolume_Knob";
+			buttonName = MenuButtonName_BGMVolume_Knob;
 			break;
 		}
 
@@ -282,13 +299,13 @@ void LevelMainMenu::LevelInit()
 		switch (j)
 		{
 		case 0:
-			buttonName = "MasterVolume_Box";
+			buttonName = MenuButtonName_MasterVolume_Box;
 			break;
 		case 1:
-			buttonName = "SFXVolume_Box";
+			buttonName = MenuButtonName_SFXVolume_Box;
 			break;
 		case 2:
-			buttonName = "BGMVolume_Box";
+			buttonName = MenuButtonName_BGMVolume_Box;
 			break;
 		}
 		
@@ -312,82 +329,82 @@ void LevelMainMenu::LevelInit()
 
 	}
 	// DisplayText
-	buttonList["DisplayType_Text"]->LowerButton = buttonList["MasterVolume_Text"];
+	buttonList[MenuButtonName_DisplayType_Text]->LowerButton = buttonList[MenuButtonName_MasterVolume_Text];
 
-	buttonList["MasterVolume_Text"]->UpperButton = buttonList["DisplayType_Text"];
-	buttonList["MasterVolume_Text"]->LowerButton = buttonList["SFXVolume_Text"];
-	buttonList["MasterVolume_Knob"]->RightButton = buttonList["MasterVolume_Box"];
-	buttonList["MasterVolume_Box"]->LeftButton = buttonList["MasterVolume_Knob"];
+	buttonList[MenuButtonName_MasterVolume_Text]->UpperButton = buttonList[MenuButtonName_DisplayType_Text];
+	buttonList[MenuButtonName_MasterVolume_Text]->LowerButton = buttonList[MenuButtonName_SFXVolume_Text];
+	buttonList[MenuButtonName_MasterVolume_Knob]->RightButton = buttonList[MenuButtonName_MasterVolume_Box];
+	buttonList[MenuButtonName_MasterVolume_Box]->LeftButton = buttonList[MenuButtonName_MasterVolume_Knob];
 
 
-	buttonList["SFXVolume_Text"]->UpperButton = buttonList["MasterVolume_Text"];
-	buttonList["SFXVolume_Text"]->LowerButton = buttonList["BGMVolume_Text"];
-	buttonList["SFXVolume_Knob"]->RightButton = buttonList["SFXVolume_Box"];
-	buttonList["SFXVolume_Box"]->LeftButton = buttonList["SFXVolume_Knob"];
+	buttonList[MenuButtonName_SFXVolume_Text]->UpperButton = buttonList[MenuButtonName_MasterVolume_Text];
+	buttonList[MenuButtonName_SFXVolume_Text]->LowerButton = buttonList[MenuButtonName_BGMVolume_Text];
+	buttonList[MenuButtonName_SFXVolume_Knob]->RightButton = buttonList[MenuButtonName_SFXVolume_Box];
+	buttonList[MenuButtonName_SFXVolume_Box]->LeftButton = buttonList[MenuButtonName_SFXVolume_Knob];
 
-	buttonList["BGMVolume_Text"]->UpperButton = buttonList["SFXVolume_Text"];
-	buttonList["BGMVolume_Knob"]->RightButton = buttonList["BGMVolume_Box"];
-	buttonList["BGMVolume_Box"]->LeftButton = buttonList["BGMVolume_Knob"];
+	buttonList[MenuButtonName_BGMVolume_Text]->UpperButton = buttonList[MenuButtonName_SFXVolume_Text];
+	buttonList[MenuButtonName_BGMVolume_Knob]->RightButton = buttonList[MenuButtonName_BGMVolume_Box];
+	buttonList[MenuButtonName_BGMVolume_Box]->LeftButton = buttonList[MenuButtonName_BGMVolume_Knob];
 	
-	buttonList["AreYouSureStart_Yes"] = InitButtonData("AreYouSureStart_Yes", { 0, 0 }, { 0, 0 }, { 100, 0 }, 0, "../Resource/SceneData/YesNoConfig.json");
-	buttonList["AreYouSureStart_Yes"]->ButtonUI = InitButtonUI("AreYouSureStart_Yes", spriteList["AreYouSureYN"], buttonList["AreYouSureStart_Yes"], glm::vec2(0, 1));
-	buttonList["AreYouSureStart_Yes"]->ButtonUI->SetIsRender(false);
-	objectsList.push_back(buttonList["AreYouSureStart_Yes"]->ButtonUI);
-	yesNoList_Start.push_back(buttonList["AreYouSureStart_Yes"]->ButtonUI);
+	buttonList[MenuButtonName_AreYouSureStart_Yes] = InitButtonData(MenuButtonName_AreYouSureStart_Yes, { 0, 0 }, { 0, 0 }, { 100, 0 }, 0, "../Resource/SceneData/YesNoConfig.json");
+	buttonList[MenuButtonName_AreYouSureStart_Yes]->ButtonUI = InitButtonUI(spriteList["AreYouSureYN"], buttonList[MenuButtonName_AreYouSureStart_Yes], glm::vec2(0, 1));
+	buttonList[MenuButtonName_AreYouSureStart_Yes]->ButtonUI->SetIsRender(false);
+	objectsList.push_back(buttonList[MenuButtonName_AreYouSureStart_Yes]->ButtonUI);
+	yesNoList_Start.push_back(buttonList[MenuButtonName_AreYouSureStart_Yes]->ButtonUI);
 
-	buttonList["AreYouSureStart_No"] = InitButtonData("AreYouSureStart_No", { 0, 0 }, { 0, 0 }, { 100, 0 }, 0, "../Resource/SceneData/YesNoConfig.json");
-	buttonList["AreYouSureStart_No"]->ButtonUI = InitButtonUI("AreYouSureStart_No", spriteList["AreYouSureYN"], buttonList["AreYouSureStart_No"], glm::vec2(0, 3));
-	buttonList["AreYouSureStart_No"]->ButtonUI->SetIsRender(false);
-	objectsList.push_back(buttonList["AreYouSureStart_No"]->ButtonUI);
-	yesNoList_Start.push_back(buttonList["AreYouSureStart_No"]->ButtonUI);
+	buttonList[MenuButtonName_AreYouSureStart_No] = InitButtonData(MenuButtonName_AreYouSureStart_No, { 0, 0 }, { 0, 0 }, { 100, 0 }, 0, "../Resource/SceneData/YesNoConfig.json");
+	buttonList[MenuButtonName_AreYouSureStart_No]->ButtonUI = InitButtonUI(spriteList["AreYouSureYN"], buttonList[MenuButtonName_AreYouSureStart_No], glm::vec2(0, 3));
+	buttonList[MenuButtonName_AreYouSureStart_No]->ButtonUI->SetIsRender(false);
+	objectsList.push_back(buttonList[MenuButtonName_AreYouSureStart_No]->ButtonUI);
+	yesNoList_Start.push_back(buttonList[MenuButtonName_AreYouSureStart_No]->ButtonUI);
 
-	buttonList["AreYouSureExit_Yes"] = InitButtonData("AreYouSureExit_Yes", { 0, 0 }, { 0, 0 }, { 100, 0 }, 0, "../Resource/SceneData/YesNoConfig.json");
-	buttonList["AreYouSureExit_Yes"]->ButtonUI = InitButtonUI("AreYouSureExit_Yes", spriteList["AreYouSureYN"], buttonList["AreYouSureExit_Yes"], glm::vec2(0, 1));
-	buttonList["AreYouSureExit_Yes"]->ButtonUI->SetIsRender(false);
-	objectsList.push_back(buttonList["AreYouSureExit_Yes"]->ButtonUI);
-	yesNoList_Exit.push_back(buttonList["AreYouSureExit_Yes"]->ButtonUI);
+	buttonList[MenuButtonName_AreYouSureExit_Yes] = InitButtonData(MenuButtonName_AreYouSureExit_Yes, { 0, 0 }, { 0, 0 }, { 100, 0 }, 0, "../Resource/SceneData/YesNoConfig.json");
+	buttonList[MenuButtonName_AreYouSureExit_Yes]->ButtonUI = InitButtonUI(spriteList["AreYouSureYN"], buttonList[MenuButtonName_AreYouSureExit_Yes], glm::vec2(0, 1));
+	buttonList[MenuButtonName_AreYouSureExit_Yes]->ButtonUI->SetIsRender(false);
+	objectsList.push_back(buttonList[MenuButtonName_AreYouSureExit_Yes]->ButtonUI);
+	yesNoList_Exit.push_back(buttonList[MenuButtonName_AreYouSureExit_Yes]->ButtonUI);
 
-	buttonList["AreYouSureExit_No"] = InitButtonData("AreYouSureExit_No", { 0, 0 }, { 0, 0 }, { 100, 0 }, 0, "../Resource/SceneData/YesNoConfig.json");
-	buttonList["AreYouSureExit_No"]->ButtonUI = InitButtonUI("AreYouSureExit_No", spriteList["AreYouSureYN"], buttonList["AreYouSureExit_No"], glm::vec2(0, 3));
-	buttonList["AreYouSureExit_No"]->ButtonUI->SetIsRender(false);
-	objectsList.push_back(buttonList["AreYouSureExit_No"]->ButtonUI);
-	yesNoList_Exit.push_back(buttonList["AreYouSureExit_No"]->ButtonUI);
+	buttonList[MenuButtonName_AreYouSureExit_No] = InitButtonData(MenuButtonName_AreYouSureExit_No, { 0, 0 }, { 0, 0 }, { 100, 0 }, 0, "../Resource/SceneData/YesNoConfig.json");
+	buttonList[MenuButtonName_AreYouSureExit_No]->ButtonUI = InitButtonUI(spriteList["AreYouSureYN"], buttonList[MenuButtonName_AreYouSureExit_No], glm::vec2(0, 3));
+	buttonList[MenuButtonName_AreYouSureExit_No]->ButtonUI->SetIsRender(false);
+	objectsList.push_back(buttonList[MenuButtonName_AreYouSureExit_No]->ButtonUI);
+	yesNoList_Exit.push_back(buttonList[MenuButtonName_AreYouSureExit_No]->ButtonUI);
 
-	glm::vec3 AreYouSure_No_ButtonPos = buttonList["AreYouSureStart_No"]->ButtonUI->getPos();
-	AreYouSure_No_ButtonPos.x = buttonList["AreYouSureStart_No"]->pos.x + buttonList["AreYouSureStart_No"]->offset.x;
-	buttonList["AreYouSureStart_No"]->ButtonUI->SetPosition(AreYouSure_No_ButtonPos);
-	buttonList["AreYouSureExit_No"]->ButtonUI->SetPosition(AreYouSure_No_ButtonPos);
+	glm::vec3 AreYouSure_No_ButtonPos = buttonList[MenuButtonName_AreYouSureStart_No]->ButtonUI->getPos();
+	AreYouSure_No_ButtonPos.x = buttonList[MenuButtonName_AreYouSureStart_No]->pos.x + buttonList[MenuButtonName_AreYouSureStart_No]->offset.x;
+	buttonList[MenuButtonName_AreYouSureStart_No]->ButtonUI->SetPosition(AreYouSure_No_ButtonPos);
+	buttonList[MenuButtonName_AreYouSureExit_No]->ButtonUI->SetPosition(AreYouSure_No_ButtonPos);
 
 
-	buttonList["TextOption"] = InitButtonData("TextOption", { 0, 0 }, { 0, 0 }, { 100, 0 }, 0, "../Resource/SceneData/TextOptionConfig.json");
+	/*buttonList["TextOption"] = InitButtonData("TextOption", { 0, 0 }, { 0, 0 }, { 100, 0 }, 0, "../Resource/SceneData/TextOptionConfig.json");
 	
 	buttonList["Display"] = InitButtonData("Display", { 0, 0 }, { 0, 0 }, { 100, 0 }, 0, "../Resource/SceneData/DisplayConfig.json");
 	
-	buttonList["VolumeTrack"] = InitButtonData("VolumeTrack", { 0, 0 }, { 0, 0 }, { 100, 0 }, 0, "../Resource/SceneData/VolumeTrackConfig.json");
+	buttonList["VolumeTrack"] = InitButtonData("VolumeTrack", { 0, 0 }, { 0, 0 }, { 100, 0 }, 0, "../Resource/SceneData/VolumeTrackConfig.json");*/
 
 
 	// Setup Button Links
-	buttonList["GameName"]->LowerButton = buttonList["Text1"];
+	buttonList[MenuButtonName_GameName]->LowerButton = buttonList[MenuButtonName_StartButton];
 
-	buttonList["Text1"]->UpperButton = buttonList["GameName"];
-	buttonList["Text1"]->LowerButton = buttonList["Text2"];
+	buttonList[MenuButtonName_StartButton]->UpperButton = buttonList[MenuButtonName_GameName];
+	buttonList[MenuButtonName_StartButton]->LowerButton = buttonList[MenuButtonName_TutorialButton];
 
-	buttonList["Text2"]->UpperButton = buttonList["Text1"];
-	buttonList["Text2"]->LowerButton = buttonList["Text3"];
+	buttonList[MenuButtonName_TutorialButton]->UpperButton = buttonList[MenuButtonName_StartButton];
+	buttonList[MenuButtonName_TutorialButton]->LowerButton = buttonList[MenuButtonName_OptionButton];
 
-	buttonList["Text3"]->UpperButton = buttonList["Text2"];
-	buttonList["Text3"]->LowerButton = buttonList["Text4"];
+	buttonList[MenuButtonName_OptionButton]->UpperButton = buttonList[MenuButtonName_TutorialButton];
+	buttonList[MenuButtonName_OptionButton]->LowerButton = buttonList[MenuButtonName_ExitButton];
 
-	buttonList["Text4"]->UpperButton = buttonList["Text3"];
+	buttonList[MenuButtonName_ExitButton]->UpperButton = buttonList[MenuButtonName_OptionButton];
 
-	buttonList["AreYouSureStart_Yes"]->RightButton = buttonList["AreYouSureStart_No"];
-	buttonList["AreYouSureStart_No"]->LeftButton = buttonList["AreYouSureStart_Yes"];
+	buttonList[MenuButtonName_AreYouSureStart_Yes]->RightButton = buttonList[MenuButtonName_AreYouSureStart_No];
+	buttonList[MenuButtonName_AreYouSureStart_No]->LeftButton = buttonList[MenuButtonName_AreYouSureStart_Yes];
 
-	buttonList["AreYouSureExit_Yes"]->RightButton = buttonList["AreYouSureExit_No"];
-	buttonList["AreYouSureExit_No"]->LeftButton = buttonList["AreYouSureExit_Yes"];
+	buttonList[MenuButtonName_AreYouSureExit_Yes]->RightButton = buttonList[MenuButtonName_AreYouSureExit_No];
+	buttonList[MenuButtonName_AreYouSureExit_No]->LeftButton = buttonList[MenuButtonName_AreYouSureExit_Yes];
 
-	currentButton = buttonList["Text1"];
-	buttonList["Text1"]->playerHere = true;
+	currentButton = buttonList[MenuButtonName_StartButton];
+	buttonList[MenuButtonName_StartButton]->playerHere = true;
 
 	InitializeMenuButtons();
 
@@ -409,7 +426,7 @@ void LevelMainMenu::LevelInit()
 	KK_TRACE("Level Main Menu Loaded");
 }
 
-LevelMainMenu::ButtonData* LevelMainMenu::InitButtonData(std::string name, glm::vec2 pos, glm::vec2 size, glm::vec2 offset, int column, std::string configPath)
+LevelMainMenu::ButtonData* LevelMainMenu::InitButtonData(MenuButtonName_ name, glm::vec2 pos, glm::vec2 size, glm::vec2 offset, int column, std::string configPath)
 {
 	ButtonData* button = new ButtonData();
 	button->name = name;
@@ -528,6 +545,7 @@ void LevelMainMenu::DrawControllerButtons() {
 
 	ImGui::EndGroup();
 }
+
 void LevelMainMenu::ShowImGuiConfig(bool isShowing)
 {
 	if (!isShowing)
@@ -758,7 +776,7 @@ void LevelMainMenu::TransitionToMenu
 	MenuState newState, 
 	const std::vector<UiObject*>& hideList, 
 	const std::vector<UiObject*>& showList, 
-	const std::string& defaultButtonKey)
+	MenuButtonName_ defaultButtonKey)
 {
 	for (UiObject* ui : hideList) ui->SetIsRender(false);
 	for (UiObject* ui : showList) ui->SetIsRender(true);
@@ -769,60 +787,60 @@ void LevelMainMenu::TransitionToMenu
 	if (currentButton) currentButton->playerHere = true;
 }
 
-void LevelMainMenu::BackToMainMenu(const std::vector<UiObject*>& activeUiList, const std::string& fallbackButtonName) {
+void LevelMainMenu::BackToMainMenu(const std::vector<UiObject*>& activeUiList, MenuButtonName_ fallbackButtonName) {
 	TransitionToMenu(MenuState::Main, activeUiList, {}, fallbackButtonName);
 }
 
 void LevelMainMenu::InitializeMenuButtons()
 {
-	buttonList["GameName"]->OnExecute = [this]() {
-		TransitionToMenu(MenuState::Credits, {}, creditUIList, "Text1");
+	buttonList[MenuButtonName_GameName]->OnExecute = [this]() {
+		TransitionToMenu(MenuState::Credits, {}, creditUIList, MenuButtonName_StartButton);
 	};
 
-	buttonList["Text1"]->OnExecute = [this]() {
-		TransitionToMenu(MenuState::StartConfirm, {}, yesNoList_Start, "AreYouSureStart_No");
+	buttonList[MenuButtonName_StartButton]->OnExecute = [this]() {
+		TransitionToMenu(MenuState::StartConfirm, {}, yesNoList_Start, MenuButtonName_AreYouSureStart_No);
 	};
 
-	buttonList["Text2"]->OnExecute = [this]() {
+	buttonList[MenuButtonName_TutorialButton]->OnExecute = [this]() {
 		InfoPage = 0;
-		TransitionToMenu(MenuState::Tutorial, {}, tutorialInfoList, "Text2");
+		TransitionToMenu(MenuState::Tutorial, {}, tutorialInfoList, MenuButtonName_TutorialButton);
 	};
 
-	buttonList["Text3"]->OnExecute = [this]() {
-		TransitionToMenu(MenuState::Options, {}, OptionList, "DisplayType_Text");
+	buttonList[MenuButtonName_OptionButton]->OnExecute = [this]() {
+		TransitionToMenu(MenuState::Options, {}, OptionList, MenuButtonName_DisplayType_Text);
 	};
 
-	buttonList["Text4"]->OnExecute = [this]() {
-		TransitionToMenu(MenuState::ExitConfirm, {}, yesNoList_Exit, "AreYouSureExit_No");
+	buttonList[MenuButtonName_ExitButton]->OnExecute = [this]() {
+		TransitionToMenu(MenuState::ExitConfirm, {}, yesNoList_Exit, MenuButtonName_AreYouSureExit_No);
 	};
 
-	buttonList["AreYouSureStart_Yes"]->OnExecute = [this]() {
+	buttonList[MenuButtonName_AreYouSureStart_Yes]->OnExecute = [this]() {
 		gameEngine->GetStateController()->gameStateNext = GameState::GS_LEVELSELECTABILITY;
 	};
 
-	buttonList["AreYouSureStart_No"]->OnExecute = [this]() {
-		BackToMainMenu(yesNoList_Start, "Text1");
+	buttonList[MenuButtonName_AreYouSureStart_No]->OnExecute = [this]() {
+		BackToMainMenu(yesNoList_Start, MenuButtonName_StartButton);
 	};
 
-	buttonList["AreYouSureExit_Yes"]->OnExecute = [this]() {
+	buttonList[MenuButtonName_AreYouSureExit_Yes]->OnExecute = [this]() {
 		gameEngine->GetStateController()->gameStateNext = GameState::GS_QUIT;
 	};
 
-	buttonList["AreYouSureExit_No"]->OnExecute = [this]() {
-		BackToMainMenu(yesNoList_Exit, "Text4");
+	buttonList[MenuButtonName_AreYouSureExit_No]->OnExecute = [this]() {
+		BackToMainMenu(yesNoList_Exit, MenuButtonName_ExitButton);
 	};
 
 	// Options
 	// Text Links -> Sub Controls
-	buttonList["DisplayType_Text"]->OnExecute = [this]() { SwitchActiveButton("DisplayType"); };
-	buttonList["MasterVolume_Text"]->OnExecute = [this]() { SwitchActiveButton("MasterVolume_Knob"); };
-	buttonList["SFXVolume_Text"]->OnExecute = [this]() { SwitchActiveButton("SFXVolume_Knob"); };
-	buttonList["BGMVolume_Text"]->OnExecute = [this]() { SwitchActiveButton("BGMVolume_Knob"); };
+	buttonList[MenuButtonName_DisplayType_Text]->OnExecute = [this]() { SwitchActiveButton(MenuButtonName_DisplayType); };
+	buttonList[MenuButtonName_MasterVolume_Text]->OnExecute = [this]() { SwitchActiveButton(MenuButtonName_MasterVolume_Knob); };
+	buttonList[MenuButtonName_SFXVolume_Text]->OnExecute = [this]() { SwitchActiveButton(MenuButtonName_SFXVolume_Knob); };
+	buttonList[MenuButtonName_BGMVolume_Text]->OnExecute = [this]() { SwitchActiveButton(MenuButtonName_BGMVolume_Knob); };
 
 	// Knobs -> Sliders
-	buttonList["MasterVolume_Knob"]->OnExecute = [this]() { SwitchActiveButton("MasterVolume_Track", false); };
-	buttonList["SFXVolume_Knob"]->OnExecute = [this]() { SwitchActiveButton("SFXVolume_Track", false); };
-	buttonList["BGMVolume_Knob"]->OnExecute = [this]() { SwitchActiveButton("BGMVolume_Track", false); };
+	buttonList[MenuButtonName_MasterVolume_Knob]->OnExecute = [this]() { SwitchActiveButton(MenuButtonName_MasterVolume_Track, false); };
+	buttonList[MenuButtonName_SFXVolume_Knob]->OnExecute = [this]() { SwitchActiveButton(MenuButtonName_SFXVolume_Track, false); };
+	buttonList[MenuButtonName_BGMVolume_Knob]->OnExecute = [this]() { SwitchActiveButton(MenuButtonName_BGMVolume_Track, false); };
 
 	// Checkboxes / Mute Toggles
 	auto handleBoxToggle = [this]() {
@@ -831,34 +849,34 @@ void LevelMainMenu::InitializeMenuButtons()
 			isToggleVolume[it->second] = !isToggleVolume[it->second];
 		}
 	};
-	buttonList["MasterVolume_Box"]->OnExecute = handleBoxToggle;
-	buttonList["SFXVolume_Box"]->OnExecute = handleBoxToggle;
-	buttonList["BGMVolume_Box"]->OnExecute = handleBoxToggle;
+	buttonList[MenuButtonName_MasterVolume_Box]->OnExecute = handleBoxToggle;
+	buttonList[MenuButtonName_SFXVolume_Box]->OnExecute = handleBoxToggle;
+	buttonList[MenuButtonName_BGMVolume_Box]->OnExecute = handleBoxToggle;
 
 	// Dropdown Toggles
-	buttonList["DisplayType"]->OnExecute = [this]() {
-		currentButton = buttonList["DisplayDropdown"];
+	buttonList[MenuButtonName_DisplayType]->OnExecute = [this]() {
+		currentButton = buttonList[MenuButtonName_DisplayDropdown];
 		currentButton->playerHere = true;
-		buttonList["DisplayDropdown"]->ButtonUI->SetIsRender(true);
+		buttonList[MenuButtonName_DisplayDropdown]->ButtonUI->SetIsRender(true);
 	};
 
 	// Hardware Window Resolution Execution
-	buttonList["DisplayDropdown"]->OnExecute = [this]() {
-		int currentShift = buttonList["DisplayDropdown"]->ButtonUI->GetSpriteRenderer()->GetColumn();
+	buttonList[MenuButtonName_DisplayDropdown]->OnExecute = [this]() {
+		int currentShift = buttonList[MenuButtonName_DisplayDropdown]->ButtonUI->GetSpriteRenderer()->GetColumn();
 
 		if (isFullscreen && currentShift == 1) {
 			SDL_SetWindowFullscreen(GameEngine::GetInstance()->GetSDLWindow(), 0);
 			windowWidth = SCREEN_WIDTH;
 			windowHeight = SCREEN_HEIGHT;
 			glViewport(0, 0, windowWidth, windowHeight);
-			buttonList["DisplayType"]->ButtonUI->ShiftSpriteTo(0, 2);
+			buttonList[MenuButtonName_DisplayType]->ButtonUI->ShiftSpriteTo(0, 2);
 			isFullscreen = false;
 		}
 		else if (!isFullscreen && currentShift == 0) {
 			SDL_SetWindowFullscreen(GameEngine::GetInstance()->GetSDLWindow(), SDL_WINDOW_FULLSCREEN_DESKTOP);
 			SDL_GetWindowSize(GameEngine::GetInstance()->GetSDLWindow(), &windowWidth, &windowHeight);
 			glViewport(0, 0, windowWidth, windowHeight);
-			buttonList["DisplayType"]->ButtonUI->ShiftSpriteTo(0, 0);
+			buttonList[MenuButtonName_DisplayType]->ButtonUI->ShiftSpriteTo(0, 0);
 			isFullscreen = true;
 		}
 	};
@@ -876,7 +894,7 @@ void LevelMainMenu::HandleMainMenuLogic() {
 void LevelMainMenu::HandleCreditsLogic() 
 {
 	if (isPressedCross || isPressedCircle) {
-		BackToMainMenu(creditUIList, "Text1");
+		BackToMainMenu(creditUIList, MenuButtonName_StartButton);
 	}
 }
 
@@ -886,7 +904,7 @@ void LevelMainMenu::HandleStartConfirmLogic()
 		currentButton->OnExecute();
 	}
 	else if (isPressedCircle) {
-		BackToMainMenu(yesNoList_Start, "Text1");
+		BackToMainMenu(yesNoList_Start, MenuButtonName_StartButton);
 	}
 }
 
@@ -898,43 +916,50 @@ void LevelMainMenu::HandleTutorialLogic() {
 		InfoPage++;
 
 		if (InfoPage >= InfoPageLimit) {
-			TransitionToMenu(MenuState::Main, tutorialInfoList, {}, "Text2");
+			TransitionToMenu(MenuState::Main, tutorialInfoList, {}, MenuButtonName_TutorialButton);
 		}
 	}
 }
 
 void LevelMainMenu::HandleOptionsCancel() {
-	std::string name = currentButton->name;
+	MenuButtonName_ name = currentButton->name;
 
 	// If backing out of root options, hide options menu entirely and go back to main menu
-	if (name == "DisplayType_Text" || name == "MasterVolume_Text" ||
-		name == "SFXVolume_Text" || name == "BGMVolume_Text") {
-		TransitionToMenu(MenuState::Main, OptionList, {}, "Text3");
+	if (name == MenuButtonName_DisplayType_Text || name == MenuButtonName_MasterVolume_Text ||
+		name == MenuButtonName_SFXVolume_Text || name == MenuButtonName_BGMVolume_Text) {
+		TransitionToMenu(MenuState::Main, OptionList, {}, MenuButtonName_OptionButton);
 		return;
 	}
 
 	// Map sub-buttons directly back to their parent elements
-	std::string targetDestination = "";
-	if (name == "DisplayType")          targetDestination = "DisplayType_Text";
-	else if (name == "DisplayDropdown") {
-		targetDestination = "DisplayType";
-		buttonList["DisplayDropdown"]->ButtonUI->SetIsRender(false);
+	MenuButtonName_ targetDestination = MenuButtonName_None;
+	if (name == MenuButtonName_DisplayType)          
+		targetDestination = MenuButtonName_DisplayType_Text;
+	else if (name == MenuButtonName_DisplayDropdown) {
+		targetDestination = MenuButtonName_DisplayType;
+		buttonList[MenuButtonName_DisplayDropdown]->ButtonUI->SetIsRender(false);
 	}
-	else if (name == "MasterVolume_Knob" || name == "MasterVolume_Box")  targetDestination = "MasterVolume_Text";
-	else if (name == "SFXVolume_Knob" || name == "SFXVolume_Box")     targetDestination = "SFXVolume_Text";
-	else if (name == "BGMVolume_Knob" || name == "BGMVolume_Box")     targetDestination = "BGMVolume_Text";
-	else if (name == "MasterVolume_Track") targetDestination = "MasterVolume_Knob";
-	else if (name == "SFXVolume_Track")    targetDestination = "SFXVolume_Knob";
-	else if (name == "BGMVolume_Track")    targetDestination = "BGMVolume_Knob";
+	else if (name == MenuButtonName_MasterVolume_Knob || name == MenuButtonName_MasterVolume_Box)  
+		targetDestination = MenuButtonName_MasterVolume_Text;
+	else if (name == MenuButtonName_SFXVolume_Knob || name == MenuButtonName_SFXVolume_Box)     
+		targetDestination = MenuButtonName_SFXVolume_Text;
+	else if (name == MenuButtonName_BGMVolume_Knob || name == MenuButtonName_BGMVolume_Box)     
+		targetDestination = MenuButtonName_BGMVolume_Text;
+	else if (name == MenuButtonName_MasterVolume_Track) 
+		targetDestination = MenuButtonName_MasterVolume_Knob;
+	else if (name == MenuButtonName_SFXVolume_Track)    
+		targetDestination = MenuButtonName_SFXVolume_Knob;
+	else if (name == MenuButtonName_BGMVolume_Track)    
+		targetDestination = MenuButtonName_BGMVolume_Knob;
 
-	if (!targetDestination.empty()) {
+	if (targetDestination != MenuButtonName_None) {
 		currentButton->playerHere = false;
 		currentButton = buttonList[targetDestination];
 		currentButton->playerHere = true;
 	}
 }
 
-void LevelMainMenu::UpdateVolumeSlider(float& volumeValue, const std::string& knobKey, int rowIndex) {
+void LevelMainMenu::UpdateVolumeSlider(float& volumeValue, MenuButtonName_ knobKey, int rowIndex) {
 	std::cout << masterVolume << std::endl; // Match your original debug trace
 
 	if (holdright)      volumeValue++;
@@ -949,18 +974,18 @@ void LevelMainMenu::UpdateVolumeSlider(float& volumeValue, const std::string& kn
 }
 
 void LevelMainMenu::HandleVolumeSliderAdjustment() {
-	if (currentButton == buttonList["MasterVolume_Track"]) {
-		UpdateVolumeSlider(masterVolume, "MasterVolume_Knob", 0);
+	if (currentButton == buttonList[MenuButtonName_MasterVolume_Track]) {
+		UpdateVolumeSlider(masterVolume, MenuButtonName_MasterVolume_Knob, 0);
 	}
-	else if (currentButton == buttonList["SFXVolume_Track"]) {
-		UpdateVolumeSlider(SFXVolume, "SFXVolume_Knob", 1);
+	else if (currentButton == buttonList[MenuButtonName_SFXVolume_Track]) {
+		UpdateVolumeSlider(SFXVolume, MenuButtonName_SFXVolume_Knob, 1);
 	}
-	else if (currentButton == buttonList["BGMVolume_Track"]) {
-		UpdateVolumeSlider(BGMVolume, "BGMVolume_Knob", 2);
+	else if (currentButton == buttonList[MenuButtonName_BGMVolume_Track]) {
+		UpdateVolumeSlider(BGMVolume, MenuButtonName_BGMVolume_Knob, 2);
 	}
 }
 
-void LevelMainMenu::SwitchActiveButton(const std::string& targetKey, bool disableOldPlayerHere) {
+void LevelMainMenu::SwitchActiveButton(MenuButtonName_ targetKey, bool disableOldPlayerHere) {
 	if (disableOldPlayerHere) currentButton->playerHere = false;
 	currentButton = buttonList[targetKey];
 	currentButton->playerHere = true;
@@ -981,7 +1006,7 @@ void LevelMainMenu::HandleOptionsLogic() {
 	}
 
 	// 3. HANDLE DROPDOWN SELECTION NAVIGATION
-	if (currentButton->name == "DisplayDropdown" && (up || down) && !playerMove) {
+	if (currentButton->name == MenuButtonName_DisplayDropdown && (up || down) && !playerMove) {
 		currentButton->ButtonUI->GetSpriteRenderer()->ShiftColumn();
 	}
 
@@ -994,7 +1019,7 @@ void LevelMainMenu::HandleExitConfirmLogic() {
 		currentButton->OnExecute();
 	}
 	else if (isPressedCircle) {
-		BackToMainMenu(yesNoList_Exit, "Text4");
+		BackToMainMenu(yesNoList_Exit, MenuButtonName_ExitButton);
 	}
 }
 void LevelMainMenu::NewUpdateInput()
@@ -1152,7 +1177,7 @@ void LevelMainMenu::UpdateUi()
 	{
 		for (const auto& buttonData : buttonList)
 		{
-			if (buttonData.first == "AreYouSureStart_Yes")
+			if (buttonData.first == MenuButtonName_AreYouSureStart_Yes)
 			{
 				if (buttonData.second->playerHere)
 					buttonData.second->ButtonUI->ShiftSpriteTo(0, 1);
@@ -1160,7 +1185,7 @@ void LevelMainMenu::UpdateUi()
 					buttonData.second->ButtonUI->ShiftSpriteTo(0, 0);
 			}
 
-			if (buttonData.first == "AreYouSureStart_No")
+			if (buttonData.first == MenuButtonName_AreYouSureStart_No)
 			{
 				if (buttonData.second->playerHere)
 					buttonData.second->ButtonUI->ShiftSpriteTo(0, 3);
@@ -1173,7 +1198,7 @@ void LevelMainMenu::UpdateUi()
 	{
 		for (const auto& buttonData : buttonList)
 		{
-			if (buttonData.first == "AreYouSureExit_Yes")
+			if (buttonData.first == MenuButtonName_AreYouSureExit_Yes)
 			{
 				if (buttonData.second->playerHere)
 					buttonData.second->ButtonUI->ShiftSpriteTo(0, 1);
@@ -1181,7 +1206,7 @@ void LevelMainMenu::UpdateUi()
 					buttonData.second->ButtonUI->ShiftSpriteTo(0, 0);
 			}
 
-			if (buttonData.first == "AreYouSureExit_No")
+			if (buttonData.first == MenuButtonName_AreYouSureExit_No)
 			{
 				if (buttonData.second->playerHere)
 					buttonData.second->ButtonUI->ShiftSpriteTo(0, 3);
@@ -1194,7 +1219,7 @@ void LevelMainMenu::UpdateUi()
 	{
 		for (const auto& buttonData : buttonList)
 		{
-			if (buttonData.first == "DisplayType")
+			if (buttonData.first == MenuButtonName_DisplayType)
 			{
 				int baseOffset = !isFullscreen ? 2 : 0;
 				int playerOffset = buttonData.second->playerHere ? 0 : 1;
@@ -1202,9 +1227,9 @@ void LevelMainMenu::UpdateUi()
 				buttonData.second->ButtonUI->ShiftSpriteTo(0, baseOffset + playerOffset);
 			}
 
-			if (buttonData.first == "MasterVolume_Track" ||
-				buttonData.first == "SFXVolume_Track" || 
-				buttonData.first == "BGMVolume_Track")
+			if (buttonData.first == MenuButtonName_MasterVolume_Track ||
+				buttonData.first == MenuButtonName_SFXVolume_Track ||
+				buttonData.first == MenuButtonName_BGMVolume_Track)
 			{
 				if (buttonData.second->playerHere)
 					buttonData.second->ButtonUI->ShiftSpriteTo(0, 1);
@@ -1212,9 +1237,9 @@ void LevelMainMenu::UpdateUi()
 					buttonData.second->ButtonUI->ShiftSpriteTo(0, 0);
 			}
 
-			if (buttonData.first == "MasterVolume_Knob" || 
-				buttonData.first == "SFXVolume_Knob" || 
-				buttonData.first == "BGMVolume_Knob")
+			if (buttonData.first == MenuButtonName_MasterVolume_Knob || 
+				buttonData.first == MenuButtonName_SFXVolume_Knob || 
+				buttonData.first == MenuButtonName_BGMVolume_Knob)
 			{
 				//KK_TRACE("KNOB");
 				//KK_TRACE("buttonData.first = " + buttonData.first);
@@ -1225,10 +1250,10 @@ void LevelMainMenu::UpdateUi()
 					buttonData.second->ButtonUI->ShiftSpriteTo(0, 0);
 			}
 
-			if (buttonData.first == "DisplayType_Text" || 
-				buttonData.first == "MasterVolume_Text" ||
-				buttonData.first == "SFXVolume_Text" ||
-				buttonData.first == "BGMVolume_Text")
+			if (buttonData.first == MenuButtonName_DisplayType_Text || 
+				buttonData.first == MenuButtonName_MasterVolume_Text ||
+				buttonData.first == MenuButtonName_SFXVolume_Text ||
+				buttonData.first == MenuButtonName_BGMVolume_Text)
 			{
 				int isPlayer = buttonData.second->playerHere ? 1 : 0;
 
@@ -1237,9 +1262,9 @@ void LevelMainMenu::UpdateUi()
 				buttonData.second->ButtonUI->ShiftSpriteTo(0, yIndex);
 			}
 
-			if (buttonData.first == "MasterVolume_Box" || 
-				buttonData.first == "SFXVolume_Box" || 
-				buttonData.first == "BGMVolume_Box")
+			if (buttonData.first == MenuButtonName_MasterVolume_Box || 
+				buttonData.first == MenuButtonName_SFXVolume_Box || 
+				buttonData.first == MenuButtonName_BGMVolume_Box)
 			{
 				bool isToggled = isToggleVolume[volumeBoxIndexMap.find(buttonData.first)->second];
 				bool isPlayer = buttonData.second->playerHere;

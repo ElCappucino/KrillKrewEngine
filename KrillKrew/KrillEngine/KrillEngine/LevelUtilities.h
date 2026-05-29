@@ -77,6 +77,45 @@
 #define MAP_WIDTH  20
 #define MAP_HEIGHT 16
 
+enum MenuButtonName_
+{
+    MenuButtonName_None,
+    MenuButtonName_GameName,
+    MenuButtonName_StartButton,
+    MenuButtonName_TutorialButton,
+    MenuButtonName_OptionButton,
+    MenuButtonName_ExitButton,
+
+    MenuButtonName_DisplayType,
+    MenuButtonName_DisplayDropdown,
+
+    MenuButtonName_DisplayType_Text,
+    MenuButtonName_MasterVolume_Text,
+    MenuButtonName_SFXVolume_Text,
+    MenuButtonName_BGMVolume_Text,
+
+    MenuButtonName_MasterVolume_Track,
+    MenuButtonName_SFXVolume_Track,
+    MenuButtonName_BGMVolume_Track,
+
+    MenuButtonName_MasterVolume_Knob,
+    MenuButtonName_SFXVolume_Knob,
+    MenuButtonName_BGMVolume_Knob,
+
+    MenuButtonName_MasterVolume_Box,
+    MenuButtonName_SFXVolume_Box,
+    MenuButtonName_BGMVolume_Box,
+
+    MenuButtonName_AreYouSureStart_Yes,
+    MenuButtonName_AreYouSureStart_No,
+    MenuButtonName_AreYouSureExit_Yes,
+    MenuButtonName_AreYouSureExit_No,
+
+    MenuButtonName_TextOption,
+    MenuButtonName_Display,
+    MenuButtonName_VolumeTrack
+};
+
 
 
 

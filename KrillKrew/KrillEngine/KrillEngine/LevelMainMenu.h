@@ -20,17 +20,17 @@ private:
 		ExitConfirm
 	};
 
-	const std::unordered_map<std::string, int> volumeBoxIndexMap = {
-	{"MasterVolume_Box", 0},
-	{"SFXVolume_Box",    1},
-	{"BGMVolume_Box",    2}
+	const std::unordered_map<MenuButtonName_, int> volumeBoxIndexMap = {
+	{MenuButtonName_MasterVolume_Box, 0},
+	{MenuButtonName_SFXVolume_Box,    1},
+	{MenuButtonName_BGMVolume_Box,    2}
 	};
 
-	const std::unordered_map<std::string, int> volumeTextIndexMap = {
-	{"DisplayType_Text",  0},
-	{"MasterVolume_Text", 2},
-	{"SFXVolume_Text",    4},
-	{"BGMVolume_Text",    6}
+	const std::unordered_map<MenuButtonName_, int> volumeTextIndexMap = {
+	{MenuButtonName_DisplayType_Text,  0},
+	{MenuButtonName_MasterVolume_Text, 2},
+	{MenuButtonName_SFXVolume_Text,    4},
+	{MenuButtonName_BGMVolume_Text,    6}
 	};
 
 	MenuState currentMenuState = MenuState::Main;
@@ -111,7 +111,7 @@ private:
 
 	struct ButtonData
 	{
-		std::string name;
+		MenuButtonName_ name;
 		int number;
 		glm::vec2 pos;
 		glm::vec2 size;
@@ -128,9 +128,10 @@ private:
 		bool playerHere = false;
 
 		std::function<void()> OnExecute = nullptr;
+		std::function<void()> OnHover = nullptr;
 	};
 
-	std::map<std::string, ButtonData*> buttonList;
+	std::map<MenuButtonName_, ButtonData*> buttonList;
 	std::vector<ButtonData*> Buttons;
 
 	ButtonData* currentButton;
@@ -147,14 +148,14 @@ public:
 	virtual void HandleMouse(int type, int x, int y);
 
 
-	void BackToMainMenu(const std::vector<UiObject*>& activeUiList, const std::string& fallbackButtonName);
-	void TransitionToMenu(MenuState newState, const std::vector<UiObject*>& hideList, const std::vector<UiObject*>& showList, const std::string& defaultButtonKey);
+	void BackToMainMenu(const std::vector<UiObject*>& activeUiList, MenuButtonName_ fallbackButtonName);
+	void TransitionToMenu(MenuState newState, const std::vector<UiObject*>& hideList, const std::vector<UiObject*>& showList, MenuButtonName_ defaultButtonKey);
 	void InitializeMenuButtons();
-	void SwitchActiveButton(const std::string& targetKey, bool disableOldPlayerHere = true);
+	void SwitchActiveButton(MenuButtonName_ targetKey, bool disableOldPlayerHere = true);
 
 	// Options
 	void HandleOptionsCancel();
-	void UpdateVolumeSlider(float& volumeValue, const std::string& knobKey, int rowIndex);
+	void UpdateVolumeSlider(float& volumeValue, MenuButtonName_ knobKey, int rowIndex);
 	void HandleVolumeSliderAdjustment();
 
 	void UpdateInput();
@@ -163,9 +164,9 @@ public:
 	void UpdateAudio();
 
 	void ShowImGuiConfig(bool isShowing);
-	LevelMainMenu::ButtonData* InitButtonData(std::string name, glm::vec2 pos, glm::vec2 size, glm::vec2 offset, int column, std::string configPath);
-	UiObject* InitUI(std::string name, SpritesheetInfo spriteInfo, glm::vec2 pos, glm::vec2 size, glm::vec2 spriteShiftPos);
-	UiObject* InitButtonUI(std::string name, SpritesheetInfo spriteInfo, ButtonData* buttonData, glm::vec2 spriteShiftPos);
+	LevelMainMenu::ButtonData* InitButtonData(MenuButtonName_ name, glm::vec2 pos, glm::vec2 size, glm::vec2 offset, int column, std::string configPath);
+	UiObject* InitUI(SpritesheetInfo spriteInfo, glm::vec2 pos, glm::vec2 size, glm::vec2 spriteShiftPos);
+	UiObject* InitButtonUI(SpritesheetInfo spriteInfo, ButtonData* buttonData, glm::vec2 spriteShiftPos);
 	void saveConfig(std::string& filename, ButtonData* con);
 	void loadConfig(std::string filename);
 	void loadConfigButtonData(std::string filename, ButtonData* buttonData);
