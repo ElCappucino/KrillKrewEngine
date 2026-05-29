@@ -369,7 +369,6 @@ public:
 	void CheckPlayerRemain();
 
 	void GroundTileRefactor();
-	void TileImport(std::array<std::array<int, MAP_WIDTH>, MAP_HEIGHT> &TileBuffer, std::string fileName);
 
 	virtual void AddEntityToScene(EntityObject* entity);
 	virtual void AddObjectToScene(DrawableObject* object);

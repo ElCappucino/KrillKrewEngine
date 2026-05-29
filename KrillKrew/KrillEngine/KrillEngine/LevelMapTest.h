@@ -13,9 +13,9 @@ private:
 	std::map<std::string, SpritesheetInfo> spriteList;
 	DrawableObject* player[4]; // add up to 4 players
 
-	int groundTile[MAP_HEIGHT][MAP_WIDTH] = { 0 };
-	int propsTile[MAP_HEIGHT][MAP_WIDTH] = { 0 };
-	int colliderTile[MAP_HEIGHT][MAP_WIDTH] = { 0 };
+	std::array<std::array<int, MAP_WIDTH>, MAP_HEIGHT> groundTile = { 0 };
+	std::array<std::array<int, MAP_WIDTH>, MAP_HEIGHT> propsTile = { 0 };
+	std::array<std::array<int, MAP_WIDTH>, MAP_HEIGHT> colliderTile = { 0 };
 
 	Camera camera;
 	
@@ -37,5 +37,4 @@ public:
 	virtual void Movement(float axisX, float axisY, bool isPositiveX, bool isPositiveY);
 
 	void CameraLerp();
-	void TileImport(int TileBuffer[][MAP_WIDTH], std::string fileName);
 };
