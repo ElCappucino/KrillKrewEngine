@@ -53,7 +53,6 @@ private:
 	
 	int playerNumber = 4; // Change later
 	bool playerMove = false;
-	int playerWhere = 1;
 
 	bool isCredit = false;
 	bool isFullscreen = false;
@@ -61,9 +60,6 @@ private:
 	bool isTutorial = false;
 	int InfoPage = 0;
 	int InfoPageLimit = 3;
-
-	bool isStart = false;
-	bool isExit = false;
 
 	bool up = false;
 	bool down = false;
@@ -80,14 +76,7 @@ private:
 	bool isPressedSquare = false;
 	bool isPressedTriangle = false;
 
-	bool isOption = false;
-	bool isSelectDisplay = false;
-	bool isSelectVolume = false;
-	bool isMasterVolume = false;
-	bool isSFXVolume = false;
-	bool isBGMVolume = false;
 	bool isToggleVolume[3] = { true, true, true };
-	bool isSlider = false;
 	float masterVolume = 100;
 	float SFXVolume = 20;
 	float BGMVolume = 20;
@@ -103,10 +92,6 @@ private:
 	GLRenderer* renderer;
 	GameEngine* gameEngine;
 
-	int dt = 0;
-	float time1s = 0;
-	float time05s = 0;
-	float previousWidth = 0, previousHeight = 0;
 	ImVec2 joystickVal;
 
 	struct ButtonData
@@ -147,6 +132,14 @@ public:
 	virtual void HandleKey(char key);
 	virtual void HandleMouse(int type, int x, int y);
 
+	void InitializeMainMenuUI();
+	void InitializeConfirmUI();
+	void InitializeCreditUI();
+	void InitializeTutorialUI();
+	void InitializeOptionUI();
+	void SetupButtonLinks();
+
+	void InitializeImGui();
 
 	void BackToMainMenu(const std::vector<UiObject*>& activeUiList, MenuButtonName_ fallbackButtonName);
 	void TransitionToMenu(MenuState newState, const std::vector<UiObject*>& hideList, const std::vector<UiObject*>& showList, MenuButtonName_ defaultButtonKey);
@@ -159,7 +152,6 @@ public:
 	void HandleVolumeSliderAdjustment();
 
 	void UpdateInput();
-	void NewUpdateInput();
 	void UpdateUi();
 	void UpdateAudio();
 
@@ -173,7 +165,6 @@ public:
 	void DrawVirtualJoystick(const char* label, ImVec2& stickValue, float radius);
 	void DrawControllerButtons();
 
-	void TransitionTo(MenuState newState);
 	void HandleMainMenuLogic();
 	void HandleCreditsLogic();
 	void HandleStartConfirmLogic();
