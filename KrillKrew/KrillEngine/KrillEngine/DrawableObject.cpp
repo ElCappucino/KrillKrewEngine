@@ -1,9 +1,38 @@
 
 #include "DrawableObject.h"
+#include "GameEngine.h"
 
+bool DrawableObject::ApplyTransform(glm::mat4 globalModelTransform)
+{
+	GLuint modelMatrixId = GameEngine::GetInstance()->GetRenderer()->GetModelMatrixAttrId();
 
+	if (modelMatrixId == -1)
+	{
+		std::cout << "Error: Can't perform transformation" << std::endl;
+		return false;
+	}
 
+	glm::mat4 currentMatrix = globalModelTransform * getTransform();
 
+	glUniformMatrix4fv(modelMatrixId, 1, GL_FALSE, glm::value_ptr(currentMatrix));
+
+	return true;
+}
+
+bool DrawableObject::SetRenderMode(int renderMode)
+{
+	GLuint renderModeId = GameEngine::GetInstance()->GetRenderer()->GetModeUniformId();
+
+	if (renderModeId == -1)
+	{
+		std::cout << "Error: Can't set renderMode" << std::endl;
+		return false;
+	}
+
+	glUniform1i(renderModeId, renderMode);
+
+	return true;
+}
 
 glm::mat4 DrawableObject::getTransform()
 {

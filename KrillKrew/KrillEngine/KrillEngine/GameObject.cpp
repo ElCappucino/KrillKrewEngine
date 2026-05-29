@@ -20,37 +20,33 @@ void GameObject::SetColor(float r, float g, float b)
 
 void GameObject::Render(glm::mat4 globalModelTransform)
 {
-	// std::cout << "Hello" << std::endl;
-	SquareMeshVbo *squareMesh = dynamic_cast<SquareMeshVbo *> (GameEngine::GetInstance()->GetRenderer()->GetMesh(SquareMeshVbo::MESH_NAME));
+    SquareMeshVbo* squareMesh = dynamic_cast<SquareMeshVbo*>(GameEngine::GetInstance()->GetRenderer()->GetMesh(SquareMeshVbo::MESH_NAME));
 
-	GLuint modelMatixId = GameEngine::GetInstance()->GetRenderer()->GetModelMatrixAttrId();
-	GLuint colorId = GameEngine::GetInstance()->GetRenderer()->GetColorUniformId();
-	GLuint renderModeId = GameEngine::GetInstance()->GetRenderer()->GetModeUniformId();
+    if (squareMesh == nullptr)
+    {
+        return;
+    }
 
-	if (modelMatixId == -1) {
-		std::cout << "Error: Can't perform transformation " << std::endl;
-		return;
-	}
-	if (colorId == -1) {
-		std::cout << "Error: Can't set color " << std::endl;
-		return;
-	}
-	if (renderModeId == -1) {
-		std::cout << "Error: Can't set renderMode in ImageObject " << std::endl;
-		return;
-	}
-	//vector <glm::mat4> matrixStack;
+    if (!ApplyTransform(globalModelTransform))
+    {
+        return;
+    }
 
-	glm::mat4 currentMatrix = this->getTransform();
+    if (!SetRenderMode(0))
+    {
+        return;
+    }
 
-	if (squareMesh != nullptr) {
+    GLuint colorId = GameEngine::GetInstance()->GetRenderer()->GetColorUniformId();
 
-		currentMatrix = globalModelTransform * currentMatrix;
-		glUniformMatrix4fv(modelMatixId, 1, GL_FALSE, glm::value_ptr(currentMatrix));
-		glUniform3f(colorId, color.x, color.y, color.z);
-		glUniform1i(renderModeId, 0);
-		squareMesh->Render();
+    if (colorId == -1)
+    {
+        std::cout << "Error: Can't set color in GameObject" << std::endl;
+        return;
+    }
 
-	}
+    glUniform3f(colorId, color.x, color.y, color.z);
+
+    squareMesh->Render();
 }
 

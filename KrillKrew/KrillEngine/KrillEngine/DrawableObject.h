@@ -13,6 +13,9 @@ protected:
 	float rotateAngle;
 	int orderingLayer;
 	bool isActive = true;
+	bool ApplyTransform(glm::mat4 globalModelTransform);
+	bool SetRenderMode(int renderMode);
+
 public:
 	glm::mat4 getTransform();
 	bool GetIsActive();
