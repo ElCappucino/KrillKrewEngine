@@ -1458,7 +1458,7 @@ void LevelMainMenu::loadConfigButtonData(std::string filename, ButtonData* butto
 	}
 }
 
-#define RUN_TEST_SUITE 0
+#define RUN_TEST_SUITE 1
 
 #if RUN_TEST_SUITE
 #include "tests/catch_amalgamated.hpp"
@@ -1469,92 +1469,133 @@ struct MenuTestBridge {
 	static LevelMainMenu::ButtonData* GetCurrentButton(const LevelMainMenu& menu) {
 		return menu.currentButton;
 	}
+
 	static int GetPlayerNumber(const LevelMainMenu& menu) {
 		return menu.playerNumber;
 	}
-	static Timer* GetTimer(const LevelMainMenu& menu) {
-		return menu.timer;
+
+	static LevelMainMenu::MenuState GetMenuState(const LevelMainMenu& menu) {
+		return menu.currentMenuState;
+	}
+
+	static bool GetCurrentButtonPlayerHere(const LevelMainMenu& menu) {
+		return menu.currentButton != nullptr && menu.currentButton->playerHere;
+	}
+
+	static float GetMasterVolume(const LevelMainMenu& menu) {
+		return menu.masterVolume;
+	}
+
+	static float GetSFXVolume(const LevelMainMenu& menu) {
+		return menu.SFXVolume;
+	}
+
+	static float GetBGMVolume(const LevelMainMenu& menu) {
+		return menu.BGMVolume;
+	}
+
+	static int GetInfoPage(const LevelMainMenu& menu) {
+		return menu.InfoPage;
+	}
+
+	static int GetInfoPageLimit(const LevelMainMenu& menu) {
+		return menu.InfoPageLimit;
+	}
+
+	static int GetButtonCount(const LevelMainMenu& menu) {
+		return static_cast<int>(menu.buttonList.size());
+	}
+
+	static int GetObjectCount(const LevelMainMenu& menu) {
+		return static_cast<int>(menu.objectsList.size());
+	}
+
+	static bool HasStartButton(const LevelMainMenu& menu) {
+		auto it = menu.buttonList.find(MenuButtonName_StartButton);
+		return it != menu.buttonList.end() && it->second != nullptr;
+	}
+
+	static bool HasTutorialButton(const LevelMainMenu& menu) {
+		auto it = menu.buttonList.find(MenuButtonName_TutorialButton);
+		return it != menu.buttonList.end() && it->second != nullptr;
+	}
+
+	static bool HasOptionButton(const LevelMainMenu& menu) {
+		auto it = menu.buttonList.find(MenuButtonName_OptionButton);
+		return it != menu.buttonList.end() && it->second != nullptr;
+	}
+
+	static bool HasExitButton(const LevelMainMenu& menu) {
+		auto it = menu.buttonList.find(MenuButtonName_ExitButton);
+		return it != menu.buttonList.end() && it->second != nullptr;
 	}
 };
 
 // Because we are inside the .cpp file, we can test private methods/variables 
 // directly without needing a "Friend Bridge" helper!
-TEST_CASE("LevelMainMenu Internal State Tests", "[InlineMenu]")
+TEST_CASE("LevelMainMenu initializes with safe default state", "[InlineMenu]")
 {
-	SDL_Window* window;
-	SDL_GLContext glContext;
-	SDL_Event sdlEvent;
+	SDL_Window* window = nullptr;
+	SDL_GLContext glContext = nullptr;
 
-	GameEngine* engine = nullptr;
-
-	//Use OpenGL 3.1 core
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 3);
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
 
-	// Initialize video subsystem
-	if (SDL_Init(SDL_INIT_AUDIO | SDL_INIT_VIDEO | SDL_INIT_JOYSTICK | SDL_INIT_GAMECONTROLLER) < 0)
-	{
-		// Display error message
-		cout << "SDL could not initialize! SDL_Error: " << SDL_GetError() << endl;
-	}
-	else
-	{
-		// Create window
-		SDL_InitSubSystem(SDL_INIT_JOYSTICK);
-		TTF_Init();
+	REQUIRE(SDL_Init(SDL_INIT_AUDIO | SDL_INIT_VIDEO | SDL_INIT_JOYSTICK | SDL_INIT_GAMECONTROLLER) == 0);
+	SDL_InitSubSystem(SDL_INIT_JOYSTICK);
+	TTF_Init();
 
-		window = SDL_CreateWindow("My Game", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, WIDTH, HEIGHT, SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN);
-		if (window == NULL)
-		{
-			// Display error message
-			cout << "Window could not be created! SDL_Error" << SDL_GetError() << endl;
-		}
-		else
-		{
-			// Create OpenGL context
-			glContext = SDL_GL_CreateContext(window);
+	window = SDL_CreateWindow(
+		"My Game",
+		SDL_WINDOWPOS_CENTERED,
+		SDL_WINDOWPOS_CENTERED,
+		WIDTH,
+		HEIGHT,
+		SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN
+	);
 
-			if (glContext == NULL)
-			{
-				// Display error message
-				cout << "OpenGL context could not be created! SDL Error: " << SDL_GetError() << endl;
-			}
-			else
-			{
-				// Initialize glew
-				GLenum glewError = glewInit();
-				if (glewError != GLEW_OK)
-				{
-					cout << "Error initializing GLEW! " << glewGetErrorString(glewError) << endl;
-				}
-				if (SDL_GL_SetSwapInterval(1) < 0)
-				{
-					cout << "Warning: Unable to set VSync! SDL Error: " << SDL_GetError() << endl;
-				}
+	REQUIRE(window != nullptr);
 
+	glContext = SDL_GL_CreateContext(window);
+	REQUIRE(glContext != nullptr);
 
-				engine = GameEngine::GetInstance();
-				engine->SetSDLWindow(window);
-				engine->SetglContext(glContext);
-				engine->Init(WIDTH, HEIGHT);
-			}
-		}
-	}
+	REQUIRE(glewInit() == GLEW_OK);
+	SDL_GL_SetSwapInterval(1);
+
+	GameEngine* engine = GameEngine::GetInstance();
+	engine->SetSDLWindow(window);
+	engine->SetglContext(glContext);
+	engine->Init(WIDTH, HEIGHT);
 
 	LevelMainMenu menu;
 	menu.LevelInit();
 
-	SECTION("Verifying baseline configuration math") {
-		
-		REQUIRE(MenuTestBridge::GetCurrentButton(menu) != nullptr);
-		REQUIRE(MenuTestBridge::GetPlayerNumber(menu) == 4);
-		REQUIRE(MenuTestBridge::GetTimer(menu) != nullptr);
-		/*REQUIRE(menu.soundManager != nullptr);
-		REQUIRE(menu.renderer != nullptr);
-		REQUIRE(menu.gameEngine != nullptr);
-		REQUIRE(menu.currentButton != nullptr);*/
-	}
+	REQUIRE(MenuTestBridge::GetCurrentButton(menu) != nullptr);
+
+	CHECK(MenuTestBridge::GetMenuState(menu) == LevelMainMenu::MenuState::Main);
+	CHECK(MenuTestBridge::GetCurrentButtonPlayerHere(menu) == true);
+
+	CHECK(MenuTestBridge::GetPlayerNumber(menu) >= 1);
+	CHECK(MenuTestBridge::GetPlayerNumber(menu) <= 4);
+
+	CHECK(MenuTestBridge::GetInfoPage(menu) == 0);
+	CHECK(MenuTestBridge::GetInfoPageLimit(menu) > 0);
+
+	CHECK(MenuTestBridge::GetButtonCount(menu) > 0);
+	CHECK(MenuTestBridge::GetObjectCount(menu) > 0);
+
+	CHECK(MenuTestBridge::HasStartButton(menu));
+	CHECK(MenuTestBridge::HasTutorialButton(menu));
+	CHECK(MenuTestBridge::HasOptionButton(menu));
+	CHECK(MenuTestBridge::HasExitButton(menu));
+
+	CHECK(MenuTestBridge::GetMasterVolume(menu) >= 0.0f);
+	CHECK(MenuTestBridge::GetMasterVolume(menu) <= 100.0f);
+	CHECK(MenuTestBridge::GetSFXVolume(menu) >= 0.0f);
+	CHECK(MenuTestBridge::GetSFXVolume(menu) <= 100.0f);
+	CHECK(MenuTestBridge::GetBGMVolume(menu) >= 0.0f);
+	CHECK(MenuTestBridge::GetBGMVolume(menu) <= 100.0f);
 }
 #endif
 

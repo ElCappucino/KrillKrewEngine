@@ -40,6 +40,11 @@ void Timer::setTimeScale(float T)
 	timerScale = std::max(0.0f, T);
 }
 
+float Timer::getTimeScale() const
+{
+	return timerScale;
+}
+
 void Timer::tick() 
 {
 	auto now = std::chrono::high_resolution_clock::now();

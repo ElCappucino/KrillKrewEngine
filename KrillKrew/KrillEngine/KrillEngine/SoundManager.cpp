@@ -1,4 +1,5 @@
 #include "SoundManager.h"
+#include "AudioUtils.h"
 #include <iostream>
 #include "nlohmann/json.hpp"
 #include <fstream>
@@ -84,7 +85,7 @@ namespace KrillSoundManager
 
     void SoundManager::SetVolumeSFX(const std::string& name, int volume)
     {   
-        volume = std::max(0, std::min(volume, 128));
+        volume = ClampVolume(volume);
 
         if (SFXSounds.find(name) != SFXSounds.end()) {
             SFXSounds[name]->SetVolume(volume);
@@ -96,7 +97,7 @@ namespace KrillSoundManager
     }
     void SoundManager::SetVolumeMusic(const std::string& name, int volume)
     {   
-        volume = std::max(0, std::min(volume, 128));
+        volume = ClampVolume(volume);
 
         if (musicSounds.find(name) != musicSounds.end()) {
             musicSounds[name]->SetVolume(volume);

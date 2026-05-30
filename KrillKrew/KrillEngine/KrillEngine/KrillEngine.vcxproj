@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AudioUtils.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="Collider.h" />
     <ClInclude Include="DrawableObject.h" />
@@ -69,6 +70,7 @@
     <ClInclude Include="SoundManager.h" />
     <ClInclude Include="SpriteRenderer.h" />
     <ClInclude Include="SquareMeshVbo.h" />
+    <ClInclude Include="Tests\catch_amalgamated.hpp" />
     <ClInclude Include="TextObject.h" />
     <ClInclude Include="TileObject.h" />
     <ClInclude Include="Timer.h" />
@@ -122,9 +124,14 @@
     <ClCompile Include="SoundManager.cpp" />
     <ClCompile Include="SpriteRenderer.cpp" />
     <ClCompile Include="SquareMeshVbo.cpp" />
+    <ClCompile Include="AudioUtils.cpp" />
+    <ClCompile Include="Tests\AudioUtilsTests.cpp" />
+    <ClCompile Include="Tests\catch_amalgamated.cpp" />
+    <ClCompile Include="Tests\ProjectileTests.cpp" />
     <ClCompile Include="TextObject.cpp" />
     <ClCompile Include="TileObject.cpp" />
     <ClCompile Include="Timer.cpp" />
+    <ClCompile Include="Tests\TimerTests.cpp" />
     <ClCompile Include="TrapObject.cpp" />
     <ClCompile Include="TriangleMeshVbo.cpp" />
     <ClCompile Include="UiObject.cpp" />
