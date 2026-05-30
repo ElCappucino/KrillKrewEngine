@@ -260,31 +260,6 @@ void LevelMapTest::CameraLerp() {
 
 }
 
-void LevelMapTest::TileImport(int TileBuffer[][MAP_WIDTH], std::string fileName) {
-	std::ifstream mapfile(fileName);
-	std::string line;
-	int row = 0;
-	int column = 1;
-	if (!mapfile.is_open()) {
-		// error
-		std::cout << "Error: reading tile information" << std::endl;
-	}
-	else {
-		int counter = 0;
-		while (!mapfile.eof()) {
-			//string line;
-			if (getline(mapfile, line, ',')) {
-
-				TileBuffer[counter / MAP_WIDTH][counter % MAP_WIDTH] = std::stoi(line);
-
-				counter++;
-			}
-		}
-		mapfile.close();
-
-	}
-}
-
 void LevelMapTest::Movement(float axisX, float axisY, bool isPositiveX, bool isPositiveY) {
 
 }

@@ -12,6 +12,9 @@ protected:
 	GLuint posAttribId = -1;
 	GLuint texAttribId = -1;
 
+	void LoadQuadData();
+	void BindVertexAndTextureData();
+
 public:
 
 	MeshVbo();

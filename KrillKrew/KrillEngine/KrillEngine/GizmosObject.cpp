@@ -21,42 +21,33 @@ void GizmosObject::SetColor(float r, float g, float b)
 
 void GizmosObject::Render(glm::mat4 globalModelTransform)
 {
-	// std::cout << "Hello" << std::endl;
-	LineMeshVbo* squareMesh = dynamic_cast<LineMeshVbo*> (GameEngine::GetInstance()->GetRenderer()->GetMesh(LineMeshVbo::MESH_NAME));
+    LineMeshVbo* lineMesh = dynamic_cast<LineMeshVbo*>(GameEngine::GetInstance()->GetRenderer()->GetMesh(LineMeshVbo::MESH_NAME));
 
-	GLuint modelMatixId = GameEngine::GetInstance()->GetRenderer()->GetModelMatrixAttrId();
-	GLuint colorId = GameEngine::GetInstance()->GetRenderer()->GetColorUniformId();
-	GLuint renderModeId = GameEngine::GetInstance()->GetRenderer()->GetModeUniformId();
+    if (lineMesh == nullptr)
+    {
+        return;
+    }
 
-	if (modelMatixId == -1) {
-		std::cout << "Error: Can't perform transformation " << std::endl;
-		return;
-	}
-	if (colorId == -1) {
-		std::cout << "Error: Can't set color " << std::endl;
-		return;
-	}
-	if (renderModeId == -1) {
-		std::cout << "Error: Can't set renderMode in ImageObject " << std::endl;
-		return;
-	}
-	//vector <glm::mat4> matrixStack;
+    if (!ApplyTransform(globalModelTransform))
+    {
+        return;
+    }
 
-	glm::mat4 currentMatrix = this->getTransform();
+    if (!SetRenderMode(0))
+    {
+        return;
+    }
 
-	if (squareMesh != nullptr) {
+    GLuint colorId = GameEngine::GetInstance()->GetRenderer()->GetColorUniformId();
 
-		currentMatrix = globalModelTransform * currentMatrix;
-		glUniformMatrix4fv(modelMatixId, 1, GL_FALSE, glm::value_ptr(currentMatrix));
-		glUniform3f(colorId, borderColor.x, borderColor.y, borderColor.z); // Set the fill color
-		glUniform1i(renderModeId, 0); // Set the render mode for filled polygons
-		squareMesh->Render();
+    if (colorId == -1)
+    {
+        std::cout << "Error: Can't set color in GizmosObject" << std::endl;
+        return;
+    }
 
-		// Render the border
-		//glUniform3f(colorId, borderColor.x, borderColor.y, borderColor.z); // Set the border color
-		//glUniform1i(renderModeId, 1); // Set the render mode for line drawing
-		//squareMesh->Render();
+    glUniform3f(colorId, borderColor.x, borderColor.y, borderColor.z);
 
-	}
+    lineMesh->Render();
 }
 

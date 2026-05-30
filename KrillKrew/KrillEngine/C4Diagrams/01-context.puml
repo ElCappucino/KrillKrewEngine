@@ -1,0 +1,22 @@
+@startuml System Context
+
+!includeurl https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Context.puml
+
+LAYOUT_WITH_LEGEND()
+
+title KrillEngine - System Context
+
+Person(player, "Player", "Plays the game")
+
+System(game, "KrillEngine", "2D OpenGL multiplayer arena game")
+
+System_Ext(os, "Operating System", "Runs the executable")
+System_Ext(gpu, "GPU / OpenGL Driver", "Executes rendering")
+System_Ext(resources, "Resource Files", "Textures, shaders, audio, configs")
+
+Rel(player, game, "Uses")
+Rel(game, os, "Runs on")
+Rel(game, gpu, "Renders through")
+Rel(game, resources, "Loads assets from")
+
+@enduml

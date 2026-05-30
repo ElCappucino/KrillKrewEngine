@@ -3250,32 +3250,6 @@ void LevelShowcase::GroundTileRefactor()
 	}
 }
 
-void LevelShowcase::TileImport(std::array<std::array<int, MAP_WIDTH>, MAP_HEIGHT> &TileBuffer, std::string fileName) 
-{
-	std::ifstream mapfile(fileName);
-	std::string line;
-	int row = 0;
-	int column = 1;
-	if (!mapfile.is_open()) {
-		// error
-		std::cout << "Error: reading tile information" << std::endl;
-	}
-	else {
-		int counter = 0;
-		while (!mapfile.eof()) {
-			//string line;
-			if (getline(mapfile, line, ',')) {
-
-				TileBuffer[counter / MAP_WIDTH][counter % MAP_WIDTH] = std::stoi(line);
-
-				counter++;
-			}
-		}
-		mapfile.close();
-
-	}
-}
-
 void LevelShowcase::UsingAbilityKeyDown(int numPlayer, PlayerObject::AbilityButton button) {
 
 	PlayerObject::Ability idAbility = players[numPlayer]->GetAbilityByButton(button);
