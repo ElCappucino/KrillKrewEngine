@@ -1,33 +1,32 @@
 #pragma once
 
-#include <chrono>
 #include "Log.h"
+#include <chrono>
 
 class Timer {
 private:
-	static Timer* instance;
-	std::chrono::high_resolution_clock::time_point startTime;
-	std::chrono::high_resolution_clock::time_point lastTime;
-	std::chrono::duration<float> deltaTime;
-	float timerScale;
+  static Timer *instance;
+  std::chrono::high_resolution_clock::time_point startTime;
+  std::chrono::high_resolution_clock::time_point lastTime;
+  std::chrono::duration<float> deltaTime;
+  float timerScale;
 
-	// fps count and cap
-	int frameCount;
-	float fps;
-	float fpsUpdateInterval; // seconds
-	float fpsElapsedTime;
+  // fps count and cap
+  int frameCount;
+  float fps;
+  float fpsUpdateInterval; // seconds
+  float fpsElapsedTime;
 
 protected:
-	Timer();
+  Timer();
 
 public:
-	static Timer* Instance();
-	void reset();
-	void tick();
+  static Timer *Instance();
+  void reset();
+  void tick();
 
-	float getDeltaTime() const;
-	void setTimeScale(float T);
-	float getTimeScale() const;
-	float getFps() const;
-
+  float getDeltaTime() const;
+  void setTimeScale(float T);
+  float getTimeScale() const;
+  float getFps() const;
 };

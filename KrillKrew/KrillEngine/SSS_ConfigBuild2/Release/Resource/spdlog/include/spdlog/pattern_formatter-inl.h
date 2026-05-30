@@ -41,7 +41,7 @@ namespace details {
 
 class scoped_padder {
 public:
-    scoped_padder(size_t wrapped_size, const padding_info &padinfo, memory_buf_t &dest)
+    scoped_padder(size_t wrapped_size, const padding_info& padinfo, memory_buf_t& dest)
         : padinfo_(padinfo),
           dest_(dest) {
         remaining_pad_ = static_cast<long>(padinfo.width_) - static_cast<long>(wrapped_size);
@@ -80,16 +80,16 @@ private:
                                        dest_);
     }
 
-    const padding_info &padinfo_;
-    memory_buf_t &dest_;
+    const padding_info& padinfo_;
+    memory_buf_t& dest_;
     long remaining_pad_;
     string_view_t spaces_{"                                                                ", 64};
 };
 
 struct null_scoped_padder {
     null_scoped_padder(size_t /*wrapped_size*/,
-                       const padding_info & /*padinfo*/,
-                       memory_buf_t & /*dest*/) {}
+                       const padding_info& /*padinfo*/,
+                       memory_buf_t& /*dest*/) {}
 
     template <typename T>
     static unsigned int count_digits(T /* number */) {
@@ -103,7 +103,7 @@ public:
     explicit name_formatter(padding_info padinfo)
         : flag_formatter(padinfo) {}
 
-    void format(const details::log_msg &msg, const std::tm &, memory_buf_t &dest) override {
+    void format(const details::log_msg& msg, const std::tm&, memory_buf_t& dest) override {
         ScopedPadder p(msg.logger_name.size(), padinfo_, dest);
         fmt_helper::append_string_view(msg.logger_name, dest);
     }
@@ -116,8 +116,8 @@ public:
     explicit level_formatter(padding_info padinfo)
         : flag_formatter(padinfo) {}
 
-    void format(const details::log_msg &msg, const std::tm &, memory_buf_t &dest) override {
-        const string_view_t &level_name = level::to_string_view(msg.level);
+    void format(const details::log_msg& msg, const std::tm&, memory_buf_t& dest) override {
+        const string_view_t& level_name = level::to_string_view(msg.level);
         ScopedPadder p(level_name.size(), padinfo_, dest);
         fmt_helper::append_string_view(level_name, dest);
     }
@@ -130,7 +130,7 @@ public:
     explicit short_level_formatter(padding_info padinfo)
         : flag_formatter(padinfo) {}
 
-    void format(const details::log_msg &msg, const std::tm &, memory_buf_t &dest) override {
+    void format(const details::log_msg& msg, const std::tm&, memory_buf_t& dest) override {
         string_view_t level_name{level::to_short_c_str(msg.level)};
         ScopedPadder p(level_name.size(), padinfo_, dest);
         fmt_helper::append_string_view(level_name, dest);
@@ -141,12 +141,12 @@ public:
 // Date time pattern appenders
 ///////////////////////////////////////////////////////////////////////
 
-static const char *ampm(const tm &t) { return t.tm_hour >= 12 ? "PM" : "AM"; }
+static const char* ampm(const tm& t) { return t.tm_hour >= 12 ? "PM" : "AM"; }
 
-static int to12h(const tm &t) { return t.tm_hour > 12 ? t.tm_hour - 12 : t.tm_hour; }
+static int to12h(const tm& t) { return t.tm_hour > 12 ? t.tm_hour - 12 : t.tm_hour; }
 
 // Abbreviated weekday name
-static std::array<const char *, 7> days{{"Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"}};
+static std::array<const char*, 7> days{{"Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"}};
 
 template <typename ScopedPadder>
 class a_formatter final : public flag_formatter {
@@ -154,7 +154,7 @@ public:
     explicit a_formatter(padding_info padinfo)
         : flag_formatter(padinfo) {}
 
-    void format(const details::log_msg &, const std::tm &tm_time, memory_buf_t &dest) override {
+    void format(const details::log_msg&, const std::tm& tm_time, memory_buf_t& dest) override {
         string_view_t field_value{days[static_cast<size_t>(tm_time.tm_wday)]};
         ScopedPadder p(field_value.size(), padinfo_, dest);
         fmt_helper::append_string_view(field_value, dest);
@@ -162,7 +162,7 @@ public:
 };
 
 // Full weekday name
-static std::array<const char *, 7> full_days{
+static std::array<const char*, 7> full_days{
     {"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"}};
 
 template <typename ScopedPadder>
@@ -171,7 +171,7 @@ public:
     explicit A_formatter(padding_info padinfo)
         : flag_formatter(padinfo) {}
 
-    void format(const details::log_msg &, const std::tm &tm_time, memory_buf_t &dest) override {
+    void format(const details::log_msg&, const std::tm& tm_time, memory_buf_t& dest) override {
         string_view_t field_value{full_days[static_cast<size_t>(tm_time.tm_wday)]};
         ScopedPadder p(field_value.size(), padinfo_, dest);
         fmt_helper::append_string_view(field_value, dest);
@@ -179,7 +179,7 @@ public:
 };
 
 // Abbreviated month
-static const std::array<const char *, 12> months{
+static const std::array<const char*, 12> months{
     {"Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"}};
 
 template <typename ScopedPadder>
@@ -188,7 +188,7 @@ public:
     explicit b_formatter(padding_info padinfo)
         : flag_formatter(padinfo) {}
 
-    void format(const details::log_msg &, const std::tm &tm_time, memory_buf_t &dest) override {
+    void format(const details::log_msg&, const std::tm& tm_time, memory_buf_t& dest) override {
         string_view_t field_value{months[static_cast<size_t>(tm_time.tm_mon)]};
         ScopedPadder p(field_value.size(), padinfo_, dest);
         fmt_helper::append_string_view(field_value, dest);
@@ -196,9 +196,9 @@ public:
 };
 
 // Full month name
-static const std::array<const char *, 12> full_months{{"January", "February", "March", "April",
-                                                       "May", "June", "July", "August", "September",
-                                                       "October", "November", "December"}};
+static const std::array<const char*, 12> full_months{{"January", "February", "March", "April",
+                                                      "May", "June", "July", "August", "September",
+                                                      "October", "November", "December"}};
 
 template <typename ScopedPadder>
 class B_formatter final : public flag_formatter {
@@ -206,7 +206,7 @@ public:
     explicit B_formatter(padding_info padinfo)
         : flag_formatter(padinfo) {}
 
-    void format(const details::log_msg &, const std::tm &tm_time, memory_buf_t &dest) override {
+    void format(const details::log_msg&, const std::tm& tm_time, memory_buf_t& dest) override {
         string_view_t field_value{full_months[static_cast<size_t>(tm_time.tm_mon)]};
         ScopedPadder p(field_value.size(), padinfo_, dest);
         fmt_helper::append_string_view(field_value, dest);
@@ -220,7 +220,7 @@ public:
     explicit c_formatter(padding_info padinfo)
         : flag_formatter(padinfo) {}
 
-    void format(const details::log_msg &, const std::tm &tm_time, memory_buf_t &dest) override {
+    void format(const details::log_msg&, const std::tm& tm_time, memory_buf_t& dest) override {
         const size_t field_size = 24;
         ScopedPadder p(field_size, padinfo_, dest);
 
@@ -249,7 +249,7 @@ public:
     explicit C_formatter(padding_info padinfo)
         : flag_formatter(padinfo) {}
 
-    void format(const details::log_msg &, const std::tm &tm_time, memory_buf_t &dest) override {
+    void format(const details::log_msg&, const std::tm& tm_time, memory_buf_t& dest) override {
         const size_t field_size = 2;
         ScopedPadder p(field_size, padinfo_, dest);
         fmt_helper::pad2(tm_time.tm_year % 100, dest);
@@ -263,7 +263,7 @@ public:
     explicit D_formatter(padding_info padinfo)
         : flag_formatter(padinfo) {}
 
-    void format(const details::log_msg &, const std::tm &tm_time, memory_buf_t &dest) override {
+    void format(const details::log_msg&, const std::tm& tm_time, memory_buf_t& dest) override {
         const size_t field_size = 10;
         ScopedPadder p(field_size, padinfo_, dest);
 
@@ -282,7 +282,7 @@ public:
     explicit Y_formatter(padding_info padinfo)
         : flag_formatter(padinfo) {}
 
-    void format(const details::log_msg &, const std::tm &tm_time, memory_buf_t &dest) override {
+    void format(const details::log_msg&, const std::tm& tm_time, memory_buf_t& dest) override {
         const size_t field_size = 4;
         ScopedPadder p(field_size, padinfo_, dest);
         fmt_helper::append_int(tm_time.tm_year + 1900, dest);
@@ -296,7 +296,7 @@ public:
     explicit m_formatter(padding_info padinfo)
         : flag_formatter(padinfo) {}
 
-    void format(const details::log_msg &, const std::tm &tm_time, memory_buf_t &dest) override {
+    void format(const details::log_msg&, const std::tm& tm_time, memory_buf_t& dest) override {
         const size_t field_size = 2;
         ScopedPadder p(field_size, padinfo_, dest);
         fmt_helper::pad2(tm_time.tm_mon + 1, dest);
@@ -310,7 +310,7 @@ public:
     explicit d_formatter(padding_info padinfo)
         : flag_formatter(padinfo) {}
 
-    void format(const details::log_msg &, const std::tm &tm_time, memory_buf_t &dest) override {
+    void format(const details::log_msg&, const std::tm& tm_time, memory_buf_t& dest) override {
         const size_t field_size = 2;
         ScopedPadder p(field_size, padinfo_, dest);
         fmt_helper::pad2(tm_time.tm_mday, dest);
@@ -324,7 +324,7 @@ public:
     explicit H_formatter(padding_info padinfo)
         : flag_formatter(padinfo) {}
 
-    void format(const details::log_msg &, const std::tm &tm_time, memory_buf_t &dest) override {
+    void format(const details::log_msg&, const std::tm& tm_time, memory_buf_t& dest) override {
         const size_t field_size = 2;
         ScopedPadder p(field_size, padinfo_, dest);
         fmt_helper::pad2(tm_time.tm_hour, dest);
@@ -338,7 +338,7 @@ public:
     explicit I_formatter(padding_info padinfo)
         : flag_formatter(padinfo) {}
 
-    void format(const details::log_msg &, const std::tm &tm_time, memory_buf_t &dest) override {
+    void format(const details::log_msg&, const std::tm& tm_time, memory_buf_t& dest) override {
         const size_t field_size = 2;
         ScopedPadder p(field_size, padinfo_, dest);
         fmt_helper::pad2(to12h(tm_time), dest);
@@ -352,7 +352,7 @@ public:
     explicit M_formatter(padding_info padinfo)
         : flag_formatter(padinfo) {}
 
-    void format(const details::log_msg &, const std::tm &tm_time, memory_buf_t &dest) override {
+    void format(const details::log_msg&, const std::tm& tm_time, memory_buf_t& dest) override {
         const size_t field_size = 2;
         ScopedPadder p(field_size, padinfo_, dest);
         fmt_helper::pad2(tm_time.tm_min, dest);
@@ -366,7 +366,7 @@ public:
     explicit S_formatter(padding_info padinfo)
         : flag_formatter(padinfo) {}
 
-    void format(const details::log_msg &, const std::tm &tm_time, memory_buf_t &dest) override {
+    void format(const details::log_msg&, const std::tm& tm_time, memory_buf_t& dest) override {
         const size_t field_size = 2;
         ScopedPadder p(field_size, padinfo_, dest);
         fmt_helper::pad2(tm_time.tm_sec, dest);
@@ -380,7 +380,7 @@ public:
     explicit e_formatter(padding_info padinfo)
         : flag_formatter(padinfo) {}
 
-    void format(const details::log_msg &msg, const std::tm &, memory_buf_t &dest) override {
+    void format(const details::log_msg& msg, const std::tm&, memory_buf_t& dest) override {
         auto millis = fmt_helper::time_fraction<std::chrono::milliseconds>(msg.time);
         const size_t field_size = 3;
         ScopedPadder p(field_size, padinfo_, dest);
@@ -395,7 +395,7 @@ public:
     explicit f_formatter(padding_info padinfo)
         : flag_formatter(padinfo) {}
 
-    void format(const details::log_msg &msg, const std::tm &, memory_buf_t &dest) override {
+    void format(const details::log_msg& msg, const std::tm&, memory_buf_t& dest) override {
         auto micros = fmt_helper::time_fraction<std::chrono::microseconds>(msg.time);
 
         const size_t field_size = 6;
@@ -411,7 +411,7 @@ public:
     explicit F_formatter(padding_info padinfo)
         : flag_formatter(padinfo) {}
 
-    void format(const details::log_msg &msg, const std::tm &, memory_buf_t &dest) override {
+    void format(const details::log_msg& msg, const std::tm&, memory_buf_t& dest) override {
         auto ns = fmt_helper::time_fraction<std::chrono::nanoseconds>(msg.time);
         const size_t field_size = 9;
         ScopedPadder p(field_size, padinfo_, dest);
@@ -426,7 +426,7 @@ public:
     explicit E_formatter(padding_info padinfo)
         : flag_formatter(padinfo) {}
 
-    void format(const details::log_msg &msg, const std::tm &, memory_buf_t &dest) override {
+    void format(const details::log_msg& msg, const std::tm&, memory_buf_t& dest) override {
         const size_t field_size = 10;
         ScopedPadder p(field_size, padinfo_, dest);
         auto duration = msg.time.time_since_epoch();
@@ -442,7 +442,7 @@ public:
     explicit p_formatter(padding_info padinfo)
         : flag_formatter(padinfo) {}
 
-    void format(const details::log_msg &, const std::tm &tm_time, memory_buf_t &dest) override {
+    void format(const details::log_msg&, const std::tm& tm_time, memory_buf_t& dest) override {
         const size_t field_size = 2;
         ScopedPadder p(field_size, padinfo_, dest);
         fmt_helper::append_string_view(ampm(tm_time), dest);
@@ -456,7 +456,7 @@ public:
     explicit r_formatter(padding_info padinfo)
         : flag_formatter(padinfo) {}
 
-    void format(const details::log_msg &, const std::tm &tm_time, memory_buf_t &dest) override {
+    void format(const details::log_msg&, const std::tm& tm_time, memory_buf_t& dest) override {
         const size_t field_size = 11;
         ScopedPadder p(field_size, padinfo_, dest);
 
@@ -477,7 +477,7 @@ public:
     explicit R_formatter(padding_info padinfo)
         : flag_formatter(padinfo) {}
 
-    void format(const details::log_msg &, const std::tm &tm_time, memory_buf_t &dest) override {
+    void format(const details::log_msg&, const std::tm& tm_time, memory_buf_t& dest) override {
         const size_t field_size = 5;
         ScopedPadder p(field_size, padinfo_, dest);
 
@@ -494,7 +494,7 @@ public:
     explicit T_formatter(padding_info padinfo)
         : flag_formatter(padinfo) {}
 
-    void format(const details::log_msg &, const std::tm &tm_time, memory_buf_t &dest) override {
+    void format(const details::log_msg&, const std::tm& tm_time, memory_buf_t& dest) override {
         const size_t field_size = 8;
         ScopedPadder p(field_size, padinfo_, dest);
 
@@ -514,10 +514,10 @@ public:
         : flag_formatter(padinfo) {}
 
     z_formatter() = default;
-    z_formatter(const z_formatter &) = delete;
-    z_formatter &operator=(const z_formatter &) = delete;
+    z_formatter(const z_formatter&) = delete;
+    z_formatter& operator=(const z_formatter&) = delete;
 
-    void format(const details::log_msg &msg, const std::tm &tm_time, memory_buf_t &dest) override {
+    void format(const details::log_msg& msg, const std::tm& tm_time, memory_buf_t& dest) override {
         const size_t field_size = 6;
         ScopedPadder p(field_size, padinfo_, dest);
 
@@ -539,7 +539,7 @@ private:
     log_clock::time_point last_update_{std::chrono::seconds(0)};
     int offset_minutes_{0};
 
-    int get_cached_offset(const log_msg &msg, const std::tm &tm_time) {
+    int get_cached_offset(const log_msg& msg, const std::tm& tm_time) {
         // refresh every 10 seconds
         if (msg.time - last_update_ >= std::chrono::seconds(10)) {
             offset_minutes_ = os::utc_minutes_offset(tm_time);
@@ -556,7 +556,7 @@ public:
     explicit t_formatter(padding_info padinfo)
         : flag_formatter(padinfo) {}
 
-    void format(const details::log_msg &msg, const std::tm &, memory_buf_t &dest) override {
+    void format(const details::log_msg& msg, const std::tm&, memory_buf_t& dest) override {
         const auto field_size = ScopedPadder::count_digits(msg.thread_id);
         ScopedPadder p(field_size, padinfo_, dest);
         fmt_helper::append_int(msg.thread_id, dest);
@@ -570,7 +570,7 @@ public:
     explicit pid_formatter(padding_info padinfo)
         : flag_formatter(padinfo) {}
 
-    void format(const details::log_msg &, const std::tm &, memory_buf_t &dest) override {
+    void format(const details::log_msg&, const std::tm&, memory_buf_t& dest) override {
         const auto pid = static_cast<uint32_t>(details::os::pid());
         auto field_size = ScopedPadder::count_digits(pid);
         ScopedPadder p(field_size, padinfo_, dest);
@@ -584,7 +584,7 @@ public:
     explicit v_formatter(padding_info padinfo)
         : flag_formatter(padinfo) {}
 
-    void format(const details::log_msg &msg, const std::tm &, memory_buf_t &dest) override {
+    void format(const details::log_msg& msg, const std::tm&, memory_buf_t& dest) override {
         ScopedPadder p(msg.payload.size(), padinfo_, dest);
         fmt_helper::append_string_view(msg.payload, dest);
     }
@@ -595,7 +595,7 @@ public:
     explicit ch_formatter(char ch)
         : ch_(ch) {}
 
-    void format(const details::log_msg &, const std::tm &, memory_buf_t &dest) override {
+    void format(const details::log_msg&, const std::tm&, memory_buf_t& dest) override {
         dest.push_back(ch_);
     }
 
@@ -609,7 +609,7 @@ public:
     aggregate_formatter() = default;
 
     void add_ch(char ch) { str_ += ch; }
-    void format(const details::log_msg &, const std::tm &, memory_buf_t &dest) override {
+    void format(const details::log_msg&, const std::tm&, memory_buf_t& dest) override {
         fmt_helper::append_string_view(str_, dest);
     }
 
@@ -623,7 +623,7 @@ public:
     explicit color_start_formatter(padding_info padinfo)
         : flag_formatter(padinfo) {}
 
-    void format(const details::log_msg &msg, const std::tm &, memory_buf_t &dest) override {
+    void format(const details::log_msg& msg, const std::tm&, memory_buf_t& dest) override {
         msg.color_range_start = dest.size();
     }
 };
@@ -633,7 +633,7 @@ public:
     explicit color_stop_formatter(padding_info padinfo)
         : flag_formatter(padinfo) {}
 
-    void format(const details::log_msg &msg, const std::tm &, memory_buf_t &dest) override {
+    void format(const details::log_msg& msg, const std::tm&, memory_buf_t& dest) override {
         msg.color_range_end = dest.size();
     }
 };
@@ -645,7 +645,7 @@ public:
     explicit source_location_formatter(padding_info padinfo)
         : flag_formatter(padinfo) {}
 
-    void format(const details::log_msg &msg, const std::tm &, memory_buf_t &dest) override {
+    void format(const details::log_msg& msg, const std::tm&, memory_buf_t& dest) override {
         if (msg.source.empty()) {
             ScopedPadder p(0, padinfo_, dest);
             return;
@@ -674,7 +674,7 @@ public:
     explicit source_filename_formatter(padding_info padinfo)
         : flag_formatter(padinfo) {}
 
-    void format(const details::log_msg &msg, const std::tm &, memory_buf_t &dest) override {
+    void format(const details::log_msg& msg, const std::tm&, memory_buf_t& dest) override {
         if (msg.source.empty()) {
             ScopedPadder p(0, padinfo_, dest);
             return;
@@ -696,15 +696,15 @@ public:
     #pragma warning(push)
     #pragma warning(disable : 4127)  // consider using 'if constexpr' instead
 #endif                               // _MSC_VER
-    static const char *basename(const char *filename) {
+    static const char* basename(const char* filename) {
         // if the size is 2 (1 character + null terminator) we can use the more efficient strrchr
         // the branch will be elided by optimizations
         if (sizeof(os::folder_seps) == 2) {
-            const char *rv = std::strrchr(filename, os::folder_seps[0]);
+            const char* rv = std::strrchr(filename, os::folder_seps[0]);
             return rv != nullptr ? rv + 1 : filename;
         } else {
-            const std::reverse_iterator<const char *> begin(filename + std::strlen(filename));
-            const std::reverse_iterator<const char *> end(filename);
+            const std::reverse_iterator<const char*> begin(filename + std::strlen(filename));
+            const std::reverse_iterator<const char*> end(filename);
 
             const auto it = std::find_first_of(begin, end, std::begin(os::folder_seps),
                                                std::end(os::folder_seps) - 1);
@@ -715,7 +715,7 @@ public:
     #pragma warning(pop)
 #endif  // _MSC_VER
 
-    void format(const details::log_msg &msg, const std::tm &, memory_buf_t &dest) override {
+    void format(const details::log_msg& msg, const std::tm&, memory_buf_t& dest) override {
         if (msg.source.empty()) {
             ScopedPadder p(0, padinfo_, dest);
             return;
@@ -733,7 +733,7 @@ public:
     explicit source_linenum_formatter(padding_info padinfo)
         : flag_formatter(padinfo) {}
 
-    void format(const details::log_msg &msg, const std::tm &, memory_buf_t &dest) override {
+    void format(const details::log_msg& msg, const std::tm&, memory_buf_t& dest) override {
         if (msg.source.empty()) {
             ScopedPadder p(0, padinfo_, dest);
             return;
@@ -752,7 +752,7 @@ public:
     explicit source_funcname_formatter(padding_info padinfo)
         : flag_formatter(padinfo) {}
 
-    void format(const details::log_msg &msg, const std::tm &, memory_buf_t &dest) override {
+    void format(const details::log_msg& msg, const std::tm&, memory_buf_t& dest) override {
         if (msg.source.empty()) {
             ScopedPadder p(0, padinfo_, dest);
             return;
@@ -774,7 +774,7 @@ public:
         : flag_formatter(padinfo),
           last_message_time_(log_clock::now()) {}
 
-    void format(const details::log_msg &msg, const std::tm &, memory_buf_t &dest) override {
+    void format(const details::log_msg& msg, const std::tm&, memory_buf_t& dest) override {
         auto delta = (std::max)(msg.time - last_message_time_, log_clock::duration::zero());
         auto delta_units = std::chrono::duration_cast<DurationUnits>(delta);
         last_message_time_ = msg.time;
@@ -797,8 +797,8 @@ public:
     explicit mdc_formatter(padding_info padinfo)
         : flag_formatter(padinfo) {}
 
-    void format(const details::log_msg &, const std::tm &, memory_buf_t &dest) override {
-        auto &mdc_map = mdc::get_context();
+    void format(const details::log_msg&, const std::tm&, memory_buf_t& dest) override {
+        auto& mdc_map = mdc::get_context();
         if (mdc_map.empty()) {
             ScopedPadder p(0, padinfo_, dest);
             return;
@@ -807,12 +807,12 @@ public:
         }
     }
 
-    void format_mdc(const mdc::mdc_map_t &mdc_map, memory_buf_t &dest) {
+    void format_mdc(const mdc::mdc_map_t& mdc_map, memory_buf_t& dest) {
         auto last_element = --mdc_map.end();
         for (auto it = mdc_map.begin(); it != mdc_map.end(); ++it) {
-            auto &pair = *it;
-            const auto &key = pair.first;
-            const auto &value = pair.second;
+            auto& pair = *it;
+            const auto& key = pair.first;
+            const auto& value = pair.second;
             size_t content_size = key.size() + value.size() + 1;  // 1 for ':'
 
             if (it != last_element) {
@@ -838,7 +838,7 @@ public:
     explicit full_formatter(padding_info padinfo)
         : flag_formatter(padinfo) {}
 
-    void format(const details::log_msg &msg, const std::tm &tm_time, memory_buf_t &dest) override {
+    void format(const details::log_msg& msg, const std::tm& tm_time, memory_buf_t& dest) override {
         using std::chrono::duration_cast;
         using std::chrono::milliseconds;
         using std::chrono::seconds;
@@ -897,7 +897,7 @@ public:
         // add source location if present
         if (!msg.source.empty()) {
             dest.push_back('[');
-            const char *filename =
+            const char* filename =
                 details::short_filename_formatter<details::null_scoped_padder>::basename(
                     msg.source.filename);
             fmt_helper::append_string_view(filename, dest);
@@ -909,7 +909,7 @@ public:
 
 #ifndef SPDLOG_NO_TLS
         // add mdc if present
-        auto &mdc_map = mdc::get_context();
+        auto& mdc_map = mdc::get_context();
         if (!mdc_map.empty()) {
             dest.push_back('[');
             mdc_formatter_.format_mdc(mdc_map, dest);
@@ -926,9 +926,8 @@ private:
     memory_buf_t cached_datetime_;
 
 #ifndef SPDLOG_NO_TLS
-    mdc_formatter<null_scoped_padder> mdc_formatter_{padding_info{}};
+    mdc_formatter<null_scoped_padder> mdc_formatter_{padding_info {}};
 #endif
-
 };
 
 }  // namespace details
@@ -960,7 +959,7 @@ SPDLOG_INLINE pattern_formatter::pattern_formatter(pattern_time_type time_type, 
 
 SPDLOG_INLINE std::unique_ptr<formatter> pattern_formatter::clone() const {
     custom_flags cloned_custom_formatters;
-    for (auto &it : custom_handlers_) {
+    for (auto& it : custom_handlers_) {
         cloned_custom_formatters[it.first] = it.second->clone();
     }
     auto cloned = details::make_unique<pattern_formatter>(pattern_, pattern_time_type_, eol_,
@@ -973,7 +972,7 @@ SPDLOG_INLINE std::unique_ptr<formatter> pattern_formatter::clone() const {
 #endif
 }
 
-SPDLOG_INLINE void pattern_formatter::format(const details::log_msg &msg, memory_buf_t &dest) {
+SPDLOG_INLINE void pattern_formatter::format(const details::log_msg& msg, memory_buf_t& dest) {
     if (need_localtime_) {
         const auto secs =
             std::chrono::duration_cast<std::chrono::seconds>(msg.time.time_since_epoch());
@@ -983,7 +982,7 @@ SPDLOG_INLINE void pattern_formatter::format(const details::log_msg &msg, memory
         }
     }
 
-    for (auto &f : formatters_) {
+    for (auto& f : formatters_) {
         f->format(msg, cached_tm_, dest);
     }
     // write eol
@@ -998,7 +997,7 @@ SPDLOG_INLINE void pattern_formatter::set_pattern(std::string pattern) {
 
 SPDLOG_INLINE void pattern_formatter::need_localtime(bool need) { need_localtime_ = need; }
 
-SPDLOG_INLINE std::tm pattern_formatter::get_time_(const details::log_msg &msg) {
+SPDLOG_INLINE std::tm pattern_formatter::get_time_(const details::log_msg& msg) {
     if (pattern_time_type_ == pattern_time_type::local) {
         return details::os::localtime(log_clock::to_time_t(msg.time));
     }
@@ -1256,7 +1255,7 @@ SPDLOG_INLINE void pattern_formatter::handle_flag_(char flag, details::padding_i
 // Advance the given it pass the end of the padding spec found (if any)
 // Return padding.
 SPDLOG_INLINE details::padding_info pattern_formatter::handle_padspec_(
-    std::string::const_iterator &it, std::string::const_iterator end) {
+    std::string::const_iterator& it, std::string::const_iterator end) {
     using details::padding_info;
     using details::scoped_padder;
     const size_t max_width = 64;
@@ -1300,7 +1299,7 @@ SPDLOG_INLINE details::padding_info pattern_formatter::handle_padspec_(
     return details::padding_info{std::min<size_t>(width, max_width), side, truncate};
 }
 
-SPDLOG_INLINE void pattern_formatter::compile_pattern_(const std::string &pattern) {
+SPDLOG_INLINE void pattern_formatter::compile_pattern_(const std::string& pattern) {
     auto end = pattern.end();
     std::unique_ptr<details::aggregate_formatter> user_chars;
     formatters_.clear();

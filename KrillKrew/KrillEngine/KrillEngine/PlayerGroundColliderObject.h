@@ -3,14 +3,14 @@
 #include "DrawableObject.h"
 #include "gtc/matrix_transform.hpp"
 #include "gtc/type_ptr.hpp"
-#include <string>
 #include <array>
+#include <string>
 
-#include "ImageObject.h"
-#include "SpriteRenderer.h"
 #include "Collider.h"
-#include "InfoStruct.h"
 #include "GameEngine.h"
+#include "ImageObject.h"
+#include "InfoStruct.h"
+#include "SpriteRenderer.h"
 #include "SquareMeshVbo.h"
 // #include "PlayerObject.h"
 #include "EntityObject.h"
@@ -19,37 +19,33 @@
 class PlayerObject;
 
 /// @brief The class for creating object that render using texture
-class PlayerGroundColliderObject : public EntityObject
-{
+class PlayerGroundColliderObject : public EntityObject {
 private:
-
-	PlayerObject* parent;
-	glm::vec2 colliderOffset;
+  PlayerObject *parent;
+  glm::vec2 colliderOffset;
 
 protected:
-
-	//virtual Collider* collider;
+  // virtual Collider* collider;
 
 public:
+  PlayerGroundColliderObject(PlayerObject *parent);
+  ~PlayerGroundColliderObject();
 
-	PlayerGroundColliderObject(PlayerObject* parent);
-	~PlayerGroundColliderObject();
+  virtual void SetSpriteInfo(SpritesheetInfo info);
+  void SetTexture(std::string path);
+  void Render(glm::mat4 globalModelTransform);
 
-	virtual void SetSpriteInfo(SpritesheetInfo info);
-	void SetTexture(std::string path);
-	void Render(glm::mat4 globalModelTransform);
+  virtual void SetSize(float sizeX, float sizeY);
+  virtual void SetPosition(glm::vec3 newPosition);
+  void SetCollisionOffset(glm::vec2 newOffset);
 
-	virtual void SetSize(float sizeX, float sizeY);
-	virtual void SetPosition(glm::vec3 newPosition);
-	void SetCollisionOffset(glm::vec2 newOffset);
+  virtual Collider *GetCollider();
+  glm::vec2 GetColliderOffset() const;
 
-	virtual Collider* GetCollider();
-	glm::vec2 GetColliderOffset() const;
-
-	virtual void OnColliderEnter(Collider* other);
-	virtual void OnColliderStay(Collider* other);
-	virtual void OnColliderExit(Collider* other);
-	virtual void OnTriggerEnter(Collider* other);
-	virtual void OnTriggerStay(Collider* other);
-	virtual void OnTriggerExit(Collider* other);
+  virtual void OnColliderEnter(Collider *other);
+  virtual void OnColliderStay(Collider *other);
+  virtual void OnColliderExit(Collider *other);
+  virtual void OnTriggerEnter(Collider *other);
+  virtual void OnTriggerStay(Collider *other);
+  virtual void OnTriggerExit(Collider *other);
 };

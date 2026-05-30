@@ -8,7 +8,7 @@
 
 using spdlog::details::file_helper;
 
-static void write_with_helper(file_helper &helper, size_t howmany) {
+static void write_with_helper(file_helper& helper, size_t howmany) {
     spdlog::memory_buf_t formatted;
     spdlog::fmt_lib::format_to(std::back_inserter(formatted), "{}", std::string(howmany, '1'));
     helper.write(formatted);
@@ -60,9 +60,9 @@ TEST_CASE("file_helper_reopen2", "[file_helper::reopen(false)]") {
     REQUIRE(helper.size() == expected_size);
 }
 
-static void test_split_ext(const spdlog::filename_t::value_type *fname,
-                           const spdlog::filename_t::value_type *expect_base,
-                           const spdlog::filename_t::value_type *expect_ext) {
+static void test_split_ext(const spdlog::filename_t::value_type* fname,
+                           const spdlog::filename_t::value_type* expect_base,
+                           const spdlog::filename_t::value_type* expect_ext) {
     spdlog::filename_t filename(fname);
     spdlog::filename_t expected_base(expect_base);
     spdlog::filename_t expected_ext(expect_ext);
@@ -121,13 +121,13 @@ TEST_CASE("file_event_handlers", "[file_helper]") {
         REQUIRE(filename == test_filename);
         events.push_back(flags::before_open);
     };
-    handlers.after_open = [&](spdlog::filename_t filename, std::FILE *fstream) {
+    handlers.after_open = [&](spdlog::filename_t filename, std::FILE* fstream) {
         REQUIRE(filename == test_filename);
         REQUIRE(fstream);
         fputs("after_open\n", fstream);
         events.push_back(flags::after_open);
     };
-    handlers.before_close = [&](spdlog::filename_t filename, std::FILE *fstream) {
+    handlers.before_close = [&](spdlog::filename_t filename, std::FILE* fstream) {
         REQUIRE(filename == test_filename);
         REQUIRE(fstream);
         fputs("before_close\n", fstream);

@@ -4,77 +4,72 @@
 
 // Core Classes
 
+#include "GLRenderer.h"
 #include "GameEngine.h"
 #include "GameStateController.h"
 #include "GameStateList.h"
-#include "GLRenderer.h"
 
 // ImGui
 #include "imgui.h"
-#include "imgui_impl_sdl2.h"
 #include "imgui_impl_opengl3.h"
+#include "imgui_impl_sdl2.h"
 
 // Object Classes
 
 #include "DrawableObject.h"
-#include "TextObject.h"
 #include "EntityObject.h"
 #include "GameObject.h"
 #include "GizmosObject.h"
 #include "ImageObject.h"
+#include "ParticleObject.h"
+#include "PlayerGroundColliderObject.h"
+#include "PlayerHitboxObject.h"
 #include "PlayerObject.h"
 #include "ProjectileObject.h"
+#include "PropObject.h"
+#include "TextObject.h"
+#include "TileObject.h"
 #include "TrapObject.h"
 #include "UiObject.h"
-#include "TileObject.h"
-#include "PlayerHitboxObject.h"
-#include "PlayerGroundColliderObject.h"
-#include "PropObject.h"
-#include "ParticleObject.h"
-#include "TextObject.h"
 
 // Vbo
 
 #include "LineMeshVbo.h"
+#include "MeshVbo.h"
 #include "SquareMeshVbo.h"
 #include "TriangleMeshVbo.h"
-#include "MeshVbo.h"
 
 // Component
 
 #include "Camera.h"
 #include "Collider.h"
+#include "InfoStruct.h"
 #include "Joystick.h"
 #include "Log.h"
 #include "Shader.h"
-#include "Timer.h"
-#include "InfoStruct.h"
 #include "SoundManager.h"
+#include "Timer.h"
 
 // Library
-#include <string>
-#include <vector>
+#include <array>
+#include <bitset>
+#include <chrono>
+#include <cmath>
+#include <cstdlib>
 #include <fstream>
-#include <sstream>
+#include <functional>
 #include <iostream>
 #include <map>
-#include <bitset>
-#include <functional>
-#include <cmath>
-#include <array>
-#include <memory>
-#include <unordered_map>
 #include <math.h>
-#include <chrono>
-#include <set>
-#include <unordered_set>
-#include <queue>
+#include <memory>
 #include <numeric>
-#include <cstdlib>
+#include <queue>
+#include <set>
+#include <sstream>
+#include <string>
+#include <unordered_map>
+#include <unordered_set>
+#include <vector>
 
-#define MAP_WIDTH  20
+#define MAP_WIDTH 20
 #define MAP_HEIGHT 16
-
-
-
-

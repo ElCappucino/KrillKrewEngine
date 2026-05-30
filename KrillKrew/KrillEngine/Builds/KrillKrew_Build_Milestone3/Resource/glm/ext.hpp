@@ -1,38 +1,41 @@
 /// @file glm/ext.hpp
 ///
 /// @ref core (Dependence)
-/// 
+///
 /// @defgroup gtc GTC Extensions (Stable)
 ///
-/// @brief Functions and types that the GLSL specification doesn't define, but useful to have for a C++ program.
-/// 
-/// GTC extensions aim to be stable. 
-/// 
-/// Even if it's highly unrecommended, it's possible to include all the extensions at once by
-/// including <glm/ext.hpp>. Otherwise, each extension needs to be included  a specific file.
-/// 
-/// @defgroup gtx GTX Extensions (Experimental)
-/// 
-/// @brief Functions and types that the GLSL specification doesn't define, but 
+/// @brief Functions and types that the GLSL specification doesn't define, but
 /// useful to have for a C++ program.
-/// 
-/// Experimental extensions are useful functions and types, but the development of
-/// their API and functionality is not necessarily stable. They can change 
-/// substantially between versions. Backwards compatibility is not much of an issue
-/// for them.
-/// 
-/// Even if it's highly unrecommended, it's possible to include all the extensions 
-/// at once by including <glm/ext.hpp>. Otherwise, each extension needs to be 
-/// included  a specific file.
+///
+/// GTC extensions aim to be stable.
+///
+/// Even if it's highly unrecommended, it's possible to include all the
+/// extensions at once by including <glm/ext.hpp>. Otherwise, each extension
+/// needs to be included  a specific file.
+///
+/// @defgroup gtx GTX Extensions (Experimental)
+///
+/// @brief Functions and types that the GLSL specification doesn't define, but
+/// useful to have for a C++ program.
+///
+/// Experimental extensions are useful functions and types, but the development
+/// of their API and functionality is not necessarily stable. They can change
+/// substantially between versions. Backwards compatibility is not much of an
+/// issue for them.
+///
+/// Even if it's highly unrecommended, it's possible to include all the
+/// extensions at once by including <glm/ext.hpp>. Otherwise, each extension
+/// needs to be included  a specific file.
 
 #pragma once
 
 #include "glm.hpp"
 
-#if GLM_MESSAGES == GLM_MESSAGES_ENABLED && !defined(GLM_MESSAGE_EXT_INCLUDED_DISPLAYED)
-#	define GLM_MESSAGE_EXT_INCLUDED_DISPLAYED
-#	pragma message("GLM: All extensions included (not recommanded)")
-#endif//GLM_MESSAGES
+#if GLM_MESSAGES == GLM_MESSAGES_ENABLED &&                                    \
+    !defined(GLM_MESSAGE_EXT_INCLUDED_DISPLAYED)
+#define GLM_MESSAGE_EXT_INCLUDED_DISPLAYED
+#pragma message("GLM: All extensions included (not recommanded)")
+#endif // GLM_MESSAGES
 
 #include "./gtc/bitfield.hpp"
 #include "./gtc/color_space.hpp"
@@ -50,13 +53,13 @@
 #include "./gtc/random.hpp"
 #include "./gtc/reciprocal.hpp"
 #include "./gtc/round.hpp"
-//#include "./gtc/type_aligned.hpp"
+// #include "./gtc/type_aligned.hpp"
 #include "./gtc/type_precision.hpp"
 #include "./gtc/type_ptr.hpp"
 #include "./gtc/ulp.hpp"
 #include "./gtc/vec1.hpp"
 #if GLM_HAS_ALIGNED_TYPE
-#	include "./gtc/type_aligned.hpp"
+#include "./gtc/type_aligned.hpp"
 #endif
 
 #include "./gtx/associated_min_max.hpp"
@@ -101,7 +104,7 @@
 #include "./gtx/std_based_type.hpp"
 
 #if !(GLM_COMPILER & GLM_COMPILER_CUDA)
-#	include "./gtx/string_cast.hpp"
+#include "./gtx/string_cast.hpp"
 #endif
 
 #include "./gtx/transform.hpp"
@@ -111,9 +114,9 @@
 #include "./gtx/wrap.hpp"
 
 #if GLM_HAS_TEMPLATE_ALIASES
-#	include "./gtx/scalar_multiplication.hpp"
+#include "./gtx/scalar_multiplication.hpp"
 #endif
 
 #if GLM_HAS_RANGE_FOR
-#	include "./gtx/range.hpp"
+#include "./gtx/range.hpp"
 #endif

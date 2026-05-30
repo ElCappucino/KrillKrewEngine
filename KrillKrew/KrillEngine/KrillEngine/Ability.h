@@ -1,9 +1,10 @@
 #pragma once
 
 class Ability {
-	void* abilityFunc;
-	std::string name;
+  void *abilityFunc;
+  std::string name;
+
 public:
-	void* getAbility();
-	void setAbility(void* ability);
+  void *getAbility();
+  void setAbility(void *ability);
 };

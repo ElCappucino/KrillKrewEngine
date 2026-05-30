@@ -6,7 +6,7 @@ using spdlog::details::to_string_view;
 
 // log to str and return it
 template <typename... Args>
-static std::string log_to_str(const std::string &msg, const Args &...args) {
+static std::string log_to_str(const std::string& msg, const Args&... args) {
     std::ostringstream oss;
     auto oss_sink = std::make_shared<spdlog::sinks::ostream_sink_mt>(oss);
     spdlog::logger oss_logger("pattern_tester", oss_sink);
@@ -234,7 +234,7 @@ TEST_CASE("paddinng_truncate", "[pattern_formatter]") {
 TEST_CASE("padding_truncate_funcname", "[pattern_formatter]") {
     spdlog::sinks::test_sink_st test_sink;
 
-    const char *pattern = "%v [%5!!]";
+    const char* pattern = "%v [%5!!]";
     auto formatter = std::unique_ptr<spdlog::formatter>(new spdlog::pattern_formatter(pattern));
     test_sink.set_formatter(std::move(formatter));
 
@@ -252,7 +252,7 @@ TEST_CASE("padding_truncate_funcname", "[pattern_formatter]") {
 TEST_CASE("padding_funcname", "[pattern_formatter]") {
     spdlog::sinks::test_sink_st test_sink;
 
-    const char *pattern = "%v [%10!]";
+    const char* pattern = "%v [%10!]";
     auto formatter = std::unique_ptr<spdlog::formatter>(new spdlog::pattern_formatter(pattern));
     test_sink.set_formatter(std::move(formatter));
 
@@ -330,9 +330,9 @@ public:
     explicit custom_test_flag(std::string txt)
         : some_txt{std::move(txt)} {}
 
-    void format(const spdlog::details::log_msg &,
-                const std::tm &tm,
-                spdlog::memory_buf_t &dest) override {
+    void format(const spdlog::details::log_msg&,
+                const std::tm& tm,
+                spdlog::memory_buf_t& dest) override {
         if (some_txt == "throw_me") {
             throw spdlog::spdlog_ex("custom_flag_exception_test");
         } else if (some_txt == "time") {
@@ -377,9 +377,9 @@ TEST_CASE("clone-custom_formatter", "[pattern_formatter]") {
 //
 
 #ifdef _WIN32
-static const char *const test_path = "\\a\\b\\c/myfile.cpp";
+static const char* const test_path = "\\a\\b\\c/myfile.cpp";
 #else
-static const char *const test_path = "/a/b//myfile.cpp";
+static const char* const test_path = "/a/b//myfile.cpp";
 #endif
 
 TEST_CASE("short filename formatter-1", "[pattern_formatter]") {

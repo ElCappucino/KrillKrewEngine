@@ -9,29 +9,25 @@
 #pragma once
 
 #include <cstddef> // size_t
-#include <string> // string, to_string
+#include <string>  // string, to_string
 
 #include <nlohmann/detail/abi_macros.hpp>
 
 NLOHMANN_JSON_NAMESPACE_BEGIN
-namespace detail
-{
+namespace detail {
 
-template<typename StringType>
-void int_to_string(StringType& target, std::size_t value)
-{
-    // For ADL
-    using std::to_string;
-    target = to_string(value);
+template <typename StringType>
+void int_to_string(StringType &target, std::size_t value) {
+  // For ADL
+  using std::to_string;
+  target = to_string(value);
 }
 
-template<typename StringType>
-StringType to_string(std::size_t value)
-{
-    StringType result;
-    int_to_string(result, value);
-    return result;
+template <typename StringType> StringType to_string(std::size_t value) {
+  StringType result;
+  int_to_string(result, value);
+  return result;
 }
 
-}  // namespace detail
+} // namespace detail
 NLOHMANN_JSON_NAMESPACE_END

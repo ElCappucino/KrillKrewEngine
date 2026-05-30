@@ -38,7 +38,7 @@ extern "C" {
 
 /* Function prototypes */
 
-#define FONT_CHARACTER_SIZE  8
+#define FONT_CHARACTER_SIZE 8
 
 /**
  *  \brief Draw a string in the currently set font.
@@ -63,7 +63,6 @@ int SDLTest_DrawCharacter(SDL_Renderer *renderer, int x, int y, char c);
  *  \returns Returns 0 on success, -1 on failure.
  */
 int SDLTest_DrawString(SDL_Renderer *renderer, int x, int y, const char *s);
-
 
 /**
  *  \brief Cleanup textures used by font drawing functions.
