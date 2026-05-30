@@ -23,6 +23,9 @@ void LevelLoading::LevelInit()
 		-(SCREEN_HEIGHT / 2),
 		(SCREEN_HEIGHT / 2));
 
+	SDL_GetWindowSize(GameEngine::GetInstance()->GetSDLWindow(), &windowWidth, &windowHeight);
+	glViewport(0, 0, windowWidth, windowHeight);
+
 	// Setup Dear ImGui context
 	IMGUI_CHECKVERSION();
 	ImGui::CreateContext();
@@ -74,7 +77,7 @@ void LevelLoading::LevelDraw()
 	//if (show_demo_window)
 	//	ImGui::ShowDemoWindow(&show_demo_window);
 
-	ImGui::Text("Mouse pos: (%g, %g)", io.MousePos.x, io.MousePos.y);
+	//ImGui::Text("Mouse pos: (%g, %g)", io.MousePos.x, io.MousePos.y);
 
 
 	// Rendering

@@ -32,40 +32,7 @@ void ParticleObject::SetTexture(std::string path)
 
 void ParticleObject::Render(glm::mat4 globalModelTransform)
 {
-	SquareMeshVbo* squareMesh = dynamic_cast<SquareMeshVbo*> (GameEngine::GetInstance()->GetRenderer()->GetMesh(SquareMeshVbo::MESH_NAME));
-
-	GLuint modelMatixId = GameEngine::GetInstance()->GetRenderer()->GetModelMatrixAttrId();
-	GLuint renderModeId = GameEngine::GetInstance()->GetRenderer()->GetModeUniformId();
-
-	if (modelMatixId == -1) {
-		std::cout << "Error: Can't perform transformation " << std::endl;
-		return;
-	}
-	if (renderModeId == -1) {
-		std::cout << "Error: Can't set renderMode in ImageObject " << std::endl;
-		return;
-	}
-
-	squareMesh->ChangeTextureData(spriteRenderer->GetRow(),
-		spriteRenderer->GetColumn(),
-		spriteRenderer->GetSpriteWidth(),
-		spriteRenderer->GetSpriteHeight(),
-		spriteRenderer->GetSheetWidth(),
-		spriteRenderer->GetSheetHeight());
-
-	std::vector <glm::mat4> matrixStack;
-
-	glm::mat4 currentMatrix = this->getTransform();
-
-	if (squareMesh != nullptr) {
-
-		currentMatrix = globalModelTransform * currentMatrix;
-		glUniformMatrix4fv(modelMatixId, 1, GL_FALSE, glm::value_ptr(currentMatrix));
-		glUniform1i(renderModeId, 1);
-		glBindTexture(GL_TEXTURE_2D, texture);
-		squareMesh->Render();
-
-	}
+	RenderTexturedObject(globalModelTransform);
 }
 
 void ParticleObject::SetSpriteInfo(SpritesheetInfo info)
@@ -104,7 +71,12 @@ void ParticleObject::OnTriggerExit(Collider* other)
 }
 void ParticleObject::UpdateSpriteSheetPosition()
 {
+	//KK_TRACE("ParticleObject: UpdateSpriteSheetPosition");
 	this->GetSpriteRenderer()->ShiftColumn();
+}
+void ParticleObject::SetAnimationSprite(ParticleObject::AnimationState state, SpritesheetInfo spriteInfo)
+{
+	animList.insert({ state, spriteInfo });
 }
 void ParticleObject::UpdateCurrentAnimation() 
 {
@@ -115,9 +87,31 @@ void ParticleObject::UpdateCurrentAnimation()
 
 	if (currentColumn == lastFrame)
 	{
-		this->SetIsActive(false);
+		if (type == ParticleType::Tentacle)
+		{
+			ChangeAnimationState(AnimationState::idle);
+		}
+		else
+		{
+			this->SetIsActive(false);
+		}
+		
 	}
 }
+
+void ParticleObject::ChangeAnimationState(AnimationState anim)
+{
+	if (currAnimState != anim)
+	{
+		currAnimState = anim;
+		this->SetTextureWithID(animList.find(anim)->second, animList.find(anim)->second.textureid);
+		this->spriteRenderer->SetTexture(animList.find(anim)->second.texture);
+		//this->SetTexture(animList.find(anim)->second.texture);
+		this->spriteRenderer->ShiftTo(0, 0);
+		this->spriteRenderer->isLoop = animList.find(anim)->second.isLoop;
+	}
+}
+
 void ParticleObject::UpdateCollider() 
 {
 

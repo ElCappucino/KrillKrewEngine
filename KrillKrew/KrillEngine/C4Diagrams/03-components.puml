@@ -1,0 +1,92 @@
+@startuml Component Diagram
+
+left to right direction
+
+skinparam linetype ortho
+skinparam shadowing false
+skinparam packageStyle rectangle
+
+!includeurl https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Component.puml
+
+LAYOUT_WITH_LEGEND()
+
+title KrillEngine - Component Diagram
+
+Container_Boundary(objects, "Object") {
+
+    Component(drawable, "DrawableObject")
+    Component(image, "ImageObject")
+    Component(entity, "EntityObject")
+
+    Component(player, "PlayerObject")
+    Component(projectile, "ProjectileObject")
+    Component(trap, "TrapObject")
+    Component(tile, "TileObject")
+
+    Component(ui, "UiObject")
+    Component(gizmo, "GizmosObject")
+
+    Rel(image, drawable, "extends")
+    Rel(entity, image, "extends")
+
+    Rel(player, entity, "extends")
+    Rel(projectile, entity, "extends")
+    Rel(trap, entity, "extends")
+
+    Rel(tile, image, "extends")
+    Rel(ui, image, "extends")
+    Rel(gizmo, drawable, "extends")
+}
+
+Container_Boundary(renderer, "Renderer") {
+
+    Component(glrenderer, "GLRenderer")
+    Component(shader, "Shader")
+    Component(sprite, "SpriteRenderer")
+}
+
+Container_Boundary(vbo, "VBO") {
+
+    Component(mesh, "MeshVbo")
+    Component(square, "SquareMeshVbo")
+    Component(line, "LineMeshVbo")
+
+    Rel(square, mesh, "extends")
+    Rel(line, mesh, "extends")
+}
+
+Container_Boundary(levels, "Levels") {
+
+    Component(level, "Level")
+    Component(gameplay, "LevelGameplay")
+    Component(menu, "LevelMainMenu")
+    Component(loading, "LevelLoading")
+
+    Rel(gameplay, level, "extends")
+    Rel(menu, level, "extends")
+    Rel(loading, level, "extends")
+}
+
+Container_Boundary(collision, "Collision") {
+
+    Component(collider, "Collider")
+}
+
+Container_Boundary(audio, "Audio") {
+
+    Component(sound, "SoundManager")
+}
+
+Container_Boundary(input, "JoystickAttribute") {
+
+    Component(controller, "Controller")
+    Component(axis, "Axis")
+    Component(button, "Button")
+}
+
+Rel(glrenderer, drawable, "renders")
+Rel(entity, collider, "uses")
+Rel(gameplay, player, "creates")
+Rel(gameplay, projectile, "updates")
+
+@enduml

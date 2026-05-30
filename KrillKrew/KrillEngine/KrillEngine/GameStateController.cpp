@@ -7,6 +7,8 @@
 #include "LevelImGui.h"
 #include "LevelSelectAbility.h"
 #include "LevelMainMenu.h"
+#include "LevelWinRound.h"
+#include "LevelWinMatch.h"
 
 GameStateController::GameStateController()
 {
@@ -55,7 +57,12 @@ void GameStateController::LoadLevel()
 		case GameState::GS_LEVELMAINMENU:
 			currentLevel = new LevelMainMenu();
 			break;
-		
+		case GameState::GS_LEVELROUNDWIN:
+			currentLevel = new LevelWinRound();
+			break;
+		case GameState::GS_LEVELMATCHWIN:
+			currentLevel = new LevelWinMatch();
+			break;
 		default:
 			std::cout << "gGameStateCurr : invalid state!!" << std::endl;
 			exit(1);

@@ -1,6 +1,7 @@
 #include "TileObject.h"
 #include "PlayerObject.h"
 #include "Level.h"
+#include "SoundManager.h"
 
 int BFSTile
 (
@@ -159,40 +160,7 @@ bool TileObject::GetIsBroke() const
 }
 void TileObject::Render(glm::mat4 globalModelTransform)
 {
-	SquareMeshVbo* squareMesh = dynamic_cast<SquareMeshVbo*> (GameEngine::GetInstance()->GetRenderer()->GetMesh(SquareMeshVbo::MESH_NAME));
-
-	GLuint modelMatixId = GameEngine::GetInstance()->GetRenderer()->GetModelMatrixAttrId();
-	GLuint renderModeId = GameEngine::GetInstance()->GetRenderer()->GetModeUniformId();
-
-	if (modelMatixId == -1) {
-		std::cout << "Error: Can't perform transformation " << std::endl;
-		return;
-	}
-	if (renderModeId == -1) {
-		std::cout << "Error: Can't set renderMode in ImageObject " << std::endl;
-		return;
-	}
-
-	squareMesh->ChangeTextureData(spriteRenderer->GetRow(),
-		spriteRenderer->GetColumn(),
-		spriteRenderer->GetSpriteWidth(),
-		spriteRenderer->GetSpriteHeight(),
-		spriteRenderer->GetSheetWidth(),
-		spriteRenderer->GetSheetHeight());
-
-	std::vector <glm::mat4> matrixStack;
-
-	glm::mat4 currentMatrix = this->getTransform();
-
-	if (squareMesh != nullptr) {
-
-		currentMatrix = globalModelTransform * currentMatrix;
-		glUniformMatrix4fv(modelMatixId, 1, GL_FALSE, glm::value_ptr(currentMatrix));
-		glUniform1i(renderModeId, 1);
-		glBindTexture(GL_TEXTURE_2D, texture);
-		squareMesh->Render();
-
-	}
+	RenderTexturedObject(globalModelTransform);
 }
 
 void TileObject::SetSize(float sizeX, float sizeY)
@@ -225,7 +193,11 @@ void TileObject::SetTilePosition(int x, int y)
 
 void TileObject::UpdateTileArray(int flag)
 {
-	(*updateTile)[tilePos.x][tilePos.y] = flag;
+	if (updateTile)
+	{
+		(*updateTile)[tilePos.x][tilePos.y] = flag;
+	}
+	
 }
 void TileObject::SetUpdateTileset(std::array<std::array<int, MAP_WIDTH>, MAP_HEIGHT>* tiles)
 {
@@ -234,10 +206,15 @@ void TileObject::SetUpdateTileset(std::array<std::array<int, MAP_WIDTH>, MAP_HEI
 
 void TileObject::DisableOverlaySprite()
 {
-	this->isBroke = true;
-	this->isBreakable = false;
-	this->crackOverlay->SetIsActive(false);
-	this->GetCollider()->GetGizmos()->SetIsActive(false);
+	if (!this->isBroke)
+	{
+		this->isBroke = true;
+		this->isBreakable = false;
+		this->crackOverlay->SetIsActive(false);
+		this->GetCollider()->GetGizmos()->SetIsActive(false);
+		KrillSoundManager::SoundManager::GetInstance()->PlaySFX("Rock_Destroyed", false);
+	}
+	
 }
 void TileObject::CheckIfBreak()
 {
@@ -300,7 +277,7 @@ void TileObject::UpdateSpriteSheetPosition()
 	if (currentDurability >= maxDurability)
 	{
 		this->currAnimState = TileObject::AnimationState::FinishBreaking;
-		this->SetIsActive(false);
+		//this->SetIsActive(false);
 	}
 }
 void TileObject::AddCollapseTileToScene()
@@ -318,15 +295,6 @@ void TileObject::AddCollapseTileToScene()
 	particle->SetPosition(this->pos);
 	particle->SetSize(particle->GetSpriteRenderer()->GetSpriteWidth(), particle->GetSpriteRenderer()->GetSpriteHeight());
 	this->currentLevel->AddEntityToScene(particle);
-
-	/*TileObject* collapseTile = new TileObject();
-	collapseTile->SetIsAnimated(true);
-	collapseTile->currAnimState = AnimationState::Breaking;
-	collapseTile->SetSize(256.f, -256.f);
-	collapseTile->SetPosition(this->pos);
-	collapseTile->GetSpriteRenderer()->SetFrame(10);
-	collapseTile->SetSpriteInfo(collapseTileSprite);
-	collapseTile->GetSpriteRenderer()->ShiftTo(this->GetSpriteRenderer()->GetRow(), this->GetSpriteRenderer()->GetColumn());*/
 
 	currentLevel->AddEntityToScene(particle);
 }

@@ -30,7 +30,10 @@ bool UiObject::GetIsRender() const
 {
 	return this->isRender;
 }
-
+void UiObject::ShiftSpriteTo(int row, int col)
+{
+	this->GetSpriteRenderer()->ShiftTo(row, col);
+}
 void UiObject::Render(glm::mat4 globalModelTransform)
 {
 	if (!isRender)
@@ -38,40 +41,7 @@ void UiObject::Render(glm::mat4 globalModelTransform)
 		return;
 	}
 
-	SquareMeshVbo* squareMesh = dynamic_cast<SquareMeshVbo*> (GameEngine::GetInstance()->GetRenderer()->GetMesh(SquareMeshVbo::MESH_NAME));
-
-	GLuint modelMatixId = GameEngine::GetInstance()->GetRenderer()->GetModelMatrixAttrId();
-	GLuint renderModeId = GameEngine::GetInstance()->GetRenderer()->GetModeUniformId();
-
-	if (modelMatixId == -1) {
-		std::cout << "Error: Can't perform transformation " << std::endl;
-		return;
-	}
-	if (renderModeId == -1) {
-		std::cout << "Error: Can't set renderMode in ImageObject " << std::endl;
-		return;
-	}
-
-	squareMesh->ChangeTextureData(spriteRenderer->GetRow(),
-		spriteRenderer->GetColumn(),
-		spriteRenderer->GetSpriteWidth(),
-		spriteRenderer->GetSpriteHeight(),
-		spriteRenderer->GetSheetWidth(),
-		spriteRenderer->GetSheetHeight());
-
-	std::vector <glm::mat4> matrixStack;
-
-	glm::mat4 currentMatrix = this->getTransform();
-
-	if (squareMesh != nullptr) {
-
-		currentMatrix = globalModelTransform * currentMatrix;
-		glUniformMatrix4fv(modelMatixId, 1, GL_FALSE, glm::value_ptr(currentMatrix));
-		glUniform1i(renderModeId, 1);
-		glBindTexture(GL_TEXTURE_2D, texture);
-		squareMesh->Render();
-
-	}
+	RenderTexturedObject(globalModelTransform);
 }
 
 void UiObject::setNumOwner(int num) {
@@ -128,6 +98,9 @@ float UiObject::getOrderingLayer() const
 		break;
 	case YesNoButton:
 		return -3000.0f;
+		break;
+	case Knob:
+		return -3100.0f;
 		break;
 	default:
 		return -2000;

@@ -8,6 +8,7 @@
 #include "TileObject.h"
 #include "Level.h"
 #include "PropObject.h"
+#include "SoundManager.h"
 
 PlayerObject::PlayerObject()
 {
@@ -61,41 +62,7 @@ void PlayerObject::SetTexture(std::string path)
 }
 void PlayerObject::Render(glm::mat4 globalModelTransform)
 {
-	SquareMeshVbo* squareMesh = dynamic_cast<SquareMeshVbo*> (GameEngine::GetInstance()->GetRenderer()->GetMesh(SquareMeshVbo::MESH_NAME));
-
-	GLuint modelMatixId = GameEngine::GetInstance()->GetRenderer()->GetModelMatrixAttrId();
-	GLuint renderModeId = GameEngine::GetInstance()->GetRenderer()->GetModeUniformId();
-
-	if (modelMatixId == -1) {
-		std::cout << "Error: Can't perform transformation " << std::endl;
-		return;
-	}
-	if (renderModeId == -1) {
-		std::cout << "Error: Can't set renderMode in ImageObject " << std::endl;
-		return;
-	}
-
-	squareMesh->ChangeTextureData(
-		spriteRenderer->GetRow(),
-		spriteRenderer->GetColumn(),
-		spriteRenderer->GetSpriteWidth(),
-		spriteRenderer->GetSpriteHeight(),
-		spriteRenderer->GetSheetWidth(),
-		spriteRenderer->GetSheetHeight());
-
-	std::vector <glm::mat4> matrixStack;
-
-	glm::mat4 currentMatrix = this->getTransform();
-
-	if (squareMesh != nullptr) {
-
-		currentMatrix = globalModelTransform * currentMatrix;
-		glUniformMatrix4fv(modelMatixId, 1, GL_FALSE, glm::value_ptr(currentMatrix));
-		glUniform1i(renderModeId, 1);
-		glBindTexture(GL_TEXTURE_2D, texture);
-		squareMesh->Render();
-
-	}
+	RenderTexturedObject(globalModelTransform);
 }
 
 void PlayerObject::UpdateFacingSide(bool isLeft)
@@ -718,7 +685,12 @@ void PlayerObject::CheckIfOnGround()
 			<< this->GetGroundColliderObject()->getPos().z << std::endl;*/
 		//KK_TRACE("Player is not on ground. groundCheckCollider Pos = {0}", this->GetGroundColliderObject()->getPos());
 		this->SetVelocity(0, 0, false, false);
-		this->isFell = true;
+		if (!isFell)
+		{
+			KrillSoundManager::SoundManager::GetInstance()->PlaySFX("Water_Splashes", false);
+			this->isFell = true;
+		}
+		
 		this->ChangeAnimationState(AnimationState::FellDown);
 	}
 }

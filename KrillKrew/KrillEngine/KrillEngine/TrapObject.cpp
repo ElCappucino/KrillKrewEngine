@@ -1,6 +1,6 @@
 
 #include "TrapObject.h"
-
+#include "SoundManager.h"
 
 
 TrapObject::TrapObject()
@@ -30,40 +30,7 @@ void TrapObject::SetTexture(std::string path)
 
 void TrapObject::Render(glm::mat4 globalModelTransform)
 {
-	SquareMeshVbo* squareMesh = dynamic_cast<SquareMeshVbo*> (GameEngine::GetInstance()->GetRenderer()->GetMesh(SquareMeshVbo::MESH_NAME));
-
-	GLuint modelMatixId = GameEngine::GetInstance()->GetRenderer()->GetModelMatrixAttrId();
-	GLuint renderModeId = GameEngine::GetInstance()->GetRenderer()->GetModeUniformId();
-
-	if (modelMatixId == -1) {
-		std::cout << "Error: Can't perform transformation " << std::endl;
-		return;
-	}
-	if (renderModeId == -1) {
-		std::cout << "Error: Can't set renderMode in ImageObject " << std::endl;
-		return;
-	}
-
-	squareMesh->ChangeTextureData(spriteRenderer->GetRow(),
-		spriteRenderer->GetColumn(),
-		spriteRenderer->GetSpriteWidth(),
-		spriteRenderer->GetSpriteHeight(),
-		spriteRenderer->GetSheetWidth(),
-		spriteRenderer->GetSheetHeight());
-
-	std::vector <glm::mat4> matrixStack;
-
-	glm::mat4 currentMatrix = this->getTransform();
-
-	if (squareMesh != nullptr) {
-
-		currentMatrix = globalModelTransform * currentMatrix;
-		glUniformMatrix4fv(modelMatixId, 1, GL_FALSE, glm::value_ptr(currentMatrix));
-		glUniform1i(renderModeId, 1);
-		glBindTexture(GL_TEXTURE_2D, texture);
-		squareMesh->Render();
-
-	}
+	RenderTexturedObject(globalModelTransform);
 }
 
 void TrapObject::SetLifeTime(int lifeTime) {
@@ -131,6 +98,7 @@ void TrapObject::OnColliderEnter(Collider* other)
 		if (this->GetPlayerNumber() != player->GetPlayerNumber())
 		{
 			//KK_TRACE("Collide with TNT");
+			KrillSoundManager::SoundManager::GetInstance()->PlaySFX("Player_Damaged", false);
 			switch (type)
 			{
 				case TypeTrap::Trap:
@@ -140,6 +108,8 @@ void TrapObject::OnColliderEnter(Collider* other)
 						player->SetSlowDuration(3.f);
 						player->SetIsSlow(true);
 						ChangeAnimationState(AnimationState::Collide);
+
+						KrillSoundManager::SoundManager::GetInstance()->PlaySFX("Jellyfish_Explode", false);
 					}
 					
 					// player->ApplyKnockback(this);

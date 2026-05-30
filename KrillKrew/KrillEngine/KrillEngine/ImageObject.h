@@ -15,11 +15,11 @@ class ImageObject :public DrawableObject
 {
 
 protected:
-
 	unsigned int texture;
 	SpriteRenderer* spriteRenderer;
 	SpritesheetInfo sheetInfo;
 	bool isAnimated;
+	void RenderTexturedObject(glm::mat4 globalModelTransform);
 
 public:
 	ImageObject();
