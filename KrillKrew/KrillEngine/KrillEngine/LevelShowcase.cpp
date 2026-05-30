@@ -285,9 +285,10 @@ void LevelShowcase::LevelLoad()
     spriteList["Pause_BG"] = SpritesheetInfo("Pause_BG", "../Resource/Texture/Menu/Pause/UI_Pause_BG.png", 623, 671, 623, 671);
     spriteList["Pause_text"] = SpritesheetInfo("Pause_text", "../Resource/Texture/Menu/Pause/UI_Pause_text.png", 300, 70, 1800, 70);
 
-    spriteList["AreYouSure"] = SpritesheetInfo("AreYouSure", "../Resource/Texture/Are You Sure/UI_AreYouSure_BG.png", 676, 317, 2028, 317);
-    spriteList["AreYouSureYN"] =
-        SpritesheetInfo("AreYouSureYN", "../Resource/Texture/Are You Sure/UI_AreYouSure_YesNo.png", 235, 45, 940, 45);
+    // elemental  effect
+    spriteList["Burning"] = SpritesheetInfo("Burning", "../Resource/Texture/burning.png", 482, 594, 482, 594);
+
+    soundManager = KrillSoundManager::SoundManager::GetInstance();
 
     spriteList["OptionsBG"] = SpritesheetInfo("OptionsBG", "../Resource/Texture/Pause and Options/UI_Options_BG.png", 623, 671, 623, 671);
     spriteList["OptionsDisplay"] =
@@ -584,7 +585,6 @@ void LevelShowcase::InitProp()
 void LevelShowcase::LevelInit()
 {
     std::cout << "Init Level" << std::endl;
-
     glClearColor(0.f, 180.f / 255.f, 171.f / 255.f, 1.f);
 
     GameEngine::GetInstance()->GetRenderer()->SetOrthoProjection(
@@ -1127,7 +1127,8 @@ void LevelShowcase::LevelInit()
     std::sort(objectsList.begin(), objectsList.end(), compareLayer);
 
     // Read config file
-
+    this->ability = new Ability();
+    this->ability->SetCurrLevel(this);
     LoadConfigInfo("../Resource/SceneData/LevelShowcase.json");
 
     KrillSoundManager::SoundManager::GetInstance()->LoadVolumeConfig("../Resource/SceneData/CurrentVolume.json",
@@ -1156,6 +1157,7 @@ void LevelShowcase::LevelInit()
 
     std::cout << "Init Level" << std::endl;
 }
+
 void LevelShowcase::UpdateVolume()
 {
     KrillSoundManager::SoundManager::GetInstance()->SetVolumeAllMusic((masterVolume / 100.0f) * musicVolume * 0.01f * (128.f - 0));
@@ -1553,8 +1555,9 @@ void LevelShowcase::LevelUpdate()
             UpdateKrakenEvent();
         }
 
-        // Ui Skills
-        UpdateUI();
+        BurningEffect();
+
+        CheckPlayerRemain();
 
         CheckPlayerRemain();
 
@@ -2330,19 +2333,19 @@ void LevelShowcase::UpdateInput()
                             PlayerObject::Ability idAbility = players[i]->GetAbilityByButton(PlayerObject::AbilityButton::Circle);
                             if (idAbility == PlayerObject::Ability::Cleave)
                             {
-                                ShootCleave(i, PlayerObject::AbilityButton::Circle);
+                                ability->ShootCleave(players[i], i, PlayerObject::AbilityButton::Circle);
                             }
 
                             idAbility = players[i]->GetAbilityByButton(PlayerObject::AbilityButton::Cross);
                             if (idAbility == PlayerObject::Ability::Cleave)
                             {
-                                ShootCleave(i, PlayerObject::AbilityButton::Cross);
+                                ability->ShootCleave(players[i], i, PlayerObject::AbilityButton::Cross);
                             }
 
                             idAbility = players[i]->GetAbilityByButton(PlayerObject::AbilityButton::Triangle);
                             if (idAbility == PlayerObject::Ability::Cleave)
                             {
-                                ShootCleave(i, PlayerObject::AbilityButton::Triangle);
+                                ability->ShootCleave(players[i], i, PlayerObject::AbilityButton::Triangle);
                             }
 
                             players[i]->SetIsAiming(false);
@@ -2421,7 +2424,7 @@ void LevelShowcase::UpdateInput()
                 {
                     if (players[i + currentPlayer]->GetCooldown(PlayerObject::AbilityButton::Triangle) <= 0)
                     {
-                        UsingAbilityKeyDown(i + currentPlayer, PlayerObject::AbilityButton::Triangle);
+                        ability->UsingAbilityKeyDown(players[i], i + currentPlayer, PlayerObject::AbilityButton::Triangle);
                     }
                 }
 
@@ -2429,7 +2432,7 @@ void LevelShowcase::UpdateInput()
                 {
                     if (players[i + currentPlayer]->GetCooldown(PlayerObject::AbilityButton::Triangle) <= 0)
                     {
-                        UsingAbilityKeyUp(i + currentPlayer, PlayerObject::AbilityButton::Triangle);
+                        ability->UsingAbilityKeyUp(players[i], i + currentPlayer, PlayerObject::AbilityButton::Triangle);
                     }
                 }
 
@@ -2438,7 +2441,7 @@ void LevelShowcase::UpdateInput()
                 {
                     if (players[i + currentPlayer]->GetCooldown(PlayerObject::AbilityButton::Circle) <= 0)
                     {
-                        UsingAbilityKeyDown(i + currentPlayer, PlayerObject::AbilityButton::Circle);
+                        ability->UsingAbilityKeyDown(players[i], i + currentPlayer, PlayerObject::AbilityButton::Circle);
                     }
                 }
 
@@ -2446,7 +2449,7 @@ void LevelShowcase::UpdateInput()
                 {
                     if (players[i + currentPlayer]->GetCooldown(PlayerObject::AbilityButton::Circle) <= 0)
                     {
-                        UsingAbilityKeyUp(i + currentPlayer, PlayerObject::AbilityButton::Circle);
+                        ability->UsingAbilityKeyUp(players[i], i + currentPlayer, PlayerObject::AbilityButton::Circle);
                     }
                 }
 
@@ -2455,7 +2458,7 @@ void LevelShowcase::UpdateInput()
                 {
                     if (players[i + currentPlayer]->GetCooldown(PlayerObject::AbilityButton::Cross) <= 0)
                     {
-                        UsingAbilityKeyDown(i + currentPlayer, PlayerObject::AbilityButton::Cross);
+                        ability->UsingAbilityKeyDown(players[i], i + currentPlayer, PlayerObject::AbilityButton::Cross);
                     }
                 }
 
@@ -2463,7 +2466,7 @@ void LevelShowcase::UpdateInput()
                 {
                     if (players[i + currentPlayer]->GetCooldown(PlayerObject::AbilityButton::Cross) <= 0)
                     {
-                        UsingAbilityKeyUp(i + currentPlayer, PlayerObject::AbilityButton::Cross);
+                        ability->UsingAbilityKeyUp(players[i], i + currentPlayer, PlayerObject::AbilityButton::Cross);
                     }
                 }
 
@@ -2692,7 +2695,6 @@ void LevelShowcase::UpdateMovement()
             float knockbackVeloY = abs(knockbackVelo.y);
 
             player->SetVelocity(knockbackVeloX / 1.01f, knockbackVeloY / 1.01f, player->GetXIsPositive(), player->GetYIsPositive());
-
             // KK_CORE_WARN("Set Velocity = {0}, {1}", knockbackVeloX, knockbackVeloY);
         }
 
@@ -2714,611 +2716,675 @@ void LevelShowcase::UpdateMovement()
         {
             player->ReduceDashDuration(timer->getDeltaTime());
         }
+
+        if (player->GetIsBurning())
+        {
+            glm::vec3 vel = player->GetVelocity();
+            if (abs(vel.x) > 0.1f || abs(vel.y) > 0.1f)
+            {
+                player->ReduceBurningDuration(timer->getDeltaTime());
+            }
+        }
     }
 }
 
 void LevelShowcase::UpdateTime()
 {
 
-    timer->tick();
-    // timer->reset();
-    // KK_TRACE("timer->getDeltaTime() = {0}", timer->getDeltaTime());
-    time1s += timer->getDeltaTime();
-    time01s += timer->getDeltaTime();
-    // dt += timer->getDeltaTime();
-
     if (time1s >= 1.0f)
     {
         KK_INFO("UpdateTime() FPS: {0} time1s = {1}", framePerSecond, time1s);
         framePerSecond = 0;
 
-        time1s = 0.0f;
-    }
-
-    if (time01s >= 0.1f)
-    {
-        time01s = 0.0f;
-    }
-}
-void LevelShowcase::DrawImGUI()
-{
-    bool show_demo_window = true;
-    bool show_another_window = false;
-    ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
-
-    ImGuiIO& io = ImGui::GetIO();
-    (void)io;
-
-    // Start the Dear ImGui frame
-    ImGui_ImplOpenGL3_NewFrame();
-    ImGui_ImplSDL2_NewFrame();
-    ImGui::NewFrame();
-
-    //// 1. Show the big demo window (Most of the sample code is in ImGui::ShowDemoWindow()! You can browse its code to learn more about
-    ///Dear ImGui!).
-    // if (show_demo_window)
-    //	ImGui::ShowDemoWindow(&show_demo_window);
-
-    // if (ImGui::Button("Reset Scene", ImVec2(100, 50)))
-    //	isResetScene++;
-
-    // if (ImGui::Button("To FullScreen", ImVec2(100, 50)))
-    //	isFullScreen++;
-
-    // if (ImGui::Button("To WindowScreen", ImVec2(100, 50)))
-    //	isWindowScreen++;
-
-    // ImGui::SliderFloat("musicVolume", &musicVolume, 0.0f, 1.0f, "ratio = %.3f");
-    // ImGui::SliderFloat("sfxVolume", &sfxVolume, 0.0f, 1.0f, "ratio = %.3f");
-
-    // soundManager->SetVolumeAllMusic(0 + (musicVolume * (128.f - 0)));
-    // soundManager->SetVolumeAllSFX(0 + (sfxVolume * (128.f - 0)));
-
-    // if (isFullScreen & 1)
-    //{
-    //	SDL_SetWindowFullscreen(GameEngine::GetInstance()->GetSDLWindow(), SDL_WINDOW_FULLSCREEN_DESKTOP);
-    //	glViewport(0, 0, 1920, 1080);
-    //	isFullScreen = 0;
-    // }
-
-    // if (isWindowScreen & 1)
-    //{
-    //	SDL_SetWindowFullscreen(GameEngine::GetInstance()->GetSDLWindow(), 0);
-    //	glViewport(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
-    //	isWindowScreen = 0;
-    // }
-    //// Cooldown Stats
-    ///*float MeleeCooldown = 2.f;
-    // float FireballCooldown = 3.f;
-    // float TrapCooldown = 3.f;
-    // float DashCooldown = 3.f;
-    // float TNTCooldown = 3.f;
-    // float TeleportCooldown = 3.f;
-    // float BolaCooldown = 3.f;
-    // float CleaveCooldown = 3.f;
-
-    // float FireballLifetime = 3.f;
-    // float TeleportLifetime = 2.f;
-    // float BolaLifetime = 2.f;
-    // float CleaveLifetime = 2.f;*/
-
-    // ImGui::Text("Cooldown stats");
-    // ImGui::InputFloat("Melee Cooldown", &MeleeCooldown, 0.1f, 1.0f, "%.2f");
-    // ImGui::InputFloat("Fireball Cooldown", &FireballCooldown, 0.1f, 1.0f, "%.2f");
-    // ImGui::InputFloat("Trap Cooldown", &TrapCooldown, 0.1f, 1.0f, "%.2f");
-    // ImGui::InputFloat("Dash Cooldown", &DashCooldown, 0.1f, 1.0f, "%.2f");
-    // ImGui::InputFloat("TNT Cooldown", &TNTCooldown, 0.1f, 1.0f, "%.2f");
-    // ImGui::InputFloat("Teleport Cooldown", &TeleportCooldown, 0.1f, 1.0f, "%.2f");
-    // ImGui::InputFloat("Bola Cooldown", &BolaCooldown, 0.1f, 1.0f, "%.2f");
-    // ImGui::InputFloat("Cleave Cooldown", &CleaveCooldown, 0.1f, 1.0f, "%.2f");
-
-    // ImGui::Text("Lifetime stats");
-    // ImGui::InputFloat("Fireball Lifetime", &FireballLifetime, 0.1f, 1.0f, "%.2f");
-    // ImGui::InputFloat("Teleport Lifetime", &TeleportLifetime, 0.1f, 1.0f, "%.2f");
-    // ImGui::InputFloat("Bola Lifetime", &BolaLifetime, 0.1f, 1.0f, "%.2f");
-    // ImGui::InputFloat("Cleave Lifetime", &CleaveLifetime, 0.1f, 1.0f, "%.2f");
-
-    // ImGui::Text("Overall stats");
-    // ImGui::InputFloat("Move Speed", &playerMovementSpeed, 0.1f, 1.0f, "%.2f");
-
-    // if (isResetScene & 1)
-    //{
-    //	GameEngine::GetInstance()->GetStateController()->loadingState = GameState::GS_LEVELSHOWCASE;
-    //	GameEngine::GetInstance()->GetStateController()->gameStateNext = GameState::GS_LEVELLOADING;
-    // }
-    // ImGuiTabBarFlags tab_bar_flags = ImGuiTabBarFlags_None;
-    // if (ImGui::BeginTabBar("MyTabBar", tab_bar_flags))
-    //{
-    //	for (int i = 0; i < playerSize; i++)
-    //	{
-    //		std::string tabname = "player " + std::to_string(i);
-    //		ImGui::PushID(i);
-
-    //		if (ImGui::BeginTabItem(tabname.c_str()))
-    //		{
-    //			ImGui::Text("Player %d", i);
-    //			ImGui::SameLine();
-    //			ImGui::SeparatorText("");
-    //			ImGui::Text("Position: %f, %f, %f", players[i]->getPos().x, players[i]->getPos().y, players[i]->getPos().z);
-    //
-    //			ImGui::Text("isShooting: %s", players[i]->GetIsShooting() ? "true" : "false");
-    //			ImGui::Text("isAiming: %s", players[i]->GetIsAiming() ? "true" : "false");
-    //			ImGui::Text("isSlow: %s", players[i]->GetIsSlow() ? "true" : "false");
-    //			ImGui::Text("isDashing: %s", players[i]->GetIsDashing() ? "true" : "false");
-    //			ImGui::Text("isKnockback: %s", players[i]->GetIsKnockback() ? "true" : "false");
-    //			ImGui::Text("isStun: %s", players[i]->GetIsStun() ? "true" : "false");
-    //			ImGui::Text("isOnGround: %s", players[i]->GetIsOnGround() ? "true" : "false");
-    //			ImGui::Text("Current Velocity: %f, %f", players[i]->GetVelocity().x, players[i]->GetVelocity().y);
-
-    //			/*ImGui::DragFloat("ColX Button", &groundColX[i], 2.0f, 0.0f, 1024.f, "%.3f");
-    //			ImGui::DragFloat("ColY Button", &groundColY[i], 2.0f, 0.0f, 1024.f, "%.3f");*/
-    //			ImGui::DragFloat("Col offset X", &groundColOffsetX[i], 2.0f, -1024.f, 1024.f, "%.3f");
-    //			ImGui::DragFloat("Col offset Y", &groundColOffsetY[i], 2.0f, -1024.f, 1024.f, "%.3f");
-
-    //			players[i]->GetGroundColliderObject()->SetCollisionOffset(glm::vec2(groundColOffsetX[i], groundColOffsetY[i]));
-    //			/*Fireball = 0,
-    //				Trap = 1,
-    //				Dash = 2,
-    //				TNT = 3,
-    //				Teleport = 4,
-    //				Bola = 5,
-    //				Cleave = 6*/
-
-    //			for (int j = 0; j < 3; j++)
-    //			{
-    //				ImGui::PushID(j);
-
-    //				ImGui::Text("skill %d", j);
-    //				ImGui::Text("ability %d cooldown: %.2f", i ,players[i]->GetCooldown(static_cast<PlayerObject::AbilityButton>(j)));
-    //				ImGui::RadioButton("Fireball", &playersSkill[i][j], static_cast<int>(PlayerObject::Ability::Fireball));
-    //				ImGui::SameLine();
-    //				ImGui::RadioButton("Trap", &playersSkill[i][j], static_cast<int>(PlayerObject::Ability::Trap));
-    //				ImGui::SameLine();
-    //				ImGui::RadioButton("Dash", &playersSkill[i][j], static_cast<int>(PlayerObject::Ability::Dash));
-    //				//ImGui::SameLine();
-    //				ImGui::RadioButton("TNT", &playersSkill[i][j], static_cast<int>(PlayerObject::Ability::TNT));
-    //				ImGui::SameLine();
-    //				ImGui::RadioButton("Teleport", &playersSkill[i][j], static_cast<int>(PlayerObject::Ability::Teleport));
-    //				ImGui::SameLine();
-    //				ImGui::RadioButton("Bola", &playersSkill[i][j], static_cast<int>(PlayerObject::Ability::Bola));
-    //				ImGui::SameLine();
-    //				ImGui::RadioButton("Cleave", &playersSkill[i][j], static_cast<int>(PlayerObject::Ability::Cleave));
-    //				ImGui::SeparatorText("");
-
-    //				ImGui::PopID();
-    //			}
-    //			ImGui::EndTabItem();
-    //		}
-    //
-    //		ImGui::PopID();
-    //	}
-    //
-    //	ImGui::EndTabBar();
-    //}
-    //
-    // for (int i = 0; i < playerSize; i++)
-    //{
-    //	for (int j = 0; j < 3; j++)
-    //	{
-    //		players[i]->SetAbility
-    //		(
-    //			static_cast<PlayerObject::AbilityButton>(j),
-    //			static_cast<PlayerObject::Ability>(playersSkill[i][j])
-    //		);
-    //	}
-    //}
-
-    // Rendering
-    ImGui::Render();
-
-    ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
-    SDL_GL_SwapWindow(GameEngine::GetInstance()->GetSDLWindow());
-}
-void LevelShowcase::UpdateUI()
-{
-    int playerNumber = 4; // Change later
-
-    float uiWidth = 420.f * 0.7f;
-    float uiHeight = 116.f * 0.7f;
-
-    float posX = camera.GetCenterX() - (uiWidth * camera.GetCameraWidth() / SCREEN_WIDTH / 2.f) * (playerNumber - 1);
-    float posY =
-        GameEngine::GetInstance()->GetRenderer()->GetOrthovalue().bottom + ((uiHeight * camera.GetCameraHeight() / SCREEN_HEIGHT) / 2.f);
-
-    for (int i = 0; i < playerNumber; i++)
-    {
-        UiObject* ui = playerUIs[i];
-
-        float posX_current = posX + (ui->getNumOwner() * uiWidth * camera.GetCameraWidth() / SCREEN_WIDTH);
-
-        ui->SetPosition(glm::vec3(posX_current, posY, 0));
-        ui->SetSize(uiWidth * camera.GetCameraWidth() / SCREEN_WIDTH, -uiHeight * camera.GetCameraHeight() / SCREEN_HEIGHT);
-
-        for (int j = 0; j < 3; j++)
+        if (time1s >= 1.0f)
         {
-            UiObject* uiSkill = playerSkillUIs[i][j];
+            // KK_INFO("UpdateTime() FPS: {0} time1s = {1}", framePerSecond, time1s);
+            framePerSecond = 0;
 
-            float offsetX = (57.f * j - 26.f) * camera.GetCameraWidth() / SCREEN_WIDTH;
-            float posX_currentSkill = posX_current + offsetX;
+            time1s = 0.0f;
+        }
 
-            float skillWidth = 69.f * 0.7f;
-            float skillHeight = 69.f * 0.7f;
+        if (time01s >= 0.1f)
+        {
+            time01s = 0.0f;
+        }
 
-            uiSkill->SetPosition(glm::vec3(posX_currentSkill, posY, 0));
-            uiSkill->SetSize(skillWidth * camera.GetCameraWidth() / SCREEN_WIDTH, -skillHeight * camera.GetCameraHeight() / SCREEN_HEIGHT);
+        if (time01s >= 0.1f)
+        {
+            time01s = 0.0f;
+        }
+    }
 
-            TextObject* cooldownText = playerSkillCooldownTexts[i][j];
-            cooldownText->SetPosition(glm::vec3(posX_currentSkill, posY, 0));
+    void LevelShowcase::DrawImGUI()
+    {
+        bool show_demo_window = true;
+        bool show_another_window = false;
+        ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
 
-            UiObject* uiCover = playerSkillCooldownCovers[i][j];
+        ImGuiIO& io = ImGui::GetIO();
+        (void)io;
 
-            uiCover->SetPosition(glm::vec3(posX_currentSkill, posY, 0));
-            uiCover->SetSize(skillWidth * camera.GetCameraWidth() / SCREEN_WIDTH, -skillHeight * camera.GetCameraHeight() / SCREEN_HEIGHT);
+        // Start the Dear ImGui frame
+        ImGui_ImplOpenGL3_NewFrame();
+        ImGui_ImplSDL2_NewFrame();
+        ImGui::NewFrame();
 
-            UiObject* uiButton = playerSkillButtons[i][j];
+        //// 1. Show the big demo window (Most of the sample code is in ImGui::ShowDemoWindow()! You can browse its code to learn more about
+        /// Dear ImGui!).
+        // if (show_demo_window)
+        //	ImGui::ShowDemoWindow(&show_demo_window);
 
-            uiButton->SetPosition(glm::vec3(posX_currentSkill, posY, 0));
-            uiButton->SetSize(skillWidth * camera.GetCameraWidth() / SCREEN_WIDTH, -skillHeight * camera.GetCameraHeight() / SCREEN_HEIGHT);
+        // if (ImGui::Button("Reset Scene", ImVec2(100, 50)))
+        //	isResetScene++;
 
-            float cooldown = players[i]->GetCooldown(static_cast<PlayerObject::AbilityButton>(j));
+        // if (ImGui::Button("To FullScreen", ImVec2(100, 50)))
+        //	isFullScreen++;
 
-            if (cooldown > 0)
+        // if (ImGui::Button("To WindowScreen", ImVec2(100, 50)))
+        //	isWindowScreen++;
+
+        // ImGui::SliderFloat("musicVolume", &musicVolume, 0.0f, 1.0f, "ratio = %.3f");
+        // ImGui::SliderFloat("sfxVolume", &sfxVolume, 0.0f, 1.0f, "ratio = %.3f");
+
+        // soundManager->SetVolumeAllMusic(0 + (musicVolume * (128.f - 0)));
+        // soundManager->SetVolumeAllSFX(0 + (sfxVolume * (128.f - 0)));
+
+        // if (isFullScreen & 1)
+        //{
+        //	SDL_SetWindowFullscreen(GameEngine::GetInstance()->GetSDLWindow(), SDL_WINDOW_FULLSCREEN_DESKTOP);
+        //	glViewport(0, 0, 1920, 1080);
+        //	isFullScreen = 0;
+        // }
+
+        // if (isWindowScreen & 1)
+        //{
+        //	SDL_SetWindowFullscreen(GameEngine::GetInstance()->GetSDLWindow(), 0);
+        //	glViewport(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
+        //	isWindowScreen = 0;
+        // }
+        //// Cooldown Stats
+        ///*float MeleeCooldown = 2.f;
+        // float FireballCooldown = 3.f;
+        // float TrapCooldown = 3.f;
+        // float DashCooldown = 3.f;
+        // float TNTCooldown = 3.f;
+        // float TeleportCooldown = 3.f;
+        // float BolaCooldown = 3.f;
+        // float CleaveCooldown = 3.f;
+
+        // float FireballLifetime = 3.f;
+        // float TeleportLifetime = 2.f;
+        // float BolaLifetime = 2.f;
+        // float CleaveLifetime = 2.f;*/
+
+        // ImGui::Text("Cooldown stats");
+        // ImGui::InputFloat("Melee Cooldown", &MeleeCooldown, 0.1f, 1.0f, "%.2f");
+        // ImGui::InputFloat("Fireball Cooldown", &FireballCooldown, 0.1f, 1.0f, "%.2f");
+        // ImGui::InputFloat("Trap Cooldown", &TrapCooldown, 0.1f, 1.0f, "%.2f");
+        // ImGui::InputFloat("Dash Cooldown", &DashCooldown, 0.1f, 1.0f, "%.2f");
+        // ImGui::InputFloat("TNT Cooldown", &TNTCooldown, 0.1f, 1.0f, "%.2f");
+        // ImGui::InputFloat("Teleport Cooldown", &TeleportCooldown, 0.1f, 1.0f, "%.2f");
+        // ImGui::InputFloat("Bola Cooldown", &BolaCooldown, 0.1f, 1.0f, "%.2f");
+        // ImGui::InputFloat("Cleave Cooldown", &CleaveCooldown, 0.1f, 1.0f, "%.2f");
+
+        // ImGui::Text("Lifetime stats");
+        // ImGui::InputFloat("Fireball Lifetime", &FireballLifetime, 0.1f, 1.0f, "%.2f");
+        // ImGui::InputFloat("Teleport Lifetime", &TeleportLifetime, 0.1f, 1.0f, "%.2f");
+        // ImGui::InputFloat("Bola Lifetime", &BolaLifetime, 0.1f, 1.0f, "%.2f");
+        // ImGui::InputFloat("Cleave Lifetime", &CleaveLifetime, 0.1f, 1.0f, "%.2f");
+
+        // ImGui::Text("Overall stats");
+        // ImGui::InputFloat("Move Speed", &playerMovementSpeed, 0.1f, 1.0f, "%.2f");
+
+        // if (isResetScene & 1)
+        //{
+        //	GameEngine::GetInstance()->GetStateController()->loadingState = GameState::GS_LEVELSHOWCASE;
+        //	GameEngine::GetInstance()->GetStateController()->gameStateNext = GameState::GS_LEVELLOADING;
+        // }
+        // ImGuiTabBarFlags tab_bar_flags = ImGuiTabBarFlags_None;
+        // if (ImGui::BeginTabBar("MyTabBar", tab_bar_flags))
+        //{
+        //	for (int i = 0; i < playerSize; i++)
+        //	{
+        //		std::string tabname = "player " + std::to_string(i);
+        //		ImGui::PushID(i);
+
+        //		if (ImGui::BeginTabItem(tabname.c_str()))
+        //		{
+        //			ImGui::Text("Player %d", i);
+        //			ImGui::SameLine();
+        //			ImGui::SeparatorText("");
+        //			ImGui::Text("Position: %f, %f, %f", players[i]->getPos().x, players[i]->getPos().y, players[i]->getPos().z);
+        //
+        //			ImGui::Text("isShooting: %s", players[i]->GetIsShooting() ? "true" : "false");
+        //			ImGui::Text("isAiming: %s", players[i]->GetIsAiming() ? "true" : "false");
+        //			ImGui::Text("isSlow: %s", players[i]->GetIsSlow() ? "true" : "false");
+        //			ImGui::Text("isDashing: %s", players[i]->GetIsDashing() ? "true" : "false");
+        //			ImGui::Text("isKnockback: %s", players[i]->GetIsKnockback() ? "true" : "false");
+        //			ImGui::Text("isStun: %s", players[i]->GetIsStun() ? "true" : "false");
+        //			ImGui::Text("isOnGround: %s", players[i]->GetIsOnGround() ? "true" : "false");
+        //			ImGui::Text("Current Velocity: %f, %f", players[i]->GetVelocity().x, players[i]->GetVelocity().y);
+
+        //			/*ImGui::DragFloat("ColX Button", &groundColX[i], 2.0f, 0.0f, 1024.f, "%.3f");
+        //			ImGui::DragFloat("ColY Button", &groundColY[i], 2.0f, 0.0f, 1024.f, "%.3f");*/
+        //			ImGui::DragFloat("Col offset X", &groundColOffsetX[i], 2.0f, -1024.f, 1024.f, "%.3f");
+        //			ImGui::DragFloat("Col offset Y", &groundColOffsetY[i], 2.0f, -1024.f, 1024.f, "%.3f");
+
+        //			players[i]->GetGroundColliderObject()->SetCollisionOffset(glm::vec2(groundColOffsetX[i], groundColOffsetY[i]));
+        //			/*Fireball = 0,
+        //				Trap = 1,
+        //				Dash = 2,
+        //				TNT = 3,
+        //				Teleport = 4,
+        //				Bola = 5,
+        //				Cleave = 6*/
+
+        //			for (int j = 0; j < 3; j++)
+        //			{
+        //				ImGui::PushID(j);
+
+        //				ImGui::Text("skill %d", j);
+        //				ImGui::Text("ability %d cooldown: %.2f", i ,players[i]->GetCooldown(static_cast<PlayerObject::AbilityButton>(j)));
+        //				ImGui::RadioButton("Fireball", &playersSkill[i][j], static_cast<int>(PlayerObject::Ability::Fireball));
+        //				ImGui::SameLine();
+        //				ImGui::RadioButton("Trap", &playersSkill[i][j], static_cast<int>(PlayerObject::Ability::Trap));
+        //				ImGui::SameLine();
+        //				ImGui::RadioButton("Dash", &playersSkill[i][j], static_cast<int>(PlayerObject::Ability::Dash));
+        //				//ImGui::SameLine();
+        //				ImGui::RadioButton("TNT", &playersSkill[i][j], static_cast<int>(PlayerObject::Ability::TNT));
+        //				ImGui::SameLine();
+        //				ImGui::RadioButton("Teleport", &playersSkill[i][j], static_cast<int>(PlayerObject::Ability::Teleport));
+        //				ImGui::SameLine();
+        //				ImGui::RadioButton("Bola", &playersSkill[i][j], static_cast<int>(PlayerObject::Ability::Bola));
+        //				ImGui::SameLine();
+        //				ImGui::RadioButton("Cleave", &playersSkill[i][j], static_cast<int>(PlayerObject::Ability::Cleave));
+        //				ImGui::SeparatorText("");
+
+        //				ImGui::PopID();
+        //			}
+        //			ImGui::EndTabItem();
+        //		}
+        //
+        //		ImGui::PopID();
+        //	}
+        //
+        //	ImGui::EndTabBar();
+        //}
+        //
+        // for (int i = 0; i < playerSize; i++)
+        //{
+        //	for (int j = 0; j < 3; j++)
+        //	{
+        //		players[i]->SetAbility
+        //		(
+        //			static_cast<PlayerObject::AbilityButton>(j),
+        //			static_cast<PlayerObject::Ability>(playersSkill[i][j])
+        //		);
+        //	}
+        //}
+
+        // Rendering
+        ImGui::Render();
+
+        ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+        SDL_GL_SwapWindow(GameEngine::GetInstance()->GetSDLWindow());
+    }
+
+    void LevelShowcase::UpdateUI()
+    {
+        int playerNumber = 4; // Change later
+
+        float uiWidth = 420.f * 0.7f;
+        float uiHeight = 116.f * 0.7f;
+
+        float posX = camera.GetCenterX() - (uiWidth * camera.GetCameraWidth() / SCREEN_WIDTH / 2.f) * (playerNumber - 1);
+        float posY = GameEngine::GetInstance()->GetRenderer()->GetOrthovalue().bottom +
+                     ((uiHeight * camera.GetCameraHeight() / SCREEN_HEIGHT) / 2.f);
+
+        for (int i = 0; i < playerNumber; i++)
+        {
+            UiObject* ui = playerUIs[i];
+
+            float posX_current = posX + (ui->getNumOwner() * uiWidth * camera.GetCameraWidth() / SCREEN_WIDTH);
+
+            ui->SetPosition(glm::vec3(posX_current, posY, 0));
+            ui->SetSize(uiWidth * camera.GetCameraWidth() / SCREEN_WIDTH, -uiHeight * camera.GetCameraHeight() / SCREEN_HEIGHT);
+
+            for (int j = 0; j < 3; j++)
             {
-                std::string cooldownString = std::to_string((int)std::roundf(cooldown));
-                uiCover->SetIsRender(true);
-                cooldownText->loadText(cooldownString, SDL_Color{255, 255, 255}, 64);
-            }
-            else
-            {
-                if (uiCover->GetIsRender() == true)
+                UiObject* uiSkill = playerSkillUIs[i][j];
+
+                float offsetX = (57.f * j - 26.f) * camera.GetCameraWidth() / SCREEN_WIDTH;
+                float posX_currentSkill = posX_current + offsetX;
+
+                float skillWidth = 69.f * 0.7f;
+                float skillHeight = 69.f * 0.7f;
+
+                uiSkill->SetPosition(glm::vec3(posX_currentSkill, posY, 0));
+                uiSkill->SetSize(skillWidth * camera.GetCameraWidth() / SCREEN_WIDTH,
+                                 -skillHeight * camera.GetCameraHeight() / SCREEN_HEIGHT);
+
+                TextObject* cooldownText = playerSkillCooldownTexts[i][j];
+                cooldownText->SetPosition(glm::vec3(posX_currentSkill, posY, 0));
+
+                UiObject* uiCover = playerSkillCooldownCovers[i][j];
+
+                uiCover->SetPosition(glm::vec3(posX_currentSkill, posY, 0));
+                uiCover->SetSize(skillWidth * camera.GetCameraWidth() / SCREEN_WIDTH,
+                                 -skillHeight * camera.GetCameraHeight() / SCREEN_HEIGHT);
+
+                UiObject* uiButton = playerSkillButtons[i][j];
+
+                uiButton->SetPosition(glm::vec3(posX_currentSkill, posY, 0));
+                uiButton->SetSize(skillWidth * camera.GetCameraWidth() / SCREEN_WIDTH,
+                                  -skillHeight * camera.GetCameraHeight() / SCREEN_HEIGHT);
+
+                float cooldown = players[i]->GetCooldown(static_cast<PlayerObject::AbilityButton>(j));
+
+                if (cooldown > 0)
                 {
-                    std::string cooldownString = " ";
-                    uiCover->SetIsRender(false);
+                    std::string cooldownString = std::to_string((int)std::roundf(cooldown));
+                    uiCover->SetIsRender(true);
                     cooldownText->loadText(cooldownString, SDL_Color{255, 255, 255}, 64);
-                }
-            }
-        }
-    }
-
-    for (UiObject* ui : uiObjects)
-    {
-        switch (ui->uiType)
-        {
-            case UiObject::Kraken:
-
-                if (krakenSign_t >= 6.0f)
-                {
-                    break;
-                }
-
-                krakenSign_t += 0.01f;
-
-                float uiWidth = 544.f;
-                float uiHeight = -215.f;
-
-                // krakenSign_t
-                float posY_start = GameEngine::GetInstance()->GetRenderer()->GetOrthovalue().top - (uiHeight / 2.f);
-                float posY_end = GameEngine::GetInstance()->GetRenderer()->GetOrthovalue().top + (uiHeight / 2.f);
-
-                float t = Parabola(krakenSign_t);
-
-                float posX = camera.GetCenterX();
-                float posY = posY_end + t * posY_start;
-
-                ui->SetPosition(glm::vec3(posX, posY, 0));
-                ui->SetSize(uiWidth * camera.GetCameraWidth() / SCREEN_WIDTH, uiHeight * camera.GetCameraHeight() / SCREEN_HEIGHT);
-        }
-        // ui->SetPosition(glm::vec3(posX + (ui->getNumOwner() * ui->getSize().x * camera.GetCameraWidth() / SCREEN_WIDTH), posY, 0));
-    }
-
-    if (isPause)
-    {
-
-        float uiWidth_PauseBG = 623.f * 0.7f;
-        float uiHeight_PauseBG = 671.f * 0.7f;
-
-        float uiWidth_PauseText = 300.f;
-        float uiHeight_PauseText = 70.f;
-
-        int centerPosX = camera.GetCenterX();
-        int centerPosY = camera.GetCenterY();
-        posX = centerPosX;
-        posY = centerPosY;
-        PauseMenu->SetPosition(glm::vec3(posX, posY, 0));
-        PauseMenu->SetSize(uiWidth_PauseBG * camera.GetCameraWidth() / SCREEN_WIDTH,
-                           -uiHeight_PauseBG * camera.GetCameraHeight() / SCREEN_HEIGHT);
-
-        posX = centerPosX;
-        posY = centerPosY + (125 * camera.GetCameraHeight() / SCREEN_HEIGHT);
-        ResumeButton->SetPosition(glm::vec3(posX, posY, 0));
-        ResumeButton->SetSize(uiWidth_PauseText * camera.GetCameraWidth() / SCREEN_WIDTH,
-                              -uiHeight_PauseText * camera.GetCameraHeight() / SCREEN_HEIGHT);
-
-        posX = centerPosX;
-        posY = centerPosY;
-        OptionButton->SetPosition(glm::vec3(posX, posY, 0));
-        OptionButton->SetSize(uiWidth_PauseText * camera.GetCameraWidth() / SCREEN_WIDTH,
-                              -uiHeight_PauseText * camera.GetCameraHeight() / SCREEN_HEIGHT);
-
-        posX = centerPosX;
-        posY = centerPosY - (125 * camera.GetCameraHeight() / SCREEN_HEIGHT);
-        MainMenuButton->SetPosition(glm::vec3(posX, posY, 0));
-        MainMenuButton->SetSize(uiWidth_PauseText * camera.GetCameraWidth() / SCREEN_WIDTH,
-                                -uiHeight_PauseText * camera.GetCameraHeight() / SCREEN_HEIGHT);
-
-        posX = centerPosX;
-        posY = centerPosY;
-        AreYouSureBG->SetPosition(glm::vec3(posX, posY, 0));
-        AreYouSureBG->SetSize(AreYouSureBG->GetSpriteRenderer()->GetSpriteWidth() * camera.GetCameraWidth() / SCREEN_WIDTH,
-                              -AreYouSureBG->GetSpriteRenderer()->GetSpriteHeight() * camera.GetCameraHeight() / SCREEN_HEIGHT);
-
-        posX = centerPosX - (175 * camera.GetCameraWidth() / SCREEN_WIDTH);
-        posY = centerPosY - (50 * camera.GetCameraHeight() / SCREEN_HEIGHT);
-        YesButton->SetPosition(glm::vec3(posX, posY, 0));
-        YesButton->SetSize(YesButton->GetSpriteRenderer()->GetSpriteWidth() * camera.GetCameraWidth() / SCREEN_WIDTH,
-                           -YesButton->GetSpriteRenderer()->GetSpriteHeight() * camera.GetCameraHeight() / SCREEN_HEIGHT);
-
-        posX = centerPosX + (175 * camera.GetCameraWidth() / SCREEN_WIDTH);
-        posY = centerPosY - (50 * camera.GetCameraHeight() / SCREEN_HEIGHT);
-        NoButton->SetPosition(glm::vec3(posX, posY, 0));
-        NoButton->SetSize(NoButton->GetSpriteRenderer()->GetSpriteWidth() * camera.GetCameraWidth() / SCREEN_WIDTH,
-                          -NoButton->GetSpriteRenderer()->GetSpriteHeight() * camera.GetCameraHeight() / SCREEN_HEIGHT);
-
-        posX = centerPosX;
-        posY = centerPosY;
-        OptionBG->SetPosition(glm::vec3(posX, posY, 0));
-        OptionBG->SetSize(OptionBG->GetSpriteRenderer()->GetSpriteWidth() * camera.GetCameraWidth() / SCREEN_WIDTH,
-                          -OptionBG->GetSpriteRenderer()->GetSpriteHeight() * camera.GetCameraHeight() / SCREEN_HEIGHT);
-
-        for (int i = 0; i < OptionTextList.size(); i++)
-        {
-            posX = centerPosX - (165 * camera.GetCameraWidth() / SCREEN_WIDTH);
-            posY = centerPosY + ((135 + (-i * 100)) * camera.GetCameraHeight() / SCREEN_HEIGHT);
-            OptionTextList.at(i)->SetPosition(glm::vec3(posX, posY, 0));
-            OptionTextList.at(i)->SetSize(
-                OptionTextList.at(i)->GetSpriteRenderer()->GetSpriteWidth() * camera.GetCameraWidth() / SCREEN_WIDTH,
-                -OptionTextList.at(i)->GetSpriteRenderer()->GetSpriteHeight() * camera.GetCameraHeight() / SCREEN_HEIGHT);
-        }
-
-        for (int i = 0; i < volumeTrackList.size(); i++)
-        {
-            posX = centerPosX - (35 * camera.GetCameraWidth() / SCREEN_WIDTH);
-            posY = centerPosY + ((95 + ((-i - 1) * 100)) * camera.GetCameraHeight() / SCREEN_HEIGHT);
-            volumeTrackList.at(i)->SetPosition(glm::vec3(posX, posY, 0));
-            volumeTrackList.at(i)->SetSize(
-                volumeTrackList.at(i)->GetSpriteRenderer()->GetSpriteWidth() * camera.GetCameraWidth() / SCREEN_WIDTH,
-                -volumeTrackList.at(i)->GetSpriteRenderer()->GetSpriteHeight() * camera.GetCameraHeight() / SCREEN_HEIGHT);
-        }
-
-        for (int i = 0; i < volumeBoxList.size(); i++)
-        {
-            posX = centerPosX + (225 * camera.GetCameraWidth() / SCREEN_WIDTH);
-            posY = centerPosY + ((95 + ((-i - 1) * 100)) * camera.GetCameraHeight() / SCREEN_HEIGHT);
-            volumeBoxList.at(i)->SetPosition(glm::vec3(posX, posY, 0));
-            volumeBoxList.at(i)->SetSize(
-                volumeBoxList.at(i)->GetSpriteRenderer()->GetSpriteWidth() * camera.GetCameraWidth() / SCREEN_WIDTH,
-                -volumeBoxList.at(i)->GetSpriteRenderer()->GetSpriteHeight() * camera.GetCameraHeight() / SCREEN_HEIGHT);
-        }
-
-        posX = centerPosX + (90 * camera.GetCameraWidth() / SCREEN_WIDTH);
-        posY = centerPosY + (135 * camera.GetCameraHeight() / SCREEN_HEIGHT);
-        DisplayBox->SetPosition(glm::vec3(posX, posY, 0));
-        DisplayBox->SetSize(DisplayBox->GetSpriteRenderer()->GetSpriteWidth() * camera.GetCameraWidth() / SCREEN_WIDTH,
-                            -DisplayBox->GetSpriteRenderer()->GetSpriteHeight() * camera.GetCameraHeight() / SCREEN_HEIGHT);
-
-        posX = centerPosX + (90 * camera.GetCameraWidth() / SCREEN_WIDTH);
-        posY = centerPosY + (65 * camera.GetCameraHeight() / SCREEN_HEIGHT);
-        DisplayDropDown->SetPosition(glm::vec3(posX, posY, 0));
-        DisplayDropDown->SetSize(DisplayDropDown->GetSpriteRenderer()->GetSpriteWidth() * camera.GetCameraWidth() / SCREEN_WIDTH,
-                                 -DisplayDropDown->GetSpriteRenderer()->GetSpriteHeight() * camera.GetCameraHeight() / SCREEN_HEIGHT);
-
-        for (int i = 0; i < volumeKnobList.size(); i++)
-        {
-            if (i == 0)
-            {
-                posX = centerPosX + ((masterVolume * 4.f - 58.f / 0.25f) * camera.GetCameraWidth() / SCREEN_WIDTH);
-            }
-            else if (i == 1)
-            {
-                posX = centerPosX + ((sfxVolume * 4.f - 58.f / 0.25f) * camera.GetCameraWidth() / SCREEN_WIDTH);
-            }
-            else if (i == 2)
-            {
-                posX = centerPosX + ((musicVolume * 4.f - 58.f / 0.25f) * camera.GetCameraWidth() / SCREEN_WIDTH);
-            }
-            posY = centerPosY + ((95 + ((-i - 1) * 100)) * camera.GetCameraHeight() / SCREEN_HEIGHT);
-            volumeKnobList.at(i)->SetPosition(glm::vec3(posX, posY, 0));
-            volumeKnobList.at(i)->SetSize(
-                volumeKnobList.at(i)->GetSpriteRenderer()->GetSpriteWidth() * camera.GetCameraWidth() / SCREEN_WIDTH,
-                -volumeKnobList.at(i)->GetSpriteRenderer()->GetSpriteHeight() * camera.GetCameraHeight() / SCREEN_HEIGHT);
-        }
-    }
-}
-
-void LevelShowcase::LevelDraw()
-{
-    frame++;
-    framePerSecond++;
-
-    UpdateTime();
-
-    // Collider position update
-    for (int i = 0; i < entityObjects.size(); i++)
-    {
-        entityObjects[i]->UpdateCollider();
-    }
-
-    GameEngine::GetInstance()->Render(objectsList);
-
-    // dt = 0;
-
-    DrawImGUI();
-
-    // cout << "Draw Level" << endl;
-}
-
-void LevelShowcase::LevelFree()
-{
-    for (int i = objectsList.size() - 1; i >= 0; i--)
-    {
-        if (! objectsList[i] || ! objectsList[i]->GetIsActive())
-        {
-            objectsList[i] = nullptr;
-            objectsList.erase(objectsList.begin() + i);
-        }
-    }
-
-    for (int i = entityObjects.size() - 1; i >= 0; i--)
-    {
-        if (! entityObjects[i] || ! entityObjects[i]->GetIsActive())
-        {
-            entityObjects.erase(entityObjects.begin() + i);
-        }
-    }
-
-    for (int i = propObjects.size() - 1; i >= 0; i--)
-    {
-        if (! propObjects[i] || ! propObjects[i]->GetIsActive())
-        {
-            propObjects.erase(propObjects.begin() + i);
-        }
-    }
-
-    // Clean up DrawableObjects
-    /*for (DrawableObject* obj: objectsList)
-    {
-        delete obj;
-    }*/
-    objectsList.clear();
-    entityObjects.clear();
-    currentCollisions.clear();
-    previousCollisions.clear();
-    spriteList.clear();
-
-    soundManager->StopMusic("GameScene_BGM");
-    // cout << "Free Level" << endl;
-}
-
-void LevelShowcase::LevelUnload()
-{
-    GameEngine::GetInstance()->ClearMesh();
-
-    ImGui_ImplOpenGL3_Shutdown();
-    ImGui_ImplSDL2_Shutdown();
-    ImGui::DestroyContext();
-
-    SaveConfigInfo("../Resource/SceneData/LevelShowcase.json");
-
-    KrillSoundManager::SoundManager::GetInstance()->SaveVolumeConfig("../Resource/SceneData/CurrentVolume.json",
-                                                                     masterVolume,
-                                                                     isToggleMasterVolume,
-                                                                     musicVolume,
-                                                                     isToggleSFXVolume,
-                                                                     sfxVolume,
-                                                                     isToggleBGMVolume);
-
-    // cout << "Unload Level" << endl;
-}
-
-void LevelShowcase::HandleKey(char key)
-{
-}
-
-void LevelShowcase::HandleMouse(int type, int x, int y)
-{
-}
-
-void LevelShowcase::Movement(float axisX, float axisY, bool isPositiveX, bool isPositiveY)
-{
-}
-
-void LevelShowcase::GroundTileRefactor()
-{
-    for (int i = 0; i < MAP_HEIGHT; i++)
-    {
-        for (int j = 0; j < MAP_WIDTH; j++)
-        {
-            if (i == 0 || i == MAP_HEIGHT - 1 || j == 0 || j == MAP_WIDTH - 1)
-            {
-                continue;
-            }
-
-            if (tilesList[i][j] == nullptr)
-            {
-                continue;
-            }
-
-            // currentGroundTile[i][j] = tilesList[i][j]->GetIsBroke() ? 0 : 1;
-
-            int flag = currentGroundTile[i][j];
-
-            std::pair<int, int> pos;
-
-            if (i == 0 || i == MAP_HEIGHT - 1 || j == 0 || j == MAP_WIDTH - 1)
-            {
-                continue;
-            }
-            else if (tilesList[i][j]->currAnimState == TileObject::AnimationState::FinishBreaking)
-            {
-                // KK_TRACE("Refactor check: finish breaking");
-                continue;
-            }
-            else if (flag == 2)
-            {
-                // KK_TRACE("Refactor check: if tile is breaking");
-                // SpritesheetInfo collapseTileSprite = SpritesheetInfo("CollapseTile", "../Resource/Texture/Props/prop_spr_vfx_smoke.png",
-                // 200, 200, 800, 200);
-
-                /*TileObject* collapseTile = new TileObject();
-                collapseTile->SetIsAnimated(true);
-                collapseTile->currAnimState = TileObject::AnimationState::Breaking;
-                collapseTile->SetIsBroke(true);
-                collapseTile->SetSize(256.f, -256.f);
-                collapseTile->SetPosition(tilesList[i][j]->getPos());
-                collapseTile->GetSpriteRenderer()->SetFrame(10);
-                collapseTile->SetTextureWithID(spriteList.find("CollapseTile")->second, spriteList.find("CollapseTile")->second.textureid);
-                collapseTile->GetSpriteRenderer()->ShiftTo(tilesList[i][j]->GetSpriteRenderer()->GetRow(),
-                tilesList[i][j]->GetSpriteRenderer()->GetColumn());*/
-
-                // AddEntityToScene(collapseTile);
-
-                tilesList[i][j]->ImmediatelyBreak();
-                tilesList[i][j]->currAnimState = TileObject::AnimationState::FinishBreaking;
-
-                currentGroundTile[i][j] = 0;
-            }
-
-            flag = currentGroundTile[i][j];
-
-            if (flag == 0)
-            {
-                if (tilesList[i - 1][j] == 0)
-                {
-                    tilesList[i][j]->currAnimState = TileObject::AnimationState::Breaking;
-                }
-
-                // tilesList[i][j]->GetCollider()->GetGizmos()->SetIsActive(false);
-                tilesList[i][j]->DisableOverlaySprite();
-
-                if (currentGroundTile[i - 1][j] == 0)
-                {
-                    // blank
-                    pos = {99, 99};
                 }
                 else
                 {
+                    if (uiCover->GetIsRender() == true)
+                    {
+                        std::string cooldownString = " ";
+                        uiCover->SetIsRender(false);
+                        cooldownText->loadText(cooldownString, SDL_Color{255, 255, 255}, 64);
+                    }
+                }
+            }
+        }
 
-                    int upperPos = i - 1;
+        for (UiObject* ui : uiObjects)
+        {
+            switch (ui->uiType)
+            {
+                case UiObject::Kraken:
 
+                    if (krakenSign_t >= 6.0f)
+                    {
+                        break;
+                    }
+
+                    krakenSign_t += 0.01f;
+
+                    float uiWidth = 544.f;
+                    float uiHeight = -215.f;
+
+                    // krakenSign_t
+                    float posY_start = GameEngine::GetInstance()->GetRenderer()->GetOrthovalue().top - (uiHeight / 2.f);
+                    float posY_end = GameEngine::GetInstance()->GetRenderer()->GetOrthovalue().top + (uiHeight / 2.f);
+
+                    float t = Parabola(krakenSign_t);
+
+                    float posX = camera.GetCenterX();
+                    float posY = posY_end + t * posY_start;
+
+                    ui->SetPosition(glm::vec3(posX, posY, 0));
+                    ui->SetSize(uiWidth * camera.GetCameraWidth() / SCREEN_WIDTH, uiHeight * camera.GetCameraHeight() / SCREEN_HEIGHT);
+            }
+            // ui->SetPosition(glm::vec3(posX + (ui->getNumOwner() * ui->getSize().x * camera.GetCameraWidth() / SCREEN_WIDTH), posY, 0));
+        }
+
+        if (isPause)
+        {
+
+            float uiWidth_PauseBG = 623.f * 0.7f;
+            float uiHeight_PauseBG = 671.f * 0.7f;
+
+            float uiWidth_PauseText = 300.f;
+            float uiHeight_PauseText = 70.f;
+
+            int centerPosX = camera.GetCenterX();
+            int centerPosY = camera.GetCenterY();
+            posX = centerPosX;
+            posY = centerPosY;
+            PauseMenu->SetPosition(glm::vec3(posX, posY, 0));
+            PauseMenu->SetSize(uiWidth_PauseBG * camera.GetCameraWidth() / SCREEN_WIDTH,
+                               -uiHeight_PauseBG * camera.GetCameraHeight() / SCREEN_HEIGHT);
+
+            posX = centerPosX;
+            posY = centerPosY + (125 * camera.GetCameraHeight() / SCREEN_HEIGHT);
+            ResumeButton->SetPosition(glm::vec3(posX, posY, 0));
+            ResumeButton->SetSize(uiWidth_PauseText * camera.GetCameraWidth() / SCREEN_WIDTH,
+                                  -uiHeight_PauseText * camera.GetCameraHeight() / SCREEN_HEIGHT);
+
+            posX = centerPosX;
+            posY = centerPosY;
+            OptionButton->SetPosition(glm::vec3(posX, posY, 0));
+            OptionButton->SetSize(uiWidth_PauseText * camera.GetCameraWidth() / SCREEN_WIDTH,
+                                  -uiHeight_PauseText * camera.GetCameraHeight() / SCREEN_HEIGHT);
+
+            posX = centerPosX;
+            posY = centerPosY - (125 * camera.GetCameraHeight() / SCREEN_HEIGHT);
+            MainMenuButton->SetPosition(glm::vec3(posX, posY, 0));
+            MainMenuButton->SetSize(uiWidth_PauseText * camera.GetCameraWidth() / SCREEN_WIDTH,
+                                    -uiHeight_PauseText * camera.GetCameraHeight() / SCREEN_HEIGHT);
+
+            posX = centerPosX;
+            posY = centerPosY;
+            AreYouSureBG->SetPosition(glm::vec3(posX, posY, 0));
+            AreYouSureBG->SetSize(AreYouSureBG->GetSpriteRenderer()->GetSpriteWidth() * camera.GetCameraWidth() / SCREEN_WIDTH,
+                                  -AreYouSureBG->GetSpriteRenderer()->GetSpriteHeight() * camera.GetCameraHeight() / SCREEN_HEIGHT);
+
+            posX = centerPosX - (175 * camera.GetCameraWidth() / SCREEN_WIDTH);
+            posY = centerPosY - (50 * camera.GetCameraHeight() / SCREEN_HEIGHT);
+            YesButton->SetPosition(glm::vec3(posX, posY, 0));
+            YesButton->SetSize(YesButton->GetSpriteRenderer()->GetSpriteWidth() * camera.GetCameraWidth() / SCREEN_WIDTH,
+                               -YesButton->GetSpriteRenderer()->GetSpriteHeight() * camera.GetCameraHeight() / SCREEN_HEIGHT);
+
+            posX = centerPosX + (175 * camera.GetCameraWidth() / SCREEN_WIDTH);
+            posY = centerPosY - (50 * camera.GetCameraHeight() / SCREEN_HEIGHT);
+            NoButton->SetPosition(glm::vec3(posX, posY, 0));
+            NoButton->SetSize(NoButton->GetSpriteRenderer()->GetSpriteWidth() * camera.GetCameraWidth() / SCREEN_WIDTH,
+                              -NoButton->GetSpriteRenderer()->GetSpriteHeight() * camera.GetCameraHeight() / SCREEN_HEIGHT);
+
+            posX = centerPosX;
+            posY = centerPosY;
+            OptionBG->SetPosition(glm::vec3(posX, posY, 0));
+            OptionBG->SetSize(OptionBG->GetSpriteRenderer()->GetSpriteWidth() * camera.GetCameraWidth() / SCREEN_WIDTH,
+                              -OptionBG->GetSpriteRenderer()->GetSpriteHeight() * camera.GetCameraHeight() / SCREEN_HEIGHT);
+
+            for (int i = 0; i < OptionTextList.size(); i++)
+            {
+                posX = centerPosX - (165 * camera.GetCameraWidth() / SCREEN_WIDTH);
+                posY = centerPosY + ((135 + (-i * 100)) * camera.GetCameraHeight() / SCREEN_HEIGHT);
+                OptionTextList.at(i)->SetPosition(glm::vec3(posX, posY, 0));
+                OptionTextList.at(i)->SetSize(
+                    OptionTextList.at(i)->GetSpriteRenderer()->GetSpriteWidth() * camera.GetCameraWidth() / SCREEN_WIDTH,
+                    -OptionTextList.at(i)->GetSpriteRenderer()->GetSpriteHeight() * camera.GetCameraHeight() / SCREEN_HEIGHT);
+            }
+
+            for (int i = 0; i < volumeTrackList.size(); i++)
+            {
+                posX = centerPosX - (35 * camera.GetCameraWidth() / SCREEN_WIDTH);
+                posY = centerPosY + ((95 + ((-i - 1) * 100)) * camera.GetCameraHeight() / SCREEN_HEIGHT);
+                volumeTrackList.at(i)->SetPosition(glm::vec3(posX, posY, 0));
+                volumeTrackList.at(i)->SetSize(
+                    volumeTrackList.at(i)->GetSpriteRenderer()->GetSpriteWidth() * camera.GetCameraWidth() / SCREEN_WIDTH,
+                    -volumeTrackList.at(i)->GetSpriteRenderer()->GetSpriteHeight() * camera.GetCameraHeight() / SCREEN_HEIGHT);
+            }
+
+            for (int i = 0; i < volumeBoxList.size(); i++)
+            {
+                posX = centerPosX + (225 * camera.GetCameraWidth() / SCREEN_WIDTH);
+                posY = centerPosY + ((95 + ((-i - 1) * 100)) * camera.GetCameraHeight() / SCREEN_HEIGHT);
+                volumeBoxList.at(i)->SetPosition(glm::vec3(posX, posY, 0));
+                volumeBoxList.at(i)->SetSize(
+                    volumeBoxList.at(i)->GetSpriteRenderer()->GetSpriteWidth() * camera.GetCameraWidth() / SCREEN_WIDTH,
+                    -volumeBoxList.at(i)->GetSpriteRenderer()->GetSpriteHeight() * camera.GetCameraHeight() / SCREEN_HEIGHT);
+            }
+
+            posX = centerPosX + (90 * camera.GetCameraWidth() / SCREEN_WIDTH);
+            posY = centerPosY + (135 * camera.GetCameraHeight() / SCREEN_HEIGHT);
+            DisplayBox->SetPosition(glm::vec3(posX, posY, 0));
+            DisplayBox->SetSize(DisplayBox->GetSpriteRenderer()->GetSpriteWidth() * camera.GetCameraWidth() / SCREEN_WIDTH,
+                                -DisplayBox->GetSpriteRenderer()->GetSpriteHeight() * camera.GetCameraHeight() / SCREEN_HEIGHT);
+
+            posX = centerPosX + (90 * camera.GetCameraWidth() / SCREEN_WIDTH);
+            posY = centerPosY + (65 * camera.GetCameraHeight() / SCREEN_HEIGHT);
+            DisplayDropDown->SetPosition(glm::vec3(posX, posY, 0));
+            DisplayDropDown->SetSize(DisplayDropDown->GetSpriteRenderer()->GetSpriteWidth() * camera.GetCameraWidth() / SCREEN_WIDTH,
+                                     -DisplayDropDown->GetSpriteRenderer()->GetSpriteHeight() * camera.GetCameraHeight() / SCREEN_HEIGHT);
+
+            for (int i = 0; i < volumeKnobList.size(); i++)
+            {
+                if (i == 0)
+                {
+                    posX = centerPosX + ((masterVolume * 4.f - 58.f / 0.25f) * camera.GetCameraWidth() / SCREEN_WIDTH);
+                }
+                else if (i == 1)
+                {
+                    posX = centerPosX + ((sfxVolume * 4.f - 58.f / 0.25f) * camera.GetCameraWidth() / SCREEN_WIDTH);
+                }
+                else if (i == 2)
+                {
+                    posX = centerPosX + ((musicVolume * 4.f - 58.f / 0.25f) * camera.GetCameraWidth() / SCREEN_WIDTH);
+                }
+                posY = centerPosY + ((95 + ((-i - 1) * 100)) * camera.GetCameraHeight() / SCREEN_HEIGHT);
+                volumeKnobList.at(i)->SetPosition(glm::vec3(posX, posY, 0));
+                volumeKnobList.at(i)->SetSize(
+                    volumeKnobList.at(i)->GetSpriteRenderer()->GetSpriteWidth() * camera.GetCameraWidth() / SCREEN_WIDTH,
+                    -volumeKnobList.at(i)->GetSpriteRenderer()->GetSpriteHeight() * camera.GetCameraHeight() / SCREEN_HEIGHT);
+            }
+        }
+    }
+
+    void LevelShowcase::LevelDraw()
+    {
+        frame++;
+        framePerSecond++;
+
+        UpdateTime();
+
+        // Collider position update
+        for (int i = 0; i < entityObjects.size(); i++)
+        {
+            entityObjects[i]->UpdateCollider();
+        }
+
+        GameEngine::GetInstance()->Render(objectsList);
+
+        // dt = 0;
+
+        DrawImGUI();
+
+        // cout << "Draw Level" << endl;
+    }
+
+    void LevelShowcase::LevelFree()
+    {
+        for (int i = objectsList.size() - 1; i >= 0; i--)
+        {
+            if (! objectsList[i] || ! objectsList[i]->GetIsActive())
+            {
+                objectsList[i] = nullptr;
+                objectsList.erase(objectsList.begin() + i);
+            }
+        }
+
+        for (int i = entityObjects.size() - 1; i >= 0; i--)
+        {
+            if (! entityObjects[i] || ! entityObjects[i]->GetIsActive())
+            {
+                entityObjects.erase(entityObjects.begin() + i);
+            }
+        }
+
+        for (int i = propObjects.size() - 1; i >= 0; i--)
+        {
+            if (! propObjects[i] || ! propObjects[i]->GetIsActive())
+            {
+                propObjects.erase(propObjects.begin() + i);
+            }
+        }
+
+        // Clean up DrawableObjects
+        /*for (DrawableObject* obj: objectsList)
+        {
+            delete obj;
+        }*/
+        objectsList.clear();
+        entityObjects.clear();
+        currentCollisions.clear();
+        previousCollisions.clear();
+        spriteList.clear();
+
+        soundManager->StopMusic("GameScene_BGM");
+        // cout << "Free Level" << endl;
+    }
+
+    void LevelShowcase::LevelUnload()
+    {
+        GameEngine::GetInstance()->ClearMesh();
+
+        ImGui_ImplOpenGL3_Shutdown();
+        ImGui_ImplSDL2_Shutdown();
+        ImGui::DestroyContext();
+
+        SaveConfigInfo("../Resource/SceneData/LevelShowcase.json");
+
+        KrillSoundManager::SoundManager::GetInstance()->SaveVolumeConfig("../Resource/SceneData/CurrentVolume.json",
+                                                                         masterVolume,
+                                                                         isToggleMasterVolume,
+                                                                         musicVolume,
+                                                                         isToggleSFXVolume,
+                                                                         sfxVolume,
+                                                                         isToggleBGMVolume);
+
+        // cout << "Unload Level" << endl;
+    }
+
+    void LevelShowcase::HandleKey(char key)
+    {
+    }
+
+    void LevelShowcase::HandleMouse(int type, int x, int y)
+    {
+    }
+
+    void LevelShowcase::Movement(float axisX, float axisY, bool isPositiveX, bool isPositiveY)
+    {
+    }
+
+    void LevelShowcase::GroundTileRefactor()
+    {
+        for (int i = 0; i < MAP_HEIGHT; i++)
+        {
+            for (int j = 0; j < MAP_WIDTH; j++)
+            {
+                if (i == 0 || i == MAP_HEIGHT - 1 || j == 0 || j == MAP_WIDTH - 1)
+                {
+                    continue;
+                }
+
+                if (tilesList[i][j] == nullptr)
+                {
+                    continue;
+                }
+
+                // currentGroundTile[i][j] = tilesList[i][j]->GetIsBroke() ? 0 : 1;
+
+                int flag = currentGroundTile[i][j];
+
+                std::pair<int, int> pos;
+
+                if (i == 0 || i == MAP_HEIGHT - 1 || j == 0 || j == MAP_WIDTH - 1)
+                {
+                    continue;
+                }
+                else if (tilesList[i][j]->currAnimState == TileObject::AnimationState::FinishBreaking)
+                {
+                    // KK_TRACE("Refactor check: finish breaking");
+                    continue;
+                }
+                else if (flag == 2)
+                {
+                    // KK_TRACE("Refactor check: if tile is breaking");
+                    // SpritesheetInfo collapseTileSprite = SpritesheetInfo("CollapseTile",
+                    // "../Resource/Texture/Props/prop_spr_vfx_smoke.png", 200, 200, 800, 200);
+
+                    /*TileObject* collapseTile = new TileObject();
+                    collapseTile->SetIsAnimated(true);
+                    collapseTile->currAnimState = TileObject::AnimationState::Breaking;
+                    collapseTile->SetIsBroke(true);
+                    collapseTile->SetSize(256.f, -256.f);
+                    collapseTile->SetPosition(tilesList[i][j]->getPos());
+                    collapseTile->GetSpriteRenderer()->SetFrame(10);
+                    collapseTile->SetTextureWithID(spriteList.find("CollapseTile")->second,
+                    spriteList.find("CollapseTile")->second.textureid);
+                    collapseTile->GetSpriteRenderer()->ShiftTo(tilesList[i][j]->GetSpriteRenderer()->GetRow(),
+                    tilesList[i][j]->GetSpriteRenderer()->GetColumn());*/
+
+                    // AddEntityToScene(collapseTile);
+
+                    tilesList[i][j]->ImmediatelyBreak();
+                    tilesList[i][j]->currAnimState = TileObject::AnimationState::FinishBreaking;
+
+                    currentGroundTile[i][j] = 0;
+                }
+
+                flag = currentGroundTile[i][j];
+
+                if (flag == 0)
+                {
+                    if (tilesList[i - 1][j] == 0)
+                    {
+                        tilesList[i][j]->currAnimState = TileObject::AnimationState::Breaking;
+                    }
+
+                    // tilesList[i][j]->GetCollider()->GetGizmos()->SetIsActive(false);
+                    tilesList[i][j]->DisableOverlaySprite();
+
+                    if (currentGroundTile[i - 1][j] == 0)
+                    {
+                        // blank
+                        pos = {99, 99};
+                    }
+                    else
+                    {
+
+                        int upperPos = i - 1;
+
+                        std::bitset<8> surround;
+                        surround[0] = currentGroundTile[upperPos - 1][j];
+                        surround[1] = currentGroundTile[upperPos - 1][j + 1];
+                        surround[2] = currentGroundTile[upperPos][j + 1];
+                        surround[3] = currentGroundTile[upperPos + 1][j + 1];
+                        surround[4] = currentGroundTile[upperPos + 1][j];
+                        surround[5] = currentGroundTile[upperPos + 1][j - 1];
+                        surround[6] = currentGroundTile[upperPos][j - 1];
+                        surround[7] = currentGroundTile[upperPos - 1][j - 1];
+
+                        if (! (surround[0] && surround[2]))
+                        {
+                            surround[1] = 0;
+                        }
+                        if (! (surround[2] && surround[4]))
+                        {
+                            surround[3] = 0;
+                        }
+                        if (! (surround[4] && surround[6]))
+                        {
+                            surround[5] = 0;
+                        }
+                        if (! (surround[6] && surround[0]))
+                        {
+                            surround[7] = 0;
+                        }
+
+                        auto it = blob_lookup_table_underground.find((int)(surround.to_ulong()));
+
+                        // std::cout << "Bitset = " << (int)surround.to_ulong() << std::endl;
+
+                        if (it != blob_lookup_table_underground.end())
+                        {
+                            pos = it->second;
+
+                            // std::cout << "pair = " << it->second.first << " " << it->second.second << std::endl;
+                        }
+                        else
+                        {
+                            pos = {99, 99};
+                            // std::cout << "blob_lookup_table.end()" << std::endl;
+                        }
+                    }
+                }
+                else
+                {
                     std::bitset<8> surround;
-                    surround[0] = currentGroundTile[upperPos - 1][j];
-                    surround[1] = currentGroundTile[upperPos - 1][j + 1];
-                    surround[2] = currentGroundTile[upperPos][j + 1];
-                    surround[3] = currentGroundTile[upperPos + 1][j + 1];
-                    surround[4] = currentGroundTile[upperPos + 1][j];
-                    surround[5] = currentGroundTile[upperPos + 1][j - 1];
-                    surround[6] = currentGroundTile[upperPos][j - 1];
-                    surround[7] = currentGroundTile[upperPos - 1][j - 1];
+                    surround[0] = currentGroundTile[i - 1][j];
+                    surround[1] = currentGroundTile[i - 1][j + 1];
+                    surround[2] = currentGroundTile[i][j + 1];
+                    surround[3] = currentGroundTile[i + 1][j + 1];
+                    surround[4] = currentGroundTile[i + 1][j];
+                    surround[5] = currentGroundTile[i + 1][j - 1];
+                    surround[6] = currentGroundTile[i][j - 1];
+                    surround[7] = currentGroundTile[i - 1][j - 1];
 
                     if (! (surround[0] && surround[2]))
                     {
@@ -3337,11 +3403,9 @@ void LevelShowcase::GroundTileRefactor()
                         surround[7] = 0;
                     }
 
-                    auto it = blob_lookup_table_underground.find((int)(surround.to_ulong()));
-
+                    auto it = blob_lookup_table.find((int)(surround.to_ulong()));
                     // std::cout << "Bitset = " << (int)surround.to_ulong() << std::endl;
-
-                    if (it != blob_lookup_table_underground.end())
+                    if (it != blob_lookup_table.end())
                     {
                         pos = it->second;
 
@@ -3353,740 +3417,443 @@ void LevelShowcase::GroundTileRefactor()
                         // std::cout << "blob_lookup_table.end()" << std::endl;
                     }
                 }
-            }
-            else
-            {
-                std::bitset<8> surround;
-                surround[0] = currentGroundTile[i - 1][j];
-                surround[1] = currentGroundTile[i - 1][j + 1];
-                surround[2] = currentGroundTile[i][j + 1];
-                surround[3] = currentGroundTile[i + 1][j + 1];
-                surround[4] = currentGroundTile[i + 1][j];
-                surround[5] = currentGroundTile[i + 1][j - 1];
-                surround[6] = currentGroundTile[i][j - 1];
-                surround[7] = currentGroundTile[i - 1][j - 1];
 
-                if (! (surround[0] && surround[2]))
-                {
-                    surround[1] = 0;
-                }
-                if (! (surround[2] && surround[4]))
-                {
-                    surround[3] = 0;
-                }
-                if (! (surround[4] && surround[6]))
-                {
-                    surround[5] = 0;
-                }
-                if (! (surround[6] && surround[0]))
-                {
-                    surround[7] = 0;
-                }
+                // std::cout << flag << ",";
 
-                auto it = blob_lookup_table.find((int)(surround.to_ulong()));
-                // std::cout << "Bitset = " << (int)surround.to_ulong() << std::endl;
-                if (it != blob_lookup_table.end())
+                if (pos.first != 99)
                 {
-                    pos = it->second;
-
-                    // std::cout << "pair = " << it->second.first << " " << it->second.second << std::endl;
+                    tilesList[i][j]->GetSpriteRenderer()->ShiftTo(pos.first - 1, pos.second - 1);
                 }
                 else
                 {
-                    pos = {99, 99};
-                    // std::cout << "blob_lookup_table.end()" << std::endl;
+                    tilesList[i][j]->SetIsActive(false);
                 }
-            }
 
-            // std::cout << flag << ",";
-
-            if (pos.first != 99)
-            {
-                tilesList[i][j]->GetSpriteRenderer()->ShiftTo(pos.first - 1, pos.second - 1);
+                // std::cout << "posX = " << obj->getPos().x << " posY = " << obj->getPos().y << std::endl;
             }
-            else
-            {
-                tilesList[i][j]->SetIsActive(false);
-            }
-
-            // std::cout << "posX = " << obj->getPos().x << " posY = " << obj->getPos().y << std::endl;
+            // std::cout << std::endl;
         }
-        // std::cout << std::endl;
     }
-}
 
-void LevelShowcase::UsingAbilityKeyDown(int numPlayer, PlayerObject::AbilityButton button)
-{
-
-    PlayerObject::Ability idAbility = players[numPlayer]->GetAbilityByButton(button);
-    // std::cout << "idAbility " << idAbility << std::endl;
-    if (players[numPlayer]->GetCooldown(button) <= 0)
+    void LevelShowcase::UsingAbilityKeyDown(int numPlayer, PlayerObject::AbilityButton button)
     {
-        switch (idAbility)
+
+        PlayerObject::Ability idAbility = players[numPlayer]->GetAbilityByButton(button);
+        // std::cout << "idAbility " << idAbility << std::endl;
+        if (players[numPlayer]->GetCooldown(button) <= 0)
         {
+            switch (idAbility)
+            {
 
-            case PlayerObject::Ability::Fireball:
+                case PlayerObject::Ability::Fireball:
 
-                if (! players[numPlayer]->GetIsAiming())
-                {
-                    AimFireball(numPlayer, button);
-
-                    break;
-                }
-                break;
-
-            case PlayerObject::Ability::Trap:
-                Trap(numPlayer, button);
-                KrillSoundManager::SoundManager::GetInstance()->PlaySFX("Jellyfish_Placed", false);
-                break;
-
-            case PlayerObject::Ability::Dash:
-                Dash(numPlayer, button);
-                break;
-
-            case PlayerObject::Ability::TNT:
-
-                if (! players[numPlayer]->GetIsTNT())
-                {
-                    TNT(numPlayer, button);
-                    KrillSoundManager::SoundManager::GetInstance()->PlaySFX("Landmine_Placed", false);
-                }
-                else if (players[numPlayer]->GetIsTNT())
-                {
-                    for (TrapObject* trap : players[numPlayer]->GetOwningTrap()) // find tnt
+                    if (! players[numPlayer]->GetIsAiming())
                     {
-                        if (trap->GetType() == TrapObject::TypeTrap::Tnt)
-                        {
-                            KrillSoundManager::SoundManager::GetInstance()->PlaySFX("Landmine_Explode", false);
-                            trap->ExplodeTileInRange();
-                            trap->ChangeAnimationState(TrapObject::AnimationState::Collide);
-                            KK_TRACE("Press Again");
-                            trap->isActivate = true;
-                            players[numPlayer]->SetAbilityCooldown(button, TNTCooldown);
-                            players[numPlayer]->SetIsTNT(false);
-                            players[numPlayer]->RemoveOwningTrap(trap);
-                        }
+                        AimFireball(numPlayer, button);
+
+                        break;
                     }
-                }
-                break;
+                    break;
 
-            case PlayerObject::Ability::Teleport:
+                case PlayerObject::Ability::Trap:
+                    Trap(numPlayer, button);
+                    KrillSoundManager::SoundManager::GetInstance()->PlaySFX("Jellyfish_Placed", false);
+                    break;
 
-                if (! players[numPlayer]->GetIsAiming())
-                {
-                    if (players[numPlayer]->GetIsShooting())
+                case PlayerObject::Ability::Dash:
+                    Dash(numPlayer, button);
+                    break;
+
+                case PlayerObject::Ability::TNT:
+
+                    if (! players[numPlayer]->GetIsTNT())
                     {
-                        for (ProjectileObject* projectile : players[numPlayer]->GetOwningProjectile())
+                        TNT(numPlayer, button);
+                        KrillSoundManager::SoundManager::GetInstance()->PlaySFX("Landmine_Placed", false);
+                    }
+                    else if (players[numPlayer]->GetIsTNT())
+                    {
+                        for (TrapObject* trap : players[numPlayer]->GetOwningTrap()) // find tnt
                         {
-                            if (projectile->GetType() == ProjectileObject::TypeProjectile::Teleport)
+                            if (trap->GetType() == TrapObject::TypeTrap::Tnt)
                             {
-                                KrillSoundManager::SoundManager::GetInstance()->PlaySFX("Teleport_Hit", false);
-                                players[numPlayer]->SetPosition(projectile->getPos());
-                                players[numPlayer]->SetIsShooting(false);
-                                projectile->SetIsActive(false);
-                                players[numPlayer]->SetAbilityCooldown(button, 6);
-                                players[numPlayer]->RemoveOwningProjectile(projectile);
+                                KrillSoundManager::SoundManager::GetInstance()->PlaySFX("Landmine_Explode", false);
+                                trap->ExplodeTileInRange();
+                                trap->ChangeAnimationState(TrapObject::AnimationState::Collide);
+                                KK_TRACE("Press Again");
+                                trap->isActivate = true;
+                                players[numPlayer]->SetAbilityCooldown(button, TNTCooldown);
+                                players[numPlayer]->SetIsTNT(false);
+                                players[numPlayer]->RemoveOwningTrap(trap);
                             }
                         }
                     }
-                    else
-                    {
-                        AimTeleport(numPlayer, button);
-                    }
-                }
-                break;
-
-            case PlayerObject::Ability::Bola:
-
-                if (! players[numPlayer]->GetIsAiming())
-                {
-                    AimBola(numPlayer, button);
                     break;
-                }
 
-                break;
+                case PlayerObject::Ability::Teleport:
 
-            case PlayerObject::Ability::Cleave:
-
-                if (! players[numPlayer]->GetIsAiming())
-                {
-                    AimCleave(numPlayer, button);
+                    if (! players[numPlayer]->GetIsAiming())
+                    {
+                        if (players[numPlayer]->GetIsShooting())
+                        {
+                            for (ProjectileObject* projectile : players[numPlayer]->GetOwningProjectile())
+                            {
+                                if (projectile->GetType() == ProjectileObject::TypeProjectile::Teleport)
+                                {
+                                    KrillSoundManager::SoundManager::GetInstance()->PlaySFX("Teleport_Hit", false);
+                                    players[numPlayer]->SetPosition(projectile->getPos());
+                                    players[numPlayer]->SetIsShooting(false);
+                                    projectile->SetIsActive(false);
+                                    players[numPlayer]->SetAbilityCooldown(button, 6);
+                                    players[numPlayer]->RemoveOwningProjectile(projectile);
+                                }
+                            }
+                        }
+                        else
+                        {
+                            AimTeleport(numPlayer, button);
+                        }
+                    }
                     break;
-                }
-                break;
-        }
-    }
-}
 
-void LevelShowcase::UsingAbilityKeyUp(int numPlayer, PlayerObject::AbilityButton button)
-{
-    PlayerObject::Ability idAbility = players[numPlayer]->GetAbilityByButton(button);
-    // std::cout << "idAbility " << idAbility << std::endl;
-    if (players[numPlayer]->GetCooldown(button) <= 0)
-    {
-        switch (idAbility)
-        {
+                case PlayerObject::Ability::Bola:
 
-            case PlayerObject::Ability::Fireball:
-                if (players[numPlayer]->GetIsAiming())
-                {
-                    if (players[numPlayer]->GetHoldingProjectile() == ProjectileObject::TypeProjectile::Fireball)
+                    if (! players[numPlayer]->GetIsAiming())
                     {
-                        ShootFireball(numPlayer, button);
-
+                        AimBola(numPlayer, button);
                         break;
                     }
-                }
-                break;
 
-            case PlayerObject::Ability::Teleport:
-                if (players[numPlayer]->GetIsAiming())
-                {
-                    if (players[numPlayer]->GetHoldingProjectile() == ProjectileObject::TypeProjectile::Teleport)
+                    break;
+
+                case PlayerObject::Ability::Cleave:
+
+                    if (! players[numPlayer]->GetIsAiming())
                     {
-                        ShootTeleport(numPlayer, button);
-                        KrillSoundManager::SoundManager::GetInstance()->PlaySFX("Teleport_Throwing", false);
+                        AimCleave(numPlayer, button);
                         break;
                     }
-                }
-                break;
-
-            case PlayerObject::Ability::Bola:
-                if (players[numPlayer]->GetIsAiming())
-                {
-                    if (players[numPlayer]->GetHoldingProjectile() == ProjectileObject::TypeProjectile::Bola)
-                    {
-                        ShootBola(numPlayer, button);
-                        KrillSoundManager::SoundManager::GetInstance()->PlaySFX("Bola_Throwing", false);
-                        break;
-                    }
-                }
-                break;
-        }
-    }
-}
-
-void LevelShowcase::AimFireball(int numPlayer, PlayerObject::AbilityButton button)
-{
-    players[numPlayer]->SetVelocity(0, 0, false, false);
-    players[numPlayer]->SetIsAiming(true);
-    players[numPlayer]->SetHoldingProjectile(ProjectileObject::TypeProjectile::Fireball);
-    ProjectileObject* projectile = new ProjectileObject();
-    projectile->SetAnimationSprite(ProjectileObject::Collide, spriteList.find("Bomb_Explode")->second);
-    projectile->SetSpriteInfo(spriteList.find("Bomb")->second);
-    projectile->SetTexture(spriteList.find("Bomb")->second.texture);
-    projectile->SetPosition(players[numPlayer]->getPos());
-    projectile->SetSize(256.f, -256.f);
-    projectile->SetLifeTime(9999);
-    projectile->SetOwner(players[numPlayer]);
-    projectile->SetType(ProjectileObject::TypeProjectile::Fireball);
-    projectile->SetCanKnockback(true);
-    projectile->SetIsCanStun(true);
-    projectile->SetIsShooting(false);
-    // projectile->SetIsActive(false);
-    std::cout << "Owner " << projectile->GetOwner()->GetPlayerNumber() << std::endl;
-    entityObjects.push_back(projectile);
-    objectsList.push_back(projectile);
-    players[numPlayer]->AddOwningProjectile(projectile);
-    // objectsList.push_back(projectile->GetCollider()->GetGizmos());
-}
-
-void LevelShowcase::ShootFireball(int numPlayer, PlayerObject::AbilityButton button)
-{
-    players[numPlayer]->SetIsAiming(false);
-    for (ProjectileObject* projectile : players[numPlayer]->GetOwningProjectile())
-    {
-        if (projectile->GetType() == ProjectileObject::TypeProjectile::Fireball)
-        {
-            projectile->SetLifeTime(FireballLifetime);
-            projectile->SetIsShooting(true);
-            // projectile->SetIsActive(true);
-            players[numPlayer]->SetHoldingProjectile(0);
-        }
-    }
-    players[numPlayer]->SetAbilityCooldown(button, FireballCooldown);
-}
-
-void LevelShowcase::Trap(int numPlayer, PlayerObject::AbilityButton button)
-{
-    players[numPlayer]->ChangeAnimationState(PlayerObject::AnimationState::PlaceItem);
-    players[numPlayer]->SetAbilityCooldown(button, TrapCooldown);
-    TrapObject* Trap = new TrapObject();
-    Trap->SetSpriteInfo(spriteList.find("Trap")->second);
-    Trap->SetTexture(spriteList.find("Trap")->second.texture);
-    Trap->SetPosition(players[numPlayer]->getPos());
-    Trap->SetSize(128.f, -128.f);
-    Trap->SetPlayerNumber(players[numPlayer]->GetPlayerNumber());
-    Trap->SetType(TrapObject::TypeTrap::Trap);
-    Trap->SetIsActive(true);
-    Trap->SetAnimationSprite(TrapObject::AnimationState::Idle, spriteList.find("Trap")->second);
-    Trap->SetAnimationSprite(TrapObject::AnimationState::Collide, spriteList.find("Trap_Explode")->second);
-    // std::cout << "Owner " << Trap->getNumOwner() << std::endl;
-    objectsList.push_back(Trap);
-    entityObjects.push_back(Trap);
-    players[numPlayer]->AddOwningTrap(Trap);
-    // std::cout << "place trap" << std::endl;
-}
-
-void LevelShowcase::Dash(int num, PlayerObject::AbilityButton button)
-{
-    players[num]->SetAbilityCooldown(button, DashCooldown);
-    players[num]->SetIsDashing(true);
-    players[num]->SetDashDuration(DashDuration);
-}
-
-void LevelShowcase::TNT(int numPlayer, PlayerObject::AbilityButton button)
-{
-    players[numPlayer]->SetIsTNT(true);
-    players[numPlayer]->ChangeAnimationState(PlayerObject::AnimationState::PlaceItem);
-    TrapObject* TNT = new TrapObject();
-    TNT->SetSpriteInfo(spriteList.find("TNT")->second);
-    TNT->SetTexture(spriteList.find("TNT")->second.texture);
-    TNT->SetPosition(players[numPlayer]->getPos());
-    TNT->SetSize(128.f, -128.f);
-    TNT->GetCollider()->setColliderSize(glm::vec3(500.f, 500.f, 0));
-    TNT->SetPlayerNumber(players[numPlayer]->GetPlayerNumber());
-    TNT->SetType(TrapObject::TypeTrap::Tnt);
-    TNT->SetAnimationSprite(TrapObject::AnimationState::Idle, spriteList.find("TNT")->second);
-    TNT->SetAnimationSprite(TrapObject::AnimationState::Collide, spriteList.find("Landmine_Explode")->second);
-    // TNT->GetCollider()->Update(glm::vec3(0, 0, 0), TNT->getPos());
-    // TNT->setIsCanKnockback(true);
-    // std::cout << "Owner " << Trap->getNumOwner() << std::endl;
-    objectsList.push_back(TNT);
-    entityObjects.push_back(TNT);
-    // objectsList.push_back(TNT->GetCollider()->GetGizmos());
-    players[numPlayer]->AddOwningTrap(TNT);
-}
-
-void LevelShowcase::AimTeleport(int numPlayer, PlayerObject::AbilityButton button)
-{
-    players[numPlayer]->SetVelocity(0, 0, false, false);
-    players[numPlayer]->SetIsAiming(true);
-    players[numPlayer]->SetHoldingProjectile(ProjectileObject::TypeProjectile::Teleport);
-    ProjectileObject* projectile = new ProjectileObject();
-    projectile->SetAnimationSprite(ProjectileObject::Collide, spriteList.find("Teleport_Explode")->second);
-    projectile->SetSpriteInfo(spriteList.find("Teleport")->second);
-    projectile->SetTexture(spriteList.find("Teleport")->second.texture);
-    projectile->SetPosition(players[numPlayer]->getPos());
-    projectile->SetSize(256.f, -256.f);
-    projectile->SetLifeTime(9999);
-    projectile->SetOwner(players[numPlayer]);
-    projectile->SetType(ProjectileObject::TypeProjectile::Teleport);
-    projectile->SetCanKnockback(false);
-    projectile->SetIsCanStun(false);
-    projectile->SetIsShooting(false);
-    // projectile->SetIsActive(false);
-    std::cout << "Owner " << projectile->GetOwner()->GetPlayerNumber() << std::endl;
-    objectsList.push_back(projectile);
-    entityObjects.push_back(projectile);
-    players[numPlayer]->AddOwningProjectile(projectile);
-}
-
-void LevelShowcase::ShootTeleport(int numPlayer, PlayerObject::AbilityButton button)
-{
-    if (players[numPlayer]->GetIsShooting() == false)
-    {
-        players[numPlayer]->SetIsShooting(true);
-        players[numPlayer]->SetIsAiming(false);
-
-        for (ProjectileObject* projectile : players[numPlayer]->GetOwningProjectile())
-        {
-            if (projectile->GetType() == ProjectileObject::TypeProjectile::Teleport)
-            {
-                projectile->SetLifeTime(TeleportLifetime);
-                projectile->SetIsShooting(true);
-                players[numPlayer]->SetHoldingProjectile(0);
+                    break;
             }
         }
     }
-}
 
-void LevelShowcase::AimBola(int numPlayer, PlayerObject::AbilityButton button)
-{
-    players[numPlayer]->SetVelocity(0, 0, false, false);
-    players[numPlayer]->SetIsAiming(true);
-    players[numPlayer]->SetHoldingProjectile(ProjectileObject::TypeProjectile::Bola);
-    ProjectileObject* projectile = new ProjectileObject();
-    projectile->SetAnimationSprite(ProjectileObject::Collide, spriteList.find("Stun_Explode")->second);
-    projectile->SetSpriteInfo(spriteList.find("Bola")->second);
-    projectile->SetTexture(spriteList.find("Bola")->second.texture);
-    projectile->SetPosition(players[numPlayer]->getPos());
-    projectile->SetSize(256.f, -256.f);
-    projectile->SetLifeTime(9999);
-    projectile->SetOwner(players[numPlayer]);
-    projectile->SetType(ProjectileObject::TypeProjectile::Bola);
-    projectile->SetCanKnockback(false);
-    projectile->SetIsCanStun(true);
-    projectile->SetIsShooting(false);
-    // projectile->SetIsActive(false);
-    std::cout << "Owner " << projectile->GetOwner()->GetPlayerNumber() << std::endl;
-    objectsList.push_back(projectile);
-    entityObjects.push_back(projectile);
-    players[numPlayer]->AddOwningProjectile(projectile);
-}
-
-void LevelShowcase::ShootBola(int numPlayer, PlayerObject::AbilityButton button)
-{
-    players[numPlayer]->SetIsAiming(false);
-    for (ProjectileObject* projectile : players[numPlayer]->GetOwningProjectile())
+    void LevelShowcase::SetProjectileAnimation(ProjectileObject * projectile, std::string name)
     {
-        if (projectile->GetType() == ProjectileObject::TypeProjectile::Bola)
-        {
-            projectile->SetLifeTime(BolaLifetime);
-            projectile->SetIsShooting(true);
-            players[numPlayer]->SetHoldingProjectile(0);
-        }
+        projectile->SetAnimationSprite(ProjectileObject::Collide, spriteList.find(name)->second);
     }
-    players[numPlayer]->SetAbilityCooldown(button, BolaCooldown);
-}
 
-void LevelShowcase::AimCleave(int numPlayer, PlayerObject::AbilityButton button)
-{
-    players[numPlayer]->SetVelocity(0, 0, false, false);
-    players[numPlayer]->SetIsAiming(true);
-    players[numPlayer]->SetHoldingProjectile(ProjectileObject::TypeProjectile::Cleave);
-    // ProjectileObject* projectile = new ProjectileObject();
-    //
-    // projectile->SetSpriteInfo(spriteList.find("Cleave")->second);
-    // projectile->SetTexture(spriteList.find("Cleave")->second.texture);
-    // projectile->SetPosition(players[numPlayer]->getPos());
-    // projectile->SetSize(256.f, -256.f);
-    // projectile->SetLifeTime(9999);
-    // projectile->SetOwner(players[numPlayer]);
-    // projectile->SetType(ProjectileObject::TypeProjectile::Cleave);
-    // projectile->SetCanKnockback(false);
-    // projectile->SetIsCanStun(true);
-    // projectile->SetIsShooting(false);
-    ////projectile->SetIsActive(false);
-    // std::cout << "Owner " << projectile->GetOwner()->GetPlayerNumber() << std::endl;
-    // objectsList.push_back(projectile);
-    // entityObjects.push_back(projectile);
-    ////players[numPlayer]->SetAbilityCooldown(button, CleaveCooldown);
-    // players[numPlayer]->AddOwningProjectile(projectile);
-}
-
-void LevelShowcase::ShootCleave(int numPlayer, PlayerObject::AbilityButton button)
-{
-    players[numPlayer]->SetIsAiming(false);
-
-    ProjectileObject* projectile = new ProjectileObject();
-
-    projectile->SetSpriteInfo(spriteList.find("Cleave")->second);
-    projectile->SetTexture(spriteList.find("Cleave")->second.texture);
-    projectile->SetPosition(players[numPlayer]->getPos());
-    projectile->SetSize(256.f, -256.f);
-
-    projectile->SetOwner(players[numPlayer]);
-    projectile->SetType(ProjectileObject::TypeProjectile::Cleave);
-    projectile->SetCanKnockback(false);
-    projectile->SetIsCanStun(true);
-    projectile->SetIsShooting(false);
-    // projectile->SetIsActive(false);
-    std::cout << "Owner " << projectile->GetOwner()->GetPlayerNumber() << std::endl;
-    objectsList.push_back(projectile);
-    entityObjects.push_back(projectile);
-    // players[numPlayer]->SetAbilityCooldown(button, CleaveCooldown);
-    players[numPlayer]->AddOwningProjectile(projectile);
-
-    projectile->SetLifeTime(CleaveLifetime);
-    projectile->SetIsShooting(true);
-    players[numPlayer]->SetHoldingProjectile(0);
-    projectile->SetLifeTime(1);
-
-    PlayerObject* player = players[numPlayer];
-    float veloX = player->GetCurrentDirection().x;
-    float veloY = player->GetCurrentDirection().y;
-    float angle = atan2(-player->GetCurrentDirection().y, player->GetCurrentDirection().x);
-
-    float absSizeX = abs(projectile->getSize().x);
-
-    if (angle < -3.14f / 2.f || angle > 3.14f / 2.f)
+    void LevelShowcase::SetTrapAnimation(TrapObject * trap, std::string nameIdle, std::string nameCollide)
     {
-        projectile->SetSize(-absSizeX, projectile->getSize().y);
+        trap->SetAnimationSprite(TrapObject::Idle, spriteList.find(nameIdle)->second);
+        trap->SetAnimationSprite(TrapObject::Collide, spriteList.find(nameCollide)->second);
+    }
 
-        if (angle > 0)
+    void LevelShowcase::SetSprite(EntityObject * projectile, std::string name)
+    {
+        projectile->SetSpriteInfo(spriteList.find(name)->second);
+        projectile->SetTexture(spriteList.find(name)->second.texture);
+    }
+
+    void LevelShowcase::AddEntityToScene(EntityObject * entity)
+    {
+        entityObjects.push_back(entity);
+        objectsList.push_back(entity);
+        // objectsList.push_back(entity->GetCollider()->GetGizmos());
+        // players[numPlayer]->SetAbilityCooldown(button, 6);
+    }
+
+    void LevelShowcase::AddObjectToScene(DrawableObject * object)
+    {
+        objectsList.push_back(object);
+    }
+
+    void LevelShowcase::loadAbility(std::string filename)
+    {
+        std::ifstream file(filename);
+        nlohmann::json data = nlohmann::json::parse(file);
+
+        if (file.is_open())
         {
-            angle = -(3.14f - angle);
+            std::cout << "Opened" << std::endl;
+            std::string selectStr;
+            for (int i = 0; i < 3; i++)
+            {
+                selectStr = "ability" + std::to_string(i);
+                if (data.count(selectStr))
+                {
+                    abilityId[i] = data[selectStr];
+                }
+                else
+                {
+                    std::cout << selectStr << "Not found" << std::endl;
+                    abilityId[i] = i;
+                }
+            }
         }
+
         else
         {
-            angle = 3.14f + angle;
-        }
-    }
-    else
-    {
-        projectile->SetSize(absSizeX, projectile->getSize().y);
-    }
-
-    bool PositiveX = veloX > 0.f ? true : false;
-    bool PositiveY = veloY < 0.f ? true : false;
-
-    projectile->SetPosition(player->getPos() + (projectile->GetVelocity() * glm::vec3(15.f, 15.f, 0.f)));
-    projectile->SetRotation(angle);
-    projectile->SetVelocity(abs(veloX), abs(veloY), PositiveX, PositiveY);
-    players[numPlayer]->SetAbilityCooldown(button, CleaveCooldown);
-
-    KrillSoundManager::SoundManager::GetInstance()->PlaySFX("Cleave_Slash", false);
-}
-
-void LevelShowcase::AddEntityToScene(EntityObject* entity)
-{
-    entityObjects.push_back(entity);
-    objectsList.push_back(entity);
-    // objectsList.push_back(entity->GetCollider()->GetGizmos());
-    // players[numPlayer]->SetAbilityCooldown(button, 6);
-}
-
-void LevelShowcase::AddObjectToScene(DrawableObject* object)
-{
-    objectsList.push_back(object);
-}
-
-void LevelShowcase::loadAbility(std::string filename)
-{
-    std::ifstream file(filename);
-    nlohmann::json data = nlohmann::json::parse(file);
-
-    if (file.is_open())
-    {
-        std::cout << "Opened" << std::endl;
-        std::string selectStr;
-        for (int i = 0; i < 3; i++)
-        {
-            selectStr = "ability" + std::to_string(i);
-            if (data.count(selectStr))
-            {
-                abilityId[i] = data[selectStr];
-            }
-            else
-            {
-                std::cout << selectStr << "Not found" << std::endl;
-                abilityId[i] = i;
-            }
+            std::cout << "Failed" << std::endl;
         }
     }
 
-    else
+    void LevelShowcase::SaveConfigInfo(const std::string& fileName)
     {
-        std::cout << "Failed" << std::endl;
-    }
-}
-
-void LevelShowcase::SaveConfigInfo(const std::string& fileName)
-{
-
-    std::ofstream file(fileName);
-    nlohmann::json data;
-
-    //// ImGUI
-    // float groundColX[4] = { 64.f, 64.f, 64.f, 64.f };
-    // float groundColY[4] = { 64.f, 64.f, 64.f, 64.f };
-    // float groundColOffsetX[4] = { 0.f, 0.f, 0.f, 0.f };
-    // float groundColOffsetY[4] = { -96.f, -96.f, -96.f, -96.f };
-    // int playersSkill[4][3];
-
-    data["groundColOffsetY"] = {
-        {"0", groundColOffsetY[0]}, {"1", groundColOffsetY[1]}, {"2", groundColOffsetY[2]}, {"3", groundColOffsetY[3]}};
-
-    /*for (int i = 0; i < 4; i++)
-    {
-        std::string playerName = "Player " + std::to_string(i) + " Skill";
-        data[playerName] =
+        if (ability == nullptr)
         {
-            playersSkill[i][0],
-            playersSkill[i][1],
-            playersSkill[i][2]
-        };
-    }*/
-
-    data["MeleeCooldown"] = MeleeCooldown;
-    data["FireballCooldown"] = FireballCooldown;
-    data["TrapCooldown"] = TrapCooldown;
-    data["DashCooldown"] = DashCooldown;
-    data["TNTCooldown"] = MeleeCooldown;
-    data["TeleportCooldown"] = MeleeCooldown;
-    data["BolaCooldown"] = BolaCooldown;
-    data["CleaveCooldown"] = CleaveCooldown;
-
-    // float MeleeCooldown = 2.f;
-    // float FireballCooldown = 3.f;
-    // float TrapCooldown = 3.f;
-    // float DashCooldown = 3.f;
-    // float TNTCooldown = 3.f;
-    // float TeleportCooldown = 3.f;
-    // float BolaCooldown = 3.f;
-    // float CleaveCooldown = 3.f;
-
-    data["FireballLifetime"] = FireballLifetime;
-    data["TeleportLifetime"] = TeleportLifetime;
-    data["BolaLifetime"] = BolaLifetime;
-    data["CleaveLifetime"] = CleaveLifetime;
-    data["DashDuration"] = DashDuration;
-    data["playerMovementSpeed"] = playerMovementSpeed;
-    // float FireballLifetime = 1.f;
-    // float TeleportLifetime = 2.f;
-    // float BolaLifetime = 2.f;
-    // float CleaveLifetime = 2.f;
-
-    // float DashDuration = 0.2f;
-
-    if (! file.is_open())
-    {
-        KK_ERROR("LevelShowcase: Fail to save config");
-    }
-    else
-    {
-        file << data;
-        file.close();
-        KK_INFO("LevelShowcase: Save config Complete");
-    }
-}
-
-void LevelShowcase::LoadConfigInfo(const std::string& fileName)
-{
-    std::ifstream file(fileName);
-    nlohmann::json data = nlohmann::json::parse(file);
-
-    groundColOffsetY[0] = data["groundColOffsetY"]["0"];
-    groundColOffsetY[1] = data["groundColOffsetY"]["1"];
-    groundColOffsetY[2] = data["groundColOffsetY"]["2"];
-    groundColOffsetY[3] = data["groundColOffsetY"]["3"];
-
-    /*for (int i = 0; i < 4; i++)
-    {
-        std::string playerName = "Player " + std::to_string(i) + " Skill";
-
-        for (int j = 0; j < 3; j++)
-        {
-            playersSkill[i][j] = data[playerName][j].get<int>();
+            return;
         }
-    }*/
-
-    MeleeCooldown = data["MeleeCooldown"];
-    FireballCooldown = data["FireballCooldown"];
-    TrapCooldown = data["TrapCooldown"];
-    DashCooldown = data["DashCooldown"];
-    TNTCooldown = data["TNTCooldown"];
-    TeleportCooldown = data["TeleportCooldown"];
-    BolaCooldown = data["BolaCooldown"];
-    CleaveCooldown = data["CleaveCooldown"];
-
-    FireballLifetime = data["FireballLifetime"];
-    TeleportLifetime = data["TeleportLifetime"];
-    BolaLifetime = data["BolaLifetime"];
-    CleaveLifetime = data["CleaveLifetime"];
-    DashDuration = data["DashDuration"];
-
-    playerMovementSpeed = data["playerMovementSpeed"];
-}
-
-void LevelShowcase::SaveWinRoundInfo(const std::string& fileName)
-{
-    int playerRoundWin[4] = {0};
-    int currentRoundWinner = 0;
-    int currentRound;
-
-    std::ifstream readfile(fileName);
-
-    // read file
-    if (! readfile.is_open())
-    {
-        KK_ERROR("LevelShowcase: Cannot read round win file!");
-    }
-    else
-    {
-        nlohmann::json data = nlohmann::json::parse(readfile);
-
-        std::string playerScore;
-
-        for (int i = 0; i < 4; i++)
-        {
-            playerScore = "Score_Player" + std::to_string(i);
-
-            if (! data.count(playerScore))
-            {
-                KK_ERROR("LevelShowcase: Cannot read player Score!");
-            }
-            else
-            {
-                playerRoundWin[i] = data[playerScore];
-
-                KK_ERROR("playerRoundWin[{0}] = {1}", i, playerRoundWin[i]);
-            }
-        }
-
-        std::string roundNumber = "roundNumber";
-
-        if (! data.count(roundNumber))
-        {
-            KK_ERROR("LevelShowcase: Cannot read round Number!");
-        }
-        else
-        {
-            currentRound = data[roundNumber];
-        }
-
-        readfile.close();
-    }
-
-    // save value + new round win
-    for (int i = 0; i < playerSize; i++)
-    {
-        if (! players[i]->GetIsFell())
-        {
-            int winner = i;
-
-            if (winner == 3)
-            {
-                winner = 2;
-            }
-            else if (winner == 2)
-            {
-                winner = 3;
-            }
-            currentRoundWinner = winner;
-            playerRoundWin[winner]++;
-            break;
-        }
-    }
-
-    currentRound++;
-
-    // save value to file
-
-    std::ofstream writefile(fileName);
-
-    if (! writefile.is_open())
-    {
-        KK_ERROR("LevelShowcase: Cannot write Ui Position config file!");
-    }
-    else
-    {
-        KK_INFO("LevelShowcase: Open file Round Win Complete");
-
+        std::ofstream file(fileName);
         nlohmann::json data;
 
-        std::string playerScore;
+        //// ImGUI
+        // float groundColX[4] = { 64.f, 64.f, 64.f, 64.f };
+        // float groundColY[4] = { 64.f, 64.f, 64.f, 64.f };
+        // float groundColOffsetX[4] = { 0.f, 0.f, 0.f, 0.f };
+        // float groundColOffsetY[4] = { -96.f, -96.f, -96.f, -96.f };
+        // int playersSkill[4][3];
 
-        for (int i = 0; i < 4; i++)
+        data["groundColOffsetY"] = {
+            {"0", groundColOffsetY[0]}, {"1", groundColOffsetY[1]}, {"2", groundColOffsetY[2]}, {"3", groundColOffsetY[3]}};
+
+        /*for (int i = 0; i < 4; i++)
         {
-            playerScore = "Score_Player" + std::to_string(i);
+            std::string playerName = "Player " + std::to_string(i) + " Skill";
+            data[playerName] =
+            {
+                playersSkill[i][0],
+                playersSkill[i][1],
+                playersSkill[i][2]
+            };
+        }*/
 
-            data[playerScore] = playerRoundWin[i];
+        data["MeleeCooldown"] = MeleeCooldown;
+        data["FireballCooldown"] = ability->GetFireballCooldown();
+        data["TrapCooldown"] = ability->GetTrapCooldown();
+        data["DashCooldown"] = ability->GetDashCooldown();
+        data["TNTCooldown"] = ability->GetTNTCooldown();
+        data["TeleportCooldown"] = ability->GetTeleportCooldown();
+        data["BolaCooldown"] = ability->GetBolaCooldown();
+        data["CleaveCooldown"] = ability->GetCleaveCooldown();
+
+        // float MeleeCooldown = 2.f;
+        // float FireballCooldown = 3.f;
+        // float TrapCooldown = 3.f;
+        // float DashCooldown = 3.f;
+        // float TNTCooldown = 3.f;
+        // float TeleportCooldown = 3.f;
+        // float BolaCooldown = 3.f;
+        // float CleaveCooldown = 3.f;
+
+        data["FireballLifetime"] = ability->GetFireballLifetime();
+        data["TeleportLifetime"] = ability->GetTeleportLifetime();
+        data["BolaLifetime"] = ability->GetBolaLifetime();
+        data["CleaveLifetime"] = ability->GetCleaveLifetime();
+        data["DashDuration"] = ability->GetDashDuration();
+        data["playerMovementSpeed"] = playerMovementSpeed;
+        // float FireballLifetime = 1.f;
+        // float TeleportLifetime = 2.f;
+        // float BolaLifetime = 2.f;
+        // float CleaveLifetime = 2.f;
+
+        // float DashDuration = 0.2f;
+
+        if (! file.is_open())
+        {
+            KK_ERROR("LevelShowcase: Fail to save config");
+        }
+        else
+        {
+            file << data;
+            file.close();
+            KK_INFO("LevelShowcase: Save config Complete");
+        }
+    }
+
+    void LevelShowcase::LoadConfigInfo(const std::string& fileName)
+    {
+        if (ability == nullptr)
+        {
+            return;
+        }
+        std::ifstream file(fileName);
+        nlohmann::json data = nlohmann::json::parse(file);
+        if (! file.is_open())
+        {
+            KK_ERROR("Cannot open config file!");
+            return;
+        }
+        groundColOffsetY[0] = data["groundColOffsetY"]["0"];
+        groundColOffsetY[1] = data["groundColOffsetY"]["1"];
+        groundColOffsetY[2] = data["groundColOffsetY"]["2"];
+        groundColOffsetY[3] = data["groundColOffsetY"]["3"];
+
+        /*for (int i = 0; i < 4; i++)
+        {
+            std::string playerName = "Player " + std::to_string(i) + " Skill";
+
+            for (int j = 0; j < 3; j++)
+            {
+                playersSkill[i][j] = data[playerName][j].get<int>();
+            }
+        }*/
+
+        MeleeCooldown = data["MeleeCooldown"];
+        ability->SetFireballCooldown(data["FireballCooldown"]);
+        ability->SetTrapCooldown(data["TrapCooldown"]);
+        ability->SetDashCooldown(data["DashCooldown"]);
+        ability->SetTNTCooldown(data["TNTCooldown"]);
+        ability->SetTeleportCooldown(data["TeleportCooldown"]);
+        ability->SetBolaCooldown(data["BolaCooldown"]);
+        ability->SetCleaveCooldown(data["CleaveCooldown"]);
+
+        ability->SetFireballLifetime(data["FireballLifetime"]);
+        ability->SetTeleportLifetime(data["TeleportLifetime"]);
+        ability->SetBolaLifetime(data["BolaLifetime"]);
+        ability->SetCleaveLifetime(data["CleaveLifetime"]);
+        ability->SetDashDuration(data["DashDuration"]);
+
+        playerMovementSpeed = data["playerMovementSpeed"];
+
+        playerMovementSpeed = data["playerMovementSpeed"];
+    }
+
+    void LevelShowcase::SaveWinRoundInfo(const std::string& fileName)
+    {
+        int playerRoundWin[4] = {0};
+        int currentRoundWinner = 0;
+        int currentRound;
+
+        std::ifstream readfile(fileName);
+
+        // read file
+        if (! readfile.is_open())
+        {
+            KK_ERROR("LevelShowcase: Cannot read round win file!");
+        }
+        else
+        {
+            nlohmann::json data = nlohmann::json::parse(readfile);
+
+            std::string playerScore;
+
+            for (int i = 0; i < 4; i++)
+            {
+                playerScore = "Score_Player" + std::to_string(i);
+
+                if (! data.count(playerScore))
+                {
+                    KK_ERROR("LevelShowcase: Cannot read player Score!");
+                }
+                else
+                {
+                    playerRoundWin[i] = data[playerScore];
+
+                    KK_ERROR("playerRoundWin[{0}] = {1}", i, playerRoundWin[i]);
+                }
+            }
+
+            std::string roundNumber = "roundNumber";
+
+            if (! data.count(roundNumber))
+            {
+                KK_ERROR("LevelShowcase: Cannot read round Number!");
+            }
+            else
+            {
+                currentRound = data[roundNumber];
+            }
+
+            readfile.close();
         }
 
-        std::string roundWinner = "RoundWinner";
+        // save value + new round win
+        for (int i = 0; i < playerSize; i++)
+        {
+            if (! players[i]->GetIsFell())
+            {
+                int winner = i;
 
-        data[roundWinner] = currentRoundWinner;
+                if (winner == 3)
+                {
+                    winner = 2;
+                }
+                else if (winner == 2)
+                {
+                    winner = 3;
+                }
+                currentRoundWinner = winner;
+                playerRoundWin[winner]++;
+                break;
+            }
+        }
 
-        std::string roundNumber = "roundNumber";
+        currentRound++;
 
-        data[roundNumber] = currentRound;
+        // save value to file
 
-        writefile << data;
+        std::ofstream writefile(fileName);
 
-        KK_INFO("LevelShowcase: Save Round Win Complete");
+        if (! writefile.is_open())
+        {
+            KK_ERROR("LevelShowcase: Cannot write Ui Position config file!");
+        }
+        else
+        {
+            KK_INFO("LevelShowcase: Open file Round Win Complete");
 
-        writefile.close();
+            nlohmann::json data;
+
+            std::string playerScore;
+
+            for (int i = 0; i < 4; i++)
+            {
+                playerScore = "Score_Player" + std::to_string(i);
+
+                data[playerScore] = playerRoundWin[i];
+            }
+
+            std::string roundWinner = "RoundWinner";
+
+            data[roundWinner] = currentRoundWinner;
+
+            std::string roundNumber = "roundNumber";
+
+            data[roundNumber] = currentRound;
+
+            writefile.close();
+        }
     }
-}
+
+    void LevelShowcase::BurningEffect()
+    {
+        for (int i = 0; i < 4; i++)
+        {
+            if (players[i]->GetIsBurning())
+            {
+                if (burningObjects[i] == nullptr)
+                {
+                    UiObject* burning = new UiObject();
+                    burning->SetSpriteInfo(spriteList.find("Burning")->second);
+                    burning->SetSize(burning->GetSpriteRenderer()->GetSpriteWidth() / 4,
+                                     -burning->GetSpriteRenderer()->GetSpriteHeight() / 4);
+                    burningObjects[i] = burning;
+                    uiObjects.push_back(burning);
+                    objectsList.push_back(burning);
+                }
+                burningObjects[i]->SetPosition(players[i]->getPos());
+            }
+            else
+            {
+                if (burningObjects[i] != nullptr)
+                {
+                    UiObject* objectToDelete = burningObjects[i];
+                    uiObjects.erase(std::remove(uiObjects.begin(), uiObjects.end(), objectToDelete), uiObjects.end());
+                    objectsList.erase(std::remove(objectsList.begin(), objectsList.end(), objectToDelete), objectsList.end());
+                    delete objectToDelete;
+                    burningObjects[i] = nullptr;
+                }
+            }
+        }
+    }

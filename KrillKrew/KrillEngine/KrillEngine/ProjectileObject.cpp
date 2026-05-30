@@ -181,7 +181,15 @@ void ProjectileObject::OnColliderEnter(Collider* other)
                 else if (this->type == TypeProjectile::Bola)
                 {
                     player->SetIsStun(true);
-                    player->SetStunDuraion(10);
+                    if (player->GetIsSlow())
+                    {
+                        player->SetStunDuraion(5);
+                        player->SetIsShocking(true);
+                    }
+                    else
+                    {
+                        player->SetStunDuraion(3);
+                    }
                     KrillSoundManager::SoundManager::GetInstance()->PlaySFX("Bola_Hit", false);
                 }
                 else if (this->type == ProjectileObject::TypeProjectile::Teleport)
@@ -199,176 +207,201 @@ void ProjectileObject::OnColliderEnter(Collider* other)
                 /*playerOwner->RemoveOwningProjectile(this);
                 this->isActive = false;*/
 
+                /*playerOwner->RemoveOwningProjectile(this);
+                this->isActive = false;*/
+
                 // updateSpritesheet
                 if (this->type == TypeProjectile::Fireball)
                 {
                     this->SetRotation(0);
                 }
+            }
+        }
 
-                auto CollideSprite = animList.find(AnimationState::Collide);
-                if (CollideSprite != animList.end())
+        TrapObject* trap = dynamic_cast<TrapObject*>(other->GetParent());
+        if (trap != nullptr)
+        {
+            if (trap->GetType() == TrapObject::TypeTrap::Tnt && this->type == TypeProjectile::Fireball)
+            {
+                // ExplodeTileInRange();
+                trap->SetIsExplode(true);
+                trap->isActivate = true;
+                trap->ExplodeTileInRange();
+                KrillSoundManager::SoundManager::GetInstance()->PlaySFX("Bomb_Explosion", false);
+                ChangeAnimationState(AnimationState::Collide);
+
+                PlayerObject* trapOwner = trap->GetOwner();
+                if (trapOwner != nullptr)
                 {
-                    ProjectileObject::ChangeAnimationState(AnimationState::Collide);
+                    for (int b = 0; b < 3; b++)
+                    {
+                        PlayerObject::AbilityButton btn = static_cast<PlayerObject::AbilityButton>(b);
+                        if (trapOwner->GetAbilityByButton(btn) == PlayerObject::Ability::TNT)
+                        {
+                            trapOwner->SetAbilityCooldown(btn, 3);
+                            break;
+                        }
+                    }
+                    trap->ChangeAnimationState(TrapObject::AnimationState::Collide);
+                    trapOwner->SetIsTNT(false);
+                    trapOwner->RemoveOwningTrap(trap);
                 }
-
-                // set column to 0
             }
         }
     }
-}
-void ProjectileObject::OnColliderStay(Collider* other)
-{
-    // Base
-    EntityObject::OnColliderStay(other);
-
-    // Behavior
-}
-void ProjectileObject::OnColliderExit(Collider* other)
-{
-    // Base
-    EntityObject::OnColliderExit(other);
-
-    TileObject* tile = dynamic_cast<TileObject*>(other->GetParent());
-
-    if (tile != nullptr)
+    void ProjectileObject::OnColliderStay(Collider * other)
     {
-        DeleteTileInRange(tile);
+        // Base
+        EntityObject::OnColliderStay(other);
+
+        // Behavior
     }
-    // Behavior
-}
-void ProjectileObject::OnTriggerEnter(Collider* other)
-{
-    // Base
-    EntityObject::OnTriggerEnter(other);
-
-    // Behavior
-}
-void ProjectileObject::OnTriggerStay(Collider* other)
-{
-    // Base
-    EntityObject::OnTriggerStay(other);
-
-    // Behavior
-}
-void ProjectileObject::OnTriggerExit(Collider* other)
-{
-    // Base
-    EntityObject::OnTriggerExit(other);
-
-    // Behavior
-}
-// int ProjectileObject::getNumOwner() {
-//	return playerNumOwner;
-// }
-
-PlayerObject* ProjectileObject::GetOwner()
-{
-    return playerOwner;
-}
-
-void ProjectileObject::SetCanKnockback(bool isCanKnockback)
-{
-    this->CanKnockback = isCanKnockback;
-}
-
-bool ProjectileObject::GetCanKnockback()
-{
-    return CanKnockback;
-}
-
-void ProjectileObject::SetType(TypeProjectile Type)
-{
-    this->type = Type;
-
-    switch (type)
+    void ProjectileObject::OnColliderExit(Collider * other)
     {
-        case ProjectileObject::TypeProjectile::Fireball:
-            this->SetSize(300.f, -300.f);
-            break;
-        case ProjectileObject::TypeProjectile::Teleport:
-            this->SetSize(211.f * 0.8f, -97.f * 0.8f);
-            break;
-        case ProjectileObject::TypeProjectile::Bola:
-            this->SetSize(400.f * 0.7f, -400.f * 0.7f);
-            break;
-        case ProjectileObject::TypeProjectile::Cleave:
-            this->SetSize(358.f * 0.8f, -258.f * 0.8f);
-            break;
-    }
-}
+        // Base
+        EntityObject::OnColliderExit(other);
 
-ProjectileObject::TypeProjectile ProjectileObject::GetType()
-{
-    return type;
-}
+        TileObject* tile = dynamic_cast<TileObject*>(other->GetParent());
 
-void ProjectileObject::SetIsShooting(bool isShooting)
-{
-    this->isShooting = isShooting;
-}
-bool ProjectileObject::GetIsShooting()
-{
-    return isShooting;
-}
-
-void ProjectileObject::SetIsCanStun(bool isCanStun)
-{
-    this->CanStun = isCanStun;
-}
-
-bool ProjectileObject::GetIsCanStun()
-{
-    return CanStun;
-}
-void ProjectileObject::UpdateCurrentAnimation()
-{
-
-    if (currAnimState == AnimationState::Collide)
-    {
-        this->SetVelocity(0, 0, true, true);
-
-        float lastFrame = (GetSpriteRenderer()->GetSheetWidth() / GetSpriteRenderer()->GetSpriteWidth()) - 1;
-        KK_CORE_WARN("ProjectileObject: lastFrame = {0}", lastFrame);
-        KK_CORE_WARN("ProjectileObject: GetSpriteRenderer()->GetColumn() = {0}", GetSpriteRenderer()->GetColumn());
-        if (GetIsAnimated() && GetSpriteRenderer()->GetColumn() == lastFrame)
+        if (tile != nullptr)
         {
-            this->SetIsActive(false);
-            playerOwner->SetIsShooting(false);
-            playerOwner->RemoveOwningProjectile(this);
+            DeleteTileInRange(tile);
+        }
+        // Behavior
+    }
+    void ProjectileObject::OnTriggerEnter(Collider * other)
+    {
+        // Base
+        EntityObject::OnTriggerEnter(other);
+
+        // Behavior
+    }
+    void ProjectileObject::OnTriggerStay(Collider * other)
+    {
+        // Base
+        EntityObject::OnTriggerStay(other);
+
+        // Behavior
+    }
+    void ProjectileObject::OnTriggerExit(Collider * other)
+    {
+        // Base
+        EntityObject::OnTriggerExit(other);
+
+        // Behavior
+    }
+    // int ProjectileObject::getNumOwner() {
+    //	return playerNumOwner;
+    // }
+
+    PlayerObject* ProjectileObject::GetOwner()
+    {
+        return playerOwner;
+    }
+
+    void ProjectileObject::SetCanKnockback(bool isCanKnockback)
+    {
+        this->CanKnockback = isCanKnockback;
+    }
+
+    bool ProjectileObject::GetCanKnockback()
+    {
+        return CanKnockback;
+    }
+
+    void ProjectileObject::SetType(TypeProjectile Type)
+    {
+        this->type = Type;
+
+        switch (type)
+        {
+            case ProjectileObject::TypeProjectile::Fireball:
+                this->SetSize(300.f, -300.f);
+                break;
+            case ProjectileObject::TypeProjectile::Teleport:
+                this->SetSize(211.f * 0.8f, -97.f * 0.8f);
+                break;
+            case ProjectileObject::TypeProjectile::Bola:
+                this->SetSize(400.f * 0.7f, -400.f * 0.7f);
+                break;
+            case ProjectileObject::TypeProjectile::Cleave:
+                this->SetSize(358.f * 0.8f, -258.f * 0.8f);
+                break;
         }
     }
-}
 
-void ProjectileObject::SetAnimationSprite(AnimationState state, SpritesheetInfo spriteInfo)
-{
-    animList.insert({state, spriteInfo});
-}
-
-void ProjectileObject::ChangeAnimationState(AnimationState anim)
-{
-    if (currAnimState != anim)
+    ProjectileObject::TypeProjectile ProjectileObject::GetType()
     {
-        currAnimState = anim;
-        this->SetTextureWithID(animList.find(anim)->second, animList.find(anim)->second.textureid);
-        this->spriteRenderer->SetTexture(animList.find(anim)->second.texture);
-        // this->SetTexture(animList.find(anim)->second.texture);
-        this->spriteRenderer->ShiftTo(0, 0);
-        this->spriteRenderer->isLoop = animList.find(anim)->second.isLoop;
+        return type;
+    }
 
-        if (anim == AnimationState::Collide)
+    void ProjectileObject::SetIsShooting(bool isShooting)
+    {
+        this->isShooting = isShooting;
+    }
+    bool ProjectileObject::GetIsShooting()
+    {
+        return isShooting;
+    }
+
+    void ProjectileObject::SetIsCanStun(bool isCanStun)
+    {
+        this->CanStun = isCanStun;
+    }
+
+    bool ProjectileObject::GetIsCanStun()
+    {
+        return CanStun;
+    }
+    void ProjectileObject::UpdateCurrentAnimation()
+    {
+
+        if (currAnimState == AnimationState::Collide)
         {
-            // up size explode effect
-            this->SetSize(this->getSize().x * 2.0f, this->getSize().y * 2.0f);
+            this->SetVelocity(0, 0, true, true);
+
+            float lastFrame = (GetSpriteRenderer()->GetSheetWidth() / GetSpriteRenderer()->GetSpriteWidth()) - 1;
+            KK_CORE_WARN("ProjectileObject: lastFrame = {0}", lastFrame);
+            KK_CORE_WARN("ProjectileObject: GetSpriteRenderer()->GetColumn() = {0}", GetSpriteRenderer()->GetColumn());
+            if (GetIsAnimated() && GetSpriteRenderer()->GetColumn() == lastFrame)
+            {
+                this->SetIsActive(false);
+                playerOwner->SetIsShooting(false);
+                playerOwner->RemoveOwningProjectile(this);
+            }
         }
     }
-}
 
-void ProjectileObject::UpdateCollider()
-{
-    this->GetCollider()->Update(this->getSize() * 0.5f, this->getPos());
-}
+    void ProjectileObject::SetAnimationSprite(AnimationState state, SpritesheetInfo spriteInfo)
+    {
+        animList.insert({state, spriteInfo});
+    }
 
-float ProjectileObject::getOrderingLayer() const
-{
-    return -2000;
-}
+    void ProjectileObject::ChangeAnimationState(AnimationState anim)
+    {
+        if (currAnimState != anim)
+        {
+            currAnimState = anim;
+            this->SetTextureWithID(animList.find(anim)->second, animList.find(anim)->second.textureid);
+            this->spriteRenderer->SetTexture(animList.find(anim)->second.texture);
+            // this->SetTexture(animList.find(anim)->second.texture);
+            this->spriteRenderer->ShiftTo(0, 0);
+            this->spriteRenderer->isLoop = animList.find(anim)->second.isLoop;
+
+            if (anim == AnimationState::Collide)
+            {
+                // up size explode effect
+                this->SetSize(this->getSize().x * 2.0f, this->getSize().y * 2.0f);
+            }
+        }
+    }
+
+    void ProjectileObject::UpdateCollider()
+    {
+        this->GetCollider()->Update(this->getSize() * 0.5f, this->getPos());
+    }
+
+    float ProjectileObject::getOrderingLayer() const
+    {
+        return -2000;
+    }

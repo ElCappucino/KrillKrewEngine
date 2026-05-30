@@ -425,6 +425,20 @@ void PlayerObject::OnColliderEnter(Collider* other)
     EntityObject::OnColliderEnter(other);
 
     // Behavior
+    PlayerObject* player = dynamic_cast<PlayerObject*>(other->GetParent());
+    if (player != nullptr)
+    {
+
+        if (this->GetPlayerNumber() != player->GetPlayerNumber())
+        {
+            if (player->GetIsShocking())
+            {
+                this->SetIsStun(true);
+                this->SetStunDuraion(3);
+                this->SetIsShocking(true);
+            }
+        }
+    }
 }
 void PlayerObject::OnColliderStay(Collider* other)
 {
@@ -598,6 +612,31 @@ void PlayerObject::SetIsOnGround(bool isOnGround)
     this->isOnGround = isOnGround;
 }
 
+void PlayerObject::SetIsShocking(bool isShocking)
+{
+    this->isShocking = isShocking;
+}
+
+void PlayerObject::SetIsBurning(bool isBurning)
+{
+    this->isBurning = isBurning;
+}
+
+void PlayerObject::SetBurningDuration(int time)
+{
+    durationBurning = time;
+}
+
+void PlayerObject::ReduceBurningDuration(float dt)
+{
+    durationBurning -= dt;
+    if (durationBurning <= 0.0f)
+    {
+        durationBurning = 0.0f;
+        isBurning = false;
+    }
+}
+
 void PlayerObject::ReduceKnockbackDuration(float dt)
 {
     durationKnockback -= dt;
@@ -666,6 +705,10 @@ void PlayerObject::ReduceStunDuration(float dt)
     {
         durationStun = 0.0f;
         isStun = false;
+        if (isShocking)
+        {
+            isShocking = false;
+        }
     }
 }
 
@@ -678,6 +721,17 @@ bool PlayerObject::GetIsFell() const
 {
     return this->isFell;
 }
+
+bool PlayerObject::GetIsShocking() const
+{
+    return this->isShocking;
+}
+
+bool PlayerObject::GetIsBurning() const
+{
+    return this->isBurning;
+}
+
 bool PlayerObject::GetMeleeCooldown() const
 {
     return meleeCooldown;
@@ -707,6 +761,9 @@ void PlayerObject::CheckIfOnGround()
 
 void PlayerObject::ApplyKnockback(EntityObject* obj)
 {
+    this->SetIsDashing(false);
+    this->dashDuration = 0.0f;
+
     ProjectileObject* projectile = dynamic_cast<ProjectileObject*>(obj);
     TrapObject* trap = dynamic_cast<TrapObject*>(obj);
 
@@ -846,14 +903,17 @@ void PlayerObject::AddOwningTrap(TrapObject* trap)
 }
 void PlayerObject::RemoveOwningTrap(TrapObject* trap)
 {
-    auto it = std::find(ownTrap.begin(), ownTrap.end(), trap);
-    if (it == ownTrap.end())
+    if (trap != nullptr)
     {
-        KK_ERROR("PlayerObject: could not find trap to remove");
-    }
-    else
-    {
-        ownTrap.erase(it);
+        auto it = std::find(ownTrap.begin(), ownTrap.end(), trap);
+        if (it == ownTrap.end())
+        {
+            KK_ERROR("PlayerObject: could not find trap to remove");
+        }
+        else
+        {
+            ownTrap.erase(it);
+        }
     }
 }
 

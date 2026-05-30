@@ -15,6 +15,7 @@ private:
     std::vector<PropObject*> propObjects;
     std::vector<TextObject*> textObjects;
     std::vector<UiObject*> uiObjects;
+    std::array<UiObject*, 4> burningObjects;
 
     std::set<std::pair<Collider*, Collider*>> currentCollisions;
     std::set<std::pair<Collider*, Collider*>> previousCollisions;
@@ -237,29 +238,9 @@ private:
         {193, {1, 1}},
     };
 
-    // ImGUI
-    float groundColX[4] = {64.f, 64.f, 64.f, 64.f};
-    float groundColY[4] = {64.f, 64.f, 64.f, 64.f};
-    float groundColOffsetX[4] = {0.f, 0.f, 0.f, 0.f};
-    float groundColOffsetY[4] = {-96.f, -96.f, -96.f, -96.f};
-    int playersSkill[4][3] = {0};
-    int isResetScene;
-    int isFullScreen;
-    int isWindowScreen;
-
     float MeleeCooldown = 2.f;
-    float FireballCooldown = 3.f;
-    float TrapCooldown = 3.f;
-    float DashCooldown = 3.f;
-    float TNTCooldown = 3.f;
-    float TeleportCooldown = 3.f;
-    float BolaCooldown = 3.f;
-    float CleaveCooldown = 3.f;
 
-    float FireballLifetime = 1.f;
-    float TeleportLifetime = 2.f;
-    float BolaLifetime = 2.f;
-    float CleaveLifetime = 2.f;
+    float playerMovementSpeed = 1000.f;
 
     float DashDuration = 0.2f;
     float playerMovementSpeed = 1000.f;
@@ -299,6 +280,7 @@ private:
     std::array<bool, 4> isPositiveXOld;
     std::array<bool, 4> isPositiveYOld;
 
+    Ability* ability;
     KrillSoundManager::SoundManager* soundManager;
 
 public:
@@ -330,25 +312,16 @@ public:
     void ClearUnusedObject();
     void UpdatePauseMenu();
     void CheckPlayerRemain();
+    void BurningEffect();
 
     void GroundTileRefactor();
 
+    virtual void SetProjectileAnimation(ProjectileObject* projectile, std::string name);
+    virtual void SetTrapAnimation(TrapObject* trap, std::string nameIdle, std::string nameCollide);
+    virtual void SetSprite(EntityObject* projectile, std::string name);
+
     virtual void AddEntityToScene(EntityObject* entity);
     virtual void AddObjectToScene(DrawableObject* object);
-
-    void UsingAbilityKeyDown(int numPlayer, PlayerObject::AbilityButton button);
-    void UsingAbilityKeyUp(int numPlayer, PlayerObject::AbilityButton button);
-    void AimFireball(int numPlayer, PlayerObject::AbilityButton button);
-    void ShootFireball(int numPlayer, PlayerObject::AbilityButton button);
-    void Trap(int numPlayer, PlayerObject::AbilityButton button);
-    void Dash(int numPlayer, PlayerObject::AbilityButton button);
-    void TNT(int numPlayer, PlayerObject::AbilityButton button);
-    void AimTeleport(int numPlayer, PlayerObject::AbilityButton button);
-    void ShootTeleport(int numPlayer, PlayerObject::AbilityButton button);
-    void AimBola(int numPlayer, PlayerObject::AbilityButton button);
-    void ShootBola(int numPlayer, PlayerObject::AbilityButton button);
-    void AimCleave(int numPlayer, PlayerObject::AbilityButton button);
-    void ShootCleave(int numPlayer, PlayerObject::AbilityButton button);
 
     void loadAbility(std::string filename);
     void SaveConfigInfo(const std::string& fileName);

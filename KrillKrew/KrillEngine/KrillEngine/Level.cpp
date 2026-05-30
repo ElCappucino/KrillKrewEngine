@@ -136,6 +136,18 @@ void Level::Movement(float axisX, float axisY, bool isPositiveX, bool isPositive
 {
 }
 
+void  Level::SetProjectileAnimation(ProjectileObject* projectile, std::string name) {
+
+}
+
+void  Level::SetTrapAnimation(TrapObject* projectile, std::string nameIdle, std::string nameCollide) {
+
+}
+
+void  Level::SetSprite(EntityObject* projectile, std::string name) {
+
+}
+
 void Level::AddEntityToScene(EntityObject* entity)
 {
 }

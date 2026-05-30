@@ -99,6 +99,8 @@ private:
     bool isDashing;
     bool isOnGround;
     bool isFell;
+    bool isBurning;
+    bool isShocking;
 
     int playerNumber;
 
@@ -108,9 +110,6 @@ private:
 
     float slowness = 2;
     float slowDuration; // add value if slow and decrease over time
-
-    float dashSpeed = 2;
-    float dashDuration; // add value if dashing and decrease over time
 
     // UI
     UiObject* playerUI;
@@ -130,16 +129,13 @@ private:
     int holdingProjectile = 0;
     bool isStun;
     float durationStun;
+    float durationBurning;
 
 public:
     float projectileHoldDuration = 0;
 
     PlayerObject();
     virtual ~PlayerObject();
-
-    void SetTexture(std::string path);
-    void Render(glm::mat4 globalModelTransform);
-    void UpdateFacingSide(bool isLeft);
 
     void SetVelocity(float axisX, float axisY, bool isPositiveX, bool isPositiveY);
     void SetIsShooting(bool isShooting);
@@ -153,6 +149,7 @@ public:
     void SetAbility(AbilityButton numberAbility, Ability idAbility);
     void SetPlayerUI(UiObject* ui);
     void SetCurrentDirection(glm::vec2 dir);
+    void SetBurningDuration(int time);
 
     void SetIsKnockback(bool isKnockback);
     void SetKnockbackDuration(int time);
@@ -161,12 +158,15 @@ public:
     void SetIsStun(bool isStun);
     void SetStunDuraion(int time);
     void SetIsOnGround(bool isOnGround);
+    void SetIsShocking(bool isShocking);
+    void SetIsBurning(bool isBurning);
 
     void ReduceAbilityCooldown(int button, float dt);
     void ReduceSlowDuration(float dt);
     void ReduceDashDuration(float dt);
     void ReduceKnockbackDuration(float dt);
     void ReduceStunDuration(float dt);
+    void ReduceBurningDuration(float dt);
 
     virtual void SetAnimationSprite(AnimationState state, SpritesheetInfo spriteInfo);
     virtual void ChangeAnimationState(AnimationState anim);
@@ -187,6 +187,22 @@ public:
     virtual void OnTriggerEnter(Collider* other);
     virtual void OnTriggerStay(Collider* other);
     virtual void OnTriggerExit(Collider* other);
+
+    glm::vec3 GetVelocity() const;
+    bool GetIsAiming() const;
+    bool GetIsSlow() const;
+    bool GetIsDashing() const;
+    bool GetIsShooting() const;
+    int GetPlayerNumber() const;
+    float GetCooldown(PlayerObject::AbilityButton button) const;
+    float GetSlowDuration() const;
+    float GetDashDuration() const;
+    glm::vec2 GetCurrentDirection() const;
+    float GetStunDuration() const;
+    bool GetIsOnGround() const;
+    bool GetIsFell() const;
+    bool GetIsShocking() const;
+    bool GetIsBurning() const;
 
     glm::vec3 GetVelocity() const;
     bool GetIsAiming() const;

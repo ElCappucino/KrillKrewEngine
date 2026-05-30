@@ -54,6 +54,25 @@ int TrapObject::GetPlayerNumber()
     return playerNumOwner;
 }
 
+void TrapObject::SetIsExplode(bool isExplode)
+{
+    this->isExplode = isExplode;
+}
+
+bool TrapObject::GetIsExplode()
+{
+    return isExplode;
+}
+
+void TrapObject::SetOwner(PlayerObject* player)
+{
+    this->playerOwner = player;
+}
+PlayerObject* TrapObject::GetOwner()
+{
+    return playerOwner;
+}
+
 void TrapObject::AddTileInRange(TileObject* tile)
 {
     KK_TRACE("AddTileInRange");
@@ -96,151 +115,167 @@ void TrapObject::OnColliderEnter(Collider* other)
     if (player != nullptr)
     {
 
-        if (this->GetPlayerNumber() != player->GetPlayerNumber())
+        // KK_TRACE("Collide with TNT");
+        KrillSoundManager::SoundManager::GetInstance()->PlaySFX("Player_Damaged", false);
+        switch (type)
         {
-            // KK_TRACE("Collide with TNT");
-            KrillSoundManager::SoundManager::GetInstance()->PlaySFX("Player_Damaged", false);
-            switch (type)
-            {
-                case TypeTrap::Trap:
-                    // KK_TRACE("Trap of player {0} hit player {1}", this->GetPlayerNumber(), player->GetPlayerNumber());
-                    if (currAnimState == AnimationState::Idle)
+            case TypeTrap::Trap:
+                // KK_TRACE("Trap of player {0} hit player {1}", this->GetPlayerNumber(), player->GetPlayerNumber());
+                if (currAnimState == AnimationState::Idle && this->GetPlayerNumber() != player->GetPlayerNumber())
+                {
+                    player->SetSlowDuration(3.f);
+                    player->SetIsSlow(true);
+                    ChangeAnimationState(AnimationState::Collide);
+
+                    if (this->GetPlayerNumber() != player->GetPlayerNumber())
                     {
-                        player->SetSlowDuration(3.f);
-                        player->SetIsSlow(true);
-                        ChangeAnimationState(AnimationState::Collide);
+                        // KK_TRACE("Collide with TNT");
+                        KrillSoundManager::SoundManager::GetInstance()->PlaySFX("Player_Damaged", false);
+                        switch (type)
+                        {
+                            case TypeTrap::Trap:
+                                // KK_TRACE("Trap of player {0} hit player {1}", this->GetPlayerNumber(), player->GetPlayerNumber());
+                                if (currAnimState == AnimationState::Idle)
+                                {
+                                    player->SetSlowDuration(3.f);
+                                    player->SetIsSlow(true);
+                                    ChangeAnimationState(AnimationState::Collide);
 
-                        KrillSoundManager::SoundManager::GetInstance()->PlaySFX("Jellyfish_Explode", false);
+                                    KrillSoundManager::SoundManager::GetInstance()->PlaySFX("Jellyfish_Explode", false);
+                                }
+
+                                // this->isActive = false;
+                                break;
+                            case TypeTrap::Tnt:
+                                if (isActivate)
+                                {
+                                    ChangeAnimationState(AnimationState::Collide);
+                                    ////KK_TRACE("Activate TNT");
+                                    SetCanKnockback(true);
+                                    player->ApplyKnockback(this);
+                                    // this->isActive = false;
+                                    if (isExplode)
+                                    {
+                                        player->SetIsBurning(true);
+                                        player->SetBurningDuration(3);
+                                    }
+                                }
+                                break;
+                        }
                     }
-
-                    // player->ApplyKnockback(this);
-
-                    // this->isActive = false;
-                    break;
-                case TypeTrap::Tnt:
-                    if (isActivate)
+                }
+                void TrapObject::OnColliderStay(Collider * other)
+                {
+                    PlayerObject* player = dynamic_cast<PlayerObject*>(other->GetParent());
+                    if (player != nullptr)
                     {
-                        ChangeAnimationState(AnimationState::Collide);
-                        ////KK_TRACE("Activate TNT");
-                        SetCanKnockback(true);
-                        player->ApplyKnockback(this);
-                        // this->isActive = false;
-                    }
-                    break;
-            }
-        }
-    }
-}
-void TrapObject::OnColliderStay(Collider* other)
-{
-    PlayerObject* player = dynamic_cast<PlayerObject*>(other->GetParent());
-    if (player != nullptr)
-    {
 
-        if (this->GetPlayerNumber() != player->GetPlayerNumber())
-        {
-            // KK_TRACE("Collide with TNT");
-            switch (type)
-            {
-                case TypeTrap::Tnt:
-                    if (isActivate)
+                        // KK_TRACE("Collide with TNT");
+                        switch (type)
+                        {
+                            case TypeTrap::Tnt:
+                                if (isActivate)
+                                {
+                                    // KK_TRACE("Activate TNT");
+                                    ChangeAnimationState(AnimationState::Collide);
+                                    SetCanKnockback(true);
+                                    player->ApplyKnockback(this);
+                                    // this->isActive = false;
+                                    if (isExplode)
+                                    {
+                                        player->SetIsBurning(true);
+                                        player->SetBurningDuration(3);
+                                    }
+                                }
+                                break;
+                        }
+                    }
+                }
+                void TrapObject::OnColliderExit(Collider * other)
+                {
+                    TileObject* tile = dynamic_cast<TileObject*>(other->GetParent());
+
+                    if (tile != nullptr)
                     {
-                        // KK_TRACE("Activate TNT");
-                        ChangeAnimationState(AnimationState::Collide);
-                        SetCanKnockback(true);
-                        player->ApplyKnockback(this);
-                        // this->isActive = false;
+                        DeleteTileInRange(tile);
                     }
-                    break;
-            }
-        }
-    }
-}
-void TrapObject::OnColliderExit(Collider* other)
-{
-    TileObject* tile = dynamic_cast<TileObject*>(other->GetParent());
+                }
+                void TrapObject::OnTriggerEnter(Collider * other)
+                {
+                }
+                void TrapObject::OnTriggerStay(Collider * other)
+                {
+                }
+                void TrapObject::OnTriggerExit(Collider * other)
+                {
+                }
 
-    if (tile != nullptr)
-    {
-        DeleteTileInRange(tile);
-    }
-}
-void TrapObject::OnTriggerEnter(Collider* other)
-{
-}
-void TrapObject::OnTriggerStay(Collider* other)
-{
-}
-void TrapObject::OnTriggerExit(Collider* other)
-{
-}
+                void TrapObject::SetCanKnockback(bool isCanKnockback)
+                {
+                    this->CanKnockback = isCanKnockback;
+                }
 
-void TrapObject::SetCanKnockback(bool isCanKnockback)
-{
-    this->CanKnockback = isCanKnockback;
-}
+                bool TrapObject::GetCanKnockback()
+                {
+                    return CanKnockback;
+                }
 
-bool TrapObject::GetCanKnockback()
-{
-    return CanKnockback;
-}
+                void TrapObject::SetType(int type)
+                {
+                    this->type = type;
 
-void TrapObject::SetType(int type)
-{
-    this->type = type;
+                    switch (type)
+                    {
+                        case TrapObject::TypeTrap::Trap:
+                            this->SetSize(256.f, -256.f);
+                            this->spriteRenderer->isLoop = false;
+                            break;
+                        case TrapObject::TypeTrap::Tnt:
+                            this->SetSize(370.f, -370.f);
+                            break;
+                    }
+                }
 
-    switch (type)
-    {
-        case TrapObject::TypeTrap::Trap:
-            this->SetSize(256.f, -256.f);
-            this->spriteRenderer->isLoop = false;
-            break;
-        case TrapObject::TypeTrap::Tnt:
-            this->SetSize(370.f, -370.f);
-            break;
-    }
-}
+                bool TrapObject::GetType()
+                {
+                    return type;
+                }
 
-bool TrapObject::GetType()
-{
-    return type;
-}
+                void TrapObject::UpdateCurrentAnimation()
+                {
 
-void TrapObject::UpdateCurrentAnimation()
-{
+                    if (currAnimState == AnimationState::Collide)
+                    {
+                        float lastFrame = (GetSpriteRenderer()->GetSheetWidth() / GetSpriteRenderer()->GetSpriteWidth()) - 1;
+                        KK_CORE_WARN("ProjectileObject: lastFrame = {0}", lastFrame);
+                        KK_CORE_WARN("ProjectileObject: GetSpriteRenderer()->GetColumn() = {0}", GetSpriteRenderer()->GetColumn());
+                        if (GetIsAnimated() && GetSpriteRenderer()->GetColumn() == lastFrame)
+                        {
+                            this->SetIsActive(false);
+                        }
+                    }
+                }
 
-    if (currAnimState == AnimationState::Collide)
-    {
-        float lastFrame = (GetSpriteRenderer()->GetSheetWidth() / GetSpriteRenderer()->GetSpriteWidth()) - 1;
-        KK_CORE_WARN("ProjectileObject: lastFrame = {0}", lastFrame);
-        KK_CORE_WARN("ProjectileObject: GetSpriteRenderer()->GetColumn() = {0}", GetSpriteRenderer()->GetColumn());
-        if (GetIsAnimated() && GetSpriteRenderer()->GetColumn() == lastFrame)
-        {
-            this->SetIsActive(false);
-        }
-    }
-}
+                void TrapObject::SetAnimationSprite(AnimationState state, SpritesheetInfo spriteInfo)
+                {
+                    animList.insert({state, spriteInfo});
+                }
 
-void TrapObject::SetAnimationSprite(AnimationState state, SpritesheetInfo spriteInfo)
-{
-    animList.insert({state, spriteInfo});
-}
+                void TrapObject::ChangeAnimationState(AnimationState anim)
+                {
+                    if (currAnimState != anim)
+                    {
+                        KK_CORE_TRACE("TrapObject: ChangeAnimationState");
+                        currAnimState = anim;
+                        this->SetTextureWithID(animList.find(anim)->second, animList.find(anim)->second.textureid);
+                        this->spriteRenderer->SetTexture(animList.find(anim)->second.texture);
+                        // this->SetTexture(animList.find(anim)->second.texture);
+                        this->spriteRenderer->ShiftTo(0, 0);
+                        this->spriteRenderer->isLoop = animList.find(anim)->second.isLoop;
+                    }
+                }
 
-void TrapObject::ChangeAnimationState(AnimationState anim)
-{
-    if (currAnimState != anim)
-    {
-        KK_CORE_TRACE("TrapObject: ChangeAnimationState");
-        currAnimState = anim;
-        this->SetTextureWithID(animList.find(anim)->second, animList.find(anim)->second.textureid);
-        this->spriteRenderer->SetTexture(animList.find(anim)->second.texture);
-        // this->SetTexture(animList.find(anim)->second.texture);
-        this->spriteRenderer->ShiftTo(0, 0);
-        this->spriteRenderer->isLoop = animList.find(anim)->second.isLoop;
-    }
-}
-
-float TrapObject::getOrderingLayer() const
-{
-    return this->pos.y;
-}
+                float TrapObject::getOrderingLayer() const
+                {
+                    return this->pos.y;
+                }

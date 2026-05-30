@@ -5,8 +5,10 @@
 #include "ImageObject.h"
 #include "Joystick.h"
 #include "LineMeshVbo.h"
+#include "ProjectileObject.h"
 #include "SquareMeshVbo.h"
 #include "Timer.h"
+#include "TrapObject.h"
 #include <array>
 #include <chrono>
 #include <fstream>
@@ -62,6 +64,12 @@ public:
     virtual void HandleKey(char key);
     virtual void HandleMouse(int type, int x, int y);
 
+    virtual void SetProjectileAnimation(ProjectileObject* projectile, std::string name);
+    virtual void SetTrapAnimation(TrapObject* projectile, std::string nameIdle, std::string nameCollide);
+    virtual void SetSprite(EntityObject* projectile, std::string name);
+
+    virtual void AddEntityToScene(EntityObject* entity);
+    virtual void AddObjectToScene(DrawableObject* object);
     virtual void AddEntityToScene(EntityObject* entity);
     virtual void AddObjectToScene(DrawableObject* object);
 };
