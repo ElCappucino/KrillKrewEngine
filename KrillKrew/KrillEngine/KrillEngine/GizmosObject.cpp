@@ -1,14 +1,12 @@
 
 #include "GizmosObject.h"
 
-
 GizmosObject::GizmosObject()
 {
-	borderColor = glm::vec3(0.0, 0.0, 0.0);
-	this->rotateAngle = 0;
-	this->orderingLayer = 3;
+    borderColor = glm::vec3(0.0, 0.0, 0.0);
+    this->rotateAngle = 0;
+    this->orderingLayer = 3;
 }
-
 
 GizmosObject::~GizmosObject()
 {
@@ -16,7 +14,7 @@ GizmosObject::~GizmosObject()
 
 void GizmosObject::SetColor(float r, float g, float b)
 {
-	borderColor = glm::vec3(r, g, b);
+    borderColor = glm::vec3(r, g, b);
 }
 
 void GizmosObject::Render(glm::mat4 globalModelTransform)
@@ -28,12 +26,12 @@ void GizmosObject::Render(glm::mat4 globalModelTransform)
         return;
     }
 
-    if (!ApplyTransform(globalModelTransform))
+    if (! ApplyTransform(globalModelTransform))
     {
         return;
     }
 
-    if (!SetRenderMode(0))
+    if (! SetRenderMode(0))
     {
         return;
     }
@@ -50,4 +48,3 @@ void GizmosObject::Render(glm::mat4 globalModelTransform)
 
     lineMesh->Render();
 }
-

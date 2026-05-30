@@ -1,13 +1,10 @@
 
 #include "GameObject.h"
 
-
-
 GameObject::GameObject()
 {
-	color = glm::vec3(0.0, 0.0, 0.0);
+    color = glm::vec3(0.0, 0.0, 0.0);
 }
-
 
 GameObject::~GameObject()
 {
@@ -15,7 +12,7 @@ GameObject::~GameObject()
 
 void GameObject::SetColor(float r, float g, float b)
 {
-	color = glm::vec3(r, g, b);
+    color = glm::vec3(r, g, b);
 }
 
 void GameObject::Render(glm::mat4 globalModelTransform)
@@ -27,12 +24,12 @@ void GameObject::Render(glm::mat4 globalModelTransform)
         return;
     }
 
-    if (!ApplyTransform(globalModelTransform))
+    if (! ApplyTransform(globalModelTransform))
     {
         return;
     }
 
-    if (!SetRenderMode(0))
+    if (! SetRenderMode(0))
     {
         return;
     }
@@ -49,4 +46,3 @@ void GameObject::Render(glm::mat4 globalModelTransform)
 
     squareMesh->Render();
 }
-

@@ -1,305 +1,287 @@
 #include "TileObject.h"
-#include "PlayerObject.h"
 #include "Level.h"
+#include "PlayerObject.h"
 #include "SoundManager.h"
 
-int BFSTile
-(
-	std::array<std::array<int, MAP_WIDTH>, MAP_HEIGHT>& currentTile,
-	int startX,
-	int startY,
-	int newFlag)
+int BFSTile(std::array<std::array<int, MAP_WIDTH>, MAP_HEIGHT>& currentTile, int startX, int startY, int newFlag)
 {
-	int tileAmount = 0;
-	std::queue<glm::vec2> checkQueue;
-	checkQueue.emplace(glm::vec2(startX, startY));
-	while (!checkQueue.empty())
-	{
-		glm::vec2 current = checkQueue.front();
-		checkQueue.pop();
-		if (current.x < 1 || current.x >= MAP_HEIGHT || current.y < 1 || current.y >= MAP_WIDTH)
-			continue;
-		if (currentTile[current.x][current.y] == 1)
-		{
-			tileAmount++;
-			currentTile[current.x][current.y] = newFlag;
-			checkQueue.push(glm::vec2(current.x - 1, current.y));
-			checkQueue.push(glm::vec2(current.x + 1, current.y));
-			checkQueue.push(glm::vec2(current.x, current.y - 1));
-			checkQueue.push(glm::vec2(current.x, current.y + 1));
-		}
-	}
+    int tileAmount = 0;
+    std::queue<glm::vec2> checkQueue;
+    checkQueue.emplace(glm::vec2(startX, startY));
+    while (! checkQueue.empty())
+    {
+        glm::vec2 current = checkQueue.front();
+        checkQueue.pop();
+        if (current.x < 1 || current.x >= MAP_HEIGHT || current.y < 1 || current.y >= MAP_WIDTH)
+            continue;
+        if (currentTile[current.x][current.y] == 1)
+        {
+            tileAmount++;
+            currentTile[current.x][current.y] = newFlag;
+            checkQueue.push(glm::vec2(current.x - 1, current.y));
+            checkQueue.push(glm::vec2(current.x + 1, current.y));
+            checkQueue.push(glm::vec2(current.x, current.y - 1));
+            checkQueue.push(glm::vec2(current.x, current.y + 1));
+        }
+    }
 
-	return tileAmount;
+    return tileAmount;
 }
 
 void TileCollapseCheck(std::array<std::array<int, MAP_WIDTH>, MAP_HEIGHT>& currentTile)
 {
-	// create buffer copy from currentTile
-	std::array<std::array<int, MAP_WIDTH>, MAP_HEIGHT> bufferTile = currentTile;
+    // create buffer copy from currentTile
+    std::array<std::array<int, MAP_WIDTH>, MAP_HEIGHT> bufferTile = currentTile;
 
-	// give replace value = 2
-	int replaceVal = 2;
+    // give replace value = 2
+    int replaceVal = 2;
 
-	// map int int store the amount of eachreplace tile
-	std::map<int, int> adjacentSize;
+    // map int int store the amount of eachreplace tile
+    std::map<int, int> adjacentSize;
 
-	for (int i = 1; i < MAP_HEIGHT - 1; i++)
-	{
-		for (int j = 1; j < MAP_WIDTH - 1; j++)
-		{
-			// check tile
-			if (bufferTile[i][j] != 1)// if not 1 skip
-			{
-				continue;
-			}
-			else
-			{
-				// if 1 bfs and replace it with replace value. updaate map[replace value] then replace value++
-				int size = BFSTile(bufferTile, i, j, replaceVal);
-				adjacentSize.emplace(replaceVal, size);
-				replaceVal++;
-				
-			}
+    for (int i = 1; i < MAP_HEIGHT - 1; i++)
+    {
+        for (int j = 1; j < MAP_WIDTH - 1; j++)
+        {
+            // check tile
+            if (bufferTile[i][j] != 1) // if not 1 skip
+            {
+                continue;
+            }
+            else
+            {
+                // if 1 bfs and replace it with replace value. updaate map[replace value] then replace value++
+                int size = BFSTile(bufferTile, i, j, replaceVal);
+                adjacentSize.emplace(replaceVal, size);
+                replaceVal++;
+            }
+        }
+    }
+    // if (repalce value = 2, break the function
+    if (replaceVal <= 3)
+    {
+        return;
+    }
 
-		}
-	}
-	// if (repalce value = 2, break the function
-	if (replaceVal <= 3)
-	{
-		return;
-	}
+    int min = INT_MAX;
+    int minFlag = -1;
+    // loop through the map and check if which part has most adjacent tile
+    for (auto it : adjacentSize)
+    {
+        if (min > it.second)
+        {
+            min = it.second;
+            minFlag = it.first;
+        }
+    }
 
-	int min = INT_MAX;
-	int minFlag = -1;
-	// loop through the map and check if which part has most adjacent tile
-	for (auto it : adjacentSize)
-	{
-		if (min > it.second)
-		{
-			min = it.second;
-			minFlag = it.first;
-		}
-	}
-
-	// set the reference tile info to zero. change it to fall animation later.
-	for (int i = 1; i < MAP_HEIGHT - 1; i++)
-	{
-		for (int j = 1; j < MAP_WIDTH - 1; j++)
-		{
-			// check tile
-			if (bufferTile[i][j] == minFlag)// if not 1 skip
-			{
-				currentTile[i][j] = 2;
-			}
-
-		}
-	}
-	
+    // set the reference tile info to zero. change it to fall animation later.
+    for (int i = 1; i < MAP_HEIGHT - 1; i++)
+    {
+        for (int j = 1; j < MAP_WIDTH - 1; j++)
+        {
+            // check tile
+            if (bufferTile[i][j] == minFlag) // if not 1 skip
+            {
+                currentTile[i][j] = 2;
+            }
+        }
+    }
 }
 
 TileObject::TileObject()
 {
-	this->updateTile = nullptr;
-	this->isBreakable = false;
-	this->isBroke = false;
-	this->collider = new Collider(Collider::Trigger, this);
+    this->updateTile = nullptr;
+    this->isBreakable = false;
+    this->isBroke = false;
+    this->collider = new Collider(Collider::Trigger, this);
 
-	this->maxDurability = 3;
-	this->currentDurability = 0;
+    this->maxDurability = 3;
+    this->currentDurability = 0;
 
-	SpritesheetInfo crackEffectSprite = SpritesheetInfo("CrackEffect", "../Resource/Texture/tileCrack.png", 128, 128, 512, 128);
+    SpritesheetInfo crackEffectSprite = SpritesheetInfo("CrackEffect", "../Resource/Texture/tileCrack.png", 128, 128, 512, 128);
 
-	this->crackOverlay = new ImageObject();
-	this->crackOverlay->SetSpriteInfo(crackEffectSprite);
-	this->crackOverlay->SetSize(128.f, -128.f);
-	this->crackOverlay->SetOrderingLayer(2000.f);
-	this->orderingLayer = 0;
+    this->crackOverlay = new ImageObject();
+    this->crackOverlay->SetSpriteInfo(crackEffectSprite);
+    this->crackOverlay->SetSize(128.f, -128.f);
+    this->crackOverlay->SetOrderingLayer(2000.f);
+    this->orderingLayer = 0;
 
-	this->currAnimState = AnimationState::Idle;
-
+    this->currAnimState = AnimationState::Idle;
 }
 TileObject::~TileObject()
 {
-	//delete collider;
-	crackOverlay = nullptr;
-	currentLevel = nullptr;
-	updateTile = nullptr;
+    // delete collider;
+    crackOverlay = nullptr;
+    currentLevel = nullptr;
+    updateTile = nullptr;
 }
 
 void TileObject::SetSpriteInfo(SpritesheetInfo info)
 {
-	this->spriteRenderer->SetSpriteInfo(info.spritewidth, info.spriteheight, info.sheetwidth, info.sheetheight);
-	this->SetTexture(info.texture);
+    this->spriteRenderer->SetSpriteInfo(info.spritewidth, info.spriteheight, info.sheetwidth, info.sheetheight);
+    this->SetTexture(info.texture);
 }
 void TileObject::SetTexture(std::string path)
 {
-	this->texture = GameEngine::GetInstance()->GetRenderer()->LoadTexture(path);
-	// KK_INFO(this->texture);
+    this->texture = GameEngine::GetInstance()->GetRenderer()->LoadTexture(path);
+    // KK_INFO(this->texture);
 }
 
 void TileObject::SetIsBreakable(bool isBreakable)
 {
-	this->isBreakable = isBreakable;
-	if (!isBreakable)
-	{
-		this->crackOverlay->SetIsActive(false);
-	}
+    this->isBreakable = isBreakable;
+    if (! isBreakable)
+    {
+        this->crackOverlay->SetIsActive(false);
+    }
 }
 void TileObject::SetIsBroke(bool isBroke)
 {
-	this->isBroke = isBroke;
+    this->isBroke = isBroke;
 }
 bool TileObject::GetIsBreakable() const
 {
-	return isBreakable;
+    return isBreakable;
 }
 bool TileObject::GetIsBroke() const
 {
-	return isBroke;
+    return isBroke;
 }
 void TileObject::Render(glm::mat4 globalModelTransform)
 {
-	RenderTexturedObject(globalModelTransform);
+    RenderTexturedObject(globalModelTransform);
 }
 
 void TileObject::SetSize(float sizeX, float sizeY)
 {
-	size = glm::vec3(sizeX, sizeY, 1);
-	this->collider->setColliderSize(size);
-	crackOverlay->SetSize(sizeX, sizeY);
-
+    size = glm::vec3(sizeX, sizeY, 1);
+    this->collider->setColliderSize(size);
+    crackOverlay->SetSize(sizeX, sizeY);
 }
 void TileObject::SetPosition(glm::vec3 newPosition)
 {
-	pos = newPosition;
-	crackOverlay->SetPosition(newPosition);
+    pos = newPosition;
+    crackOverlay->SetPosition(newPosition);
 }
 
 Collider* TileObject::GetCollider()
 {
-	return this->collider;
+    return this->collider;
 }
 
 ImageObject* TileObject::GetOverlaySprite()
 {
-	return this->crackOverlay;
+    return this->crackOverlay;
 }
 void TileObject::SetTilePosition(int x, int y)
 {
-	this->tilePos.x = x;
-	this->tilePos.y = y;
+    this->tilePos.x = x;
+    this->tilePos.y = y;
 }
 
 void TileObject::UpdateTileArray(int flag)
 {
-	if (updateTile)
-	{
-		(*updateTile)[tilePos.x][tilePos.y] = flag;
-	}
-	
+    if (updateTile)
+    {
+        (*updateTile)[tilePos.x][tilePos.y] = flag;
+    }
 }
 void TileObject::SetUpdateTileset(std::array<std::array<int, MAP_WIDTH>, MAP_HEIGHT>* tiles)
 {
-	this->updateTile = tiles;
+    this->updateTile = tiles;
 }
 
 void TileObject::DisableOverlaySprite()
 {
-	if (!this->isBroke)
-	{
-		this->isBroke = true;
-		this->isBreakable = false;
-		this->crackOverlay->SetIsActive(false);
-		this->GetCollider()->GetGizmos()->SetIsActive(false);
-		KrillSoundManager::SoundManager::GetInstance()->PlaySFX("Rock_Destroyed", false);
-	}
-	
+    if (! this->isBroke)
+    {
+        this->isBroke = true;
+        this->isBreakable = false;
+        this->crackOverlay->SetIsActive(false);
+        this->GetCollider()->GetGizmos()->SetIsActive(false);
+        KrillSoundManager::SoundManager::GetInstance()->PlaySFX("Rock_Destroyed", false);
+    }
 }
 void TileObject::CheckIfBreak()
 {
-	if (currentDurability >= maxDurability)
-	{
-		// create tile falling animation object
-		DisableOverlaySprite();
+    if (currentDurability >= maxDurability)
+    {
+        // create tile falling animation object
+        DisableOverlaySprite();
 
-		UpdateTileArray(0);
-		AddCollapseTileToScene();
+        UpdateTileArray(0);
+        AddCollapseTileToScene();
 
-		TileCollapseCheck(*updateTile);
-	}
+        TileCollapseCheck(*updateTile);
+    }
 }
 void TileObject::GotHit()
 {
-	currentDurability++;
-	this->crackOverlay->GetSpriteRenderer()->ShiftColumn();
-	CheckIfBreak();
+    currentDurability++;
+    this->crackOverlay->GetSpriteRenderer()->ShiftColumn();
+    CheckIfBreak();
 }
 
 void TileObject::ImmediatelyBreak()
 {
-	currentDurability = maxDurability;
-	CheckIfBreak();
+    currentDurability = maxDurability;
+    CheckIfBreak();
 }
 
 void TileObject::OnColliderEnter(Collider* other)
 {
-
 }
 void TileObject::OnColliderStay(Collider* other)
 {
-
 }
 void TileObject::OnColliderExit(Collider* other)
 {
-
 }
 void TileObject::OnTriggerEnter(Collider* other)
 {
-	
 }
 void TileObject::OnTriggerStay(Collider* other)
 {
-
 }
 void TileObject::OnTriggerExit(Collider* other)
 {
-
 }
 
 void TileObject::UpdateSpriteSheetPosition()
 {
-	if (currAnimState == AnimationState::Breaking)
-	{
-		this->GetSpriteRenderer()->ShiftColumn();
-		currentDurability++;
-	}
-	if (currentDurability >= maxDurability)
-	{
-		this->currAnimState = TileObject::AnimationState::FinishBreaking;
-		//this->SetIsActive(false);
-	}
+    if (currAnimState == AnimationState::Breaking)
+    {
+        this->GetSpriteRenderer()->ShiftColumn();
+        currentDurability++;
+    }
+    if (currentDurability >= maxDurability)
+    {
+        this->currAnimState = TileObject::AnimationState::FinishBreaking;
+        // this->SetIsActive(false);
+    }
 }
 void TileObject::AddCollapseTileToScene()
 {
-	if (currentLevel == nullptr)
-	{
-		KK_CORE_ERROR("TileObject: current level == nullptr");
-		return;
-	}
-	SpritesheetInfo collapseTileSprite = SpritesheetInfo("CollapseTile", "../Resource/Texture/Props/prop_spr_vfx_smoke.png", 200, 200, 800, 200);
+    if (currentLevel == nullptr)
+    {
+        KK_CORE_ERROR("TileObject: current level == nullptr");
+        return;
+    }
+    SpritesheetInfo collapseTileSprite =
+        SpritesheetInfo("CollapseTile", "../Resource/Texture/Props/prop_spr_vfx_smoke.png", 200, 200, 800, 200);
 
-	ParticleObject* particle = new ParticleObject();
-	particle->SetSpriteInfo(collapseTileSprite);
+    ParticleObject* particle = new ParticleObject();
+    particle->SetSpriteInfo(collapseTileSprite);
 
-	particle->SetPosition(this->pos);
-	particle->SetSize(particle->GetSpriteRenderer()->GetSpriteWidth(), particle->GetSpriteRenderer()->GetSpriteHeight());
-	this->currentLevel->AddEntityToScene(particle);
+    particle->SetPosition(this->pos);
+    particle->SetSize(particle->GetSpriteRenderer()->GetSpriteWidth(), particle->GetSpriteRenderer()->GetSpriteHeight());
+    this->currentLevel->AddEntityToScene(particle);
 
-	currentLevel->AddEntityToScene(particle);
+    currentLevel->AddEntityToScene(particle);
 }
 
-float TileObject::getOrderingLayer() const {
-	return 2000.f;
+float TileObject::getOrderingLayer() const
+{
+    return 2000.f;
 }
-
