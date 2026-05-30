@@ -11,4 +11,5 @@ jobs:
         with:
           clang-format-version: '18'
           check-path: '.'
-          fallback-style: 'Google'
+          fallback-style: 'file'
+          exclude-regex: '(third_party|external|build|generated|src/legacy_file\.cpp)'
