@@ -1,5 +1,7 @@
 #include "LevelMainMenu.h"
 
+
+
 void LevelMainMenu::LevelLoad() 
 {
 	SquareMeshVbo* square = new SquareMeshVbo();
@@ -663,6 +665,7 @@ void LevelMainMenu::TransitionToMenu(MenuState newState, const std::vector<UiObj
 	if (currentButton == nullptr)
 	{
 		KK_ERROR("LevelMainMenu::TransitionToMenu() : currentButton == nullptr!");
+		return;
 	}
 	for (UiObject* ui : hideList) ui->SetIsRender(false);
 	for (UiObject* ui : showList) ui->SetIsRender(true);
@@ -676,8 +679,10 @@ void LevelMainMenu::TransitionToMenu(MenuState newState, const std::vector<UiObj
 	{
 		KK_ERROR("LevelMainMenu::TransitionToMenu() : new currentButton == nullptr!");
 	}
-
-	currentButton->playerHere = true;
+	else
+	{
+		currentButton->playerHere = true;
+	}
 }
 
 void LevelMainMenu::BackToMainMenu(const std::vector<UiObject*>& activeUiList, MenuButtonName_ fallbackButtonName) {
@@ -1452,4 +1457,104 @@ void LevelMainMenu::loadConfigButtonData(std::string filename, ButtonData* butto
 		buttonData->offset.y = data["offsetY"];
 	}
 }
+
+#define RUN_TEST_SUITE 0
+
+#if RUN_TEST_SUITE
+#include "tests/catch_amalgamated.hpp"
+using namespace std;
+const GLint WIDTH = 1280, HEIGHT = 720;
+
+struct MenuTestBridge {
+	static LevelMainMenu::ButtonData* GetCurrentButton(const LevelMainMenu& menu) {
+		return menu.currentButton;
+	}
+	static int GetPlayerNumber(const LevelMainMenu& menu) {
+		return menu.playerNumber;
+	}
+	static Timer* GetTimer(const LevelMainMenu& menu) {
+		return menu.timer;
+	}
+};
+
+// Because we are inside the .cpp file, we can test private methods/variables 
+// directly without needing a "Friend Bridge" helper!
+TEST_CASE("LevelMainMenu Internal State Tests", "[InlineMenu]")
+{
+	SDL_Window* window;
+	SDL_GLContext glContext;
+	SDL_Event sdlEvent;
+
+	GameEngine* engine = nullptr;
+
+	//Use OpenGL 3.1 core
+	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
+	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 3);
+	SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
+
+	// Initialize video subsystem
+	if (SDL_Init(SDL_INIT_AUDIO | SDL_INIT_VIDEO | SDL_INIT_JOYSTICK | SDL_INIT_GAMECONTROLLER) < 0)
+	{
+		// Display error message
+		cout << "SDL could not initialize! SDL_Error: " << SDL_GetError() << endl;
+	}
+	else
+	{
+		// Create window
+		SDL_InitSubSystem(SDL_INIT_JOYSTICK);
+		TTF_Init();
+
+		window = SDL_CreateWindow("My Game", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, WIDTH, HEIGHT, SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN);
+		if (window == NULL)
+		{
+			// Display error message
+			cout << "Window could not be created! SDL_Error" << SDL_GetError() << endl;
+		}
+		else
+		{
+			// Create OpenGL context
+			glContext = SDL_GL_CreateContext(window);
+
+			if (glContext == NULL)
+			{
+				// Display error message
+				cout << "OpenGL context could not be created! SDL Error: " << SDL_GetError() << endl;
+			}
+			else
+			{
+				// Initialize glew
+				GLenum glewError = glewInit();
+				if (glewError != GLEW_OK)
+				{
+					cout << "Error initializing GLEW! " << glewGetErrorString(glewError) << endl;
+				}
+				if (SDL_GL_SetSwapInterval(1) < 0)
+				{
+					cout << "Warning: Unable to set VSync! SDL Error: " << SDL_GetError() << endl;
+				}
+
+
+				engine = GameEngine::GetInstance();
+				engine->SetSDLWindow(window);
+				engine->SetglContext(glContext);
+				engine->Init(WIDTH, HEIGHT);
+			}
+		}
+	}
+
+	LevelMainMenu menu;
+	menu.LevelInit();
+
+	SECTION("Verifying baseline configuration math") {
+		
+		REQUIRE(MenuTestBridge::GetCurrentButton(menu) != nullptr);
+		REQUIRE(MenuTestBridge::GetPlayerNumber(menu) == 4);
+		REQUIRE(MenuTestBridge::GetTimer(menu) != nullptr);
+		/*REQUIRE(menu.soundManager != nullptr);
+		REQUIRE(menu.renderer != nullptr);
+		REQUIRE(menu.gameEngine != nullptr);
+		REQUIRE(menu.currentButton != nullptr);*/
+	}
+}
+#endif
 

@@ -8,17 +8,42 @@
 //using json = nlohmann::json;
 class LevelMainMenu : public Level
 {
-private:
+	friend struct MenuTestBridge;
 
-	enum class MenuState 
-	{ 
-		Main, 
-		Credits, 
-		StartConfirm, 
-		Tutorial, 
-		Options, 
+public:
+	enum class MenuState
+	{
+		Main,
+		Credits,
+		StartConfirm,
+		Tutorial,
+		Options,
 		ExitConfirm
 	};
+
+	struct ButtonData
+	{
+		MenuButtonName_ name;
+		std::string stringName;
+		glm::vec2 pos;
+		glm::vec2 size;
+		glm::vec2 offset;
+		int column;
+
+		UiObject* ButtonUI;
+
+		ButtonData* UpperButton = nullptr;
+		ButtonData* LowerButton = nullptr;
+		ButtonData* LeftButton = nullptr;
+		ButtonData* RightButton = nullptr;
+
+		bool playerHere = false;
+
+		std::function<void()> OnExecute = nullptr;
+		std::function<void()> OnHover = nullptr;
+	};
+
+private:
 
 	const std::unordered_map<MenuButtonName_, int> volumeBoxIndexMap = {
 	{MenuButtonName_MasterVolume_Box, 0},
@@ -88,40 +113,23 @@ private:
 	OrthographicValue targetSceneProjection; // use for lerping between the current projection and this (target projection).
 	Camera camera;
 	Timer* timer;
-	KrillSoundManager::SoundManager* soundManager;
-	GLRenderer* renderer;
-	GameEngine* gameEngine;
+	
 
 	ImVec2 joystickVal;
-
-	struct ButtonData
-	{
-		MenuButtonName_ name;
-		std::string stringName;
-		glm::vec2 pos;
-		glm::vec2 size;
-		glm::vec2 offset;
-		int column;
-
-		UiObject* ButtonUI;
-
-		ButtonData* UpperButton = nullptr;
-		ButtonData* LowerButton = nullptr;
-		ButtonData* LeftButton = nullptr;
-		ButtonData* RightButton = nullptr;
-
-		bool playerHere = false;
-
-		std::function<void()> OnExecute = nullptr;
-		std::function<void()> OnHover = nullptr;
-	};
 
 	std::map<MenuButtonName_, ButtonData*> buttonList;
 	std::vector<ButtonData*> Buttons;
 
+	KrillSoundManager::SoundManager* soundManager;
+	GLRenderer* renderer;
+	GameEngine* gameEngine;
+
 	ButtonData* currentButton;
 
 public:
+
+	
+
 	virtual void LevelLoad();
 	virtual void LevelInit();
 	virtual void LevelUpdate();
@@ -145,7 +153,7 @@ public:
 
 	void BackToMainMenu(const std::vector<UiObject*>& activeUiList, MenuButtonName_ fallbackButtonName);
 	void TransitionToMenu(MenuState newState, const std::vector<UiObject*>& hideList, const std::vector<UiObject*>& showList, MenuButtonName_ defaultButtonKey);
-	void InitializeMenuButtons();
+	void InitializeButtonsAction();
 	void SwitchActiveButton(MenuButtonName_ targetKey, bool disableOldPlayerHere = true);
 
 	// Options
