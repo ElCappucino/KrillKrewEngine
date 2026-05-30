@@ -3,11 +3,11 @@
 #include "SDL_events.h"
 #include "SDL_gamecontroller.h"
 
+#include <algorithm>
 #include <array>
+#include <iostream>
 #include <memory>
 #include <unordered_map>
-#include <algorithm>
-#include <iostream>
 
 #include "Log.h"
 
@@ -30,12 +30,12 @@ public:
     enum class Button
     {
         Cross = SDL_CONTROLLER_BUTTON_A,             // A (Xbox), Cross (PS)
-        Circle = SDL_CONTROLLER_BUTTON_B,             // B (Xbox), Circle (PS)
-        Square = SDL_CONTROLLER_BUTTON_X,             // X (Xbox), Square (PS)
-        Triangle = SDL_CONTROLLER_BUTTON_Y,             // Y (Xbox), Triangle (PS)
-        ShareButton = SDL_CONTROLLER_BUTTON_BACK,          // Back/Share
-        P5Button = SDL_CONTROLLER_BUTTON_GUIDE,         // PS / Xbox Logo
-        OptionsButton = SDL_CONTROLLER_BUTTON_START,         // Start/Options
+        Circle = SDL_CONTROLLER_BUTTON_B,            // B (Xbox), Circle (PS)
+        Square = SDL_CONTROLLER_BUTTON_X,            // X (Xbox), Square (PS)
+        Triangle = SDL_CONTROLLER_BUTTON_Y,          // Y (Xbox), Triangle (PS)
+        ShareButton = SDL_CONTROLLER_BUTTON_BACK,    // Back/Share
+        P5Button = SDL_CONTROLLER_BUTTON_GUIDE,      // PS / Xbox Logo
+        OptionsButton = SDL_CONTROLLER_BUTTON_START, // Start/Options
         LeftStickDown = SDL_CONTROLLER_BUTTON_LEFTSTICK,
         RightStickDown = SDL_CONTROLLER_BUTTON_RIGHTSTICK,
         L1 = SDL_CONTROLLER_BUTTON_LEFTSHOULDER,
@@ -44,7 +44,7 @@ public:
         DPAD_Down = SDL_CONTROLLER_BUTTON_DPAD_DOWN,
         DPAD_Left = SDL_CONTROLLER_BUTTON_DPAD_LEFT,
         DPAD_Right = SDL_CONTROLLER_BUTTON_DPAD_RIGHT,
-        Touchpad = SDL_CONTROLLER_BUTTON_TOUCHPAD,      // Only on PS controllers
+        Touchpad = SDL_CONTROLLER_BUTTON_TOUCHPAD, // Only on PS controllers
         Count
     };
 

@@ -1,38 +1,36 @@
 #pragma once
 #include "glm.hpp"
-#include <vector>
 #include "gtc/matrix_transform.hpp"
 #include "gtc/type_ptr.hpp"
+#include <vector>
 
 /// @brief The class for creating drawable object
 class DrawableObject
 {
 protected:
-	glm::vec3 pos;
-	glm::vec3 size;
-	float rotateAngle;
-	int orderingLayer;
-	bool isActive = true;
-	bool ApplyTransform(glm::mat4 globalModelTransform);
-	bool SetRenderMode(int renderMode);
+    glm::vec3 pos;
+    glm::vec3 size;
+    float rotateAngle;
+    int orderingLayer;
+    bool isActive = true;
+    bool ApplyTransform(glm::mat4 globalModelTransform);
+    bool SetRenderMode(int renderMode);
 
 public:
-	glm::mat4 getTransform();
-	bool GetIsActive();
-	void SetIsActive(bool isActive);
-	DrawableObject();
-	virtual ~DrawableObject();
-	virtual void Render(glm::mat4 globalModelTransform) = 0;
-	virtual void SetSize(float sizeX, float sizeY);
-	virtual void SetPosition(glm::vec3 newPosition);
-	virtual void SetRotation(float degree);
-	void SetOrderingLayer(int layer);
-	void Translate(glm::vec3 moveDistance);
-	virtual glm::vec3 getPos();
-	glm::vec3 getSize();
-	virtual float getOrderingLayer() const;
+    glm::mat4 getTransform();
+    bool GetIsActive();
+    void SetIsActive(bool isActive);
+    DrawableObject();
+    virtual ~DrawableObject();
+    virtual void Render(glm::mat4 globalModelTransform) = 0;
+    virtual void SetSize(float sizeX, float sizeY);
+    virtual void SetPosition(glm::vec3 newPosition);
+    virtual void SetRotation(float degree);
+    void SetOrderingLayer(int layer);
+    void Translate(glm::vec3 moveDistance);
+    virtual glm::vec3 getPos();
+    glm::vec3 getSize();
+    virtual float getOrderingLayer() const;
 
-	//Rotate, Scale ???
-
+    // Rotate, Scale ???
 };
-
