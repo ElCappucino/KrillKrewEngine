@@ -11,37 +11,58 @@ class LevelMainMenu : public Level
     friend struct MenuTestBridge;
 
 public:
-    enum class MenuState
-    {
-        Main,
-        Credits,
-        StartConfirm,
-        Tutorial,
-        Options,
-        ExitConfirm
-    };
+	enum class MenuState
+	{
+		Main,
+		Credits,
+		StartConfirm,
+		Tutorial,
+		Options,
+		ExitConfirm
+	};
 
-    struct ButtonData
-    {
-        MenuButtonName_ name;
-        std::string stringName;
-        glm::vec2 pos;
-        glm::vec2 size;
-        glm::vec2 offset;
-        int column;
+	struct ButtonData
+	{
+		MenuButtonName_ name;
+		std::string stringName;
+		glm::vec2 pos;
+		glm::vec2 size;
+		glm::vec2 offset;
+		int column;
 
-        UiObject* ButtonUI;
+		UiObject* ButtonUI;
 
-        ButtonData* UpperButton = nullptr;
-        ButtonData* LowerButton = nullptr;
-        ButtonData* LeftButton = nullptr;
-        ButtonData* RightButton = nullptr;
+		ButtonData* UpperButton = nullptr;
+		ButtonData* LowerButton = nullptr;
+		ButtonData* LeftButton = nullptr;
+		ButtonData* RightButton = nullptr;
 
-        bool playerHere = false;
+		bool playerHere = false;
 
-        std::function<void()> OnExecute = nullptr;
-        std::function<void()> OnHover = nullptr;
-    };
+		std::function<void()> OnExecute = nullptr;
+		std::vector<std::function<void()>> OnHoverListeners;
+
+		// 2. Helper method to easily subscribe new functions
+		void AddOnHover(std::function<void()> callback)
+		{
+			if (callback)
+			{
+				OnHoverListeners.push_back(callback);
+			}
+		}
+
+		// 3. Helper method to fire all registered functions
+		void InvokeHover()
+		{
+			for (const auto& callback : OnHoverListeners)
+			{
+				if (callback)
+				{
+					callback(); // Execute each registered function in order
+				}
+			}
+		}
+	};
 
 private:
     const std::unordered_map<MenuButtonName_, int> volumeBoxIndexMap = {

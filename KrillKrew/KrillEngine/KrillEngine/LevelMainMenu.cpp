@@ -545,135 +545,134 @@ void LevelMainMenu::UpdateAudio()
 }
 void LevelMainMenu::InitializeButtonHoverActions()
 {
-    // Assign hover function
-    // Lambda function for main menu text hover
-    auto BindNormalHoverFunction = [this](MenuButtonName_ enumName, int activeCol, int inactiveCol) {
-        if (! buttonList[enumName])
-        {
-            KK_CORE_ERROR("LevelMainMenu::InitializeButtonHoverActions() : No button in buttonList that matches the name!");
-            return;
-        }
+	// Assign hover function
+	// Lambda function for main menu text hover
+	auto BindNormalHoverFunction = [this](MenuButtonName_ enumName, int activeCol, int inactiveCol) {
 
-        buttonList[enumName]->OnHover = [this, enumName, activeCol, inactiveCol]() {
-            ButtonData* btn = buttonList[enumName];
-            if (! btn)
-            {
-                KK_CORE_ERROR("LevelMainMenu::InitializeButtonHoverActions() : No button data!");
-                return;
-            }
+		if (!buttonList[enumName])
+		{ 
+			KK_CORE_ERROR("LevelMainMenu::InitializeButtonHoverActions() : No button in buttonList that matches the name!");
+			return;
+		}
 
-            if (! btn->ButtonUI)
-            {
-                KK_CORE_ERROR("LevelMainMenu::InitializeButtonHoverActions() : button isn't initialize UI yet!");
-                return;
-            }
+		buttonList[enumName]->AddOnHover([this, enumName, activeCol, inactiveCol]() {
 
-            btn->ButtonUI->ShiftSpriteTo(0, btn->playerHere ? activeCol : inactiveCol);
-        };
-    };
+			ButtonData* btn = buttonList[enumName];
+			if (!btn)
+			{
+				KK_CORE_ERROR("LevelMainMenu::InitializeButtonHoverActions() : No button data!");
+				return;
+			}
 
-    BindNormalHoverFunction(MenuButtonName_GameName, 1, 0);
-    BindNormalHoverFunction(MenuButtonName_StartButton, 1, 0);
-    BindNormalHoverFunction(MenuButtonName_TutorialButton, 3, 2);
-    BindNormalHoverFunction(MenuButtonName_OptionButton, 5, 4);
-    BindNormalHoverFunction(MenuButtonName_ExitButton, 7, 6);
+			if (!btn->ButtonUI)
+			{
+				KK_CORE_ERROR("LevelMainMenu::InitializeButtonHoverActions() : button isn't initialize UI yet!");
+				return;
+			}
 
-    BindNormalHoverFunction(MenuButtonName_AreYouSureStart_Yes, 1, 0);
-    BindNormalHoverFunction(MenuButtonName_AreYouSureStart_No, 3, 2);
-    BindNormalHoverFunction(MenuButtonName_AreYouSureExit_Yes, 1, 0);
-    BindNormalHoverFunction(MenuButtonName_AreYouSureExit_No, 3, 2);
+			btn->ButtonUI->ShiftSpriteTo(0, btn->playerHere ? activeCol : inactiveCol);
+		});
+	};
 
-    BindNormalHoverFunction(MenuButtonName_DisplayType_Text, 1, 0);
-    BindNormalHoverFunction(MenuButtonName_MasterVolume_Text, 3, 2);
-    BindNormalHoverFunction(MenuButtonName_SFXVolume_Text, 5, 4);
-    BindNormalHoverFunction(MenuButtonName_BGMVolume_Text, 7, 6);
+	BindNormalHoverFunction(MenuButtonName_GameName, 1, 0);
+	BindNormalHoverFunction(MenuButtonName_StartButton, 1, 0);
+	BindNormalHoverFunction(MenuButtonName_TutorialButton, 3, 2);
+	BindNormalHoverFunction(MenuButtonName_OptionButton, 5, 4);
+	BindNormalHoverFunction(MenuButtonName_ExitButton, 7, 6);
 
-    BindNormalHoverFunction(MenuButtonName_MasterVolume_Track, 1, 0);
-    BindNormalHoverFunction(MenuButtonName_SFXVolume_Track, 1, 0);
-    BindNormalHoverFunction(MenuButtonName_BGMVolume_Track, 1, 0);
+	BindNormalHoverFunction(MenuButtonName_AreYouSureStart_Yes, 1, 0);
+	BindNormalHoverFunction(MenuButtonName_AreYouSureStart_No, 3, 2);
+	BindNormalHoverFunction(MenuButtonName_AreYouSureExit_Yes, 1, 0);
+	BindNormalHoverFunction(MenuButtonName_AreYouSureExit_No, 3, 2);
 
-    BindNormalHoverFunction(MenuButtonName_MasterVolume_Knob, 1, 0);
-    BindNormalHoverFunction(MenuButtonName_SFXVolume_Knob, 1, 0);
-    BindNormalHoverFunction(MenuButtonName_BGMVolume_Knob, 1, 0);
+	BindNormalHoverFunction(MenuButtonName_DisplayType_Text, 1, 0);
+	BindNormalHoverFunction(MenuButtonName_MasterVolume_Text, 3, 2);
+	BindNormalHoverFunction(MenuButtonName_SFXVolume_Text, 5, 4);
+	BindNormalHoverFunction(MenuButtonName_BGMVolume_Text, 7, 6);
 
-    // Lambda function for main menu text hover
-    if (! buttonList[MenuButtonName_DisplayType])
-    {
-        KK_CORE_ERROR("LevelMainMenu::InitializeButtonHoverActions() : No MenuButtonName_DisplayType button data!");
-    }
-    else
-    {
-        buttonList[MenuButtonName_DisplayType]->OnHover = [this]() {
-            ButtonData* btn = buttonList[MenuButtonName_DisplayType];
-            if (! btn)
-            {
-                KK_CORE_ERROR("LevelMainMenu::InitializeButtonHoverActions() : No button data!");
-                return;
-            }
+	BindNormalHoverFunction(MenuButtonName_MasterVolume_Track, 1, 0);
+	BindNormalHoverFunction(MenuButtonName_SFXVolume_Track, 1, 0);
+	BindNormalHoverFunction(MenuButtonName_BGMVolume_Track, 1, 0);
 
-            if (! btn->ButtonUI)
-            {
-                KK_CORE_ERROR("LevelMainMenu::InitializeButtonHoverActions() : button isn't initialize UI yet!");
-                return;
-            }
+	BindNormalHoverFunction(MenuButtonName_MasterVolume_Knob, 1, 0);
+	BindNormalHoverFunction(MenuButtonName_SFXVolume_Knob, 1, 0);
+	BindNormalHoverFunction(MenuButtonName_BGMVolume_Knob, 1, 0);
 
-            int baseOffset = ! this->isFullscreen ? 2 : 0;
-            int playerOffset = btn->playerHere ? 0 : 1;
-            btn->ButtonUI->ShiftSpriteTo(0, baseOffset + playerOffset);
-        };
-    }
+	// Lambda function for main menu text hover
+	if (!buttonList[MenuButtonName_DisplayType])
+	{
+		KK_CORE_ERROR("LevelMainMenu::InitializeButtonHoverActions() : No MenuButtonName_DisplayType button data!");
+	}
+	else
+	{
+		buttonList[MenuButtonName_DisplayType]->AddOnHover([this]() {
+			ButtonData* btn = buttonList[MenuButtonName_DisplayType];
+			if (!btn)
+			{
+				KK_CORE_ERROR("LevelMainMenu::InitializeButtonHoverActions() : No button data!");
+				return;
+			}
 
-    // Lambda function for volume mute checkbox
-    auto BindVolumeBoxHoverFunction = [this](MenuButtonName_ enumName, int mapIndex) {
-        if (! buttonList[enumName])
-        {
-            KK_CORE_ERROR("LevelMainMenu::InitializeButtonHoverActions() at BindVolumeBoxHoverFunction() : No button in buttonList that "
-                          "matches the name!");
-            return;
-        }
+			if (!btn->ButtonUI)
+			{
+				KK_CORE_ERROR("LevelMainMenu::InitializeButtonHoverActions() : button isn't initialize UI yet!");
+				return;
+			}
 
-        buttonList[enumName]->OnHover = [this, enumName, mapIndex]() {
-            ButtonData* btn = buttonList[enumName];
-            if (! btn)
-            {
-                KK_CORE_ERROR("LevelMainMenu::InitializeButtonHoverActions() at BindVolumeBoxHoverFunction() : No button data!");
-                return;
-            }
+			int baseOffset = !this->isFullscreen ? 2 : 0;
+			int playerOffset = btn->playerHere ? 0 : 1;
+			btn->ButtonUI->ShiftSpriteTo(0, baseOffset + playerOffset);
+			});
+	}
 
-            if (! btn->ButtonUI)
-            {
-                KK_CORE_ERROR(
-                    "LevelMainMenu::InitializeButtonHoverActions() at BindVolumeBoxHoverFunction() : button isn't initialize UI yet!");
-                return;
-            }
+	// Lambda function for volume mute checkbox
+	auto BindVolumeBoxHoverFunction = [this](MenuButtonName_ enumName, int mapIndex) {
 
-            bool isToggled = this->isToggleVolume[mapIndex];
-            int yIndex = btn->playerHere ? (isToggled ? 0 : 2) : (isToggled ? 1 : 3);
-            btn->ButtonUI->ShiftSpriteTo(0, yIndex);
-        };
-    };
+		if (!buttonList[enumName])
+		{
+			KK_CORE_ERROR("LevelMainMenu::InitializeButtonHoverActions() at BindVolumeBoxHoverFunction() : No button in buttonList that matches the name!");
+			return;
+		}
 
-    BindVolumeBoxHoverFunction(MenuButtonName_MasterVolume_Box, 0);
-    BindVolumeBoxHoverFunction(MenuButtonName_SFXVolume_Box, 1);
-    BindVolumeBoxHoverFunction(MenuButtonName_BGMVolume_Box, 2);
+		buttonList[enumName]->AddOnHover([this, enumName, mapIndex]() {
+
+			ButtonData* btn = buttonList[enumName];
+			if (!btn)
+			{
+				KK_CORE_ERROR("LevelMainMenu::InitializeButtonHoverActions() at BindVolumeBoxHoverFunction() : No button data!");
+				return;
+			}
+
+			if (!btn->ButtonUI)
+			{
+				KK_CORE_ERROR("LevelMainMenu::InitializeButtonHoverActions() at BindVolumeBoxHoverFunction() : button isn't initialize UI yet!");
+				return;
+			}
+
+			bool isToggled = this->isToggleVolume[mapIndex];
+			int yIndex = btn->playerHere ? (isToggled ? 0 : 2) : (isToggled ? 1 : 3);
+			btn->ButtonUI->ShiftSpriteTo(0, yIndex);
+			});
+		};
+
+	BindVolumeBoxHoverFunction(MenuButtonName_MasterVolume_Box, 0);
+	BindVolumeBoxHoverFunction(MenuButtonName_SFXVolume_Box, 1);
+	BindVolumeBoxHoverFunction(MenuButtonName_BGMVolume_Box, 2);
 }
 void LevelMainMenu::UpdateUi()
 {
-    for (auto& pair : buttonList)
-    {
-        ButtonData* buttonData = pair.second;
+	for (auto& pair : buttonList)
+	{
+		ButtonData* buttonData = pair.second;
 
-        if (buttonData == nullptr)
-        {
-            KK_ERROR("LevelMainMenu::UpdateUi() : buttonData == nullptr!");
-            continue;
-        }
+		if (buttonData == nullptr)
+		{
+			KK_ERROR("LevelMainMenu::UpdateUi() : buttonData == nullptr!");
+			continue;
+		}
 
-        if (buttonData->OnHover)
-        {
-            buttonData->OnHover();
-        }
-    }
+		buttonData->InvokeHover();
+	}
 }
 
 void LevelMainMenu::TransitionToMenu(MenuState newState,
@@ -1202,153 +1201,138 @@ void LevelMainMenu::ShowImGuiConfig(bool isShowing)
 
 void LevelMainMenu::UpdateInput()
 {
-    // change this to test the joystick
-    bool isUsingJoystick = false;
+	// change this to test the joystick
+	bool isUsingJoystick = false;
 
-    up = false;
-    down = false;
-    right = false;
-    left = false;
+	up = false;
+	down = false;
+	right = false;
+	left = false;
 
-    if (isUsingJoystick)
-    {
-        if (SDL_NumJoysticks() > 0)
-        {
-            Joystick::Update();
-            for (int i = 0; i < 1; i++)
-            {
-                float axisX = Joystick::GetAxis(0, Joystick::Axis::LeftStickHorizontal);
-                float axisY = Joystick::GetAxis(0, Joystick::Axis::LeftStickVertical);
+	if (isUsingJoystick)
+	{
+		if (SDL_NumJoysticks() > 0)
+		{
+			Joystick::Update();
+			for (int i = 0; i < 1; i++)
+			{
+				float axisX = Joystick::GetAxis(0, Joystick::Axis::LeftStickHorizontal);
+				float axisY = Joystick::GetAxis(0, Joystick::Axis::LeftStickVertical);
 
-                up = false;
-                down = false;
-                right = false;
-                left = false;
+				up = false;
+				down = false;
+				right = false;
+				left = false;
 
-                if (axisX > 0.8 || joystickVal.x > 0.8 || Joystick::GetButtonDown(0, Joystick::Button::DPAD_Right))
-                {
-                    right = true;
-                    holdright = true;
-                }
-                else if (axisX < -0.8 || joystickVal.x < -0.8 || Joystick::GetButtonDown(0, Joystick::Button::DPAD_Left))
-                {
-                    left = true;
-                    holdleft = true;
-                }
-                else if (axisY > 0.8 || joystickVal.y < -0.8 || Joystick::GetButtonDown(0, Joystick::Button::DPAD_Down))
-                {
+				if (axisX > 0.8 || joystickVal.x > 0.8 || Joystick::GetButtonDown(0, Joystick::Button::DPAD_Right)) {
+					right = true;
+					holdright = true;
+				}
+				else if (axisX < -0.8 || joystickVal.x < -0.8 || Joystick::GetButtonDown(0, Joystick::Button::DPAD_Left)) {
+					left = true;
+					holdleft = true;
+				}
+				else if (axisY > 0.8 || joystickVal.y < -0.8 || Joystick::GetButtonDown(0, Joystick::Button::DPAD_Down)) {
 
-                    down = true;
-                    holddown = true;
-                }
-                else if (axisY < -0.8 || joystickVal.y > 0.8 || Joystick::GetButtonDown(0, Joystick::Button::DPAD_Up))
-                {
-                    up = true;
-                    holdup = true;
-                }
-                else
-                {
-                    holdright = false;
-                    holdleft = false;
-                    holddown = false;
-                    holdup = false;
+					down = true;
+					holddown = true;
+				}
+				else if (axisY < -0.8 || joystickVal.y > 0.8 || Joystick::GetButtonDown(0, Joystick::Button::DPAD_Up)) {
+					up = true;
+					holdup = true;
 
-                    playerMove = false;
-                }
+				}
+				else
+				{
+					holdright = false;
+					holdleft = false;
+					holddown = false;
+					holdup = false;
 
-                if (Joystick::GetButtonDown(i, Joystick::Button::Cross))
-                    isPressedCross = true;
-                if (Joystick::GetButtonDown(i, Joystick::Button::Circle))
-                    isPressedCircle = true;
-                if (Joystick::GetButtonDown(i, Joystick::Button::Square))
-                    isPressedSquare = true;
-                if (Joystick::GetButtonDown(i, Joystick::Button::Triangle))
-                    isPressedTriangle = true;
-            }
-        }
-    }
-    else
-    {
-        if (joystickVal.x > 0.8)
-        {
-            right = true;
-            holdright = true;
-        }
-        else if (joystickVal.x < -0.8)
-        {
-            left = true;
-            holdleft = true;
-        }
-        else if (joystickVal.y > 0.8)
-        {
-            up = true;
-            holdup = true;
-        }
-        else if (joystickVal.y < -0.8)
-        {
+					playerMove = false;
+				}
 
-            down = true;
-            holddown = true;
-        }
-        else
-        {
-            holdright = false;
-            holdleft = false;
-            holddown = false;
-            holdup = false;
+				if (Joystick::GetButtonDown(i, Joystick::Button::Cross)) isPressedCross = true;
+				if (Joystick::GetButtonDown(i, Joystick::Button::Circle)) isPressedCircle = true;
+				if (Joystick::GetButtonDown(i, Joystick::Button::Square)) isPressedSquare = true;
+				if (Joystick::GetButtonDown(i, Joystick::Button::Triangle)) isPressedTriangle = true;
+			}
+		}
+	}
+	else
+	{
+		if (joystickVal.x > 0.8) {
+			right = true;
+			holdright = true;
+		}
+		else if (joystickVal.x < -0.8) {
+			left = true;
+			holdleft = true;
+		}
+		else if (joystickVal.y > 0.8) {
+			up = true;
+			holdup = true;
+		}
+		else if (joystickVal.y < -0.8) {
 
-            playerMove = false;
-        }
-    }
+			down = true;
+			holddown = true;
+		}
+		else
+		{
+			holdright = false;
+			holdleft = false;
+			holddown = false;
+			holdup = false;
 
-    switch (currentMenuState)
-    {
-        case MenuState::Main:
-            HandleMainMenuLogic();
-            break;
-        case MenuState::Credits:
-            HandleCreditsLogic();
-            break;
-        case MenuState::StartConfirm:
-            HandleStartConfirmLogic();
-            break;
-        case MenuState::Tutorial:
-            HandleTutorialLogic();
-            break;
-        case MenuState::Options:
-            HandleOptionsLogic();
-            break;
-        case MenuState::ExitConfirm:
-            HandleExitConfirmLogic();
-            break;
-    }
+			playerMove = false;
+		}
+	}
 
-    // update joystick inputs
-    if (! playerMove && (up || down || left || right))
-    {
-        playerMove = true;
-        currentButton->playerHere = false;
 
-        if (up && currentButton->UpperButton != nullptr)
-            currentButton = currentButton->UpperButton;
+	switch (currentMenuState) {
+	case MenuState::Main:        HandleMainMenuLogic(); break;
+	case MenuState::Credits:     HandleCreditsLogic();  break;
+	case MenuState::StartConfirm:    HandleStartConfirmLogic(); break;
+	case MenuState::Tutorial:    HandleTutorialLogic(); break;
+	case MenuState::Options:    HandleOptionsLogic(); break;
+	case MenuState::ExitConfirm:    HandleExitConfirmLogic(); break;
+	}
 
-        if (down && currentButton->LowerButton != nullptr)
-            currentButton = currentButton->LowerButton;
+	// update joystick inputs
+	if (!playerMove && (up || down || left || right))
+	{
+		playerMove = true;
+		currentButton->playerHere = false;
 
-        if (left && currentButton->LeftButton != nullptr)
-            currentButton = currentButton->LeftButton;
+		ButtonData* previousButton = currentButton;
 
-        if (right && currentButton->RightButton != nullptr)
-            currentButton = currentButton->RightButton;
+		if (up && currentButton->UpperButton != nullptr)
+			currentButton = currentButton->UpperButton;
 
-        currentButton->playerHere = true;
-    }
+		if (down && currentButton->LowerButton != nullptr)
+			currentButton = currentButton->LowerButton;
 
-    // Reset button to prevent infinite Click
-    isPressedCross = false;
-    isPressedCircle = false;
-    isPressedSquare = false;
-    isPressedTriangle = false;
+		if (left && currentButton->LeftButton != nullptr)
+			currentButton = currentButton->LeftButton;
+
+		if (right && currentButton->RightButton != nullptr)
+			currentButton = currentButton->RightButton;
+
+		currentButton->playerHere = true;
+
+		if (previousButton != currentButton)
+		{
+			currentButton->InvokeHover();
+		}
+	}
+
+
+	// Reset button to prevent infinite Click
+	isPressedCross = false;
+	isPressedCircle = false;
+	isPressedSquare = false;
+	isPressedTriangle = false;
 }
 
 void LevelMainMenu::LevelUpdate()
