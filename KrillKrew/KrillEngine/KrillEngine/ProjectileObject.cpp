@@ -8,13 +8,23 @@ ProjectileObject::ProjectileObject()
 	collider = new Collider(Collider::Trigger, this);
 	this->pos = glm::vec3(0, 0, 0);
 	this->playerOwner = nullptr;
+	this->velocity = glm::vec3(0, 0, 0);
+	this->lifeTime = 0.0f;
+	this->CanKnockback = false;
+	this->CanStun = false;
+	this->isShooting = false;
+	this->type = TypeProjectile::Fireball;
+	this->currAnimState = AnimationState::Idle;
 	
 	this->orderingLayer = 3;
 
 	this->isAnimated = true;
 	this->rotateAngle = 0;
 
-	this->spriteRenderer->SetFrame(10);
+	if (this->spriteRenderer != nullptr)
+	{
+		this->spriteRenderer->SetFrame(10);
+	}
 }
 
 
@@ -46,11 +56,13 @@ void ProjectileObject::SetVelocity(float axisX, float axisY, bool isPositiveX, b
 	velocity = glm::vec3(axisX * 5.f, axisY * 5.f, 0);
 
 }
+
 void ProjectileObject::SetSize(float sizeX, float sizeY)
 {
 	size = glm::vec3(sizeX, sizeY, 1);
 	this->collider->setColliderSize(size);
 }
+
 glm::vec3 ProjectileObject::GetVelocity() 
 {
 	return velocity;
@@ -58,22 +70,31 @@ glm::vec3 ProjectileObject::GetVelocity()
 
 void ProjectileObject::SetLifeTime(float lifeTime) 
 {
-	this->lifeTime = lifeTime;
+	this->lifeTime = std::max(0.0f, lifeTime);
 }
+
 void ProjectileObject::SetOwner(PlayerObject* player)
 {
 	this->playerOwner = player;
 }
+
 void ProjectileObject::ReduceLifeTime(float dt) 
-{
-	lifeTime -= dt;
+{	
+	if (dt <= 0.0f)
+	{
+		return;
+	}
+
+	lifeTime = std::max(0.0f, lifeTime - dt);
+
 	if (lifeTime <= 0.0f && currAnimState != AnimationState::Collide)
 	{
 		if (type == ProjectileObject::TypeProjectile::Cleave)
 		{
 			this->SetIsActive(false);
 		}
-		if (type == ProjectileObject::TypeProjectile::Teleport) 
+
+		if (type == ProjectileObject::TypeProjectile::Teleport && playerOwner != nullptr)
 		{
 			playerOwner->SetPosition(this->getPos());
 		}
@@ -83,7 +104,7 @@ void ProjectileObject::ReduceLifeTime(float dt)
 			this->SetRotation(0);
 			ExplodeTileInRange();
 		}
-		else if (this->type == ProjectileObject::TypeProjectile::Teleport) 
+		else if (type == ProjectileObject::TypeProjectile::Teleport && playerOwner != nullptr)
 		{
 			playerOwner->SetPosition(this->getPos());
 		}
@@ -91,6 +112,7 @@ void ProjectileObject::ReduceLifeTime(float dt)
 		{
 			//KK_ERROR("This is not fireball");
 		}
+
 		auto CollideSprite = animList.find(AnimationState::Collide);
 		if (CollideSprite != animList.end())
 		{
@@ -102,9 +124,17 @@ void ProjectileObject::ReduceLifeTime(float dt)
 
 void ProjectileObject::AddTileInRange(TileObject* tile)
 {
-	//KK_TRACE("AddTileInRange");
-	TileInRange.push_back(tile);
+	if (tile == nullptr)
+	{
+		return;
+	}
+
+	if (std::find(TileInRange.begin(), TileInRange.end(), tile) == TileInRange.end())
+	{
+		TileInRange.push_back(tile);
+	}
 }
+
 void ProjectileObject::DeleteTileInRange(TileObject* tile)
 {
 	auto clearTile = std::find(TileInRange.begin(), TileInRange.end(), tile);
@@ -124,7 +154,10 @@ void ProjectileObject::ExplodeTileInRange()
 	//KK_TRACE("Tile in range = {0}", TileInRange.size());
 	for (TileObject* tile : TileInRange)
 	{
-		tile->GotHit();
+		if (tile != nullptr)
+		{
+			tile->GotHit();
+		}
 	}
 	//this->isActive = false;
 }
@@ -141,6 +174,11 @@ void ProjectileObject::OnColliderEnter(Collider* other)
 {
 	// Base
 	EntityObject::OnColliderEnter(other);
+
+	if (other == nullptr || other->GetParent() == nullptr)
+	{
+		return;
+	}
 
 	TileObject* tile = dynamic_cast<TileObject*>(other->GetParent());
 
@@ -163,14 +201,17 @@ void ProjectileObject::OnColliderEnter(Collider* other)
 	if (player != nullptr)
 	{
 		if (this->playerOwner != player)
-		{
-			playerOwner->SetIsShooting(false);
-			playerOwner->SetIsAiming(false);
+		{	
 			if (playerOwner == nullptr)
 			{
 				//KK_ERROR("Projectile has no owner");
+				return;
 			}
-			else if (currAnimState != AnimationState::Collide)
+
+			playerOwner->SetIsShooting(false);
+			playerOwner->SetIsAiming(false);
+			
+			if (currAnimState != AnimationState::Collide)
 			{
 				//KK_INFO("Projectile Hit Player");
 				playerOwner->SetIsShooting(false);
@@ -190,7 +231,10 @@ void ProjectileObject::OnColliderEnter(Collider* other)
 				}
 				else if (this->type == ProjectileObject::TypeProjectile::Teleport) {
 					playerOwner->SetPosition(this->getPos());
-					playerOwner->GetGroundColliderObject()->SetPosition(this->getPos());
+					if (playerOwner->GetGroundColliderObject() != nullptr)
+					{
+						playerOwner->GetGroundColliderObject()->SetPosition(this->getPos());
+					}
 					playerOwner->SetPosition(this->getPos());
 					KrillSoundManager::SoundManager::GetInstance()->PlaySFX("Teleport_Hit", false);
 				}
@@ -223,6 +267,7 @@ void ProjectileObject::OnColliderEnter(Collider* other)
 		
 	}
 }
+
 void ProjectileObject::OnColliderStay(Collider* other)
 {
 	// Base
@@ -230,10 +275,16 @@ void ProjectileObject::OnColliderStay(Collider* other)
 
 	// Behavior
 }
+
 void ProjectileObject::OnColliderExit(Collider* other)
 {
 	// Base
 	EntityObject::OnColliderExit(other);
+
+	if (other == nullptr || other->GetParent() == nullptr)
+	{
+		return;
+	}
 
 	TileObject* tile = dynamic_cast<TileObject*>(other->GetParent());
 
@@ -243,6 +294,7 @@ void ProjectileObject::OnColliderExit(Collider* other)
 	}
 	// Behavior
 }
+
 void ProjectileObject::OnTriggerEnter(Collider* other)
 {
 	// Base
@@ -319,9 +371,14 @@ void ProjectileObject::SetIsCanStun(bool isCanStun) {
 bool ProjectileObject::GetIsCanStun() {
 	return CanStun;
 }
+
 void ProjectileObject::UpdateCurrentAnimation()
 {
-	
+	if (GetSpriteRenderer() == nullptr)
+	{
+		return;
+	}
+
 	if (currAnimState == AnimationState::Collide)
 	{
 		this->SetVelocity(0, 0, true, true);
@@ -332,8 +389,11 @@ void ProjectileObject::UpdateCurrentAnimation()
 		if (GetIsAnimated() && GetSpriteRenderer()->GetColumn() == lastFrame)
 		{
 			this->SetIsActive(false);
-			playerOwner->SetIsShooting(false);
-			playerOwner->RemoveOwningProjectile(this);
+			if (playerOwner != nullptr)
+			{
+				playerOwner->SetIsShooting(false);
+				playerOwner->RemoveOwningProjectile(this);
+			}
 		}
 	}
 }
@@ -345,21 +405,25 @@ void ProjectileObject::SetAnimationSprite(AnimationState state, SpritesheetInfo 
 
 void ProjectileObject::ChangeAnimationState(AnimationState anim)
 {
+	auto animation = animList.find(anim);
+
+	if (animation == animList.end() || this->spriteRenderer == nullptr)
+	{
+		return;
+	}
+
 	if (currAnimState != anim)
 	{
 		currAnimState = anim;
-		this->SetTextureWithID(animList.find(anim)->second, animList.find(anim)->second.textureid);
-		this->spriteRenderer->SetTexture(animList.find(anim)->second.texture);
-		//this->SetTexture(animList.find(anim)->second.texture);
+		this->SetTextureWithID(animation->second, animation->second.textureid);
+		this->spriteRenderer->SetTexture(animation->second.texture);
 		this->spriteRenderer->ShiftTo(0, 0);
-		this->spriteRenderer->isLoop = animList.find(anim)->second.isLoop;
+		this->spriteRenderer->isLoop = animation->second.isLoop;
 
 		if (anim == AnimationState::Collide)
 		{
-			// up size explode effect
 			this->SetSize(this->getSize().x * 2.0f, this->getSize().y * 2.0f);
 		}
-		
 	}
 }
 

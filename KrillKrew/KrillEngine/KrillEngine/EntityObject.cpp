@@ -85,11 +85,18 @@ void EntityObject::SetAnimationSprite(AnimationState state, SpritesheetInfo spri
 }
 void EntityObject::ChangeAnimationState(AnimationState anim)
 {
+	auto animation = animList.find(anim);
+
+	if (animation == animList.end() || this->spriteRenderer == nullptr)
+	{
+		return;
+	}
+
 	if (currAnimState != anim)
 	{
 		currAnimState = anim;
-		this->SetTextureWithID(animList.find(anim)->second, animList.find(anim)->second.textureid);
-		this->spriteRenderer->SetTexture(animList.find(anim)->second.texture);
+		this->SetTextureWithID(animation->second, animation->second.textureid);
+		this->spriteRenderer->SetTexture(animation->second.texture);
 	}
 }
 void EntityObject::UpdateCurrentAnimation()
@@ -99,7 +106,11 @@ void EntityObject::UpdateCurrentAnimation()
 
 void EntityObject::UpdateCollider()
 {
-	// 
+	if (this->GetCollider() == nullptr)
+	{
+		return;
+	}
+
 	this->GetCollider()->Update(this->GetCollider()->GetSize(), this->getPos());
 }
 

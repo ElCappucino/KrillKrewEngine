@@ -10,6 +10,11 @@ void ImageObject::RenderTexturedObject(glm::mat4 globalModelTransform)
 		return;
 	}
 
+	if (spriteRenderer == nullptr)
+	{
+		return;
+	}
+
 	squareMesh->ChangeTextureData(
 		spriteRenderer->GetRow(),
 		spriteRenderer->GetColumn(),

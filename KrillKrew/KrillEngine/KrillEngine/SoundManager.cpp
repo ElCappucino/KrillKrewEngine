@@ -83,7 +83,9 @@ namespace KrillSoundManager
     }
 
     void SoundManager::SetVolumeSFX(const std::string& name, int volume)
-    {
+    {   
+        volume = std::max(0, std::min(volume, 128));
+
         if (SFXSounds.find(name) != SFXSounds.end()) {
             SFXSounds[name]->SetVolume(volume);
         }
@@ -93,7 +95,9 @@ namespace KrillSoundManager
         }
     }
     void SoundManager::SetVolumeMusic(const std::string& name, int volume)
-    {
+    {   
+        volume = std::max(0, std::min(volume, 128));
+
         if (musicSounds.find(name) != musicSounds.end()) {
             musicSounds[name]->SetVolume(volume);
         }
@@ -158,23 +162,28 @@ namespace KrillSoundManager
     void SoundManager::LoadVolumeConfig(const std::string& filename, float& master, bool& ismute_master, float& music, bool& ismute_music, float& sfx, bool& ismute_sfx)
     {
         std::ifstream file(filename);
-        nlohmann::json data = nlohmann::json::parse(file);;
 
         if (!file.is_open())
         {
             KK_ERROR("LoadVolumeConfig: Cannot open volume config file");
+            return;
         }
-        else
+
+        try
         {
-            master = data["MasterVolume"];
-            sfx = data["SFXVolume"];
-            music = data["BGMVolume"];
+            nlohmann::json data = nlohmann::json::parse(file);
 
-            ismute_master = data["Master_isMute"];
-            ismute_music = data["SFX_isMute"];
-            ismute_sfx = data["BGM_isMute"];
+            master = data.value("MasterVolume", master);
+            sfx = data.value("SFXVolume", sfx);
+            music = data.value("BGMVolume", music);
 
-            file.close();
+            ismute_master = data.value("Master_isMute", ismute_master);
+            ismute_music = data.value("SFX_isMute", ismute_music);
+            ismute_sfx = data.value("BGM_isMute", ismute_sfx);
+        }
+        catch (const std::exception& e)
+        {
+            KK_ERROR("LoadVolumeConfig: Invalid config file");
         }
     }
 }

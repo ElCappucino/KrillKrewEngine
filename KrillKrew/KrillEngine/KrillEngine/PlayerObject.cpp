@@ -144,12 +144,18 @@ void PlayerObject::SetIsSlow(bool isSlow)
 		slowEffect->SetSize(55.f, 79.f);
 		slowEffect->SetOrderingLayer(1);
 		this->slowStatusObject = slowEffect;
-		currentLevel->AddObjectToScene(slowEffect);
+		if (currentLevel != nullptr)
+		{
+			currentLevel->AddObjectToScene(slowEffect);
+		}
 	}
 	else
 	{
-		this->slowStatusObject->SetIsActive(false);
-		this->slowStatusObject = nullptr;
+		if (this->slowStatusObject != nullptr)
+		{
+			this->slowStatusObject->SetIsActive(false);
+			this->slowStatusObject = nullptr;
+		}
 	}
 }
 void PlayerObject::SetIsDashing(bool isDashing)
@@ -201,16 +207,23 @@ void PlayerObject::SetAnimationSprite(AnimationState state, SpritesheetInfo spri
 {
 	animList.insert({ state, spriteInfo });
 }
+
 void PlayerObject::ChangeAnimationState(AnimationState anim)
 {
+	auto animation = animList.find(anim);
+
+	if (animation == animList.end() || this->spriteRenderer == nullptr)
+	{
+		return;
+	}
+
 	if (currAnimState != anim)
 	{
 		currAnimState = anim;
-		this->SetTextureWithID(animList.find(anim)->second, animList.find(anim)->second.textureid);
-		this->spriteRenderer->SetTexture(animList.find(anim)->second.texture);
-		//this->SetTexture(animList.find(anim)->second.texture);
+		this->SetTextureWithID(animation->second, animation->second.textureid);
+		this->spriteRenderer->SetTexture(animation->second.texture);
 		this->spriteRenderer->ShiftTo(0, 0);
-		this->spriteRenderer->isLoop = animList.find(anim)->second.isLoop;
+		this->spriteRenderer->isLoop = animation->second.isLoop;
 	}
 }
 
@@ -506,7 +519,15 @@ PlayerObject::Ability PlayerObject::GetAbilityByButton(AbilityButton button) con
 }
 void PlayerObject::AddAimingTile(TileObject* tile)
 {
-	aimingTile.push_back(tile);
+	if (tile == nullptr)
+	{
+		return;
+	}
+
+	if (std::find(aimingTile.begin(), aimingTile.end(), tile) == aimingTile.end())
+	{
+		aimingTile.push_back(tile);
+	}
 }
 void PlayerObject::ClearAimingTile(TileObject* tile)
 {
@@ -523,7 +544,15 @@ void PlayerObject::ClearAimingTile(TileObject* tile)
 }
 void PlayerObject::AddAimingProp(PropObject* prop)
 {
-	aimingProp.push_back(prop);
+	if (prop == nullptr)
+	{
+		return;
+	}
+
+	if (std::find(aimingProp.begin(), aimingProp.end(), prop) == aimingProp.end())
+	{
+		aimingProp.push_back(prop);
+	}
 }
 void PlayerObject::ClearAimingProp(PropObject* prop)
 {
@@ -542,44 +571,46 @@ void PlayerObject::ClearAimingProp(PropObject* prop)
 
 void PlayerObject::HitAimingTile()
 {
-	// KK_INFO("aiming Tile Amount = {0}", aimingTile.size());
-
-	for (int i = 0; i < aimingProp.size(); i++)
+	for (auto it = aimingProp.begin(); it != aimingProp.end();)
 	{
-		if (aimingProp[i]->GetIsActive() == false)
+		if (*it == nullptr || (*it)->GetIsActive() == false)
 		{
-			auto clearTile = std::find(aimingProp.begin(), aimingProp.end(), aimingProp[i]);
-			aimingProp.erase(clearTile);
+			it = aimingProp.erase(it);
+		}
+		else
+		{
+			++it;
 		}
 	}
 
 	if (!aimingProp.empty())
 	{
-		for (int i = 0; i < aimingProp.size(); i++)
+		for (PropObject* prop : aimingProp)
 		{
-			aimingProp[i]->GotHit();
-		}
-	}
-	else
-	{
-		for (int i = 0; i < aimingTile.size(); i++)
-		{
-			if (aimingTile[i]->GetIsActive() == false)
+			if (prop != nullptr)
 			{
-				auto clearTile = std::find(aimingTile.begin(), aimingTile.end(), aimingTile[i]);
-				aimingTile.erase(clearTile);
+				prop->GotHit();
 			}
-			else
-			{
-				if (aimingTile[i]->GetIsBreakable())
-				{
-					aimingTile[i]->GotHit();
-				}
+		}
 
-			}
-		}
+		return;
 	}
-	
+
+	for (auto it = aimingTile.begin(); it != aimingTile.end();)
+	{
+		if (*it == nullptr || (*it)->GetIsActive() == false)
+		{
+			it = aimingTile.erase(it);
+			continue;
+		}
+
+		if ((*it)->GetIsBreakable())
+		{
+			(*it)->GotHit();
+		}
+
+		++it;
+	}
 }
 
 //int PlayerObject::getIdAbility(int numberAbility) {
@@ -696,16 +727,25 @@ void PlayerObject::CheckIfOnGround()
 }
 
 void PlayerObject::ApplyKnockback(EntityObject* obj)
-{
+{	
+	if (obj == nullptr)
+	{
+		return;
+	}
+
 	ProjectileObject* projectile = dynamic_cast<ProjectileObject*>(obj);
 	TrapObject* trap = dynamic_cast<TrapObject*>(obj);
 
-	if ((projectile != nullptr	&& projectile->GetCanKnockback()	&& projectile->GetOwner()->GetPlayerNumber() != playerNumber) || 
+	if ((projectile != nullptr	&& projectile->GetCanKnockback()	&& projectile->GetOwner() != nullptr && projectile->GetOwner()->GetPlayerNumber() != playerNumber) ||
 		(trap != nullptr		&& trap->GetCanKnockback()			&& trap->GetPlayerNumber() != playerNumber)) // check if it is projectile or trap
 	{
 		
 		glm::vec3 knockbackDirection = obj->getPos() - this->getPos();
 		float magnitude = sqrt(std::pow(knockbackDirection.x, 2) + pow(knockbackDirection.y, 2));
+		if (magnitude <= 0.0f)
+		{
+			return;
+		}
 		//KK_CORE_INFO("PlayerObject: magnitude = {0}", magnitude);
 		float knockbackDirectionX = knockbackDirection.x / magnitude;
 		float knockbackDirectionY = knockbackDirection.y / magnitude;
@@ -778,7 +818,11 @@ void PlayerObject::UpdateAbilityCooldown(float dt)
 
 void PlayerObject::UpdateCollider()
 {
-	// 
+	if (GetCollider() == nullptr || GetAttackColliderObject() == nullptr || GetGroundColliderObject() == nullptr)
+	{
+		return;
+	}
+
 	this->GetCollider()->Update(this->getSize(), this->getPos());
 
 	glm::vec3 attackSize = glm::vec3(this->getSize().x / 4, this->getSize().y / 4, 0);
@@ -820,7 +864,15 @@ std::vector<ProjectileObject*> PlayerObject::GetOwningProjectile() const
 }
 void PlayerObject::AddOwningProjectile(ProjectileObject* projectile)
 {
-	ownProjectile.emplace_back(projectile);
+	if (projectile == nullptr)
+	{
+		return;
+	}
+
+	if (std::find(ownProjectile.begin(), ownProjectile.end(), projectile) == ownProjectile.end())
+	{
+		ownProjectile.emplace_back(projectile);
+	}
 }
 
 void PlayerObject::RemoveOwningProjectile(ProjectileObject* projectile)
@@ -842,7 +894,15 @@ std::vector<TrapObject*> PlayerObject::GetOwningTrap() const
 }
 void PlayerObject::AddOwningTrap(TrapObject* trap)
 {
-	ownTrap.emplace_back(trap);
+	if (trap == nullptr)
+	{
+		return;
+	}
+
+	if (std::find(ownTrap.begin(), ownTrap.end(), trap) == ownTrap.end())
+	{
+		ownTrap.emplace_back(trap);
+	}
 }
 void PlayerObject::RemoveOwningTrap(TrapObject* trap)
 {

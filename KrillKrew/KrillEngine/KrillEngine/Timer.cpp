@@ -1,4 +1,6 @@
 #include "Timer.h"
+#include <algorithm>
+#include <cmath>
 
 Timer* Timer::instance = nullptr;
 
@@ -27,12 +29,15 @@ float Timer::getDeltaTime() const {
 	return deltaTime.count();
 }
 
-void Timer::setTimeScale(float T) {
-	timerScale = T;
-}
+void Timer::setTimeScale(float T)
+{
+	if (!std::isfinite(T))
+	{
+		timerScale = 1.0f;
+		return;
+	}
 
-float Timer::getTimeScale() const {
-	return timerScale;
+	timerScale = std::max(0.0f, T);
 }
 
 void Timer::tick() 
