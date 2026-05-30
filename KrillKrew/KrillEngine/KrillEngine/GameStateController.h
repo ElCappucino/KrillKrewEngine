@@ -8,26 +8,24 @@ class Level;
 class GameStateController
 {
 private:
-	Level* currentLevel;
+    Level* currentLevel;
 
 public:
+    GameState gameStateCurr;
+    GameState gameStatePrev;
+    GameState gameStateNext;
+    GameState loadingState;
 
-	GameState gameStateCurr;
-	GameState gameStatePrev;
-	GameState gameStateNext;
-	GameState loadingState;
+    GameStateController();
+    void Init(GameState gameStateInit);
 
-	GameStateController();
-	void Init(GameState gameStateInit);
-
-	void LoadLevel();
-	void InitLevel();
-	void UpdateLevel();
-	void DrawLevel();
-	void Freelevel();
-	void UnloadLevel();
-	void HandleKeyLevel(char key);
-	void HandleMouseLevel(int type, int x, int y);
-	void MovementLevel(float axisX, float axisY, bool isPositiveX, bool isPositiveY);
-
+    void LoadLevel();
+    void InitLevel();
+    void UpdateLevel();
+    void DrawLevel();
+    void Freelevel();
+    void UnloadLevel();
+    void HandleKeyLevel(char key);
+    void HandleMouseLevel(int type, int x, int y);
+    void MovementLevel(float axisX, float axisY, bool isPositiveX, bool isPositiveY);
 };

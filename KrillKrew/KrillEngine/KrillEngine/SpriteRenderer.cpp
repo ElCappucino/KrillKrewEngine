@@ -2,102 +2,102 @@
 
 void SpriteRenderer::SetSpriteInfo(float spritewidth, float spriteheight, float sheetwidth, float sheetheight)
 {
-	this->spritewidth = spritewidth;
-	this->spriteheight = spriteheight;
-	this->sheetwidth = sheetwidth;
-	this->sheetheight = sheetheight;
+    this->spritewidth = spritewidth;
+    this->spriteheight = spriteheight;
+    this->sheetwidth = sheetwidth;
+    this->sheetheight = sheetheight;
 }
 void SpriteRenderer::SetTexture(std::string texture)
 {
-	this->texture = texture;
+    this->texture = texture;
 }
 void SpriteRenderer::SetFrame(int frame)
 {
-	this->frame = frame;
+    this->frame = frame;
 }
 void SpriteRenderer::ShiftColumn()
 {
-	if (column == (sheetwidth / spritewidth) - 1)
-	{
-		if (isLoop)
-		{
-			column = 0;
-		}
-	}
-	else 
-	{
-		column++;
-	}
+    if (column == (sheetwidth / spritewidth) - 1)
+    {
+        if (isLoop)
+        {
+            column = 0;
+        }
+    }
+    else
+    {
+        column++;
+    }
 }
 void SpriteRenderer::ShiftRow()
 {
-	if (row == (sheetheight / spriteheight) - 1)
-	{
-		row = 0;
-	}
-	else
-	{
-		row++;
-	}
+    if (row == (sheetheight / spriteheight) - 1)
+    {
+        row = 0;
+    }
+    else
+    {
+        row++;
+    }
 }
 void SpriteRenderer::ShiftTo(float row, float column)
 {
-	if (row <= - 1)
-	{
-		row = (sheetheight / spriteheight) - 1;
-	}
-	if (column <= -1)
-	{
-		if (isLoop)
-		{
-			column = (sheetwidth / spritewidth) - 1;
-		}
-	}
+    if (row <= -1)
+    {
+        row = (sheetheight / spriteheight) - 1;
+    }
+    if (column <= -1)
+    {
+        if (isLoop)
+        {
+            column = (sheetwidth / spritewidth) - 1;
+        }
+    }
 
-	this->row = row;
-	this->column = column;
+    this->row = row;
+    this->column = column;
 }
 SpriteRenderer::SpriteRenderer(std::string texture)
 {
-	this->texture = texture;
+    this->texture = texture;
 
-	this->row = 0;
-	this->column = 0;
-	this->spritewidth = 0;
-	this->spriteheight = 0;
-	this->sheetwidth = 0;
-	this->sheetheight = 0;
+    this->row = 0;
+    this->column = 0;
+    this->spritewidth = 0;
+    this->spriteheight = 0;
+    this->sheetwidth = 0;
+    this->sheetheight = 0;
 
-	this->isLoop = true;
+    this->isLoop = true;
 
-	this->frame = 10;
+    this->frame = 10;
 }
 
 float SpriteRenderer::GetRow()
 {
-	return row;
+    return row;
 }
 float SpriteRenderer::GetColumn()
 {
-	return column;
+    return column;
 }
 float SpriteRenderer::GetSpriteWidth()
 {
-	return spritewidth;
+    return spritewidth;
 }
 float SpriteRenderer::GetSpriteHeight()
 {
-	return spriteheight;
+    return spriteheight;
 }
 float SpriteRenderer::GetSheetWidth()
 {
-	return sheetwidth;
+    return sheetwidth;
 }
 float SpriteRenderer::GetSheetHeight()
 {
-	return sheetheight;
+    return sheetheight;
 }
 int SpriteRenderer::GetFrame()
 {
-	return frame;
+    return frame;
 }

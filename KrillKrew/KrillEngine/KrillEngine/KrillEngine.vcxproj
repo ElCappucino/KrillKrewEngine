@@ -257,7 +257,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>../Resource/glew/include;../Resource/glm;../Resource/SDL2-2.0.5/include;../Resource;../Resource/spdlog/include;../Resource/imgui-1.91.8;../Resource/imgui-1.91.8/backends;../Resource/SDL2_Mixer/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../Resource/glew/include;../Resource/glm;../Resource/SDL2-2.0.5/include;../Resource;../Resource/spdlog/include;../Resource/imgui-1.91.8;../Resource/imgui-1.91.8/backends;../Resource/SDL2_Mixer/include;../Resource/json/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>

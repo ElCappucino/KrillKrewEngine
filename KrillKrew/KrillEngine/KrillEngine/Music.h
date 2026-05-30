@@ -2,10 +2,10 @@
 #include <SDL_mixer.h>
 #include <string>
 
-class Music 
+class Music
 {
 private:
-    Mix_Music* music;  // For background music
+    Mix_Music* music; // For background music
 
 public:
     Music(const std::string& filePath);
@@ -13,5 +13,5 @@ public:
 
     void Play(bool isLoop = true);
     void Stop();
-    void SetVolume(int volume);  // Volume range: 0 - 128
+    void SetVolume(int volume); // Volume range: 0 - 128
 };

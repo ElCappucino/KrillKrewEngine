@@ -1,0 +1,218 @@
+{
+    "MenuButtonName_AreYouSureExit_No": {
+        "column": 0,
+        "height": 45.0,
+        "offsetX": 250.0,
+        "offsetY": 0.0,
+        "posX": -126.0,
+        "posY": -50.0,
+        "width": 235.0
+    },
+    "MenuButtonName_AreYouSureExit_Yes": {
+        "column": 0,
+        "height": 45.0,
+        "offsetX": 250.0,
+        "offsetY": 0.0,
+        "posX": -126.0,
+        "posY": -50.0,
+        "width": 235.0
+    },
+    "MenuButtonName_AreYouSureStart_No": {
+        "column": 0,
+        "height": 45.0,
+        "offsetX": 250.0,
+        "offsetY": 0.0,
+        "posX": -126.0,
+        "posY": -50.0,
+        "width": 235.0
+    },
+    "MenuButtonName_AreYouSureStart_Yes": {
+        "column": 0,
+        "height": 45.0,
+        "offsetX": 250.0,
+        "offsetY": 0.0,
+        "posX": -126.0,
+        "posY": -50.0,
+        "width": 235.0
+    },
+    "MenuButtonName_BGMVolume_Box": {
+        "column": 0,
+        "height": 0.0,
+        "offsetX": 260.0,
+        "offsetY": 104.0,
+        "posX": -30.0,
+        "posY": 5.0,
+        "width": 0.0
+    },
+    "MenuButtonName_BGMVolume_Knob": {
+        "column": 0,
+        "height": 0.0,
+        "offsetX": 260.0,
+        "offsetY": 104.0,
+        "posX": -30.0,
+        "posY": 5.0,
+        "width": 0.0
+    },
+    "MenuButtonName_BGMVolume_Text": {
+        "column": 6,
+        "height": 0.0,
+        "offsetX": 0.0,
+        "offsetY": 105.0,
+        "posX": -155.0,
+        "posY": 150.0,
+        "width": 0.0
+    },
+    "MenuButtonName_BGMVolume_Track": {
+        "column": 0,
+        "height": 0.0,
+        "offsetX": 260.0,
+        "offsetY": 104.0,
+        "posX": -30.0,
+        "posY": 5.0,
+        "width": 0.0
+    },
+    "MenuButtonName_DisplayDropdown": {
+        "column": 0,
+        "height": 0.0,
+        "offsetX": 0.0,
+        "offsetY": 72.0,
+        "posX": 101.0,
+        "posY": 150.0,
+        "width": 0.0
+    },
+    "MenuButtonName_DisplayType": {
+        "column": 0,
+        "height": 0.0,
+        "offsetX": 0.0,
+        "offsetY": 72.0,
+        "posX": 101.0,
+        "posY": 150.0,
+        "width": 0.0
+    },
+    "MenuButtonName_DisplayType_Text": {
+        "column": 0,
+        "height": 65.0,
+        "offsetX": 0.0,
+        "offsetY": 0.0,
+        "posX": -155.0,
+        "posY": 150.0,
+        "width": 0.0
+    },
+    "MenuButtonName_ExitButton": {
+        "column": 6,
+        "height": 43.0,
+        "offsetX": 0.0,
+        "offsetY": 0.0,
+        "posX": -349.0,
+        "posY": -234.0,
+        "width": 194.0
+    },
+    "MenuButtonName_GameName": {
+        "column": 0,
+        "height": 35.0,
+        "offsetX": 0.0,
+        "offsetY": 0.0,
+        "posX": -406.0,
+        "posY": 284.0,
+        "width": 314.0
+    },
+    "MenuButtonName_MasterVolume_Box": {
+        "column": 0,
+        "height": 0.0,
+        "offsetX": 260.0,
+        "offsetY": 104.0,
+        "posX": -30.0,
+        "posY": 5.0,
+        "width": 0.0
+    },
+    "MenuButtonName_MasterVolume_Knob": {
+        "column": 0,
+        "height": 0.0,
+        "offsetX": 260.0,
+        "offsetY": 104.0,
+        "posX": -30.0,
+        "posY": 5.0,
+        "width": 0.0
+    },
+    "MenuButtonName_MasterVolume_Text": {
+        "column": 2,
+        "height": 0.0,
+        "offsetX": 0.0,
+        "offsetY": 105.0,
+        "posX": -155.0,
+        "posY": 150.0,
+        "width": 0.0
+    },
+    "MenuButtonName_MasterVolume_Track": {
+        "column": 0,
+        "height": 0.0,
+        "offsetX": 260.0,
+        "offsetY": 104.0,
+        "posX": -30.0,
+        "posY": 5.0,
+        "width": 0.0
+    },
+    "MenuButtonName_OptionButton": {
+        "column": 4,
+        "height": 43.0,
+        "offsetX": 0.0,
+        "offsetY": 0.0,
+        "posX": -373.0,
+        "posY": -150.0,
+        "width": 194.0
+    },
+    "MenuButtonName_SFXVolume_Box": {
+        "column": 0,
+        "height": 0.0,
+        "offsetX": 260.0,
+        "offsetY": 104.0,
+        "posX": -30.0,
+        "posY": 5.0,
+        "width": 0.0
+    },
+    "MenuButtonName_SFXVolume_Knob": {
+        "column": 0,
+        "height": 0.0,
+        "offsetX": 260.0,
+        "offsetY": 104.0,
+        "posX": -30.0,
+        "posY": 5.0,
+        "width": 0.0
+    },
+    "MenuButtonName_SFXVolume_Text": {
+        "column": 4,
+        "height": 0.0,
+        "offsetX": 0.0,
+        "offsetY": 105.0,
+        "posX": -155.0,
+        "posY": 150.0,
+        "width": 0.0
+    },
+    "MenuButtonName_SFXVolume_Track": {
+        "column": 0,
+        "height": 0.0,
+        "offsetX": 260.0,
+        "offsetY": 104.0,
+        "posX": -30.0,
+        "posY": 5.0,
+        "width": 0.0
+    },
+    "MenuButtonName_StartButton": {
+        "column": 0,
+        "height": 43.0,
+        "offsetX": 0.0,
+        "offsetY": 0.0,
+        "posX": -414.0,
+        "posY": 34.0,
+        "width": 194.0
+    },
+    "MenuButtonName_TutorialButton": {
+        "column": 2,
+        "height": 43.0,
+        "offsetX": 0.0,
+        "offsetY": 0.0,
+        "posX": -405.0,
+        "posY": -59.0,
+        "width": 194.0
+    }
+}

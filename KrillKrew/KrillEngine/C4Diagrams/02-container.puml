@@ -1,0 +1,60 @@
+@startuml Container Diagram
+
+left to right direction
+
+skinparam linetype ortho
+skinparam shadowing false
+skinparam packageStyle rectangle
+
+!includeurl https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
+
+LAYOUT_WITH_LEGEND()
+
+title KrillEngine - Container Diagram
+
+Person(player, "Player")
+
+System_Boundary(krill, "KrillEngine") {
+
+    Container(main, "Main Application", "C++ / SDL2", "Creates window and runs game loop")
+
+    Container(engine, "GameEngine", "C++ Singleton", "Central engine access point")
+
+    Container(levels, "Level System", "C++", "Gameplay/menu/loading states")
+
+    Container(objects, "Game Object System", "C++", "Players, projectiles, traps, tiles, UI")
+
+    Container(renderer, "Renderer", "C++ / OpenGL", "Rendering system")
+
+    Container(input, "Input System", "SDL2", "Keyboard/controller input")
+
+    Container(audio, "Audio System", "SDL_mixer", "Music and sound")
+
+    Container(collision, "Collision System", "C++", "Collision and trigger detection")
+
+    ContainerDb(resources, "Resource Files", "JSON/textures/audio")
+}
+
+System_Ext(opengl, "OpenGL/GLEW")
+System_Ext(sdl, "SDL2")
+
+Rel(player, input, "Uses")
+
+Rel(main, engine, "Initializes")
+Rel(main, levels, "Updates")
+Rel(main, sdl, "Uses")
+
+Rel(engine, renderer, "Uses")
+Rel(levels, objects, "Creates/updates")
+Rel(levels, collision, "Uses")
+Rel(levels, audio, "Triggers sounds")
+
+Rel(objects, renderer, "Rendered by")
+Rel(objects, collision, "Uses")
+
+Rel(renderer, opengl, "Calls")
+Rel(renderer, resources, "Loads textures/shaders")
+
+Rel(audio, resources, "Loads audio")
+
+@enduml
