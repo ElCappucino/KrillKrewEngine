@@ -180,7 +180,7 @@ void LevelMainMenu::InitializeConfirmUI()
 	objectsList.push_back(areYouSureExit);
 	yesNoList_Exit.push_back(areYouSureExit);
 
-	// 4. Helper Lambda to eliminate duplicated button creation logic
+	// 4. Helper Lambda for confirmation button creation
 	auto SetupConfirmButton = [this, &ynsprite](MenuButtonName_ name, std::string stringName, glm::vec2 shift, std::vector<UiObject*>& targetList)
 		{
 			std::string filename = "../Resource/SceneData/MainMenu/" + stringName + ".json";
@@ -233,14 +233,14 @@ void LevelMainMenu::InitializeTutorialUI()
 
 void LevelMainMenu::InitializeOptionUI()
 {
-	// 1. Setup Options Background
+	// Setup Options Background
 	auto& bgSprite = spriteList["OptionsBG"];
 	UiObject* optionsBG = InitUI(bgSprite, { 0, 0 }, { bgSprite.spritewidth, bgSprite.spriteheight }, { 0, 0 });
 	optionsBG->SetIsRender(false);
 	OptionList.push_back(optionsBG);
 	objectsList.push_back(optionsBG);
 
-	// 2. Setup Option Texts
+	// Setup Option Texts
 	// Button Name Mapping
 	MenuButtonName_ textButtons[] = 
 	{
@@ -282,7 +282,7 @@ void LevelMainMenu::InitializeOptionUI()
 		objectsList.push_back(textOption);
 	}
 
-	// 3. Display Type Button Setup
+	// Display Type Button Setup
 	auto& optionDisplaySprite = spriteList["OptionsDisplay"];
 
 	configFileName = "../Resource/SceneData/MainMenu/MenuButtonName_DisplayType.json";
@@ -301,7 +301,7 @@ void LevelMainMenu::InitializeOptionUI()
 	OptionList.push_back(optionDisplay);
 	objectsList.push_back(optionDisplay);
 
-	// 4. Display Dropdown
+	// Display Dropdown
 
 	auto& displayDropdownSprite = spriteList["OptionsDisplayDropdown"];
 	buttonList[MenuButtonName_DisplayDropdown] = InitButtonData(MenuButtonName_DisplayDropdown, "MenuButtonName_DisplayDropdown", { 100, 100 }, {289, 65}, {0, 0}, 0, configFileName);
@@ -317,7 +317,7 @@ void LevelMainMenu::InitializeOptionUI()
 
 	objectsList.push_back(displayDropdownUI);
 
-	// 5. Volume Controls
+	// Volume Controls
 	MenuButtonName_ trackButtons[] = { MenuButtonName_MasterVolume_Track, MenuButtonName_SFXVolume_Track, MenuButtonName_BGMVolume_Track };
 	MenuButtonName_ knobButtons[] = { MenuButtonName_MasterVolume_Knob,  MenuButtonName_SFXVolume_Knob,  MenuButtonName_BGMVolume_Knob };
 	MenuButtonName_ boxButtons[] = { MenuButtonName_MasterVolume_Box,   MenuButtonName_SFXVolume_Box,   MenuButtonName_BGMVolume_Box };
@@ -342,8 +342,9 @@ void LevelMainMenu::InitializeOptionUI()
 		std::string knobNameString = knobButtonsString[j];
 		std::string boxNameString = boxButtonsString[j];
 
-		configFileName = "../Resource/SceneData/MainMenu/" + trackNameString + ".json";
 		// Track UI
+		configFileName = "../Resource/SceneData/MainMenu/" + trackNameString + ".json";
+		
 		buttonList[trackName] = InitButtonData(trackName, trackNameString, { 100, 100 }, { 289, 65 }, { 0, 0 }, 0, configFileName);
 
 		float volumeButtonPosX = buttonList[trackName]->pos.x;
@@ -643,7 +644,13 @@ void LevelMainMenu::UpdateUi()
 	{
 		ButtonData* buttonData = pair.second;
 
-		if (buttonData && buttonData->OnHover)
+		if (buttonData == nullptr)
+		{
+			KK_ERROR("LevelMainMenu::UpdateUi() : buttonData == nullptr!");
+			continue;
+		}
+
+		if (buttonData->OnHover)
 		{
 			buttonData->OnHover();
 		}
@@ -652,13 +659,25 @@ void LevelMainMenu::UpdateUi()
 
 void LevelMainMenu::TransitionToMenu(MenuState newState, const std::vector<UiObject*>& hideList, const std::vector<UiObject*>& showList, MenuButtonName_ defaultButtonKey)
 {
+	// Check if current button isn't null
+	if (currentButton == nullptr)
+	{
+		KK_ERROR("LevelMainMenu::TransitionToMenu() : currentButton == nullptr!");
+	}
 	for (UiObject* ui : hideList) ui->SetIsRender(false);
 	for (UiObject* ui : showList) ui->SetIsRender(true);
 
-	if (currentButton) currentButton->playerHere = false;
+	currentButton->playerHere = false;
 	currentMenuState = newState;
 	currentButton = buttonList[defaultButtonKey];
-	if (currentButton) currentButton->playerHere = true;
+
+	// Check if new current button isn't null
+	if (currentButton == nullptr)
+	{
+		KK_ERROR("LevelMainMenu::TransitionToMenu() : new currentButton == nullptr!");
+	}
+
+	currentButton->playerHere = true;
 }
 
 void LevelMainMenu::BackToMainMenu(const std::vector<UiObject*>& activeUiList, MenuButtonName_ fallbackButtonName) {
@@ -667,9 +686,20 @@ void LevelMainMenu::BackToMainMenu(const std::vector<UiObject*>& activeUiList, M
 
 void LevelMainMenu::HandleMainMenuLogic() {
 
-	if (isPressedCross && currentButton)
+	if (isPressedCross)
 	{
-		if (currentButton->OnExecute) {
+		if (currentButton == nullptr)
+		{
+			KK_ERROR("LevelMainMenu::HandleMainMenuLogic() : currentButton == nullptr!");
+			return;
+		}
+
+		if (!currentButton->OnExecute)
+		{
+			KK_ERROR("LevelMainMenu::HandleMainMenuLogic() : No OnExecute function in current button!");
+		}
+		else 
+		{
 			currentButton->OnExecute();
 		}
 	}
@@ -684,8 +714,22 @@ void LevelMainMenu::HandleCreditsLogic()
 
 void LevelMainMenu::HandleStartConfirmLogic()
 {
-	if (isPressedCross && currentButton->OnExecute) {
-		currentButton->OnExecute();
+	if (isPressedCross) {
+
+		if (currentButton == nullptr)
+		{
+			KK_ERROR("LevelMainMenu::HandleStartConfirmLogic() : currentButton == nullptr!");
+			return;
+		}
+
+		if (!currentButton->OnExecute)
+		{
+			KK_ERROR("LevelMainMenu::HandleStartConfirmLogic() : No OnExecute function in current button!");
+		}
+		else
+		{
+			currentButton->OnExecute();
+		}
 	}
 	else if (isPressedCircle) {
 		BackToMainMenu(yesNoList_Start, MenuButtonName_StartButton);
@@ -705,36 +749,54 @@ void LevelMainMenu::HandleTutorialLogic() {
 	}
 }
 
-void LevelMainMenu::HandleOptionsCancel() {
+void LevelMainMenu::HandleOptionsCancel() 
+{
 	MenuButtonName_ name = currentButton->name;
 
 	// If backing out of root options, hide options menu entirely and go back to main menu
-	if (name == MenuButtonName_DisplayType_Text || name == MenuButtonName_MasterVolume_Text ||
-		name == MenuButtonName_SFXVolume_Text || name == MenuButtonName_BGMVolume_Text) {
+	if (name == MenuButtonName_DisplayType_Text || 
+		name == MenuButtonName_MasterVolume_Text ||
+		name == MenuButtonName_SFXVolume_Text || 
+		name == MenuButtonName_BGMVolume_Text) 
+	{
 		TransitionToMenu(MenuState::Main, OptionList, {}, MenuButtonName_OptionButton);
 		return;
 	}
 
 	// Map sub-buttons directly back to their parent elements
 	MenuButtonName_ targetDestination = MenuButtonName_None;
+
 	if (name == MenuButtonName_DisplayType)
 		targetDestination = MenuButtonName_DisplayType_Text;
+	
+	else if (
+		name == MenuButtonName_MasterVolume_Knob || 
+		name == MenuButtonName_MasterVolume_Box)
+		targetDestination = MenuButtonName_MasterVolume_Text;
+
+	else if (
+		name == MenuButtonName_SFXVolume_Knob || 
+		name == MenuButtonName_SFXVolume_Box)
+		targetDestination = MenuButtonName_SFXVolume_Text;
+
+	else if (
+		name == MenuButtonName_BGMVolume_Knob || 
+		name == MenuButtonName_BGMVolume_Box)
+		targetDestination = MenuButtonName_BGMVolume_Text;
+
+	else if (name == MenuButtonName_MasterVolume_Track)
+		targetDestination = MenuButtonName_MasterVolume_Knob;
+
+	else if (name == MenuButtonName_SFXVolume_Track)
+		targetDestination = MenuButtonName_SFXVolume_Knob;
+
+	else if (name == MenuButtonName_BGMVolume_Track)
+		targetDestination = MenuButtonName_BGMVolume_Knob;
+
 	else if (name == MenuButtonName_DisplayDropdown) {
 		targetDestination = MenuButtonName_DisplayType;
 		buttonList[MenuButtonName_DisplayDropdown]->ButtonUI->SetIsRender(false);
 	}
-	else if (name == MenuButtonName_MasterVolume_Knob || name == MenuButtonName_MasterVolume_Box)
-		targetDestination = MenuButtonName_MasterVolume_Text;
-	else if (name == MenuButtonName_SFXVolume_Knob || name == MenuButtonName_SFXVolume_Box)
-		targetDestination = MenuButtonName_SFXVolume_Text;
-	else if (name == MenuButtonName_BGMVolume_Knob || name == MenuButtonName_BGMVolume_Box)
-		targetDestination = MenuButtonName_BGMVolume_Text;
-	else if (name == MenuButtonName_MasterVolume_Track)
-		targetDestination = MenuButtonName_MasterVolume_Knob;
-	else if (name == MenuButtonName_SFXVolume_Track)
-		targetDestination = MenuButtonName_SFXVolume_Knob;
-	else if (name == MenuButtonName_BGMVolume_Track)
-		targetDestination = MenuButtonName_BGMVolume_Knob;
 
 	if (targetDestination != MenuButtonName_None) {
 		currentButton->playerHere = false;
@@ -757,7 +819,10 @@ void LevelMainMenu::UpdateVolumeSlider(float& volumeValue, MenuButtonName_ knobK
 	buttonList[knobKey]->ButtonUI->SetPosition(glm::vec3(newX, newY, 0.0f));
 }
 
-void LevelMainMenu::HandleVolumeSliderAdjustment() {
+void LevelMainMenu::HandleVolumeSliderAdjustment() 
+{
+	if (currentButton == nullptr) return;
+
 	if (currentButton == buttonList[MenuButtonName_MasterVolume_Track]) {
 		UpdateVolumeSlider(masterVolume, MenuButtonName_MasterVolume_Knob, 0);
 	}
@@ -775,33 +840,56 @@ void LevelMainMenu::SwitchActiveButton(MenuButtonName_ targetKey, bool disableOl
 	currentButton->playerHere = true;
 }
 
-void LevelMainMenu::HandleOptionsLogic() {
+void LevelMainMenu::HandleOptionsLogic() 
+{
+	if (isPressedCross) 
+	{
+		if (currentButton == nullptr)
+		{
+			KK_ERROR("LevelMainMenu::HandleOptionsLogic() : currentButton == nullptr!");
+			return;
+		}
 
-	if (!currentButton) return;
-
-	// 1. HANDLE CROSS PRESS (EXECUTE ACTION)
-	if (isPressedCross && currentButton->OnExecute) {
-		currentButton->OnExecute();
+		if (!currentButton->OnExecute)
+		{
+			KK_ERROR("LevelMainMenu::HandleOptionsLogic() : No OnExecute function in current button!");
+		}
+		else
+		{
+			currentButton->OnExecute();
+		}
 	}
-
-	// 2. HANDLE CIRCLE PRESS (GO BACK / CANCEL)
-	else if (isPressedCircle) {
+	else if (isPressedCircle) 
+	{
 		HandleOptionsCancel();
 	}
 
-	// 3. HANDLE DROPDOWN SELECTION NAVIGATION
+	// Handle Up/Down Navigation while in display setting drop down
 	if (currentButton->name == MenuButtonName_DisplayDropdown && (up || down) && !playerMove) {
 		currentButton->ButtonUI->GetSpriteRenderer()->ShiftColumn();
 	}
 
-	// 4. HANDLE SLIDER/TRACK HOLD LOGIC
+	// Handle slider hold logic
 	HandleVolumeSliderAdjustment();
 }
 
 void LevelMainMenu::HandleExitConfirmLogic() {
 
-	if (isPressedCross && currentButton->OnExecute) {
-		currentButton->OnExecute();
+	if (isPressedCross) {
+		if (currentButton == nullptr)
+		{
+			KK_ERROR("LevelMainMenu::HandleExitConfirmLogic() : currentButton == nullptr!");
+			return;
+		}
+
+		if (!currentButton->OnExecute)
+		{
+			KK_ERROR("LevelMainMenu::HandleExitConfirmLogic() : No OnExecute function in current button!");
+		}
+		else
+		{
+			currentButton->OnExecute();
+		}
 	}
 	else if (isPressedCircle) {
 		BackToMainMenu(yesNoList_Exit, MenuButtonName_ExitButton);
@@ -898,13 +986,7 @@ void LevelMainMenu::DrawControllerButtons()
 				isPressedTriangle = true;
 			}
 		}
-		else
-		{
-			/*isPressedCross = false;
-			isPressedCircle = false;
-			isPressedSquare = false;
-			isPressedTriangle = false;*/
-		}
+		
 		ImGui::PopStyleColor();
 		};
 
