@@ -536,7 +536,7 @@ void LevelMainMenu::InitializeButtonHoverActions()
 			return;
 		}
 
-		buttonList[enumName]->OnHover = [this, enumName, activeCol, inactiveCol]() {
+		buttonList[enumName]->AddOnHover([this, enumName, activeCol, inactiveCol]() {
 
 			ButtonData* btn = buttonList[enumName];
 			if (!btn)
@@ -552,7 +552,7 @@ void LevelMainMenu::InitializeButtonHoverActions()
 			}
 
 			btn->ButtonUI->ShiftSpriteTo(0, btn->playerHere ? activeCol : inactiveCol);
-		};
+		});
 	};
 
 	BindNormalHoverFunction(MenuButtonName_GameName, 1, 0);
@@ -586,7 +586,7 @@ void LevelMainMenu::InitializeButtonHoverActions()
 	}
 	else
 	{
-		buttonList[MenuButtonName_DisplayType]->OnHover = [this]() {
+		buttonList[MenuButtonName_DisplayType]->AddOnHover([this]() {
 			ButtonData* btn = buttonList[MenuButtonName_DisplayType];
 			if (!btn)
 			{
@@ -603,7 +603,7 @@ void LevelMainMenu::InitializeButtonHoverActions()
 			int baseOffset = !this->isFullscreen ? 2 : 0;
 			int playerOffset = btn->playerHere ? 0 : 1;
 			btn->ButtonUI->ShiftSpriteTo(0, baseOffset + playerOffset);
-			};
+			});
 	}
 
 	// Lambda function for volume mute checkbox
@@ -615,7 +615,7 @@ void LevelMainMenu::InitializeButtonHoverActions()
 			return;
 		}
 
-		buttonList[enumName]->OnHover = [this, enumName, mapIndex]() {
+		buttonList[enumName]->AddOnHover([this, enumName, mapIndex]() {
 
 			ButtonData* btn = buttonList[enumName];
 			if (!btn)
@@ -633,7 +633,7 @@ void LevelMainMenu::InitializeButtonHoverActions()
 			bool isToggled = this->isToggleVolume[mapIndex];
 			int yIndex = btn->playerHere ? (isToggled ? 0 : 2) : (isToggled ? 1 : 3);
 			btn->ButtonUI->ShiftSpriteTo(0, yIndex);
-			};
+			});
 		};
 
 	BindVolumeBoxHoverFunction(MenuButtonName_MasterVolume_Box, 0);
@@ -652,10 +652,7 @@ void LevelMainMenu::UpdateUi()
 			continue;
 		}
 
-		if (buttonData->OnHover)
-		{
-			buttonData->OnHover();
-		}
+		buttonData->InvokeHover();
 	}
 }
 
@@ -1267,6 +1264,8 @@ void LevelMainMenu::UpdateInput()
 		playerMove = true;
 		currentButton->playerHere = false;
 
+		ButtonData* previousButton = currentButton;
+
 		if (up && currentButton->UpperButton != nullptr)
 			currentButton = currentButton->UpperButton;
 
@@ -1280,6 +1279,11 @@ void LevelMainMenu::UpdateInput()
 			currentButton = currentButton->RightButton;
 
 		currentButton->playerHere = true;
+
+		if (previousButton != currentButton)
+		{
+			currentButton->InvokeHover();
+		}
 	}
 
 

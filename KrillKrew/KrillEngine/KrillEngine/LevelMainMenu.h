@@ -40,7 +40,28 @@ public:
 		bool playerHere = false;
 
 		std::function<void()> OnExecute = nullptr;
-		std::function<void()> OnHover = nullptr;
+		std::vector<std::function<void()>> OnHoverListeners;
+
+		// 2. Helper method to easily subscribe new functions
+		void AddOnHover(std::function<void()> callback)
+		{
+			if (callback)
+			{
+				OnHoverListeners.push_back(callback);
+			}
+		}
+
+		// 3. Helper method to fire all registered functions
+		void InvokeHover()
+		{
+			for (const auto& callback : OnHoverListeners)
+			{
+				if (callback)
+				{
+					callback(); // Execute each registered function in order
+				}
+			}
+		}
 	};
 
 private:
