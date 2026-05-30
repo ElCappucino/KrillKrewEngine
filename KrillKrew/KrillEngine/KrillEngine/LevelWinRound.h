@@ -7,58 +7,58 @@
 class LevelWinRound : public Level
 {
 private:
-	std::vector<DrawableObject*> objectsList;
+    std::vector<DrawableObject*> objectsList;
 
-	std::map<std::string, SpritesheetInfo> spriteList;
+    std::map<std::string, SpritesheetInfo> spriteList;
 
-	int roundWinner;
-	int playerNumber = 4;
-	int roundNum;
-	std::array<int, 4> playerScores;
+    int roundWinner;
+    int playerNumber = 4;
+    int roundNum;
+    std::array<int, 4> playerScores;
 
-	GLint currentViewport[4];
+    GLint currentViewport[4];
 
-	UiObject* Background_UI; // pos 0, 0 no config
-	UiObject* RoundNum_UI;
-	UiObject* RoundWinCharacter_UI;
-	UiObject* PlayerProfile_UI;
-	std::array<UiObject*, 4> PlayerScore_UI;
+    UiObject* Background_UI; // pos 0, 0 no config
+    UiObject* RoundNum_UI;
+    UiObject* RoundWinCharacter_UI;
+    UiObject* PlayerProfile_UI;
+    std::array<UiObject*, 4> PlayerScore_UI;
 
-	glm::vec3 RoundNum_pos;
-	glm::vec3 RoundWinCharacter_pos;
-	glm::vec3 PlayerProfile_pos;
-	std::array<glm::vec3, 4> PlayerScore_pos;
+    glm::vec3 RoundNum_pos;
+    glm::vec3 RoundWinCharacter_pos;
+    glm::vec3 PlayerProfile_pos;
+    std::array<glm::vec3, 4> PlayerScore_pos;
 
-	glm::vec3 Background_size = {1920 * 0.7f, -1080 * 0.7f, 0};
-	glm::vec3 RoundNum_size = { 330 * 0.7f, -125 * 0.7f, 0 };
-	glm::vec3 RoundWinCharacter_size = { 919 * 0.7f, -950 * 0.7f, 0 };
-	glm::vec3 PlayerProfile_size = { 600 * 0.7f, -150 * 0.7f, 0 };
-	glm::vec3 PlayerScore_size = { 36 * 0.7f, -46 * 0.7f, 0 };
+    glm::vec3 Background_size = {1920 * 0.7f, -1080 * 0.7f, 0};
+    glm::vec3 RoundNum_size = {330 * 0.7f, -125 * 0.7f, 0};
+    glm::vec3 RoundWinCharacter_size = {919 * 0.7f, -950 * 0.7f, 0};
+    glm::vec3 PlayerProfile_size = {600 * 0.7f, -150 * 0.7f, 0};
+    glm::vec3 PlayerScore_size = {36 * 0.7f, -46 * 0.7f, 0};
 
-	int windowWidth = SCREEN_WIDTH;
-	int windowHeight = SCREEN_HEIGHT;
+    int windowWidth = SCREEN_WIDTH;
+    int windowHeight = SCREEN_HEIGHT;
 
-	OrthographicValue targetSceneProjection;
-	Camera camera;
-	Timer* timer;
+    OrthographicValue targetSceneProjection;
+    Camera camera;
+    Timer* timer;
 
 public:
-	virtual void LevelLoad();
-	virtual void LevelInit();
-	virtual void LevelUpdate();
-	virtual void LevelDraw();
-	virtual void LevelFree();
-	virtual void LevelUnload();
-	virtual void Movement(float axisX, float axisY, bool isPositiveX, bool isPositiveY);
-	virtual void HandleKey(char key);
-	virtual void HandleMouse(int type, int x, int y);
+    virtual void LevelLoad();
+    virtual void LevelInit();
+    virtual void LevelUpdate();
+    virtual void LevelDraw();
+    virtual void LevelFree();
+    virtual void LevelUnload();
+    virtual void Movement(float axisX, float axisY, bool isPositiveX, bool isPositiveY);
+    virtual void HandleKey(char key);
+    virtual void HandleMouse(int type, int x, int y);
 
-	void UpdateInput();
-	void UpdateUI();
+    void UpdateInput();
+    void UpdateUI();
 
-	void SaveInfo(std::string filename);
-	bool LoadInfo(std::string filename);
+    void SaveInfo(std::string filename);
+    bool LoadInfo(std::string filename);
 
-	void SaveUIPositionConfig(std::string filename);
-	bool LoadUIPositionConfig(std::string filename);
+    void SaveUIPositionConfig(std::string filename);
+    bool LoadUIPositionConfig(std::string filename);
 };

@@ -1,0 +1,20 @@
+# Format Style Options - Created with Clang Power Tools
+---
+BasedOnStyle: Microsoft
+SpaceAfterLogicalNot: true
+SpaceAfterTemplateKeyword: false
+PointerAlignment: Left
+AccessModifierOffset: -4
+NamespaceIndentation: None
+BreakBeforeBraces: Custom
+BraceWrapping:
+  BeforeElse: true
+IndentCaseLabels: true
+
+ColumnLimit: 140 
+BinPackArguments: false        
+BinPackParameters: false
+
+AllowAllConstructorInitializersOnNextLine: true
+ConstructorInitializerAllOnOneLineOrSplitOnNext: true
+...

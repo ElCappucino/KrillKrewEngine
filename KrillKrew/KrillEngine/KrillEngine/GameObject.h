@@ -9,14 +9,13 @@
 
 /// @brief The class for creating game object
 /// @note There nothing implemented here yet.
-class GameObject :public DrawableObject
+class GameObject : public DrawableObject
 {
-	glm::vec3 color;
+    glm::vec3 color;
 
 public:
-	GameObject();
-	~GameObject();
-	void SetColor(float r, float g, float b);
-	void Render(glm::mat4 globalModelTransform);
+    GameObject();
+    ~GameObject();
+    void SetColor(float r, float g, float b);
+    void Render(glm::mat4 globalModelTransform);
 };
-

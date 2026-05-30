@@ -1,76 +1,75 @@
 #pragma once
 
+#include "Collider.h"
 #include "DrawableObject.h"
+#include "EntityObject.h"
+#include "GameEngine.h"
+#include "PlayerObject.h"
+#include "SquareMeshVbo.h"
 #include "gtc/matrix_transform.hpp"
 #include "gtc/type_ptr.hpp"
-#include <string>
 #include <array>
-#include "EntityObject.h"
-#include "Collider.h"
-#include "PlayerObject.h"
-#include "GameEngine.h"
-#include "SquareMeshVbo.h"
+#include <string>
 
 /// @brief The class for creating object that render using texture
-class TrapObject :public EntityObject
+class TrapObject : public EntityObject
 {
 
 public:
-	 enum TypeTrap
-	 {
-		Trap,
-		Tnt
-	 };
+    enum TypeTrap
+    {
+        Trap,
+        Tnt
+    };
 
-	 virtual enum AnimationState
-	 {
-		 Idle = 1,
-		 Collide
-	 };
+    virtual enum AnimationState
+    {
+        Idle = 1,
+        Collide
+    };
 
 private:
-	int lifeTime;
-	int playerNumOwner;
-	bool CanKnockback;
-	int type;
-	
-	std::vector<TileObject*> TileInRange;
+    int lifeTime;
+    int playerNumOwner;
+    bool CanKnockback;
+    int type;
 
-	AnimationState currAnimState;
-	std::map<AnimationState, SpritesheetInfo> animList;
+    std::vector<TileObject*> TileInRange;
+
+    AnimationState currAnimState;
+    std::map<AnimationState, SpritesheetInfo> animList;
 
 public:
-	bool isActivate = false;
-	TrapObject();
-	virtual ~TrapObject();
-	void Render(glm::mat4 globalModelTransform);
-	void SetTexture(std::string path);
-	void SetLifeTime(int lifeTime);
-	void SetPlayerNumber(int Num);
-	void ReduceLifeTime();
-	int GetLifetime();
-	int GetPlayerNumber();
-	void SetCanKnockback(bool isCanKnockback);
-	bool GetCanKnockback();
-	void SetType(int type);
-	bool GetType();
+    bool isActivate = false;
+    TrapObject();
+    virtual ~TrapObject();
+    void Render(glm::mat4 globalModelTransform);
+    void SetTexture(std::string path);
+    void SetLifeTime(int lifeTime);
+    void SetPlayerNumber(int Num);
+    void ReduceLifeTime();
+    int GetLifetime();
+    int GetPlayerNumber();
+    void SetCanKnockback(bool isCanKnockback);
+    bool GetCanKnockback();
+    void SetType(int type);
+    bool GetType();
 
-	void AddTileInRange(TileObject* tile);
-	void DeleteTileInRange(TileObject* tile);
-	void ExplodeTileInRange();
-	void ChangeStateAfterCollide();
+    void AddTileInRange(TileObject* tile);
+    void DeleteTileInRange(TileObject* tile);
+    void ExplodeTileInRange();
+    void ChangeStateAfterCollide();
 
-	virtual void UpdateCurrentAnimation();
-	virtual void SetAnimationSprite(AnimationState state, SpritesheetInfo spriteInfo);
-	virtual void ChangeAnimationState(AnimationState anim);
+    virtual void UpdateCurrentAnimation();
+    virtual void SetAnimationSprite(AnimationState state, SpritesheetInfo spriteInfo);
+    virtual void ChangeAnimationState(AnimationState anim);
 
-	virtual void OnColliderEnter(Collider* other);
-	virtual void OnColliderStay(Collider* other);
-	virtual void OnColliderExit(Collider* other);
-	virtual void OnTriggerEnter(Collider* other);
-	virtual void OnTriggerStay(Collider* other);
-	virtual void OnTriggerExit(Collider* other);
+    virtual void OnColliderEnter(Collider* other);
+    virtual void OnColliderStay(Collider* other);
+    virtual void OnColliderExit(Collider* other);
+    virtual void OnTriggerEnter(Collider* other);
+    virtual void OnTriggerStay(Collider* other);
+    virtual void OnTriggerExit(Collider* other);
 
-	virtual float getOrderingLayer() const;
-
+    virtual float getOrderingLayer() const;
 };

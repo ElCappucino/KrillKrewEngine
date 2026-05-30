@@ -3,101 +3,97 @@
 
 PlayerHitboxObject::PlayerHitboxObject(PlayerObject* parent)
 {
-	this->parent = parent;
-	this->collider = new Collider(Collider::Trigger, parent);
-	this->isAnimated = false;
+    this->parent = parent;
+    this->collider = new Collider(Collider::Trigger, parent);
+    this->isAnimated = false;
 
-	glm::vec3 attackSize = glm::vec3(parent->getSize().x / 4, parent->getSize().y / 4, 0);
-	glm::vec3 attackPos = glm::vec3(parent->getPos().x + 64.f, parent->getPos().y, 0);
-	this->size = attackSize;
-	this->pos = attackPos;
+    glm::vec3 attackSize = glm::vec3(parent->getSize().x / 4, parent->getSize().y / 4, 0);
+    glm::vec3 attackPos = glm::vec3(parent->getPos().x + 64.f, parent->getPos().y, 0);
+    this->size = attackSize;
+    this->pos = attackPos;
 
-	this->collider->Update(attackSize, attackPos);
+    this->collider->Update(attackSize, attackPos);
 
-	SpritesheetInfo hitboxSprite = SpritesheetInfo("hitbox", "../Resource/Texture/marker01.png", 500, 500, 500, 500);
+    SpritesheetInfo hitboxSprite = SpritesheetInfo("hitbox", "../Resource/Texture/marker01.png", 500, 500, 500, 500);
 
-	this->SetSpriteInfo(hitboxSprite);
+    this->SetSpriteInfo(hitboxSprite);
 
-	this->orderingLayer = 2;
+    this->orderingLayer = 2;
 }
 PlayerHitboxObject::~PlayerHitboxObject()
 {
-	parent = nullptr;
+    parent = nullptr;
 }
 
 void PlayerHitboxObject::SetSpriteInfo(SpritesheetInfo info)
 {
-	this->spriteRenderer->SetSpriteInfo(info.spritewidth, info.spriteheight, info.sheetwidth, info.sheetheight);
-	this->SetTexture(info.texture);
+    this->spriteRenderer->SetSpriteInfo(info.spritewidth, info.spriteheight, info.sheetwidth, info.sheetheight);
+    this->SetTexture(info.texture);
 }
 void PlayerHitboxObject::SetTexture(std::string path)
 {
-	this->texture = GameEngine::GetInstance()->GetRenderer()->LoadTexture(path);
+    this->texture = GameEngine::GetInstance()->GetRenderer()->LoadTexture(path);
 }
 void PlayerHitboxObject::Render(glm::mat4 globalModelTransform)
 {
-	RenderTexturedObject(globalModelTransform);
+    RenderTexturedObject(globalModelTransform);
 }
 
 void PlayerHitboxObject::SetSize(float sizeX, float sizeY)
 {
-	this->size = glm::vec3(sizeX, sizeY, 0);
+    this->size = glm::vec3(sizeX, sizeY, 0);
 }
 void PlayerHitboxObject::SetPosition(glm::vec3 newPosition)
 {
-	this->pos = newPosition;
+    this->pos = newPosition;
 }
 
 Collider* PlayerHitboxObject::GetCollider()
 {
-	return this->collider;
+    return this->collider;
 }
 
 void PlayerHitboxObject::OnColliderEnter(Collider* other)
 {
-	TileObject* tile = dynamic_cast<TileObject*>(other->GetParent());
-	if (tile != nullptr)
-	{
-		// KK_TRACE("hit Tile");
-		this->parent->AddAimingTile(tile);
-	}
+    TileObject* tile = dynamic_cast<TileObject*>(other->GetParent());
+    if (tile != nullptr)
+    {
+        // KK_TRACE("hit Tile");
+        this->parent->AddAimingTile(tile);
+    }
 
-	PropObject* prop = dynamic_cast<PropObject*>(other->GetParent());
-	if (prop != nullptr && prop->propType != PropObject::PropType::Tiny)
-	{
-		// KK_TRACE("hit Tile");
-		this->parent->AddAimingProp(prop);
-	}
+    PropObject* prop = dynamic_cast<PropObject*>(other->GetParent());
+    if (prop != nullptr && prop->propType != PropObject::PropType::Tiny)
+    {
+        // KK_TRACE("hit Tile");
+        this->parent->AddAimingProp(prop);
+    }
 }
 void PlayerHitboxObject::OnColliderStay(Collider* other)
 {
-
 }
 void PlayerHitboxObject::OnColliderExit(Collider* other)
 {
-	TileObject* tile = dynamic_cast<TileObject*>(other->GetParent());
-	if (tile != nullptr)
-	{
-		// KK_TRACE("On ColliderExit PlayerHitboxObject");
-		this->parent->ClearAimingTile(tile);
-	}
+    TileObject* tile = dynamic_cast<TileObject*>(other->GetParent());
+    if (tile != nullptr)
+    {
+        // KK_TRACE("On ColliderExit PlayerHitboxObject");
+        this->parent->ClearAimingTile(tile);
+    }
 
-	PropObject* prop = dynamic_cast<PropObject*>(other->GetParent());
-	if (prop != nullptr)
-	{
-		// KK_TRACE("hit Tile");
-		this->parent->ClearAimingProp(prop);
-	}
+    PropObject* prop = dynamic_cast<PropObject*>(other->GetParent());
+    if (prop != nullptr)
+    {
+        // KK_TRACE("hit Tile");
+        this->parent->ClearAimingProp(prop);
+    }
 }
 void PlayerHitboxObject::OnTriggerEnter(Collider* other)
 {
-
 }
 void PlayerHitboxObject::OnTriggerStay(Collider* other)
 {
-
 }
 void PlayerHitboxObject::OnTriggerExit(Collider* other)
 {
-
 }
