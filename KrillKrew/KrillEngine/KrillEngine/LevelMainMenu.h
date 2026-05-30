@@ -76,10 +76,10 @@ private:
 	bool isPressedSquare = false;
 	bool isPressedTriangle = false;
 
-	bool isToggleVolume[3] = { true, true, true };
-	float masterVolume = 100;
-	float SFXVolume = 20;
-	float BGMVolume = 20;
+	bool isToggleVolume[3] = { true, true, true }; // Master, SFX, BGM
+	float masterVolume = 0;
+	float SFXVolume = 0;
+	float BGMVolume = 0;
 
 	int configNum = 0;
 	int windowWidth = SCREEN_WIDTH;
@@ -97,7 +97,7 @@ private:
 	struct ButtonData
 	{
 		MenuButtonName_ name;
-		int number;
+		std::string stringName;
 		glm::vec2 pos;
 		glm::vec2 size;
 		glm::vec2 offset;
@@ -139,6 +139,8 @@ public:
 	void InitializeOptionUI();
 	void SetupButtonLinks();
 
+	void InitializeButtonHoverActions();
+
 	void InitializeImGui();
 
 	void BackToMainMenu(const std::vector<UiObject*>& activeUiList, MenuButtonName_ fallbackButtonName);
@@ -156,14 +158,15 @@ public:
 	void UpdateAudio();
 
 	void ShowImGuiConfig(bool isShowing);
-	LevelMainMenu::ButtonData* InitButtonData(MenuButtonName_ name, glm::vec2 pos, glm::vec2 size, glm::vec2 offset, int column, std::string configPath);
+	LevelMainMenu::ButtonData* InitButtonData(MenuButtonName_ name, std::string stringName, glm::vec2 pos, glm::vec2 size, glm::vec2 offset, int column, std::string configPath);
 	UiObject* InitUI(SpritesheetInfo spriteInfo, glm::vec2 pos, glm::vec2 size, glm::vec2 spriteShiftPos);
 	UiObject* InitButtonUI(SpritesheetInfo spriteInfo, ButtonData* buttonData, glm::vec2 spriteShiftPos);
-	void saveConfig(std::string& filename, ButtonData* con);
-	void loadConfig(std::string filename);
 	void loadConfigButtonData(std::string filename, ButtonData* buttonData);
 	void DrawVirtualJoystick(const char* label, ImVec2& stickValue, float radius);
 	void DrawControllerButtons();
+
+	void SaveAllButtonConfigs(const std::string& filename);
+	void LoadAllButtonConfigs(const std::string& filename);
 
 	void HandleMainMenuLogic();
 	void HandleCreditsLogic();

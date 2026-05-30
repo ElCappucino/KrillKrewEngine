@@ -50,10 +50,11 @@ UiObject* LevelMainMenu::InitButtonUI(SpritesheetInfo spriteInfo, ButtonData* bu
 	return ui;
 }
 
-LevelMainMenu::ButtonData* LevelMainMenu::InitButtonData(MenuButtonName_ name, glm::vec2 pos, glm::vec2 size, glm::vec2 offset, int column, std::string configPath)
+LevelMainMenu::ButtonData* LevelMainMenu::InitButtonData(MenuButtonName_ name, std::string stringName, glm::vec2 pos, glm::vec2 size, glm::vec2 offset, int column, std::string configPath)
 {
 	ButtonData* button = new ButtonData();
 	button->name = name;
+	button->stringName = stringName;
 	button->pos = pos;
 	button->size = size;
 	button->offset = offset;
@@ -115,38 +116,45 @@ void LevelMainMenu::InitializeMainMenuUI()
 	objectsList.push_back(BG);
 
 	// game name
-	buttonList[MenuButtonName_GameName] = InitButtonData(MenuButtonName_GameName, { 100, 100 }, { 470, 55 }, { 0, 0 }, 0, "../Resource/SceneData/text0.json");
+	buttonList[MenuButtonName_GameName] = InitButtonData(MenuButtonName_GameName, "MenuButtonName_GameName", { 100, 100 }, {470, 55}, {0, 0}, 0, "../Resource/SceneData/MainMenu/MenuButtonName_GameName.json");
 	buttonList[MenuButtonName_GameName]->ButtonUI = InitButtonUI(spriteList["Name"], buttonList[MenuButtonName_GameName], glm::vec2(0, 0));
 
 	objectsList.push_back(buttonList[MenuButtonName_GameName]->ButtonUI);
 	textList.push_back(buttonList[MenuButtonName_GameName]->ButtonUI);
 
-	//Main button
+	// Main button
 	for (int i = 1; i < 5; i++)
 	{
 		// position file data
-		std::string fileName = "../Resource/SceneData/text" + std::to_string(i) + ".json";
+		
 		MenuButtonName_ buttonName;
+		std::string buttonStringName;
 
 		switch (i)
 		{
 		case 1:
 			buttonName = MenuButtonName_StartButton;
+			buttonStringName = "MenuButtonName_StartButton";
 			break;
 		case 2:
 			buttonName = MenuButtonName_TutorialButton;
+			buttonStringName = "MenuButtonName_TutorialButton";
 			break;
 		case 3:
 			buttonName = MenuButtonName_OptionButton;
+			buttonStringName = "MenuButtonName_OptionButton";
 			break;
 		case 4:
 			buttonName = MenuButtonName_ExitButton;
+			buttonStringName = "MenuButtonName_ExitButton";
 			break;
 		}
 
+		std::string fileName = "../Resource/SceneData/MainMenu/" + buttonStringName + ".json";
+
 		int buttonUIShiftColumn = (i - 1) * 2;
 
-		buttonList[buttonName] = InitButtonData(buttonName, { 100, 100 }, { 289, 65 }, { 0, 0 }, buttonUIShiftColumn, fileName);
+		buttonList[buttonName] = InitButtonData(buttonName, buttonStringName, { 100, 100 }, { 289, 65 }, { 0, 0 }, buttonUIShiftColumn, fileName);
 		buttonList[buttonName]->ButtonUI = InitButtonUI(spriteList["Text"], buttonList[buttonName], glm::vec2(0, buttonUIShiftColumn));
 
 		objectsList.push_back(buttonList[buttonName]->ButtonUI);
@@ -173,9 +181,10 @@ void LevelMainMenu::InitializeConfirmUI()
 	yesNoList_Exit.push_back(areYouSureExit);
 
 	// 4. Helper Lambda to eliminate duplicated button creation logic
-	auto SetupConfirmButton = [this, &ynsprite](MenuButtonName_ name, glm::vec2 shift, std::vector<UiObject*>& targetList)
+	auto SetupConfirmButton = [this, &ynsprite](MenuButtonName_ name, std::string stringName, glm::vec2 shift, std::vector<UiObject*>& targetList)
 		{
-			buttonList[name] = InitButtonData(name, { 0, 0 }, { 0, 0 }, { 100, 0 }, 0, "../Resource/SceneData/YesNoConfig.json");
+			std::string filename = "../Resource/SceneData/MainMenu/" + stringName + ".json";
+			buttonList[name] = InitButtonData(name, stringName, { 0, 0 }, { 0, 0 }, { 100, 0 }, 0, filename);
 			buttonList[name]->ButtonUI = InitButtonUI(ynsprite, buttonList[name], shift);
 			buttonList[name]->ButtonUI->SetIsRender(false);
 
@@ -184,11 +193,11 @@ void LevelMainMenu::InitializeConfirmUI()
 		};
 
 	// 5. Create the buttons cleanly
-	SetupConfirmButton(MenuButtonName_AreYouSureStart_Yes, { 0, 1 }, yesNoList_Start);
-	SetupConfirmButton(MenuButtonName_AreYouSureStart_No, { 0, 3 }, yesNoList_Start);
+	SetupConfirmButton(MenuButtonName_AreYouSureStart_Yes, "MenuButtonName_AreYouSureStart_Yes", { 0, 1 }, yesNoList_Start);
+	SetupConfirmButton(MenuButtonName_AreYouSureStart_No, "MenuButtonName_AreYouSureStart_No", { 0, 3 }, yesNoList_Start);
 
-	SetupConfirmButton(MenuButtonName_AreYouSureExit_Yes, { 0, 1 }, yesNoList_Exit);
-	SetupConfirmButton(MenuButtonName_AreYouSureExit_No, { 0, 3 }, yesNoList_Exit);
+	SetupConfirmButton(MenuButtonName_AreYouSureExit_Yes, "MenuButtonName_AreYouSureExit_Yes", { 0, 1 }, yesNoList_Exit);
+	SetupConfirmButton(MenuButtonName_AreYouSureExit_No, "MenuButtonName_AreYouSureExit_No", { 0, 3 }, yesNoList_Exit);
 
 	// 6. Adjust positions for 'No' buttons
 	glm::vec3 AreYouSure_No_ButtonPos = buttonList[MenuButtonName_AreYouSureStart_No]->ButtonUI->getPos();
@@ -241,13 +250,25 @@ void LevelMainMenu::InitializeOptionUI()
 		MenuButtonName_BGMVolume_Text
 	};
 
+	std::string textButtonsName[] =
+	{
+		"MenuButtonName_DisplayType_Text",
+		"MenuButtonName_MasterVolume_Text",
+		"MenuButtonName_SFXVolume_Text",
+		"MenuButtonName_BGMVolume_Text"
+	};
+
+	std::string configFileName;
+
 	for (int j = 0; j < 4; j++) {
 
 		MenuButtonName_ buttonName = textButtons[j];
+		std::string buttonStringName = textButtonsName[j];
 		auto& textSprite = spriteList["OptionsText"];
 		glm::vec2 spriteColumn = glm::vec2(0, j * 2);
+		configFileName = "../Resource/SceneData/MainMenu/" + buttonStringName + ".json";
 
-		buttonList[buttonName] = InitButtonData(buttonName, { 100, 100 }, { 289, 65 }, { 0, 0 }, j * 2, "../Resource/SceneData/TextOptionConfig.json");
+		buttonList[buttonName] = InitButtonData(buttonName, buttonStringName, { 100, 100 }, { 289, 65 }, { 0, 0 }, j * 2, configFileName);
 		float buttonPosX = buttonList[buttonName]->pos.x;
 		float buttonPosY = buttonList[buttonName]->pos.y + (-j * buttonList[buttonName]->offset.y);
 
@@ -264,7 +285,9 @@ void LevelMainMenu::InitializeOptionUI()
 	// 3. Display Type Button Setup
 	auto& optionDisplaySprite = spriteList["OptionsDisplay"];
 
-	buttonList[MenuButtonName_DisplayType] = InitButtonData(MenuButtonName_DisplayType, { 100, 100 }, { 289, 65 }, { 0, 0 }, 0, "../Resource/SceneData/DisplayConfig.json");
+	configFileName = "../Resource/SceneData/MainMenu/MenuButtonName_DisplayType.json";
+
+	buttonList[MenuButtonName_DisplayType] = InitButtonData(MenuButtonName_DisplayType, "MenuButtonName_DisplayType", { 100, 100 }, {289, 65}, {0, 0}, 0, configFileName);
 
 	float displayTypePosX = buttonList[MenuButtonName_DisplayType]->pos.x;
 	float displayTypePosY = buttonList[MenuButtonName_DisplayType]->pos.y;
@@ -279,8 +302,9 @@ void LevelMainMenu::InitializeOptionUI()
 	objectsList.push_back(optionDisplay);
 
 	// 4. Display Dropdown
+
 	auto& displayDropdownSprite = spriteList["OptionsDisplayDropdown"];
-	buttonList[MenuButtonName_DisplayDropdown] = InitButtonData(MenuButtonName_DisplayDropdown, { 100, 100 }, { 289, 65 }, { 0, 0 }, 0, "../Resource/SceneData/DisplayConfig.json");
+	buttonList[MenuButtonName_DisplayDropdown] = InitButtonData(MenuButtonName_DisplayDropdown, "MenuButtonName_DisplayDropdown", { 100, 100 }, {289, 65}, {0, 0}, 0, configFileName);
 	
 	float displayDropdownOffsetY = -70.0f;
 	float displayDropdownButtonPosX = buttonList[MenuButtonName_DisplayDropdown]->pos.x;
@@ -297,6 +321,11 @@ void LevelMainMenu::InitializeOptionUI()
 	MenuButtonName_ trackButtons[] = { MenuButtonName_MasterVolume_Track, MenuButtonName_SFXVolume_Track, MenuButtonName_BGMVolume_Track };
 	MenuButtonName_ knobButtons[] = { MenuButtonName_MasterVolume_Knob,  MenuButtonName_SFXVolume_Knob,  MenuButtonName_BGMVolume_Knob };
 	MenuButtonName_ boxButtons[] = { MenuButtonName_MasterVolume_Box,   MenuButtonName_SFXVolume_Box,   MenuButtonName_BGMVolume_Box };
+
+	std::string trackButtonsString[] = { "MenuButtonName_MasterVolume_Track", "MenuButtonName_SFXVolume_Track", "MenuButtonName_BGMVolume_Track" };
+	std::string knobButtonsString[] = { "MenuButtonName_MasterVolume_Knob",  "MenuButtonName_SFXVolume_Knob",  "MenuButtonName_BGMVolume_Knob" };
+	std::string boxButtonsString[] = { "MenuButtonName_MasterVolume_Box",   "MenuButtonName_SFXVolume_Box",   "MenuButtonName_BGMVolume_Box" };
+
 	float volumeValues[] = { masterVolume, SFXVolume, BGMVolume };
 
 	auto& trackSprite = spriteList["OptionsVolumeTrack"];
@@ -309,8 +338,13 @@ void LevelMainMenu::InitializeOptionUI()
 		MenuButtonName_ knobName = knobButtons[j];
 		MenuButtonName_ boxName = boxButtons[j];
 
+		std::string trackNameString = trackButtonsString[j];
+		std::string knobNameString = knobButtonsString[j];
+		std::string boxNameString = boxButtonsString[j];
+
+		configFileName = "../Resource/SceneData/MainMenu/" + trackNameString + ".json";
 		// Track UI
-		buttonList[trackName] = InitButtonData(trackName, { 100, 100 }, { 289, 65 }, { 0, 0 }, 0, "../Resource/SceneData/VolumeTrackConfig.json");
+		buttonList[trackName] = InitButtonData(trackName, trackNameString, { 100, 100 }, { 289, 65 }, { 0, 0 }, 0, configFileName);
 
 		float volumeButtonPosX = buttonList[trackName]->pos.x;
 		float volumeButtonPosY = buttonList[trackName]->pos.y - (j * buttonList[trackName]->offset.y);
@@ -324,9 +358,10 @@ void LevelMainMenu::InitializeOptionUI()
 		OptionList.push_back(optionVolumeTrack);
 
 		// Knob UI
+		configFileName = "../Resource/SceneData/MainMenu/" + knobNameString + ".json";
 		float knobX = (volumeValues[j] * 4 - 57.5 / 0.25);
 
-		buttonList[knobName] = InitButtonData(knobName, { 100, 100 }, { 289, 65 }, { 0, 0 }, 0, "../Resource/SceneData/VolumeTrackConfig.json");
+		buttonList[knobName] = InitButtonData(knobName, knobNameString, { 100, 100 }, { 289, 65 }, { 0, 0 }, 0, configFileName);
 
 		UiObject* optionVolumeKnob = InitUI(knobSprite, { 0, 0 }, { knobSprite.spritewidth, knobSprite.spriteheight }, { 0, 0 });
 		optionVolumeKnob->SetIsRender(false);
@@ -338,7 +373,9 @@ void LevelMainMenu::InitializeOptionUI()
 		OptionList.push_back(optionVolumeKnob);
 
 		// Box UI
-		buttonList[boxName] = InitButtonData(boxName, { 100, 100 }, { 289, 65 }, { 0, 0 }, 0, "../Resource/SceneData/VolumeTrackConfig.json");
+		configFileName = "../Resource/SceneData/MainMenu/" + boxNameString + ".json";
+
+		buttonList[boxName] = InitButtonData(boxName, boxNameString, { 100, 100 }, { 289, 65 }, { 0, 0 }, 0, configFileName);
 
 		float BoxButtonPosX = buttonList[boxName]->pos.x + buttonList[boxName]->offset.x;
 		float BoxButtonPosY = buttonList[boxName]->pos.y - (j * buttonList[boxName]->offset.y);
@@ -372,7 +409,7 @@ void LevelMainMenu::InitializeImGui()
 	ImGui_ImplOpenGL3_Init(glsl_version);
 }
 
-void LevelMainMenu::InitializeMenuButtons()
+void LevelMainMenu::InitializeButtonsAction()
 {
 	buttonList[MenuButtonName_GameName]->OnExecute = [this]() {
 		TransitionToMenu(MenuState::Credits, {}, creditUIList, MenuButtonName_StartButton);
@@ -484,122 +521,131 @@ void LevelMainMenu::UpdateAudio()
 		soundManager->SetVolumeAllMusic(0);
 	}
 }
+void LevelMainMenu::InitializeButtonHoverActions()
+{
+	// Assign hover function
+	// Lambda function for main menu text hover
+	auto BindNormalHoverFunction = [this](MenuButtonName_ enumName, int activeCol, int inactiveCol) {
 
+		if (!buttonList[enumName])
+		{ 
+			KK_CORE_ERROR("LevelMainMenu::InitializeButtonHoverActions() : No button in buttonList that matches the name!");
+			return;
+		}
+
+		buttonList[enumName]->OnHover = [this, enumName, activeCol, inactiveCol]() {
+
+			ButtonData* btn = buttonList[enumName];
+			if (!btn)
+			{
+				KK_CORE_ERROR("LevelMainMenu::InitializeButtonHoverActions() : No button data!");
+				return;
+			}
+
+			if (!btn->ButtonUI)
+			{
+				KK_CORE_ERROR("LevelMainMenu::InitializeButtonHoverActions() : button isn't initialize UI yet!");
+				return;
+			}
+
+			btn->ButtonUI->ShiftSpriteTo(0, btn->playerHere ? activeCol : inactiveCol);
+		};
+	};
+
+	BindNormalHoverFunction(MenuButtonName_GameName, 1, 0);
+	BindNormalHoverFunction(MenuButtonName_StartButton, 1, 0);
+	BindNormalHoverFunction(MenuButtonName_TutorialButton, 3, 2);
+	BindNormalHoverFunction(MenuButtonName_OptionButton, 5, 4);
+	BindNormalHoverFunction(MenuButtonName_ExitButton, 7, 6);
+
+	BindNormalHoverFunction(MenuButtonName_AreYouSureStart_Yes, 1, 0);
+	BindNormalHoverFunction(MenuButtonName_AreYouSureStart_No, 3, 2);
+	BindNormalHoverFunction(MenuButtonName_AreYouSureExit_Yes, 1, 0);
+	BindNormalHoverFunction(MenuButtonName_AreYouSureExit_No, 3, 2);
+
+	BindNormalHoverFunction(MenuButtonName_DisplayType_Text, 1, 0);
+	BindNormalHoverFunction(MenuButtonName_MasterVolume_Text, 3, 2);
+	BindNormalHoverFunction(MenuButtonName_SFXVolume_Text, 5, 4);
+	BindNormalHoverFunction(MenuButtonName_BGMVolume_Text, 7, 6);
+
+	BindNormalHoverFunction(MenuButtonName_MasterVolume_Track, 1, 0);
+	BindNormalHoverFunction(MenuButtonName_SFXVolume_Track, 1, 0);
+	BindNormalHoverFunction(MenuButtonName_BGMVolume_Track, 1, 0);
+
+	BindNormalHoverFunction(MenuButtonName_MasterVolume_Knob, 1, 0);
+	BindNormalHoverFunction(MenuButtonName_SFXVolume_Knob, 1, 0);
+	BindNormalHoverFunction(MenuButtonName_BGMVolume_Knob, 1, 0);
+
+	// Lambda function for main menu text hover
+	if (!buttonList[MenuButtonName_DisplayType])
+	{
+		KK_CORE_ERROR("LevelMainMenu::InitializeButtonHoverActions() : No MenuButtonName_DisplayType button data!");
+	}
+	else
+	{
+		buttonList[MenuButtonName_DisplayType]->OnHover = [this]() {
+			ButtonData* btn = buttonList[MenuButtonName_DisplayType];
+			if (!btn)
+			{
+				KK_CORE_ERROR("LevelMainMenu::InitializeButtonHoverActions() : No button data!");
+				return;
+			}
+
+			if (!btn->ButtonUI)
+			{
+				KK_CORE_ERROR("LevelMainMenu::InitializeButtonHoverActions() : button isn't initialize UI yet!");
+				return;
+			}
+
+			int baseOffset = !this->isFullscreen ? 2 : 0;
+			int playerOffset = btn->playerHere ? 0 : 1;
+			btn->ButtonUI->ShiftSpriteTo(0, baseOffset + playerOffset);
+			};
+	}
+
+	// Lambda function for volume mute checkbox
+	auto BindVolumeBoxHoverFunction = [this](MenuButtonName_ enumName, int mapIndex) {
+
+		if (!buttonList[enumName])
+		{
+			KK_CORE_ERROR("LevelMainMenu::InitializeButtonHoverActions() at BindVolumeBoxHoverFunction() : No button in buttonList that matches the name!");
+			return;
+		}
+
+		buttonList[enumName]->OnHover = [this, enumName, mapIndex]() {
+
+			ButtonData* btn = buttonList[enumName];
+			if (!btn)
+			{
+				KK_CORE_ERROR("LevelMainMenu::InitializeButtonHoverActions() at BindVolumeBoxHoverFunction() : No button data!");
+				return;
+			}
+
+			if (!btn->ButtonUI)
+			{
+				KK_CORE_ERROR("LevelMainMenu::InitializeButtonHoverActions() at BindVolumeBoxHoverFunction() : button isn't initialize UI yet!");
+				return;
+			}
+
+			bool isToggled = this->isToggleVolume[mapIndex];
+			int yIndex = btn->playerHere ? (isToggled ? 0 : 2) : (isToggled ? 1 : 3);
+			btn->ButtonUI->ShiftSpriteTo(0, yIndex);
+			};
+		};
+
+	BindVolumeBoxHoverFunction(MenuButtonName_MasterVolume_Box, 0);
+	BindVolumeBoxHoverFunction(MenuButtonName_SFXVolume_Box, 1);
+	BindVolumeBoxHoverFunction(MenuButtonName_BGMVolume_Box, 2);
+}
 void LevelMainMenu::UpdateUi()
 {
-	if (currentMenuState == MenuState::Main)
+	for (auto& pair : buttonList)
 	{
-		for (int j = 0; j < textList.size(); j++)
+		ButtonData* buttonData = pair.second;
+
+		if (buttonData && buttonData->OnHover)
 		{
-			if (Buttons.at(j)->playerHere == true)
-			{
-				textList.at(j)->ShiftSpriteTo(textList.at(j)->GetSpriteRenderer()->GetRow(), Buttons.at(j)->column + 1);
-			}
-			else {
-				textList.at(j)->ShiftSpriteTo(textList.at(j)->GetSpriteRenderer()->GetRow(), Buttons.at(j)->column);
-			}
-		}
-	}
-	else if (currentMenuState == MenuState::StartConfirm)
-	{
-		for (const auto& buttonData : buttonList)
-		{
-			if (buttonData.first == MenuButtonName_AreYouSureStart_Yes)
-			{
-				if (buttonData.second->playerHere)
-					buttonData.second->ButtonUI->ShiftSpriteTo(0, 1);
-				else
-					buttonData.second->ButtonUI->ShiftSpriteTo(0, 0);
-			}
-
-			if (buttonData.first == MenuButtonName_AreYouSureStart_No)
-			{
-				if (buttonData.second->playerHere)
-					buttonData.second->ButtonUI->ShiftSpriteTo(0, 3);
-				else
-					buttonData.second->ButtonUI->ShiftSpriteTo(0, 2);
-			}
-		}
-	}
-	else if (currentMenuState == MenuState::ExitConfirm)
-	{
-		for (const auto& buttonData : buttonList)
-		{
-			if (buttonData.first == MenuButtonName_AreYouSureExit_Yes)
-			{
-				if (buttonData.second->playerHere)
-					buttonData.second->ButtonUI->ShiftSpriteTo(0, 1);
-				else
-					buttonData.second->ButtonUI->ShiftSpriteTo(0, 0);
-			}
-
-			if (buttonData.first == MenuButtonName_AreYouSureExit_No)
-			{
-				if (buttonData.second->playerHere)
-					buttonData.second->ButtonUI->ShiftSpriteTo(0, 3);
-				else
-					buttonData.second->ButtonUI->ShiftSpriteTo(0, 2);
-			}
-		}
-	}
-	else if (currentMenuState == MenuState::Options)
-	{
-		for (const auto& buttonData : buttonList)
-		{
-			if (buttonData.first == MenuButtonName_DisplayType)
-			{
-				int baseOffset = !isFullscreen ? 2 : 0;
-				int playerOffset = buttonData.second->playerHere ? 0 : 1;
-
-				buttonData.second->ButtonUI->ShiftSpriteTo(0, baseOffset + playerOffset);
-			}
-
-			if (buttonData.first == MenuButtonName_MasterVolume_Track ||
-				buttonData.first == MenuButtonName_SFXVolume_Track ||
-				buttonData.first == MenuButtonName_BGMVolume_Track)
-			{
-				if (buttonData.second->playerHere)
-					buttonData.second->ButtonUI->ShiftSpriteTo(0, 1);
-				else
-					buttonData.second->ButtonUI->ShiftSpriteTo(0, 0);
-			}
-
-			if (buttonData.first == MenuButtonName_MasterVolume_Knob ||
-				buttonData.first == MenuButtonName_SFXVolume_Knob ||
-				buttonData.first == MenuButtonName_BGMVolume_Knob)
-			{
-				//KK_TRACE("KNOB");
-				//KK_TRACE("buttonData.first = " + buttonData.first);
-
-				if (buttonData.second->playerHere)
-					buttonData.second->ButtonUI->ShiftSpriteTo(0, 1);
-				else
-					buttonData.second->ButtonUI->ShiftSpriteTo(0, 0);
-			}
-
-			if (buttonData.first == MenuButtonName_DisplayType_Text ||
-				buttonData.first == MenuButtonName_MasterVolume_Text ||
-				buttonData.first == MenuButtonName_SFXVolume_Text ||
-				buttonData.first == MenuButtonName_BGMVolume_Text)
-			{
-				int isPlayer = buttonData.second->playerHere ? 1 : 0;
-
-				int yIndex = isPlayer + volumeTextIndexMap.find(buttonData.first)->second;
-
-				buttonData.second->ButtonUI->ShiftSpriteTo(0, yIndex);
-			}
-
-			if (buttonData.first == MenuButtonName_MasterVolume_Box ||
-				buttonData.first == MenuButtonName_SFXVolume_Box ||
-				buttonData.first == MenuButtonName_BGMVolume_Box)
-			{
-				bool isToggled = isToggleVolume[volumeBoxIndexMap.find(buttonData.first)->second];
-				bool isPlayer = buttonData.second->playerHere;
-
-				int yIndex = isPlayer ? (isToggled ? 0 : 2) : (isToggled ? 1 : 3);
-
-				buttonData.second->ButtonUI->ShiftSpriteTo(0, yIndex);
-			}
+			buttonData->OnHover();
 		}
 	}
 }
@@ -808,9 +854,11 @@ void LevelMainMenu::LevelInit()
 	InitializeOptionUI();
 	
 	SetupButtonLinks();
-	InitializeMenuButtons();
+	InitializeButtonsAction();
 
 	InitializeImGui();
+
+	InitializeButtonHoverActions();
 
 	KK_TRACE("Level Main Menu Loaded");
 }
@@ -866,16 +914,16 @@ void LevelMainMenu::DrawControllerButtons()
 	float center = buttonSize + spacing;
 
 	// Y - Top (Yellow-ish)
-	DrawButton("Cross", center, 0, ImVec4(0.0f, 0.0f, 0.0f, 1.0f));
+	DrawButton("Triangle", center, 0, ImVec4(0.0f, 0.0f, 0.0f, 1.0f));
 
 	// X - Left (Blue-ish)
-	DrawButton("Circle", 0, center, ImVec4(0.0f, 0.0f, 0.0f, 1.0f));
+	DrawButton("Square", 0, center, ImVec4(0.0f, 0.0f, 0.0f, 1.0f));
 
 	// B - Right (Red-ish)
-	DrawButton("Square", center * 2, center, ImVec4(0.0f, 0.0f, 0.0f, 1.0f));
+	DrawButton("Circle", center * 2, center, ImVec4(0.0f, 0.0f, 0.0f, 1.0f));
 
 	// A - Bottom (Green-ish)
-	DrawButton("Triangle", center, center * 2, ImVec4(0.0f, 0.0f, 0.0f, 1.0f));
+	DrawButton("Cross", center, center * 2, ImVec4(0.0f, 0.0f, 0.0f, 1.0f));
 
 	ImGui::EndGroup();
 }
@@ -929,140 +977,97 @@ void LevelMainMenu::ShowImGuiConfig(bool isShowing)
 	ImGui_ImplSDL2_NewFrame();
 	ImGui::NewFrame();
 
+	static MenuButtonName_ selectedKey = MenuButtonName_None;
+
 	if (ImGui::Button("Go levelSelectAbility")) {
 		gameEngine->GetStateController()->gameStateNext = GameState::GS_LEVELSELECTABILITY;
 	}
 
+	ImGui::SameLine();
+	if (ImGui::Button("Save Entire Layout")) {
+		SaveAllButtonConfigs("../Resource/SceneData/MenuLayoutConfig.json");
+	}
+
+	ImGui::SameLine();
+	if (ImGui::Button("Load Entire Layout")) {
+		LoadAllButtonConfigs("../Resource/SceneData/MenuLayoutConfig.json");
+	}
+
+
 	DrawVirtualJoystick("Joystick", joystickVal, 50);
 	DrawControllerButtons();
 
-	ImGuiTabBarFlags tab_bar_flags = ImGuiTabBarFlags_None;
+	auto DrawButtonEditor = [](const char* label, ButtonData* data) {
+		if (!data) return;
+		ImGui::PushID(label);
 
-	if (ImGui::BeginTabBar("MyTabBar", tab_bar_flags)) {
-		if (ImGui::BeginTabItem("Text")) {
-			if (ImGui::Button("Save config")) {
-				for (int i = 0; i < Buttons.size(); i++) {
-					std::string fileName = "text" + std::to_string(i) + ".json";
-					saveConfig(fileName, Buttons.at(i));
-				}
-			}
+		bool changed = false;
+		changed |= ImGui::InputFloat("PosX", &data->pos.x, 1.0f, 1.0f, "%.2f");
+		changed |= ImGui::InputFloat("PosY", &data->pos.y, 1.0f, 1.0f, "%.2f");
+		changed |= ImGui::InputFloat("Width", &data->size.x, 1.0f, 1.0f, "%.2f");
+		changed |= ImGui::InputFloat("Height", &data->size.y, 1.0f, 1.0f, "%.2f");
+		changed |= ImGui::InputFloat("OffsetX", &data->offset.x, 1.0f, 1.0f, "%.2f");
+		changed |= ImGui::InputFloat("OffsetY", &data->offset.y, 1.0f, 1.0f, "%.2f");
+		ImGui::InputInt("Column ID", &data->column);
 
-			ImGui::SameLine();
-			if (ImGui::Button("Load config")) {
-				for (int i = 0; i < Buttons.size(); i++) {
-					std::string fileName = "text" + std::to_string(i) + ".json";
-					loadConfig(fileName);
-					textList.at(i)->SetPosition(glm::vec3(Buttons.at(i)->pos.x, Buttons.at(i)->pos.y, 0));
-					textList.at(i)->SetSize(Buttons.at(i)->size.x, -Buttons.at(i)->size.y);
-				}
-			}
-
-			for (int i = 0; i < Buttons.size(); i++) {
-				ImGui::PushID(i);
-				ImGui::Text("Text%d", i);
-				ImGui::InputFloat("PosX", &Buttons.at(i)->pos.x, 1.0f, 1.0f, "%.2f");
-				ImGui::InputFloat("PosY", &Buttons.at(i)->pos.y, 1.0f, 1.0f, "%.2f");
-				ImGui::InputFloat("Width", &Buttons.at(i)->size.x, 1.0f, 1.0f, "%.2f");
-				ImGui::InputFloat("Height", &Buttons.at(i)->size.y, 1.0f, 1.0f, "%.2f");
-				ImGui::PopID();
-			}
-			ImGui::EndTabItem();
+		if (changed && data->ButtonUI) {
+			data->ButtonUI->SetPosition(glm::vec3(data->pos.x, data->pos.y, 0));
+			data->ButtonUI->SetSize(data->size.x, -data->size.y);
 		}
 
-		if (ImGui::BeginTabItem("YesNo")) {
-			configNum = 5;
-			if (ImGui::Button("Save config")) {
-				std::string fileName = "YesNoConfig.json";
-				saveConfig(fileName, Buttons.at(configNum));
-			}
+		ImGui::PopID();
+	};
 
-			ImGui::SameLine();
-			if (ImGui::Button("Load config")) {
-				std::string fileName = "YesNoConfig.json";
-				loadConfig(fileName);
-				for (int i = 0; i < yesNoList.size(); i++) {
-					yesNoList.at(i)->SetPosition(glm::vec3(Buttons.at(configNum)->pos.x + (i * Buttons.at(configNum)->offset.x), Buttons.at(configNum)->pos.y, 0));
-				}
-			}
-			ImGui::InputFloat("PosX", &Buttons.at(configNum)->pos.x, 1.0f, 1.0f, "%.2f");
-			ImGui::InputFloat("PosY", &Buttons.at(configNum)->pos.y, 1.0f, 1.0f, "%.2f");
-			ImGui::InputFloat("OffSetX", &Buttons.at(configNum)->offset.x, 1.0f, 1.0f, "%.2f");
-			ImGui::InputFloat("OffSetY", &Buttons.at(configNum)->offset.y, 1.0f, 1.0f, "%.2f");
+	ImGui::BeginChild("left_pane", ImVec2(300, 0), true);
+	ImGui::TextColored(ImVec4(0.3f, 0.6f, 0.9f, 1.0f), "UI Object List");
+	ImGui::Separator();
 
-			ImGui::EndTabItem();
+	for (auto& pair : buttonList) {
+		MenuButtonName_ enumKey = pair.first;
+		ButtonData* buttonData = pair.second;
+
+		if (!buttonData) continue;
+
+		// Determine a display title string
+		std::string displayName = buttonData->stringName.empty() ?
+			"ID: " + std::to_string(enumKey) : buttonData->stringName;
+
+		// Fallback safety selection initializing if nothing is selected yet
+		if (selectedKey == MenuButtonName_None) {
+			selectedKey = enumKey;
 		}
 
-		if (ImGui::BeginTabItem("Text option")) {
-			configNum = 6;
-			if (ImGui::Button("Save config")) {
-				std::string fileName = "TextOptionConfig.json";
-				saveConfig(fileName, Buttons.at(configNum));
-			}
-
-			ImGui::SameLine();
-			if (ImGui::Button("Load config")) {
-				std::string fileName = "TextOptionConfig.json";
-				loadConfig(fileName);
-				for (int i = 0; i < textOptionList.size(); i++) {
-					textOptionList.at(i)->SetPosition(glm::vec3(Buttons.at(configNum)->pos.x, Buttons.at(configNum)->pos.y + (i * Buttons.at(configNum)->offset.y), 0));
-				}
-			}
-			ImGui::InputFloat("PosX", &Buttons.at(configNum)->pos.x, 1.0f, 1.0f, "%.2f");
-			ImGui::InputFloat("PosY", &Buttons.at(configNum)->pos.y, 1.0f, 1.0f, "%.2f");
-			ImGui::InputFloat("OffSetX", &Buttons.at(configNum)->offset.x, 1.0f, 1.0f, "%.2f");
-			ImGui::InputFloat("OffSetY", &Buttons.at(configNum)->offset.y, 1.0f, 1.0f, "%.2f");
-
-			ImGui::EndTabItem();
+		// Render an interactive list item
+		if (ImGui::Selectable(displayName.c_str(), selectedKey == enumKey)) {
+			selectedKey = enumKey;
 		}
-
-		if (ImGui::BeginTabItem("display option")) {
-			configNum = 7;
-			if (ImGui::Button("Save config")) {
-				std::string fileName = "DisplayConfig.json";
-				saveConfig(fileName, Buttons.at(configNum));
-			}
-
-			ImGui::SameLine();
-			if (ImGui::Button("Load config")) {
-				std::string fileName = "DisplayConfig.json";
-				loadConfig(fileName);
-				for (int i = 0; i < textOptionList.size(); i++) {
-					textOptionList.at(i)->SetPosition(glm::vec3(Buttons.at(configNum)->pos.x, Buttons.at(configNum)->pos.y + (i * Buttons.at(configNum)->offset.y), 0));
-				}
-			}
-			ImGui::InputFloat("PosX", &Buttons.at(configNum)->pos.x, 1.0f, 1.0f, "%.2f");
-			ImGui::InputFloat("PosY", &Buttons.at(configNum)->pos.y, 1.0f, 1.0f, "%.2f");
-			ImGui::InputFloat("OffSetX", &Buttons.at(configNum)->offset.x, 1.0f, 1.0f, "%.2f");
-			ImGui::InputFloat("OffSetY", &Buttons.at(configNum)->offset.y, 1.0f, 1.0f, "%.2f");
-
-			ImGui::EndTabItem();
-		}
-
-		if (ImGui::BeginTabItem("volume track")) {
-			configNum = 8;
-			if (ImGui::Button("Save config")) {
-				std::string fileName = "VolumeTrackConfig.json";
-				saveConfig(fileName, Buttons.at(configNum));
-			}
-
-			ImGui::SameLine();
-			if (ImGui::Button("Load config")) {
-				std::string fileName = "VolumeTrackConfig.json";
-				loadConfig(fileName);
-				for (int i = 0; i < textOptionList.size(); i++) {
-					volumeTrackList.at(i)->SetPosition(glm::vec3(Buttons.at(configNum)->pos.x, Buttons.at(configNum)->pos.y + (i * Buttons.at(configNum)->offset.y), 0));
-				}
-			}
-			ImGui::InputFloat("PosX", &Buttons.at(configNum)->pos.x, 1.0f, 1.0f, "%.2f");
-			ImGui::InputFloat("PosY", &Buttons.at(configNum)->pos.y, 1.0f, 1.0f, "%.2f");
-			ImGui::InputFloat("OffSetX", &Buttons.at(configNum)->offset.x, 1.0f, 1.0f, "%.2f");
-			ImGui::InputFloat("OffSetY", &Buttons.at(configNum)->offset.y, 1.0f, 1.0f, "%.2f");
-
-			ImGui::EndTabItem();
-		}
-
-		ImGui::EndTabBar();
 	}
+	ImGui::EndChild();
+
+	ImGui::SameLine(); // Places panel 2 immediately to the right of panel 1
+
+	// Pane 2: Right-side properties inspector context matching our selection
+	ImGui::BeginChild("right_pane", ImVec2(0, 0), true);
+
+	// Safety verification check that the selected entry exists
+	if (buttonList.find(selectedKey) != buttonList.end() && buttonList[selectedKey] != nullptr) {
+		ButtonData* currentData = buttonList[selectedKey];
+
+		std::string inspectorTitle = currentData->stringName.empty() ?
+			"Object Inspector" : currentData->stringName;
+
+		ImGui::Text("Editing Entity: %s", inspectorTitle.c_str());
+		ImGui::Text("System Enum Identifier: %d", selectedKey);
+		ImGui::Checkbox("Active Hover State Focus", &currentData->playerHere);
+		ImGui::Separator();
+
+		// Pass selection pointer over into our drawing logic blocks
+		DrawButtonEditor(inspectorTitle.c_str(), currentData);
+	}
+	else {
+		ImGui::Text("Please choose a UI configuration target from the sidebar.");
+	}
+	ImGui::EndChild();
 	// Rendering
 	ImGui::Render();
 
@@ -1255,83 +1260,78 @@ void LevelMainMenu::HandleMouse(int type, int x, int y) {
 
 }
 
-void LevelMainMenu::saveConfig(std::string& filename, ButtonData* con) 
+void LevelMainMenu::SaveAllButtonConfigs(const std::string& filename)
 {
-	nlohmann::json data;
+	nlohmann::json rootJson;
 
-	data["number"] = con->number;
-	data["posX"] = con->pos.x;
-	data["posY"] = con->pos.y;
-	data["width"] = con->size.x;
-	data["hight"] = con->size.y;
-	data["offSetX"] = con->offset.x;
-	data["offSetY"] = con->offset.y;
+	for (const auto& pair : buttonList)
+	{
+		MenuButtonName_ enumName = pair.first;
+		ButtonData* buttonData = pair.second;
+
+		if (!buttonData) continue;
+
+		std::string key = buttonData->stringName.empty() ? std::to_string(enumName) : buttonData->stringName;
+
+		nlohmann::json buttonJson;
+
+		buttonJson["posX"] = buttonData->pos.x;
+		buttonJson["posY"] = buttonData->pos.y;
+		buttonJson["width"] = buttonData->size.x;
+		buttonJson["height"] = buttonData->size.y;
+		buttonJson["offsetX"] = buttonData->offset.x;
+		buttonJson["offsetY"] = buttonData->offset.y;
+		buttonJson["column"] = buttonData->column;
+
+		rootJson[key] = buttonJson;
+	}
 
 	std::ofstream file(filename);
+	if (!file.is_open()) return;
 
-	if (!file.is_open()) 
-	{
-		KK_CORE_WARN("LevelMainMenu::saveConfig : Cannot save configuration");
-		return;
-	}
-
-	file << data;
+	file << rootJson.dump(4);
 	file.close();
-	KK_CORE_INFO("LevelMainMenu::saveConfig : Successfully save configuration");
-
 }
 
-void LevelMainMenu::loadConfig(std::string filename) 
+void LevelMainMenu::LoadAllButtonConfigs(const std::string& filename)
 {
 	std::ifstream file(filename);
+	if (!file.is_open()) return;
 
-	if (!file.is_open())
+	nlohmann::json rootJson = nlohmann::json::parse(file);
+	file.close();
+
+	for (auto& pair : buttonList)
 	{
-		KK_ERROR("LevelMainMenu: Cannot Load Configuration file!");
-		return;
-	}
+		MenuButtonName_ enumName = pair.first;
+		ButtonData* buttonData = pair.second;
 
-	nlohmann::json data = nlohmann::json::parse(file);
-	int id = -1;
-	std::cout << "Opened" << std::endl;
+		if (!buttonData) continue;
 
-	if (data.contains("number") && !data["number"].is_null()) 
-	{
-		id = data["number"];
+		std::string key = buttonData->stringName.empty() ? std::to_string(enumName) : buttonData->stringName;
 
-		for (int i = 0; i < Buttons.size(); i++) 
+		if (rootJson.contains(key))
 		{
-			if (Buttons.at(i)->number == id) 
+			const auto& buttonJson = rootJson[key];
+
+			if (buttonJson.contains("posX"))    buttonData->pos.x = buttonJson["posX"];
+			if (buttonJson.contains("posY"))    buttonData->pos.y = buttonJson["posY"];
+			if (buttonJson.contains("width"))   buttonData->size.x = buttonJson["width"];
+			if (buttonJson.contains("height"))   buttonData->size.y = buttonJson["height"];
+			if (buttonJson.contains("offsetX")) buttonData->offset.x = buttonJson["offsetX"];
+			if (buttonJson.contains("offsetY")) buttonData->offset.y = buttonJson["offsetY"];
+			if (buttonJson.contains("column"))  buttonData->column = buttonJson["column"];
+
+			if (buttonData->ButtonUI)
 			{
-				std::cout << "Loaded" << std::endl;
-
-				if (data.contains("posX") && !data["posX"].is_null()) {
-					Buttons.at(i)->pos.x = data["posX"];
-				}
-
-				if (data.contains("posY") && !data["posY"].is_null()) {
-					Buttons.at(i)->pos.y = data["posY"];
-				}
-
-				if (data.contains("width") && !data["width"].is_null()) {
-					Buttons.at(i)->size.x = data["width"];
-				}
-
-				if (data.contains("hight") && !data["hight"].is_null()) {
-					Buttons.at(i)->size.y = data["hight"];
-				}
-
-				if (data.contains("offSetX") && !data["offSetX"].is_null()) {
-					Buttons.at(i)->offset.x = data["offSetX"];
-				}
-
-				if (data.contains("offSetY") && !data["offSetY"].is_null()) {
-					Buttons.at(i)->offset.y = data["offSetY"];
-				}
+				buttonData->ButtonUI->SetPosition(glm::vec3(buttonData->pos.x, buttonData->pos.y, 0));
+				buttonData->ButtonUI->SetSize(buttonData->size.x, -buttonData->size.y);
 			}
 		}
 	}
 }
+
+
 
 void LevelMainMenu::loadConfigButtonData(std::string filename, ButtonData* buttonData)
 {
@@ -1358,16 +1358,16 @@ void LevelMainMenu::loadConfigButtonData(std::string filename, ButtonData* butto
 		buttonData->size.x = data["width"];
 	}
 
-	if (data.contains("hight") && !data["hight"].is_null()) {
-		buttonData->size.y = data["hight"];
+	if (data.contains("height") && !data["height"].is_null()) {
+		buttonData->size.y = data["height"];
 	}
 
-	if (data.contains("offSetX") && !data["offSetX"].is_null()) {
-		buttonData->offset.x = data["offSetX"];
+	if (data.contains("offsetX") && !data["offsetX"].is_null()) {
+		buttonData->offset.x = data["offsetX"];
 	}
 
-	if (data.contains("offSetY") && !data["offSetY"].is_null()) {
-		buttonData->offset.y = data["offSetY"];
+	if (data.contains("offsetY") && !data["offsetY"].is_null()) {
+		buttonData->offset.y = data["offsetY"];
 	}
 }
 
